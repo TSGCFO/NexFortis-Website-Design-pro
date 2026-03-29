@@ -125,7 +125,7 @@ function ProductCard({ product }: { product: Product }) {
           </div>
           {isAvailable ? (
             <Link href={`/service/${product.slug}`}>
-              <Button size="sm" className="bg-[#1a2744] hover:bg-[#1a2744]/90 text-xs">Order Now</Button>
+              <Button size="sm" className="bg-[#B76E79] hover:bg-[#A35D68] text-white text-xs">Order Now</Button>
             </Link>
           ) : (
             <Link href={`/waitlist?product=${product.slug}`}>

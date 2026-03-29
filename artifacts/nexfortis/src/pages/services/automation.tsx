@@ -254,7 +254,7 @@ export default function AutomationSoftware() {
           <p className="text-lg text-white/80 mb-10">
             Tell us about your workflow challenges and we'll design a custom solution that saves your team hours every week.
           </p>
-          <Link href="/contact" className="inline-flex px-8 py-4 min-h-[48px] rounded-xl bg-warning text-white font-bold text-lg hover:bg-warning/90 transition-all items-center justify-center gap-2 hover:-translate-y-0.5">
+          <Link href="/contact" className="inline-flex px-8 py-4 min-h-[48px] rounded-xl bg-rose-gold text-rose-gold-foreground font-bold text-lg hover:bg-rose-gold-hover transition-all items-center justify-center gap-2 hover:-translate-y-0.5">
             Get a Free Quote <ArrowRight className="w-5 h-5" />
           </Link>
         </div>

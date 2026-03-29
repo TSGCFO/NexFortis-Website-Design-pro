@@ -63,7 +63,7 @@ export function Navbar() {
                   <Button variant="ghost" size="sm">Sign In</Button>
                 </Link>
                 <Link href="/order">
-                  <Button size="sm" className="bg-[#f0a500] text-[#1a2744] hover:bg-[#f0a500]/90 font-bold">
+                  <Button size="sm" className="bg-[#B76E79] text-white hover:bg-[#A35D68] font-bold">
                     Get Started
                   </Button>
                 </Link>
@@ -112,7 +112,7 @@ export function Navbar() {
                     <Button variant="outline" className="w-full" size="sm">Sign In</Button>
                   </Link>
                   <Link href="/order" onClick={() => setOpen(false)}>
-                    <Button className="w-full bg-[#f0a500] text-[#1a2744] hover:bg-[#f0a500]/90 font-bold" size="sm">
+                    <Button className="w-full bg-[#B76E79] text-white hover:bg-[#A35D68] font-bold" size="sm">
                       Get Started
                     </Button>
                   </Link>

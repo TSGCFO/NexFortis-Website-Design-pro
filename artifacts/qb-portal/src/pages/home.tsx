@@ -54,7 +54,7 @@ export default function Home() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
             <Link href="/order">
-              <Button size="lg" className="bg-[#f0a500] text-[#1a2744] hover:bg-[#f0a500]/90 font-bold text-lg px-8 gap-2">
+              <Button size="lg" className="bg-[#B76E79] text-white hover:bg-[#A35D68] font-bold text-lg px-8 gap-2">
                 Get Started <ArrowRight className="w-5 h-5" />
               </Button>
             </Link>
@@ -187,7 +187,7 @@ export default function Home() {
           <h2 className="text-3xl font-bold mb-4">Ready to Convert Your QuickBooks File?</h2>
           <p className="text-white/70 mb-8">Get started in minutes. Your converted file will be delivered in under 1 hour.</p>
           <Link href="/order">
-            <Button size="lg" className="bg-[#f0a500] text-[#1a2744] hover:bg-[#f0a500]/90 font-bold text-lg px-8 gap-2">
+            <Button size="lg" className="bg-[#B76E79] text-white hover:bg-[#A35D68] font-bold text-lg px-8 gap-2">
               Start Your Conversion <ArrowRight className="w-5 h-5" />
             </Button>
           </Link>

@@ -129,7 +129,7 @@ export default function About() {
           <p className="text-lg text-white/80 mb-10">
             Ready to transform your business with technology? We'd love to hear from you.
           </p>
-          <Link href="/contact" className="inline-flex px-8 py-4 min-h-[48px] rounded-xl bg-warning text-white font-bold text-lg hover:bg-warning/90 transition-all items-center justify-center gap-2 hover:-translate-y-0.5">
+          <Link href="/contact" className="inline-flex px-8 py-4 min-h-[48px] rounded-xl bg-rose-gold text-rose-gold-foreground font-bold text-lg hover:bg-rose-gold-hover transition-all items-center justify-center gap-2 hover:-translate-y-0.5">
             Contact Us <ArrowRight className="w-5 h-5" />
           </Link>
         </div>

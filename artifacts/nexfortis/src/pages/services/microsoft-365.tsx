@@ -169,8 +169,9 @@ export default function Microsoft365() {
               <tr className="border-b-2 border-border text-left">
                 <th scope="col" className="p-4 font-display font-bold text-xl text-primary">Feature</th>
                 {tiers.map((tier, i) => (
-                  <th key={i} scope="col" className={`p-4 font-display font-bold text-xl ${i === 2 ? "text-accent" : "text-primary"}`}>
+                  <th key={i} scope="col" className={`p-4 font-display font-bold text-xl ${i === 2 ? "text-rose-gold" : "text-primary"}`}>
                     {tier}
+                    {i === 2 && <span className="ml-2 inline-block px-2 py-0.5 rounded-full bg-rose-gold text-white text-xs font-semibold align-middle">Recommended</span>}
                   </th>
                 ))}
               </tr>
@@ -229,7 +230,7 @@ export default function Microsoft365() {
           <p className="text-lg text-white/80 mb-10">
             Get a custom Microsoft 365 deployment plan tailored to your team's size and security requirements.
           </p>
-          <Link href="/contact" className="inline-flex px-8 py-4 min-h-[48px] rounded-xl bg-warning text-white font-bold text-lg hover:bg-warning/90 transition-all items-center justify-center gap-2 hover:-translate-y-0.5">
+          <Link href="/contact" className="inline-flex px-8 py-4 min-h-[48px] rounded-xl bg-rose-gold text-rose-gold-foreground font-bold text-lg hover:bg-rose-gold-hover transition-all items-center justify-center gap-2 hover:-translate-y-0.5">
             Get a Free Quote <ArrowRight className="w-5 h-5" />
           </Link>
         </div>

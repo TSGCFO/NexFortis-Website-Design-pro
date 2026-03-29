@@ -143,7 +143,7 @@ export default function ServiceDetail() {
                   {product.turnaround && <p className="text-sm text-muted-foreground mb-4"><Clock className="w-4 h-4 inline mr-1" />Turnaround: {product.turnaround}</p>}
                   {isAvailable ? (
                     <Link href={`/order?service=${product.id}`}>
-                      <Button className="w-full bg-[#f0a500] text-[#1a2744] hover:bg-[#f0a500]/90 font-bold gap-2" size="lg">
+                      <Button className="w-full bg-[#B76E79] text-white hover:bg-[#A35D68] font-bold gap-2" size="lg">
                         Order Now <ArrowRight className="w-4 h-4" />
                       </Button>
                     </Link>

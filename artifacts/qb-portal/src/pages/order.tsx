@@ -437,7 +437,7 @@ export default function Order() {
                 <Button
                   type="submit"
                   disabled={!canSubmit || submitting}
-                  className="w-full mt-6 bg-[#f0a500] text-[#1a2744] hover:bg-[#f0a500]/90 font-bold text-lg py-3"
+                  className="w-full mt-6 bg-[#B76E79] text-white hover:bg-[#A35D68] font-bold text-lg py-3"
                   size="lg"
                 >
                   {submitting ? "Processing..." : `Upload & Pay $${total} CAD`}

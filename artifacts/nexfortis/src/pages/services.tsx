@@ -134,7 +134,7 @@ export default function ServicesOverview() {
         <div className="text-center mt-4">
           <Link
             href="/contact"
-            className="inline-flex items-center gap-2 px-8 py-4 min-h-[48px] rounded-xl bg-warning text-warning-foreground font-bold text-lg hover:bg-warning/90 hover:-translate-y-0.5 transition-all shadow-xl shadow-warning/20"
+            className="inline-flex items-center gap-2 px-8 py-4 min-h-[48px] rounded-xl bg-rose-gold text-rose-gold-foreground font-bold text-lg hover:bg-rose-gold-hover hover:-translate-y-0.5 transition-all shadow-xl shadow-rose-gold/20"
           >
             Book a Consultation <ArrowRight className="w-5 h-5" aria-hidden="true" />
           </Link>

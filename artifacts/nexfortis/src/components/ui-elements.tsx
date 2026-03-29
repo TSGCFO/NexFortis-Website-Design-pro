@@ -41,7 +41,7 @@ export function SectionHeader({ title, subtitle, centered = false, light = false
 export function ServiceCard({ title, description, icon: Icon, href, cta = "Get a Free Quote" }: { title: string, description: string, icon: LucideIcon, href: string, cta?: string }) {
   return (
     <div
-      className="bg-card rounded-2xl p-8 shadow-lg shadow-black/5 dark:shadow-black/20 border border-border/50 flex flex-col h-full group transition-all duration-200 hover:shadow-xl hover:border-accent/50 hover:-translate-y-2"
+      className="bg-card rounded-2xl p-8 shadow-lg shadow-black/5 dark:shadow-black/20 border border-border/50 flex flex-col h-full group transition-all duration-200 hover:shadow-xl hover:border-rose-gold/50 hover:border-l-rose-gold hover:border-l-4 hover:-translate-y-2"
     >
       <div className="w-14 h-14 rounded-xl bg-secondary flex items-center justify-center text-accent mb-6 group-hover:bg-accent group-hover:text-white transition-colors duration-200">
         <Icon className="w-7 h-7" />

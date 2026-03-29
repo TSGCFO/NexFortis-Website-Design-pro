@@ -161,7 +161,7 @@ export default function Portal() {
               <p className="text-white/70 text-sm">{user.email}</p>
             </div>
             <Link href="/order">
-              <Button className="bg-[#f0a500] text-[#1a2744] hover:bg-[#f0a500]/90 font-bold gap-2">
+              <Button className="bg-[#B76E79] text-white hover:bg-[#A35D68] font-bold gap-2">
                 <Upload className="w-4 h-4" /> New Order
               </Button>
             </Link>
@@ -224,7 +224,7 @@ export default function Portal() {
                 <CardContent className="p-8 text-center">
                   <Package className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
                   <p className="text-muted-foreground">No orders yet.</p>
-                  <Link href="/order"><Button className="mt-4 bg-[#f0a500] text-[#1a2744]">Place Your First Order</Button></Link>
+                  <Link href="/order"><Button className="mt-4 bg-[#B76E79] text-white hover:bg-[#A35D68]">Place Your First Order</Button></Link>
                 </CardContent>
               </Card>
             ) : (

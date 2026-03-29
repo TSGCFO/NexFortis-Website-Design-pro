@@ -85,6 +85,10 @@
   --color-warning-foreground: hsl(var(--warning-foreground));
   --color-warning-hover: hsl(var(--warning-hover));
 
+  --color-rose-gold: #B76E79;
+  --color-rose-gold-hover: #A35D68;
+  --color-rose-gold-foreground: #ffffff;
+
   --font-sans: 'Inter', sans-serif;
   --font-display: 'Outfit', sans-serif;
 
@@ -199,14 +203,14 @@
 }
 
 .text-gradient-azure {
-  background: linear-gradient(to right, hsl(203, 88%, 52%), hsl(203, 88%, 40%));
+  background: linear-gradient(to right, #B76E79, #A35D68);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .dark .text-gradient-azure {
-  background: linear-gradient(to right, hsl(203, 88%, 62%), hsl(203, 88%, 48%));
+  background: linear-gradient(to right, #C8838E, #B76E79);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
