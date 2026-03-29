@@ -1,0 +1,225 @@
+
+# NexFortis IT Solutions — Complete Website Design Brief for Replit Agent
+
+## Company Overview
+Design a professional, modern, and conversion-optimized business website for **NexFortis** (17756968 Canada Inc.), a Canadian IT solutions company headquartered at 204 Hill Farm Rd, Nobleton, ON L7B 0A1, Canada. NexFortis provides end-to-end technology services for small, medium, and enterprise-level businesses. The website must position NexFortis as a trusted, one-stop technology partner that simplifies IT for businesses of all sizes.
+
+---
+
+## Brand & Design Direction
+
+- **Brand Name:** NexFortis
+- **Tagline Suggestion:** "Your Business. Our Technology. Limitless Growth." (or generate a better one)
+- **Color Palette:** Professional and modern — use a primary dark navy/deep blue (#1a2744 or similar), accented with a vibrant teal/electric blue (#00b4d8 or similar) and clean white (#ffffff). Secondary accent of a warm gold or orange for CTAs.
+- **Typography:** Clean sans-serif fonts (e.g., Inter, Poppins, or Manrope for headings; Open Sans or Nunito for body text).
+- **Design Style:** Sleek, corporate-modern with generous white space, smooth scroll animations, subtle gradient backgrounds, and micro-interactions on hover. Think Stripe/Vercel-level polish. Use professional SVG icons (Lucide, Heroicons, or similar) throughout.
+- **Responsiveness:** Fully responsive across desktop, tablet, and mobile. Mobile-first layout principles.
+
+---
+
+## Site Structure & Pages
+
+### 1. HOME PAGE
+A high-impact landing page with:
+- **Hero Section:** Full-width hero with a bold headline, subheadline describing NexFortis's value proposition, and two CTAs ("Get a Free Consultation" and "Explore Our Services"). Animated background or subtle particle/gradient animation.
+- **Trusted By / Partner Badges:** A horizontal scrolling or static row showing "Microsoft Authorized Partner & Reseller" badge, and any other trust indicators.
+- **Services Overview Grid:** A visually appealing grid/card layout summarizing the 5 major service pillars (see below), each with an icon, short description, and "Learn More" link to the respective service page.
+- **Why Choose NexFortis:** 3-4 key differentiators in icon+text format (e.g., "End-to-End Solutions", "Microsoft Certified Partner", "Tailored for Your Business Size", "Canadian-Based Support").
+- **Testimonials / Social Proof Section:** Placeholder for client testimonials with a carousel/slider.
+- **CTA Banner:** A bold call-to-action section ("Ready to Transform Your Business IT? Let's Talk.") with a contact button.
+- **Footer:** Contact info, quick links to all service pages, social media icons, copyright notice, privacy policy link.
+
+### 2. ABOUT US PAGE
+- Company story, mission, and vision
+- Core values (Integrity, Innovation, Client-First, Simplicity)
+- Team section (placeholder for team member cards with photo, name, title, bio)
+- "Why NexFortis" section emphasizing the breadth of services and personalized approach
+
+### 3. SERVICES PAGES (One dedicated page per service pillar, plus a Services overview/index page)
+
+---
+
+#### SERVICE PILLAR 1: Digital Marketing Solutions
+**Page: /services/digital-marketing**
+
+Create a dedicated, detailed service page covering all of the following sub-services. Each sub-service should have its own section with icon, description, and benefits:
+
+- **Website Design & Development:** Custom, responsive, SEO-optimized website design for businesses. From single-page landing sites to full e-commerce platforms.
+- **Website Hosting:** Reliable, fast, secure website hosting with uptime guarantees, SSL certificates, and daily backups.
+- **Domain Registration & Management:** Domain name search, registration, DNS management, and renewal services.
+- **Website Management & Maintenance:** Ongoing site updates, security patches, performance optimization, content updates, and technical support.
+- **Google Ads Management:** Campaign setup, keyword research, ad copywriting, bid management, A/B testing, conversion tracking, and ROI reporting for Google Ads (Search, Display, Shopping, YouTube).
+- **SEO Optimization:** On-page SEO, off-page SEO, technical SEO audits, keyword research, local SEO, link building, and monthly performance reporting.
+- **Content Management:** CMS setup and management (WordPress, custom CMS), content scheduling, blog management, and media library organization.
+- **Content Creation:** Blog posts, website copy, social media content, email marketing content, infographics, video scripts, and brand storytelling.
+
+Include a pricing teaser or "Request a Custom Quote" CTA for each sub-service.
+
+---
+
+#### SERVICE PILLAR 2: Microsoft 365 Solutions (Microsoft Partner & Reseller)
+**Page: /services/microsoft-365**
+
+Prominently display the **Microsoft Authorized Partner & Reseller** badge. This page should communicate that NexFortis provides complete end-to-end Microsoft Office 365 setup, migration, and management. Structure the page with these sections:
+
+- **Overview:** NexFortis is a certified Microsoft Partner and Reseller offering the full Microsoft 365 ecosystem tailored to your business size.
+- **What We Provide:**
+  - **Business Email Setup:** Professional work email addresses on your custom domain via Microsoft Exchange Online.
+  - **Microsoft 365 Business Suite:** Full deployment of Office 365 apps (Word, Excel, PowerPoint, Outlook, OneNote, OneDrive, SharePoint) — with or without Microsoft Teams.
+  - **Microsoft Teams Deployment:** Setup, configuration, and training for Microsoft Teams for collaboration, meetings, and chat.
+  - **Email Security & Threat Protection:** Advanced email filtering, anti-phishing, anti-malware, data loss prevention (DLP), and compliance configurations.
+  - **Security & Compliance Management:** Conditional access policies, multi-factor authentication (MFA), information protection, and compliance center configurations.
+  - **User Management:** Active Directory / Entra ID user provisioning, group management, role-based access control (RBAC), license assignment, and onboarding/offboarding workflows.
+  - **Device Management:** Microsoft Intune / Endpoint Manager for mobile device management (MDM), application management (MAM), device compliance policies, and remote wipe capabilities.
+
+- **Tiered Service Packages (display as a comparison table or tiered cards):**
+  | Feature | Small Business | Medium Business | Enterprise |
+  |---|---|---|---|
+  | Business Email Setup | ✓ | ✓ | ✓ |
+  | Office 365 Apps | ✓ | ✓ | ✓ |
+  | Microsoft Teams | Optional | ✓ | ✓ |
+  | Email Security | Basic | Advanced | Enterprise-Grade |
+  | User Management | Up to 25 users | Up to 100 users | Unlimited |
+  | Device Management | — | Basic Intune | Full Intune + Autopilot |
+  | Security & Compliance | MFA | MFA + Conditional Access | Full Zero Trust |
+  | Dedicated Support | Email | Email + Phone | Priority 24/7 |
+
+- CTA: "Get Your Microsoft 365 Quote" button linking to contact form.
+
+---
+
+#### SERVICE PILLAR 3: QuickBooks Migration & Accounting Tools
+**Page: /services/quickbooks**
+
+This page covers QuickBooks migration services and a comprehensive catalog of QuickBooks add-on products that NexFortis resells. Structure the page as follows:
+
+**Section A: QuickBooks Migration Services**
+- **Enterprise to Pro/Premier Conversion:** Full conversion of QuickBooks Enterprise company files to QuickBooks Pro or Premier. All data including transactions, lists, budgets, memorized transactions, payroll, inventory, users, rights, and preferences. Pricing starts at $249. Next-day and same-day turnaround available.
+- **QuickBooks Data Migration:** Full-service migration/conversion from QuickBooks Enterprise to Pro/Premier/Mac/Online. Also migrations FROM NetSuite, Peachtree, Sage 50, AccountEdge/MYOB, SAP, Xero, DacEasy, ODOO, and others TO QuickBooks. 100% data accuracy guaranteed with money-back guarantee. Standard $299 (1 business day), Expedited $450 (same day). Bulk discounts available.
+- **QuickBooks Data Recovery:** Professional data recovery resolving corruption issues — error code repair, file corruption, password recovery, TLG recovery, Mac data recovery, multi-currency issues, and file optimization. Full money-back guarantee.
+- **QuickBooks Data Services:** File merging, super condensing, list reduction, audit trail removal, online file preparation, period copy for CRA audits, and custom programming.
+
+**Section B: QuickBooks Add-On Products Catalog**
+Display as a product grid/catalog with cards. Each card shows: product name, short description, price, and a "Learn More" or "Buy Now" button. Organize into categories:
+
+**Financial Statements & Reporting:**
+- A/R Statements Pro — $79 — Professional customizable accounts receivable statements
+- List Reporter — $59 — Reports from QuickBooks lists, trip records, and time records into Excel
+
+**Nonprofit / Donor Tools:**
+- Donor Statements (QB Desktop) — $99 — Donor thank-you and giving statements from QB Desktop
+- Donor Statements (QB Online) — $99 — Donor giving statements from QB Online
+- Donor Statements Desktop + Email Manager Bundle — $158 (20% discount)
+- Donor Statements Online + Email Manager Bundle — $158 (20% discount)
+
+**Payment Processing:**
+- Direct Debit File Creator — $119 — NACHA files for ACH debit collections
+- Direct Deposit File Creator — $119 — NACHA direct deposit files for employees/vendors
+- PayPal Link — $99 — Import PayPal activity into QuickBooks
+- PositivePay File Creator (Excel) — $119 — Positive Pay files from Excel
+- PositivePay File Creator (QB Desktop) — $119 — Positive Pay files from QB Desktop
+- PositivePay File Creator (QB Online) — $119 — Positive Pay files from QB Online
+
+**Data Import & Conversion:**
+- IIF Transaction Creator — $139 — Import transactions from Excel to QuickBooks via IIF
+- IIF Transaction Creator Pro — $169 — Advanced version with Profile Manager and QB integration
+- IIF Transaction Creator (Australia) — $139 — For Reckon Accounts users
+- List Importer — $59 — Import lists into QuickBooks from Excel
+- Transaction Copier — $119 — Copy transactions between QuickBooks company files
+- Excel to OFX/QFX/QBO Converter — $79 — Convert Excel data to financial file formats
+- Excel to QIF Converter — $69 — Convert Excel data to QIF for Quicken
+- QIF to IIF Converter — $99 — Convert QIF files to IIF for QuickBooks
+- QIF to OFX/QFX/QBO Converter — $79 — Convert QIF to OFX-compatible formats
+- OFX/QFX/QBO to IIF Converter — $99 — Convert OFX files to IIF for QuickBooks
+- OFX Cleaner — $79 — Clean up OFX/QFX/QBO files for better compatibility
+
+**Email & Communication:**
+- Excel Batch-Email Manager — $99 — Bulk email tool from Excel with mail merge
+
+**Time Tracking:**
+- Timesheet Link — $89 — Import time records into QuickBooks from Excel
+- Timesheet Link (IIF) — Import time records via IIF format
+
+**Data Recovery & Legacy Tools:**
+- BKFRecovery 2.0 — Recover data from Windows Backup (.BKF) files
+- MDBRecovery 2017 — Recover and remove security from Access database files
+- MDWRecovery 3.0 — Recover Access Workgroup and Simply Accounting security files
+- Other Data Services — Access repair, Lotus 123/Organizer repair, Sage 50 Quantum downgrade, Simply Accounting repair/downgrade, SuperCalc conversion, password recovery
+
+**Support:**
+- Premium Support Service — Priority support with in-depth data file review and ~1 hour response times during business hours
+
+---
+
+#### SERVICE PILLAR 4: IT Consultation & Project Management
+**Page: /services/it-consulting**
+
+- **IT Consultation:** Strategic technology advisory services — infrastructure planning, technology stack recommendations, vendor evaluation, cloud strategy, cybersecurity assessments, and digital transformation roadmaps.
+- **Project Management:** End-to-end IT project management — requirements gathering, scoping, timeline planning, resource allocation, milestone tracking, stakeholder communication, and delivery.
+- **Technology Audits:** Comprehensive review of existing IT infrastructure, software, security posture, and processes with actionable improvement recommendations.
+
+---
+
+#### SERVICE PILLAR 5: Workflow Automation & Custom Software Development
+**Page: /services/automation-software**
+
+- **Workflow Automation:** Design and implement fully automated business workflows — from simple task automations (email notifications, data syncing, approval chains) to complex multi-system orchestrations using tools like Power Automate, Zapier, Make, or custom solutions.
+- **Custom Workflow Automations:** More complex, bespoke automation solutions tailored to unique business processes — involving API integrations, conditional logic, data transformations, and multi-platform coordination.
+- **Full-Stack Custom Software Development:** Complete end-to-end design, development, and deployment of customized business software — web applications, internal tools, client portals, dashboards, inventory systems, CRM integrations, and more. Built with modern tech stacks tailored to client requirements.
+
+Include use-case examples or scenario cards (e.g., "Automated invoice processing", "Custom client portal", "Multi-system data sync").
+
+---
+
+### 4. CONTACT US PAGE
+**Page: /contact**
+- Contact form (Name, Email, Phone, Company, Service Interested In [dropdown], Message)
+- Direct contact info: phone number, email address, physical address
+- Embedded Google Map showing Nobleton, ON location
+- Business hours
+- CTA: "Book a Free 30-Minute Consultation"
+
+### 5. BLOG PAGE (placeholder)
+**Page: /blog**
+- Blog listing page with card layout (featured image, title, excerpt, date, category)
+- Individual blog post template
+- Categories matching service pillars
+
+### 6. PRIVACY POLICY & TERMS OF SERVICE
+- Standard placeholder pages
+
+---
+
+## Technical Requirements
+
+- **Framework:** Use React (Next.js or Vite) or a modern framework suitable for Replit deployment
+- **Styling:** Tailwind CSS for utility-first styling
+- **Animations:** Framer Motion for smooth page transitions, scroll-triggered animations, and hover effects
+- **Icons:** Lucide React or Heroicons
+- **Forms:** Functional contact form (can use Formspree, EmailJS, or similar for email delivery)
+- **SEO:** Proper meta tags, Open Graph tags, structured data (JSON-LD), semantic HTML, sitemap.xml, robots.txt
+- **Performance:** Lazy loading for images, code splitting, optimized bundle size
+- **Accessibility:** WCAG 2.1 AA compliant — proper ARIA labels, keyboard navigation, color contrast
+- **Deployment:** Ready for Replit deployment with proper build configuration
+
+---
+
+## Navigation Structure
+
+```
+NexFortis Logo | Services ▼ | About | Blog | Contact | [Get a Quote] button
+                  ├── Digital Marketing
+                  ├── Microsoft 365 Solutions
+                  ├── QuickBooks Migration & Tools
+                  ├── IT Consulting & Project Management
+                  └── Automation & Custom Software
+```
+
+## Additional Notes
+- Every service page should have a sticky "Request a Quote" or "Book a Consultation" floating CTA button.
+- Include smooth scrolling and anchor links within long service pages.
+- Use professional stock imagery placeholders (abstract tech, office environments, collaboration) — prefer SVG illustrations where appropriate.
+- The overall tone should be professional, approachable, and confidence-inspiring — written for business owners and decision-makers who may not be technical.
+- All copy should be clear, jargon-free (explain technical concepts simply), and benefit-focused (what the client gets, not just what NexFortis does).
+
+Build the complete website with all pages, navigation, responsive design, animations, and deploy it on Replit.

@@ -1,0 +1,138 @@
+# REPLIT AGENT: qb-converter M6 — Full Service Infrastructure + Complete Product Catalog
+## Repo: https://github.com/TSGCFO/qb-converter (private)
+
+---
+
+## YOUR MISSION
+
+Build the complete service infrastructure for NexGen Digital Solutions' QuickBooks
+conversion service. The core converter CLI is done (206 tests passing). Your job is
+to build: website with FULL product catalog, operator docs, legal, email templates,
+and Stripe integration stubs.
+
+**DO NOT touch src/, tests/, or any existing code/docs.**
+
+---
+
+## BUSINESS CONTEXT
+
+- **Company:** NexGen Digital Solutions
+- **Operator:** Hassan Sadiq (solo founder — hassansadiq73@gmail.com)
+- **Location:** Ontario, Canada
+- **Core service:** Convert Canadian QuickBooks Enterprise .QBM → Premier
+- **Core price:** $149 CAD flat fee
+- **Turnaround:** Under 1 hour (competitors take 1 business day)
+- **Competitor 1:** Big Red Consulting — 28 products, $249 USD conversion, US-focused
+- **Competitor 2:** E-Tech (e-tech.ca) — 7 product lines, $299–$450 USD, 21+ years
+- **Advantage:** Cheaper, faster, Canadian-first (GST/HST, PIPEDA, CRA)
+- **File accepted:** .QBM only at launch
+- **Enterprise trial expires:** March 31, 2026
+
+---
+
+## COMPLETE SERVICE & PRODUCT CATALOG
+
+Build the website to display ALL of the following. Products are grouped into three
+tiers: Launch Services (available now), Coming Soon Services, and Coming Soon Tools.
+
+---
+
+### TIER 1 — LAUNCH SERVICES (Available Now — Accept Orders)
+
+These are services Hassan can deliver manually right now.
+
+| # | Service | Price (CAD) | Turnaround | Competitor Equivalent |
+|---|---------|-------------|------------|-----------------------|
+| 1 | Enterprise → Premier/Pro Conversion | $149 | Under 1 hour | Big Red #8: $249 USD; E-Tech #33: $299 USD |
+| 2 | File Health Check & Validation Report | $49 (add-on) | Included | E-Tech #34 (bundled) |
+| 3 | Rush Delivery (15-min guarantee) | +$49 (add-on) | 15 minutes | E-Tech #33: $450 USD expedited |
+| 4 | Premium Support (priority email) | $29/month | Within 1 hour | Big Red #23 |
+
+---
+
+### TIER 2 — COMING SOON SERVICES (Show on website, "Coming Soon" badge, collect waitlist emails)
+
+These are manual services Hassan will offer once workflows are documented.
+
+| # | Service | Target Price (CAD) | Target Date | Competitor Equivalent |
+|---|---------|-------------------|-------------|-----------------------|
+| 5 | QuickBooks Data Recovery (corruption, error codes, TLG) | $199 | v1.5 (May–Jun) | E-Tech #34: premium pricing |
+| 6 | Audit Trail Removal | $79 | v1.1 (Apr–May) | E-Tech #35 |
+| 7 | Super Condense / File Size Reduction | $99 | v1.1 (Apr–May) | E-Tech #35 |
+| 8 | List Reduction (trim inactive items) | $79 | v1.1 (Apr–May) | E-Tech #35 |
+| 9 | Multi-Currency Removal | $79 | v1.1 (Apr–May) | E-Tech #35 |
+| 10 | CRA Period Copy (audit export) | $99 | v1.1 (Apr–May) | E-Tech #35 |
+| 11 | File Merge (combine two QB files) | $199 | v1.5 (May–Jun) | E-Tech #35 |
+| 12 | Online File Preparation (QB Online migration) | $249 | v1.5 (May–Jun) | E-Tech #35 |
+| 13 | Enterprise → QuickBooks Online Migration | $249 | v1.5 (May–Jun) | E-Tech #33 |
+| 14 | Sage 50 / Simply Accounting → QuickBooks | $299 | v3.0 (Q4 2026) | E-Tech #32 |
+| 15 | Sage 50 Quantum Downgrade | $249 | v3.0 (Q4 2026) | E-Tech #32 |
+| 16 | Simply Accounting Downgrade | $249 | v3.0 (Q4 2026) | E-Tech #32 |
+| 17 | Simply Accounting Database Repair | $199 | v3.0 (Q4 2026) | E-Tech #32 |
+| 18 | NetSuite → QuickBooks Migration | $349 | v2.0 (Q3 2026) | E-Tech #33 |
+| 19 | Peachtree/Sage → QuickBooks Migration | $299 | v2.0 (Q3 2026) | E-Tech #33 |
+| 20 | AccountEdge/MYOB → QuickBooks Migration | $299 | v2.0 (Q3 2026) | E-Tech #33 |
+| 21 | SAP → QuickBooks Migration | $349 | v2.0 (Q3 2026) | E-Tech #33 |
+| 22 | Xero → QuickBooks Migration | $249 | v2.0 (Q3 2026) | E-Tech #33 |
+| 23 | DacEasy → QuickBooks Migration | $249 | v2.0 (Q3 2026) | E-Tech #33 |
+| 24 | ODOO → QuickBooks Migration | $249 | v2.0 (Q3 2026) | E-Tech #33 |
+| 25 | Transaction Copier Service (copy between QB files) | $99 | v1.5 (May–Jun) | Big Red #28: $119 USD software |
+| 26 | QuickBooks Password Recovery | $99 | v1.5 (May–Jun) | E-Tech #34 |
+| 27 | Mac QuickBooks Data Recovery | $199 | v2.0 (Q3 2026) | E-Tech #34 |
+| 28 | Access Database Repair | $149 | v3.0 (Q4 2026) | E-Tech #32 |
+| 29 | BKF (Windows Backup) Recovery | $149 | v3.0 (Q4 2026) | E-Tech #29 |
+| 30 | Custom QB Programming | Quote-based | v2.0 (Q3 2026) | E-Tech #35 |
+
+---
+
+### TIER 3 — COMING SOON SOFTWARE TOOLS (Show on website, "Coming Soon" badge, collect waitlist emails)
+
+These are downloadable software products. Show them all on the website with descriptions
+and "Join Waitlist" buttons instead of purchase buttons.
+
+| # | Tool | Target Price (CAD) | Competitor Equivalent |
+|---|------|-------------------|-----------------------|
+| 31 | A/R Statements Pro (Excel add-in for professional AR statements) | $79 | Big Red #1: $79 USD |
+| 32 | Excel Batch-Email Manager (bulk email from Excel) | $99 | Big Red #9: $99 USD |
+| 33 | IIF Transaction Creator (Excel → QuickBooks import) | $139 | Big Red #12: $139 USD |
+| 34 | IIF Transaction Creator Pro (with Profile Manager) | $169 | Big Red #14: $169 USD |
+| 35 | List Importer (Excel → QB list import) | $59 | Big Red #15: $59 USD |
+| 36 | List Reporter (QB lists → Excel reports) | $59 | Big Red #16: $59 USD |
+| 37 | Excel to OFX/QFX/QBO Converter | $79 | Big Red #10: $79 USD |
+| 38 | Excel to QIF Converter | $69 | Big Red #11: $69 USD |
+| 39 | OFX Cleaner (clean payee names in OFX files) | $79 | Big Red #17: $79 USD |
+| 40 | OFX/QFX/QBO to IIF Converter | $99 | Big Red #18: $99 USD |
+| 41 | QIF to IIF Converter | $99 | Big Red #24: $99 USD |
+| 42 | QIF to OFX/QFX/QBO Converter | $79 | Big Red #25: $79 USD |
+| 43 | PayPal Link (import PayPal transactions to QB) | $99 | Big Red #19: $99 USD |
+| 44 | Direct Deposit File Creator (NACHA from QB) | $119 | Big Red #3: $119 USD |
+| 45 | Direct Debit File Creator (ACH NACHA from QB) | $119 | Big Red #2: $119 USD |
+| 46 | PositivePay File Creator - Excel | $119 | Big Red #20: $119 USD |
+| 47 | PositivePay File Creator - QB Desktop | $119 | Big Red #21: $119 USD |
+| 48 | PositivePay File Creator - QB Online | $119 | Big Red #22: $119 USD |
+| 49 | Donor Statements - QB Desktop | $99 | Big Red #4: $99 USD |
+| 50 | Donor Statements - QB Online | $99 | Big Red #5: $99 USD |
+| 51 | Timesheet Link (Excel → QB time import) | $89 | Big Red #26: $89 USD |
+| 52 | Transaction Copier Tool (copy txns between QB files) | $119 | Big Red #28: $119 USD |
+| 53 | Access Database Security Removal Tool | $29 | E-Tech #30: MDBRecovery |
+| 54 | Access Workgroup / Simply Accounting Password Recovery | $29 | E-Tech #31: MDWRecovery |
+
+---
+
+## TASK 1 — Operator Runbook
+**File:** `docs/operator_runbook.md`
+
+Write the complete internal runbook for Hassan. Include:
+
+### Core Conversion Workflow:
+1. Order email arrives from Stripe (customer name, email, file link, services purchased)
+2. Download .QBM → `C:\Projects\qb-orders\<order-id>\input.qbm`
+3. Dry-run: `qb-convert "input.qbm" --dry-run`
+4. If add-ons purchased, process in order:
+   a. File Health Check → `--report report.html`
+   b. Audit Trail Removal → manual QB procedure
+   c. List Reduction → manual QB procedure
+   d. Multi-Currency Removal → manual QB procedure
+   e. Super Condense → manual QB procedure
+   f. CRA Period Copy → manual QB procedure
+5. Full conversion:

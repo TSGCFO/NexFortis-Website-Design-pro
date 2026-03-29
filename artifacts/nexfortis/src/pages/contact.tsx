@@ -1,0 +1,223 @@
+import { useState } from "react";
+import { PageHero, Section } from "@/components/ui-elements";
+import { SEO } from "@/components/seo";
+import { MapPin, Phone, Mail, Clock, Loader2 } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useToast } from "@/hooks/use-toast";
+
+const formSchema = z.object({
+  name: z.string().min(2, "Name must be at least 2 characters."),
+  email: z.string().email("Please enter a valid email address."),
+  phone: z.string().min(10, "Please enter a valid phone number (at least 10 digits)."),
+  company: z.string().optional(),
+  service: z.string().min(1, "Please select a service you're interested in."),
+  message: z.string().min(10, "Please provide at least 10 characters of detail."),
+});
+
+type FormData = z.infer<typeof formSchema>;
+
+export default function Contact() {
+  const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>({
+    resolver: zodResolver(formSchema),
+  });
+
+  const onSubmit = async (data: FormData) => {
+    setIsSubmitting(true);
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    setIsSubmitting(false);
+
+    toast({
+      title: "Message Sent Successfully!",
+      description: "We'll get back to you within 24 business hours.",
+    });
+    reset();
+  };
+
+  const inputClasses = "w-full px-4 py-3 min-h-[44px] rounded-xl bg-secondary border border-border focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition-all";
+
+  return (
+    <div>
+      <SEO title="Contact Us" description="Get in touch with NexFortis IT Solutions. Request a quote, schedule a consultation, or ask about our services. Located in Nobleton, Ontario." path="/contact" />
+      <PageHero
+        title="Contact Us"
+        subtitle="Ready to discuss your next IT project? Get in touch with our experts today."
+      />
+
+      <Section bg="secondary" className="relative">
+        <div className="grid lg:grid-cols-5 gap-12 items-start">
+
+          <div className="lg:col-span-2 space-y-8">
+            <div>
+              <h2 className="text-3xl font-display font-bold text-primary mb-8">Get In Touch</h2>
+              <p className="text-muted-foreground mb-8">
+                Book a free 30-minute consultation. Whether you have a specific project in mind or just want to explore your options, we're here to help.
+              </p>
+            </div>
+
+            <div className="space-y-6">
+              <div className="flex gap-4 items-start">
+                <div className="w-12 h-12 bg-card rounded-xl shadow-sm flex items-center justify-center text-accent shrink-0 border border-border" aria-hidden="true">
+                  <MapPin className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-primary">Headquarters</h3>
+                  <address className="text-muted-foreground not-italic">204 Hill Farm Rd<br />Nobleton, ON L7B 0A1</address>
+                </div>
+              </div>
+
+              <div className="flex gap-4 items-start">
+                <div className="w-12 h-12 bg-card rounded-xl shadow-sm flex items-center justify-center text-accent shrink-0 border border-border" aria-hidden="true">
+                  <Phone className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-primary">Phone</h3>
+                  <a href="tel:+18005550199" className="text-muted-foreground hover:text-accent transition-colors">+1 (800) 555-0199</a>
+                </div>
+              </div>
+
+              <div className="flex gap-4 items-start">
+                <div className="w-12 h-12 bg-card rounded-xl shadow-sm flex items-center justify-center text-accent shrink-0 border border-border" aria-hidden="true">
+                  <Mail className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-primary">Email</h3>
+                  <a href="mailto:contact@nexfortis.com" className="text-muted-foreground hover:text-accent transition-colors">contact@nexfortis.com</a>
+                </div>
+              </div>
+
+              <div className="flex gap-4 items-start">
+                <div className="w-12 h-12 bg-card rounded-xl shadow-sm flex items-center justify-center text-accent shrink-0 border border-border" aria-hidden="true">
+                  <Clock className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-primary">Business Hours</h3>
+                  <p className="text-muted-foreground">Mon – Fri: 9:00 AM – 5:00 PM EST</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="lg:col-span-3 bg-card p-8 md:p-12 rounded-3xl shadow-xl border border-border">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6" noValidate>
+              <div className="grid md:grid-cols-2 gap-6">
+                <div>
+                  <label htmlFor="contact-name" className="block text-sm font-semibold text-primary mb-2">Full Name <span className="text-destructive" aria-hidden="true">*</span></label>
+                  <input
+                    id="contact-name"
+                    {...register("name")}
+                    className={inputClasses}
+                    placeholder="John Doe"
+                    autoComplete="name"
+                    aria-required="true"
+                    aria-invalid={errors.name ? "true" : undefined}
+                    aria-describedby={errors.name ? "name-error" : undefined}
+                  />
+                  {errors.name && <p id="name-error" className="text-destructive text-sm mt-1" role="alert">{errors.name.message}</p>}
+                </div>
+                <div>
+                  <label htmlFor="contact-email" className="block text-sm font-semibold text-primary mb-2">Email Address <span className="text-destructive" aria-hidden="true">*</span></label>
+                  <input
+                    id="contact-email"
+                    {...register("email")}
+                    type="email"
+                    className={inputClasses}
+                    placeholder="john@company.com"
+                    autoComplete="email"
+                    aria-required="true"
+                    aria-invalid={errors.email ? "true" : undefined}
+                    aria-describedby={errors.email ? "email-error" : undefined}
+                  />
+                  {errors.email && <p id="email-error" className="text-destructive text-sm mt-1" role="alert">{errors.email.message}</p>}
+                </div>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-6">
+                <div>
+                  <label htmlFor="contact-phone" className="block text-sm font-semibold text-primary mb-2">Phone Number <span className="text-destructive" aria-hidden="true">*</span></label>
+                  <input
+                    id="contact-phone"
+                    {...register("phone")}
+                    type="tel"
+                    className={inputClasses}
+                    placeholder="(555) 123-4567"
+                    autoComplete="tel"
+                    aria-required="true"
+                    aria-invalid={errors.phone ? "true" : undefined}
+                    aria-describedby={errors.phone ? "phone-error" : undefined}
+                  />
+                  {errors.phone && <p id="phone-error" className="text-destructive text-sm mt-1" role="alert">{errors.phone.message}</p>}
+                </div>
+                <div>
+                  <label htmlFor="contact-company" className="block text-sm font-semibold text-primary mb-2">Company <span className="text-muted-foreground font-normal">(Optional)</span></label>
+                  <input
+                    id="contact-company"
+                    {...register("company")}
+                    className={inputClasses}
+                    placeholder="Company Ltd."
+                    autoComplete="organization"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label htmlFor="contact-service" className="block text-sm font-semibold text-primary mb-2">Service Interested In <span className="text-destructive" aria-hidden="true">*</span></label>
+                <select
+                  id="contact-service"
+                  {...register("service")}
+                  className={`${inputClasses} text-foreground`}
+                  aria-required="true"
+                  aria-invalid={errors.service ? "true" : undefined}
+                  aria-describedby={errors.service ? "service-error" : undefined}
+                >
+                  <option value="">Select a service...</option>
+                  <option value="digital-marketing">Digital Marketing</option>
+                  <option value="microsoft-365">Microsoft 365 Solutions</option>
+                  <option value="quickbooks">QuickBooks Migration</option>
+                  <option value="consulting">IT Consulting</option>
+                  <option value="automation">Workflow Automation</option>
+                  <option value="other">Other Inquiry</option>
+                </select>
+                {errors.service && <p id="service-error" className="text-destructive text-sm mt-1" role="alert">{errors.service.message}</p>}
+              </div>
+
+              <div>
+                <label htmlFor="contact-message" className="block text-sm font-semibold text-primary mb-2">Message <span className="text-destructive" aria-hidden="true">*</span></label>
+                <textarea
+                  id="contact-message"
+                  {...register("message")}
+                  rows={4}
+                  className={`${inputClasses} resize-none`}
+                  placeholder="Tell us about your project or problem..."
+                  aria-required="true"
+                  aria-invalid={errors.message ? "true" : undefined}
+                  aria-describedby={errors.message ? "message-error" : undefined}
+                />
+                {errors.message && <p id="message-error" className="text-destructive text-sm mt-1" role="alert">{errors.message.message}</p>}
+              </div>
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full py-4 min-h-[48px] rounded-xl bg-warning text-warning-foreground font-bold text-lg hover:bg-warning/90 hover:shadow-lg shadow-warning/20 transition-all disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              >
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                    Sending...
+                  </>
+                ) : (
+                  "Send Message"
+                )}
+              </button>
+            </form>
+          </div>
+        </div>
+      </Section>
+    </div>
+  );
+}

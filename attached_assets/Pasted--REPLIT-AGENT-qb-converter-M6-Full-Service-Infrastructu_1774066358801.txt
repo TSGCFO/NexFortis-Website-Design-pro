@@ -1,0 +1,372 @@
+# REPLIT AGENT: qb-converter M6 — Full Service Infrastructure + Complete Product Catalog
+
+## Repo: <https://github.com/TSGCFO/qb-converter> (private)
+
+## Branch: Create `feature/m6-service-infrastructure` from main
+
+---
+
+## MISSION
+
+Build the complete service infrastructure for NexGen Digital Solutions' QuickBooks conversion service.
+The core converter CLI is done (206 tests passing). Build: website with FULL product catalog (54 products),
+operator docs, legal, email templates, and Stripe integration stubs.
+
+---
+
+## CONSTRAINTS (Apply to ALL tasks)
+
+- **DO NOT** modify `src/`, `tests/`, or any existing files in `docs/`
+- New website files → `website/`, new docs → `docs/`
+- No new Python packages
+- Commit after each task: `feat: <description> (M6 Task N)`
+- Run `pytest tests/ -v` and `ruff check src tests` before final commit
+- "Coming Soon" products → "Join Waitlist" button only, never a buy button
+- "Available Now" products → "Order Now" button → `upload.html`
+
+---
+
+## BUSINESS CONTEXT
+
+| Field | Value |
+|-------|-------|
+| Company | NexGen Digital Solutions |
+| Operator | Hassan Sadiq (solo) — <hassansadiq73@gmail.com> |
+| Location | Ontario, Canada |
+| Core service | Convert Canadian QuickBooks Enterprise .QBM → Premier |
+| Core price | $149 CAD flat fee |
+| Turnaround | Under 1 hour (competitors: 1 business day) |
+| Competitor 1 | Big Red Consulting — 28 products, $249 USD, US-focused |
+| Competitor 2 | E-Tech (e-tech.ca) — 7 product lines, $299–$450 USD, 21+ years |
+| Advantage | Cheaper, faster, Canadian-first (GST/HST, PIPEDA, CRA) |
+| File accepted | .QBM only at launch |
+| Enterprise trial expires | March 31, 2026 |
+
+---
+
+## MASTER PRODUCT CATALOG (54 Products)
+
+This is the **single source of truth**. All tasks reference this. Build Task 9 (`products.json`) first,
+then use it to populate the website and docs.
+
+### TIER 1 — LAUNCH (Available Now)
+
+| ID | Service | Price CAD | Turnaround | Add-on? | Requires | Competitor Ref |
+|----|---------|-----------|------------|---------|----------|----------------|
+| 1 | Enterprise → Premier/Pro Conversion | $149 | Under 1 hr | No | — | Big Red #8: $249 USD; E-Tech #33: $299 USD |
+| 2 | File Health Check & Validation Report | $49 | Included | Yes | #1 | E-Tech #34 (bundled) |
+| 3 | Rush Delivery (15-min guarantee) | +$49 | 15 min | Yes | #1 | E-Tech #33: $450 USD expedited |
+| 4 | Premium Support (priority email) | $29/mo | Within 1 hr | No | — | Big Red #23 |
+
+### TIER 2 — COMING SOON SERVICES (Waitlist only)
+
+| ID | Service | Price CAD | Target | Competitor Ref |
+|----|---------|-----------|--------|----------------|
+| 5 | QuickBooks Data Recovery (corruption, TLG) | $199 | v1.5 May–Jun | E-Tech #34 |
+| 6 | Audit Trail Removal | $79 | v1.1 Apr–May | E-Tech #35 |
+| 7 | Super Condense / File Size Reduction | $99 | v1.1 Apr–May | E-Tech #35 |
+| 8 | List Reduction (trim inactive items) | $79 | v1.1 Apr–May | E-Tech #35 |
+| 9 | Multi-Currency Removal | $79 | v1.1 Apr–May | E-Tech #35 |
+| 10 | CRA Period Copy (audit export) | $99 | v1.1 Apr–May | E-Tech #35 |
+| 11 | File Merge (combine two QB files) | $199 | v1.5 May–Jun | E-Tech #35 |
+| 12 | Online File Preparation (QBO migration) | $249 | v1.5 May–Jun | E-Tech #35 |
+| 13 | Enterprise → QuickBooks Online Migration | $249 | v1.5 May–Jun | E-Tech #33 |
+| 14 | Sage 50 / Simply Accounting → QuickBooks | $299 | v3.0 Q4 2026 | E-Tech #32 |
+| 15 | Sage 50 Quantum Downgrade | $249 | v3.0 Q4 2026 | E-Tech #32 |
+| 16 | Simply Accounting Downgrade | $249 | v3.0 Q4 2026 | E-Tech #32 |
+| 17 | Simply Accounting Database Repair | $199 | v3.0 Q4 2026 | E-Tech #32 |
+| 18 | NetSuite → QuickBooks Migration | $349 | v2.0 Q3 2026 | E-Tech #33 |
+| 19 | Peachtree/Sage → QuickBooks Migration | $299 | v2.0 Q3 2026 | E-Tech #33 |
+| 20 | AccountEdge/MYOB → QuickBooks Migration | $299 | v2.0 Q3 2026 | E-Tech #33 |
+| 21 | SAP → QuickBooks Migration | $349 | v2.0 Q3 2026 | E-Tech #33 |
+| 22 | Xero → QuickBooks Migration | $249 | v2.0 Q3 2026 | E-Tech #33 |
+| 23 | DacEasy → QuickBooks Migration | $249 | v2.0 Q3 2026 | E-Tech #33 |
+| 24 | ODOO → QuickBooks Migration | $249 | v2.0 Q3 2026 | E-Tech #33 |
+| 25 | Transaction Copier Service | $99 | v1.5 May–Jun | Big Red #28: $119 USD |
+| 26 | QuickBooks Password Recovery | $99 | v1.5 May–Jun | E-Tech #34 |
+| 27 | Mac QuickBooks Data Recovery | $199 | v2.0 Q3 2026 | E-Tech #34 |
+| 28 | Access Database Repair | $149 | v3.0 Q4 2026 | E-Tech #32 |
+| 29 | BKF (Windows Backup) Recovery | $149 | v3.0 Q4 2026 | E-Tech #29 |
+| 30 | Custom QB Programming | Quote | v2.0 Q3 2026 | E-Tech #35 |
+
+### TIER 3 — COMING SOON TOOLS (Waitlist only)
+
+| ID | Tool | Price CAD | Competitor Ref |
+|----|------|-----------|----------------|
+| 31 | A/R Statements Pro (Excel add-in) | $79 | Big Red #1 |
+| 32 | Excel Batch-Email Manager | $99 | Big Red #9 |
+| 33 | IIF Transaction Creator (Excel → QB) | $139 | Big Red #12 |
+| 34 | IIF Transaction Creator Pro (+ Profile Mgr) | $169 | Big Red #14 |
+| 35 | List Importer (Excel → QB lists) | $59 | Big Red #15 |
+| 36 | List Reporter (QB lists → Excel) | $59 | Big Red #16 |
+| 37 | Excel to OFX/QFX/QBO Converter | $79 | Big Red #10 |
+| 38 | Excel to QIF Converter | $69 | Big Red #11 |
+| 39 | OFX Cleaner (payee names) | $79 | Big Red #17 |
+| 40 | OFX/QFX/QBO to IIF Converter | $99 | Big Red #18 |
+| 41 | QIF to IIF Converter | $99 | Big Red #24 |
+| 42 | QIF to OFX/QFX/QBO Converter | $79 | Big Red #25 |
+| 43 | PayPal Link (PayPal → QB import) | $99 | Big Red #19 |
+| 44 | Direct Deposit File Creator (NACHA) | $119 | Big Red #3 |
+| 45 | Direct Debit File Creator (ACH NACHA) | $119 | Big Red #2 |
+| 46 | PositivePay File Creator - Excel | $119 | Big Red #20 |
+| 47 | PositivePay File Creator - QB Desktop | $119 | Big Red #21 |
+| 48 | PositivePay File Creator - QB Online | $119 | Big Red #22 |
+| 49 | Donor Statements - QB Desktop | $99 | Big Red #4 |
+| 50 | Donor Statements - QB Online | $99 | Big Red #5 |
+| 51 | Timesheet Link (Excel → QB time) | $89 | Big Red #26 |
+| 52 | Transaction Copier Tool | $119 | Big Red #28 |
+| 53 | Access Database Security Removal | $29 | E-Tech #30 |
+| 54 | Access/Simply Accounting Password Recovery | $29 | E-Tech #31 |
+
+### Website Display Groupings
+
+**Services (Tier 1 + 2) — group by:**
+
+- "QuickBooks Conversion": #1, 13, 12
+- "QuickBooks Data Services": #2, 6, 7, 8, 9, 10, 11, 25, 26, 30
+- "QuickBooks Data Recovery": #5, 27
+- "Platform Migrations": #14–24
+- "Sage & Simply Accounting": #15, 16, 17
+- "Other Data Services": #28, 29
+
+**Tools (Tier 3) — group by:**
+
+- "Excel & QuickBooks Import/Export": #33–36, 40–42
+- "Financial File Converters": #37–39
+- "Payment & Banking": #44–48
+- "Nonprofit & Donor Management": #49–50
+- "Time Tracking": #51
+- "Email & Communication": #32
+- "Statements": #31
+- "Transaction Management": #52
+- "Database & Recovery Tools": #53–54
+
+---
+
+## TASKS
+
+### Task 1 — Operator Runbook → `docs/operator_runbook.md`
+
+Complete internal runbook for Hassan covering:
+
+**Core Conversion Workflow (with time estimates per step):**
+
+1. Order email arrives from Stripe (customer name, email, file link, services)
+2. Download .QBM → `C:\Projects\qb-orders\<order-id>\input.qbm`
+3. Dry-run: `qb-convert "input.qbm" --dry-run`
+4. If add-ons purchased, process in order: Health Check (`--report`), Audit Trail Removal, List Reduction, Multi-Currency Removal, Super Condense, CRA Period Copy (all manual QB procedures)
+5. Full conversion: `qb-convert "input.qbm" --output "converted.qbm" --report "report.html" --verbose`
+6. Verify report.html → Email customer converted.qbm + report.html
+7. Rush orders: complete within 15 min. Archive order folder.
+
+Target: <30 min conversion-only, <60 min with add-ons.
+
+**Troubleshooting Table:**
+
+| Issue | Resolution |
+|-------|-----------|
+| Already Premier | Refund, email template #4 |
+| Pro edition | Refund, explain Enterprise-only |
+| US edition | Warn in email, proceed |
+| Corrupted file | Offer Recovery ($199) or refund |
+| Customer sent .QBB/.QBW | Reply with QBM guide, no refund |
+| Conversion fails | Full refund, escalate |
+| File > 500 MB | Contact customer for alt delivery |
+
+---
+
+### Task 2 — Customer QBM Guide → `docs/customer_qbm_guide.md`
+
+Step-by-step: Open Enterprise → File → Create Copy → Select "Portable company file" (NOT Backup) → Save → Upload.
+Include: common mistakes, file size notes (5–30 MB typical), what NOT to upload (.QBB, .QBW, .QBO).
+
+---
+
+### Task 3 — Website → `website/`
+
+Static site: HTML + CSS + vanilla JS only. No frameworks. Mobile-first responsive.
+
+#### `website/index.html`
+
+1. **Nav:** Logo "NexGen Digital" | Services | Tools | FAQ | Contact | "Get Started →"
+2. **Hero:** H1 "QuickBooks Conversion, Migration & Data Services — Starting at $149 CAD" | Sub: "Canadian-first. Under 1 hour. 54 products and services." | CTA → upload.html | Trust badges: 🇨🇦 Canadian | 🔒 Secure | ✅ Penny-Perfect
+3. **How It Works:** 3 steps (Create QBM → Upload & Pay → Receive converted file under 1 hr)
+4. **Comparison Table:**
+
+| | NexGen | Big Red | E-Tech |
+|--|--------|---------|--------|
+| Price | $149 CAD | $249 USD (~$344) | $299 USD (~$413) |
+| Turnaround | Under 1 hr | Next business day | 1 business day |
+| Same-day | Included | Not stated | $450 USD (~$621) |
+| Canadian-first | ✅ | ❌ | Implied |
+| GST/HST preserved | ✅ | ❓ | ✅ |
+| Products | 54 | 28 | 7 |
+
+1. **Services Section:** All Tier 1+2 as cards using groupings above. Tier 1 → price + "Order Now". Tier 2 → target price + orange "Coming Soon" badge + "Join Waitlist →"
+2. **Tools Section:** All Tier 3 as compact grid cards using groupings above. Each: name, 1-line desc, price, "Coming Soon — Join Waitlist →"
+3. **FAQ Section** (from Task 4)
+4. **Footer:** <hassansadiq73@gmail.com> | © 2026 NexGen Digital Solutions | Terms | Privacy | Contact
+
+#### `website/upload.html`
+
+**Form fields:**
+
+- Full Name (req), Email (req), Phone (opt)
+- File upload: .qbm only, max 500 MB
+- QB version year dropdown: 2019–2024
+- Service selection (radio): Only #1 selectable; #5, #13, #14 shown disabled with "Coming Soon" + "Join Waitlist" link; "Other" → email link
+- Add-ons (checkboxes, shown only when #1 selected): Only #2 and #3 selectable; #6–10 disabled with "Coming Soon" badge
+- Live order total (JS-calculated)
+- Confirmation checkbox: "I confirm this is a Canadian QuickBooks Enterprise file"
+- `<div id="stripe-payment-element"></div>` placeholder
+- Submit: "Upload & Pay [TOTAL] CAD" (dynamic)
+
+#### `website/waitlist.html`
+
+- Reads product name from `?product=` URL param
+- Form: Email + product display
+- Submit → localStorage (email + product + timestamp)
+- Prevent duplicate (same email + product)
+- Success: "You're on the list! We'll email you when [product] launches."
+
+#### `website/style.css`
+
+- Colors: navy #1a2744, white #fff, gold #f0a500, light grey #f5f7fa
+- Badges: "Coming Soon" → #ff6b35 orange pill with pulse animation; "Available" → #28a745 green
+- Font: system stack (-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif)
+- Responsive breakpoints: 768px, 1200px
+- Card grid: 3col desktop, 2col tablet, 1col mobile; white bg, shadow, hover lift
+- Tool cards: smaller compact layout
+- Comparison table: striped, NexGen column highlighted
+
+#### `website/order.js`
+
+- Live total calculation on radio/checkbox change
+- Show/hide add-ons based on service selection
+- Disabled states for "Coming Soon" (greyed, non-interactive, tooltip with target date)
+- File validation: .qbm extension only, warn if >100 MB
+- Disable submit until: file + service + confirmation checked
+
+#### `website/waitlist.js`
+
+- Read product from URL param, display in heading
+- Submit → localStorage, show success, prevent dupes
+
+---
+
+### Task 4 — FAQ → `docs/faq_content.md`
+
+Write 30 FAQ entries covering:
+
+- **Conversion (19):** QBM definition, creation steps, supported versions, data preservation, GST/HST, multi-currency, turnaround, security, failure/refund, US files, wrong file types (.QBB/.QBW), Enterprise vs Premier differences, Premier list limits (14,999), licence requirements, Enterprise-only features lost
+- **Add-Ons (4):** File Health Check, Audit Trail Removal, Super Condense, CRA Period Copy
+- **Migration (4):** Sage 50, QBO conversion, other platforms, comparison to Big Red
+- **Tools (3):** Availability timeline, Desktop vs Online compatibility, waitlist process
+
+---
+
+### Task 5 — Legal → `docs/terms_of_service.md` + `docs/privacy_policy.md`
+
+**ToS:** All 54 products/services described; CAD pricing; Coming Soon = waitlist only; refund if conversion technically fails, no refund for incompatible files; no Intuit/Sage affiliation; Tier 3 license TBD; liability capped at fee paid; Ontario law; contact <hassansadiq73@gmail.com>
+
+**Privacy (PIPEDA):** Collect name/email/phone/QB file/waitlist signups; use for service delivery + waitlist only; files deleted within 7 days; waitlist retained until unsubscribe; no data sold/shared; PIPEDA governs; contact <hassansadiq73@gmail.com>
+
+---
+
+### Task 6 — Email Templates → `docs/email_templates.md`
+
+6 templates:
+
+1. **Order Confirmation** — receipt, services + add-ons purchased, turnaround
+2. **Conversion Delivery** — attach .qbm + report.html, Premier restore instructions (File → Restore Company → Local Backup → browse)
+3. **Recovery/Data Service Delivery** — attach file, describe work done
+4. **Refund / Failed** — reason, refund 3–5 business days
+5. **QBM Creation Help** — for wrong file type submissions
+6. **Waitlist Confirmation** — product name, expected launch date, notification promise
+
+---
+
+### Task 7 — Stripe Stub → `website/stripe_config.js`
+
+JS stubs with comments:
+
+- `// Replace with Stripe publishable key: pk_live_...`
+- `initializeStripe(publishableKey)`
+- `createPaymentIntent(amount, currency, orderDetails)` → `/api/create-payment-intent`
+- `handlePaymentSubmit(event)`
+- Comment: "Backend required: Python FastAPI endpoint at /api/create-payment-intent"
+- Export all functions
+
+---
+
+### Task 8 — Hosting Recommendation → `docs/hosting_recommendation.md`
+
+| Component | Recommendation | Cost |
+|-----------|---------------|------|
+| Frontend | Vercel or Netlify (free, CDN) | Free |
+| Backend | Python FastAPI on Railway/Render | ~$7/mo |
+| File storage | Local at low volume; S3 presigned URLs at scale | — |
+| Domain | qbconvert.ca or nexgendigital.ca | ~$15/yr |
+| SSL | Free via Vercel/Netlify | Free |
+| Email | Stripe webhooks → Gmail SMTP | Free |
+| Waitlist | localStorage now; API + DB post-launch | — |
+| **Total** | | **~$15–25/mo** |
+
+Scaling note: At $2K+ CAD/mo revenue → dedicated VPS ($20/mo) with automated pipeline.
+
+---
+
+### Task 9 — Product Catalog → `website/products.json`
+
+Structured JSON for ALL 54 products. Schema per item:
+
+```json
+{
+  "id": "slug",
+  "name": "Display Name",
+  "category": "conversion|data-services|recovery|migration|statements|...",
+  "tier": "launch|coming-soon",
+  "price_cad": 149,
+  "turnaround": "Under 1 hour",
+  "description": "One-line description",
+  "competitor_ref": "Big Red #N ($X USD), E-Tech #N ($X USD)",
+  "is_addon": false,
+  "requires_service": null,
+  "target_launch": "2026-03-20",
+  "badge": "available|coming-soon"
+}
+```
+
+Services go in `"services"` array, tools in `"tools"` array. Use the Master Product Catalog above as the data source.
+
+---
+
+### Task 10 — Milestone Log → `docs/milestone_log_m6.md`
+
+List each deliverable with completion date, M6 acceptance checklist with ✅, deferred items, total time.
+
+---
+
+## ACCEPTANCE CRITERIA
+
+All must pass:
+
+- [ ] `docs/operator_runbook.md` — complete with add-on workflows + troubleshooting
+- [ ] `docs/customer_qbm_guide.md` — clear step-by-step
+- [ ] `website/index.html` — landing page with ALL 54 products
+- [ ] `website/upload.html` — dynamic order form, Coming Soon disabled
+- [ ] `website/waitlist.html` — working waitlist signup
+- [ ] `website/style.css` — responsive, Coming Soon badges
+- [ ] `website/order.js` — dynamic pricing, file validation
+- [ ] `website/waitlist.js` — waitlist form logic
+- [ ] `website/products.json` — all 54 products structured
+- [ ] `docs/faq_content.md` — 30 entries covering all tiers
+- [ ] `docs/terms_of_service.md` — Ontario law, all services
+- [ ] `docs/privacy_policy.md` — PIPEDA-compliant
+- [ ] `docs/email_templates.md` — 6 templates
+- [ ] `website/stripe_config.js` — stubs
+- [ ] `docs/hosting_recommendation.md` — complete
+- [ ] `docs/milestone_log_m6.md` — written
+- [ ] `pytest tests/ -v` — all 206 tests passing
+- [ ] `ruff check src tests` — lint clean
+- [ ] No changes to `src/`, `tests/`, or existing `docs/` files

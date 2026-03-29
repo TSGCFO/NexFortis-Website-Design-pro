@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "NexFortis IT Solutions"
+version = "1.0.0"
+id = "artifacts/nexfortis"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 19446
+
+[services.development]
+run = "pnpm --filter @workspace/nexfortis run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/nexfortis", "run", "build" ]
+publicDir = "artifacts/nexfortis/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "19446"
+BASE_PATH = "/"

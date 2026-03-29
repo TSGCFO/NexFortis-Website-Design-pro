@@ -1,0 +1,27 @@
+packages:
+  "framer-motion": "For smooth page transitions, scroll-triggered animations, and hover effects"
+  "react-hook-form": "For form state management"
+  "@hookform/resolvers": "For Zod validation integration"
+  "zod": "For contact form validation schema"
+
+images:
+  - path: "artifacts/nexfortis/public/images/hero-bg.png"
+    description: "Abstract dark navy and vibrant teal gradient mesh with subtle geometric tech grid lines, corporate modern style, clean and professional"
+    aspect_ratio: "16:9"
+  - path: "artifacts/nexfortis/public/images/about-team.png"
+    description: "Diverse professional IT team collaborating in a modern bright office, reviewing data on a tablet, professional corporate photography style"
+    aspect_ratio: "16:9"
+  - path: "artifacts/nexfortis/public/images/blog-1.png"
+    description: "Modern cloud computing infrastructure concept, glowing servers, dark blue and teal lighting"
+    aspect_ratio: "16:9"
+  - path: "artifacts/nexfortis/public/images/blog-2.png"
+    description: "Business dashboard on a sleek laptop screen, financial growth charts"
+    aspect_ratio: "16:9"
+  - path: "artifacts/nexfortis/public/images/blog-3.png"
+    description: "Cybersecurity concept, glowing padlock and digital code, dark navy background"
+    aspect_ratio: "16:9"
+
+notes:
+  - Frontend-only marketing site. Forms are stubbed to show success states.
+  - Using wouter for routing.
+  - Colors matched to NexFortis brand guidelines (Navy, Teal, Light gray, Orange/Gold CTA).

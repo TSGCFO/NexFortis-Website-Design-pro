@@ -1,0 +1,4 @@
+- [ ] Actual file processing (that's the qb-converter CLI, separate system)
+- [ ] Automated email sending (manual for now)
+- [ ] Main site SEO updates for QB content (separate task later)
+- [ ] Production Stripe keys (test mode only)

@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/qb-portal/"
+title = "NexFortis QuickBooks Portal"
+version = "1.0.0"
+id = "artifacts/qb-portal"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/qb-portal/" ]
+localPort = 20914
+
+[services.development]
+run = "pnpm --filter @workspace/qb-portal run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/qb-portal", "run", "build" ]
+publicDir = "artifacts/qb-portal/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "20914"
+BASE_PATH = "/qb-portal/"
