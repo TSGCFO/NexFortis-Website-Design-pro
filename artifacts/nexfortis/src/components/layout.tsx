@@ -295,8 +295,14 @@ export function Layout({ children }: { children: ReactNode }) {
                   height={40}
                 />
               </Link>
+              <p className="text-primary-foreground/90 mb-2 text-sm font-semibold">
+                Complexity Decoded. <span className="text-rose-gold">Advantage.</span>
+              </p>
+              <p className="text-primary-foreground/60 mb-2 text-xs">
+                Your Business. Our Technology. Limitless Growth.
+              </p>
               <p className="text-primary-foreground/70 mb-6 text-sm leading-relaxed">
-                Your Business. Our Technology. Limitless Growth. NexFortis provides end-to-end IT solutions for Canadian businesses.
+                NexFortis provides end-to-end IT solutions for Canadian businesses.
               </p>
             </div>
 

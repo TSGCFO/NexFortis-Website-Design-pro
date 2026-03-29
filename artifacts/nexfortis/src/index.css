@@ -260,6 +260,24 @@
   background: linear-gradient(135deg, hsl(222, 47%, 14%) 0%, hsl(217, 60%, 8%) 100%);
 }
 
+.text-rose-gold {
+  color: #e8a87c;
+}
+
+.text-gradient-teal {
+  background: linear-gradient(to right, hsl(194, 100%, 50%), hsl(194, 100%, 38%));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.dark .text-gradient-teal {
+  background: linear-gradient(to right, hsl(194, 100%, 65%), hsl(194, 100%, 50%));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
 .text-gradient-azure {
   background: linear-gradient(to right, #B76E79, #A35D68);
   -webkit-background-clip: text;

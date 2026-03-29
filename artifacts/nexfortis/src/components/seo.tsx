@@ -22,7 +22,7 @@ function getSiteUrl(): string {
 
 export function SEO({ title, description, path = "/", type = "website", image, noIndex }: SEOProps) {
   const siteUrl = getSiteUrl();
-  const fullTitle = path === "/" ? `${SITE_NAME} — Your Business. Our Technology. Limitless Growth.` : `${title} | ${SITE_NAME}`;
+  const fullTitle = path === "/" ? `${SITE_NAME} — Complexity Decoded. Advantage.` : `${title} | ${SITE_NAME}`;
   const fullUrl = `${siteUrl}${path}`;
   const ogImage = image || `${siteUrl}${DEFAULT_IMAGE}`;
 

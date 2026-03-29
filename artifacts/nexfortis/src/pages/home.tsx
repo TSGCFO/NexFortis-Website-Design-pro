@@ -153,11 +153,13 @@ export default function Home() {
                 Canada's Trusted Managed IT Partner
               </div>
 
-              <h1 className="text-5xl md:text-7xl font-display font-extrabold text-white leading-[1.1] mb-8">
-                Your Business.<br />
-                <span className="text-gradient-azure">Our Technology.</span><br />
-                Limitless Growth.
-              </h1>
+            <h1 className="text-5xl md:text-7xl font-display font-extrabold text-white leading-[1.1] mb-4">
+              Complexity Decoded.{" "}
+              <span className="text-rose-gold">Advantage.</span>
+            </h1>
+            <p className="text-2xl md:text-3xl text-white/60 font-display font-semibold mb-8">
+              Your Business. Our Technology. Limitless Growth.
+            </p>
 
               <p className="text-xl md:text-2xl text-white/80 mb-12 max-w-3xl leading-relaxed">
                 From managed IT and Microsoft 365 to QuickBooks migration and digital marketing — NexFortis is the all-in-one IT partner Canadian businesses trust to scale securely.
