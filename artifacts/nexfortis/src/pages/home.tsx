@@ -227,19 +227,42 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="border-b border-border bg-background py-12" aria-label="Trust badges">
+      <section
+        className="border-t border-b py-10"
+        style={{ backgroundColor: "#F8F8F9", borderColor: "#D1D2D4" }}
+        aria-label="Certified Partnerships"
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-center text-sm font-semibold text-muted-foreground uppercase tracking-widest mb-8">
-            Certified Partners &amp; Trusted by Modern Canadian Businesses
+          <p
+            className="text-center text-sm tracking-widest mb-8"
+            style={{ fontFamily: "'Alegreya Sans SC', sans-serif", fontVariant: "small-caps", color: "#A0A1A3" }}
+          >
+            Certified Technology Partner
           </p>
-          <div className="flex flex-wrap justify-center items-center gap-12 md:gap-24 opacity-60 grayscale hover:grayscale-0 transition-all duration-300">
-            <div className="flex items-center gap-3 font-display font-bold text-xl text-primary">
-              <Cloud className="w-8 h-8 text-accent" aria-hidden="true" />
-              Microsoft Authorized Partner
+          <div className="flex flex-wrap justify-center items-center gap-12 md:gap-16">
+            {/* ASSET: replace src with official Microsoft AI Cloud Partner Program badge file */}
+            <div className="p-6">
+              <img
+                src={`${import.meta.env.BASE_URL}images/badge-microsoft-partner.png`}
+                alt="Microsoft AI Cloud Partner Program badge"
+                className="h-9 w-auto object-contain"
+              />
             </div>
-            <div className="flex items-center gap-3 font-display font-bold text-xl text-primary">
-              <Database className="w-8 h-8 text-accent" aria-hidden="true" />
-              QuickBooks ProAdvisor
+            {/* ASSET: replace src with official Google Partner badge file */}
+            <div className="p-6">
+              <img
+                src={`${import.meta.env.BASE_URL}images/badge-google-partner.png`}
+                alt="Google Partner badge"
+                className="h-9 w-auto object-contain"
+              />
+            </div>
+            {/* ASSET: replace src with official QuickBooks ProAdvisor badge file */}
+            <div className="p-6">
+              <img
+                src={`${import.meta.env.BASE_URL}images/badge-quickbooks-proadvisor.png`}
+                alt="QuickBooks ProAdvisor badge"
+                className="h-9 w-auto object-contain"
+              />
             </div>
           </div>
         </div>

@@ -338,6 +338,27 @@ export function Layout({ children }: { children: ReactNode }) {
             </div>
           </div>
 
+          <div className="border-t border-primary-foreground/10 pt-6 pb-4 flex justify-center items-center gap-8">
+            {/* ASSET: replace src with official Microsoft AI Cloud Partner Program badge file */}
+            <img
+              src={`${import.meta.env.BASE_URL}images/badge-microsoft-partner.png`}
+              alt="Microsoft AI Cloud Partner Program badge"
+              className="h-9 w-auto object-contain opacity-70"
+            />
+            {/* ASSET: replace src with official Google Partner badge file */}
+            <img
+              src={`${import.meta.env.BASE_URL}images/badge-google-partner.png`}
+              alt="Google Partner badge"
+              className="h-9 w-auto object-contain opacity-70"
+            />
+            {/* ASSET: replace src with official QuickBooks ProAdvisor badge file */}
+            <img
+              src={`${import.meta.env.BASE_URL}images/badge-quickbooks-proadvisor.png`}
+              alt="QuickBooks ProAdvisor badge"
+              className="h-9 w-auto object-contain opacity-70"
+            />
+          </div>
+
           <div className="border-t border-primary-foreground/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-primary-foreground/50">
             <p>&copy; {new Date().getFullYear()} NexFortis IT Solutions (17756968 Canada Inc.). All rights reserved.</p>
             <div className="flex gap-6">
