@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { Section, SectionHeader, FAQItem } from "@/components/ui-elements";
-import { SEO, OrganizationSchema, FAQSchema } from "@/components/seo";
+import { SEO, OrganizationSchema, LocalBusinessSchema, WebSiteSchema, FAQSchema } from "@/components/seo";
 
 const services = [
   {
@@ -121,6 +121,8 @@ export default function Home() {
         path="/"
       />
       <OrganizationSchema />
+      <LocalBusinessSchema />
+      <WebSiteSchema />
       <FAQSchema faqs={homeFaqs} />
 
       <section className="relative min-h-[90vh] flex items-center justify-center bg-primary overflow-hidden pt-20">

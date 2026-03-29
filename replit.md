@@ -85,7 +85,16 @@ NexFortis IT Solutions — complete business website for a Canadian IT solutions
 - **Logo**: PNG versions in `public/images/` (logo-original.png for light mode, logo-white.png for dark mode/footer)
 - Floating "Request a Quote" CTA button on all service pages
 - **Theme System**: ThemeProvider in `src/hooks/use-theme.tsx`, toggle in navbar (Sun/Moon/Monitor icons), CSS variables in `.dark` class
-- **SEO**: Per-page meta tags, Organization/Service/Article JSON-LD schemas in `src/components/seo.tsx`
+- **SEO**:
+  - Per-page meta tags (title, description, canonical, OG, Twitter) via React Helmet in `src/components/seo.tsx`
+  - Static fallback meta tags, OG tags, and JSON-LD in `index.html` for non-JS crawlers
+  - `robots.txt` and `sitemap.xml` in `public/`
+  - Schemas: Organization, LocalBusiness (Nobleton, ON), WebSite (SearchAction), Service, BreadcrumbList, FAQPage, Article
+  - `hreflang="en-CA"` and `x-default` on all pages
+  - Dynamic URL resolution via `getSiteUrl()` — works on replit.app, custom domains, and production
+  - Geo meta tags (`geo.region: CA-ON`, `geo.placename: Nobleton`)
+  - All schema URLs use relative paths resolved to absolute at runtime
+  - Blog admin and 404 pages have `noIndex` set
 - **Accessibility (UI/UX Pro Max audit applied)**:
   - Skip-to-content link for keyboard navigation
   - Active nav state indicators (teal highlight + underline)

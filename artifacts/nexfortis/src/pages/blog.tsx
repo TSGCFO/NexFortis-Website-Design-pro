@@ -115,15 +115,15 @@ export default function Blog() {
   return (
     <div>
       <SEO
-        title="Blog — Insights & IT Resources"
+        title="IT Insights & Resources"
         description="Expert IT advice, managed services guides, QuickBooks tips, Microsoft 365 how-tos, and digital marketing insights from the NexFortis team in Canada."
         path="/blog"
         type="website"
       />
       <BreadcrumbSchema
         items={[
-          { name: "Home", url: "https://nexfortis.com/" },
-          { name: "Blog", url: "https://nexfortis.com/blog" },
+          { name: "Home", url: "/" },
+          { name: "Blog", url: "/blog" },
         ]}
       />
       <PageHero

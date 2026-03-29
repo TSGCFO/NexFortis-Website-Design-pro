@@ -1,5 +1,5 @@
 import { Section } from "@/components/ui-elements";
-import { SEO, ArticleSchema } from "@/components/seo";
+import { SEO, ArticleSchema, BreadcrumbSchema } from "@/components/seo";
 import { Calendar, ArrowLeft, Tag } from "lucide-react";
 import { Link } from "wouter";
 import { useQuery } from "@tanstack/react-query";
@@ -52,7 +52,14 @@ export default function BlogPostPage({ slug }: { slug: string }) {
   return (
     <div>
       <SEO title={post.title} description={post.excerpt} path={`/blog/${post.slug}`} type="article" />
-      <ArticleSchema title={post.title} description={post.excerpt} datePublished={post.createdAt} url={`https://nexfortis.com/blog/${post.slug}`} />
+      <ArticleSchema title={post.title} description={post.excerpt} datePublished={post.createdAt} url={`/blog/${post.slug}`} />
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "/" },
+          { name: "Blog", url: "/blog" },
+          { name: post.title, url: `/blog/${post.slug}` },
+        ]}
+      />
       <div className="relative pt-32 pb-16 md:pt-44 md:pb-24 bg-primary overflow-hidden">
         <div className="absolute top-0 right-0 -mr-40 -mt-40 w-[600px] h-[600px] bg-accent/20 rounded-full blur-[100px] mix-blend-screen pointer-events-none" aria-hidden="true" />
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">

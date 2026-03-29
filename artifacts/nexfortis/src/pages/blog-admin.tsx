@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Section } from "@/components/ui-elements";
+import { SEO } from "@/components/seo";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiFetch } from "@/lib/api";
 import { Plus, Pencil, Trash2, Eye, EyeOff, ArrowLeft, Save, X } from "lucide-react";
@@ -215,6 +216,7 @@ export default function BlogAdmin() {
 
   return (
     <div>
+      <SEO title="Blog Manager" description="Manage blog posts for NexFortis IT Solutions." path="/blog/admin" noIndex />
       <div className="relative pt-32 pb-12 md:pt-44 md:pb-16 bg-primary overflow-hidden">
         <div className="absolute top-0 right-0 -mr-40 -mt-40 w-[600px] h-[600px] bg-accent/20 rounded-full blur-[100px] mix-blend-screen pointer-events-none" aria-hidden="true" />
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">

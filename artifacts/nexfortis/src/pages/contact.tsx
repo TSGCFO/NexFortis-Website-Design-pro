@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { PageHero, Section } from "@/components/ui-elements";
-import { SEO } from "@/components/seo";
+import { SEO, BreadcrumbSchema } from "@/components/seo";
 import { MapPin, Phone, Mail, Clock, Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -42,7 +42,13 @@ export default function Contact() {
 
   return (
     <div>
-      <SEO title="Contact Us" description="Get in touch with NexFortis IT Solutions. Request a quote, schedule a consultation, or ask about our services. Located in Nobleton, Ontario." path="/contact" />
+      <SEO title="Contact NexFortis — Free IT Consultation" description="Get in touch with NexFortis IT Solutions. Request a quote, schedule a consultation, or ask about our services. Located in Nobleton, Ontario." path="/contact" />
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "/" },
+          { name: "Contact Us", url: "/contact" },
+        ]}
+      />
       <PageHero
         title="Contact Us"
         subtitle="Ready to discuss your next IT project? Get in touch with our experts today."

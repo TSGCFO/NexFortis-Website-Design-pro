@@ -68,11 +68,11 @@ export default function ITConsulting() {
   return (
     <div>
       <SEO title="IT Consulting & Managed IT Services" description="Virtual CIO services, strategic IT consulting, technology audits, and project management for Canadian businesses. Reduce costs, close security gaps, and modernize your infrastructure." path="/services/it-consulting" />
-      <ServiceSchema name="IT Consulting & Project Management" description="Strategic IT consulting, project management, technology audits, and virtual CIO services for Canadian businesses." url="https://nexfortis.com/services/it-consulting" />
+      <ServiceSchema name="IT Consulting & Project Management" description="Strategic IT consulting, project management, technology audits, and virtual CIO services for Canadian businesses." url="/services/it-consulting" />
       <BreadcrumbSchema items={[
-        { name: "Home", url: "https://nexfortis.com/" },
-        { name: "Services", url: "https://nexfortis.com/services" },
-        { name: "IT Consulting", url: "https://nexfortis.com/services/it-consulting" },
+        { name: "Home", url: "/" },
+        { name: "Services", url: "/services" },
+        { name: "IT Consulting", url: "/services/it-consulting" },
       ]} />
       <FAQSchema faqs={consultingFaqs} />
       <PageHero 

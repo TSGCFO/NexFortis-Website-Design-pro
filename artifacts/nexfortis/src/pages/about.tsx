@@ -1,5 +1,5 @@
 import { PageHero, Section, SectionHeader } from "@/components/ui-elements";
-import { SEO } from "@/components/seo";
+import { SEO, BreadcrumbSchema } from "@/components/seo";
 import { Target, Lightbulb, Users, Minimize2, ArrowRight } from "lucide-react";
 import { Link } from "wouter";
 import { motion } from "framer-motion";
@@ -14,7 +14,13 @@ export default function About() {
 
   return (
     <div>
-      <SEO title="About Us" description="Learn about NexFortis IT Solutions — our mission, vision, and values. Empowering Canadian businesses with innovative IT solutions since day one." path="/about" />
+      <SEO title="About Us — Canada's Trusted IT Partner" description="Learn about NexFortis IT Solutions — our mission, vision, and values. Empowering Canadian businesses with innovative IT solutions since day one." path="/about" />
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "/" },
+          { name: "About Us", url: "/about" },
+        ]}
+      />
       <PageHero 
         title="About NexFortis" 
         subtitle="Empowering Canadian businesses with innovative, reliable, and scalable IT solutions."

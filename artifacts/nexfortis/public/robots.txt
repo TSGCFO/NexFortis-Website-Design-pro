@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /blog/admin
+
+Sitemap: https://nexfortis.com/sitemap.xml

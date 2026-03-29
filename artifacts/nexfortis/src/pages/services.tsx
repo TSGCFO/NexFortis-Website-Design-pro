@@ -62,8 +62,8 @@ export default function ServicesOverview() {
       />
       <BreadcrumbSchema
         items={[
-          { name: "Home", url: "https://nexfortis.com/" },
-          { name: "Services", url: "https://nexfortis.com/services" },
+          { name: "Home", url: "/" },
+          { name: "Services", url: "/services" },
         ]}
       />
       <PageHero

@@ -1,8 +1,22 @@
 import { PageHero, Section } from "@/components/ui-elements";
+import { SEO, BreadcrumbSchema } from "@/components/seo";
 
 export default function Placeholder({ title }: { title: string }) {
+  const path = title === "Privacy Policy" ? "/privacy" : "/terms";
+
   return (
     <div>
+      <SEO
+        title={title}
+        description={`${title} for NexFortis IT Solutions — 17756968 Canada Inc. Read our ${title.toLowerCase()} covering data handling, service terms, and Canadian regulatory compliance.`}
+        path={path}
+      />
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "/" },
+          { name: title, url: path },
+        ]}
+      />
       <PageHero title={title} subtitle="Last Updated: October 2023" />
       <Section bg="white">
         <div className="max-w-3xl mx-auto prose prose-blue lg:prose-lg text-muted-foreground">
