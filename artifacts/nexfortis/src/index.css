@@ -83,6 +83,7 @@
 
   --color-warning: hsl(var(--warning));
   --color-warning-foreground: hsl(var(--warning-foreground));
+  --color-warning-hover: hsl(var(--warning-hover));
 
   --font-sans: 'Inter', sans-serif;
   --font-display: 'Outfit', sans-serif;
@@ -94,36 +95,48 @@
 }
 
 :root {
+  --nf-azure: #0F92E3;
+  --nf-azure-hover: #0B7AC4;
+  --nf-charcoal: #2C2C2C;
+  --nf-navy: #0A1628;
+  --nf-rose-gold: #B76E79;
+  --nf-rose-gold-hover: #A35D68;
+  --nf-silver: #A9A9A9;
+  --nf-silver-light: #D3D3D3;
+  --nf-white: #FFFFFF;
+  --nf-off-white: #F5F5F5;
+
   --background: 0 0% 100%;
-  --foreground: 212 100% 12%;
+  --foreground: 217 60% 10%;
   
   --card: 0 0% 100%;
-  --card-foreground: 212 100% 12%;
+  --card-foreground: 217 60% 10%;
   
   --popover: 0 0% 100%;
-  --popover-foreground: 212 100% 12%;
+  --popover-foreground: 217 60% 10%;
   
-  --primary: 212 100% 12%;
+  --primary: 217 60% 10%;
   --primary-foreground: 0 0% 100%;
   
   --secondary: 210 25% 96%;
-  --secondary-foreground: 212 100% 12%;
+  --secondary-foreground: 217 60% 10%;
   
   --muted: 210 25% 96%;
   --muted-foreground: 215 16% 47%;
   
-  --accent: 194 100% 42%;
+  --accent: 203 88% 47%;
   --accent-foreground: 0 0% 100%;
   
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 100%;
 
-  --warning: 31 100% 48%;
+  --warning: 351 34% 57%;
+  --warning-hover: 351 28% 50%;
   --warning-foreground: 0 0% 100%;
   
   --border: 214 32% 91%;
   --input: 214 32% 91%;
-  --ring: 194 100% 42%;
+  --ring: 203 88% 47%;
 
   --radius: 0.5rem;
 }
@@ -147,18 +160,19 @@
   --muted: 217 33% 17%;
   --muted-foreground: 215 20% 65%;
 
-  --accent: 194 100% 50%;
+  --accent: 203 88% 55%;
   --accent-foreground: 222 47% 11%;
 
   --destructive: 0 63% 50%;
   --destructive-foreground: 210 20% 90%;
 
-  --warning: 31 100% 55%;
+  --warning: 351 34% 62%;
+  --warning-hover: 351 28% 55%;
   --warning-foreground: 0 0% 100%;
 
   --border: 217 33% 22%;
   --input: 217 33% 22%;
-  --ring: 194 100% 50%;
+  --ring: 203 88% 55%;
 }
 
 @layer base {
@@ -176,23 +190,23 @@
   }
 }
 
-.bg-gradient-navy-teal {
-  background: linear-gradient(135deg, hsl(212, 100%, 12%) 0%, hsl(194, 100%, 25%) 100%);
+.bg-gradient-navy {
+  background: linear-gradient(135deg, var(--nf-navy) 0%, hsl(217, 60%, 6%) 100%);
 }
 
-.dark .bg-gradient-navy-teal {
-  background: linear-gradient(135deg, hsl(222, 47%, 14%) 0%, hsl(194, 100%, 20%) 100%);
+.dark .bg-gradient-navy {
+  background: linear-gradient(135deg, hsl(222, 47%, 14%) 0%, hsl(217, 60%, 8%) 100%);
 }
 
-.text-gradient-teal {
-  background: linear-gradient(to right, hsl(194, 100%, 50%), hsl(194, 100%, 38%));
+.text-gradient-azure {
+  background: linear-gradient(to right, hsl(203, 88%, 52%), hsl(203, 88%, 40%));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-.dark .text-gradient-teal {
-  background: linear-gradient(to right, hsl(194, 100%, 62%), hsl(194, 100%, 48%));
+.dark .text-gradient-azure {
+  background: linear-gradient(to right, hsl(203, 88%, 62%), hsl(203, 88%, 48%));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -219,7 +233,7 @@ html {
 }
 
 :focus-visible {
-  outline: 2px solid hsl(194, 100%, 42%);
+  outline: 2px solid var(--nf-azure);
   outline-offset: 2px;
   border-radius: 4px;
 }

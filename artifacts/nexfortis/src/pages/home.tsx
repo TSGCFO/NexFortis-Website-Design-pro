@@ -159,7 +159,7 @@ export default function Home() {
 
             <h1 className="text-5xl md:text-7xl font-display font-extrabold text-white leading-[1.1] mb-8">
               Your Business.<br />
-              <span className="text-gradient-teal">Our Technology.</span><br />
+              <span className="text-gradient-azure">Our Technology.</span><br />
               Limitless Growth.
             </h1>
 
@@ -170,7 +170,7 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
                 href="/contact"
-                className="w-full sm:w-auto px-8 py-4 min-h-[48px] rounded-xl bg-warning text-warning-foreground font-bold text-lg hover:bg-warning/90 hover:-translate-y-1 transition-all shadow-xl shadow-warning/20 flex items-center justify-center gap-2"
+                className="w-full sm:w-auto px-8 py-4 min-h-[48px] rounded-xl bg-warning text-warning-foreground font-bold text-lg hover:bg-warning-hover hover:-translate-y-1 transition-all shadow-xl shadow-warning/20 flex items-center justify-center gap-2"
               >
                 Get a Free Quote <ArrowRight className="w-5 h-5" aria-hidden="true" />
               </Link>
@@ -480,7 +480,7 @@ export default function Home() {
         </div>
       </Section>
 
-      <section className="py-24 bg-gradient-navy-teal relative overflow-hidden">
+      <section className="py-24 bg-gradient-navy relative overflow-hidden">
         <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white via-transparent to-transparent" aria-hidden="true"></div>
         <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
           <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-6">
@@ -491,7 +491,7 @@ export default function Home() {
           </p>
           <Link
             href="/contact"
-            className="inline-flex px-8 py-4 min-h-[48px] rounded-xl bg-warning text-warning-foreground font-bold text-lg hover:bg-warning/90 hover:scale-105 transition-all shadow-xl shadow-warning/20 items-center justify-center gap-2"
+            className="inline-flex px-8 py-4 min-h-[48px] rounded-xl bg-warning text-warning-foreground font-bold text-lg hover:bg-warning-hover hover:scale-105 transition-all shadow-xl shadow-warning/20 items-center justify-center gap-2"
           >
             Book a Consultation <ArrowRight className="w-5 h-5" aria-hidden="true" />
           </Link>
