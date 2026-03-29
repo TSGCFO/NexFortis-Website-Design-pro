@@ -1,4 +1,4 @@
-import { PageHero, Section, SectionHeader, FAQItem } from "@/components/ui-elements";
+import { PageHero, Section, SectionHeader, FAQItem, PageBreadcrumbs } from "@/components/ui-elements";
 import { SEO, ServiceSchema, BreadcrumbSchema, FAQSchema } from "@/components/seo";
 import { Check, ShieldCheck, Mail, Users, MonitorSmartphone, ArrowRight, Cloud, Lock, Smartphone } from "lucide-react";
 import { Link } from "wouter";
@@ -71,6 +71,11 @@ export default function Microsoft365() {
         title="Microsoft 365 Solutions"
         subtitle="Empower your workforce with enterprise-grade productivity tools and zero-trust security."
       />
+      <PageBreadcrumbs items={[
+        { label: "Home", href: "/" },
+        { label: "Services", href: "/services" },
+        { label: "Microsoft 365" },
+      ]} />
 
       <Section bg="white">
         <div className="grid lg:grid-cols-2 gap-16 items-center mb-24">
@@ -216,7 +221,7 @@ export default function Microsoft365() {
             Get a custom Microsoft 365 deployment plan tailored to your team's size and security requirements.
           </p>
           <Link href="/contact" className="inline-flex px-8 py-4 min-h-[48px] rounded-xl bg-warning text-white font-bold text-lg hover:bg-warning/90 transition-all items-center justify-center gap-2 hover:-translate-y-0.5">
-            Get Your Microsoft 365 Quote <ArrowRight className="w-5 h-5" />
+            Get a Free Quote <ArrowRight className="w-5 h-5" />
           </Link>
         </div>
       </Section>

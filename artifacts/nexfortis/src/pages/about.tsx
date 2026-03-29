@@ -1,4 +1,4 @@
-import { PageHero, Section, SectionHeader } from "@/components/ui-elements";
+import { PageHero, Section, SectionHeader, PageBreadcrumbs } from "@/components/ui-elements";
 import { SEO, BreadcrumbSchema } from "@/components/seo";
 import { Target, Lightbulb, Users, Minimize2, ArrowRight } from "lucide-react";
 import { Link } from "wouter";
@@ -27,6 +27,10 @@ export default function About() {
         imagePath={`${import.meta.env.BASE_URL}images/about-team.png`}
         imageWebpPath={`${import.meta.env.BASE_URL}images/about-team.webp`}
       />
+      <PageBreadcrumbs items={[
+        { label: "Home", href: "/" },
+        { label: "About Us" },
+      ]} />
 
       <Section bg="white">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
@@ -97,7 +101,7 @@ export default function About() {
             Ready to transform your business with technology? We'd love to hear from you.
           </p>
           <Link href="/contact" className="inline-flex px-8 py-4 min-h-[48px] rounded-xl bg-warning text-white font-bold text-lg hover:bg-warning/90 transition-all items-center justify-center gap-2 hover:-translate-y-0.5">
-            Get in Touch <ArrowRight className="w-5 h-5" />
+            Contact Us <ArrowRight className="w-5 h-5" />
           </Link>
         </div>
       </Section>

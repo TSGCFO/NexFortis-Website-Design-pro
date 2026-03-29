@@ -1,4 +1,4 @@
-import { PageHero, Section, SectionHeader, FAQItem } from "@/components/ui-elements";
+import { PageHero, Section, SectionHeader, FAQItem, PageBreadcrumbs } from "@/components/ui-elements";
 import { SEO, ServiceSchema, BreadcrumbSchema, FAQSchema } from "@/components/seo";
 import { Globe, Server, Search, PenTool, BarChart, Settings, ArrowRight, CheckCircle2 } from "lucide-react";
 import { Link } from "wouter";
@@ -61,6 +61,11 @@ export default function DigitalMarketing() {
         title="Digital Marketing & Web Presence" 
         subtitle="Your digital storefront matters. We build, host, and optimize your online presence to attract and convert."
       />
+      <PageBreadcrumbs items={[
+        { label: "Home", href: "/" },
+        { label: "Services", href: "/services" },
+        { label: "Digital Marketing" },
+      ]} />
 
       <Section bg="white">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
@@ -196,7 +201,7 @@ export default function DigitalMarketing() {
             Let's discuss how we can build a digital strategy that drives real results for your business.
           </p>
           <Link href="/contact" className="inline-flex px-8 py-4 min-h-[48px] rounded-xl bg-warning text-white font-bold text-lg hover:bg-warning/90 transition-all items-center justify-center gap-2 hover:-translate-y-0.5">
-            Start Your Project <ArrowRight className="w-5 h-5" />
+            Get a Free Quote <ArrowRight className="w-5 h-5" />
           </Link>
         </div>
       </Section>

@@ -1,6 +1,6 @@
 import { ReactNode, useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "wouter";
-import { Menu, X, ChevronDown, Monitor, Database, Cloud, Cog, LayoutDashboard, ArrowRight, Sun, Moon, MonitorSmartphone } from "lucide-react";
+import { Menu, X, ChevronDown, Monitor, Database, Cloud, Cog, LayoutDashboard, ArrowRight, Sun, Moon, MonitorSmartphone, ChevronUp } from "lucide-react";
 import { useTheme } from "@/hooks/use-theme";
 
 const services = [
@@ -150,7 +150,6 @@ export function Layout({ children }: { children: ReactNode }) {
               className="relative"
               onMouseEnter={() => setServicesDropdownOpen(true)}
               onMouseLeave={() => setServicesDropdownOpen(false)}
-              onFocus={() => setServicesDropdownOpen(true)}
               onBlur={(e) => {
                 if (!e.currentTarget.contains(e.relatedTarget as Node)) {
                   setServicesDropdownOpen(false);
@@ -159,16 +158,16 @@ export function Layout({ children }: { children: ReactNode }) {
               onKeyDown={(e) => {
                 if (e.key === "Escape") {
                   setServicesDropdownOpen(false);
-                  (e.currentTarget.querySelector("a") as HTMLElement)?.focus();
+                  (e.currentTarget.querySelector("button") as HTMLElement)?.focus();
                 }
               }}
             >
-              <Link
-                href="/services"
+              <button
+                type="button"
+                onClick={() => setServicesDropdownOpen((prev) => !prev)}
                 className={`text-sm font-semibold transition-colors flex items-center gap-1 py-2 relative ${
                   isServicesActive ? "text-accent" : "text-foreground/80 hover:text-accent"
                 }`}
-                aria-current={isServicesActive ? "page" : undefined}
                 aria-expanded={servicesDropdownOpen}
                 aria-haspopup="true"
               >
@@ -176,7 +175,7 @@ export function Layout({ children }: { children: ReactNode }) {
                 {isServicesActive && (
                   <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-accent rounded-full" />
                 )}
-              </Link>
+              </button>
 
               <div
                 className={`absolute top-full left-1/2 -translate-x-1/2 w-64 bg-card rounded-xl shadow-xl border border-border/50 overflow-hidden py-2 transition-all duration-150 origin-top ${
@@ -212,6 +211,15 @@ export function Layout({ children }: { children: ReactNode }) {
                     </Link>
                   );
                 })}
+                <div className="border-t border-border/50 mt-2 pt-2">
+                  <Link
+                    href="/services"
+                    className="flex items-center gap-2 px-4 py-3 text-sm font-semibold text-accent hover:bg-secondary transition-colors"
+                    role="listitem"
+                  >
+                    View All Services <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </div>
               </div>
             </div>
 
@@ -223,7 +231,7 @@ export function Layout({ children }: { children: ReactNode }) {
           <div className="hidden md:flex items-center gap-3">
             <ThemeToggle />
             <Link href="/contact" className="px-6 py-2.5 rounded-full bg-warning text-warning-foreground font-semibold text-sm hover:bg-warning/90 hover:shadow-lg hover:shadow-warning/20 transition-all hover:-translate-y-0.5">
-              Get a Quote
+              Get a Free Quote
             </Link>
           </div>
 
@@ -264,7 +272,7 @@ export function Layout({ children }: { children: ReactNode }) {
             <Link href="/blog" className={`text-lg font-semibold min-h-[44px] flex items-center ${location === "/blog" ? "text-accent" : ""}`}>Blog</Link>
             <Link href="/contact" className={`text-lg font-semibold min-h-[44px] flex items-center ${location === "/contact" ? "text-accent" : ""}`}>Contact</Link>
             <Link href="/contact" className="mt-4 px-6 py-3 text-center rounded-xl bg-warning text-warning-foreground font-semibold min-h-[44px] flex items-center justify-center">
-              Get a Quote
+              Get a Free Quote
             </Link>
           </nav>
         </div>
@@ -350,11 +358,33 @@ export function FloatingCTA() {
       <Link
         href="/contact"
         className="flex items-center gap-2 px-6 py-4 rounded-full bg-accent text-white font-bold shadow-xl shadow-accent/30 hover:shadow-2xl hover:shadow-accent/40 hover:-translate-y-1 transition-all group"
-        aria-label="Request a Quote"
+        aria-label="Get a Free Quote"
       >
-        <span>Request a Quote</span>
+        <span>Get a Free Quote</span>
         <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
       </Link>
     </div>
+  );
+}
+
+export function BackToTop() {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setVisible(window.scrollY > 400);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  if (!visible) return null;
+
+  return (
+    <button
+      onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+      className="fixed bottom-8 left-8 z-40 w-12 h-12 rounded-full bg-secondary border border-border shadow-lg flex items-center justify-center text-foreground hover:bg-accent hover:text-white hover:border-accent transition-all hover:-translate-y-0.5 animate-[fadeInScale_0.2s_ease-out]"
+      aria-label="Back to top"
+    >
+      <ChevronUp className="w-5 h-5" />
+    </button>
   );
 }

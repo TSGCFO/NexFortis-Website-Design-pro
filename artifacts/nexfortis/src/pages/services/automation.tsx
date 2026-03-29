@@ -1,4 +1,4 @@
-import { PageHero, Section, SectionHeader, FAQItem } from "@/components/ui-elements";
+import { PageHero, Section, SectionHeader, FAQItem, PageBreadcrumbs } from "@/components/ui-elements";
 import { SEO, ServiceSchema, BreadcrumbSchema, FAQSchema } from "@/components/seo";
 import { Zap, Code2, GitMerge, ArrowRight, CheckCircle2, Workflow, Bot, Layers, MessageCircle, FileCode, FlaskConical, Rocket } from "lucide-react";
 import { Link } from "wouter";
@@ -93,6 +93,11 @@ export default function AutomationSoftware() {
         title="Workflow Automation & Custom Software" 
         subtitle="Eliminate manual busywork and build bespoke tools that run your business flawlessly."
       />
+      <PageBreadcrumbs items={[
+        { label: "Home", href: "/" },
+        { label: "Services", href: "/services" },
+        { label: "Workflow Automation" },
+      ]} />
 
       <Section bg="white">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
@@ -250,7 +255,7 @@ export default function AutomationSoftware() {
             Tell us about your workflow challenges and we'll design a custom solution that saves your team hours every week.
           </p>
           <Link href="/contact" className="inline-flex px-8 py-4 min-h-[48px] rounded-xl bg-warning text-white font-bold text-lg hover:bg-warning/90 transition-all items-center justify-center gap-2 hover:-translate-y-0.5">
-            Discuss Your Project <ArrowRight className="w-5 h-5" />
+            Get a Free Quote <ArrowRight className="w-5 h-5" />
           </Link>
         </div>
       </Section>

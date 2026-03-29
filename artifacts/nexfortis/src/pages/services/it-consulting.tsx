@@ -1,4 +1,4 @@
-import { PageHero, Section, SectionHeader, FAQItem } from "@/components/ui-elements";
+import { PageHero, Section, SectionHeader, FAQItem, PageBreadcrumbs } from "@/components/ui-elements";
 import { SEO, ServiceSchema, BreadcrumbSchema, FAQSchema } from "@/components/seo";
 import { Map, ListChecks, SearchCheck, ArrowRight, Shield, TrendingUp, Clock, CheckCircle2, MessageCircle, Target, Rocket, BarChart2 } from "lucide-react";
 import { Link } from "wouter";
@@ -79,6 +79,11 @@ export default function ITConsulting() {
         title="IT Consulting & Project Management" 
         subtitle="Strategic technology guidance to align your IT infrastructure with your business goals."
       />
+      <PageBreadcrumbs items={[
+        { label: "Home", href: "/" },
+        { label: "Services", href: "/services" },
+        { label: "IT Consulting" },
+      ]} />
 
       <Section bg="white">
         <div className="flex flex-wrap justify-center items-center gap-0 mb-24">

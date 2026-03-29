@@ -1,4 +1,4 @@
-import { PageHero, Section, SectionHeader, FAQItem } from "@/components/ui-elements";
+import { PageHero, Section, SectionHeader, FAQItem, PageBreadcrumbs } from "@/components/ui-elements";
 import { SEO, ServiceSchema, BreadcrumbSchema, FAQSchema } from "@/components/seo";
 import { ArrowRight, Database, Wrench, ShieldAlert, CheckCircle2, DollarSign, ClipboardList, Zap, FileCheck, Headphones } from "lucide-react";
 import { Link } from "wouter";
@@ -80,6 +80,11 @@ export default function QuickBooks() {
         title="QuickBooks Migration & Tools" 
         subtitle="Expert data migration, recovery services, and powerful add-on tools to supercharge your accounting."
       />
+      <PageBreadcrumbs items={[
+        { label: "Home", href: "/" },
+        { label: "Services", href: "/services" },
+        { label: "QuickBooks Solutions" },
+      ]} />
 
       <Section bg="white">
         <div className="grid lg:grid-cols-2 gap-16 items-center mb-20">
@@ -204,7 +209,7 @@ export default function QuickBooks() {
                       <p className="text-accent font-semibold">{item.price}</p>
                     </div>
                     <Link href="/contact" className="px-4 py-2 rounded-lg bg-primary/10 dark:bg-primary/20 text-primary hover:bg-accent hover:text-white transition-colors text-sm font-bold">
-                      Buy Now
+                      Request a License
                     </Link>
                   </div>
                 ))}
