@@ -219,6 +219,23 @@ export default function QuickBooks() {
         </div>
       </Section>
 
+      <Section bg="white">
+        <div className="max-w-3xl mx-auto bg-gradient-to-r from-accent/10 to-primary/10 rounded-3xl p-8 md:p-12 border border-accent/20 text-center">
+          <h3 className="text-2xl md:text-3xl font-display font-bold text-primary mb-4">
+            Access Our QuickBooks Tools Online
+          </h3>
+          <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
+            Our web-based QuickBooks add-on tools are available directly in your browser — no installation required. Generate statements, process payments, and import data with just a few clicks.
+          </p>
+          <Link
+            href="/qb-portal/"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-accent text-white font-bold text-lg hover:bg-accent/90 transition-all hover:-translate-y-0.5 shadow-lg"
+          >
+            Open QuickBooks Tools Portal <ArrowRight className="w-5 h-5" />
+          </Link>
+        </div>
+      </Section>
+
       <Section bg="secondary">
         <SectionHeader
           title="QuickBooks FAQ"

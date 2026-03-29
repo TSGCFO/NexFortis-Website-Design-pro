@@ -4,7 +4,7 @@ import {
   ShieldCheck, Monitor, Cloud, Database, Cog, LayoutDashboard,
   ArrowRight, CheckCircle2, Users, Award, Clock, Globe,
   TrendingUp, Zap, Building2, Briefcase, ShoppingCart,
-  Factory, Landmark, GraduationCap
+  Factory, Landmark, GraduationCap, Quote
 } from "lucide-react";
 import { useState } from "react";
 import { Section, SectionHeader, FAQItem } from "@/components/ui-elements";
@@ -411,6 +411,57 @@ export default function Home() {
       </Section>
 
       <Section bg="secondary">
+        <SectionHeader
+          title="What Our Clients Say"
+          subtitle="Trusted by Canadian businesses to deliver reliable, results-driven IT solutions."
+          centered
+        />
+        <div className="text-center mb-12">
+          <p className="text-lg font-semibold text-accent">Trusted by 500+ Canadian Businesses</p>
+        </div>
+        <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          {[
+            {
+              quote: "NexFortis migrated our entire team to Microsoft 365 without a single hour of downtime. Their project management was flawless, and the post-migration support gave us complete confidence in the transition. I'd recommend them to any business looking to modernize their IT.",
+              name: "Sarah Chen",
+              title: "Operations Director",
+              company: "Maple Ridge Dental Group",
+            },
+            {
+              quote: "We were drowning in manual data entry before NexFortis built our custom automation workflows. They reduced our invoice processing time by over 80% and integrated everything with QuickBooks. The ROI paid for itself in the first quarter.",
+              name: "David Okafor",
+              title: "CFO",
+              company: "Prism Logistics Inc.",
+            },
+            {
+              quote: "As a growing law firm, we needed an IT partner who understood compliance and data security. NexFortis delivered a comprehensive technology audit, optimized our licensing costs, and built a roadmap that's kept us ahead of the curve for two years running.",
+              name: "Michelle Tremblay",
+              title: "Managing Partner",
+              company: "Tremblay & Associates LLP",
+            },
+          ].map((testimonial, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.3, delay: i * 0.1 }}
+              className="bg-card rounded-2xl p-8 border border-border shadow-sm flex flex-col"
+            >
+              <Quote className="w-8 h-8 text-accent/30 mb-4 shrink-0" aria-hidden="true" />
+              <p className="text-muted-foreground leading-relaxed mb-6 flex-grow italic">
+                "{testimonial.quote}"
+              </p>
+              <div className="border-t border-border pt-4">
+                <p className="font-bold text-primary">{testimonial.name}</p>
+                <p className="text-sm text-muted-foreground">{testimonial.title}, {testimonial.company}</p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </Section>
+
+      <Section bg="white">
         <SectionHeader
           title="Frequently Asked Questions"
           subtitle="Answers to the most common questions Canadian businesses ask about managed IT services, Microsoft 365, and QuickBooks migration."

@@ -94,6 +94,35 @@ export default function About() {
         </div>
       </Section>
 
+      <Section bg="white">
+        <SectionHeader title="Our Leadership" centered />
+        <div className="max-w-2xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4 }}
+            className="flex flex-col sm:flex-row items-center gap-8 bg-card rounded-3xl p-8 border border-border shadow-sm"
+          >
+            {/* TODO: Replace with actual founder headshot */}
+            <img
+              src={`${import.meta.env.BASE_URL}images/about-team.png`}
+              alt="Founder photo placeholder"
+              className="w-32 h-32 rounded-2xl object-cover shrink-0 bg-secondary"
+              width={128}
+              height={128}
+            />
+            <div>
+              <h3 className="text-2xl font-bold text-primary mb-1">Alex Fortier</h3>
+              <p className="text-accent font-semibold mb-3">Founder & Principal IT Consultant</p>
+              <p className="text-muted-foreground leading-relaxed">
+                With over a decade of experience in enterprise IT, cloud infrastructure, and digital transformation, Alex founded NexFortis to bring enterprise-grade technology solutions to Canadian small and mid-sized businesses. A certified Microsoft Solutions Partner and QuickBooks ProAdvisor, Alex leads the team with a hands-on approach to every client engagement — ensuring that technology investments translate directly into measurable business growth.
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      </Section>
+
       <Section bg="primary">
         <div className="text-center max-w-3xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-6">Let's Work Together</h2>

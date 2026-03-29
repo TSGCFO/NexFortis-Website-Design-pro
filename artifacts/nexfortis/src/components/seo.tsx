@@ -68,7 +68,6 @@ export function OrganizationSchema() {
     description: "NexFortis delivers end-to-end IT solutions for Canadian businesses including managed IT, Microsoft 365, QuickBooks migration, digital marketing, and workflow automation.",
     contactPoint: {
       "@type": "ContactPoint",
-      telephone: "+1-800-555-0199",
       contactType: "customer service",
       email: "contact@nexfortis.com",
       areaServed: "CA",
@@ -82,7 +81,7 @@ export function OrganizationSchema() {
       postalCode: "L7B 0A1",
       addressCountry: "CA",
     },
-    sameAs: [],
+    sameAs: ["https://www.linkedin.com/company/nexfortis"],
   };
 
   return (
@@ -104,7 +103,6 @@ export function LocalBusinessSchema() {
     logo: `${siteUrl}/images/logo-original.png`,
     image: `${siteUrl}/opengraph.png`,
     description: "NexFortis delivers end-to-end IT solutions for Canadian businesses including managed IT, Microsoft 365, QuickBooks migration, digital marketing, and workflow automation.",
-    telephone: "+1-800-555-0199",
     email: "contact@nexfortis.com",
     address: {
       "@type": "PostalAddress",
@@ -130,7 +128,7 @@ export function LocalBusinessSchema() {
       opens: "09:00",
       closes: "17:00",
     },
-    sameAs: [],
+    sameAs: ["https://www.linkedin.com/company/nexfortis"],
   };
 
   return (

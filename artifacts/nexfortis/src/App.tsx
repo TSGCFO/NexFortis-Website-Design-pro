@@ -17,7 +17,8 @@ const Contact = lazy(() => import("@/pages/contact"));
 const Blog = lazy(() => import("@/pages/blog"));
 const BlogPostPage = lazy(() => import("@/pages/blog-post"));
 const BlogAdmin = lazy(() => import("@/pages/blog-admin"));
-const Placeholder = lazy(() => import("@/pages/placeholder"));
+const Privacy = lazy(() => import("@/pages/privacy"));
+const Terms = lazy(() => import("@/pages/terms"));
 const NotFound = lazy(() => import("@/pages/not-found"));
 
 const LazyProviders = lazy(() => import("@/components/providers"));
@@ -49,12 +50,8 @@ function Router() {
           <Route path="/blog/:slug">
             {(params) => <BlogPostPage slug={params.slug} />}
           </Route>
-          <Route path="/privacy">
-            {() => <Placeholder title="Privacy Policy" />}
-          </Route>
-          <Route path="/terms">
-            {() => <Placeholder title="Terms of Service" />}
-          </Route>
+          <Route path="/privacy" component={Privacy} />
+          <Route path="/terms" component={Terms} />
           <Route component={NotFound} />
         </Switch>
       </Suspense>

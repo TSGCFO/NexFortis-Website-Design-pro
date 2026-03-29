@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { PageHero, Section, PageBreadcrumbs } from "@/components/ui-elements";
 import { SEO, BreadcrumbSchema } from "@/components/seo";
-import { MapPin, Phone, Mail, Clock, Loader2 } from "lucide-react";
+import { MapPin, Mail, Clock, Loader2, Linkedin } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -28,14 +28,30 @@ export default function Contact() {
 
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    setIsSubmitting(false);
-
-    toast({
-      title: "Message Sent Successfully!",
-      description: "We'll get back to you within 24 business hours.",
-    });
-    reset();
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      const result = await res.json();
+      if (!res.ok) {
+        throw new Error(result.error || "Failed to send message");
+      }
+      toast({
+        title: "Message Sent Successfully!",
+        description: "We'll get back to you within 24 business hours.",
+      });
+      reset();
+    } catch (err: unknown) {
+      toast({
+        title: "Something went wrong",
+        description: err instanceof Error ? err.message : "Please try again later or email us directly.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const inputClasses = "w-full px-4 py-3 min-h-[44px] rounded-xl bg-secondary border border-border focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition-all";
@@ -82,16 +98,6 @@ export default function Contact() {
 
               <div className="flex gap-4 items-start">
                 <div className="w-12 h-12 bg-card rounded-xl shadow-sm flex items-center justify-center text-accent shrink-0 border border-border" aria-hidden="true">
-                  <Phone className="w-5 h-5" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-primary">Phone</h3>
-                  <a href="tel:+18005550199" className="text-muted-foreground hover:text-accent transition-colors">+1 (800) 555-0199</a>
-                </div>
-              </div>
-
-              <div className="flex gap-4 items-start">
-                <div className="w-12 h-12 bg-card rounded-xl shadow-sm flex items-center justify-center text-accent shrink-0 border border-border" aria-hidden="true">
                   <Mail className="w-5 h-5" />
                 </div>
                 <div>
@@ -107,6 +113,17 @@ export default function Contact() {
                 <div>
                   <h3 className="font-bold text-primary">Business Hours</h3>
                   <p className="text-muted-foreground">Mon – Fri: 9:00 AM – 5:00 PM EST</p>
+                </div>
+              </div>
+
+              {/* TODO: Update this URL when the LinkedIn page is live */}
+              <div className="flex gap-4 items-start">
+                <div className="w-12 h-12 bg-card rounded-xl shadow-sm flex items-center justify-center text-accent shrink-0 border border-border" aria-hidden="true">
+                  <Linkedin className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-primary">LinkedIn</h3>
+                  <a href="https://www.linkedin.com/company/nexfortis" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-accent transition-colors">Follow us on LinkedIn</a>
                 </div>
               </div>
             </div>

@@ -16,7 +16,7 @@ const consultingFaqs = [
   },
   {
     question: "How much can IT consulting save my business?",
-    answer: "On average, our clients see a 40% reduction in IT costs within the first year of engagement. Savings come from license optimization (eliminating unused subscriptions), vendor consolidation, security incident prevention, and strategic infrastructure decisions that avoid costly mistakes. We provide detailed ROI projections before any engagement so you can see the expected return on your consulting investment.",
+    answer: "On average, our clients report a 40% reduction in IT costs within the first year of engagement, based on client-reported data and internal case studies. Savings come from license optimization (eliminating unused subscriptions), vendor consolidation, security incident prevention, and strategic infrastructure decisions that avoid costly mistakes. We provide detailed ROI projections before any engagement so you can see the expected return on your consulting investment.",
   },
   {
     question: "Do you manage IT projects from start to finish?",
@@ -53,8 +53,8 @@ export default function ITConsulting() {
   ];
 
   const stats = [
-    { icon: Shield, value: "100%", label: "Client satisfaction rate" },
-    { icon: TrendingUp, value: "40%", label: "Average cost reduction" },
+    { icon: Shield, value: "100%", label: "Client satisfaction rate (based on client feedback surveys)" },
+    { icon: TrendingUp, value: "40%", label: "Average cost reduction (as reported by clients in year one)" },
     { icon: Clock, value: "24h", label: "Response time SLA" },
   ];
 

@@ -176,6 +176,12 @@ export default function Microsoft365() {
               </tr>
             </thead>
             <tbody className="text-muted-foreground">
+              <tr className="border-b border-border/50 bg-accent/5">
+                <th scope="row" className="p-4 font-bold text-foreground text-left">Pricing</th>
+                <td className="p-4 font-semibold text-accent">Contact for Pricing</td>
+                <td className="p-4 font-semibold text-accent">Contact for Pricing</td>
+                <td className="p-4 font-semibold text-accent">Contact for Pricing</td>
+              </tr>
               {rows.map((row, i) => (
                 <tr key={i} className="border-b border-border/50 hover:bg-secondary/50 transition-colors">
                   <th scope="row" className="p-4 font-medium text-foreground text-left">{row[0]}</th>
@@ -193,6 +199,9 @@ export default function Microsoft365() {
             </tbody>
           </table>
         </div>
+        <p className="text-center text-sm text-muted-foreground mt-4 max-w-2xl mx-auto">
+          Microsoft 365 license costs are billed directly by Microsoft. NexFortis provides deployment, migration, and management services — <Link href="/contact" className="text-accent font-semibold hover:underline">contact us for a quote</Link>.
+        </p>
       </Section>
 
       <Section bg="secondary">
