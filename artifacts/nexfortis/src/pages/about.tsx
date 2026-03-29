@@ -25,6 +25,7 @@ export default function About() {
         title="About NexFortis" 
         subtitle="Empowering Canadian businesses with innovative, reliable, and scalable IT solutions."
         imagePath={`${import.meta.env.BASE_URL}images/about-team.png`}
+        imageWebpPath={`${import.meta.env.BASE_URL}images/about-team.webp`}
       />
 
       <Section bg="white">

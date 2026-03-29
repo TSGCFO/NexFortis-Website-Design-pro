@@ -1,56 +1,63 @@
 import { Switch, Route, Router as WouterRouter } from "wouter";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { MotionConfig } from "framer-motion";
-import { HelmetProvider } from "react-helmet-async";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Layout, FloatingCTA } from "@/components/layout";
 import { ThemeProvider } from "@/hooks/use-theme";
+import { lazy, Suspense } from "react";
 
-// Pages
-import Home from "@/pages/home";
-import About from "@/pages/about";
-import ServicesOverview from "@/pages/services";
-import DigitalMarketing from "@/pages/services/digital-marketing";
-import Microsoft365 from "@/pages/services/microsoft-365";
-import QuickBooks from "@/pages/services/quickbooks";
-import ITConsulting from "@/pages/services/it-consulting";
-import AutomationSoftware from "@/pages/services/automation";
-import Contact from "@/pages/contact";
-import Blog from "@/pages/blog";
-import BlogPostPage from "@/pages/blog-post";
-import BlogAdmin from "@/pages/blog-admin";
-import Placeholder from "@/pages/placeholder";
-import NotFound from "@/pages/not-found";
+const Home = lazy(() => import("@/pages/home"));
+const About = lazy(() => import("@/pages/about"));
+const ServicesOverview = lazy(() => import("@/pages/services"));
+const DigitalMarketing = lazy(() => import("@/pages/services/digital-marketing"));
+const Microsoft365 = lazy(() => import("@/pages/services/microsoft-365"));
+const QuickBooks = lazy(() => import("@/pages/services/quickbooks"));
+const ITConsulting = lazy(() => import("@/pages/services/it-consulting"));
+const AutomationSoftware = lazy(() => import("@/pages/services/automation"));
+const Contact = lazy(() => import("@/pages/contact"));
+const Blog = lazy(() => import("@/pages/blog"));
+const BlogPostPage = lazy(() => import("@/pages/blog-post"));
+const BlogAdmin = lazy(() => import("@/pages/blog-admin"));
+const Placeholder = lazy(() => import("@/pages/placeholder"));
+const NotFound = lazy(() => import("@/pages/not-found"));
 
-const queryClient = new QueryClient();
+const LazyProviders = lazy(() => import("@/components/providers"));
+
+function PageFallback() {
+  return (
+    <div className="min-h-[60vh] flex items-center justify-center">
+      <div className="w-8 h-8 border-4 border-accent border-t-transparent rounded-full animate-spin" />
+    </div>
+  );
+}
 
 function Router() {
   return (
     <Layout>
-      <Switch>
-        <Route path="/" component={Home} />
-        <Route path="/about" component={About} />
-        <Route path="/services" component={ServicesOverview} />
-        <Route path="/services/digital-marketing" component={DigitalMarketing} />
-        <Route path="/services/microsoft-365" component={Microsoft365} />
-        <Route path="/services/quickbooks" component={QuickBooks} />
-        <Route path="/services/it-consulting" component={ITConsulting} />
-        <Route path="/services/automation-software" component={AutomationSoftware} />
-        <Route path="/contact" component={Contact} />
-        <Route path="/blog" component={Blog} />
-        <Route path="/blog/admin" component={BlogAdmin} />
-        <Route path="/blog/:slug">
-          {(params) => <BlogPostPage slug={params.slug} />}
-        </Route>
-        <Route path="/privacy">
-          {() => <Placeholder title="Privacy Policy" />}
-        </Route>
-        <Route path="/terms">
-          {() => <Placeholder title="Terms of Service" />}
-        </Route>
-        <Route component={NotFound} />
-      </Switch>
+      <Suspense fallback={<PageFallback />}>
+        <Switch>
+          <Route path="/" component={Home} />
+          <Route path="/about" component={About} />
+          <Route path="/services" component={ServicesOverview} />
+          <Route path="/services/digital-marketing" component={DigitalMarketing} />
+          <Route path="/services/microsoft-365" component={Microsoft365} />
+          <Route path="/services/quickbooks" component={QuickBooks} />
+          <Route path="/services/it-consulting" component={ITConsulting} />
+          <Route path="/services/automation-software" component={AutomationSoftware} />
+          <Route path="/contact" component={Contact} />
+          <Route path="/blog" component={Blog} />
+          <Route path="/blog/admin" component={BlogAdmin} />
+          <Route path="/blog/:slug">
+            {(params) => <BlogPostPage slug={params.slug} />}
+          </Route>
+          <Route path="/privacy">
+            {() => <Placeholder title="Privacy Policy" />}
+          </Route>
+          <Route path="/terms">
+            {() => <Placeholder title="Terms of Service" />}
+          </Route>
+          <Route component={NotFound} />
+        </Switch>
+      </Suspense>
       <FloatingCTA />
     </Layout>
   );
@@ -58,20 +65,18 @@ function Router() {
 
 function App() {
   return (
-    <HelmetProvider>
-      <QueryClientProvider client={queryClient}>
+    <Suspense fallback={<PageFallback />}>
+      <LazyProviders>
         <ThemeProvider>
-          <MotionConfig reducedMotion="user">
-            <TooltipProvider>
-              <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-                <Router />
-              </WouterRouter>
-              <Toaster />
-            </TooltipProvider>
-          </MotionConfig>
+          <TooltipProvider>
+            <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
+              <Router />
+            </WouterRouter>
+            <Toaster />
+          </TooltipProvider>
         </ThemeProvider>
-      </QueryClientProvider>
-    </HelmetProvider>
+      </LazyProviders>
+    </Suspense>
   );
 }
 

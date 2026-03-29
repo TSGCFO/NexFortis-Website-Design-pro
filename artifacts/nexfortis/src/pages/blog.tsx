@@ -20,6 +20,10 @@ interface BlogPost {
 
 const BASE = import.meta.env.BASE_URL;
 
+function webpFromPng(pngPath: string): string {
+  return pngPath.replace(/\.png$/, '.webp');
+}
+
 const fallbackPosts: BlogPost[] = [
   {
     id: 1,
@@ -149,14 +153,17 @@ export default function Blog() {
               >
                 <div className="h-64 lg:h-full min-h-[280px] overflow-hidden relative bg-gradient-to-br from-accent/15 to-primary/15 flex items-center justify-center">
                   {featured.coverImage ? (
-                    <img
-                      src={featured.coverImage}
-                      alt={`Cover image for ${featured.title}`}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      loading="lazy"
-                      width={600}
-                      height={400}
-                    />
+                    <picture>
+                      <source srcSet={webpFromPng(featured.coverImage)} type="image/webp" />
+                      <img
+                        src={featured.coverImage}
+                        alt={`Cover image for ${featured.title}`}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        loading="lazy"
+                        width={600}
+                        height={400}
+                      />
+                    </picture>
                   ) : (
                     <span className="text-8xl font-display font-extrabold text-accent/15 select-none" aria-hidden="true">
                       {featured.title.charAt(0)}
@@ -212,14 +219,17 @@ export default function Blog() {
                   >
                     <div className="h-44 overflow-hidden relative bg-gradient-to-br from-accent/10 to-primary/10 flex items-center justify-center">
                       {post.coverImage ? (
-                        <img
-                          src={post.coverImage}
-                          alt={`Cover image for ${post.title}`}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                          loading="lazy"
-                          width={400}
-                          height={176}
-                        />
+                        <picture>
+                          <source srcSet={webpFromPng(post.coverImage)} type="image/webp" />
+                          <img
+                            src={post.coverImage}
+                            alt={`Cover image for ${post.title}`}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            loading="lazy"
+                            width={400}
+                            height={176}
+                          />
+                        </picture>
                       ) : (
                         <span className="text-5xl font-display font-extrabold text-accent/15 select-none" aria-hidden="true">
                           {post.title.charAt(0)}

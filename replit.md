@@ -59,7 +59,7 @@ NexFortis IT Solutions — complete business website for a Canadian IT solutions
 
 - **Framework**: React 19 + Vite
 - **Styling**: Tailwind CSS v4
-- **Animations**: Framer Motion
+- **Animations**: Framer Motion (lazy-loaded via providers.tsx; Layout uses CSS transitions)
 - **Forms**: React Hook Form + Zod
 - **Icons**: Lucide React
 - **Routing**: Wouter
@@ -84,6 +84,19 @@ NexFortis IT Solutions — complete business website for a Canadian IT solutions
 - **Company**: 17756968 Canada Inc., 204 Hill Farm Rd, Nobleton, ON L7B 0A1
 - **Logo**: PNG versions in `public/images/` (logo-original.png for light mode, logo-white.png for dark mode/footer)
 - Floating "Request a Quote" CTA button on all service pages
+- **Performance**:
+  - Code splitting: All page routes use `React.lazy()` with `Suspense` fallback — each route produces its own JS chunk
+  - Vendor chunk splitting in `vite.config.ts`: react, framer-motion, react-query, react-helmet-async, lucide-react separated into individual vendor chunks
+  - Dynamic import bootstrap: main.tsx is a tiny vanilla entry (~1.8 KB) that async-imports React; `modulePreload: false` in vite.config.ts
+  - Initial blocking JS: ~1.8 KB entry script; React/ReactDOM load asynchronously
+  - Images: WebP versions of all content PNGs (hero-bg, about-team, blog-1/2/3) with `<picture>` element fallbacks
+  - SVG logos optimized via SVGO (~35% reduction; logo-original.svg/logo-icon.svg still large due to traced raster paths — PNGs used in practice)
+  - Self-hosted fonts: Inter (400-700) and Outfit (400-800) woff2 files in `public/fonts/` — no Google Fonts CDN requests (PIPEDA compliance)
+  - Font loading: `@font-face` declarations with `font-display: swap` in `index.css`
+  - Resource preloading: `<link rel="preload">` for Inter 400, Outfit, and hero-bg.webp in `index.html`
+  - `<meta name="theme-color">` set to brand navy (#003566)
+  - PWA manifest: `public/manifest.json` with icons, theme/background colors
+  - All below-fold images use `loading="lazy"`
 - **Theme System**: ThemeProvider in `src/hooks/use-theme.tsx`, toggle in navbar (Sun/Moon/Monitor icons), CSS variables in `.dark` class
 - **SEO**:
   - Per-page meta tags (title, description, canonical, OG, Twitter) via React Helmet in `src/components/seo.tsx`

@@ -127,13 +127,16 @@ export default function Home() {
 
       <section className="relative min-h-[90vh] flex items-center justify-center bg-primary overflow-hidden pt-20">
         <div className="absolute inset-0 z-0" aria-hidden="true">
-          <img
-            src={`${import.meta.env.BASE_URL}images/hero-bg.png`}
-            alt=""
-            className="w-full h-full object-cover opacity-40 mix-blend-overlay"
-            loading="eager"
-            aria-hidden="true"
-          />
+          <picture>
+            <source srcSet={`${import.meta.env.BASE_URL}images/hero-bg.webp`} type="image/webp" />
+            <img
+              src={`${import.meta.env.BASE_URL}images/hero-bg.png`}
+              alt=""
+              className="w-full h-full object-cover opacity-40 mix-blend-overlay"
+              loading="eager"
+              aria-hidden="true"
+            />
+          </picture>
           <div className="absolute inset-0 bg-gradient-to-b from-primary/50 via-primary/80 to-primary" />
         </div>
 
@@ -310,14 +313,17 @@ export default function Home() {
 
           <div className="relative">
             <div className="absolute inset-0 bg-accent/10 rounded-3xl transform translate-x-4 translate-y-4" aria-hidden="true"></div>
-            <img
-              src={`${import.meta.env.BASE_URL}images/about-team.png`}
-              alt="NexFortis IT team collaborating on client project"
-              className="relative z-10 rounded-3xl shadow-2xl object-cover aspect-[4/3]"
-              loading="lazy"
-              width={600}
-              height={450}
-            />
+            <picture>
+              <source srcSet={`${import.meta.env.BASE_URL}images/about-team.webp`} type="image/webp" />
+              <img
+                src={`${import.meta.env.BASE_URL}images/about-team.png`}
+                alt="NexFortis IT team collaborating on client project"
+                className="relative z-10 rounded-3xl shadow-2xl object-cover aspect-[4/3]"
+                loading="lazy"
+                width={600}
+                height={450}
+              />
+            </picture>
           </div>
         </div>
       </Section>

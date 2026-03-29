@@ -1,6 +1,5 @@
-import { ReactNode, useState, useEffect } from "react";
+import { ReactNode, useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "wouter";
-import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ChevronDown, Monitor, Database, Cloud, Cog, LayoutDashboard, ArrowRight, Sun, Moon, MonitorSmartphone } from "lucide-react";
 import { useTheme } from "@/hooks/use-theme";
 
@@ -60,38 +59,32 @@ function ThemeToggle() {
       >
         <CurrentIcon className="w-5 h-5" />
       </button>
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{ opacity: 0, y: 4 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 4 }}
-            transition={{ duration: 0.12 }}
-            className="absolute right-0 top-full mt-2 bg-card border border-border rounded-xl shadow-xl overflow-hidden w-36 z-50"
-            role="listbox"
-            aria-label="Select theme"
-          >
-            {options.map((opt) => {
-              const Icon = opt.icon;
-              const isSelected = theme === opt.value;
-              return (
-                <button
-                  key={opt.value}
-                  onClick={() => { setTheme(opt.value); setOpen(false); }}
-                  className={`w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium transition-colors ${
-                    isSelected ? "bg-accent/10 text-accent" : "text-foreground hover:bg-secondary"
-                  }`}
-                  role="option"
-                  aria-selected={isSelected}
-                >
-                  <Icon className="w-4 h-4" />
-                  {opt.label}
-                </button>
-              );
-            })}
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <div
+        className={`absolute right-0 top-full mt-2 bg-card border border-border rounded-xl shadow-xl overflow-hidden w-36 z-50 transition-all duration-150 origin-top-right ${
+          open ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
+        }`}
+        role="listbox"
+        aria-label="Select theme"
+      >
+        {options.map((opt) => {
+          const Icon = opt.icon;
+          const isSelected = theme === opt.value;
+          return (
+            <button
+              key={opt.value}
+              onClick={() => { setTheme(opt.value); setOpen(false); }}
+              className={`w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium transition-colors ${
+                isSelected ? "bg-accent/10 text-accent" : "text-foreground hover:bg-secondary"
+              }`}
+              role="option"
+              aria-selected={isSelected}
+            >
+              <Icon className="w-4 h-4" />
+              {opt.label}
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 }
@@ -102,6 +95,7 @@ export function Layout({ children }: { children: ReactNode }) {
   const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
   const [location] = useLocation();
   const { resolvedTheme } = useTheme();
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -184,47 +178,41 @@ export function Layout({ children }: { children: ReactNode }) {
                 )}
               </Link>
 
-              <AnimatePresence>
-                {servicesDropdownOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 8 }}
-                    transition={{ duration: 0.15, ease: "easeOut" }}
-                    className="absolute top-full left-1/2 -translate-x-1/2 w-64 bg-card rounded-xl shadow-xl border border-border/50 overflow-hidden py-2"
-                    role="list"
-                  >
-                    {services.map((service) => {
-                      const Icon = service.icon;
-                      const isItemActive = location === service.href;
-                      return (
-                        <Link
-                          key={service.href}
-                          href={service.href}
-                          className={`flex items-center gap-3 px-4 py-3 transition-colors group ${
-                            isItemActive ? "bg-accent/5" : "hover:bg-secondary"
-                          }`}
-                          role="listitem"
-                          aria-current={isItemActive ? "page" : undefined}
-                        >
-                          <div className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${
-                            isItemActive
-                              ? "bg-accent/10 text-accent"
-                              : "bg-secondary group-hover:bg-accent/10 text-primary group-hover:text-accent"
-                          }`}>
-                            <Icon className="w-4 h-4" />
-                          </div>
-                          <span className={`text-sm font-medium transition-colors ${
-                            isItemActive ? "text-accent" : "text-foreground group-hover:text-accent"
-                          }`}>
-                            {service.name}
-                          </span>
-                        </Link>
-                      );
-                    })}
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              <div
+                className={`absolute top-full left-1/2 -translate-x-1/2 w-64 bg-card rounded-xl shadow-xl border border-border/50 overflow-hidden py-2 transition-all duration-150 origin-top ${
+                  servicesDropdownOpen ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
+                }`}
+                role="list"
+              >
+                {services.map((service) => {
+                  const Icon = service.icon;
+                  const isItemActive = location === service.href;
+                  return (
+                    <Link
+                      key={service.href}
+                      href={service.href}
+                      className={`flex items-center gap-3 px-4 py-3 transition-colors group ${
+                        isItemActive ? "bg-accent/5" : "hover:bg-secondary"
+                      }`}
+                      role="listitem"
+                      aria-current={isItemActive ? "page" : undefined}
+                    >
+                      <div className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${
+                        isItemActive
+                          ? "bg-accent/10 text-accent"
+                          : "bg-secondary group-hover:bg-accent/10 text-primary group-hover:text-accent"
+                      }`}>
+                        <Icon className="w-4 h-4" />
+                      </div>
+                      <span className={`text-sm font-medium transition-colors ${
+                        isItemActive ? "text-accent" : "text-foreground group-hover:text-accent"
+                      }`}>
+                        {service.name}
+                      </span>
+                    </Link>
+                  );
+                })}
+              </div>
             </div>
 
             <NavLink href="/about" location={location}>About</NavLink>
@@ -253,38 +241,33 @@ export function Layout({ children }: { children: ReactNode }) {
           </div>
         </div>
 
-        <AnimatePresence>
-          {mobileMenuOpen && (
-            <motion.div
-              id="mobile-nav"
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.2, ease: "easeOut" }}
-              className="md:hidden border-t border-border overflow-hidden bg-background"
-              role="navigation"
-              aria-label="Mobile navigation"
-            >
-              <nav className="flex flex-col px-4 py-6 gap-4">
-                <Link href="/" className={`text-lg font-semibold min-h-[44px] flex items-center ${location === "/" ? "text-accent" : ""}`}>Home</Link>
-                <Link href="/services" className={`text-lg font-semibold min-h-[44px] flex items-center ${location === "/services" ? "text-accent" : ""}`}>All Services</Link>
-                <div className="pl-4 flex flex-col gap-3 border-l-2 border-border ml-2">
-                  {services.map((s) => (
-                    <Link key={s.href} href={s.href} className={`min-h-[44px] flex items-center transition-colors ${location === s.href ? "text-accent font-medium" : "text-muted-foreground hover:text-accent"}`}>
-                      {s.name}
-                    </Link>
-                  ))}
-                </div>
-                <Link href="/about" className={`text-lg font-semibold min-h-[44px] flex items-center ${location === "/about" ? "text-accent" : ""}`}>About</Link>
-                <Link href="/blog" className={`text-lg font-semibold min-h-[44px] flex items-center ${location === "/blog" ? "text-accent" : ""}`}>Blog</Link>
-                <Link href="/contact" className={`text-lg font-semibold min-h-[44px] flex items-center ${location === "/contact" ? "text-accent" : ""}`}>Contact</Link>
-                <Link href="/contact" className="mt-4 px-6 py-3 text-center rounded-xl bg-warning text-warning-foreground font-semibold min-h-[44px] flex items-center justify-center">
-                  Get a Quote
+        <div
+          id="mobile-nav"
+          ref={mobileMenuRef}
+          className={`md:hidden border-t border-border overflow-hidden bg-background transition-all duration-200 ease-out ${
+            mobileMenuOpen ? "max-h-[80vh] opacity-100" : "max-h-0 opacity-0"
+          }`}
+          role="navigation"
+          aria-label="Mobile navigation"
+        >
+          <nav className="flex flex-col px-4 py-6 gap-4">
+            <Link href="/" className={`text-lg font-semibold min-h-[44px] flex items-center ${location === "/" ? "text-accent" : ""}`}>Home</Link>
+            <Link href="/services" className={`text-lg font-semibold min-h-[44px] flex items-center ${location === "/services" ? "text-accent" : ""}`}>All Services</Link>
+            <div className="pl-4 flex flex-col gap-3 border-l-2 border-border ml-2">
+              {services.map((s) => (
+                <Link key={s.href} href={s.href} className={`min-h-[44px] flex items-center transition-colors ${location === s.href ? "text-accent font-medium" : "text-muted-foreground hover:text-accent"}`}>
+                  {s.name}
                 </Link>
-              </nav>
-            </motion.div>
-          )}
-        </AnimatePresence>
+              ))}
+            </div>
+            <Link href="/about" className={`text-lg font-semibold min-h-[44px] flex items-center ${location === "/about" ? "text-accent" : ""}`}>About</Link>
+            <Link href="/blog" className={`text-lg font-semibold min-h-[44px] flex items-center ${location === "/blog" ? "text-accent" : ""}`}>Blog</Link>
+            <Link href="/contact" className={`text-lg font-semibold min-h-[44px] flex items-center ${location === "/contact" ? "text-accent" : ""}`}>Contact</Link>
+            <Link href="/contact" className="mt-4 px-6 py-3 text-center rounded-xl bg-warning text-warning-foreground font-semibold min-h-[44px] flex items-center justify-center">
+              Get a Quote
+            </Link>
+          </nav>
+        </div>
       </header>
 
       <main id="main-content" className="flex-grow pt-20" role="main">
@@ -363,12 +346,7 @@ export function FloatingCTA() {
   if (!isServicePage) return null;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 50 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3, ease: "easeOut" }}
-      className="fixed bottom-8 right-8 z-40"
-    >
+    <div className="fixed bottom-8 right-8 z-40 animate-[slideUp_0.3s_ease-out]">
       <Link
         href="/contact"
         className="flex items-center gap-2 px-6 py-4 rounded-full bg-accent text-white font-bold shadow-xl shadow-accent/30 hover:shadow-2xl hover:shadow-accent/40 hover:-translate-y-1 transition-all group"
@@ -377,6 +355,6 @@ export function FloatingCTA() {
         <span>Request a Quote</span>
         <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
       </Link>
-    </motion.div>
+    </div>
   );
 }
