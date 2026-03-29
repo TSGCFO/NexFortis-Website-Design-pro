@@ -148,7 +148,7 @@ export default function Home() {
               transition={{ duration: 0.5, ease: "easeOut" }}
               className="flex-1 text-center lg:text-left"
             >
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 backdrop-blur-sm text-white text-sm font-medium mb-8">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 backdrop-blur-sm text-white text-sm font-display font-medium mb-8">
                 <ShieldCheck className="w-4 h-4 text-accent" aria-hidden="true" />
                 Canada's Trusted Managed IT Partner
               </div>
@@ -266,7 +266,7 @@ export default function Home() {
                 className={`flex flex-col ${isEven ? "lg:flex-row" : "lg:flex-row-reverse"} gap-12 items-center py-16 lg:py-24 ${i > 0 ? "border-t border-border" : ""}`}
               >
                 <div className="flex-1 max-w-xl">
-                  <span className="inline-block px-3 py-1 rounded-full bg-accent/10 text-accent text-xs font-bold uppercase tracking-wider mb-5">
+                  <span className="inline-block px-3 py-1 rounded-full bg-accent/10 text-accent text-xs font-display font-bold uppercase tracking-wider mb-5">
                     {service.badge}
                   </span>
                   <h2 className="text-2xl md:text-3xl font-display font-bold text-primary mb-5 leading-tight">

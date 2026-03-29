@@ -86,7 +86,7 @@ export default function ServicesOverview() {
                 className={`flex flex-col ${isEven ? "lg:flex-row" : "lg:flex-row-reverse"} gap-12 lg:gap-20 items-center py-20 lg:py-28 ${i > 0 ? "border-t border-border" : ""}`}
               >
                 <div className="flex-1">
-                  <span className="inline-block px-3 py-1 rounded-full bg-accent/10 text-accent text-xs font-bold uppercase tracking-wider mb-5">
+                  <span className="inline-block px-3 py-1 rounded-full bg-accent/10 text-accent text-xs font-display font-bold uppercase tracking-wider mb-5">
                     {service.badge}
                   </span>
                   <h2 className="text-2xl md:text-3xl font-display font-bold text-primary mb-5 leading-tight">

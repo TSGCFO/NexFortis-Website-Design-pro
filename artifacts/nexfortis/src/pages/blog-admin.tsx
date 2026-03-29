@@ -264,7 +264,7 @@ export default function BlogAdmin() {
                   <div className="min-w-0 flex-1 mr-4">
                     <div className="flex items-center gap-3 mb-1">
                       <h3 className="font-bold text-primary truncate">{post.title}</h3>
-                      <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${post.published ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400" : "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400"}`}>
+                      <span className={`text-xs font-display font-bold px-2 py-0.5 rounded-full ${post.published ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400" : "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400"}`}>
                         {post.published ? "Published" : "Draft"}
                       </span>
                     </div>

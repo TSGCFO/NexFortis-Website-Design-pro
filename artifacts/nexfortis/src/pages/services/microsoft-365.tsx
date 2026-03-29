@@ -85,7 +85,7 @@ export default function Microsoft365() {
             viewport={{ once: true }}
             transition={{ duration: 0.4 }}
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary text-primary font-bold text-sm mb-6 border border-border">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary text-primary font-display font-bold text-sm mb-6 border border-border">
               <ShieldCheck className="w-4 h-4 text-accent" aria-hidden="true" />
               Microsoft Authorized Partner
             </div>
@@ -104,7 +104,7 @@ export default function Microsoft365() {
                 { icon: Lock, label: "Zero Trust" },
                 { icon: Smartphone, label: "Any Device" },
               ].map((badge, i) => (
-                <span key={i} className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-accent/10 text-accent text-sm font-semibold">
+                <span key={i} className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-accent/10 text-accent text-sm font-display font-semibold">
                   <badge.icon className="w-4 h-4" /> {badge.label}
                 </span>
               ))}

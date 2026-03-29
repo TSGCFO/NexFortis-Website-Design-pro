@@ -16,7 +16,7 @@ function NavLink({ href, children, location }: { href: string; children: React.R
   return (
     <Link
       href={href}
-      className={`text-sm font-semibold transition-colors relative py-2 ${
+      className={`text-sm font-display font-semibold transition-colors relative py-2 ${
         isActive
           ? "text-accent"
           : "text-foreground/80 hover:text-accent"
@@ -165,7 +165,7 @@ export function Layout({ children }: { children: ReactNode }) {
               <button
                 type="button"
                 onClick={() => setServicesDropdownOpen((prev) => !prev)}
-                className={`text-sm font-semibold transition-colors flex items-center gap-1 py-2 relative ${
+                className={`text-sm font-display font-semibold transition-colors flex items-center gap-1 py-2 relative ${
                   isServicesActive ? "text-accent" : "text-foreground/80 hover:text-accent"
                 }`}
                 aria-expanded={servicesDropdownOpen}
@@ -203,7 +203,7 @@ export function Layout({ children }: { children: ReactNode }) {
                       }`}>
                         <Icon className="w-4 h-4" />
                       </div>
-                      <span className={`text-sm font-medium transition-colors ${
+                      <span className={`text-sm font-display font-medium transition-colors ${
                         isItemActive ? "text-accent" : "text-foreground group-hover:text-accent"
                       }`}>
                         {service.name}
@@ -214,7 +214,7 @@ export function Layout({ children }: { children: ReactNode }) {
                 <div className="border-t border-border/50 mt-2 pt-2">
                   <Link
                     href="/services"
-                    className="flex items-center gap-2 px-4 py-3 text-sm font-semibold text-accent hover:bg-secondary transition-colors"
+                    className="flex items-center gap-2 px-4 py-3 text-sm font-display font-semibold text-accent hover:bg-secondary transition-colors"
                     role="listitem"
                   >
                     View All Services <ArrowRight className="w-4 h-4" />
@@ -230,7 +230,7 @@ export function Layout({ children }: { children: ReactNode }) {
 
           <div className="hidden md:flex items-center gap-3">
             <ThemeToggle />
-            <Link href="/contact" className="px-6 py-2.5 rounded-full bg-rose-gold text-rose-gold-foreground font-semibold text-sm hover:bg-rose-gold-hover hover:shadow-lg hover:shadow-rose-gold/20 transition-all hover:-translate-y-0.5">
+            <Link href="/contact" className="px-6 py-2.5 rounded-full bg-rose-gold text-rose-gold-foreground font-display font-semibold text-sm hover:bg-rose-gold-hover hover:shadow-lg hover:shadow-rose-gold/20 transition-all hover:-translate-y-0.5">
               Get a Free Quote
             </Link>
           </div>
@@ -259,19 +259,19 @@ export function Layout({ children }: { children: ReactNode }) {
           aria-label="Mobile navigation"
         >
           <nav className="flex flex-col px-4 py-6 gap-4">
-            <Link href="/" className={`text-lg font-semibold min-h-[44px] flex items-center ${location === "/" ? "text-accent" : ""}`}>Home</Link>
-            <Link href="/services" className={`text-lg font-semibold min-h-[44px] flex items-center ${location === "/services" ? "text-accent" : ""}`}>All Services</Link>
+            <Link href="/" className={`text-lg font-display font-semibold min-h-[44px] flex items-center ${location === "/" ? "text-accent" : ""}`}>Home</Link>
+            <Link href="/services" className={`text-lg font-display font-semibold min-h-[44px] flex items-center ${location === "/services" ? "text-accent" : ""}`}>All Services</Link>
             <div className="pl-4 flex flex-col gap-3 border-l-2 border-border ml-2">
               {services.map((s) => (
-                <Link key={s.href} href={s.href} className={`min-h-[44px] flex items-center transition-colors ${location === s.href ? "text-accent font-medium" : "text-muted-foreground hover:text-accent"}`}>
+                <Link key={s.href} href={s.href} className={`min-h-[44px] font-display flex items-center transition-colors ${location === s.href ? "text-accent font-medium" : "text-muted-foreground hover:text-accent"}`}>
                   {s.name}
                 </Link>
               ))}
             </div>
-            <Link href="/about" className={`text-lg font-semibold min-h-[44px] flex items-center ${location === "/about" ? "text-accent" : ""}`}>About</Link>
-            <Link href="/blog" className={`text-lg font-semibold min-h-[44px] flex items-center ${location === "/blog" ? "text-accent" : ""}`}>Blog</Link>
-            <Link href="/contact" className={`text-lg font-semibold min-h-[44px] flex items-center ${location === "/contact" ? "text-accent" : ""}`}>Contact</Link>
-            <Link href="/contact" className="mt-4 px-6 py-3 text-center rounded-xl bg-rose-gold text-rose-gold-foreground font-semibold min-h-[44px] flex items-center justify-center">
+            <Link href="/about" className={`text-lg font-display font-semibold min-h-[44px] flex items-center ${location === "/about" ? "text-accent" : ""}`}>About</Link>
+            <Link href="/blog" className={`text-lg font-display font-semibold min-h-[44px] flex items-center ${location === "/blog" ? "text-accent" : ""}`}>Blog</Link>
+            <Link href="/contact" className={`text-lg font-display font-semibold min-h-[44px] flex items-center ${location === "/contact" ? "text-accent" : ""}`}>Contact</Link>
+            <Link href="/contact" className="mt-4 px-6 py-3 text-center rounded-xl bg-rose-gold text-rose-gold-foreground font-display font-semibold min-h-[44px] flex items-center justify-center">
               Get a Free Quote
             </Link>
           </nav>

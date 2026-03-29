@@ -158,10 +158,10 @@ export default function Blog() {
                       {featured.title.charAt(0)}
                     </span>
                   )}
-                  <div className={`absolute top-4 left-4 ${categoryColors[featured.category] ?? "bg-accent"} text-white text-xs font-bold px-3 py-1 rounded-full`}>
+                  <div className={`absolute top-4 left-4 ${categoryColors[featured.category] ?? "bg-accent"} text-white text-xs font-display font-bold px-3 py-1 rounded-full`}>
                     {featured.category}
                   </div>
-                  <div className="absolute top-4 right-4 bg-warning text-warning-foreground text-xs font-bold px-3 py-1 rounded-full">
+                  <div className="absolute top-4 right-4 bg-warning text-warning-foreground text-xs font-display font-bold px-3 py-1 rounded-full">
                     Featured
                   </div>
                 </div>
@@ -224,7 +224,7 @@ export default function Blog() {
                           {post.title.charAt(0)}
                         </span>
                       )}
-                      <div className={`absolute top-3 left-3 ${categoryColors[post.category] ?? "bg-accent"} text-white text-xs font-bold px-2.5 py-1 rounded-full`}>
+                      <div className={`absolute top-3 left-3 ${categoryColors[post.category] ?? "bg-accent"} text-white text-xs font-display font-bold px-2.5 py-1 rounded-full`}>
                         {post.category}
                       </div>
                     </div>

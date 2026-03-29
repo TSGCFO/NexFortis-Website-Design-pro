@@ -67,7 +67,7 @@ export default function BlogPostPage({ slug }: { slug: string }) {
             <ArrowLeft className="w-4 h-4" /> Back to Blog
           </Link>
           <div className="flex items-center gap-3 mb-6">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent/20 text-accent text-xs font-bold">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent/20 text-accent text-xs font-display font-bold">
               <Tag className="w-3 h-3" /> {post.category}
             </span>
             <span className="flex items-center gap-1.5 text-white/60 text-xs font-medium">

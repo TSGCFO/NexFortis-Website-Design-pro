@@ -94,7 +94,7 @@ export default function QuickBooks() {
             viewport={{ once: true }}
             transition={{ duration: 0.4 }}
           >
-            <span className="inline-block px-4 py-1.5 rounded-full bg-accent/10 text-accent text-sm font-bold mb-6">QuickBooks ProAdvisor</span>
+            <span className="inline-block px-4 py-1.5 rounded-full bg-accent/10 text-accent text-sm font-display font-bold mb-6">QuickBooks ProAdvisor</span>
             <h2 className="text-3xl md:text-4xl font-display font-bold text-primary mb-6">
               Your Accounting Data, Safe and Sound
             </h2>
