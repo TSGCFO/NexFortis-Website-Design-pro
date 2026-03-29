@@ -6,9 +6,11 @@ import {
   TrendingUp, Zap, Building2, Briefcase, ShoppingCart,
   Factory, Landmark, GraduationCap, Quote
 } from "lucide-react";
-import { useState } from "react";
+import { useState, lazy, Suspense } from "react";
 import { Section, SectionHeader, FAQItem } from "@/components/ui-elements";
 import { SEO, OrganizationSchema, LocalBusinessSchema, WebSiteSchema, FAQSchema } from "@/components/seo";
+
+const HeroCanvas = lazy(() => import("@/components/hero-canvas"));
 
 const services = [
   {
@@ -132,16 +134,9 @@ export default function Home() {
 
       <section className="relative min-h-[60vh] flex items-center justify-center bg-primary overflow-hidden pt-20">
         <div className="absolute inset-0 z-0" aria-hidden="true">
-          <picture>
-            <source srcSet={`${import.meta.env.BASE_URL}images/hero-bg.webp`} type="image/webp" />
-            <img
-              src={`${import.meta.env.BASE_URL}images/hero-bg.png`}
-              alt=""
-              className="w-full h-full object-cover opacity-40 mix-blend-overlay"
-              loading="eager"
-              aria-hidden="true"
-            />
-          </picture>
+          <Suspense fallback={null}>
+            <HeroCanvas />
+          </Suspense>
           <div className="absolute inset-0 bg-gradient-to-b from-primary/50 via-primary/80 to-primary" />
         </div>
 
