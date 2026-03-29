@@ -140,43 +140,67 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-b from-primary/50 via-primary/80 to-primary" />
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
-            className="max-w-4xl mx-auto"
-          >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 backdrop-blur-sm text-white text-sm font-medium mb-8">
-              <ShieldCheck className="w-4 h-4 text-accent" aria-hidden="true" />
-              Canada's Trusted Managed IT Partner
-            </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+              className="flex-1 text-center lg:text-left"
+            >
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 backdrop-blur-sm text-white text-sm font-medium mb-8">
+                <ShieldCheck className="w-4 h-4 text-accent" aria-hidden="true" />
+                Canada's Trusted Managed IT Partner
+              </div>
 
-            <h1 className="text-5xl md:text-7xl font-display font-extrabold text-white leading-[1.1] mb-8">
-              Your Business.<br />
-              <span className="text-gradient-azure">Our Technology.</span><br />
-              Limitless Growth.
-            </h1>
+              <h1 className="text-5xl md:text-7xl font-display font-extrabold text-white leading-[1.1] mb-8">
+                Your Business.<br />
+                <span className="text-gradient-azure">Our Technology.</span><br />
+                Limitless Growth.
+              </h1>
 
-            <p className="text-xl md:text-2xl text-white/80 mb-12 max-w-3xl mx-auto leading-relaxed">
-              From managed IT and Microsoft 365 to QuickBooks migration and digital marketing — NexFortis is the all-in-one IT partner Canadian businesses trust to scale securely.
-            </p>
+              <p className="text-xl md:text-2xl text-white/80 mb-12 max-w-3xl leading-relaxed">
+                From managed IT and Microsoft 365 to QuickBooks migration and digital marketing — NexFortis is the all-in-one IT partner Canadian businesses trust to scale securely.
+              </p>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link
-                href="/contact"
-                className="w-full sm:w-auto px-8 py-4 min-h-[48px] rounded-xl bg-rose-gold text-rose-gold-foreground font-bold text-lg hover:bg-rose-gold-hover hover:-translate-y-1 transition-all shadow-xl shadow-rose-gold/20 flex items-center justify-center gap-2"
-              >
-                Get a Free Quote <ArrowRight className="w-5 h-5" aria-hidden="true" />
-              </Link>
-              <Link
-                href="/services"
-                className="w-full sm:w-auto px-8 py-4 min-h-[48px] rounded-xl bg-white/10 text-white font-bold text-lg hover:bg-white/20 border border-white/20 backdrop-blur-sm transition-all flex items-center justify-center"
-              >
-                Explore Our Services
-              </Link>
-            </div>
-          </motion.div>
+              <div className="flex flex-col sm:flex-row items-center lg:items-start justify-center lg:justify-start gap-4">
+                <Link
+                  href="/contact"
+                  className="w-full sm:w-auto px-8 py-4 min-h-[48px] rounded-xl bg-rose-gold text-rose-gold-foreground font-bold text-lg hover:bg-rose-gold-hover hover:-translate-y-1 transition-all shadow-xl shadow-rose-gold/20 flex items-center justify-center gap-2"
+                >
+                  Get a Free Quote <ArrowRight className="w-5 h-5" aria-hidden="true" />
+                </Link>
+                <Link
+                  href="/services"
+                  className="w-full sm:w-auto px-8 py-4 min-h-[48px] rounded-xl bg-white/10 text-white font-bold text-lg hover:bg-white/20 border border-white/20 backdrop-blur-sm transition-all flex items-center justify-center"
+                >
+                  Explore Our Services
+                </Link>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
+              className="hidden lg:flex flex-shrink-0 items-center justify-center"
+              aria-hidden="true"
+            >
+              <div className="relative w-72 h-72 xl:w-80 xl:h-80">
+                <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-sm border border-white/15 shadow-2xl" />
+                <div className="absolute inset-0 rounded-3xl bg-gradient-to-tr from-accent/20 via-transparent to-white/10" />
+                <img
+                  src={`${import.meta.env.BASE_URL}images/logo-icon.svg`}
+                  alt=""
+                  className="absolute inset-4 w-auto h-auto object-contain drop-shadow-[0_0_40px_rgba(15,146,227,0.4)]"
+                  style={{
+                    filter: "brightness(1.2) contrast(1.1) drop-shadow(0 8px 24px rgba(0,0,0,0.3))",
+                  }}
+                />
+                <div className="absolute -inset-4 rounded-[2rem] bg-gradient-to-br from-accent/20 via-transparent to-white/5 blur-xl -z-10" />
+              </div>
+            </motion.div>
+          </div>
         </div>
       </section>
 

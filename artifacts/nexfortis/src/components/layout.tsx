@@ -112,8 +112,8 @@ export function Layout({ children }: { children: ReactNode }) {
   const isServicesActive = location === "/services" || location.startsWith("/services/");
 
   const navbarLogo = resolvedTheme === "dark"
-    ? `${import.meta.env.BASE_URL}images/logo-white.png`
-    : `${import.meta.env.BASE_URL}images/logo-original.png`;
+    ? `${import.meta.env.BASE_URL}images/logo-white.svg`
+    : `${import.meta.env.BASE_URL}images/logo-original.svg`;
 
   return (
     <div className="min-h-dvh flex flex-col font-sans">
@@ -288,7 +288,7 @@ export function Layout({ children }: { children: ReactNode }) {
             <div className="lg:col-span-1">
               <Link href="/" className="flex items-center mb-6" aria-label="NexFortis — Go to homepage">
                 <img
-                  src={`${import.meta.env.BASE_URL}images/logo-white.png`}
+                  src={`${import.meta.env.BASE_URL}images/logo-white.svg`}
                   alt="NexFortis"
                   className="h-10 w-auto"
                   width={160}

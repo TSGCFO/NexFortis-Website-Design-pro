@@ -64,7 +64,7 @@ export function OrganizationSchema() {
     name: "NexFortis IT Solutions",
     legalName: "17756968 Canada Inc.",
     url: siteUrl,
-    logo: `${siteUrl}/images/logo-original.png`,
+    logo: `${siteUrl}/images/logo-original.svg`,
     description: "NexFortis delivers end-to-end IT solutions for Canadian businesses including managed IT, Microsoft 365, QuickBooks migration, digital marketing, and workflow automation.",
     contactPoint: {
       "@type": "ContactPoint",
@@ -100,7 +100,7 @@ export function LocalBusinessSchema() {
     name: "NexFortis IT Solutions",
     legalName: "17756968 Canada Inc.",
     url: siteUrl,
-    logo: `${siteUrl}/images/logo-original.png`,
+    logo: `${siteUrl}/images/logo-original.svg`,
     image: `${siteUrl}/opengraph.png`,
     description: "NexFortis delivers end-to-end IT solutions for Canadian businesses including managed IT, Microsoft 365, QuickBooks migration, digital marketing, and workflow automation.",
     email: "contact@nexfortis.com",
@@ -247,7 +247,7 @@ export function ArticleSchema({ title, description, datePublished, dateModified,
     publisher: {
       "@type": "Organization",
       name: "NexFortis IT Solutions",
-      logo: { "@type": "ImageObject", url: `${siteUrl}/images/logo-original.png` },
+      logo: { "@type": "ImageObject", url: `${siteUrl}/images/logo-original.svg` },
     },
     author: {
       "@type": "Organization",
