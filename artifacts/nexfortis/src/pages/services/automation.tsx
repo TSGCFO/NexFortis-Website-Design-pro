@@ -99,7 +99,7 @@ export default function AutomationSoftware() {
         { label: "Workflow Automation" },
       ]} />
 
-      <Section bg="white">
+      <Section bg="brand-light">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -152,7 +152,7 @@ export default function AutomationSoftware() {
         </div>
       </Section>
 
-      <Section bg="secondary">
+      <Section bg="brand-light">
         <SectionHeader title="Real-World Use Cases" subtitle="See how automation transforms everyday business operations for Canadian companies across industries." centered />
         <div className="max-w-4xl mx-auto space-y-12 mt-12">
           {useCases.map((uc, i) => (
@@ -211,7 +211,7 @@ export default function AutomationSoftware() {
         </div>
       </Section>
 
-      <Section bg="secondary">
+      <Section bg="brand-light">
         <SectionHeader title="Our Technology Stack" subtitle="We work with the best tools and platforms to deliver robust, scalable solutions." centered />
         <div className="flex flex-wrap justify-center gap-3 mt-12">
           {techStack.map((tech, i) => (
@@ -248,7 +248,7 @@ export default function AutomationSoftware() {
         </div>
       </Section>
 
-      <Section bg="primary">
+      <Section bg="brand-navy">
         <div className="text-center max-w-3xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-6">Ready to Automate?</h2>
           <p className="text-lg text-white/80 mb-10">

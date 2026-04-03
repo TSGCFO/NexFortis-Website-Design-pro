@@ -86,7 +86,7 @@ export default function QuickBooks() {
         { label: "QuickBooks Solutions" },
       ]} />
 
-      <Section bg="white">
+      <Section bg="brand-light">
         <div className="grid lg:grid-cols-2 gap-16 items-center mb-20">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -146,7 +146,7 @@ export default function QuickBooks() {
         </div>
       </Section>
 
-      <Section bg="secondary">
+      <Section bg="brand-light">
         <SectionHeader
           title="How Our Migration Process Works"
           subtitle="A transparent, step-by-step process that gets your data into QuickBooks accurately and on time — backed by our 100% accuracy guarantee."
@@ -236,7 +236,7 @@ export default function QuickBooks() {
         </div>
       </Section>
 
-      <Section bg="secondary">
+      <Section bg="brand-light">
         <SectionHeader
           title="QuickBooks FAQ"
           subtitle="Common questions about QuickBooks migration, data recovery, and our add-on tools."
@@ -255,7 +255,7 @@ export default function QuickBooks() {
         </div>
       </Section>
 
-      <Section bg="primary">
+      <Section bg="brand-navy">
         <div className="text-center max-w-3xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-6">Need Help with QuickBooks?</h2>
           <p className="text-lg text-white/80 mb-10">

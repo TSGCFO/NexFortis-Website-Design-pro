@@ -127,8 +127,8 @@ export function Layout({ children }: { children: ReactNode }) {
       <header
         className={`fixed top-0 w-full z-50 transition-all duration-300 ${
           isScrolled
-            ? "bg-background/95 backdrop-blur-md shadow-sm py-3 border-b border-border/50"
-            : "bg-background py-5"
+            ? "bg-background/95 backdrop-blur-md shadow-lg py-2 border-b border-accent/20"
+            : "bg-background py-4"
         }`}
         role="banner"
       >
@@ -137,9 +137,9 @@ export function Layout({ children }: { children: ReactNode }) {
             <img
               src={navbarLogo}
               alt="NexFortis"
-              className="h-10 w-auto group-hover:scale-105 transition-transform"
-              width={160}
-              height={40}
+              className={`w-auto group-hover:scale-105 transition-all duration-300 ${isScrolled ? "h-12" : "h-14 lg:h-16"}`}
+              width={240}
+              height={64}
             />
           </Link>
 
@@ -282,33 +282,34 @@ export function Layout({ children }: { children: ReactNode }) {
         {children}
       </main>
 
-      <footer className="bg-primary text-primary-foreground pt-20 pb-10" role="contentinfo">
+      <div className="brand-accent-bar" aria-hidden="true" />
+      <footer className="section-brand-navy pt-20 pb-10" role="contentinfo">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
             <div className="lg:col-span-1">
-              <Link href="/" className="flex items-center mb-6" aria-label="NexFortis — Go to homepage">
+              <Link href="/" className="inline-block mb-6" aria-label="NexFortis — Go to homepage">
                 <img
                   src={`${import.meta.env.BASE_URL}images/logo-white.svg`}
                   alt="NexFortis"
-                  className="h-10 w-auto"
-                  width={160}
-                  height={40}
+                  className="h-16 w-auto"
+                  width={240}
+                  height={64}
                 />
               </Link>
-              <p className="text-primary-foreground/90 mb-2 text-sm font-semibold">
+              <p className="text-white/90 mb-2 text-sm font-display font-semibold tracking-wide">
                 Complexity Decoded. <span className="text-rose-gold">Advantage.</span>
               </p>
-              <p className="text-primary-foreground/60 mb-2 text-xs">
+              <p className="text-white/50 mb-2 text-xs font-display">
                 Your Business. Our Technology. Limitless Growth.
               </p>
-              <p className="text-primary-foreground/70 mb-6 text-sm leading-relaxed">
+              <p className="text-white/60 mb-6 text-sm leading-relaxed">
                 NexFortis provides end-to-end IT solutions for Canadian businesses.
               </p>
             </div>
 
             <div>
-              <h4 className="font-display font-semibold text-lg mb-6 text-primary-foreground">Services</h4>
-              <ul className="space-y-4 text-sm text-primary-foreground/70">
+              <h4 className="font-display font-semibold text-lg mb-6 text-white">Services</h4>
+              <ul className="space-y-4 text-sm text-white/60">
                 {services.map(s => (
                   <li key={s.href}>
                     <Link href={s.href} className="hover:text-accent transition-colors flex items-center gap-2">
@@ -320,8 +321,8 @@ export function Layout({ children }: { children: ReactNode }) {
             </div>
 
             <div>
-              <h4 className="font-display font-semibold text-lg mb-6 text-primary-foreground">Company</h4>
-              <ul className="space-y-4 text-sm text-primary-foreground/70">
+              <h4 className="font-display font-semibold text-lg mb-6 text-white">Company</h4>
+              <ul className="space-y-4 text-sm text-white/60">
                 <li><Link href="/about" className="hover:text-accent transition-colors">About Us</Link></li>
                 <li><Link href="/blog" className="hover:text-accent transition-colors">Blog</Link></li>
                 <li><Link href="/contact" className="hover:text-accent transition-colors">Contact</Link></li>
@@ -331,8 +332,8 @@ export function Layout({ children }: { children: ReactNode }) {
             </div>
 
             <div>
-              <h4 className="font-display font-semibold text-lg mb-6 text-primary-foreground">Contact</h4>
-              <address className="not-italic space-y-4 text-sm text-primary-foreground/70">
+              <h4 className="font-display font-semibold text-lg mb-6 text-white">Contact</h4>
+              <address className="not-italic space-y-4 text-sm text-white/60">
                 <p>204 Hill Farm Rd<br/>Nobleton, ON L7B 0A1</p>
                 <p><a href="mailto:contact@nexfortis.com" className="hover:text-accent transition-colors">contact@nexfortis.com</a></p>
                 {/* TODO: Update this URL when the LinkedIn page is live */}
@@ -344,32 +345,29 @@ export function Layout({ children }: { children: ReactNode }) {
             </div>
           </div>
 
-          <div className="border-t border-primary-foreground/10 pt-6 pb-4 flex justify-center items-center gap-8">
-            {/* ASSET: replace src with official Microsoft AI Cloud Partner Program badge file */}
+          <div className="border-t border-white/10 pt-6 pb-4 flex justify-center items-center gap-8">
             <img
               src={`${import.meta.env.BASE_URL}images/badge-microsoft-partner.png`}
               alt="Microsoft AI Cloud Partner Program badge"
-              className="h-9 w-auto object-contain opacity-70"
+              className="h-9 w-auto object-contain opacity-60 hover:opacity-90 transition-opacity"
             />
-            {/* ASSET: replace src with official Google Partner badge file */}
             <img
               src={`${import.meta.env.BASE_URL}images/badge-google-partner.png`}
               alt="Google Partner badge"
-              className="h-9 w-auto object-contain opacity-70"
+              className="h-9 w-auto object-contain opacity-60 hover:opacity-90 transition-opacity"
             />
-            {/* ASSET: replace src with official QuickBooks ProAdvisor badge file */}
             <img
               src={`${import.meta.env.BASE_URL}images/badge-quickbooks-proadvisor.png`}
               alt="QuickBooks ProAdvisor badge"
-              className="h-9 w-auto object-contain opacity-70"
+              className="h-9 w-auto object-contain opacity-60 hover:opacity-90 transition-opacity"
             />
           </div>
 
-          <div className="border-t border-primary-foreground/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-primary-foreground/50">
+          <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-white/40">
             <p>&copy; {new Date().getFullYear()} NexFortis IT Solutions (17756968 Canada Inc.). All rights reserved.</p>
             <div className="flex gap-6">
-              <Link href="/privacy" className="hover:text-primary-foreground transition-colors">Privacy</Link>
-              <Link href="/terms" className="hover:text-primary-foreground transition-colors">Terms</Link>
+              <Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link>
+              <Link href="/terms" className="hover:text-white transition-colors">Terms</Link>
             </div>
           </div>
         </div>

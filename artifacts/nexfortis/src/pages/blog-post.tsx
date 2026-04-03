@@ -60,8 +60,9 @@ export default function BlogPostPage({ slug }: { slug: string }) {
           { name: post.title, url: `/blog/${post.slug}` },
         ]}
       />
-      <div className="relative pt-32 pb-16 md:pt-44 md:pb-24 bg-primary overflow-hidden">
-        <div className="absolute top-0 right-0 -mr-40 -mt-40 w-[600px] h-[600px] bg-accent/20 rounded-full blur-[100px] mix-blend-screen pointer-events-none" aria-hidden="true" />
+      <div className="relative pt-32 pb-16 md:pt-44 md:pb-24 section-brand-navy overflow-hidden">
+        <div className="absolute top-0 right-0 -mr-40 -mt-40 w-[600px] h-[600px] bg-accent/15 rounded-full blur-[120px] pointer-events-none" aria-hidden="true" />
+        <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-[400px] h-[400px] bg-rose-gold/8 rounded-full blur-[100px] pointer-events-none" aria-hidden="true" />
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <Link href="/blog" className="text-white/70 hover:text-white text-sm font-medium inline-flex items-center gap-2 mb-8 transition-colors">
             <ArrowLeft className="w-4 h-4" /> Back to Blog
@@ -98,7 +99,7 @@ export default function BlogPostPage({ slug }: { slug: string }) {
         </article>
       </Section>
 
-      <Section bg="secondary">
+      <Section bg="brand-light">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-2xl font-display font-bold text-primary mb-4">Enjoyed this article?</h2>
           <p className="text-muted-foreground mb-8">Get in touch to discuss how we can help your business.</p>

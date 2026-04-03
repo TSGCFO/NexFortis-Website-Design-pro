@@ -125,11 +125,12 @@ export default function ServicesOverview() {
         </div>
       </Section>
 
-      <Section bg="secondary">
+      <Section bg="brand-navy">
         <SectionHeader
           title="Not Sure Where to Start?"
           subtitle="Book a free 30-minute consultation and we'll recommend the right services for your business stage and budget."
           centered
+          light
         />
         <div className="text-center mt-4">
           <Link

@@ -67,7 +67,7 @@ export default function DigitalMarketing() {
         { label: "Digital Marketing" },
       ]} />
 
-      <Section bg="white">
+      <Section bg="brand-light">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div>
             <motion.div
@@ -119,7 +119,7 @@ export default function DigitalMarketing() {
         </div>
       </Section>
 
-      <Section bg="secondary">
+      <Section bg="brand-light">
         <SectionHeader 
           title="Comprehensive Digital Solutions" 
           subtitle="Everything you need to establish, grow, and dominate your online presence — from design and development through to ongoing content and optimization."
@@ -175,7 +175,7 @@ export default function DigitalMarketing() {
         </div>
       </Section>
 
-      <Section bg="secondary">
+      <Section bg="brand-light">
         <SectionHeader
           title="Digital Marketing FAQ"
           subtitle="Common questions about web design, SEO, Google Ads, and digital marketing services for Canadian businesses."
@@ -194,7 +194,7 @@ export default function DigitalMarketing() {
         </div>
       </Section>
 
-      <Section bg="primary">
+      <Section bg="brand-navy">
         <div className="text-center max-w-3xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-6">Ready to Grow Your Online Presence?</h2>
           <p className="text-lg text-white/80 mb-10">

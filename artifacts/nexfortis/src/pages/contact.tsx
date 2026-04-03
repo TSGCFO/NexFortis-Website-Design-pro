@@ -74,7 +74,7 @@ export default function Contact() {
         { label: "Contact Us" },
       ]} />
 
-      <Section bg="secondary" className="relative">
+      <Section bg="brand-light" className="relative">
         <div className="grid lg:grid-cols-5 gap-12 items-start">
 
           <div className="lg:col-span-2 space-y-8">

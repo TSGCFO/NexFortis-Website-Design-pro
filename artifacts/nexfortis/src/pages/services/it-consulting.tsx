@@ -85,7 +85,7 @@ export default function ITConsulting() {
         { label: "IT Consulting" },
       ]} />
 
-      <Section bg="white">
+      <Section bg="brand-light">
         <div className="flex flex-wrap justify-center items-center gap-0 mb-24">
           {stats.map((stat, i) => (
             <motion.div
@@ -143,7 +143,7 @@ export default function ITConsulting() {
         </div>
       </Section>
 
-      <Section bg="secondary">
+      <Section bg="brand-light">
         <SectionHeader
           title="Our Engagement Process"
           subtitle="A structured approach that delivers measurable results without disrupting your day-to-day business."
@@ -197,7 +197,7 @@ export default function ITConsulting() {
         </div>
       </Section>
 
-      <Section bg="primary">
+      <Section bg="brand-navy">
         <div className="text-center max-w-3xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-6">Let's Build Your IT Strategy</h2>
           <p className="text-lg text-white/80 mb-10">

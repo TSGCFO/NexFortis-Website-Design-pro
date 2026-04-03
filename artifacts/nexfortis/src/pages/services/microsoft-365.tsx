@@ -77,7 +77,7 @@ export default function Microsoft365() {
         { label: "Microsoft 365" },
       ]} />
 
-      <Section bg="white">
+      <Section bg="brand-light">
         <div className="grid lg:grid-cols-2 gap-16 items-center mb-24">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -133,7 +133,7 @@ export default function Microsoft365() {
         </div>
       </Section>
 
-      <Section bg="secondary">
+      <Section bg="brand-light">
         <SectionHeader title="Migration Process" subtitle="A battle-tested four-phase approach to moving your organization to Microsoft 365 — without downtime, data loss, or disruption to your daily operations." centered />
         <div className="relative max-w-4xl mx-auto mt-12">
           <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-accent/20 hidden md:block" aria-hidden="true" />
@@ -205,7 +205,7 @@ export default function Microsoft365() {
         </p>
       </Section>
 
-      <Section bg="secondary">
+      <Section bg="brand-light">
         <SectionHeader
           title="Microsoft 365 FAQ"
           subtitle="Common questions about Microsoft 365 migration, deployment, and ongoing management for Canadian businesses."
@@ -224,7 +224,7 @@ export default function Microsoft365() {
         </div>
       </Section>
 
-      <Section bg="primary">
+      <Section bg="brand-navy">
         <div className="text-center max-w-3xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-6">Ready to Modernize Your Workspace?</h2>
           <p className="text-lg text-white/80 mb-10">

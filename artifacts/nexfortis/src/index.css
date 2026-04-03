@@ -312,8 +312,45 @@ html {
   to { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes fadeInScale {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
 :focus-visible {
   outline: 2px solid var(--nf-azure);
   outline-offset: 2px;
   border-radius: 4px;
+}
+
+.section-brand-navy {
+  background: linear-gradient(135deg, var(--nf-navy) 0%, hsl(217, 60%, 8%) 100%);
+  color: #fff;
+}
+
+.dark .section-brand-navy {
+  background: linear-gradient(135deg, hsl(222, 47%, 10%) 0%, hsl(217, 60%, 6%) 100%);
+}
+
+.section-brand-azure {
+  background: linear-gradient(135deg, hsl(203, 88%, 47%) 0%, hsl(203, 88%, 38%) 100%);
+  color: #fff;
+}
+
+.section-brand-light {
+  background: linear-gradient(180deg, #F7F9FC 0%, #EEF2F7 100%);
+}
+
+.dark .section-brand-light {
+  background: linear-gradient(180deg, hsl(222, 47%, 13%) 0%, hsl(222, 47%, 11%) 100%);
+}
+
+.brand-divider {
+  height: 4px;
+  background: linear-gradient(90deg, var(--nf-azure) 0%, var(--nf-rose-gold) 50%, var(--nf-azure) 100%);
+}
+
+.brand-accent-bar {
+  height: 3px;
+  background: linear-gradient(90deg, transparent 0%, var(--nf-azure) 20%, var(--nf-rose-gold) 50%, var(--nf-azure) 80%, transparent 100%);
 }

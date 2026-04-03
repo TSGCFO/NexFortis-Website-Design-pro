@@ -3,11 +3,14 @@ import { LucideIcon, ArrowRight } from "lucide-react";
 import { Link } from "wouter";
 import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 
-export function Section({ children, className = "", bg = "white", id }: { children: ReactNode, className?: string, bg?: "white" | "secondary" | "primary", id?: string }) {
-  const bgClasses = {
+export function Section({ children, className = "", bg = "white", id }: { children: ReactNode, className?: string, bg?: "white" | "secondary" | "primary" | "brand-navy" | "brand-azure" | "brand-light", id?: string }) {
+  const bgClasses: Record<string, string> = {
     white: "bg-background text-foreground",
     secondary: "bg-secondary text-foreground",
-    primary: "bg-primary text-primary-foreground"
+    primary: "bg-primary text-primary-foreground",
+    "brand-navy": "section-brand-navy",
+    "brand-azure": "section-brand-azure",
+    "brand-light": "section-brand-light text-foreground",
   };
 
   return (
@@ -93,18 +96,22 @@ export function FAQItem({ question, answer, isOpen, onToggle }: { question: stri
 
 export function PageHero({ title, subtitle, imagePath, imageWebpPath }: { title: string, subtitle: string, imagePath?: string, imageWebpPath?: string }) {
   return (
-    <div className="relative pt-24 pb-14 md:pt-32 md:pb-20 bg-primary overflow-hidden">
+    <div className="relative pt-28 pb-20 md:pt-36 md:pb-28 section-brand-navy overflow-hidden">
       {imagePath && (
         <div className="absolute inset-0 z-0">
           <picture>
             {imageWebpPath && <source srcSet={imageWebpPath} type="image/webp" />}
-            <img src={imagePath} alt="" className="w-full h-full object-cover opacity-20" loading="eager" aria-hidden="true" />
+            <img src={imagePath} alt="" className="w-full h-full object-cover opacity-15" loading="eager" aria-hidden="true" />
           </picture>
-          <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/80 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[var(--nf-navy)] via-[var(--nf-navy)]/80 to-transparent" />
         </div>
       )}
-      <div className="absolute top-0 right-0 -mr-40 -mt-40 w-[600px] h-[600px] bg-accent/20 rounded-full blur-[100px] mix-blend-screen pointer-events-none" aria-hidden="true" />
+      <div className="absolute top-0 right-0 -mr-40 -mt-40 w-[600px] h-[600px] bg-accent/15 rounded-full blur-[120px] pointer-events-none" aria-hidden="true" />
+      <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-[400px] h-[400px] bg-rose-gold/10 rounded-full blur-[100px] pointer-events-none" aria-hidden="true" />
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+        <div className="inline-block mb-6 px-4 py-1.5 rounded-full bg-white/10 border border-white/15 backdrop-blur-sm">
+          <span className="text-accent text-sm font-display font-semibold">NexFortis IT Solutions</span>
+        </div>
         <h1
           className="text-4xl md:text-6xl font-display font-extrabold text-white mb-6 leading-tight"
         >
@@ -116,6 +123,7 @@ export function PageHero({ title, subtitle, imagePath, imageWebpPath }: { title:
           {subtitle}
         </p>
       </div>
+      <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-accent to-transparent opacity-40" aria-hidden="true" />
     </div>
   );
 }

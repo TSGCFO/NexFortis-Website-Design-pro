@@ -132,13 +132,15 @@ export default function Home() {
       <WebSiteSchema />
       <FAQSchema faqs={homeFaqs} />
 
-      <section className="relative min-h-[60vh] flex items-center justify-center bg-primary overflow-hidden pt-20">
+      <section className="relative min-h-[70vh] flex items-center justify-center section-brand-navy overflow-hidden pt-24 pb-8">
         <div className="absolute inset-0 z-0" aria-hidden="true">
           <Suspense fallback={null}>
             <HeroCanvas />
           </Suspense>
-          <div className="absolute inset-0 bg-gradient-to-b from-primary/50 via-primary/80 to-primary" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[var(--nf-navy)]/40 via-[var(--nf-navy)]/70 to-[var(--nf-navy)]" />
         </div>
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 -mt-32 w-[800px] h-[800px] bg-accent/10 rounded-full blur-[150px] pointer-events-none" aria-hidden="true" />
+        <div className="absolute bottom-0 right-0 -mr-20 -mb-20 w-[500px] h-[500px] bg-rose-gold/8 rounded-full blur-[120px] pointer-events-none" aria-hidden="true" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
           <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
@@ -148,33 +150,33 @@ export default function Home() {
               transition={{ duration: 0.5, ease: "easeOut" }}
               className="flex-1 text-center lg:text-left"
             >
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 backdrop-blur-sm text-white text-sm font-display font-medium mb-8">
+              <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 border border-white/15 backdrop-blur-sm text-white text-sm font-display font-medium mb-8">
                 <ShieldCheck className="w-4 h-4 text-accent" aria-hidden="true" />
                 Canada's Trusted Managed IT Partner
               </div>
 
-            <h1 className="text-5xl md:text-7xl font-display font-extrabold text-white leading-[1.1] mb-4">
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-extrabold text-white leading-[1.05] mb-4">
               Complexity Decoded.{" "}
               <span className="text-rose-gold">Advantage.</span>
             </h1>
-            <p className="text-2xl md:text-3xl text-white/60 font-display font-semibold mb-8">
+            <p className="text-2xl md:text-3xl text-white/50 font-display font-semibold mb-8">
               Your Business. Our Technology. Limitless Growth.
             </p>
 
-              <p className="text-xl md:text-2xl text-white/80 mb-12 max-w-3xl leading-relaxed">
+              <p className="text-xl md:text-2xl text-white/75 mb-12 max-w-3xl leading-relaxed">
                 From managed IT and Microsoft 365 to QuickBooks migration and digital marketing — NexFortis is the all-in-one IT partner Canadian businesses trust to scale securely.
               </p>
 
               <div className="flex flex-col sm:flex-row items-center lg:items-start justify-center lg:justify-start gap-4">
                 <Link
                   href="/contact"
-                  className="w-full sm:w-auto px-8 py-4 min-h-[48px] rounded-xl bg-rose-gold text-rose-gold-foreground font-bold text-lg hover:bg-rose-gold-hover hover:-translate-y-1 transition-all shadow-xl shadow-rose-gold/20 flex items-center justify-center gap-2"
+                  className="w-full sm:w-auto px-10 py-4 min-h-[52px] rounded-xl bg-rose-gold text-rose-gold-foreground font-bold text-lg hover:bg-rose-gold-hover hover:-translate-y-1 transition-all shadow-xl shadow-rose-gold/25 flex items-center justify-center gap-2"
                 >
                   Get a Free Quote <ArrowRight className="w-5 h-5" aria-hidden="true" />
                 </Link>
                 <Link
                   href="/services"
-                  className="w-full sm:w-auto px-8 py-4 min-h-[48px] rounded-xl bg-white/10 text-white font-bold text-lg hover:bg-white/20 border border-white/20 backdrop-blur-sm transition-all flex items-center justify-center"
+                  className="w-full sm:w-auto px-10 py-4 min-h-[52px] rounded-xl bg-white/10 text-white font-bold text-lg hover:bg-white/20 border border-white/20 backdrop-blur-sm transition-all flex items-center justify-center"
                 >
                   Explore Our Services
                 </Link>
@@ -188,25 +190,26 @@ export default function Home() {
               className="hidden lg:flex flex-shrink-0 items-center justify-center"
               aria-hidden="true"
             >
-              <div className="relative w-72 h-72 xl:w-80 xl:h-80">
+              <div className="relative w-80 h-80 xl:w-96 xl:h-96">
                 <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-sm border border-white/15 shadow-2xl" />
                 <div className="absolute inset-0 rounded-3xl bg-gradient-to-tr from-accent/20 via-transparent to-white/10" />
                 <img
-                  src={`${import.meta.env.BASE_URL}images/logo-icon.svg`}
+                  src={`${import.meta.env.BASE_URL}images/logo-white.svg`}
                   alt=""
-                  className="absolute inset-4 w-auto h-auto object-contain drop-shadow-[0_0_40px_rgba(15,146,227,0.4)]"
+                  className="absolute inset-8 w-auto h-auto object-contain drop-shadow-[0_0_50px_rgba(15,146,227,0.4)]"
                   style={{
-                    filter: "brightness(1.2) contrast(1.1) drop-shadow(0 8px 24px rgba(0,0,0,0.3))",
+                    filter: "brightness(1.15) drop-shadow(0 8px 30px rgba(0,0,0,0.3))",
                   }}
                 />
-                <div className="absolute -inset-4 rounded-[2rem] bg-gradient-to-br from-accent/20 via-transparent to-white/5 blur-xl -z-10" />
+                <div className="absolute -inset-6 rounded-[2rem] bg-gradient-to-br from-accent/15 via-transparent to-rose-gold/10 blur-2xl -z-10" />
               </div>
             </motion.div>
           </div>
         </div>
+        <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-accent/50 to-transparent" aria-hidden="true" />
       </section>
 
-      <section className="py-12 bg-primary/95 border-b border-white/10" aria-label="Key statistics">
+      <section className="py-14 section-brand-navy border-b border-white/5" aria-label="Key statistics">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap justify-center items-center gap-0">
             {stats.map((stat, i) => (
@@ -216,12 +219,14 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.3, delay: i * 0.08 }}
-                className={`flex items-center gap-4 px-8 py-4 ${i < stats.length - 1 ? "border-r border-white/20" : ""} max-sm:border-r-0 max-sm:border-b max-sm:border-white/10 max-sm:w-1/2 max-sm:justify-center max-sm:py-5`}
+                className={`flex items-center gap-4 px-10 py-5 ${i < stats.length - 1 ? "border-r border-white/15" : ""} max-sm:border-r-0 max-sm:border-b max-sm:border-white/10 max-sm:w-1/2 max-sm:justify-center max-sm:py-5`}
               >
-                <stat.icon className="w-6 h-6 text-accent shrink-0" aria-hidden="true" />
+                <div className="w-12 h-12 rounded-xl bg-accent/15 flex items-center justify-center" aria-hidden="true">
+                  <stat.icon className="w-6 h-6 text-accent shrink-0" />
+                </div>
                 <div>
                   <div className="text-2xl md:text-3xl font-display font-extrabold text-white leading-none">{stat.value}</div>
-                  <p className="text-white/60 text-sm font-medium">{stat.label}</p>
+                  <p className="text-white/50 text-sm font-medium">{stat.label}</p>
                 </div>
               </motion.div>
             ))}
@@ -230,8 +235,7 @@ export default function Home() {
       </section>
 
       <section
-        className="border-t border-b py-10"
-        style={{ backgroundColor: "#F8F8F9", borderColor: "#D1D2D4" }}
+        className="py-12 section-brand-light border-b border-border/30"
         aria-label="Certified Partnerships"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -242,35 +246,32 @@ export default function Home() {
             Certified Technology Partner
           </p>
           <div className="flex flex-wrap justify-center items-center gap-12 md:gap-16">
-            {/* ASSET: replace src with official Microsoft AI Cloud Partner Program badge file */}
             <div className="p-6">
               <img
                 src={`${import.meta.env.BASE_URL}images/badge-microsoft-partner.png`}
                 alt="Microsoft AI Cloud Partner Program badge"
-                className="h-9 w-auto object-contain"
+                className="h-10 w-auto object-contain"
               />
             </div>
-            {/* ASSET: replace src with official Google Partner badge file */}
             <div className="p-6">
               <img
                 src={`${import.meta.env.BASE_URL}images/badge-google-partner.png`}
                 alt="Google Partner badge"
-                className="h-9 w-auto object-contain"
+                className="h-10 w-auto object-contain"
               />
             </div>
-            {/* ASSET: replace src with official QuickBooks ProAdvisor badge file */}
             <div className="p-6">
               <img
                 src={`${import.meta.env.BASE_URL}images/badge-quickbooks-proadvisor.png`}
                 alt="QuickBooks ProAdvisor badge"
-                className="h-9 w-auto object-contain"
+                className="h-10 w-auto object-contain"
               />
             </div>
           </div>
         </div>
       </section>
 
-      <Section bg="secondary">
+      <Section bg="brand-light">
         <SectionHeader
           title="Comprehensive IT Solutions for Canadian Businesses"
           subtitle="Five specialized service areas, delivered by one expert team. No vendor juggling, no knowledge gaps — just results."
@@ -330,12 +331,13 @@ export default function Home() {
         </div>
       </Section>
 
-      <Section bg="white">
+      <Section bg="brand-navy">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div>
             <SectionHeader
               title="Why Canadian Businesses Choose NexFortis"
               subtitle="We don't just fix computers — we engineer business growth through smart, strategic technology adoption."
+              light
             />
 
             <div className="space-y-6 mt-8">
@@ -352,8 +354,8 @@ export default function Home() {
                     <CheckCircle2 className="w-4 h-4 text-accent" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-lg text-primary">{item.title}</h3>
-                    <p className="text-muted-foreground leading-relaxed">{item.desc}</p>
+                    <h3 className="font-bold text-lg text-white">{item.title}</h3>
+                    <p className="text-white/65 leading-relaxed">{item.desc}</p>
                   </div>
                 </motion.div>
               ))}
@@ -361,7 +363,7 @@ export default function Home() {
           </div>
 
           <div className="relative">
-            <div className="absolute inset-0 bg-accent/10 rounded-3xl transform translate-x-4 translate-y-4" aria-hidden="true"></div>
+            <div className="absolute inset-0 bg-accent/15 rounded-3xl transform translate-x-4 translate-y-4" aria-hidden="true"></div>
             <picture>
               <source srcSet={`${import.meta.env.BASE_URL}images/about-team.webp`} type="image/webp" />
               <img
@@ -377,7 +379,7 @@ export default function Home() {
         </div>
       </Section>
 
-      <Section bg="secondary">
+      <Section bg="brand-light">
         <SectionHeader
           title="How We Deliver Results"
           subtitle="A clear, repeatable process that keeps projects on time, on budget, and fully aligned with your goals."
@@ -412,7 +414,7 @@ export default function Home() {
         </div>
       </Section>
 
-      <Section bg="white">
+      <Section bg="brand-light">
         <SectionHeader
           title="Industries We Serve"
           subtitle="NexFortis provides managed IT services, cloud solutions, and digital transformation support to businesses across Canada's most dynamic sectors."
@@ -454,11 +456,12 @@ export default function Home() {
         </div>
       </Section>
 
-      <Section bg="secondary">
+      <Section bg="brand-navy">
         <SectionHeader
           title="What Our Clients Say"
           subtitle="Trusted by Canadian businesses to deliver reliable, results-driven IT solutions."
           centered
+          light
         />
         <div className="text-center mb-12">
           <p className="text-lg font-semibold text-accent">Trusted by 500+ Canadian Businesses</p>
@@ -490,22 +493,22 @@ export default function Home() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.3, delay: i * 0.1 }}
-              className="bg-card rounded-2xl p-8 border border-border shadow-sm flex flex-col"
+              className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10 flex flex-col"
             >
-              <Quote className="w-8 h-8 text-accent/30 mb-4 shrink-0" aria-hidden="true" />
-              <p className="text-muted-foreground leading-relaxed mb-6 flex-grow italic">
+              <Quote className="w-8 h-8 text-accent/40 mb-4 shrink-0" aria-hidden="true" />
+              <p className="text-white/75 leading-relaxed mb-6 flex-grow italic">
                 "{testimonial.quote}"
               </p>
-              <div className="border-t border-border pt-4">
-                <p className="font-bold text-primary">{testimonial.name}</p>
-                <p className="text-sm text-muted-foreground">{testimonial.title}, {testimonial.company}</p>
+              <div className="border-t border-white/10 pt-4">
+                <p className="font-bold text-white">{testimonial.name}</p>
+                <p className="text-sm text-white/50">{testimonial.title}, {testimonial.company}</p>
               </div>
             </motion.div>
           ))}
         </div>
       </Section>
 
-      <Section bg="white">
+      <Section bg="brand-light">
         <SectionHeader
           title="Frequently Asked Questions"
           subtitle="Answers to the most common questions Canadian businesses ask about managed IT services, Microsoft 365, and QuickBooks migration."

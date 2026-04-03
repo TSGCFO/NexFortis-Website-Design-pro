@@ -32,7 +32,7 @@ export default function About() {
         { label: "About Us" },
       ]} />
 
-      <Section bg="white">
+      <Section bg="brand-light">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div>
             <h2 className="text-3xl md:text-4xl font-display font-bold text-primary mb-6">Our Story</h2>
@@ -67,8 +67,8 @@ export default function About() {
         </div>
       </Section>
 
-      <Section bg="secondary">
-        <SectionHeader title="Core Values" centered />
+      <Section bg="brand-navy">
+        <SectionHeader title="Core Values" centered light />
         <div className="max-w-4xl mx-auto grid sm:grid-cols-2 gap-y-10 gap-x-16">
           {values.map((val, i) => {
             const Icon = val.icon;
@@ -81,12 +81,12 @@ export default function About() {
                 transition={{ duration: 0.3, delay: i * 0.08 }}
                 className="flex items-start gap-5"
               >
-                <div className="w-14 h-14 shrink-0 bg-accent/10 rounded-2xl flex items-center justify-center text-accent">
+                <div className="w-14 h-14 shrink-0 bg-accent/20 rounded-2xl flex items-center justify-center text-accent">
                   <Icon className="w-7 h-7" />
                 </div>
                 <div>
-                  <h4 className="text-xl font-bold text-primary mb-2">{val.title}</h4>
-                  <p className="text-muted-foreground leading-relaxed">{val.desc}</p>
+                  <h4 className="text-xl font-bold text-white mb-2">{val.title}</h4>
+                  <p className="text-white/70 leading-relaxed">{val.desc}</p>
                 </div>
               </motion.div>
             );
@@ -94,7 +94,7 @@ export default function About() {
         </div>
       </Section>
 
-      <Section bg="white">
+      <Section bg="brand-light">
         <SectionHeader title="Our Leadership" centered />
         <div className="max-w-2xl mx-auto">
           <motion.div
@@ -123,8 +123,8 @@ export default function About() {
         </div>
       </Section>
 
-      <Section bg="secondary">
-        <SectionHeader title="Partnerships & Certifications" centered />
+      <Section bg="brand-navy">
+        <SectionHeader title="Partnerships & Certifications" centered light />
         <div className="max-w-4xl mx-auto">
           <div className="grid sm:grid-cols-3 gap-10">
             <motion.div
@@ -141,8 +141,8 @@ export default function About() {
                 className="h-9 w-auto object-contain"
               />
               <div>
-                <h4 className="text-lg font-bold text-primary mb-2">Microsoft AI Cloud Partner Program</h4>
-                <p className="text-muted-foreground leading-relaxed text-sm">
+                <h4 className="text-lg font-bold text-white mb-2">Microsoft AI Cloud Partner Program</h4>
+                <p className="text-white/70 leading-relaxed text-sm">
                   As a Microsoft Partner, NexFortis delivers certified expertise across Microsoft 365, Azure, and Intune — ensuring your cloud infrastructure is built on best practices with direct access to Microsoft's partner resources and support.
                 </p>
               </div>
@@ -162,8 +162,8 @@ export default function About() {
                 className="h-9 w-auto object-contain"
               />
               <div>
-                <h4 className="text-lg font-bold text-primary mb-2">Google Partner</h4>
-                <p className="text-muted-foreground leading-relaxed text-sm">
+                <h4 className="text-lg font-bold text-white mb-2">Google Partner</h4>
+                <p className="text-white/70 leading-relaxed text-sm">
                   Our Google Partner status means your digital marketing campaigns — from Google Ads to Analytics — are managed by certified professionals who meet Google's strict performance and spend requirements.
                 </p>
               </div>
@@ -183,8 +183,8 @@ export default function About() {
                 className="h-9 w-auto object-contain"
               />
               <div>
-                <h4 className="text-lg font-bold text-primary mb-2">QuickBooks ProAdvisor</h4>
-                <p className="text-muted-foreground leading-relaxed text-sm">
+                <h4 className="text-lg font-bold text-white mb-2">QuickBooks ProAdvisor</h4>
+                <p className="text-white/70 leading-relaxed text-sm">
                   Our certified ProAdvisor team provides expert QuickBooks setup, customization, and training — helping your business streamline bookkeeping, automate reporting, and maximize the value of your accounting software.
                 </p>
               </div>
@@ -193,7 +193,7 @@ export default function About() {
         </div>
       </Section>
 
-      <Section bg="primary">
+      <Section bg="brand-navy">
         <div className="text-center max-w-3xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-6">Let's Work Together</h2>
           <p className="text-lg text-white/80 mb-10">

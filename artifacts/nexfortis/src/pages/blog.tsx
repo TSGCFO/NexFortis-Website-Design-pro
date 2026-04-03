@@ -124,7 +124,7 @@ export default function Blog() {
         subtitle="Practical guides, industry news, and expert advice to help Canadian businesses get more from their technology."
       />
 
-      <Section bg="white">
+      <Section bg="brand-light">
         {posts.length === 0 ? (
           <div className="text-center py-20">
             <p className="text-2xl font-display font-bold text-primary mb-4">Loading articles...</p>
