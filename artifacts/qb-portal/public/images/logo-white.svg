@@ -45,7 +45,6 @@
 <path d="M 1014.61 387.96 C 1016.67 390.09 1018.64 392.29 1020.64 394.47 C 1018.17 395.41 1015.65 396.86 1013.37 394.63 C 1011.05 392.30 1012.98 389.93 1014.61 387.96 Z" id="p40" />
 </defs>
 <g stroke-width="10pt">
-<use stroke="#ffffff" xlink:href="#p0" />
 <use stroke="#001d3f" xlink:href="#p1" />
 <use stroke="#ffffff" xlink:href="#p2" />
 <use stroke="#001d3f" xlink:href="#p3" />
@@ -88,7 +87,6 @@
 <use stroke="#001d3f" xlink:href="#p40" />
 </g>
 <g>
-<use fill="#ffffff" xlink:href="#p0" />
 <use fill="#001d3f" xlink:href="#p1" />
 <use fill="#ffffff" xlink:href="#p2" />
 <use fill="#001d3f" xlink:href="#p3" />
