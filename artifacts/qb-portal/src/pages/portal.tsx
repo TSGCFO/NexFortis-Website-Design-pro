@@ -27,11 +27,11 @@ interface Ticket {
 }
 
 const statusColors: Record<string, string> = {
-  submitted: "bg-blue-100 text-blue-700",
-  pending_payment: "bg-yellow-100 text-yellow-700",
-  processing: "bg-amber-100 text-amber-700",
-  completed: "bg-green-100 text-green-700",
-  delivered: "bg-[#1a2744]/10 text-[#1a2744]",
+  submitted: "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400",
+  pending_payment: "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400",
+  processing: "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400",
+  completed: "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400",
+  delivered: "bg-accent/10 text-accent",
 };
 
 function apiHeaders() {
@@ -152,22 +152,24 @@ export default function Portal() {
   const processingOrders = orders.filter((o) => o.status === "processing" || o.status === "pending_payment");
 
   return (
-    <div className="min-h-screen bg-[#f5f7fa]">
-      <div className="bg-[#1a2744] text-white py-8">
+    <div className="min-h-screen bg-background">
+      <div className="section-brand-navy py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold">Welcome, {user.name.split(" ")[0]}</h1>
+              <h1 className="text-2xl font-bold font-display text-white">Welcome, {user.name.split(" ")[0]}</h1>
               <p className="text-white/70 text-sm">{user.email}</p>
             </div>
             <Link href="/order">
-              <Button className="bg-[#B76E79] text-white hover:bg-[#A35D68] font-bold gap-2">
+              <Button className="bg-rose-gold text-rose-gold-foreground hover:bg-rose-gold-hover font-display font-bold gap-2">
                 <Upload className="w-4 h-4" /> New Order
               </Button>
             </Link>
           </div>
         </div>
       </div>
+
+      <div className="brand-divider" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Tabs value={activeTab} onValueChange={setActiveTab}>
@@ -184,9 +186,9 @@ export default function Portal() {
               <Card>
                 <CardContent className="p-6">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center"><Package className="w-5 h-5 text-blue-600" /></div>
+                    <div className="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center"><Package className="w-5 h-5 text-blue-600 dark:text-blue-400" /></div>
                     <div>
-                      <p className="text-2xl font-bold text-[#1a2744]">{orders.length}</p>
+                      <p className="text-2xl font-bold text-primary">{orders.length}</p>
                       <p className="text-xs text-muted-foreground">Total Orders</p>
                     </div>
                   </div>
@@ -195,9 +197,9 @@ export default function Portal() {
               <Card>
                 <CardContent className="p-6">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-amber-100 flex items-center justify-center"><Clock className="w-5 h-5 text-amber-600" /></div>
+                    <div className="w-10 h-10 rounded-lg bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center"><Clock className="w-5 h-5 text-amber-600 dark:text-amber-400" /></div>
                     <div>
-                      <p className="text-2xl font-bold text-[#1a2744]">{processingOrders.length}</p>
+                      <p className="text-2xl font-bold text-primary">{processingOrders.length}</p>
                       <p className="text-xs text-muted-foreground">In Progress</p>
                     </div>
                   </div>
@@ -206,9 +208,9 @@ export default function Portal() {
               <Card>
                 <CardContent className="p-6">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center"><CheckCircle className="w-5 h-5 text-green-600" /></div>
+                    <div className="w-10 h-10 rounded-lg bg-green-100 dark:bg-green-900/30 flex items-center justify-center"><CheckCircle className="w-5 h-5 text-green-600 dark:text-green-400" /></div>
                     <div>
-                      <p className="text-2xl font-bold text-[#1a2744]">{completedOrders.length}</p>
+                      <p className="text-2xl font-bold text-primary">{completedOrders.length}</p>
                       <p className="text-xs text-muted-foreground">Completed</p>
                     </div>
                   </div>
@@ -216,7 +218,7 @@ export default function Portal() {
               </Card>
             </div>
 
-            <h2 className="text-lg font-bold text-[#1a2744] mb-4">Recent Orders</h2>
+            <h2 className="text-lg font-bold font-display text-primary mb-4">Recent Orders</h2>
             {loadingOrders ? (
               <p className="text-muted-foreground text-sm">Loading orders...</p>
             ) : orders.length === 0 ? (
@@ -224,7 +226,7 @@ export default function Portal() {
                 <CardContent className="p-8 text-center">
                   <Package className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
                   <p className="text-muted-foreground">No orders yet.</p>
-                  <Link href="/order"><Button className="mt-4 bg-[#B76E79] text-white hover:bg-[#A35D68]">Place Your First Order</Button></Link>
+                  <Link href="/order"><Button className="mt-4 bg-rose-gold text-rose-gold-foreground hover:bg-rose-gold-hover font-display">Place Your First Order</Button></Link>
                 </CardContent>
               </Card>
             ) : (
@@ -234,7 +236,7 @@ export default function Portal() {
                     <Card className="hover:shadow-md transition-shadow cursor-pointer">
                       <CardContent className="p-4 flex items-center justify-between">
                         <div>
-                          <p className="font-semibold text-sm text-[#1a2744]">ORD-{String(order.id).padStart(3, "0")}</p>
+                          <p className="font-semibold text-sm text-primary">ORD-{String(order.id).padStart(3, "0")}</p>
                           <p className="text-xs text-muted-foreground">{order.serviceName}</p>
                         </div>
                         <div className="flex items-center gap-4">
@@ -251,7 +253,7 @@ export default function Portal() {
           </TabsContent>
 
           <TabsContent value="orders">
-            <h2 className="text-lg font-bold text-[#1a2744] mb-4">Order History</h2>
+            <h2 className="text-lg font-bold font-display text-primary mb-4">Order History</h2>
             {orders.length === 0 ? (
               <Card><CardContent className="p-8 text-center text-muted-foreground">No orders yet.</CardContent></Card>
             ) : (
@@ -265,7 +267,7 @@ export default function Portal() {
                         <CardContent className="p-6">
                           <div className="flex items-start justify-between mb-4">
                             <div>
-                              <h3 className="font-bold text-[#1a2744]">ORD-{String(order.id).padStart(3, "0")}</h3>
+                              <h3 className="font-bold font-display text-primary">ORD-{String(order.id).padStart(3, "0")}</h3>
                               <p className="text-sm text-muted-foreground">{order.serviceName}</p>
                               {order.addons && <p className="text-xs text-muted-foreground mt-1">Add-ons: {order.addons}</p>}
                             </div>
@@ -291,10 +293,10 @@ export default function Portal() {
           </TabsContent>
 
           <TabsContent value="files">
-            <h2 className="text-lg font-bold text-[#1a2744] mb-4">My Files</h2>
-            <Card className="mb-4 border-[#f0a500]/30 bg-[#f0a500]/5">
+            <h2 className="text-lg font-bold font-display text-primary mb-4">My Files</h2>
+            <Card className="mb-4 border-accent/30 bg-accent/5">
               <CardContent className="p-4 flex items-center gap-3">
-                <Shield className="w-5 h-5 text-[#f0a500]" />
+                <Shield className="w-5 h-5 text-accent" />
                 <p className="text-sm text-muted-foreground">Files are retained for 7 days after delivery, then permanently deleted per our privacy policy.</p>
               </CardContent>
             </Card>
@@ -329,31 +331,31 @@ export default function Portal() {
           </TabsContent>
 
           <TabsContent value="settings">
-            <h2 className="text-lg font-bold text-[#1a2744] mb-4">Account Settings</h2>
+            <h2 className="text-lg font-bold font-display text-primary mb-4">Account Settings</h2>
             <Card>
               <CardContent className="p-6 space-y-4">
                 <div>
                   <label className="block text-sm font-medium mb-1">Name</label>
-                  <input type="text" value={profileName} onChange={(e) => { setProfileName(e.target.value); setProfileSaved(false); }} className="w-full px-3 py-2 rounded-lg border border-border text-sm" />
+                  <input type="text" value={profileName} onChange={(e) => { setProfileName(e.target.value); setProfileSaved(false); }} className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium mb-1">Email</label>
-                  <input type="email" defaultValue={user.email} className="w-full px-3 py-2 rounded-lg border border-border text-sm" disabled />
+                  <input type="email" defaultValue={user.email} className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm" disabled />
                 </div>
                 <div>
                   <label className="block text-sm font-medium mb-1">Phone</label>
-                  <input type="tel" value={profilePhone} onChange={(e) => { setProfilePhone(e.target.value); setProfileSaved(false); }} className="w-full px-3 py-2 rounded-lg border border-border text-sm" />
+                  <input type="tel" value={profilePhone} onChange={(e) => { setProfilePhone(e.target.value); setProfileSaved(false); }} className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm" />
                 </div>
                 <div className="flex items-center gap-3">
-                  <Button className="bg-[#1a2744]" onClick={handleProfileSave}>Save Changes</Button>
+                  <Button className="bg-navy text-white hover:bg-navy/90 font-display" onClick={handleProfileSave}>Save Changes</Button>
                   {profileSaved && <span className="text-sm text-green-600 flex items-center gap-1"><CheckCircle className="w-4 h-4" /> Saved</span>}
                 </div>
 
                 <div className="border-t pt-4 mt-4">
-                  <h3 className="font-semibold text-[#1a2744] mb-3">Change Password</h3>
+                  <h3 className="font-semibold font-display text-primary mb-3">Change Password</h3>
                   <div className="space-y-3">
-                    <input type="password" placeholder="Current password" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} className="w-full px-3 py-2 rounded-lg border border-border text-sm" />
-                    <input type="password" placeholder="New password (min 8 characters)" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} className="w-full px-3 py-2 rounded-lg border border-border text-sm" />
+                    <input type="password" placeholder="Current password" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm" />
+                    <input type="password" placeholder="New password (min 8 characters)" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm" />
                     {passwordError && <p className="text-sm text-red-500">{passwordError}</p>}
                     {passwordSaved && <p className="text-sm text-green-600 flex items-center gap-1"><CheckCircle className="w-4 h-4" /> Password updated</p>}
                     <Button variant="outline" onClick={handlePasswordChange}>Update Password</Button>
@@ -364,12 +366,12 @@ export default function Portal() {
           </TabsContent>
 
           <TabsContent value="support">
-            <h2 className="text-lg font-bold text-[#1a2744] mb-4">Support</h2>
+            <h2 className="text-lg font-bold font-display text-primary mb-4">Support</h2>
             {ticketSubmitted ? (
               <Card>
                 <CardContent className="p-8 text-center">
                   <CheckCircle className="w-12 h-12 text-green-500 mx-auto mb-4" />
-                  <h3 className="text-lg font-bold text-[#1a2744] mb-2">Ticket Submitted</h3>
+                  <h3 className="text-lg font-bold font-display text-primary mb-2">Ticket Submitted</h3>
                   <p className="text-sm text-muted-foreground mb-4">We'll respond within 4 hours (1 hour for Premium Support).</p>
                   <Button onClick={() => setTicketSubmitted(false)} variant="outline">Submit Another Ticket</Button>
                 </CardContent>
@@ -380,13 +382,13 @@ export default function Portal() {
                   <form onSubmit={handleTicketSubmit} className="space-y-4">
                     <div>
                       <label className="block text-sm font-medium mb-1">Subject</label>
-                      <input type="text" required value={ticketSubject} onChange={(e) => setTicketSubject(e.target.value)} className="w-full px-3 py-2 rounded-lg border border-border text-sm" placeholder="Brief description of your issue" />
+                      <input type="text" required value={ticketSubject} onChange={(e) => setTicketSubject(e.target.value)} className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm" placeholder="Brief description of your issue" />
                     </div>
                     <div>
                       <label className="block text-sm font-medium mb-1">Message</label>
-                      <textarea required value={ticketMessage} onChange={(e) => setTicketMessage(e.target.value)} rows={5} className="w-full px-3 py-2 rounded-lg border border-border text-sm resize-none" placeholder="Please describe your issue in detail..." />
+                      <textarea required value={ticketMessage} onChange={(e) => setTicketMessage(e.target.value)} rows={5} className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm resize-none" placeholder="Please describe your issue in detail..." />
                     </div>
-                    <Button type="submit" className="bg-[#1a2744]">Submit Ticket</Button>
+                    <Button type="submit" className="bg-navy text-white hover:bg-navy/90 font-display">Submit Ticket</Button>
                   </form>
                 </CardContent>
               </Card>
@@ -394,7 +396,7 @@ export default function Portal() {
 
             {tickets.length > 0 && (
               <div className="mt-6">
-                <h3 className="font-semibold text-[#1a2744] mb-3">Previous Tickets</h3>
+                <h3 className="font-semibold font-display text-primary mb-3">Previous Tickets</h3>
                 <div className="space-y-3">
                   {tickets.map((ticket) => (
                     <Card key={ticket.id}>
@@ -404,7 +406,7 @@ export default function Portal() {
                             <p className="font-semibold text-sm">{ticket.subject}</p>
                             <p className="text-xs text-muted-foreground">{new Date(ticket.createdAt).toLocaleDateString()}</p>
                           </div>
-                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${ticket.status === "open" ? "bg-blue-100 text-blue-700" : "bg-green-100 text-green-700"}`}>{ticket.status}</span>
+                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${ticket.status === "open" ? "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400" : "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"}`}>{ticket.status}</span>
                         </div>
                       </CardContent>
                     </Card>

@@ -83,23 +83,25 @@ export default function Waitlist() {
 
   return (
     <div>
-      <section className="bg-[#1a2744] text-white py-16">
+      <section className="section-brand-navy py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <Bell className="w-12 h-12 text-[#f0a500] mx-auto mb-4" />
-          <h1 className="text-4xl font-bold mb-4">Join the Waitlist</h1>
+          <Bell className="w-12 h-12 text-accent mx-auto mb-4" />
+          <h1 className="text-4xl font-bold font-display text-white mb-4">Join the Waitlist</h1>
           <p className="text-white/70 text-lg max-w-xl mx-auto">
             {product ? `Be the first to know when ${product.name} launches.` : "Be the first to know when our new services launch."}
           </p>
         </div>
       </section>
 
-      <section className="py-16 bg-[#f5f7fa]">
+      <div className="brand-divider" />
+
+      <section className="py-16 section-brand-light">
         <div className="max-w-md mx-auto px-4">
           {submitted ? (
             <Card>
               <CardContent className="p-8 text-center">
-                <CheckCircle className="w-16 h-16 text-[#28a745] mx-auto mb-4" />
-                <h2 className="text-2xl font-bold text-[#1a2744] mb-2">You're on the list!</h2>
+                <CheckCircle className="w-16 h-16 text-success mx-auto mb-4" />
+                <h2 className="text-2xl font-bold font-display text-primary mb-2">You're on the list!</h2>
                 <p className="text-muted-foreground">
                   We'll email you when <strong>{product?.name || "this product"}</strong> launches.
                 </p>
@@ -115,14 +117,14 @@ export default function Waitlist() {
               <CardContent className="p-8">
                 {product && (
                   <div className="mb-6 p-4 bg-muted rounded-lg">
-                    <h3 className="font-bold text-[#1a2744]">{product.name}</h3>
+                    <h3 className="font-bold font-display text-primary">{product.name}</h3>
                     <p className="text-sm text-muted-foreground mt-1">{product.description}</p>
-                    <p className="text-sm font-semibold text-[#f0a500] mt-2">{formatPrice(product.price_cad)}</p>
+                    <p className="text-sm font-semibold text-accent mt-2">{formatPrice(product.price_cad)}</p>
                   </div>
                 )}
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-[#1a2744] mb-1">Email Address</label>
+                    <label htmlFor="email" className="block text-sm font-medium text-primary mb-1">Email Address</label>
                     <input
                       id="email"
                       type="email"
@@ -130,11 +132,11 @@ export default function Waitlist() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="you@company.com"
-                      className="w-full px-4 py-2.5 rounded-lg border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-[#f0a500]/50"
+                      className="w-full px-4 py-2.5 rounded-lg border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-accent/50"
                     />
                   </div>
                   {error && <p className="text-sm text-red-500">{error}</p>}
-                  <Button type="submit" disabled={loading} className="w-full bg-[#1a2744] hover:bg-[#1a2744]/90 font-semibold">
+                  <Button type="submit" disabled={loading} className="w-full bg-navy text-white hover:bg-navy/90 font-display font-semibold">
                     {loading ? "Joining..." : "Join Waitlist"}
                   </Button>
                   <p className="text-xs text-center text-muted-foreground">We'll only email you about this product. No spam.</p>

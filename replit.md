@@ -41,6 +41,7 @@ All packages extend a base `tsconfig.base.json` with `composite: true`. The root
 ### QuickBooks Service Portal (`artifacts/qb-portal`)
 - **Framework**: React 19 + Vite + Tailwind CSS v4
 - **Routing**: Wouter
+- **Design Language**: NexFortis brand-consistent design — navy (#0A1628), azure (#0F92E3), rose-gold (#B76E79) color palette. Inter body font + Alegreya Sans SC display font (self-hosted woff2). Dark mode support via ThemeProvider (`src/hooks/use-theme.tsx`). Glassmorphism utility classes, brand dividers, section gradients. Sticky scroll-aware navbar with SVG logo (light/dark variants). NexFortis-style footer with brand accent bar.
 - **Features**: Product catalog, order flow with .qbm file upload, waitlist signup, FAQ, QBM guide, user authentication, client portal, and Stripe integration.
 - **Auth**: bcrypt password hashing, HMAC-signed tokens, httpOnly session cookies, rate-limited login.
 - **File Management**: Multer for .qbm file uploads (500MB limit), authorized download endpoints.

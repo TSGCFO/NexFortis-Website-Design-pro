@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useSearch } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Shield, CheckCircle, AlertTriangle } from "lucide-react";
+import { CheckCircle, AlertTriangle } from "lucide-react";
 
 export default function ResetPassword() {
   const searchString = useSearch();
@@ -18,13 +18,13 @@ export default function ResetPassword() {
   if (!token) {
     return (
       <div>
-        <section className="bg-[#f5f7fa] py-16 min-h-[70vh]">
+        <section className="section-brand-light py-16 min-h-[70vh]">
           <div className="max-w-md mx-auto px-4 text-center">
             <AlertTriangle className="w-12 h-12 text-red-500 mx-auto mb-4" />
-            <h1 className="text-2xl font-bold text-[#1a2744] mb-2">Invalid Reset Link</h1>
+            <h1 className="text-2xl font-bold font-display text-primary mb-2">Invalid Reset Link</h1>
             <p className="text-muted-foreground mb-6">This password reset link is invalid or has expired.</p>
             <Link href="/forgot-password">
-              <Button className="bg-[#1a2744]">Request New Reset Link</Button>
+              <Button className="bg-navy text-white hover:bg-navy/90 font-display">Request New Reset Link</Button>
             </Link>
           </div>
         </section>
@@ -68,15 +68,15 @@ export default function ResetPassword() {
   if (success) {
     return (
       <div>
-        <section className="bg-[#f5f7fa] py-16 min-h-[70vh]">
+        <section className="section-brand-light py-16 min-h-[70vh]">
           <div className="max-w-md mx-auto px-4">
             <Card>
               <CardContent className="p-8 text-center">
                 <CheckCircle className="w-12 h-12 text-green-500 mx-auto mb-4" />
-                <h2 className="text-lg font-bold text-[#1a2744] mb-2">Password Reset Successfully</h2>
+                <h2 className="text-lg font-bold font-display text-primary mb-2">Password Reset Successfully</h2>
                 <p className="text-sm text-muted-foreground mb-6">You can now sign in with your new password.</p>
                 <Link href="/login">
-                  <Button className="bg-[#1a2744]">Sign In</Button>
+                  <Button className="bg-navy text-white hover:bg-navy/90 font-display">Sign In</Button>
                 </Link>
               </CardContent>
             </Card>
@@ -88,11 +88,12 @@ export default function ResetPassword() {
 
   return (
     <div>
-      <section className="bg-[#f5f7fa] py-16 min-h-[70vh]">
+      <section className="section-brand-light py-16 min-h-[70vh]">
         <div className="max-w-md mx-auto px-4">
           <div className="text-center mb-8">
-            <Shield className="w-12 h-12 text-[#1a2744] mx-auto mb-4" />
-            <h1 className="text-2xl font-bold text-[#1a2744]">Set New Password</h1>
+            <img src={`${import.meta.env.BASE_URL}images/logo-original.svg`} alt="NexFortis" className="h-14 mx-auto mb-4 dark:hidden" />
+            <img src={`${import.meta.env.BASE_URL}images/logo-white.svg`} alt="NexFortis" className="h-14 mx-auto mb-4 hidden dark:block" />
+            <h1 className="text-2xl font-bold font-display text-primary">Set New Password</h1>
             <p className="text-muted-foreground">Enter your new password below</p>
           </div>
 
@@ -107,7 +108,7 @@ export default function ResetPassword() {
                     required
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
-                    className="w-full px-3 py-2 rounded-lg border border-border text-sm focus:outline-none focus:ring-2 focus:ring-[#f0a500]/50"
+                    className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-accent/50"
                     placeholder="Minimum 8 characters"
                     autoComplete="new-password"
                   />
@@ -120,13 +121,13 @@ export default function ResetPassword() {
                     required
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    className="w-full px-3 py-2 rounded-lg border border-border text-sm focus:outline-none focus:ring-2 focus:ring-[#f0a500]/50"
+                    className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-accent/50"
                     placeholder="Re-enter your password"
                     autoComplete="new-password"
                   />
                 </div>
                 {error && <p className="text-sm text-red-500">{error}</p>}
-                <Button type="submit" disabled={loading} className="w-full bg-[#1a2744] hover:bg-[#1a2744]/90">
+                <Button type="submit" disabled={loading} className="w-full bg-navy text-white hover:bg-navy/90 font-display">
                   {loading ? "Resetting..." : "Reset Password"}
                 </Button>
               </form>

@@ -191,19 +191,20 @@ export default function Order() {
   if (orderComplete) {
     return (
       <div>
-        <section className="bg-[#1a2744] text-white py-16">
+        <section className="section-brand-navy py-16">
           <div className="max-w-7xl mx-auto px-4 text-center">
-            <h1 className="text-4xl font-bold mb-4">Order Submitted</h1>
+            <h1 className="text-4xl font-bold font-display text-white mb-4">Order Submitted</h1>
           </div>
         </section>
-        <section className="py-16 bg-[#f5f7fa]">
+        <div className="brand-divider" />
+        <section className="py-16 section-brand-light">
           <div className="max-w-lg mx-auto px-4">
             <Card>
               <CardContent className="p-8 text-center">
-                <CheckCircle className="w-16 h-16 text-[#28a745] mx-auto mb-4" />
-                <h2 className="text-2xl font-bold text-[#1a2744] mb-2">Thank You!</h2>
+                <CheckCircle className="w-16 h-16 text-success mx-auto mb-4" />
+                <h2 className="text-2xl font-bold font-display text-primary mb-2">Thank You!</h2>
                 <p className="text-muted-foreground mb-4">Your order has been received. We'll begin processing shortly.</p>
-                {orderId && <p className="text-sm font-medium text-[#1a2744] mb-3">Order ID: ORD-{String(orderId).padStart(3, "0")}</p>}
+                {orderId && <p className="text-sm font-medium text-primary mb-3">Order ID: ORD-{String(orderId).padStart(3, "0")}</p>}
                 <div className="bg-muted rounded-lg p-4 text-left text-sm space-y-1">
                   <p><strong>Service:</strong> {selectedSvc?.name}</p>
                   {selectedAddons.length > 0 && (
@@ -215,7 +216,7 @@ export default function Order() {
                 <p className="text-xs text-muted-foreground mt-4">A confirmation email will be sent to {email}</p>
                 <div className="mt-6">
                   <Link href="/portal">
-                    <Button className="bg-[#1a2744]">Go to Dashboard</Button>
+                    <Button className="bg-navy text-white hover:bg-navy/90 font-display">Go to Dashboard</Button>
                   </Link>
                 </div>
               </CardContent>
@@ -228,50 +229,52 @@ export default function Order() {
 
   return (
     <div>
-      <section className="bg-[#1a2744] text-white py-16">
+      <section className="section-brand-navy py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl font-bold mb-4">Place Your Order</h1>
+          <h1 className="text-4xl font-bold font-display text-white mb-4">Place Your Order</h1>
           <p className="text-white/70 text-lg">Select your service, upload your file, and pay securely</p>
           <div className="flex justify-center gap-6 mt-4 text-sm text-white/50">
-            <span className="flex items-center gap-1"><Lock className="w-4 h-4 text-[#f0a500]" /> 256-bit Encrypted</span>
-            <span className="flex items-center gap-1"><Shield className="w-4 h-4 text-[#f0a500]" /> PIPEDA Compliant</span>
+            <span className="flex items-center gap-1"><Lock className="w-4 h-4 text-accent" /> 256-bit Encrypted</span>
+            <span className="flex items-center gap-1"><Shield className="w-4 h-4 text-accent" /> PIPEDA Compliant</span>
           </div>
         </div>
       </section>
 
-      <section className="py-12 bg-[#f5f7fa]">
+      <div className="brand-divider" />
+
+      <section className="py-12 section-brand-light">
         <div className="max-w-3xl mx-auto px-4">
           <form onSubmit={handleSubmit} className="space-y-6">
             <Card>
               <CardContent className="p-6">
-                <h2 className="text-lg font-bold text-[#1a2744] mb-4">1. Your Information</h2>
+                <h2 className="text-lg font-bold font-display text-primary mb-4">1. Your Information</h2>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium mb-1">Full Name *</label>
-                    <input type="text" required value={name} onChange={(e) => setName(e.target.value)} className="w-full px-3 py-2 rounded-lg border border-border text-sm focus:outline-none focus:ring-2 focus:ring-[#f0a500]/50" />
+                    <input type="text" required value={name} onChange={(e) => setName(e.target.value)} className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-accent/50" />
                   </div>
                   <div>
                     <label className="block text-sm font-medium mb-1">Email *</label>
-                    <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} className="w-full px-3 py-2 rounded-lg border border-border text-sm focus:outline-none focus:ring-2 focus:ring-[#f0a500]/50" />
+                    <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-accent/50" />
                   </div>
                 </div>
                 <div className="mt-4">
                   <label className="block text-sm font-medium mb-1">Phone (optional)</label>
-                  <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} className="w-full px-3 py-2 rounded-lg border border-border text-sm focus:outline-none focus:ring-2 focus:ring-[#f0a500]/50" />
+                  <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-accent/50" />
                 </div>
               </CardContent>
             </Card>
 
             <Card>
               <CardContent className="p-6">
-                <h2 className="text-lg font-bold text-[#1a2744] mb-4">2. Select Service</h2>
+                <h2 className="text-lg font-bold font-display text-primary mb-4">2. Select Service</h2>
                 <div className="space-y-3">
                   {services.map((svc) => (
                     <label
                       key={svc.id}
                       className={`flex items-center gap-3 p-4 rounded-lg border transition-colors ${
                         !svc.available ? "opacity-50 cursor-not-allowed bg-muted" :
-                        selectedService === svc.id ? "border-[#f0a500] bg-[#f0a500]/5 cursor-pointer" : "border-border hover:border-[#f0a500]/30 cursor-pointer"
+                        selectedService === svc.id ? "border-accent bg-accent/5 cursor-pointer" : "border-border hover:border-accent/30 cursor-pointer"
                       }`}
                     >
                       <input
@@ -280,19 +283,19 @@ export default function Order() {
                         checked={selectedService === svc.id}
                         onChange={() => svc.available && setSelectedService(svc.id)}
                         disabled={!svc.available}
-                        className="accent-[#f0a500]"
+                        className="accent-accent"
                       />
                       <div className="flex-1">
                         <div className="flex items-center gap-2">
                           <span className="font-medium text-sm">{svc.name}</span>
                           {!svc.available && (
-                            <span className="px-2 py-0.5 rounded-full bg-[#ff6b35]/10 text-[#ff6b35] text-xs font-semibold">{svc.target}</span>
+                            <span className="px-2 py-0.5 rounded-full bg-coming-soon/10 text-coming-soon text-xs font-semibold">{svc.target}</span>
                           )}
                         </div>
                       </div>
-                      <span className="font-bold text-[#f0a500]">${svc.price} CAD</span>
+                      <span className="font-bold text-accent">${svc.price} CAD</span>
                       {!svc.available && (
-                        <Link href={`/waitlist?product=${svc.slug}`} className="text-xs text-[#ff6b35] underline" onClick={(e: React.MouseEvent) => e.stopPropagation()}>
+                        <Link href={`/waitlist?product=${svc.slug}`} className="text-xs text-coming-soon underline" onClick={(e: React.MouseEvent) => e.stopPropagation()}>
                           Join Waitlist
                         </Link>
                       )}
@@ -305,14 +308,14 @@ export default function Order() {
             {isAvailableService && (
               <Card>
                 <CardContent className="p-6">
-                  <h2 className="text-lg font-bold text-[#1a2744] mb-4">3. Add-Ons</h2>
+                  <h2 className="text-lg font-bold font-display text-primary mb-4">3. Add-Ons</h2>
                   <div className="space-y-3">
                     {addons.map((addon) => (
                       <label
                         key={addon.id}
                         className={`flex items-center gap-3 p-4 rounded-lg border transition-colors ${
                           !addon.available ? "opacity-50 cursor-not-allowed bg-muted" :
-                          selectedAddons.includes(addon.id) ? "border-[#f0a500] bg-[#f0a500]/5 cursor-pointer" : "border-border hover:border-[#f0a500]/30 cursor-pointer"
+                          selectedAddons.includes(addon.id) ? "border-accent bg-accent/5 cursor-pointer" : "border-border hover:border-accent/30 cursor-pointer"
                         }`}
                       >
                         <input
@@ -320,13 +323,13 @@ export default function Order() {
                           checked={selectedAddons.includes(addon.id)}
                           onChange={() => addon.available && toggleAddon(addon.id)}
                           disabled={!addon.available}
-                          className="accent-[#f0a500]"
+                          className="accent-accent"
                         />
                         <div className="flex-1">
                           <span className="font-medium text-sm">{addon.name}</span>
-                          {!addon.available && <span className="ml-2 px-2 py-0.5 rounded-full bg-[#ff6b35]/10 text-[#ff6b35] text-xs font-semibold">Coming Soon</span>}
+                          {!addon.available && <span className="ml-2 px-2 py-0.5 rounded-full bg-coming-soon/10 text-coming-soon text-xs font-semibold">Coming Soon</span>}
                         </div>
-                        <span className="font-bold text-[#f0a500]">+${addon.price} CAD</span>
+                        <span className="font-bold text-accent">+${addon.price} CAD</span>
                       </label>
                     ))}
                   </div>
@@ -336,12 +339,12 @@ export default function Order() {
 
             <Card>
               <CardContent className="p-6">
-                <h2 className="text-lg font-bold text-[#1a2744] mb-4">{isAvailableService ? "4" : "3"}. Upload Your .QBM File</h2>
+                <h2 className="text-lg font-bold font-display text-primary mb-4">{isAvailableService ? "4" : "3"}. Upload Your .QBM File</h2>
                 <div className="border-2 border-dashed border-border rounded-lg p-8 text-center">
                   <Upload className="w-8 h-8 text-muted-foreground mx-auto mb-3" />
                   <div className="mb-3">
                     <label htmlFor="qbm-file" className="cursor-pointer">
-                      <span className="text-[#f0a500] font-medium hover:underline">Choose a .QBM file</span>
+                      <span className="text-accent font-medium hover:underline">Choose a .QBM file</span>
                       <input
                         id="qbm-file"
                         type="file"
@@ -354,25 +357,25 @@ export default function Order() {
                   </div>
                   {file && (
                     <div className="flex items-center gap-2 justify-center text-sm">
-                      <CheckCircle className="w-4 h-4 text-[#28a745]" />
+                      <CheckCircle className="w-4 h-4 text-success" />
                       <span className="font-medium">{file.name}</span>
                       <span className="text-muted-foreground">({(file.size / 1024 / 1024).toFixed(1)} MB)</span>
                     </div>
                   )}
                   {fileError && <p className="text-sm text-red-500 mt-2 flex items-center gap-1 justify-center"><AlertTriangle className="w-4 h-4" /> {fileError}</p>}
                   {fileWarning && <p className="text-sm text-amber-600 mt-2 flex items-center gap-1 justify-center"><Info className="w-4 h-4" /> {fileWarning}</p>}
-                  <p className="text-xs text-muted-foreground mt-3">Max file size: 500 MB &bull; Only .QBM files accepted &bull; <Link href="/qbm-guide" className="text-[#f0a500]">How to create a .QBM file</Link></p>
+                  <p className="text-xs text-muted-foreground mt-3">Max file size: 500 MB &bull; Only .QBM files accepted &bull; <Link href="/qbm-guide" className="text-accent">How to create a .QBM file</Link></p>
                 </div>
               </CardContent>
             </Card>
 
             <Card>
               <CardContent className="p-6">
-                <h2 className="text-lg font-bold text-[#1a2744] mb-4">{isAvailableService ? "5" : "4"}. QuickBooks Version</h2>
+                <h2 className="text-lg font-bold font-display text-primary mb-4">{isAvailableService ? "5" : "4"}. QuickBooks Version</h2>
                 <select
                   value={qbVersion}
                   onChange={(e) => setQbVersion(e.target.value)}
-                  className="w-full px-3 py-2 rounded-lg border border-border text-sm focus:outline-none focus:ring-2 focus:ring-[#f0a500]/50"
+                  className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-accent/50"
                 >
                   <option value="">Select your QuickBooks Enterprise version year</option>
                   {qbVersions.map((v) => <option key={v} value={v}>{v}</option>)}
@@ -382,7 +385,7 @@ export default function Order() {
 
             <Card>
               <CardContent className="p-6">
-                <h2 className="text-lg font-bold text-[#1a2744] mb-4">Order Summary</h2>
+                <h2 className="text-lg font-bold font-display text-primary mb-4">Order Summary</h2>
                 <div className="space-y-2 text-sm">
                   {selectedSvc && (
                     <div className="flex justify-between">
@@ -401,7 +404,7 @@ export default function Order() {
                   })}
                   <div className="border-t pt-2 flex justify-between font-bold text-lg">
                     <span>Total</span>
-                    <span className="text-[#f0a500]">${total} CAD</span>
+                    <span className="text-accent">${total} CAD</span>
                   </div>
                 </div>
 
@@ -411,25 +414,25 @@ export default function Order() {
                       type="checkbox"
                       checked={confirmed}
                       onChange={(e) => setConfirmed(e.target.checked)}
-                      className="mt-1 accent-[#f0a500]"
+                      className="mt-1 accent-accent"
                     />
                     <span className="text-sm text-muted-foreground">
                       I confirm this is a Canadian QuickBooks Enterprise file and I agree to the{" "}
-                      <Link href="/terms" className="text-[#f0a500] underline">Terms of Service</Link> and{" "}
-                      <Link href="/privacy" className="text-[#f0a500] underline">Privacy Policy</Link>.
+                      <Link href="/terms" className="text-accent underline">Terms of Service</Link> and{" "}
+                      <Link href="/privacy" className="text-accent underline">Privacy Policy</Link>.
                     </span>
                   </label>
                 </div>
 
                 <div className="mt-6" id="stripe-payment-element">
                   <div className="p-4 bg-muted rounded-lg text-center text-sm text-muted-foreground">
-                    <Lock className="w-5 h-5 mx-auto mb-2 text-[#f0a500]" />
+                    <Lock className="w-5 h-5 mx-auto mb-2 text-accent" />
                     Stripe payment integration — test mode
                   </div>
                 </div>
 
                 {submitError && (
-                  <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700">
+                  <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700 dark:bg-red-950/30 dark:border-red-800 dark:text-red-400">
                     {submitError}
                   </div>
                 )}
@@ -437,7 +440,7 @@ export default function Order() {
                 <Button
                   type="submit"
                   disabled={!canSubmit || submitting}
-                  className="w-full mt-6 bg-[#B76E79] text-white hover:bg-[#A35D68] font-bold text-lg py-3"
+                  className="w-full mt-6 bg-rose-gold text-rose-gold-foreground hover:bg-rose-gold-hover font-display font-bold text-lg py-3"
                   size="lg"
                 >
                   {submitting ? "Processing..." : `Upload & Pay $${total} CAD`}

@@ -43,20 +43,22 @@ export default function FAQ() {
 
   return (
     <div>
-      <section className="bg-[#1a2744] text-white py-16">
+      <section className="section-brand-navy py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl font-bold mb-4">Frequently Asked Questions</h1>
+          <h1 className="text-4xl font-bold font-display text-white mb-4">Frequently Asked Questions</h1>
           <p className="text-white/70 text-lg">Answers to the most common questions about our QuickBooks services</p>
         </div>
       </section>
 
-      <section className="py-8 bg-white border-b">
+      <div className="brand-divider" />
+
+      <section className="py-8 bg-background border-b border-border">
         <div className="max-w-3xl mx-auto px-4 flex flex-wrap gap-2 justify-center">
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => { setActiveCategory(cat); setOpenIndex(null); }}
-              className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${activeCategory === cat ? "bg-[#1a2744] text-white" : "bg-muted text-muted-foreground hover:bg-muted/80"}`}
+              className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${activeCategory === cat ? "bg-navy text-white" : "bg-muted text-muted-foreground hover:bg-muted/80"}`}
             >
               {cat === "all" ? `All (${faqData.length})` : `${cat} (${faqData.filter((f) => f.cat === cat).length})`}
             </button>
@@ -64,16 +66,16 @@ export default function FAQ() {
         </div>
       </section>
 
-      <section className="py-12 bg-[#f5f7fa]">
+      <section className="py-12 section-brand-light">
         <div className="max-w-3xl mx-auto px-4">
           <div className="space-y-3">
             {filtered.map((faq, i) => (
-              <div key={i} className="bg-white rounded-lg border border-border overflow-hidden">
+              <div key={i} className="bg-card rounded-lg border border-border overflow-hidden">
                 <button
                   onClick={() => setOpenIndex(openIndex === i ? null : i)}
                   className="w-full flex items-center justify-between p-4 text-left hover:bg-muted/30 transition-colors"
                 >
-                  <span className="font-medium text-[#1a2744] text-sm pr-4">{faq.q}</span>
+                  <span className="font-medium text-primary text-sm pr-4">{faq.q}</span>
                   <ChevronDown className={`w-4 h-4 text-muted-foreground shrink-0 transition-transform ${openIndex === i ? "rotate-180" : ""}`} />
                 </button>
                 {openIndex === i && (

@@ -47,7 +47,7 @@ export default function ServiceDetail() {
 
   return (
     <div>
-      <section className="bg-[#1a2744] text-white py-16">
+      <section className="section-brand-navy py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-2 text-sm text-white/50 mb-4">
             <Link href="/catalog" className="hover:text-white/70">Services & Tools</Link>
@@ -59,28 +59,30 @@ export default function ServiceDetail() {
           <div className="flex items-start justify-between flex-wrap gap-6">
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-3 mb-3">
-                <h1 className="text-3xl md:text-4xl font-bold">{product.name}</h1>
-                <span className={`px-3 py-1 rounded-full text-xs font-semibold ${isAvailable ? "bg-green-500/20 text-green-300" : "bg-[#f0a500]/20 text-[#f0a500]"}`}>
+                <h1 className="text-3xl md:text-4xl font-bold font-display text-white">{product.name}</h1>
+                <span className={`px-3 py-1 rounded-full text-xs font-semibold ${isAvailable ? "bg-green-500/20 text-green-300" : "bg-accent/20 text-accent"}`}>
                   {isAvailable ? "Available Now" : "Coming Soon"}
                 </span>
               </div>
               <p className="text-white/70 text-lg max-w-2xl">{product.description}</p>
             </div>
             <div className="text-right">
-              <p className="text-3xl font-bold text-[#f0a500]">{formatPrice(product.price_cad)}</p>
+              <p className="text-3xl font-bold text-accent">{formatPrice(product.price_cad)}</p>
               {product.turnaround && <p className="text-white/50 text-sm mt-1"><Clock className="w-4 h-4 inline mr-1" />{product.turnaround}</p>}
             </div>
           </div>
         </div>
       </section>
 
-      <section className="py-12 bg-[#f5f7fa]">
+      <div className="brand-divider" />
+
+      <section className="py-12 section-brand-light">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-3 gap-8">
             <div className="md:col-span-2 space-y-6">
               <Card>
                 <CardContent className="p-6">
-                  <h2 className="text-xl font-bold text-[#1a2744] mb-4">About This Service</h2>
+                  <h2 className="text-xl font-bold font-display text-primary mb-4">About This Service</h2>
                   <p className="text-muted-foreground leading-relaxed">{product.description}</p>
                   {product.competitor_ref && (
                     <p className="text-sm text-muted-foreground mt-4 italic">Comparable to: {product.competitor_ref}</p>
@@ -90,7 +92,7 @@ export default function ServiceDetail() {
 
               <Card>
                 <CardContent className="p-6">
-                  <h2 className="text-xl font-bold text-[#1a2744] mb-4">What's Included</h2>
+                  <h2 className="text-xl font-bold font-display text-primary mb-4">What's Included</h2>
                   <ul className="space-y-3">
                     <li className="flex items-start gap-3">
                       <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
@@ -119,7 +121,7 @@ export default function ServiceDetail() {
               {addons.length > 0 && (
                 <Card>
                   <CardContent className="p-6">
-                    <h2 className="text-xl font-bold text-[#1a2744] mb-4">Available Add-Ons</h2>
+                    <h2 className="text-xl font-bold font-display text-primary mb-4">Available Add-Ons</h2>
                     <div className="space-y-3">
                       {addons.map((addon) => (
                         <div key={addon.id} className="flex items-center justify-between p-3 rounded-lg bg-muted">
@@ -127,7 +129,7 @@ export default function ServiceDetail() {
                             <p className="font-medium text-sm">{addon.name}</p>
                             <p className="text-xs text-muted-foreground">{addon.description}</p>
                           </div>
-                          <span className="font-semibold text-[#f0a500] text-sm">{formatPrice(addon.price_cad)}</span>
+                          <span className="font-semibold text-accent text-sm">{formatPrice(addon.price_cad)}</span>
                         </div>
                       ))}
                     </div>
@@ -137,19 +139,19 @@ export default function ServiceDetail() {
             </div>
 
             <div className="space-y-6">
-              <Card className="border-[#f0a500]/30">
+              <Card className="border-accent/30">
                 <CardContent className="p-6 text-center">
-                  <p className="text-3xl font-bold text-[#f0a500] mb-2">{formatPrice(product.price_cad)}</p>
+                  <p className="text-3xl font-bold text-accent mb-2">{formatPrice(product.price_cad)}</p>
                   {product.turnaround && <p className="text-sm text-muted-foreground mb-4"><Clock className="w-4 h-4 inline mr-1" />Turnaround: {product.turnaround}</p>}
                   {isAvailable ? (
                     <Link href={`/order?service=${product.id}`}>
-                      <Button className="w-full bg-[#B76E79] text-white hover:bg-[#A35D68] font-bold gap-2" size="lg">
+                      <Button className="w-full bg-rose-gold text-rose-gold-foreground hover:bg-rose-gold-hover font-display font-bold gap-2" size="lg">
                         Order Now <ArrowRight className="w-4 h-4" />
                       </Button>
                     </Link>
                   ) : (
                     <Link href={`/waitlist?product=${product.slug}`}>
-                      <Button className="w-full bg-[#1a2744] font-bold" size="lg">
+                      <Button className="w-full bg-navy text-white hover:bg-navy/90 font-display font-bold" size="lg">
                         Join Waitlist
                       </Button>
                     </Link>
@@ -159,20 +161,20 @@ export default function ServiceDetail() {
 
               <Card>
                 <CardContent className="p-6">
-                  <h3 className="font-bold text-[#1a2744] mb-3">Trust & Security</h3>
+                  <h3 className="font-bold font-display text-primary mb-3">Trust & Security</h3>
                   <ul className="space-y-3 text-sm">
-                    <li className="flex items-center gap-2"><Lock className="w-4 h-4 text-[#f0a500]" /> 256-bit encrypted transfers</li>
-                    <li className="flex items-center gap-2"><Shield className="w-4 h-4 text-[#f0a500]" /> PIPEDA compliant</li>
-                    <li className="flex items-center gap-2"><FileCheck className="w-4 h-4 text-[#f0a500]" /> Files deleted after 7 days</li>
-                    <li className="flex items-center gap-2"><Star className="w-4 h-4 text-[#f0a500]" /> Money-back guarantee</li>
+                    <li className="flex items-center gap-2"><Lock className="w-4 h-4 text-accent" /> 256-bit encrypted transfers</li>
+                    <li className="flex items-center gap-2"><Shield className="w-4 h-4 text-accent" /> PIPEDA compliant</li>
+                    <li className="flex items-center gap-2"><FileCheck className="w-4 h-4 text-accent" /> Files deleted after 7 days</li>
+                    <li className="flex items-center gap-2"><Star className="w-4 h-4 text-accent" /> Money-back guarantee</li>
                   </ul>
                 </CardContent>
               </Card>
 
               <Card>
                 <CardContent className="p-6">
-                  <h3 className="font-bold text-[#1a2744] mb-3">Category</h3>
-                  <Link href={`/category/${product.category.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/-+$/, "")}`} className="text-[#f0a500] hover:underline text-sm">
+                  <h3 className="font-bold font-display text-primary mb-3">Category</h3>
+                  <Link href={`/category/${product.category.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/-+$/, "")}`} className="text-accent hover:underline text-sm">
                     {product.category}
                   </Link>
                 </CardContent>
@@ -182,17 +184,17 @@ export default function ServiceDetail() {
 
           {relatedProducts.length > 0 && (
             <div className="mt-12">
-              <h2 className="text-xl font-bold text-[#1a2744] mb-6">Related Services</h2>
+              <h2 className="text-xl font-bold font-display text-primary mb-6">Related Services</h2>
               <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 {relatedProducts.map((rp) => (
                   <Link key={rp.id} href={`/service/${rp.slug}`}>
                     <Card className="h-full hover:shadow-md transition-shadow cursor-pointer">
                       <CardContent className="p-4">
-                        <h3 className="font-semibold text-sm text-[#1a2744] mb-1">{rp.name}</h3>
+                        <h3 className="font-semibold text-sm font-display text-primary mb-1">{rp.name}</h3>
                         <p className="text-xs text-muted-foreground mb-2 line-clamp-2">{rp.description}</p>
                         <div className="flex items-center justify-between">
-                          <span className="font-bold text-[#f0a500] text-sm">{formatPrice(rp.price_cad)}</span>
-                          <span className={`px-2 py-0.5 rounded-full text-xs ${rp.badge === "available" ? "bg-green-100 text-green-700" : "bg-[#f0a500]/10 text-[#f0a500]"}`}>
+                          <span className="font-bold text-accent text-sm">{formatPrice(rp.price_cad)}</span>
+                          <span className={`px-2 py-0.5 rounded-full text-xs ${rp.badge === "available" ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400" : "bg-accent/10 text-accent"}`}>
                             {rp.badge === "available" ? "Available" : "Coming Soon"}
                           </span>
                         </div>

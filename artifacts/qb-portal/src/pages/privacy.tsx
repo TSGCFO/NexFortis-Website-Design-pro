@@ -1,14 +1,15 @@
 export default function Privacy() {
   return (
     <div>
-      <section className="bg-[#1a2744] text-white py-16">
+      <section className="section-brand-navy py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl font-bold mb-4">Privacy Policy</h1>
+          <h1 className="text-4xl font-bold font-display text-white mb-4">Privacy Policy</h1>
           <p className="text-white/70">Last updated: March 2026</p>
         </div>
       </section>
-      <section className="py-12 bg-white">
-        <div className="max-w-3xl mx-auto px-4 prose prose-sm">
+      <div className="brand-divider" />
+      <section className="py-12 bg-background">
+        <div className="max-w-3xl mx-auto px-4 prose prose-sm dark:prose-invert">
           <h2>1. Overview</h2>
           <p>NexFortis IT Solutions (17756968 Canada Inc.) ("we", "us", "our") is committed to protecting the privacy of our customers. This Privacy Policy describes how we collect, use, store, and protect your personal information in compliance with the Personal Information Protection and Electronic Documents Act (PIPEDA).</p>
 
