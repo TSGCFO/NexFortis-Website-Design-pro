@@ -10,6 +10,15 @@ interface ContactBody {
   message?: string;
 }
 
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
 function validateContact(body: ContactBody): string | null {
   if (!body.name || body.name.length < 2) return "Name must be at least 2 characters.";
   if (!body.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(body.email)) return "Please enter a valid email address.";
@@ -43,16 +52,16 @@ contactRouter.post("/", async (req: Request, res: Response) => {
         body: JSON.stringify({
           from: "NexFortis Contact Form <onboarding@resend.dev>",
           to: "contact@nexfortis.com",
-          subject: `New Contact Form Submission from ${name}`,
+          subject: `New Contact Form Submission from ${escapeHtml(name!)}`,
           html: `
             <h2>New Contact Form Submission</h2>
-            <p><strong>Name:</strong> ${name}</p>
-            <p><strong>Email:</strong> ${email}</p>
-            <p><strong>Phone:</strong> ${phone}</p>
-            <p><strong>Company:</strong> ${company || "Not provided"}</p>
-            <p><strong>Service:</strong> ${service}</p>
+            <p><strong>Name:</strong> ${escapeHtml(name!)}</p>
+            <p><strong>Email:</strong> ${escapeHtml(email!)}</p>
+            <p><strong>Phone:</strong> ${escapeHtml(phone!)}</p>
+            <p><strong>Company:</strong> ${escapeHtml(company || "Not provided")}</p>
+            <p><strong>Service:</strong> ${escapeHtml(service!)}</p>
             <p><strong>Message:</strong></p>
-            <p>${message}</p>
+            <p>${escapeHtml(message!)}</p>
           `,
           reply_to: email,
         }),

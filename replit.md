@@ -50,7 +50,7 @@ All packages extend a base `tsconfig.base.json` with `composite: true`. The root
 ### Express API Server (`artifacts/api-server`)
 - **Framework**: Express 5
 - **Routes**:
-    - `GET /api/health`
+    - `GET /api/healthz`
     - Blog CRUD operations (`/api/blog/posts`)
     - Contact form submission (`POST /api/contact`)
     - QB Portal backend logic (`/api/qb/*` for auth, waitlist, orders, support tickets)
