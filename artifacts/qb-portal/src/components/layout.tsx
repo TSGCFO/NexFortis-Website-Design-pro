@@ -107,6 +107,7 @@ export function Navbar() {
             className={`w-auto group-hover:scale-105 transition-all duration-300 ${isScrolled ? "h-10" : "h-12 lg:h-14"}`}
             width={200}
             height={56}
+            style={resolvedTheme === "dark" ? { mixBlendMode: "screen" } : undefined}
           />
           <span className="hidden sm:inline text-xs text-muted-foreground ml-2 font-display">QuickBooks Services</span>
         </Link>
@@ -235,6 +236,7 @@ export function Footer() {
                   className="h-14 w-auto"
                   width={200}
                   height={56}
+                  style={{ mixBlendMode: "screen" }}
                 />
               </Link>
               <p className="text-white/70 text-sm mb-1">

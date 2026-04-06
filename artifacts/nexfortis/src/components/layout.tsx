@@ -140,6 +140,7 @@ export function Layout({ children }: { children: ReactNode }) {
               className={`w-auto group-hover:scale-105 transition-all duration-300 ${isScrolled ? "h-12" : "h-14 lg:h-16"}`}
               width={240}
               height={64}
+              style={resolvedTheme === "dark" ? { mixBlendMode: "screen" } : undefined}
             />
           </Link>
 
@@ -294,6 +295,7 @@ export function Layout({ children }: { children: ReactNode }) {
                   className="h-16 w-auto"
                   width={240}
                   height={64}
+                  style={{ mixBlendMode: "screen" }}
                 />
               </Link>
               <p className="text-white/90 mb-2 text-sm font-display font-semibold tracking-wide">

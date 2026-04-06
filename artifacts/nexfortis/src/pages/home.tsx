@@ -199,6 +199,7 @@ export default function Home() {
                   className="absolute inset-8 w-auto h-auto object-contain drop-shadow-[0_0_50px_rgba(15,146,227,0.4)]"
                   style={{
                     filter: "brightness(1.15) drop-shadow(0 8px 30px rgba(0,0,0,0.3))",
+                    mixBlendMode: "screen",
                   }}
                 />
                 <div className="absolute -inset-6 rounded-[2rem] bg-gradient-to-br from-accent/15 via-transparent to-rose-gold/10 blur-2xl -z-10" />
