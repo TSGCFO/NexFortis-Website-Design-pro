@@ -1,3 +1,4 @@
+import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { CheckCircle, Shield, Download } from "lucide-react";
@@ -173,9 +174,11 @@ export function FilesTab({ completedOrders }: FilesProps) {
                     <p className="font-semibold text-sm">ORD-{String(order.id).padStart(3, "0")} - converted.qbm</p>
                     <p className="text-xs text-muted-foreground">Delivered {new Date(order.createdAt).toLocaleDateString()}</p>
                   </div>
-                  <Button size="sm" variant="outline" className="gap-1" onClick={() => { window.location.href = `/qb-portal/order/${order.id}`; }}>
-                    <Download className="w-3 h-3" /> View Files
-                  </Button>
+                  <Link href={`/order/${order.id}`}>
+                    <Button size="sm" variant="outline" className="gap-1">
+                      <Download className="w-3 h-3" /> View Files
+                    </Button>
+                  </Link>
                 </div>
               </CardContent>
             </Card>
