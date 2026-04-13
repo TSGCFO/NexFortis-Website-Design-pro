@@ -1,9 +1,15 @@
 import { AlertTriangle, CheckCircle, FileText, Info } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import { SEO } from "@/components/seo";
 
 export default function QBMGuide() {
   return (
     <div>
+      <SEO
+        title="How to Create a .QBM File"
+        description="Step-by-step guide to creating a QuickBooks Portable Company File (.QBM) from QuickBooks Enterprise for conversion."
+        path="/qbm-guide"
+      />
       <section className="section-brand-navy py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl font-bold font-display text-white mb-4">How to Create a .QBM File</h1>

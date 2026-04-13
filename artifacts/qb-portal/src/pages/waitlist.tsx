@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSearch } from "wouter";
-import { loadProducts, getProductBySlug, type Product, type ProductCatalog, formatPrice } from "@/lib/products";
+import { loadProducts, getProductBySlug, type Product, type ProductCatalog, formatPrice, getActivePrice } from "@/lib/products";
+import { SEO } from "@/components/seo";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { CheckCircle, Bell } from "lucide-react";
@@ -83,6 +84,11 @@ export default function Waitlist() {
 
   return (
     <div>
+      <SEO
+        title="Join the Waitlist"
+        description="Be the first to know when new NexFortis QuickBooks services launch."
+        path="/waitlist"
+      />
       <section className="section-brand-navy py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <Bell className="w-12 h-12 text-accent mx-auto mb-4" />
@@ -107,7 +113,7 @@ export default function Waitlist() {
                 </p>
                 {product && (
                   <div className="mt-4 p-3 bg-muted rounded-lg">
-                    <p className="text-sm text-muted-foreground">Expected price: <strong>{formatPrice(product.price_cad)}</strong></p>
+                    <p className="text-sm text-muted-foreground">Expected price: <strong>{formatPrice(getActivePrice(product))}</strong></p>
                   </div>
                 )}
               </CardContent>
@@ -119,7 +125,7 @@ export default function Waitlist() {
                   <div className="mb-6 p-4 bg-muted rounded-lg">
                     <h3 className="font-bold font-display text-primary">{product.name}</h3>
                     <p className="text-sm text-muted-foreground mt-1">{product.description}</p>
-                    <p className="text-sm font-semibold text-accent mt-2">{formatPrice(product.price_cad)}</p>
+                    <p className="text-sm font-semibold text-accent mt-2">{formatPrice(getActivePrice(product))}</p>
                   </div>
                 )}
                 <form onSubmit={handleSubmit} className="space-y-4">

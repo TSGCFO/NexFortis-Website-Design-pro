@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Shield, Upload, Clock, CheckCircle, ArrowRight, Lock, DollarSign, MapPin, Zap, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { SEO } from "@/components/seo";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 30 },
@@ -26,31 +27,36 @@ const trustBadges = [
 
 const steps = [
   { num: "1", icon: Upload, title: "Create & Upload Your QBM", desc: "Export your Enterprise file as a Portable Company File (.QBM) and upload it securely." },
-  { num: "2", icon: DollarSign, title: "Choose Services & Pay", desc: "Select your conversion and any add-ons. Pay securely with Stripe. Starting at $149 CAD." },
+  { num: "2", icon: DollarSign, title: "Choose Services & Pay", desc: "Select your conversion and any add-ons. Pay securely with Stripe. Starting at $75.00 CAD." },
   { num: "3", icon: Zap, title: "Receive Your Converted File", desc: "Get your converted Premier/Pro file delivered in under 1 hour with a validation report." },
 ];
 
 const comparisonData = [
-  { feature: "Price", nexfortis: "$149 CAD", bigred: "$249 USD (~$344 CAD)", etech: "$299 USD (~$413 CAD)" },
+  { feature: "Price", nexfortis: "From $75.00 CAD", bigred: "$249 USD (~$344 CAD)", etech: "$299 USD (~$413 CAD)" },
   { feature: "Turnaround", nexfortis: "Under 1 hour", bigred: "Next business day", etech: "1 business day" },
-  { feature: "Same-day rush", nexfortis: "Included option (+$49)", bigred: "Not stated", etech: "$450 USD (~$621 CAD)" },
+  { feature: "Same-day rush", nexfortis: "Included option (+$25.00)", bigred: "Not stated", etech: "$450 USD (~$621 CAD)" },
   { feature: "Canadian-first", nexfortis: "Yes", bigred: "No", etech: "Implied" },
   { feature: "GST/HST preserved", nexfortis: "Yes", bigred: "Unknown", etech: "Yes" },
-  { feature: "Total products", nexfortis: "54", bigred: "28", etech: "7" },
+  { feature: "Total services", nexfortis: "20", bigred: "28", etech: "7" },
 ];
 
 const featuredServices = [
-  { title: "Enterprise to Premier/Pro", price: "$149 CAD", desc: "Convert QuickBooks Enterprise .QBM files to Premier or Pro format.", badge: "available", href: "/order" },
-  { title: "File Health Check", price: "+$49 CAD", desc: "Comprehensive file integrity check with detailed validation report.", badge: "available", href: "/order" },
-  { title: "Rush Delivery", price: "+$49 CAD", desc: "Guaranteed 15-minute turnaround for your conversion.", badge: "available", href: "/order" },
-  { title: "Data Recovery", price: "$199 CAD", desc: "Recover data from corrupted QuickBooks files.", badge: "coming-soon", href: "/waitlist?product=data-recovery" },
-  { title: "Super Condense", price: "$99 CAD", desc: "Dramatically reduce your QuickBooks file size.", badge: "coming-soon", href: "/waitlist?product=super-condense" },
-  { title: "Audit Trail Removal", price: "$79 CAD", desc: "Remove audit trail to improve performance.", badge: "coming-soon", href: "/waitlist?product=audit-trail-removal" },
+  { title: "Enterprise → Premier/Pro Standard", price: "$75.00 CAD", desc: "Convert QuickBooks Enterprise .QBM files to Premier or Pro format.", badge: "available", href: "/service/enterprise-to-premier-standard" },
+  { title: "File Health Check", price: "$25.00 CAD", desc: "Comprehensive file integrity check with detailed validation report.", badge: "available", href: "/service/file-health-check" },
+  { title: "Audit Trail Removal", price: "$50.00 CAD", desc: "Remove audit trail to reduce file size and improve performance.", badge: "available", href: "/service/audit-trail-removal" },
+  { title: "Super Condense", price: "$50.00 CAD", desc: "Dramatically reduce your QuickBooks file size.", badge: "available", href: "/service/super-condense" },
+  { title: "QB Expert Support — Essentials", price: "$25.00/mo CAD", desc: "Monthly QB Desktop support with 3 tickets and 1-hour response time.", badge: "available", href: "/service/expert-support-essentials" },
+  { title: "AccountEdge/MYOB → QuickBooks", price: "$125.00 CAD", desc: "Migrate your AccountEdge or MYOB data to QuickBooks Desktop.", badge: "available", href: "/service/accountedge-to-quickbooks" },
 ];
 
 export default function Home() {
   return (
     <div>
+      <SEO
+        title="QuickBooks Conversion & Data Services"
+        description="Canadian QuickBooks experts. Enterprise to Premier conversion, data services, and expert support. Starting at $75 CAD with our launch special."
+        path="/"
+      />
       <section className="section-brand-navy py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
@@ -77,7 +83,7 @@ export default function Home() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-xl text-white/80 mb-4 max-w-2xl mx-auto"
           >
-            Starting at <span className="text-azure font-bold">$149 CAD</span>
+            Starting at <span className="text-azure font-bold">$75.00 CAD</span> with our launch special
           </motion.p>
           <motion.p
             initial={{ opacity: 0, y: 30 }}
@@ -85,7 +91,7 @@ export default function Home() {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="text-lg text-white/70 mb-10 max-w-2xl mx-auto"
           >
-            Canadian-first. Under 1 hour. 54 products and services. Convert your QuickBooks Enterprise files to Premier/Pro with penny-perfect accuracy.
+            Canadian-first. Under 1 hour. 20 services across 5 categories. Convert your QuickBooks Enterprise files to Premier/Pro with penny-perfect accuracy.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -196,18 +202,14 @@ export default function Home() {
                   <CardContent className="p-6">
                     <div className="flex items-start justify-between mb-3">
                       <h3 className="font-bold font-display text-primary">{svc.title}</h3>
-                      {svc.badge === "available" ? (
-                        <span className="px-2 py-0.5 rounded-full bg-success/10 text-success text-xs font-semibold">Available</span>
-                      ) : (
-                        <span className="px-2 py-0.5 rounded-full bg-coming-soon/10 text-coming-soon text-xs font-semibold badge-coming-soon">Coming Soon</span>
-                      )}
+                      <span className="px-2 py-0.5 rounded-full bg-success/10 text-success text-xs font-semibold">Available</span>
                     </div>
                     <p className="text-sm text-muted-foreground mb-4">{svc.desc}</p>
                     <div className="flex items-center justify-between">
                       <span className="font-bold text-accent">{svc.price}</span>
                       <Link href={svc.href}>
-                        <Button size="sm" variant={svc.badge === "available" ? "default" : "outline"} className={svc.badge === "available" ? "bg-rose-gold hover:bg-rose-gold-hover text-white" : ""}>
-                          {svc.badge === "available" ? "Order Now" : "Join Waitlist"}
+                        <Button size="sm" className="bg-rose-gold hover:bg-rose-gold-hover text-white">
+                          View Details
                         </Button>
                       </Link>
                     </div>
@@ -219,7 +221,7 @@ export default function Home() {
           <motion.div {...fadeInUp} className="text-center mt-8">
             <Link href="/catalog">
               <Button variant="outline" className="gap-2 font-display">
-                View All 54 Products <ArrowRight className="w-4 h-4" />
+                View All 20 Services <ArrowRight className="w-4 h-4" />
               </Button>
             </Link>
           </motion.div>

@@ -1,10 +1,12 @@
 import { Link } from "wouter";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { SEO } from "@/components/seo";
 
 export default function NotFound() {
   return (
     <div className="min-h-screen w-full flex items-center justify-center section-brand-light">
+      <SEO title="Page Not Found" description="The page you're looking for doesn't exist or may have been moved." noIndex />
       <Card className="w-full max-w-md mx-4">
         <CardContent className="p-8 text-center">
           <img src={`${import.meta.env.BASE_URL}images/logo-original.svg`} alt="NexFortis" className="h-12 mx-auto mb-4 dark:hidden" />

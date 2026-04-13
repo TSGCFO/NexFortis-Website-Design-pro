@@ -1,6 +1,13 @@
+import { SEO } from "@/components/seo";
+
 export default function Privacy() {
   return (
     <div>
+      <SEO
+        title="Privacy Policy"
+        description="Privacy Policy for the NexFortis QuickBooks Service Portal. Learn how we protect your data in compliance with PIPEDA."
+        path="/privacy"
+      />
       <section className="section-brand-navy py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl font-bold font-display text-white mb-4">Privacy Policy</h1>
@@ -70,7 +77,7 @@ export default function Privacy() {
           <p>We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated "Last updated" date.</p>
 
           <h2>10. Contact</h2>
-          <p>For privacy-related questions or to exercise your PIPEDA rights, contact us at <a href="mailto:hassansadiq73@gmail.com">hassansadiq73@gmail.com</a>.</p>
+          <p>For privacy-related questions or to exercise your PIPEDA rights, contact us at <a href="mailto:support@nexfortis.com">support@nexfortis.com</a>.</p>
           <p>NexFortis IT Solutions<br />Ontario, Canada</p>
         </div>
       </section>

@@ -1,6 +1,13 @@
+import { SEO } from "@/components/seo";
+
 export default function Terms() {
   return (
     <div>
+      <SEO
+        title="Terms of Service"
+        description="Terms of Service for the NexFortis QuickBooks Service Portal. Read our terms before using our services."
+        path="/terms"
+      />
       <section className="section-brand-navy py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl font-bold font-display text-white mb-4">Terms of Service</h1>
@@ -14,11 +21,13 @@ export default function Terms() {
           <p>By using the NexFortis QuickBooks Service Portal ("Service"), operated by NexFortis IT Solutions (17756968 Canada Inc.), you agree to these Terms of Service. If you do not agree, do not use the Service.</p>
 
           <h2>2. Services Offered</h2>
-          <p>NexFortis offers 54 QuickBooks-related products and services across three tiers:</p>
+          <p>NexFortis offers 20 QuickBooks-related services across five categories:</p>
           <ul>
-            <li><strong>Tier 1 — Available Now:</strong> Enterprise to Premier/Pro Conversion ($149 CAD), File Health Check ($49 CAD add-on), Rush Delivery ($49 CAD add-on), Premium Support ($29/mo CAD).</li>
-            <li><strong>Tier 2 — Coming Soon Services:</strong> Data Recovery, Audit Trail Removal, Super Condense, List Reduction, Multi-Currency Removal, CRA Period Copy, File Merge, Online File Preparation, QuickBooks Online Migration, Platform Migrations (Sage 50, NetSuite, Peachtree, AccountEdge/MYOB, SAP, Xero, DacEasy, ODOO), Transaction Copier Service, Password Recovery, Mac Data Recovery, Access Database Repair, BKF Recovery, Custom QB Programming. These are waitlist-only and not available for purchase.</li>
-            <li><strong>Tier 3 — Coming Soon Tools:</strong> 24 software tools including importers, converters, file creators, and reporting tools. These are waitlist-only and not available for purchase. Licence terms will be established upon launch.</li>
+            <li><strong>QuickBooks Conversion:</strong> Enterprise to Premier/Pro Standard and Complex conversions, Guaranteed 30-Minute conversion.</li>
+            <li><strong>QuickBooks Data Services:</strong> File Health Check, Rush Delivery, Post-Conversion Care, Audit Trail Removal, Super Condense, List Reduction, Multi-Currency Removal, QBO Readiness Report, CRA Period Copy, Audit Trail + CRA Bundle.</li>
+            <li><strong>Platform Migrations:</strong> AccountEdge/MYOB to QuickBooks, Sage 50 to QuickBooks.</li>
+            <li><strong>Expert Support:</strong> Essentials, Professional, and Premium monthly support plans.</li>
+            <li><strong>Volume Packs:</strong> 5-Pack and 10-Pack conversion bundles at discounted rates.</li>
           </ul>
 
           <h2>3. Pricing</h2>
@@ -52,7 +61,7 @@ export default function Terms() {
           <p>These Terms are governed by the laws of the Province of Ontario, Canada. Any disputes will be resolved in the courts of Ontario.</p>
 
           <h2>11. Contact</h2>
-          <p>For questions about these Terms, contact us at <a href="mailto:hassansadiq73@gmail.com">hassansadiq73@gmail.com</a>.</p>
+          <p>For questions about these Terms, contact us at <a href="mailto:support@nexfortis.com">support@nexfortis.com</a>.</p>
         </div>
       </section>
     </div>
