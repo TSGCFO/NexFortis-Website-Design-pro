@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { CheckCircle, Upload, Shield, Lock, AlertTriangle, Info } from "lucide-react";
 import { useAuth, getAuthToken } from "@/lib/auth";
-import { loadProducts, type ProductCatalog } from "@/lib/products";
+import { loadProducts, type ProductCatalog, formatPrice, getActivePrice } from "@/lib/products";
+import { SEO } from "@/components/seo";
 
 const qbVersions = ["2024", "2023", "2022", "2021", "2020", "2019"];
 
@@ -14,7 +15,6 @@ interface OrderableService {
   name: string;
   price: number;
   available: boolean;
-  target?: string;
 }
 
 interface OrderableAddon {
@@ -58,16 +58,15 @@ export default function Order() {
         id: p.id,
         slug: p.slug,
         name: p.name,
-        price: p.price_cad || 0,
+        price: getActivePrice(p),
         available: p.badge === "available",
-        target: p.badge === "coming-soon" ? "Coming Soon" : undefined,
       }));
     const serviceAddons = catalog.services
       .filter((p) => p.is_addon)
       .map((p) => ({
         id: p.id,
         name: p.name,
-        price: p.price_cad || 0,
+        price: getActivePrice(p),
         available: p.badge === "available",
       }));
     return { services: mainServices, addons: serviceAddons };
@@ -210,7 +209,7 @@ export default function Order() {
                   {selectedAddons.length > 0 && (
                     <p><strong>Add-ons:</strong> {selectedAddons.map((id) => addons.find((a) => a.id === id)?.name).join(", ")}</p>
                   )}
-                  <p><strong>Total:</strong> ${total} CAD</p>
+                  <p><strong>Total:</strong> {formatPrice(total)}</p>
                   <p><strong>File:</strong> {file?.name}</p>
                 </div>
                 <p className="text-xs text-muted-foreground mt-4">A confirmation email will be sent to {email}</p>
@@ -229,6 +228,7 @@ export default function Order() {
 
   return (
     <div>
+      <SEO title="Place Your Order" description="Select your QuickBooks service, upload your file, and pay securely." path="/order" noIndex />
       <section className="section-brand-navy py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl font-bold font-display text-white mb-4">Place Your Order</h1>
@@ -251,211 +251,4 @@ export default function Order() {
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium mb-1">Full Name *</label>
-                    <input type="text" required value={name} onChange={(e) => setName(e.target.value)} className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-accent/50" />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-1">Email *</label>
-                    <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-accent/50" />
-                  </div>
-                </div>
-                <div className="mt-4">
-                  <label className="block text-sm font-medium mb-1">Phone (optional)</label>
-                  <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-accent/50" />
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardContent className="p-6">
-                <h2 className="text-lg font-bold font-display text-primary mb-4">2. Select Service</h2>
-                <div className="space-y-3">
-                  {services.map((svc) => (
-                    <label
-                      key={svc.id}
-                      className={`flex items-center gap-3 p-4 rounded-lg border transition-colors ${
-                        !svc.available ? "opacity-50 cursor-not-allowed bg-muted" :
-                        selectedService === svc.id ? "border-accent bg-accent/5 cursor-pointer" : "border-border hover:border-accent/30 cursor-pointer"
-                      }`}
-                    >
-                      <input
-                        type="radio"
-                        name="service"
-                        checked={selectedService === svc.id}
-                        onChange={() => svc.available && setSelectedService(svc.id)}
-                        disabled={!svc.available}
-                        className="accent-accent"
-                      />
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2">
-                          <span className="font-medium text-sm">{svc.name}</span>
-                          {!svc.available && (
-                            <span className="px-2 py-0.5 rounded-full bg-coming-soon/10 text-coming-soon text-xs font-semibold">{svc.target}</span>
-                          )}
-                        </div>
-                      </div>
-                      <span className="font-bold text-accent">${svc.price} CAD</span>
-                      {!svc.available && (
-                        <Link href={`/waitlist?product=${svc.slug}`} className="text-xs text-coming-soon underline" onClick={(e: React.MouseEvent) => e.stopPropagation()}>
-                          Join Waitlist
-                        </Link>
-                      )}
-                    </label>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            {isAvailableService && (
-              <Card>
-                <CardContent className="p-6">
-                  <h2 className="text-lg font-bold font-display text-primary mb-4">3. Add-Ons</h2>
-                  <div className="space-y-3">
-                    {addons.map((addon) => (
-                      <label
-                        key={addon.id}
-                        className={`flex items-center gap-3 p-4 rounded-lg border transition-colors ${
-                          !addon.available ? "opacity-50 cursor-not-allowed bg-muted" :
-                          selectedAddons.includes(addon.id) ? "border-accent bg-accent/5 cursor-pointer" : "border-border hover:border-accent/30 cursor-pointer"
-                        }`}
-                      >
-                        <input
-                          type="checkbox"
-                          checked={selectedAddons.includes(addon.id)}
-                          onChange={() => addon.available && toggleAddon(addon.id)}
-                          disabled={!addon.available}
-                          className="accent-accent"
-                        />
-                        <div className="flex-1">
-                          <span className="font-medium text-sm">{addon.name}</span>
-                          {!addon.available && <span className="ml-2 px-2 py-0.5 rounded-full bg-coming-soon/10 text-coming-soon text-xs font-semibold">Coming Soon</span>}
-                        </div>
-                        <span className="font-bold text-accent">+${addon.price} CAD</span>
-                      </label>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            )}
-
-            <Card>
-              <CardContent className="p-6">
-                <h2 className="text-lg font-bold font-display text-primary mb-4">{isAvailableService ? "4" : "3"}. Upload Your .QBM File</h2>
-                <div className="border-2 border-dashed border-border rounded-lg p-8 text-center">
-                  <Upload className="w-8 h-8 text-muted-foreground mx-auto mb-3" />
-                  <div className="mb-3">
-                    <label htmlFor="qbm-file" className="cursor-pointer">
-                      <span className="text-accent font-medium hover:underline">Choose a .QBM file</span>
-                      <input
-                        id="qbm-file"
-                        type="file"
-                        accept=".qbm,.QBM"
-                        onChange={handleFileChange}
-                        className="hidden"
-                      />
-                    </label>
-                    <span className="text-sm text-muted-foreground ml-1">or drag and drop</span>
-                  </div>
-                  {file && (
-                    <div className="flex items-center gap-2 justify-center text-sm">
-                      <CheckCircle className="w-4 h-4 text-success" />
-                      <span className="font-medium">{file.name}</span>
-                      <span className="text-muted-foreground">({(file.size / 1024 / 1024).toFixed(1)} MB)</span>
-                    </div>
-                  )}
-                  {fileError && <p className="text-sm text-red-500 mt-2 flex items-center gap-1 justify-center"><AlertTriangle className="w-4 h-4" /> {fileError}</p>}
-                  {fileWarning && <p className="text-sm text-amber-600 mt-2 flex items-center gap-1 justify-center"><Info className="w-4 h-4" /> {fileWarning}</p>}
-                  <p className="text-xs text-muted-foreground mt-3">Max file size: 500 MB &bull; Only .QBM files accepted &bull; <Link href="/qbm-guide" className="text-accent">How to create a .QBM file</Link></p>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardContent className="p-6">
-                <h2 className="text-lg font-bold font-display text-primary mb-4">{isAvailableService ? "5" : "4"}. QuickBooks Version</h2>
-                <select
-                  value={qbVersion}
-                  onChange={(e) => setQbVersion(e.target.value)}
-                  className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-accent/50"
-                >
-                  <option value="">Select your QuickBooks Enterprise version year</option>
-                  {qbVersions.map((v) => <option key={v} value={v}>{v}</option>)}
-                </select>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardContent className="p-6">
-                <h2 className="text-lg font-bold font-display text-primary mb-4">Order Summary</h2>
-                <div className="space-y-2 text-sm">
-                  {selectedSvc && (
-                    <div className="flex justify-between">
-                      <span>{selectedSvc.name}</span>
-                      <span className="font-semibold">${selectedSvc.price} CAD</span>
-                    </div>
-                  )}
-                  {selectedAddons.map((id) => {
-                    const addon = addons.find((a) => a.id === id);
-                    return addon ? (
-                      <div key={id} className="flex justify-between text-muted-foreground">
-                        <span>{addon.name}</span>
-                        <span>+${addon.price} CAD</span>
-                      </div>
-                    ) : null;
-                  })}
-                  <div className="border-t pt-2 flex justify-between font-bold text-lg">
-                    <span>Total</span>
-                    <span className="text-accent">${total} CAD</span>
-                  </div>
-                </div>
-
-                <div className="mt-6">
-                  <label className="flex items-start gap-3 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={confirmed}
-                      onChange={(e) => setConfirmed(e.target.checked)}
-                      className="mt-1 accent-accent"
-                    />
-                    <span className="text-sm text-muted-foreground">
-                      I confirm this is a Canadian QuickBooks Enterprise file and I agree to the{" "}
-                      <Link href="/terms" className="text-accent underline">Terms of Service</Link> and{" "}
-                      <Link href="/privacy" className="text-accent underline">Privacy Policy</Link>.
-                    </span>
-                  </label>
-                </div>
-
-                <div className="mt-6" id="stripe-payment-element">
-                  <div className="p-4 bg-muted rounded-lg text-center text-sm text-muted-foreground">
-                    <Lock className="w-5 h-5 mx-auto mb-2 text-accent" />
-                    Stripe payment integration — test mode
-                  </div>
-                </div>
-
-                {submitError && (
-                  <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700 dark:bg-red-950/30 dark:border-red-800 dark:text-red-400">
-                    {submitError}
-                  </div>
-                )}
-
-                <Button
-                  type="submit"
-                  disabled={!canSubmit || submitting}
-                  className="w-full mt-6 bg-rose-gold text-rose-gold-foreground hover:bg-rose-gold-hover font-display font-bold text-lg py-3"
-                  size="lg"
-                >
-                  {submitting ? "Processing..." : `Upload & Pay $${total} CAD`}
-                </Button>
-
-                <div className="flex justify-center gap-4 mt-4 text-xs text-muted-foreground">
-                  <span className="flex items-center gap-1"><Lock className="w-3 h-3" /> Encrypted</span>
-                  <span className="flex items-center gap-1"><Shield className="w-3 h-3" /> PIPEDA</span>
-                  <span className="flex items-center gap-1"><CheckCircle className="w-3 h-3" /> Money-back guarantee</span>
-                </div>
-              </CardContent>
-            </Card>
-          </form>
-        </div>
-      </section>
-    </div>
-  );
-}
+                    <input type="text" required value={name} onChange={(e) => setName(e.target.value)} className="w-full px-3 py-2 rounded-lg border border-border bg-background tex
