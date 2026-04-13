@@ -4,6 +4,7 @@ import { getAuthToken } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft, Package, Clock, CheckCircle, Download, FileText, Shield } from "lucide-react";
+import { SEO } from "@/components/seo";
 
 interface OrderFile {
   id: number;
@@ -101,6 +102,7 @@ export default function OrderDetail() {
 
   return (
     <div>
+      <SEO title={`Order ORD-${String(order.id).padStart(3, "0")}`} description="View your order status and details." path={`/order/${order.id}`} noIndex />
       <section className="section-brand-navy py-8">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <Link href="/portal" className="text-white/50 hover:text-white/70 text-sm flex items-center gap-1 mb-4">
