@@ -3,6 +3,7 @@ import { Link, useSearch } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { CheckCircle, AlertTriangle } from "lucide-react";
+import { SEO } from "@/components/seo";
 
 export default function ResetPassword() {
   const searchString = useSearch();
@@ -88,6 +89,7 @@ export default function ResetPassword() {
 
   return (
     <div>
+      <SEO title="Reset Password" description="Set a new password for your NexFortis QuickBooks Portal account." path="/reset-password" noIndex />
       <section className="section-brand-light py-16 min-h-[70vh]">
         <div className="max-w-md mx-auto px-4">
           <div className="text-center mb-8">
