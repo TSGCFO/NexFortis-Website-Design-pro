@@ -251,4 +251,98 @@ export default function Order() {
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium mb-1">Full Name *</label>
-                    <input type="text" required value={name} onChange={(e) => setName(e.target.value)} className="w-full px-3 py-2 rounded-lg border border-border bg-background tex
+                    <input type="text" required value={name} onChange={(e) => setName(e.target.value)} className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-accent/50" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-1">Email *</label>
+                    <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-accent/50" />
+                  </div>
+                </div>
+                <div className="mt-4">
+                  <label className="block text-sm font-medium mb-1">Phone (optional)</label>
+                  <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-accent/50" />
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardContent className="p-6">
+                <h2 className="text-lg font-bold font-display text-primary mb-4">2. Select Service</h2>
+                <div className="space-y-3">
+                  {services.map((svc) => (
+                    <label
+                      key={svc.id}
+                      className={`flex items-center gap-3 p-4 rounded-lg border transition-colors ${
+                        selectedService === svc.id ? "border-accent bg-accent/5 cursor-pointer" : "border-border hover:border-accent/30 cursor-pointer"
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        name="service"
+                        checked={selectedService === svc.id}
+                        onChange={() => setSelectedService(svc.id)}
+                        className="accent-accent"
+                      />
+                      <div className="flex-1">
+                        <span className="font-medium text-sm">{svc.name}</span>
+                      </div>
+                      <span className="font-bold text-accent">{formatPrice(svc.price)}</span>
+                    </label>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            {isAvailableService && (
+              <Card>
+                <CardContent className="p-6">
+                  <h2 className="text-lg font-bold font-display text-primary mb-4">3. Add-Ons</h2>
+                  <div className="space-y-3">
+                    {addons.map((addon) => (
+                      <label
+                        key={addon.id}
+                        className={`flex items-center gap-3 p-4 rounded-lg border transition-colors ${
+                          selectedAddons.includes(addon.id) ? "border-accent bg-accent/5 cursor-pointer" : "border-border hover:border-accent/30 cursor-pointer"
+                        }`}
+                      >
+                        <input
+                          type="checkbox"
+                          checked={selectedAddons.includes(addon.id)}
+                          onChange={() => toggleAddon(addon.id)}
+                          className="accent-accent"
+                        />
+                        <div className="flex-1">
+                          <span className="font-medium text-sm">{addon.name}</span>
+                        </div>
+                        <span className="font-bold text-accent">+{formatPrice(addon.price)}</span>
+                      </label>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            <Card>
+              <CardContent className="p-6">
+                <h2 className="text-lg font-bold font-display text-primary mb-4">{isAvailableService ? "4" : "3"}. Upload Your .QBM File</h2>
+                <div className="border-2 border-dashed border-border rounded-lg p-8 text-center">
+                  <Upload className="w-8 h-8 text-muted-foreground mx-auto mb-3" />
+                  <div className="mb-3">
+                    <label htmlFor="qbm-file" className="cursor-pointer">
+                      <span className="text-accent font-medium hover:underline">Choose a .QBM file</span>
+                      <input
+                        id="qbm-file"
+                        type="file"
+                        accept=".qbm,.QBM"
+                        onChange={handleFileChange}
+                        className="hidden"
+                      />
+                    </label>
+                    <span className="text-sm text-muted-foreground ml-1">or drag and drop</span>
+                  </div>
+                  {file && (
+                    <div className="flex items-center gap-2 justify-center text-sm">
+                      <CheckCircle className="w-4 h-4 text-success" />
+                      <span className="font-medium">{file.name}</span>
+                      <span className="text-muted-foreground">({(file.size / 1024 / 1024).toFixed(1)} MB)</span>
+  
