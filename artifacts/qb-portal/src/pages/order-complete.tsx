@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { CheckCircle } from "lucide-react";
 import { formatPrice } from "@/lib/products";
+import { SEO } from "@/components/seo";
 
 interface OrderCompleteProps {
   orderId: number | null;
@@ -16,6 +17,7 @@ interface OrderCompleteProps {
 export default function OrderComplete({ orderId, serviceName, addonNames, total, fileName, email }: OrderCompleteProps) {
   return (
     <div>
+      <SEO title="Order Submitted" description="Your QuickBooks order has been received and is being processed." path="/order" noIndex />
       <section className="section-brand-navy py-16">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <h1 className="text-4xl font-bold font-display text-white mb-4">Order Submitted</h1>
