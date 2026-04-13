@@ -3,20 +3,24 @@ export interface Product {
   slug: string;
   name: string;
   category: string;
-  tier: "launch" | "coming-soon";
-  price_cad: number | null;
-  turnaround?: string;
+  category_slug: string;
   description: string;
-  competitor_ref: string;
-  is_addon?: boolean;
-  requires_service?: number | null;
-  target_launch: string;
-  badge: "available" | "coming-soon";
+  base_price_cad: number;
+  launch_price_cad: number;
+  turnaround: string;
+  badge: "available";
+  is_addon: boolean;
+  requires_service: number | null;
+  accepted_file_types: string[];
+  sort_order: number;
+  billing_type?: "subscription";
+  billing_interval?: "month";
 }
 
 export interface ProductCatalog {
+  promo_active: boolean;
+  promo_label: string;
   services: Product[];
-  tools: Product[];
 }
 
 let catalogCache: ProductCatalog | null = null;
@@ -32,19 +36,23 @@ export function getServiceCategories(services: Product[]): string[] {
   return [...new Set(services.map((s) => s.category))];
 }
 
-export function getToolCategories(tools: Product[]): string[] {
-  return [...new Set(tools.map((t) => t.category))];
-}
-
 export function getProductById(catalog: ProductCatalog, id: number): Product | undefined {
-  return [...catalog.services, ...catalog.tools].find((p) => p.id === id);
+  return catalog.services.find((p) => p.id === id);
 }
 
 export function getProductBySlug(catalog: ProductCatalog, slug: string): Product | undefined {
-  return [...catalog.services, ...catalog.tools].find((p) => p.slug === slug);
+  return catalog.services.find((p) => p.slug === slug);
 }
 
-export function formatPrice(price: number | null): string {
-  if (price === null) return "Quote";
-  return `$${price} CAD`;
+export function formatPrice(cents: number): string {
+  return `$${(cents / 100).toFixed(2)}`;
+}
+
+export function getActivePrice(product: Product): number {
+  if (!catalogCache) return product.base_price_cad;
+  return catalogCache.promo_active ? product.launch_price_cad : product.base_price_cad;
+}
+
+export function isPromoActive(): boolean {
+  return catalogCache?.promo_active ?? false;
 }
