@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { CheckCircle, Mail } from "lucide-react";
+import { SEO } from "@/components/seo";
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
@@ -40,6 +41,7 @@ export default function ForgotPassword() {
 
   return (
     <div>
+      <SEO title="Forgot Password" description="Reset your NexFortis QuickBooks Portal password." path="/forgot-password" noIndex />
       <section className="section-brand-light py-16 min-h-[70vh]">
         <div className="max-w-md mx-auto px-4">
           <div className="text-center mb-8">
