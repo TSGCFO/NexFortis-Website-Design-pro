@@ -3,6 +3,7 @@ import { Link, useLocation } from "wouter";
 import { useAuth } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { SEO } from "@/components/seo";
 
 export default function Register() {
   const [name, setName] = useState("");
@@ -33,6 +34,7 @@ export default function Register() {
 
   return (
     <div className="min-h-[80vh] flex items-center justify-center section-brand-light py-12">
+      <SEO title="Create Account" description="Create your NexFortis QuickBooks Portal account." path="/register" noIndex />
       <div className="w-full max-w-md px-4">
         <div className="text-center mb-8">
           <img src={`${import.meta.env.BASE_URL}images/logo-original.svg`} alt="NexFortis" className="h-14 mx-auto mb-4 dark:hidden" />
