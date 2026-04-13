@@ -258,7 +258,7 @@ export function Footer() {
               <h4 className="font-display font-semibold text-lg mb-4 text-white">Support</h4>
               <ul className="space-y-3 text-sm text-white/60">
                 <li><Link href="/faq" className="hover:text-accent transition-colors">FAQ</Link></li>
-                <li><a href="mailto:hassansadiq73@gmail.com" className="hover:text-accent transition-colors">Contact Us</a></li>
+                <li><a href="mailto:support@nexfortis.com" className="hover:text-accent transition-colors">Contact Us</a></li>
               </ul>
             </div>
 
@@ -291,7 +291,7 @@ export function Footer() {
 
           <div className="border-t border-white/10 pt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-white/40">
             <p>&copy; {new Date().getFullYear()} NexFortis IT Solutions. All rights reserved.</p>
-            <p>Ontario, Canada | hassansadiq73@gmail.com</p>
+            <p>Ontario, Canada | support@nexfortis.com</p>
           </div>
         </div>
       </footer>
