@@ -1,4 +1,77 @@
-- [ ] Actual file processing (that's the qb-converter CLI, separate system)
-- [ ] Automated email sending (manual for now)
-- [ ] Main site SEO updates for QB content (separate task later)
-- [ ] Production Stripe keys (test mode only)
+# NexFortis Implementation Checklist
+
+See `docs/implementation-plan.md` for full gap analysis and dependency graph.
+See `docs/prompts/` for the detailed prompt files for each step.
+
+## Phase 0 — Foundation (no dependencies)
+
+- [ ] **Prompt 01**: Product catalog overhaul (54→20 products), email replacement (hassansadiq73→support@nexfortis.com), SEO foundation (react-helmet-async, robots.txt, sitemap.xml, OG tags)
+  - Branch: `feat/foundation-catalog-email-seo`
+  - PRDs: `feature-product-catalog-pricing.md`, `feature-seo-landing-pages.md` (Section 6)
+- [ ] **Prompt 03**: Admin auth foundation — `role` column on qb_users, operator middleware, admin login, seed operator account, admin layout shell
+  - Branch: `feat/admin-auth-foundation`
+  - PRD: `feature-operator-admin-panel.md`
+
+## Phase 1 — Core Commerce (requires Prompt 01, 03)
+
+- [ ] **Prompt 02**: Catalog UI — strikethrough pricing display, launch promo badges, home page updates, FAQ updates
+  - Branch: `feat/catalog-ui-promo-display`
+  - PRD: `feature-product-catalog-pricing.md`
+- [ ] **Prompt 04**: Order flow update — new product IDs, file upload per service type, volume packs, bundles
+  - Branch: `feat/order-flow-update`
+  - PRD: `feature-product-catalog-pricing.md`
+- [ ] **Prompt 05**: Admin panel MVP — order management, ticket management, file download/upload
+  - Branch: `feat/admin-panel-mvp`
+  - PRD: `feature-operator-admin-panel.md`
+
+## Phase 2 — Subscriptions (requires Prompt 03, 05)
+
+- [ ] **Prompt 06**: Support subscription backend — Stripe subscriptions, plans, webhooks, ticket counting, SLA timer
+  - Branch: `feat/subscription-backend`
+  - PRD: `feature-expert-support-subscription.md`
+- [ ] **Prompt 07**: Support subscription frontend — purchase flow, portal tab, tier badge, ticket priority
+  - Branch: `feat/subscription-frontend`
+  - PRD: `feature-expert-support-subscription.md`
+- [ ] **Prompt 08**: Ticket system enhancement — reply/thread, status updates, admin SLA timer, priority routing
+  - Branch: `feat/ticket-system-enhancement`
+  - PRDs: `feature-expert-support-subscription.md`, `feature-operator-admin-panel.md`
+
+## Phase 3 — Growth Features (requires Prompt 04, 06)
+
+- [ ] **Prompt 09**: Promo code system — DB table, validate/redeem API, checkout field, Stripe coupons, subscriber discount
+  - Branch: `feat/promo-code-system`
+  - PRD: `feature-promo-code-system.md`
+- [ ] **Prompt 10**: Promo code admin — create/edit/deactivate codes, analytics, referral code generation
+  - Branch: `feat/promo-code-admin`
+  - PRDs: `feature-promo-code-system.md`, `feature-operator-admin-panel.md`
+
+## Phase 4 — Content & SEO (can start after Prompt 01)
+
+- [ ] **Prompt 11**: SEO landing pages batch 1 — 6 service-specific pages with content, JSON-LD, breadcrumbs
+  - Branch: `feat/seo-landing-pages-batch1`
+  - PRD: `feature-seo-landing-pages.md`
+- [ ] **Prompt 12**: SEO landing pages batch 2 — problem-focused, comparison, and educational pages
+  - Branch: `feat/seo-landing-pages-batch2`
+  - PRD: `feature-seo-landing-pages.md`
+
+## Phase 5 — Main Website Fixes (independent)
+
+- [ ] **Prompt 13**: Blog admin auth, QB Portal link → qb.nexfortis.com, GA4, headshot, LinkedIn, dead code cleanup
+  - Branch: `feat/main-site-fixes`
+  - PRD: `master-nexfortis-website-remaining-work.md`
+
+## Phase 6 — Polish & Launch Prep
+
+- [ ] **Prompt 14**: Transactional emails — Resend integration for order confirmation, ticket ack, password reset, welcome, subscription events
+  - Branch: `feat/transactional-emails`
+  - PRDs: multiple
+- [ ] **Prompt 15**: Security + polish — CORS whitelist, global error handler, production env validation, final audit
+  - Branch: `feat/security-polish`
+  - PRDs: multiple
+
+## Out of Scope (handled separately)
+
+- [ ] Actual file processing (qb-converter CLI, separate system)
+- [ ] Production Stripe keys (test mode until go-live)
+- [ ] Custom domain setup (qb.nexfortis.com DNS)
+- [ ] Microsoft Bookings integration (Premium tier v2)
