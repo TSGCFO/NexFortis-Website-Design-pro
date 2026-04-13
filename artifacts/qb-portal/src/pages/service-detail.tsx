@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { Link, useParams } from "wouter";
-import { loadProducts, getProductBySlug, type Product, type ProductCatalog, formatPrice } from "@/lib/products";
+import { loadProducts, getProductBySlug, type Product, type ProductCatalog, formatPrice, getActivePrice, isPromoActive } from "@/lib/products";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { CheckCircle, Clock, Shield, Lock, ArrowRight, Star, FileCheck } from "lucide-react";
+import { SEO } from "@/components/seo";
 
 export default function ServiceDetail() {
   const { slug } = useParams<{ slug: string }>();
@@ -18,7 +19,7 @@ export default function ServiceDetail() {
         const p = getProductBySlug(c, slug);
         if (p) {
           setProduct(p);
-          const related = [...c.services, ...c.tools]
+          const related = c.services
             .filter((r) => r.category === p.category && r.id !== p.id)
             .slice(0, 4);
           setRelatedProducts(related);
@@ -42,17 +43,23 @@ export default function ServiceDetail() {
     );
   }
 
-  const isAvailable = product.badge === "available";
+  const promo = isPromoActive();
+  const activePrice = getActivePrice(product);
   const addons = catalog.services.filter((s) => s.is_addon && s.requires_service === product.id);
 
   return (
     <div>
+      <SEO
+        title={product.name}
+        description={product.description}
+        path={`/service/${product.slug}`}
+      />
       <section className="section-brand-navy py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-2 text-sm text-white/50 mb-4">
-            <Link href="/catalog" className="hover:text-white/70">Services & Tools</Link>
+            <Link href="/catalog" className="hover:text-white/70">Services</Link>
             <span>/</span>
-            <span>{product.category}</span>
+            <Link href={`/category/${product.category_slug}`} className="hover:text-white/70">{product.category}</Link>
             <span>/</span>
             <span className="text-white/80">{product.name}</span>
           </div>
@@ -60,14 +67,21 @@ export default function ServiceDetail() {
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-3 mb-3">
                 <h1 className="text-3xl md:text-4xl font-bold font-display text-white">{product.name}</h1>
-                <span className={`px-3 py-1 rounded-full text-xs font-semibold ${isAvailable ? "bg-green-500/20 text-green-300" : "bg-accent/20 text-accent"}`}>
-                  {isAvailable ? "Available Now" : "Coming Soon"}
+                <span className="px-3 py-1 rounded-full text-xs font-semibold bg-green-500/20 text-green-300">
+                  Available Now
                 </span>
               </div>
               <p className="text-white/70 text-lg max-w-2xl">{product.description}</p>
             </div>
             <div className="text-right">
-              <p className="text-3xl font-bold text-accent">{formatPrice(product.price_cad)}</p>
+              {promo ? (
+                <>
+                  <p className="text-3xl font-bold text-accent">{formatPrice(activePrice)}</p>
+                  <p className="text-white/50 text-sm line-through">{formatPrice(product.base_price_cad)}</p>
+                </>
+              ) : (
+                <p className="text-3xl font-bold text-accent">{formatPrice(activePrice)}</p>
+              )}
               {product.turnaround && <p className="text-white/50 text-sm mt-1"><Clock className="w-4 h-4 inline mr-1" />{product.turnaround}</p>}
             </div>
           </div>
@@ -84,9 +98,6 @@ export default function ServiceDetail() {
                 <CardContent className="p-6">
                   <h2 className="text-xl font-bold font-display text-primary mb-4">About This Service</h2>
                   <p className="text-muted-foreground leading-relaxed">{product.description}</p>
-                  {product.competitor_ref && (
-                    <p className="text-sm text-muted-foreground mt-4 italic">Comparable to: {product.competitor_ref}</p>
-                  )}
                 </CardContent>
               </Card>
 
@@ -129,7 +140,7 @@ export default function ServiceDetail() {
                             <p className="font-medium text-sm">{addon.name}</p>
                             <p className="text-xs text-muted-foreground">{addon.description}</p>
                           </div>
-                          <span className="font-semibold text-accent text-sm">{formatPrice(addon.price_cad)}</span>
+                          <span className="font-semibold text-accent text-sm">{formatPrice(getActivePrice(addon))}</span>
                         </div>
                       ))}
                     </div>
@@ -141,21 +152,23 @@ export default function ServiceDetail() {
             <div className="space-y-6">
               <Card className="border-accent/30">
                 <CardContent className="p-6 text-center">
-                  <p className="text-3xl font-bold text-accent mb-2">{formatPrice(product.price_cad)}</p>
-                  {product.turnaround && <p className="text-sm text-muted-foreground mb-4"><Clock className="w-4 h-4 inline mr-1" />Turnaround: {product.turnaround}</p>}
-                  {isAvailable ? (
-                    <Link href={`/order?service=${product.id}`}>
-                      <Button className="w-full bg-rose-gold text-rose-gold-foreground hover:bg-rose-gold-hover font-display font-bold gap-2" size="lg">
-                        Order Now <ArrowRight className="w-4 h-4" />
-                      </Button>
-                    </Link>
+                  {promo ? (
+                    <>
+                      <p className="text-3xl font-bold text-accent mb-1">{formatPrice(activePrice)}</p>
+                      <p className="text-sm text-muted-foreground line-through mb-2">{formatPrice(product.base_price_cad)}</p>
+                      {catalog.promo_label && (
+                        <p className="text-xs text-rose-gold font-semibold mb-2">{catalog.promo_label}</p>
+                      )}
+                    </>
                   ) : (
-                    <Link href={`/waitlist?product=${product.slug}`}>
-                      <Button className="w-full bg-navy text-white hover:bg-navy/90 font-display font-bold" size="lg">
-                        Join Waitlist
-                      </Button>
-                    </Link>
+                    <p className="text-3xl font-bold text-accent mb-2">{formatPrice(activePrice)}</p>
                   )}
+                  {product.turnaround && <p className="text-sm text-muted-foreground mb-4"><Clock className="w-4 h-4 inline mr-1" />Turnaround: {product.turnaround}</p>}
+                  <Link href={`/order?service=${product.id}`}>
+                    <Button className="w-full bg-rose-gold text-rose-gold-foreground hover:bg-rose-gold-hover font-display font-bold gap-2" size="lg">
+                      Order Now <ArrowRight className="w-4 h-4" />
+                    </Button>
+                  </Link>
                 </CardContent>
               </Card>
 
@@ -174,7 +187,7 @@ export default function ServiceDetail() {
               <Card>
                 <CardContent className="p-6">
                   <h3 className="font-bold font-display text-primary mb-3">Category</h3>
-                  <Link href={`/category/${product.category.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/-+$/, "")}`} className="text-accent hover:underline text-sm">
+                  <Link href={`/category/${product.category_slug}`} className="text-accent hover:underline text-sm">
                     {product.category}
                   </Link>
                 </CardContent>
@@ -193,9 +206,9 @@ export default function ServiceDetail() {
                         <h3 className="font-semibold text-sm font-display text-primary mb-1">{rp.name}</h3>
                         <p className="text-xs text-muted-foreground mb-2 line-clamp-2">{rp.description}</p>
                         <div className="flex items-center justify-between">
-                          <span className="font-bold text-accent text-sm">{formatPrice(rp.price_cad)}</span>
-                          <span className={`px-2 py-0.5 rounded-full text-xs ${rp.badge === "available" ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400" : "bg-accent/10 text-accent"}`}>
-                            {rp.badge === "available" ? "Available" : "Coming Soon"}
+                          <span className="font-bold text-accent text-sm">{formatPrice(getActivePrice(rp))}</span>
+                          <span className="px-2 py-0.5 rounded-full text-xs bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">
+                            Available
                           </span>
                         </div>
                       </CardContent>
