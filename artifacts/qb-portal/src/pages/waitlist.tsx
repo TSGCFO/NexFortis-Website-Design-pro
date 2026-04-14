@@ -92,9 +92,9 @@ export default function Waitlist() {
       <section className="section-brand-navy py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <Bell className="w-12 h-12 text-accent mx-auto mb-4" />
-          <h1 className="text-4xl font-bold font-display text-white mb-4">Join the Waitlist</h1>
+          <h1 className="text-4xl font-bold font-display text-white mb-4">Get Notified About New Services</h1>
           <p className="text-white/70 text-lg max-w-xl mx-auto">
-            {product ? `Be the first to know when ${product.name} launches.` : "Be the first to know when our new services launch."}
+            {product ? `Be the first to know when ${product.name} launches.` : "Be the first to know when we launch new QuickBooks services and tools."}
           </p>
         </div>
       </section>
@@ -145,7 +145,7 @@ export default function Waitlist() {
                   <Button type="submit" disabled={loading} className="w-full bg-navy text-white hover:bg-navy/90 font-display font-semibold">
                     {loading ? "Joining..." : "Join Waitlist"}
                   </Button>
-                  <p className="text-xs text-center text-muted-foreground">We'll only email you about this product. No spam.</p>
+                  <p className="text-xs text-center text-muted-foreground">We'll only email you about new service launches. No spam.</p>
                 </form>
               </CardContent>
             </Card>

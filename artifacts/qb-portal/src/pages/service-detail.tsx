@@ -45,7 +45,7 @@ export default function ServiceDetail() {
 
   const promo = isPromoActive();
   const activePrice = getActivePrice(product);
-  const addons = catalog.services.filter((s) => s.is_addon && s.requires_service === product.id);
+  const addons = catalog.services.filter((s) => s.is_addon && product.category_slug === "quickbooks-conversion" && !product.is_addon);
 
   return (
     <div>
@@ -105,26 +105,60 @@ export default function ServiceDetail() {
                 <CardContent className="p-6">
                   <h2 className="text-xl font-bold font-display text-primary mb-4">What's Included</h2>
                   <ul className="space-y-3">
-                    <li className="flex items-start gap-3">
-                      <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
-                      <span className="text-sm">Complete {product.name.toLowerCase()} processing</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
-                      <span className="text-sm">Penny-perfect accuracy verification</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
-                      <span className="text-sm">Secure file handling (256-bit encrypted, deleted after 7 days)</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
-                      <span className="text-sm">Email confirmation and delivery notification</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
-                      <span className="text-sm">Money-back guarantee if unsatisfied</span>
-                    </li>
+                    {product.billing_type === "subscription" ? (
+                      <>
+                        <li className="flex items-start gap-3">
+                          <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+                          <span className="text-sm">{product.description}</span>
+                        </li>
+                        <li className="flex items-start gap-3">
+                          <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+                          <span className="text-sm">1–2 hour response time during business hours</span>
+                        </li>
+                        <li className="flex items-start gap-3">
+                          <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+                          <span className="text-sm">Cancel anytime — no long-term commitment</span>
+                        </li>
+                      </>
+                    ) : product.category_slug === "volume-packs" ? (
+                      <>
+                        <li className="flex items-start gap-3">
+                          <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+                          <span className="text-sm">{product.description}</span>
+                        </li>
+                        <li className="flex items-start gap-3">
+                          <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+                          <span className="text-sm">Credits valid for 12 months</span>
+                        </li>
+                        <li className="flex items-start gap-3">
+                          <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+                          <span className="text-sm">Use credits for any standard Enterprise → Premier/Pro conversion</span>
+                        </li>
+                      </>
+                    ) : (
+                      <>
+                        <li className="flex items-start gap-3">
+                          <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+                          <span className="text-sm">{product.description}</span>
+                        </li>
+                        <li className="flex items-start gap-3">
+                          <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+                          <span className="text-sm">Penny-perfect accuracy verification</span>
+                        </li>
+                        <li className="flex items-start gap-3">
+                          <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+                          <span className="text-sm">Secure file handling (256-bit encrypted, deleted after 7 days)</span>
+                        </li>
+                        <li className="flex items-start gap-3">
+                          <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+                          <span className="text-sm">Email confirmation and delivery notification</span>
+                        </li>
+                        <li className="flex items-start gap-3">
+                          <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+                          <span className="text-sm">Money-back guarantee if unsatisfied</span>
+                        </li>
+                      </>
+                    )}
                   </ul>
                 </CardContent>
               </Card>

@@ -82,7 +82,7 @@ export default function Catalog() {
                   onClick={() => setFilter(cat)}
                   className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${filter === cat ? "bg-navy text-white" : "bg-muted text-muted-foreground hover:bg-muted/80"}`}
                 >
-                  {cat}
+                  {cat} ({allProducts.filter((p) => p.category === cat).length})
                 </button>
               ))}
             </div>

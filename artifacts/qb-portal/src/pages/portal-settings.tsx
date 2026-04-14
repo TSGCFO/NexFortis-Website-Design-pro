@@ -103,7 +103,7 @@ export function SupportTab(props: SupportProps) {
           <CardContent className="p-8 text-center">
             <CheckCircle className="w-12 h-12 text-green-500 mx-auto mb-4" />
             <h3 className="text-lg font-bold font-display text-primary mb-2">Ticket Submitted</h3>
-            <p className="text-sm text-muted-foreground mb-4">We'll respond within 4 hours (1 hour for Premium Support).</p>
+            <p className="text-sm text-muted-foreground mb-4">We'll respond within 1–2 hours (30 minutes for Premium Support subscribers).</p>
             <Button onClick={() => setTicketSubmitted(false)} variant="outline">Submit Another Ticket</Button>
           </CardContent>
         </Card>
