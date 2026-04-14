@@ -135,10 +135,19 @@ Work is done through a sequence of 15 prompts executed via **Replit background t
 - Conflicts are handled by the main agent after approval
 - The operator pushes main to GitHub manually from the Git tab
 
+**Review process (after each round):**
+1. Task finishes → operator approves merge into main + pushes to GitHub + republishes the app — all at once
+2. Aki (external reviewer) pulls the new commits and runs a deep code review (diff against last known-good commit)
+3. Aki simultaneously runs E2E browser tests on the published live site
+4. Every finding — code issues, live site bugs, enhancement opportunities — is submitted via the **Replit feedback widget** (one issue per submission, specific and focused, no code blocks)
+5. Operator fixes feedback items → pushes + republishes
+6. Aki re-tests → if clean, round complete; if not, repeat from step 4
+
 **Prompt structure:**
 - Full prompt files live in `docs/prompts/` — the agent reads these as reference
 - Launcher prompts (under 1,200 characters) are pasted into the Task Board to start a task
 - Launcher prompts tell the agent to read `replit.md` and the full prompt file, then execute
+- Prompts describe what to do in detail but do NOT include copy-paste code blocks — the agent writes the code itself
 
 **Each task must:**
 1. Read `replit.md` for project context
