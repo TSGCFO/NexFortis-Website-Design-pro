@@ -93,7 +93,12 @@ export default function Catalog() {
       <section className="py-12 section-brand-light">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {Object.entries(grouped).length === 0 ? (
-            <div className="text-center py-12 text-muted-foreground">No services match your search.</div>
+            <div className="text-center py-12">
+              <p className="text-muted-foreground mb-2">No products match your search.</p>
+              <p className="text-sm text-muted-foreground">Need help? Contact us at{" "}
+                <a href="mailto:support@nexfortis.com" className="text-accent hover:underline">support@nexfortis.com</a>
+              </p>
+            </div>
           ) : (
             Object.entries(grouped).map(([category, products]) => {
               const categorySlug = products[0]?.category_slug || category.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/-+$/, "");
@@ -111,6 +116,9 @@ export default function Catalog() {
               );
             })
           )}
+          <p className="text-xs text-muted-foreground text-center mt-8">
+            All prices in Canadian dollars (CAD). GST/HST will be added at checkout based on your province.
+          </p>
         </div>
       </section>
     </div>
@@ -125,7 +133,14 @@ function ProductCard({ product }: { product: Product }) {
       <CardContent className="p-5">
         <div className="flex items-start justify-between mb-2">
           <h3 className="font-bold font-display text-primary text-sm leading-tight flex-1 mr-2">{product.name}</h3>
-          <span className="px-2 py-0.5 rounded-full bg-success/10 text-success text-xs font-semibold shrink-0">Available</span>
+          <div className="flex items-center gap-1.5 shrink-0">
+            <span className="px-2 py-0.5 rounded-full bg-success/10 text-success text-xs font-semibold">Available</span>
+            {promo && (
+              <span className="px-2 py-0.5 rounded-full bg-rose-gold/10 text-rose-gold text-xs font-semibold">
+                Launch Special
+              </span>
+            )}
+          </div>
         </div>
         <p className="text-xs text-muted-foreground mb-3 line-clamp-2">{product.description}</p>
         {product.is_addon && (
@@ -133,13 +148,29 @@ function ProductCard({ product }: { product: Product }) {
         )}
         <div className="flex items-center justify-between">
           <div>
-            {promo ? (
+            {product.billing_type === "subscription" ? (
+              promo ? (
+                <>
+                  <span className="font-bold text-accent">{formatPrice(activePrice)}/mo</span>
+                  <span className="text-xs text-muted-foreground line-through ml-2">{formatPrice(product.base_price_cad)}/mo</span>
+                </>
+              ) : (
+                <span className="font-bold text-accent">{formatPrice(activePrice)}/mo</span>
+              )
+            ) : promo ? (
               <>
                 <span className="font-bold text-accent">{formatPrice(activePrice)}</span>
                 <span className="text-xs text-muted-foreground line-through ml-2">{formatPrice(product.base_price_cad)}</span>
               </>
             ) : (
               <span className="font-bold text-accent">{formatPrice(activePrice)}</span>
+            )}
+            {product.category_slug === "volume-packs" && (
+              <div className="text-xs text-muted-foreground mt-1">
+                {product.id === 19
+                  ? `${formatPrice(Math.round(getActivePrice(product) / 5))}/conversion`
+                  : `${formatPrice(Math.round(getActivePrice(product) / 10))}/conversion`}
+              </div>
             )}
             {product.turnaround && <span className="text-xs text-muted-foreground ml-2">{product.turnaround}</span>}
           </div>

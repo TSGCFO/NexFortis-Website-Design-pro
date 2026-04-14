@@ -56,3 +56,7 @@ export function getActivePrice(product: Product): number {
 export function isPromoActive(): boolean {
   return catalogCache?.promo_active ?? false;
 }
+
+export function formatPriceCAD(cents: number): string {
+  return `$${(cents / 100).toFixed(2)} CAD`;
+}

@@ -41,12 +41,13 @@ const faqData = [
   { cat: "General", q: "How does the waitlist work?", a: "Enter your email on our waitlist page to be notified when new services launch. You'll only receive emails about services you've specifically signed up for — no spam." },
 ];
 
+const faqCategories = [...new Set(faqData.map((item) => item.cat))];
+
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
-  const [activeCategory, setActiveCategory] = useState<string>("all");
+  const [activeCat, setActiveCat] = useState<string>("all");
 
-  const categories = ["all", ...new Set(faqData.map((f) => f.cat))];
-  const filtered = activeCategory === "all" ? faqData : faqData.filter((f) => f.cat === activeCategory);
+  const filteredFaq = activeCat === "all" ? faqData : faqData.filter((f) => f.cat === activeCat);
 
   return (
     <div>
@@ -66,13 +67,27 @@ export default function FAQ() {
 
       <section className="py-8 bg-background border-b border-border">
         <div className="max-w-3xl mx-auto px-4 flex flex-wrap gap-2 justify-center">
-          {categories.map((cat) => (
+          <button
+            onClick={() => { setActiveCat("all"); setOpenIndex(null); }}
+            className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
+              activeCat === "all"
+                ? "bg-navy text-white"
+                : "bg-muted text-muted-foreground hover:bg-muted/80"
+            }`}
+          >
+            All ({faqData.length})
+          </button>
+          {faqCategories.map((cat) => (
             <button
               key={cat}
-              onClick={() => { setActiveCategory(cat); setOpenIndex(null); }}
-              className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${activeCategory === cat ? "bg-navy text-white" : "bg-muted text-muted-foreground hover:bg-muted/80"}`}
+              onClick={() => { setActiveCat(cat); setOpenIndex(null); }}
+              className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
+                activeCat === cat
+                  ? "bg-navy text-white"
+                  : "bg-muted text-muted-foreground hover:bg-muted/80"
+              }`}
             >
-              {cat === "all" ? `All (${faqData.length})` : `${cat} (${faqData.filter((f) => f.cat === cat).length})`}
+              {cat} ({faqData.filter((f) => f.cat === cat).length})
             </button>
           ))}
         </div>
@@ -81,7 +96,7 @@ export default function FAQ() {
       <section className="py-12 section-brand-light">
         <div className="max-w-3xl mx-auto px-4">
           <div className="space-y-3">
-            {filtered.map((faq, i) => (
+            {filteredFaq.map((faq, i) => (
               <div key={i} className="bg-card rounded-lg border border-border overflow-hidden">
                 <button
                   onClick={() => setOpenIndex(openIndex === i ? null : i)}

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useParams } from "wouter";
-import { loadProducts, getProductBySlug, type Product, type ProductCatalog, formatPrice, getActivePrice, isPromoActive } from "@/lib/products";
+import { loadProducts, getProductBySlug, type Product, type ProductCatalog, formatPrice, formatPriceCAD, getActivePrice, isPromoActive } from "@/lib/products";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { CheckCircle, Clock, Shield, Lock, ArrowRight, Star, FileCheck } from "lucide-react";
@@ -46,6 +46,8 @@ export default function ServiceDetail() {
   const promo = isPromoActive();
   const activePrice = getActivePrice(product);
   const addons = catalog.services.filter((s) => s.is_addon && product.category_slug === "quickbooks-conversion" && !product.is_addon);
+  const isSubscription = product.billing_type === "subscription";
+  const priceSuffix = isSubscription ? "/mo" : "";
 
   return (
     <div>
@@ -65,24 +67,47 @@ export default function ServiceDetail() {
           </div>
           <div className="flex items-start justify-between flex-wrap gap-6">
             <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-3 mb-3">
+              <div className="flex items-center gap-3 mb-3 flex-wrap">
                 <h1 className="text-3xl md:text-4xl font-bold font-display text-white">{product.name}</h1>
                 <span className="px-3 py-1 rounded-full text-xs font-semibold bg-green-500/20 text-green-300">
                   Available Now
                 </span>
               </div>
+              {promo && (
+                <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-rose-gold/10 text-rose-gold text-sm font-semibold mb-3">
+                  Launch Special — 50% Off
+                </span>
+              )}
               <p className="text-white/70 text-lg max-w-2xl">{product.description}</p>
             </div>
             <div className="text-right">
               {promo ? (
                 <>
-                  <p className="text-3xl font-bold text-accent">{formatPrice(activePrice)}</p>
-                  <p className="text-white/50 text-sm line-through">{formatPrice(product.base_price_cad)}</p>
+                  <p className="text-3xl font-bold text-accent">{formatPriceCAD(activePrice)}{priceSuffix}</p>
+                  <p className="text-white/50 text-sm line-through">{formatPrice(product.base_price_cad)}{priceSuffix}</p>
                 </>
               ) : (
-                <p className="text-3xl font-bold text-accent">{formatPrice(activePrice)}</p>
+                <p className="text-3xl font-bold text-accent">{formatPriceCAD(activePrice)}{priceSuffix}</p>
+              )}
+              {isSubscription && promo && (
+                <p className="text-xs text-white/50 mt-2">
+                  Launch rate for first 3 months, then {formatPrice(product.base_price_cad)}/mo.
+                </p>
               )}
               {product.turnaround && <p className="text-white/50 text-sm mt-1"><Clock className="w-4 h-4 inline mr-1" />{product.turnaround}</p>}
+              {product.category_slug === "volume-packs" && (
+                <div className="mt-3 px-4 py-2 rounded-lg bg-accent/10 text-accent text-sm font-medium">
+                  {product.id === 19
+                    ? `That's just ${formatPrice(Math.round(getActivePrice(product) / 5))}/conversion`
+                    : `That's just ${formatPrice(Math.round(getActivePrice(product) / 10))}/conversion`}
+                  {product.id === 20 && " — includes Guaranteed 30-Minute turnaround on all conversions"}
+                </div>
+              )}
+              <div className="flex flex-wrap gap-3 mt-4 text-xs text-white/50">
+                <span className="flex items-center gap-1">✓ Money-Back Guarantee</span>
+                <span className="flex items-center gap-1">✓ All Prices CAD</span>
+                <span className="flex items-center gap-1">✓ GST/HST added at checkout</span>
+              </div>
             </div>
           </div>
         </div>
@@ -105,7 +130,7 @@ export default function ServiceDetail() {
                 <CardContent className="p-6">
                   <h2 className="text-xl font-bold font-display text-primary mb-4">What's Included</h2>
                   <ul className="space-y-3">
-                    {product.billing_type === "subscription" ? (
+                    {isSubscription ? (
                       <>
                         <li className="flex items-start gap-3">
                           <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
@@ -134,6 +159,12 @@ export default function ServiceDetail() {
                           <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
                           <span className="text-sm">Use credits for any standard Enterprise → Premier/Pro conversion</span>
                         </li>
+                        {product.id === 20 && (
+                          <li className="flex items-start gap-3">
+                            <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+                            <span className="text-sm font-semibold">Includes Guaranteed 30-Minute turnaround on all 10 conversions</span>
+                          </li>
+                        )}
                       </>
                     ) : (
                       <>
@@ -188,14 +219,19 @@ export default function ServiceDetail() {
                 <CardContent className="p-6 text-center">
                   {promo ? (
                     <>
-                      <p className="text-3xl font-bold text-accent mb-1">{formatPrice(activePrice)}</p>
-                      <p className="text-sm text-muted-foreground line-through mb-2">{formatPrice(product.base_price_cad)}</p>
+                      <p className="text-3xl font-bold text-accent mb-1">{formatPrice(activePrice)}{priceSuffix}</p>
+                      <p className="text-sm text-muted-foreground line-through mb-2">{formatPrice(product.base_price_cad)}{priceSuffix}</p>
                       {catalog.promo_label && (
                         <p className="text-xs text-rose-gold font-semibold mb-2">{catalog.promo_label}</p>
                       )}
                     </>
                   ) : (
-                    <p className="text-3xl font-bold text-accent mb-2">{formatPrice(activePrice)}</p>
+                    <p className="text-3xl font-bold text-accent mb-2">{formatPrice(activePrice)}{priceSuffix}</p>
+                  )}
+                  {isSubscription && promo && (
+                    <p className="text-xs text-muted-foreground mb-2">
+                      Launch rate for first 3 months, then {formatPrice(product.base_price_cad)}/mo.
+                    </p>
                   )}
                   {product.turnaround && <p className="text-sm text-muted-foreground mb-4"><Clock className="w-4 h-4 inline mr-1" />Turnaround: {product.turnaround}</p>}
                   <Link href={`/order?service=${product.id}`}>

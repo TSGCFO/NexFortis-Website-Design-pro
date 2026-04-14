@@ -1,6 +1,7 @@
 import { Link } from "wouter";
 import { motion } from "framer-motion";
 import { Shield, Upload, Clock, CheckCircle, ArrowRight, Lock, DollarSign, MapPin, Zap, Award } from "lucide-react";
+import { formatPriceCAD } from "@/lib/products";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { SEO } from "@/components/seo";
@@ -32,21 +33,63 @@ const steps = [
 ];
 
 const comparisonData = [
-  { feature: "Price", nexfortis: "From $75.00 CAD", bigred: "$249 USD (~$344 CAD)", etech: "$299 USD (~$413 CAD)" },
+  { feature: "Price", nexfortis: `From ${formatPriceCAD(7500)}`, bigred: "$249 USD (~$344 CAD)", etech: "$299 USD (~$413 CAD)" },
   { feature: "Turnaround", nexfortis: "Under 1 hour", bigred: "Next business day", etech: "1 business day" },
-  { feature: "Same-day rush", nexfortis: "Included option (+$25.00)", bigred: "Not stated", etech: "$450 USD (~$621 CAD)" },
+  { feature: "Same-day rush", nexfortis: `Included option (+${formatPriceCAD(2500)})`, bigred: "Not stated", etech: "$450 USD (~$621 CAD)" },
   { feature: "Canadian-first", nexfortis: "Yes", bigred: "No", etech: "Implied" },
   { feature: "GST/HST preserved", nexfortis: "Yes", bigred: "Unknown", etech: "Yes" },
   { feature: "Total services", nexfortis: "20", bigred: "28", etech: "7" },
 ];
 
 const featuredServices = [
-  { title: "Enterprise → Premier/Pro Standard", price: "$75.00 CAD", desc: "Convert QuickBooks Enterprise .QBM files to Premier or Pro format.", badge: "available", href: "/service/enterprise-to-premier-standard" },
-  { title: "File Health Check", price: "$25.00 CAD", desc: "Comprehensive file integrity check with detailed validation report.", badge: "available", href: "/service/file-health-check" },
-  { title: "Audit Trail Removal", price: "$50.00 CAD", desc: "Remove audit trail to reduce file size and improve performance.", badge: "available", href: "/service/audit-trail-removal" },
-  { title: "Super Condense", price: "$50.00 CAD", desc: "Dramatically reduce your QuickBooks file size.", badge: "available", href: "/service/super-condense" },
-  { title: "QB Expert Support — Essentials", price: "$25.00/mo CAD", desc: "Monthly QB Desktop support with 3 tickets and 1-hour response time.", badge: "available", href: "/service/expert-support-essentials" },
-  { title: "AccountEdge/MYOB → QuickBooks", price: "$125.00 CAD", desc: "Migrate your AccountEdge or MYOB data to QuickBooks Desktop.", badge: "available", href: "/service/accountedge-to-quickbooks" },
+  {
+    title: "Enterprise → Premier/Pro Standard",
+    price: "From $75.00 CAD",
+    originalPrice: "$149.00",
+    desc: "Convert your QuickBooks Enterprise file to Premier or Pro. Under 60 minutes. Penny-perfect accuracy.",
+    badge: "Most Popular",
+    href: "/service/enterprise-to-premier-standard",
+  },
+  {
+    title: "Audit Trail + CRA Period Copy Bundle",
+    price: "$75.00 CAD",
+    originalPrice: "$149.00",
+    desc: "Our most popular bundle: audit trail removal plus CRA period copy. Save vs. buying separately.",
+    badge: "Best Value",
+    href: "/service/audit-trail-cra-bundle",
+  },
+  {
+    title: "5-Pack Conversions",
+    price: "$325.00 CAD",
+    originalPrice: "$649.00",
+    desc: "Bundle of 5 standard conversions for accountants and bookkeepers. $65/conversion. Valid 12 months.",
+    badge: "For Accountants",
+    href: "/service/5-pack-conversions",
+  },
+  {
+    title: "Guaranteed 30-Minute Conversion",
+    price: "$125.00 CAD",
+    originalPrice: "$249.00",
+    desc: "Priority processing with a guaranteed 30-minute turnaround. Full refund if we exceed 30 minutes.",
+    badge: "Fastest",
+    href: "/service/guaranteed-30-minute",
+  },
+  {
+    title: "QB Expert Support — Professional",
+    price: "$50.00/mo CAD",
+    originalPrice: "$99.00/mo",
+    desc: "8 tickets/month, 1-hour response time, data integrity analysis, 10% discount on all services.",
+    badge: "Recommended",
+    href: "/service/expert-support-professional",
+  },
+  {
+    title: "Sage 50 → QuickBooks Migration",
+    price: "$125.00 CAD",
+    originalPrice: "$249.00",
+    desc: "Migrate your Sage 50 or Simply Accounting data to QuickBooks Desktop. Full data transfer.",
+    badge: "New Service",
+    href: "/service/sage50-to-quickbooks",
+  },
 ];
 
 export default function Home() {
@@ -83,8 +126,18 @@ export default function Home() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-xl text-white/80 mb-4 max-w-2xl mx-auto"
           >
-            Starting at <span className="text-azure font-bold">$75.00 CAD</span> with our launch special
+            Starting at <span className="text-azure font-bold">{formatPriceCAD(7500)}</span> with our launch special <span className="text-white/50 text-base">(reg. $149.00)</span>
           </motion.p>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.25 }}
+            className="mb-4"
+          >
+            <div className="mt-2 inline-flex items-center gap-2 px-5 py-2 rounded-full bg-rose-gold/20 text-rose-gold text-sm font-bold">
+              🎉 Launch Special — 50% Off All Services
+            </div>
+          </motion.div>
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -182,6 +235,10 @@ export default function Home() {
               </tbody>
             </table>
           </motion.div>
+          <p className="text-xs text-muted-foreground text-center mt-4">
+            All NexFortis prices in CAD. Competitor prices shown in CAD equivalent at ~1.38 USD/CAD exchange rate.
+            GST/HST will be added at checkout.
+          </p>
         </div>
       </section>
 
@@ -202,11 +259,20 @@ export default function Home() {
                   <CardContent className="p-6">
                     <div className="flex items-start justify-between mb-3">
                       <h3 className="font-bold font-display text-primary">{svc.title}</h3>
-                      <span className="px-2 py-0.5 rounded-full bg-success/10 text-success text-xs font-semibold">Available</span>
+                      {svc.badge && (
+                        <span className="px-2 py-0.5 rounded-full bg-rose-gold/10 text-rose-gold text-xs font-semibold">
+                          {svc.badge}
+                        </span>
+                      )}
                     </div>
                     <p className="text-sm text-muted-foreground mb-4">{svc.desc}</p>
                     <div className="flex items-center justify-between">
-                      <span className="font-bold text-accent">{svc.price}</span>
+                      <div className="flex items-center gap-2">
+                        <span className="text-lg font-bold text-accent">{svc.price}</span>
+                        {svc.originalPrice && (
+                          <span className="text-sm text-muted-foreground line-through">{svc.originalPrice}</span>
+                        )}
+                      </div>
                       <Link href={svc.href}>
                         <Button size="sm" className="bg-rose-gold hover:bg-rose-gold-hover text-white">
                           View Details

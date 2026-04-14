@@ -59,6 +59,11 @@ export default function Category() {
           <p className="text-white/70 text-lg">
             {products.length} service{products.length !== 1 ? "s" : ""} in this category
           </p>
+          {isPromoActive() && (
+            <div className="mb-6 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-gold/20 text-rose-gold text-sm font-semibold mt-4">
+              Launch Special — 50% Off All Services
+            </div>
+          )}
         </div>
       </section>
 
@@ -66,11 +71,25 @@ export default function Category() {
 
       <section className="py-12 section-brand-light">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {slug === "quickbooks-conversion" && (
+            <div className="mb-8 p-4 rounded-lg bg-accent/5 border border-accent/20">
+              <p className="text-sm text-foreground">
+                <strong>Accountant or bookkeeper?</strong> Save with our{" "}
+                <Link href="/category/volume-packs" className="text-accent hover:underline font-medium">
+                  Volume Packs →
+                </Link>
+                {" "}— 5-Pack from $65/conversion, 10-Pack from $60/conversion.
+              </p>
+            </div>
+          )}
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {products.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
+          <p className="text-xs text-muted-foreground text-center mt-8">
+            All prices in Canadian dollars (CAD). GST/HST will be added at checkout based on your province.
+          </p>
         </div>
       </section>
     </div>
@@ -86,21 +105,44 @@ function ProductCard({ product }: { product: Product }) {
       <CardContent className="p-6 flex flex-col flex-1">
         <div className="flex items-start justify-between gap-2 mb-3">
           <h3 className="font-bold font-display text-primary">{product.name}</h3>
-          <span className="px-2 py-0.5 rounded-full text-xs font-semibold whitespace-nowrap flex-shrink-0 bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">
-            Available
-          </span>
+          <div className="flex items-center gap-1.5 shrink-0">
+            <span className="px-2 py-0.5 rounded-full text-xs font-semibold whitespace-nowrap bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">
+              Available
+            </span>
+            {promo && (
+              <span className="px-2 py-0.5 rounded-full bg-rose-gold/10 text-rose-gold text-xs font-semibold whitespace-nowrap">
+                Launch Special
+              </span>
+            )}
+          </div>
         </div>
         <p className="text-sm text-muted-foreground mb-4 flex-1">{product.description}</p>
         {product.is_addon && <p className="text-xs text-muted-foreground mb-3 italic">Add-on</p>}
         <div className="flex items-center justify-between mt-auto">
           <div>
-            {promo ? (
+            {product.billing_type === "subscription" ? (
+              promo ? (
+                <>
+                  <span className="font-bold text-accent">{formatPrice(activePrice)}/mo</span>
+                  <span className="text-xs text-muted-foreground line-through ml-2">{formatPrice(product.base_price_cad)}/mo</span>
+                </>
+              ) : (
+                <span className="font-bold text-accent">{formatPrice(activePrice)}/mo</span>
+              )
+            ) : promo ? (
               <>
                 <span className="font-bold text-accent">{formatPrice(activePrice)}</span>
                 <span className="text-xs text-muted-foreground line-through ml-2">{formatPrice(product.base_price_cad)}</span>
               </>
             ) : (
               <span className="font-bold text-accent">{formatPrice(activePrice)}</span>
+            )}
+            {product.category_slug === "volume-packs" && (
+              <div className="text-xs text-muted-foreground mt-1">
+                {product.id === 19
+                  ? `${formatPrice(Math.round(getActivePrice(product) / 5))}/conversion`
+                  : `${formatPrice(Math.round(getActivePrice(product) / 10))}/conversion`}
+              </div>
             )}
             {product.turnaround && <span className="text-xs text-muted-foreground ml-2"><Clock className="w-3 h-3 inline" /> {product.turnaround}</span>}
           </div>
