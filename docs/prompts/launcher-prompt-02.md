@@ -6,7 +6,7 @@ Before doing anything else:
 2. Read the full prompt at `docs/prompts/prompt-02-catalog-ui-promo-display.md` — complete step-by-step instructions.
 3. Execute every step in order (Steps 1 through 7).
 
-**Do not modify any files in `docs/`.** Do not run any git commands.
+**Do not modify any files in `docs/`.**
 
 The prompt has 7 steps:
 - Step 1: Enhance catalog product cards (promo badge, /mo for subscriptions, per-conversion for volume packs, GST note, zero-results message)

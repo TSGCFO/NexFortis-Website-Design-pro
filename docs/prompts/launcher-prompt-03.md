@@ -6,7 +6,7 @@ Before doing anything else:
 2. Read the full prompt at `docs/prompts/prompt-03-admin-auth-foundation.md` — complete step-by-step instructions.
 3. Execute every step in order (Steps 1 through 10).
 
-**Do not modify any files in `docs/`.** Do not run any git commands.
+**Do not modify any files in `docs/`.** 
 
 The prompt has 10 steps:
 - Step 1: Add `role` column to qb_users table
