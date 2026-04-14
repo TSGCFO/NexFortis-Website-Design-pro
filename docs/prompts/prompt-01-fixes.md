@@ -7,13 +7,9 @@ These are bugs and content issues found during end-to-end testing of the PR #2 m
 
 ---
 
-## Step 0: Create Branch
+## Step 0: Branch
 
-```bash
-git checkout main
-git pull origin main
-git checkout -b fix/prompt-01-e2e-issues
-```
+The branch `fix/prompt-01-e2e-issues` has already been created and pushed. You are working in it. Do NOT run `git checkout`.
 
 ---
 

@@ -1,11 +1,11 @@
 {
   "promo_active": true,
-  "promo_label": "Launch Special -- 50% Off",
+  "promo_label": "Launch Special — 50% Off",
   "services": [
     {
       "id": 1,
       "slug": "enterprise-to-premier-standard",
-      "name": "Enterprise -> Premier/Pro Standard",
+      "name": "Enterprise → Premier/Pro Standard",
       "category": "QuickBooks Conversion Services",
       "category_slug": "quickbooks-conversion",
       "description": "Convert your QuickBooks Enterprise file to Premier or Pro. Standard complexity files with clean data, processed in under 60 minutes. Includes list verification and data integrity check.",
@@ -21,7 +21,7 @@
     {
       "id": 2,
       "slug": "enterprise-to-premier-complex",
-      "name": "Enterprise -> Premier/Pro Complex",
+      "name": "Enterprise → Premier/Pro Complex",
       "category": "QuickBooks Conversion Services",
       "category_slug": "quickbooks-conversion",
       "description": "Convert complex QuickBooks Enterprise files with advanced inventory, multi-currency, large list counts, or custom fields. Includes full data audit and integrity verification.",
@@ -152,7 +152,7 @@
       "name": "Multi-Currency Removal",
       "category": "QuickBooks Data Services",
       "category_slug": "quickbooks-data-services",
-      "description": "Remove multi-currency from your QuickBooks file. Once enabled, Intuit provides no way to turn it off -- we handle it safely with full data preservation.",
+      "description": "Remove multi-currency from your QuickBooks file. Once enabled, Intuit provides no way to turn it off — we handle it safely with full data preservation.",
       "base_price_cad": 14900,
       "launch_price_cad": 7500,
       "turnaround": "1-2 business days",
@@ -213,7 +213,7 @@
     {
       "id": 14,
       "slug": "accountedge-to-quickbooks",
-      "name": "AccountEdge/MYOB -> QuickBooks",
+      "name": "AccountEdge/MYOB → QuickBooks",
       "category": "Platform Migration Services",
       "category_slug": "platform-migrations",
       "description": "Migrate your AccountEdge or MYOB data to QuickBooks Desktop. Transfers chart of accounts, customers, vendors, items, and transaction history.",
@@ -229,7 +229,7 @@
     {
       "id": 15,
       "slug": "sage50-to-quickbooks",
-      "name": "Sage 50/Simply Accounting -> QuickBooks",
+      "name": "Sage 50/Simply Accounting → QuickBooks",
       "category": "Platform Migration Services",
       "category_slug": "platform-migrations",
       "description": "Migrate your Sage 50 (Simply Accounting) data to QuickBooks Desktop. Full transfer of chart of accounts, customers, vendors, items, and transaction history.",
@@ -245,7 +245,7 @@
     {
       "id": 16,
       "slug": "expert-support-essentials",
-      "name": "QB Expert Support -- Essentials",
+      "name": "QB Expert Support — Essentials",
       "category": "QB Expert Support",
       "category_slug": "expert-support",
       "description": "Monthly QuickBooks Desktop support subscription. 3 tickets per month with 1-hour response time during business hours. Covers troubleshooting, error codes, performance issues, setup guidance. Includes 1 automated file health check per month.",
@@ -263,7 +263,7 @@
     {
       "id": 17,
       "slug": "expert-support-professional",
-      "name": "QB Expert Support -- Professional",
+      "name": "QB Expert Support — Professional",
       "category": "QB Expert Support",
       "category_slug": "expert-support",
       "description": "Monthly QuickBooks Desktop support subscription. 8 tickets per month with 1-hour response time. Covers everything in Essentials plus file corruption diagnosis, data integrity analysis, list management, multi-user troubleshooting, and optimization recommendations. 10% discount on all NexFortis services.",
@@ -281,7 +281,7 @@
     {
       "id": 18,
       "slug": "expert-support-premium",
-      "name": "QB Expert Support -- Premium",
+      "name": "QB Expert Support — Premium",
       "category": "QB Expert Support",
       "category_slug": "expert-support",
       "description": "Monthly QuickBooks Desktop support subscription. Unlimited tickets with 30-minute response time. Everything in Professional plus proactive file optimization, migration planning, priority service queue, monthly 30-min video call, and 20% discount on all NexFortis services. Dedicated referral code ($25/referral).",
@@ -302,7 +302,7 @@
       "name": "5-Pack Conversions",
       "category": "Volume Packs",
       "category_slug": "volume-packs",
-      "description": "Bundle of 5 standard Enterprise -> Premier/Pro conversions at a discounted rate. Perfect for accountants and bookkeepers managing multiple client files. Credits are valid for 12 months.",
+      "description": "Bundle of 5 standard Enterprise → Premier/Pro conversions at a discounted rate. Perfect for accountants and bookkeepers managing multiple client files. Credits are valid for 12 months.",
       "base_price_cad": 64900,
       "launch_price_cad": 32500,
       "turnaround": "Credits issued immediately",
@@ -318,7 +318,7 @@
       "name": "10-Pack Conversions",
       "category": "Volume Packs",
       "category_slug": "volume-packs",
-      "description": "Bundle of 10 standard Enterprise -> Premier/Pro conversions at the best value. Ideal for accounting firms with a steady volume of client conversions. Credits are valid for 12 months.",
+      "description": "Bundle of 10 standard Enterprise → Premier/Pro conversions at the best value. Ideal for accounting firms with a steady volume of client conversions. Credits are valid for 12 months.",
       "base_price_cad": 119900,
       "launch_price_cad": 60000,
       "turnaround": "Credits issued immediately",
