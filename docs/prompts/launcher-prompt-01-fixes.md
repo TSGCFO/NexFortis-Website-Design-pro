@@ -1,11 +1,12 @@
 # Prompt 01 Fixes — Launcher
 
+The branch `fix/prompt-01-e2e-issues` has already been created for you. You are working in that branch.
+
 Before doing anything else:
 
-1. Pull latest main: `git pull origin main`
-2. Create a new branch: `git checkout -b fix/prompt-01-e2e-issues`
-3. Read the full fix prompt at `docs/prompts/prompt-01-fixes.md` — it contains 8 steps with exact file paths, line numbers, and replacement code for 24 issues found during E2E testing.
-4. Execute every step in that file in order (Steps 1 through 8).
+1. Read the full fix prompt at `docs/prompts/prompt-01-fixes.md` — it contains 8 steps with exact file paths, line numbers, and replacement code for 24 issues found during E2E testing.
+2. Execute every step in that file in order (Steps 1 through 8).
+3. Do NOT run `git checkout` — the branch is already set up.
 
 **Do not modify any files in `docs/`.**
 
