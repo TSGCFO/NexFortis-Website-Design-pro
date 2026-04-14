@@ -2,13 +2,11 @@
 
 Before doing anything else:
 
-1. Pull latest main: `git pull origin main`
-2. Create a new branch: `git checkout -b feat/catalog-ui-promo-display`
-3. Read `replit.md` — full project context, architecture, conventions.
-4. Read the full prompt at `docs/prompts/prompt-02-catalog-ui-promo-display.md` — complete step-by-step instructions.
-5. Execute every step in order (Steps 1 through 7).
+1. Read `replit.md` — full project context, architecture, conventions.
+2. Read the full prompt at `docs/prompts/prompt-02-catalog-ui-promo-display.md` — complete step-by-step instructions.
+3. Execute every step in order (Steps 1 through 7).
 
-**Do not modify any files in `docs/`.**
+**Do not modify any files in `docs/`.** Do not run any git commands.
 
 The prompt has 7 steps:
 - Step 1: Enhance catalog product cards (promo badge, /mo for subscriptions, per-conversion for volume packs, GST note, zero-results message)
@@ -17,6 +15,6 @@ The prompt has 7 steps:
 - Step 4: Add FAQ category filter tabs
 - Step 5: Update category pages (promo banner, volume pack cross-link, GST note)
 - Step 6: Add `formatPriceCAD` helper
-- Step 7: Verify and commit
+- Step 7: Verify with `pnpm typecheck` and test in preview
 
 Go read the full prompt file now and execute it.

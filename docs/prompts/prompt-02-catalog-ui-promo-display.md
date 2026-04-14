@@ -2,14 +2,13 @@
 
 ## Step 0: Setup
 
-1. Pull the latest `main` branch: `git pull origin main`
-2. Create and switch to a new branch: `git checkout -b feat/catalog-ui-promo-display`
-3. Read these files before making any changes:
-   - `replit.md` — project overview, architecture, conventions
-   - `docs/prd/qb-portal/feature-product-catalog-pricing.md` — full catalog PRD (especially FR-04, FR-05, FR-06, FR-09, FR-12)
-   - `docs/prompts/prompt-02-catalog-ui-promo-display.md` — this file (the complete instructions)
+Read these files before making any changes:
+1. `replit.md` — project overview, architecture, conventions, current state
+2. `docs/prd/qb-portal/feature-product-catalog-pricing.md` — full catalog PRD (especially FR-04, FR-05, FR-06, FR-09, FR-12)
+3. `docs/prompts/prompt-02-catalog-ui-promo-display.md` — this file (the complete instructions)
 
 **Do NOT modify any files in `docs/`, `artifacts/api-server/`, `artifacts/nexfortis/`, or `lib/`.**
+**Do NOT run any git commands** — the Replit worktree system handles commits automatically.
 
 ---
 
@@ -429,7 +428,7 @@ Keep `formatPrice` (without CAD) for catalog cards and other compact displays wh
 
 ---
 
-## Step 7: Verify and Commit
+## Step 7: Verify
 
 1. Run `pnpm typecheck` from the repo root — fix any TypeScript errors
 2. Test in the Replit preview:
@@ -466,13 +465,7 @@ Keep `formatPrice` (without CAD) for catalog cards and other compact displays wh
    - `grep -rn "coming.soon\|Coming Soon" artifacts/qb-portal/src/` — should return zero results
    - `grep -rn "\->" artifacts/qb-portal/public/products.json` — should return zero results (all arrows should be `→`)
    - `grep -rn "\-\-" artifacts/qb-portal/public/products.json` — should return zero results (all dashes should be `—`)
-4. Commit all changes:
-```bash
-git add -A
-git commit -m "feat: enhance catalog UI with promo badges, /mo pricing, volume per-conversion rates, FAQ tabs, home page promo banner"
-git push -u origin feat/catalog-ui-promo-display
-```
-5. Create a PR against `main` with title: "Feat: Catalog UI — Promo Display, Product Cards, Home Page, FAQ Tabs"
+4. Fix any issues found in steps 1–3 before considering this task complete.
 
 ---
 

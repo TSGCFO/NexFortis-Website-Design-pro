@@ -2,14 +2,13 @@
 
 ## Step 0: Setup
 
-1. Pull the latest `main` branch: `git pull origin main`
-2. Create and switch to a new branch: `git checkout -b feat/admin-auth-foundation`
-3. Read these files before making any changes:
-   - `replit.md` — project overview, architecture, conventions
-   - `docs/prd/qb-portal/feature-operator-admin-panel.md` — admin panel PRD (especially Section 6.1: Authentication & Authorization)
-   - `docs/prompts/prompt-03-admin-auth-foundation.md` — this file (complete instructions)
+Read these files before making any changes:
+1. `replit.md` — project overview, architecture, conventions, current state
+2. `docs/prd/qb-portal/feature-operator-admin-panel.md` — admin panel PRD (especially Section 6.1: Authentication & Authorization)
+3. `docs/prompts/prompt-03-admin-auth-foundation.md` — this file (complete instructions)
 
 **Do NOT modify any files in `docs/`.**
+**Do NOT run any git commands** — the Replit worktree system handles commits automatically.
 
 ---
 
@@ -926,7 +925,7 @@ Do NOT add any admin routes to the sitemap. Admin pages should never be indexed.
 
 ---
 
-## Step 10: Verify and Commit
+## Step 10: Verify
 
 1. Run `pnpm typecheck` from the repo root — fix any TypeScript errors
 2. Run the database migration and seed (Step 2 and Step 3)
@@ -949,13 +948,7 @@ Do NOT add any admin routes to the sitemap. Admin pages should never be indexed.
 4. Grep for security issues:
    - `grep -rn "operator" artifacts/api-server/src/routes/qb-portal.ts` — confirm requireOperator is on all admin routes
    - `grep -rn "admin" artifacts/qb-portal/public/robots.txt` — confirm /admin is disallowed
-5. Commit all changes:
-```bash
-git add -A
-git commit -m "feat: add admin auth foundation — role column, operator middleware, admin layout shell with dashboard/orders/customers/tickets"
-git push -u origin feat/admin-auth-foundation
-```
-6. Create a PR against `main` with title: "Feat: Admin Auth Foundation — Role Column, Operator Middleware, Admin Layout Shell"
+5. Fix any issues found in steps 1–4 before considering this task complete.
 
 ---
 

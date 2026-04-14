@@ -6,25 +6,26 @@ This is a pnpm workspace monorepo using TypeScript, designed to manage multiple 
 
 I prefer concise and clear explanations. When making changes, please prioritize iterative development and ask for confirmation before implementing major architectural shifts. Do not make changes to files in the `docs/` directory.
 
-## Current Project State (April 2026)
+## Current Project State (April 14, 2026)
 
-The monorepo is functionally running in Replit with two frontends and one API server. The project is now entering a structured implementation phase to launch the QB Portal as a production-ready product.
+The monorepo is functionally running in Replit with two frontends and one API server. The project is in active implementation — Prompt 01 is complete (PR #2 + PR #3 merged).
 
-**What exists and works:**
-- QB Portal: Auth (login/register), product catalog (54 products — being replaced with 20), order flow with Stripe (test mode), .QBM file upload, waitlist, FAQ, QBM guide, client portal, support tickets (basic create/list)
+**What exists and works (after PR #2 and #3):**
+- QB Portal: Auth (login/register), product catalog (20 products across 5 categories with `base_price_cad`/`launch_price_cad`/`promo_active` schema), order flow with Stripe (test mode), .QBM file upload, waitlist, FAQ (rewritten for 20-product catalog), QBM guide, client portal, support tickets (basic create/list), SEO foundation (react-helmet-async, robots.txt, sitemap.xml, per-page meta tags, OG tags)
 - Main Site: All pages complete, blog with admin (no auth), contact form (email via Resend when configured), privacy & terms pages, SEO with react-helmet-async
 - API: Express 5 server with QB auth, orders, tickets, blog CRUD, contact form, file uploads
+- Email: All 4 instances of `hassansadiq73@gmail.com` replaced with `support@nexfortis.com`
 
-**What needs to be built (see `docs/implementation-plan.md` for full gap analysis):**
-- Product catalog overhaul: 54 → 20 products with new pricing schema
-- SEO foundation for QB Portal (no react-helmet, no sitemap, no robots.txt, no meta tags)
-- Email references: 4 instances of `hassansadiq73@gmail.com` must become `support@nexfortis.com`
-- Admin/operator role and panel (no admin auth, no admin routes, no admin UI)
+**What still needs to be built (see `docs/implementation-plan.md` for full gap analysis):**
+- Catalog UI enhancements: promo badges, /mo pricing for subscriptions, per-conversion rates for volume packs, FAQ filter tabs
+- Admin/operator role and panel (no role column on qb_users yet, no admin auth, no admin routes, no admin UI)
 - Support subscription system (no subscription billing, no SLA, no ticket counting)
 - Promo code system (no promo codes, no discount mechanism)
 - Stripe subscriptions (only one-time payments exist)
-- SEO landing pages (none exist for QB Portal)
+- Order flow updates for new product IDs, file types per service, volume packs
+- SEO landing pages (none exist for QB Portal beyond the foundation)
 - Main site fixes: blog admin auth, GA4, QB Portal link update, misc cleanup
+- Transactional emails, security hardening, production polish
 
 ## PRDs & Implementation Docs
 
@@ -79,13 +80,13 @@ The monorepo is structured with `artifacts/` for deployable applications and `li
 **TypeScript and Composite Projects:**
 All packages extend a base `tsconfig.base.json` with `composite: true`. The root `tsconfig.json` lists all packages as project references, enabling root-level type-checking and efficient build ordering. Type declaration files (`.d.ts`) are emitted during type-checking, while actual JavaScript bundling is handled by esbuild/Vite.
 
-**Database Schema (current — 6 tables in `lib/db/`):**
-- `qb_users` — User accounts (email, password hash, name). No `role` column yet.
-- `qb_orders` — Orders with Stripe session ID, status, total_cad (integer cents)
-- `qb_order_items` — Line items per order
-- `qb_uploaded_files` — Customer file uploads (.qbm)
-- `qb_support_tickets` — Basic tickets (subject, message, status). No priority, SLA, or reply.
-- `qb_waitlist` — Waitlist signups (email, product interest)
+**Database Schema (current — 6 tables in `lib/db/src/schema/qb-portal.ts`):**
+- `qb_users` — User accounts (email, password_hash, name, phone). No `role` column yet (added in Prompt 03).
+- `qb_orders` — Orders with service_id, service_name, addons (JSON string), total_cad (integer cents), status, stripe_session_id, upload_token
+- `qb_order_files` — File uploads per order (file_type, file_name, storage_path, file_size_bytes)
+- `qb_support_tickets` — Basic tickets (user_id, subject, message, status). No priority, SLA, or reply.
+- `qb_waitlist_signups` — Waitlist signups (email, product_id, product_name) with unique constraint on email+product
+- `qb_password_resets` — Password reset tokens (user_id, token_hash, used, expires_at)
 
 **Applications:**
 
@@ -108,7 +109,7 @@ All packages extend a base `tsconfig.base.json` with `composite: true`. The root
 - **Auth**: bcrypt password hashing, HMAC-signed tokens, httpOnly session cookies, rate-limited login.
 - **File Management**: Multer for .qbm file uploads (500MB limit), authorized download endpoints.
 - **API**: Dedicated routes at `/api/qb/` for authentication, waitlist, orders, checkout, file management, and support tickets.
-- **Products**: Catalog lives in `artifacts/qb-portal/public/products.json`. After the catalog overhaul (Prompt 01), this file will contain exactly 20 products with `base_price_cad`, `launch_price_cad`, and a top-level `promo_active` flag.
+- **Products**: Catalog lives in `artifacts/qb-portal/public/products.json`. Contains exactly 20 products with `base_price_cad`, `launch_price_cad`, `category_slug`, `sort_order`, `accepted_file_types`, optional `billing_type`/`billing_interval` for subscriptions, and a top-level `promo_active` flag. Helper functions in `src/lib/products.ts`: `formatPrice()`, `getActivePrice()`, `isPromoActive()`, `loadProducts()`.
 
 ### Express API Server (`artifacts/api-server`)
 - **Framework**: Express 5
@@ -123,18 +124,30 @@ All packages extend a base `tsconfig.base.json` with `composite: true`. The root
 
 # Implementation Workflow
 
-Work is being done through a sequence of 15 prompts. Each prompt = one feature branch = one PR. See `docs/implementation-plan.md` for the full sequence and dependency graph.
+Work is done through a sequence of 15 prompts executed via **Replit background tasks**. See `docs/implementation-plan.md` for the full sequence and dependency graph.
 
-**Branch naming convention:** `feat/{descriptive-name}` (e.g., `feat/foundation-catalog-email-seo`)
+**IMPORTANT — Replit Background Task Rules:**
+- All implementation work is done via background tasks (Task Board → "+ New task"), NEVER the main agent chat
+- Each background task runs in its own **worktree** (isolated from main)
+- Background tasks auto-commit to their worktree — do NOT include any git commands in prompts
+- Do NOT include `git pull`, `git checkout`, `git branch`, `git commit`, `git push`, or "create a PR" in prompts
+- When a task finishes, the worktree is merged into main via the "Approve" button on the Task Board
+- Conflicts are handled by the main agent after approval
+- The operator pushes main to GitHub manually from the Git tab
 
-**Each PR must:**
-1. Start from latest `main`
-2. Create a new feature branch
+**Prompt structure:**
+- Full prompt files live in `docs/prompts/` — the agent reads these as reference
+- Launcher prompts (under 1,200 characters) are pasted into the Task Board to start a task
+- Launcher prompts tell the agent to read `replit.md` and the full prompt file, then execute
+
+**Each task must:**
+1. Read `replit.md` for project context
+2. Read the full prompt file in `docs/prompts/`
 3. Reference the relevant PRDs in `docs/prd/`
-4. Run `pnpm typecheck` with no errors
-5. Verify changes work in the Replit preview
-6. Commit with a descriptive message
-7. Push and create a PR against `main`
+4. Execute all steps in order
+5. Run `pnpm typecheck` with no errors
+6. Verify changes work in the Replit preview
+7. Not modify any files in `docs/`
 8. Not break existing functionality
 
 # External Dependencies
