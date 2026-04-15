@@ -113,6 +113,9 @@ export default function Home() {
     loadProducts().then(setCatalog);
   }, []);
 
+  const flagshipProduct = catalog ? getProductBySlug(catalog, "enterprise-to-premier-standard") : undefined;
+  const regPriceFormatted = flagshipProduct ? formatPriceCAD(flagshipProduct.base_price_cad) : "$149.00 CAD";
+
   const nonAddonPrices = catalog
     ? catalog.services.filter((s) => !s.is_addon).map((s) => getActivePrice(s))
     : [];
@@ -159,7 +162,7 @@ export default function Home() {
             className="text-xl text-white/80 mb-4 max-w-2xl mx-auto"
           >
             {promo ? (
-              <>Starting at <span className="text-azure font-bold">{lowestPriceFormatted}</span> with our launch special <span className="text-white/50 text-base line-through">(reg. $149.00)</span></>
+              <>Starting at <span className="text-azure font-bold">{lowestPriceFormatted}</span> with our launch special <span className="text-white/50 text-base line-through">(reg. {regPriceFormatted})</span></>
 
             ) : (
               <>Starting at <span className="text-azure font-bold">{lowestPriceFormatted}</span></>
