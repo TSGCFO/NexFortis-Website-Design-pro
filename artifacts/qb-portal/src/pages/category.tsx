@@ -59,9 +59,9 @@ export default function Category() {
           <p className="text-white/70 text-lg">
             {products.length} service{products.length !== 1 ? "s" : ""} in this category
           </p>
-          {isPromoActive() && (
+          {isPromoActive() && catalog.promo_label && (
             <div className="mb-6 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-gold/20 text-rose-gold text-sm font-semibold mt-4">
-              Launch Special — 50% Off All Services
+              {catalog.promo_label}
             </div>
           )}
         </div>
