@@ -1,4 +1,5 @@
 import { Router, type Request, type Response, type NextFunction, type RequestHandler } from "express";
+import rateLimit from "express-rate-limit";
 import { db } from "@workspace/db";
 import { qbUsers, qbOrders, qbOrderFiles, qbWaitlistSignups, qbSupportTickets } from "@workspace/db/schema";
 import { eq, and, desc } from "drizzle-orm";
@@ -11,6 +12,24 @@ import { supabaseAdmin } from "../lib/supabase";
 import sanitizeHtml from "sanitize-html";
 
 const router = Router();
+
+const orderLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 10,
+  standardHeaders: true,
+  legacyHeaders: false,
+  keyGenerator: (req) => req.userId!,
+  message: { error: "Too many requests. Please try again later." },
+});
+
+const ticketLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 5,
+  standardHeaders: true,
+  legacyHeaders: false,
+  keyGenerator: (req) => req.userId!,
+  message: { error: "Too many requests. Please try again later." },
+});
 
 interface CatalogProduct {
   id: number;
@@ -363,7 +382,10 @@ router.get("/orders/:id", requireAuth, async (req: Request, res: Response) => {
   }
 });
 
-router.post("/orders/:id/files", (req: Request, res: Response) => {
+// orderLimiter targets file uploads (not order creation) because orders are
+// created via Stripe checkout, which is already protected by checkoutLimiter.
+// File upload is the authenticated order-related write that needs per-user limiting.
+router.post("/orders/:id/files", requireAuth, orderLimiter, (req: Request, res: Response) => {
   const orderId = parseInt(req.params.id as string);
   if (isNaN(orderId)) {
     res.status(400).json({ error: "Invalid order ID" });
@@ -505,7 +527,7 @@ router.get("/orders/:id/files/:fileId/download", async (req: Request, res: Respo
   }
 });
 
-router.post("/support-tickets", requireAuth, async (req: Request, res: Response) => {
+router.post("/support-tickets", requireAuth, ticketLimiter, async (req: Request, res: Response) => {
   try {
     const uid = getUserId(req);
     const { subject, message } = req.body;
