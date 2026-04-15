@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Link } from "wouter";
 import { motion } from "framer-motion";
 import { Shield, Upload, Clock, CheckCircle, ArrowRight, Lock, DollarSign, MapPin, Zap, Award } from "lucide-react";
@@ -53,51 +53,46 @@ function getComparisonData(lowestPriceFormatted: string, rushPriceFormatted: str
   ];
 }
 
-const featuredServices = [
+const featuredServiceDefs = [
   {
+    slug: "enterprise-to-premier-standard",
     title: "Enterprise → Premier/Pro Standard",
-    price: "From $75.00 CAD",
-    originalPrice: "$149.00",
     desc: "Convert your QuickBooks Enterprise file to Premier or Pro. Under 60 minutes. Penny-perfect accuracy.",
     badge: "Most Popular",
     href: "/service/enterprise-to-premier-standard",
+    prefix: "From ",
   },
   {
+    slug: "audit-trail-cra-bundle",
     title: "Audit Trail + CRA Period Copy Bundle",
-    price: "$75.00 CAD",
-    originalPrice: "$149.00",
     desc: "Our most popular bundle: audit trail removal plus CRA period copy. Save vs. buying separately.",
     badge: "Best Value",
     href: "/service/audit-trail-cra-bundle",
   },
   {
+    slug: "5-pack-conversions",
     title: "5-Pack Conversions",
-    price: "$325.00 CAD",
-    originalPrice: "$649.00",
     desc: "Bundle of 5 standard conversions for accountants and bookkeepers. $65/conversion. Valid 12 months.",
     badge: "For Accountants",
     href: "/service/5-pack-conversions",
   },
   {
+    slug: "guaranteed-30-minute",
     title: "Guaranteed 30-Minute Conversion",
-    price: "$125.00 CAD",
-    originalPrice: "$249.00",
     desc: "Priority processing with a guaranteed 30-minute turnaround. Full refund if we exceed 30 minutes.",
     badge: "Fastest",
     href: "/service/guaranteed-30-minute",
   },
   {
+    slug: "expert-support-professional",
     title: "QB Expert Support — Professional",
-    price: "$50.00/mo CAD",
-    originalPrice: "$99.00/mo",
     desc: "8 tickets/month, 1-hour response time, data integrity analysis, 10% discount on all services.",
     badge: "Recommended",
     href: "/service/expert-support-professional",
   },
   {
+    slug: "sage50-to-quickbooks",
     title: "Sage 50 → QuickBooks Migration",
-    price: "$125.00 CAD",
-    originalPrice: "$249.00",
     desc: "Migrate your Sage 50 or Simply Accounting data to QuickBooks Desktop. Full data transfer.",
     badge: "New Service",
     href: "/service/sage50-to-quickbooks",
@@ -108,6 +103,25 @@ export default function Home() {
   const [catalog, setCatalog] = useState<ProductCatalog | null>(null);
   const promo = catalog?.promo_active ?? false;
   const steps = getSteps(catalog);
+
+  const featuredServices = useMemo(() => {
+    if (!catalog) return null;
+    return featuredServiceDefs.map((def) => {
+      const product = getProductBySlug(catalog, def.slug);
+      if (!product) {
+        console.warn(`Featured service slug "${def.slug}" not found in catalog`);
+        return null;
+      }
+      const suffix = product.billing_type === "subscription" ? "/mo" : "";
+      const activePrice = getActivePrice(product);
+      const prefix = "prefix" in def && def.prefix ? def.prefix : "";
+      return {
+        ...def,
+        price: `${prefix}${formatPriceCAD(activePrice)}${suffix}`,
+        originalPrice: `${formatPriceCAD(product.base_price_cad)}${suffix}`,
+      };
+    }).filter(Boolean) as Array<typeof featuredServiceDefs[number] & { price: string; originalPrice: string }>;
+  }, [catalog]);
 
   useEffect(() => {
     loadProducts().then(setCatalog);
@@ -291,7 +305,7 @@ export default function Home() {
             <p className="text-muted-foreground">Our most popular QuickBooks solutions</p>
           </motion.div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {featuredServices.map((svc, i) => (
+            {featuredServices ? featuredServices.map((svc, i) => (
               <motion.div
                 key={svc.title}
                 {...stagger}
@@ -324,6 +338,25 @@ export default function Home() {
                   </CardContent>
                 </Card>
               </motion.div>
+            )) : Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="animate-pulse">
+                <Card className="border-border h-full">
+                  <CardContent className="p-6">
+                    <div className="flex items-start justify-between mb-3">
+                      <div className="h-5 bg-muted rounded w-3/4" />
+                      <div className="h-5 bg-muted rounded-full w-16" />
+                    </div>
+                    <div className="space-y-2 mb-4">
+                      <div className="h-3 bg-muted rounded w-full" />
+                      <div className="h-3 bg-muted rounded w-2/3" />
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <div className="h-6 bg-muted rounded w-28" />
+                      <div className="h-8 bg-muted rounded w-24" />
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
             ))}
           </div>
           <motion.div {...fadeInUp} className="text-center mt-8">
