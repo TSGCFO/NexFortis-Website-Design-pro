@@ -140,7 +140,7 @@ export default function Home() {
               <>Starting at <span className="text-azure font-bold">{formatPriceCAD(14900)}</span></>
             )}
           </motion.p>
-          {promo && (
+          {promo && catalog?.promo_label && (
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -148,7 +148,7 @@ export default function Home() {
               className="mb-4"
             >
               <div className="mt-2 inline-flex items-center gap-2 px-5 py-2 rounded-full bg-rose-gold/20 text-rose-gold text-sm font-bold">
-                🎉 Launch Special — 50% Off All Services
+                {catalog.promo_label}
               </div>
             </motion.div>
           )}
