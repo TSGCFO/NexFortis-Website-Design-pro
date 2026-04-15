@@ -73,9 +73,9 @@ export default function ServiceDetail() {
                   Available Now
                 </span>
               </div>
-              {promo && (
+              {promo && catalog?.promo_label && (
                 <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-rose-gold/10 text-rose-gold text-sm font-semibold mb-3">
-                  Launch Special — 50% Off
+                  {catalog.promo_label}
                 </span>
               )}
               <p className="text-white/70 text-lg max-w-2xl">{product.description}</p>
