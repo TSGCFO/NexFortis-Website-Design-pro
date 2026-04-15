@@ -1,3 +1,5 @@
+import path from "path";
+import { fileURLToPath } from "url";
 import express, { type Express } from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
@@ -6,6 +8,9 @@ import rateLimit from "express-rate-limit";
 import pinoHttp from "pino-http";
 import router from "./routes";
 import { logger } from "./lib/logger";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app: Express = express();
 
@@ -30,15 +35,26 @@ app.use(
         formAction: ["'self'"],
       },
     },
-    hsts: {
-      maxAge: 31536000,
-      includeSubDomains: true,
-    },
+    hsts: false,
     frameguard: { action: "deny" },
     noSniff: true,
     xssFilter: false,
     referrerPolicy: { policy: "strict-origin-when-cross-origin" },
   }),
+);
+
+app.use((_req, res, next) => {
+  res.setHeader("X-XSS-Protection", "0");
+  next();
+});
+
+app.use(
+  "/",
+  express.static(path.resolve(__dirname, "../../nexfortis/dist/public")),
+);
+app.use(
+  "/qb-portal",
+  express.static(path.resolve(__dirname, "../../qb-portal/dist/public")),
 );
 
 const allowedOrigins = [
@@ -55,7 +71,7 @@ app.use(
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
-        callback(new Error("Not allowed by CORS"));
+        callback(null, false);
       }
     },
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
