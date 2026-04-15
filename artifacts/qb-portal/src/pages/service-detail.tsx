@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useParams } from "wouter";
-import { loadProducts, getProductBySlug, type Product, type ProductCatalog, formatPrice, formatPriceCAD, getActivePrice, isPromoActive } from "@/lib/products";
+import { loadProducts, getProductBySlug, type Product, type ProductCatalog, formatPriceCAD, getActivePrice, isPromoActive } from "@/lib/products";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { CheckCircle, Clock, Shield, Lock, ArrowRight, Star, FileCheck } from "lucide-react";
@@ -84,20 +84,20 @@ export default function ServiceDetail() {
               {promo ? (
                 <>
                   <p className="text-3xl font-bold text-accent">{formatPriceCAD(activePrice)}{priceSuffix}</p>
-                  <p className="text-white/50 text-sm line-through">{formatPrice(product.base_price_cad)}{priceSuffix}</p>
+                  <p className="text-white/50 text-sm line-through">{formatPriceCAD(product.base_price_cad)}{priceSuffix}</p>
                 </>
               ) : (
                 <p className="text-3xl font-bold text-accent">{formatPriceCAD(activePrice)}{priceSuffix}</p>
               )}
               {isSubscription && promo && (
                 <p className="text-xs text-white/50 mt-2">
-                  Launch rate for first 3 months, then {formatPrice(product.base_price_cad)}/mo.
+                  Launch rate for first 3 months, then {formatPriceCAD(product.base_price_cad)}/mo.
                 </p>
               )}
               {product.turnaround && <p className="text-white/50 text-sm mt-1"><Clock className="w-4 h-4 inline mr-1" />{product.turnaround}</p>}
               {product.pack_size && (
                 <div className="mt-3 px-4 py-2 rounded-lg bg-accent/10 text-accent text-sm font-medium">
-                  {`That's just ${formatPrice(Math.round(getActivePrice(product) / product.pack_size))}/conversion`}
+                  {`That's just ${formatPriceCAD(Math.round(getActivePrice(product) / product.pack_size))}/conversion`}
                   {product.pack_size === 10 && " — includes Guaranteed 30-Minute turnaround on all conversions"}
                 </div>
               )}
@@ -203,7 +203,7 @@ export default function ServiceDetail() {
                             <p className="font-medium text-sm">{addon.name}</p>
                             <p className="text-xs text-muted-foreground">{addon.description}</p>
                           </div>
-                          <span className="font-semibold text-accent text-sm">{formatPrice(getActivePrice(addon))}</span>
+                          <span className="font-semibold text-accent text-sm">{formatPriceCAD(getActivePrice(addon))}</span>
                         </div>
                       ))}
                     </div>
@@ -217,18 +217,18 @@ export default function ServiceDetail() {
                 <CardContent className="p-6 text-center">
                   {promo ? (
                     <>
-                      <p className="text-3xl font-bold text-accent mb-1">{formatPrice(activePrice)}{priceSuffix}</p>
-                      <p className="text-sm text-muted-foreground line-through mb-2">{formatPrice(product.base_price_cad)}{priceSuffix}</p>
+                      <p className="text-3xl font-bold text-accent mb-1">{formatPriceCAD(activePrice)}{priceSuffix}</p>
+                      <p className="text-sm text-muted-foreground line-through mb-2">{formatPriceCAD(product.base_price_cad)}{priceSuffix}</p>
                       {catalog.promo_label && (
                         <p className="text-xs text-rose-gold font-semibold mb-2">{catalog.promo_label}</p>
                       )}
                     </>
                   ) : (
-                    <p className="text-3xl font-bold text-accent mb-2">{formatPrice(activePrice)}{priceSuffix}</p>
+                    <p className="text-3xl font-bold text-accent mb-2">{formatPriceCAD(activePrice)}{priceSuffix}</p>
                   )}
                   {isSubscription && promo && (
                     <p className="text-xs text-muted-foreground mb-2">
-                      Launch rate for first 3 months, then {formatPrice(product.base_price_cad)}/mo.
+                      Launch rate for first 3 months, then {formatPriceCAD(product.base_price_cad)}/mo.
                     </p>
                   )}
                   {product.turnaround && <p className="text-sm text-muted-foreground mb-4"><Clock className="w-4 h-4 inline mr-1" />Turnaround: {product.turnaround}</p>}
@@ -274,7 +274,7 @@ export default function ServiceDetail() {
                         <h3 className="font-semibold text-sm font-display text-primary mb-1">{rp.name}</h3>
                         <p className="text-xs text-muted-foreground mb-2 line-clamp-2">{rp.description}</p>
                         <div className="flex items-center justify-between">
-                          <span className="font-bold text-accent text-sm">{formatPrice(getActivePrice(rp))}</span>
+                          <span className="font-bold text-accent text-sm">{formatPriceCAD(getActivePrice(rp))}</span>
                           <span className="px-2 py-0.5 rounded-full text-xs bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">
                             Available
                           </span>
