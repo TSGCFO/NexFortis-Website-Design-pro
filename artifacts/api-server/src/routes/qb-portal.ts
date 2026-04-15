@@ -18,7 +18,7 @@ const orderLimiter = rateLimit({
   limit: 10,
   standardHeaders: true,
   legacyHeaders: false,
-  keyGenerator: (req) => req.userId!,
+  keyGenerator: (req: any) => req.userId || req.ip,
   message: { error: "Too many requests. Please try again later." },
 });
 
@@ -27,7 +27,7 @@ const ticketLimiter = rateLimit({
   limit: 5,
   standardHeaders: true,
   legacyHeaders: false,
-  keyGenerator: (req) => req.userId!,
+  keyGenerator: (req: any) => req.userId || req.ip,
   message: { error: "Too many requests. Please try again later." },
 });
 
@@ -309,7 +309,7 @@ router.post("/webhook/stripe", async (req: Request, res: Response) => {
   try {
     const event = endpointSecret && sig
       ? stripe.webhooks.constructEvent(req.body, sig, endpointSecret)
-      : JSON.parse(typeof req.body === "string" ? req.body : JSON.stringify(req.body));
+      : JSON.parse(Buffer.isBuffer(req.body) ? req.body.toString("utf-8") : typeof req.body === "string" ? req.body : JSON.stringify(req.body));
 
     if (event.type === "checkout.session.completed") {
       const session = event.data.object;
@@ -398,7 +398,7 @@ router.get("/orders/:id", requireAuth, async (req: Request, res: Response) => {
 // orderLimiter targets file uploads (not order creation) because orders are
 // created via Stripe checkout, which is already protected by checkoutLimiter.
 // File upload is the authenticated order-related write that needs per-user limiting.
-router.post("/orders/:id/files", requireAuth, orderLimiter, (req: Request, res: Response) => {
+router.post("/orders/:id/files", orderLimiter, (req: Request, res: Response) => {
   const orderId = parseInt(req.params.id as string);
   if (isNaN(orderId)) {
     res.status(400).json({ error: "Invalid order ID" });
