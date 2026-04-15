@@ -1,7 +1,8 @@
+import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import { motion } from "framer-motion";
 import { Shield, Upload, Clock, CheckCircle, ArrowRight, Lock, DollarSign, MapPin, Zap, Award } from "lucide-react";
-import { formatPriceCAD } from "@/lib/products";
+import { formatPriceCAD, isPromoActive, loadProducts, type ProductCatalog } from "@/lib/products";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { SEO } from "@/components/seo";
@@ -93,6 +94,13 @@ const featuredServices = [
 ];
 
 export default function Home() {
+  const [catalog, setCatalog] = useState<ProductCatalog | null>(null);
+  const promo = isPromoActive();
+
+  useEffect(() => {
+    loadProducts().then(setCatalog);
+  }, []);
+
   return (
     <div>
       <SEO
@@ -126,18 +134,24 @@ export default function Home() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-xl text-white/80 mb-4 max-w-2xl mx-auto"
           >
-            Starting at <span className="text-azure font-bold">{formatPriceCAD(7500)}</span> with our launch special <span className="text-white/50 text-base">(reg. $149.00)</span>
+            {promo ? (
+              <>Starting at <span className="text-azure font-bold">{formatPriceCAD(7500)}</span> with our launch special <span className="text-white/50 text-base">(reg. $149.00)</span></>
+            ) : (
+              <>Starting at <span className="text-azure font-bold">{formatPriceCAD(14900)}</span></>
+            )}
           </motion.p>
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.25 }}
-            className="mb-4"
-          >
-            <div className="mt-2 inline-flex items-center gap-2 px-5 py-2 rounded-full bg-rose-gold/20 text-rose-gold text-sm font-bold">
-              🎉 Launch Special — 50% Off All Services
-            </div>
-          </motion.div>
+          {promo && (
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.25 }}
+              className="mb-4"
+            >
+              <div className="mt-2 inline-flex items-center gap-2 px-5 py-2 rounded-full bg-rose-gold/20 text-rose-gold text-sm font-bold">
+                🎉 Launch Special — 50% Off All Services
+              </div>
+            </motion.div>
+          )}
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -268,8 +282,8 @@ export default function Home() {
                     <p className="text-sm text-muted-foreground mb-4">{svc.desc}</p>
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <span className="text-lg font-bold text-accent">{svc.price}</span>
-                        {svc.originalPrice && (
+                        <span className="text-lg font-bold text-accent">{promo ? svc.price : svc.originalPrice || svc.price}</span>
+                        {promo && svc.originalPrice && (
                           <span className="text-sm text-muted-foreground line-through">{svc.originalPrice}</span>
                         )}
                       </div>
