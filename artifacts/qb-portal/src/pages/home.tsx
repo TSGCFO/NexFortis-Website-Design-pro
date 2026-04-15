@@ -135,7 +135,7 @@ export default function Home() {
             className="text-xl text-white/80 mb-4 max-w-2xl mx-auto"
           >
             {promo ? (
-              <>Starting at <span className="text-azure font-bold">{formatPriceCAD(7500)}</span> with our launch special <span className="text-white/50 text-base">(reg. $149.00)</span></>
+              <>Starting at <span className="text-azure font-bold">{formatPriceCAD(7500)}</span> with our launch special <span className="text-white/50 text-base line-through">(reg. $149.00)</span></>
             ) : (
               <>Starting at <span className="text-azure font-bold">{formatPriceCAD(14900)}</span></>
             )}
