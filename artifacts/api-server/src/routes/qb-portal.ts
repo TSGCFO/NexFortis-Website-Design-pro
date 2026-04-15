@@ -91,6 +91,11 @@ function sanitizeInput(input: string): string {
 
 const requireAuth: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
   try {
+    if (!supabaseAdmin) {
+      res.status(503).json({ error: "Authentication service unavailable" });
+      return;
+    }
+
     const authHeader = req.headers.authorization;
     if (!authHeader?.startsWith("Bearer ")) {
       res.status(401).json({ error: "Authentication required" });
@@ -197,7 +202,7 @@ router.post("/checkout/create-session", async (req: Request, res: Response) => {
 
     const authHeader = req.headers.authorization;
     let userId: string | null = null;
-    if (authHeader?.startsWith("Bearer ")) {
+    if (supabaseAdmin && authHeader?.startsWith("Bearer ")) {
       const token = authHeader.slice(7);
       const { data: { user } } = await supabaseAdmin.auth.getUser(token);
       if (user) userId = user.id;
@@ -374,7 +379,7 @@ router.post("/orders/:id/files", (req: Request, res: Response) => {
   const uploadTokenHeader = (req.headers["x-upload-token"] as string) || (req.query.uploadToken as string);
 
   let userIdPromise: Promise<string | null>;
-  if (authHeader?.startsWith("Bearer ")) {
+  if (supabaseAdmin && authHeader?.startsWith("Bearer ")) {
     const token = authHeader.slice(7);
     userIdPromise = supabaseAdmin.auth.getUser(token).then(({ data: { user } }) => user?.id || null);
   } else {
@@ -452,7 +457,7 @@ router.get("/orders/:id/files/:fileId/download", async (req: Request, res: Respo
     const uploadTokenHeader = req.query.uploadToken as string;
 
     let userId: string | null = null;
-    if (authHeader?.startsWith("Bearer ")) {
+    if (supabaseAdmin && authHeader?.startsWith("Bearer ")) {
       const token = authHeader.slice(7);
       const { data: { user } } = await supabaseAdmin.auth.getUser(token);
       userId = user?.id || null;
