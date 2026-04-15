@@ -15,6 +15,7 @@ export interface Product {
   sort_order: number;
   billing_type?: "subscription";
   billing_interval?: "month";
+  pack_size?: number;
 }
 
 export interface ProductCatalog {

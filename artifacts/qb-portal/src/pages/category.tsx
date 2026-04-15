@@ -137,11 +137,9 @@ function ProductCard({ product }: { product: Product }) {
             ) : (
               <span className="font-bold text-accent">{formatPrice(activePrice)}</span>
             )}
-            {product.category_slug === "volume-packs" && (
+            {product.pack_size && (
               <div className="text-xs text-muted-foreground mt-1">
-                {product.id === 19
-                  ? `${formatPrice(Math.round(getActivePrice(product) / 5))}/conversion`
-                  : `${formatPrice(Math.round(getActivePrice(product) / 10))}/conversion`}
+                {`${formatPrice(Math.round(getActivePrice(product) / product.pack_size))}/conversion`}
               </div>
             )}
             {product.turnaround && <span className="text-xs text-muted-foreground ml-2"><Clock className="w-3 h-3 inline" /> {product.turnaround}</span>}

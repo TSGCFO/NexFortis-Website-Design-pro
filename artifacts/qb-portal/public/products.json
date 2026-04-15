@@ -310,7 +310,8 @@
       "is_addon": false,
       "requires_service": null,
       "accepted_file_types": [],
-      "sort_order": 19
+      "sort_order": 19,
+      "pack_size": 5
     },
     {
       "id": 20,
@@ -326,7 +327,8 @@
       "is_addon": false,
       "requires_service": null,
       "accepted_file_types": [],
-      "sort_order": 20
+      "sort_order": 20,
+      "pack_size": 10
     }
   ]
 }

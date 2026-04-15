@@ -95,12 +95,10 @@ export default function ServiceDetail() {
                 </p>
               )}
               {product.turnaround && <p className="text-white/50 text-sm mt-1"><Clock className="w-4 h-4 inline mr-1" />{product.turnaround}</p>}
-              {product.category_slug === "volume-packs" && (
+              {product.pack_size && (
                 <div className="mt-3 px-4 py-2 rounded-lg bg-accent/10 text-accent text-sm font-medium">
-                  {product.id === 19
-                    ? `That's just ${formatPrice(Math.round(getActivePrice(product) / 5))}/conversion`
-                    : `That's just ${formatPrice(Math.round(getActivePrice(product) / 10))}/conversion`}
-                  {product.id === 20 && " — includes Guaranteed 30-Minute turnaround on all conversions"}
+                  {`That's just ${formatPrice(Math.round(getActivePrice(product) / product.pack_size))}/conversion`}
+                  {product.pack_size === 10 && " — includes Guaranteed 30-Minute turnaround on all conversions"}
                 </div>
               )}
               <div className="flex flex-wrap gap-3 mt-4 text-xs text-white/50">
@@ -159,7 +157,7 @@ export default function ServiceDetail() {
                           <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
                           <span className="text-sm">Use credits for any standard Enterprise → Premier/Pro conversion</span>
                         </li>
-                        {product.id === 20 && (
+                        {product.pack_size === 10 && (
                           <li className="flex items-start gap-3">
                             <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
                             <span className="text-sm font-semibold">Includes Guaranteed 30-Minute turnaround on all 10 conversions</span>
