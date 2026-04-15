@@ -4,11 +4,12 @@ This prompt replaces the homegrown bcrypt+HMAC authentication system with Supaba
 
 ## Step 0: Setup
 
-Read these files before making any changes:
+Read these files for context before making any changes:
 1. `replit.md` — project overview, architecture, conventions, current state
 2. `docs/prd/qb-portal/feature-security-auth-storage.md` — security PRD (the full document, especially Sections 6, 8, and 10)
 3. `docs/specs/2026-04-14-supabase-auth-security-redesign.md` — approved design spec
-4. `docs/prompts/prompt-03-supabase-auth-web-hardening.md` — this file (complete instructions)
+
+You are already reading the primary instruction file (this file). Do not re-read it.
 
 **Do NOT modify any files in `docs/`.**
 
@@ -52,7 +53,7 @@ Create a new file in the API server that initializes two Supabase client instanc
 
 Place this file at `artifacts/api-server/src/lib/supabase.ts`.
 
-Read the environment variables `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` from `process.env`. If either is missing, log a warning but do not crash the server (this allows the app to start in environments where Supabase is not yet configured).
+Read the environment variables `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` from `process.env`. If either is missing at module load time, log a warning but do not crash the server — this allows TypeScript compilation and server startup to succeed even if Supabase is not yet configured. (This graceful degradation is for the module only. The Prerequisites check in Step 0 is a separate pre-condition that YOU the agent must verify before writing any code.)
 
 ### 2b. Frontend Supabase Client
 
@@ -80,7 +81,7 @@ In `lib/db/src/schema/qb-portal.ts`, make these changes to the `qbUsers` table:
 1. Change the `id` column from `serial("id").primaryKey()` to a UUID column that references `auth.users(id)` with `ON DELETE CASCADE`. Use Drizzle's `uuid` column type.
 2. **Remove the `passwordHash` column entirely.** Supabase Auth manages password storage — the application database never stores passwords.
 3. Keep the `email`, `name`, `phone`, and `createdAt` columns as-is.
-4. Add the `role` column as `text("role").notNull().default("customer")`. Valid values: `"customer"` or `"operator"`.
+4. Ensure the `role` column is defined as `text("role").notNull().default("customer")` with a database-level CHECK constraint restricting values to `'customer'` or `'operator'`. In Drizzle, add `.check(sql\`role IN ('customer', 'operator')\`)` or the equivalent. If the column already exists without the constraint, add it via the migration.
 
 Also update the `qbOrders` table:
 - Change `userId` from `integer` to `uuid` type. Update the foreign key reference to point to the new UUID-based `qbUsers.id`.
@@ -90,7 +91,7 @@ Also update the `qbSupportTickets` table:
 
 Also update the `qbOrderFiles` table:
 - Add an `expired` column (`boolean`, default `false`)
-- Add a `deletedAt` column (`timestamp`, nullable)
+- Add a `deletedAt` column (`timestamptz`, nullable) — use timezone-aware timestamp
 
 **Remove the `qbPasswordResets` table entirely.** Supabase Auth handles password resets natively — this table is no longer needed.
 
@@ -98,9 +99,9 @@ Also update the `qbOrderFiles` table:
 
 After updating the schema file, generate and push the Drizzle migration. Since this is a destructive change (dropping `password_hash`, changing PK type), and there are no real customer accounts in the database yet, this is safe to apply directly.
 
-Run the appropriate Drizzle migration commands. Check `package.json` for the correct command — it may be `npx drizzle-kit push`, `pnpm db:push`, or `pnpm db:migrate`.
+Run the Drizzle migration. Check `package.json` for the available command — if both `db:push` and `db:migrate` exist, prefer `db:push` for this case (it applies schema changes directly without generating migration files, which is simpler for a destructive PK type change on a dev database).
 
-If the migration tool cannot handle the PK type change automatically (integer → UUID), you may need to drop and recreate the affected tables. This is acceptable at this stage since there are no real customer records to preserve.
+If the migration fails due to the integer→UUID type change, drop `qb_users`, `qb_orders`, `qb_support_tickets`, `qb_order_files`, and `qb_password_resets` tables manually (they contain only test data), then re-run the migration. Do NOT drop `qb_waitlist_signups` — that table has no schema changes and may contain real data.
 
 ### 3c. Apply RLS Policies and Triggers in Supabase
 
@@ -112,7 +113,7 @@ Create a SQL migration file at `artifacts/api-server/src/migrations/supabase-rls
 
 2. **The trigger** — `AFTER INSERT ON auth.users FOR EACH ROW EXECUTE FUNCTION handle_new_user()`
 
-3. **RLS policies for all qb_* tables** — see Section 8.2 of the security PRD for the exact policies. Every table gets RLS enabled. Customers can only see/modify their own records (matched by `auth.uid()`). The operator can see all records (verified by checking `qb_users.role = 'operator'` for the current `auth.uid()`).
+3. **RLS policies for all qb_* tables** — see `docs/prd/qb-portal/feature-security-auth-storage.md`, Section 8.2 "Database Schema Changes", subsection "Row-Level Security Policies" (look for the SQL code block starting with `-- Enable RLS on all qb tables`). Copy those exact policies. The pattern is: customers can only see/modify their own records (matched by `auth.uid()`), while the operator can see all records (verified by checking `qb_users.role = 'operator'` for the current `auth.uid()`).
 
 4. **Enable RLS** on `qb_users`, `qb_orders`, `qb_order_files`, `qb_support_tickets`, and `qb_waitlist_signups`.
 
@@ -137,7 +138,9 @@ Remove these from `qb-portal.ts`:
 - The `POST /auth/register` route
 - The `POST /auth/login` route
 - The `POST /auth/logout` route
-- The `POST /auth/reset-password` and `POST /auth/reset-password/confirm` routes (if they exist)
+- The `POST /auth/reset-password` and `POST /auth/reset-password/confirm` routes
+
+Remove all items in this list. If an item doesn't exist in the current codebase, skip it without error.
 
 ### 4b. Create New Auth Middleware
 
@@ -151,13 +154,13 @@ Create new middleware functions that verify the Supabase JWT from the `Authoriza
 5. Attach `userId` (UUID string) and `userRole` (from `qb_users.role`) to the request object for downstream handlers.
 
 **`requireOperator` middleware:**
-1. Does everything `requireAuth` does.
-2. Additionally checks that `userRole === "operator"`.
-3. Additionally verifies that the user's session has AAL2 (MFA completed). To check this, use `supabase.auth.getUser(token)` and inspect the response — or decode the JWT and check the `aal` claim. If the user's session is AAL1 (no MFA completed), return 403 with a message indicating MFA is required.
-4. If role is not operator or AAL is not AAL2, return 403.
+1. Call `requireAuth` internally as its first step (do NOT duplicate requireAuth's code — compose the middleware so requireAuth runs first, then requireOperator adds its checks on top of the already-populated `req.userId` and `req.userRole`).
+2. Check that `req.userRole === "operator"`. If not, return 403.
+3. Check the user's AAL (assurance level). Decode the JWT and check the `aal` claim, or use `supabase.auth.getUser(token)` to inspect the response. **If AAL2 is not present, log a warning (`console.warn('Operator session is AAL1 — MFA not yet enrolled')`) but ALLOW access.** Do NOT return 403 for AAL1 sessions. MFA enrollment does not exist yet (it comes in Prompt 03B). Add a code comment: `// TODO(Prompt 03B): enforce AAL2 strictly — return 403 when aal !== 'aal2'`
+4. If role is not operator, return 403 with `{ error: 'forbidden' }`.
 
 **Important implementation notes:**
-- Do NOT use `supabase.auth.getSession()` on the server — that's for client-side use. Use `supabase.auth.getUser(token)` which makes a server-side verification call.
+- Do NOT use `supabase.auth.getSession()` on the server — that's for client-side use only. Use `supabase.auth.getUser(token)` which makes a server-side verification call. (Note: this restriction applies to the server side only. On the client side, `supabase.auth.getSession()` is the correct method — it reads the locally stored session without a network call. See Step 5e.)
 - The middleware must handle the case where the Supabase service is down (network error) — return 503 instead of crashing.
 - Add TypeScript types for the extended request object so downstream handlers can safely access `req.userId` and `req.userRole`.
 
@@ -175,7 +178,7 @@ Specifically update:
 - `GET /orders` — filter by UUID user_id
 - `POST /orders` — set user_id as UUID
 - `GET /orders/:id` — verify ownership using UUID comparison
-- File upload/download routes — verify ownership using UUID
+- File upload/download routes — update the userId comparison from integer to UUID. Do NOT change the storage mechanism (leave multer and local filesystem in place) — Supabase Storage migration comes in Prompt 04.
 - `GET /support-tickets` — filter by UUID
 - `POST /support-tickets` — set user_id as UUID
 
@@ -213,7 +216,7 @@ The new auth context should:
 Create a new page component at `artifacts/qb-portal/src/pages/auth-callback.tsx`. This page:
 1. Shows a loading spinner with "Completing sign-in..." text
 2. The Supabase client automatically processes the URL hash/params
-3. Once `onAuthStateChange` fires with a valid session, redirect the user to `/portal` (or wherever they came from)
+3. Once `onAuthStateChange` fires with a valid session, redirect the user to `/portal`
 4. If there's an error in the URL params, display an error message with a link to try again
 
 Register this route in `App.tsx` at `/auth/callback`.
@@ -225,7 +228,7 @@ Update `artifacts/qb-portal/src/pages/login.tsx`:
 1. Replace the email+password form handler to call the new `signIn()` from the auth context instead of the old API call.
 2. Add a "Sign in with Google" button that calls `signInWithGoogle()`.
 3. Add a "Sign in with Microsoft" button that calls `signInWithMicrosoft()`.
-4. Add a "Forgot password?" link that navigates to a password reset page (or shows an inline form).
+4. Add a "Forgot password?" link that navigates to `/forgot-password`.
 5. Style the social login buttons consistently with the NexFortis brand — use the brand's navy/rose-gold palette. Google button should have the Google "G" icon, Microsoft button should have the Microsoft logo icon. Use the Lucide icon library or inline SVGs.
 6. Add visual separators between the email form and social login buttons (e.g., "— or continue with —").
 
@@ -235,13 +238,13 @@ Update `artifacts/qb-portal/src/pages/register.tsx`:
 
 1. Replace the form handler to call the new `signUp()` from the auth context.
 2. Add the same Google and Microsoft social login buttons as the login page.
-3. After successful registration via email+password, show a message: "Account created! You can now sign in." (Email verification is disabled at launch per the PRD's out-of-scope section, so the user can sign in immediately.)
+3. After successful `supabase.auth.signUp()`, Supabase returns a session immediately (email verification is disabled). Check if a session exists — if yes, redirect to `/portal` (the user is already authenticated). If no session is returned (edge case: Supabase has email confirmation enabled), show: "Check your email to confirm your account."
 
 ### 5e. Update All API Call Sites
 
 Every place in the frontend that makes an API call to the Express backend needs to include the Supabase access token in the Authorization header. Search the codebase for all `fetch("/api/qb/` calls and:
 
-1. Get the access token from the auth context (or from `supabase.auth.getSession()`)
+1. Get the access token using the `getAccessToken()` function from the auth context (which wraps `supabase.auth.getSession()` internally)
 2. Add `Authorization: Bearer ${accessToken}` to the request headers
 3. Remove any references to the old `getAuthToken()` function or localStorage token reads
 
@@ -253,13 +256,24 @@ Common locations to check:
 - Profile update (`PUT /me`)
 - Any admin API calls
 
-### 5f. Add a Password Reset Page
+### 5f. Add Password Reset Pages
 
-Create `artifacts/qb-portal/src/pages/reset-password.tsx`:
+Create two pages for the password reset flow:
+
+**Page 1: Forgot Password** (`artifacts/qb-portal/src/pages/forgot-password.tsx`):
 1. A form with an email field
 2. On submit, calls `resetPassword(email)` from the auth context
 3. Shows a success message: "If an account exists with that email, you'll receive a password reset link."
 4. Supabase handles sending the actual reset email — no backend code needed
+
+Register this route in `App.tsx` at `/forgot-password`.
+
+**Page 2: Reset Password Confirmation** (`artifacts/qb-portal/src/pages/reset-password.tsx`):
+1. When the user clicks the password reset link in their email, Supabase redirects them back to the app. The `onAuthStateChange` listener will fire with a `PASSWORD_RECOVERY` event.
+2. This page displays a form for the user to enter and confirm a new password.
+3. On submit, calls `supabase.auth.updateUser({ password: newPassword })`.
+4. After success, show a success message and redirect to `/login`.
+5. If there's an error (expired link, etc.), show an error message with a link to try `/forgot-password` again.
 
 Register this route in `App.tsx` at `/reset-password`.
 
@@ -271,7 +285,7 @@ Add Helmet middleware to the Express API server.
 
 ### 6a. Add Helmet to the Middleware Stack
 
-In the main Express app setup file (likely `artifacts/api-server/src/app.ts` or `artifacts/api-server/src/index.ts` or wherever the Express app is configured):
+In the main Express app setup file. Search the codebase for `express()` or `app.use(` to locate it — check `artifacts/api-server/src/app.ts`, `artifacts/api-server/src/index.ts`, or `artifacts/api-server/src/routes/index.ts`:
 
 1. Import and add `helmet()` as the FIRST middleware in the stack (before CORS, before body parsers, before routes).
 2. Configure Helmet with these settings:
@@ -279,21 +293,23 @@ In the main Express app setup file (likely `artifacts/api-server/src/app.ts` or 
    - `hsts`: `maxAge: 31536000` (1 year), `includeSubDomains: true`
    - `frameguard`: `action: 'deny'` (prevents clickjacking)
    - `noSniff`: true (X-Content-Type-Options: nosniff)
-   - `xssFilter`: true
+   - `xssFilter`: false — this emits `X-XSS-Protection: 0`, which explicitly disables the legacy XSS auditor filter. CSP provides the actual XSS protection. Do NOT set this to true.
+   - `referrerPolicy`: `{ policy: 'strict-origin-when-cross-origin' }`
+   - Helmet removes the `X-Powered-By` header by default — do not re-add it.
 
 ### 6b. Middleware Ordering
 
 The full middleware stack should follow this order (see PRD Section 8.4):
 1. `helmet()` — security headers
 2. CORS middleware
-3. `express.raw()` for the Stripe webhook route ONLY
-4. `express.json({ limit: '1mb' })` — JSON body parser
+3. **Stripe webhook route with raw body** — register this specific route BEFORE `express.json()`: `app.use('/api/webhooks/stripe', express.raw({ type: 'application/json' }), stripeWebhookHandler)`. Do NOT add `express.raw()` to the global middleware stack — that would break all non-webhook routes.
+4. `express.json({ limit: '1mb' })` — JSON body parser (applies to all OTHER routes)
 5. `express.urlencoded({ limit: '1mb', extended: true })`
 6. `cookieParser()` (if still needed for any non-auth purpose)
 7. Global rate limiter
 8. Route handlers
 
-**Critical:** The Stripe webhook route MUST receive the raw body (not parsed JSON) for signature verification. Either register the webhook route before `express.json()` is applied, or use a route-specific `express.raw()` middleware on that route.
+**Critical:** The Stripe webhook route MUST receive the raw body (as a Buffer) for signature verification. This is why it is registered at position 3, before the global JSON parser at position 4. If `express.json()` parses the body first, `constructEvent()` will fail.
 
 ---
 
@@ -305,7 +321,7 @@ The allowed origins are:
 - `https://nexfortis.com`
 - `https://www.nexfortis.com`
 - `https://qb.nexfortis.com`
-- In development (`NODE_ENV !== 'production'`): also allow `http://localhost:*` patterns and the Replit dev URL
+- In development (`NODE_ENV !== 'production'`): also allow `http://localhost:5173` (the Vite dev server default port)
 
 Configure CORS with:
 - `credentials: true` (needed for any cookie-based flows if they remain)
@@ -331,22 +347,16 @@ Apply a global rate limiter to all routes:
 
 Create separate rate limiters for sensitive endpoints:
 
-**Checkout/payment routes** (`POST /api/qb/checkout`):
-- Window: 15 minutes
-- Max: 5 per IP
-- These are expensive operations (Stripe API calls)
+Create these stricter limiters. The exact values come from the PRD (FR-WEB-05 through FR-WEB-08):
 
-**Order creation** (`POST /api/qb/orders`):
-- Window: 15 minutes
-- Max: 10 per IP
+| Route | Limit | Window | Key By | Notes |
+|---|---|---|---|---|
+| `POST /api/qb/checkout/*` | 10 requests | 15 min | IP | Expensive Stripe API calls |
+| `POST /api/qb/orders` | 10 requests | 15 min | User ID (`req.userId`) | Authenticated route — use user-based keying, not IP, to avoid false positives behind shared NAT |
+| `POST /api/qb/support-tickets` | 5 requests | 15 min | User ID (`req.userId`) | Authenticated route — user-based keying |
+| `POST /api/contact` | 3 requests | 15 min | IP | Unauthenticated route |
 
-**Support ticket creation** (`POST /api/qb/support-tickets`):
-- Window: 15 minutes
-- Max: 10 per IP
-
-**Contact form** (`POST /api/contact`):
-- Window: 15 minutes
-- Max: 5 per IP
+For user-ID-based limiters, use `express-rate-limit`'s `keyGenerator` option: `keyGenerator: (req) => req.userId`. Apply these limiters AFTER `requireAuth` middleware on the route so `req.userId` is available.
 
 Apply these stricter limiters as middleware on the specific routes, in addition to the global limiter.
 
@@ -358,7 +368,7 @@ The current Stripe webhook handler processes events without verifying the webhoo
 
 ### 9a. Update the Webhook Handler
 
-Find the Stripe webhook route (likely `POST /api/webhooks/stripe` or similar). Update it to:
+Find the Stripe webhook route. Search the codebase for `stripe.webhooks` or `stripe-signature` or `constructEvent` to locate the existing handler. If no webhook handler exists yet, create one at `POST /api/webhooks/stripe`. Update it to:
 
 1. Read the `stripe-signature` header from the request.
 2. Read the `STRIPE_WEBHOOK_SECRET` from environment variables.
@@ -411,7 +421,7 @@ The current seed script (`artifacts/api-server/src/seed-operator.ts`) creates th
 The updated script should:
 
 1. Initialize the Supabase service role client (which has admin privileges).
-2. Check if a user with email `h.sadiq@nexfortis.com` already exists using `supabase.auth.admin.listUsers()`.
+2. Check if a user with email `h.sadiq@nexfortis.com` already exists using `supabase.auth.admin.getUserByEmail('h.sadiq@nexfortis.com')` — this is a direct lookup that does not have pagination issues. Do NOT use `listUsers()` which returns paginated results.
 3. If the user does not exist, create them using `supabase.auth.admin.createUser()` with:
    - `email`: `h.sadiq@nexfortis.com`
    - `password`: Read from `OPERATOR_PASSWORD` environment variable (do NOT hardcode the password in the script)
@@ -430,7 +440,7 @@ Update the `seed:operator` script in `package.json` to run this updated file.
 
 ### 12a. Remove Old Variables
 
-- Remove `QB_TOKEN_SECRET` from any `.env` files, `.env.example` files, or code references. This secret is no longer used.
+- Search for `QB_TOKEN_SECRET` in all `.env*` files and source code under the project root. If found in any file, remove the reference. If not found in files (it may only exist as a Replit secret), add a comment in the seed script or README: `// NOTE: The QB_TOKEN_SECRET Replit secret should be manually deleted from Replit Sidebar → Secrets.`
 
 ### 12b. Add New Variables
 
@@ -454,10 +464,11 @@ Search the entire codebase for:
 
 ## Step 13: Update robots.txt
 
-In `artifacts/qb-portal/public/robots.txt`, add these paths to the Disallow list:
+In `artifacts/qb-portal/public/robots.txt`: if the file does not exist, create it with `User-agent: *` as the first line. Then ensure the Disallow list includes these paths (add any that are missing):
 - `/admin`
 - `/auth/callback`
 - `/reset-password`
+- `/forgot-password`
 
 These pages should never be indexed by search engines.
 
@@ -483,8 +494,10 @@ These pages should never be indexed by search engines.
    - **Password reset:** Click "Forgot password?", enter an email, submit. Should show success message.
    - **Operator login:** Log in as `h.sadiq@nexfortis.com`. The auth should succeed (MFA enforcement is in Prompt 03B — for now, the operator can log in without MFA).
    - **API calls with auth:** Navigate to the portal page — orders should load. Create a support ticket — should succeed. The Authorization header should carry the Supabase JWT.
-   - **Security headers:** Open DevTools → Network tab → check any response headers. Should see: `Content-Security-Policy`, `Strict-Transport-Security`, `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`.
-   - **Rate limiting:** Make more than 5 rapid requests to `POST /api/contact` — should get a 429 response.
+   - **Security headers:** Open DevTools → Network tab → check any response headers. Should see: `Content-Security-Policy`, `Strict-Transport-Security`, `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, `X-XSS-Protection: 0`. Should NOT see `X-Powered-By`.
+   - **Rate limiting:** Make more than 3 rapid requests to `POST /api/contact` — the 4th should get a 429 response.
+   - **Password reset (full flow):** Click "Forgot password?", submit email. Then test the reset confirmation page at `/reset-password` — verify it renders a new-password form.
+   - **Sanitization test:** Create a support ticket with subject `<script>alert(1)</script>` — verify the stored value has HTML tags stripped.
    - **CORS:** From the browser console, try `fetch('https://evil.com/api/qb/me')` — should fail with CORS error. (Actually, test by checking the CORS headers on responses — `Access-Control-Allow-Origin` should only list your allowed domains.)
 
 5. **Security audit — grep checks:**
@@ -494,6 +507,10 @@ These pages should never be indexed by search engines.
    - `grep -rn "SUPABASE_SERVICE_ROLE_KEY" artifacts/qb-portal/` — must return NO results (never in frontend)
    - `grep -rn "Hassan8488" .` — must return NO results (password not hardcoded anywhere)
    - `grep -rn "qbPasswordResets" lib/db/` — should return NO results (table removed)
+   - `grep -rn "SESSION_MAX_AGE_MS" artifacts/` — should return NO results (constant removed)
+   - `grep -rn "COOKIE_NAME" artifacts/` — should return NO results (constant removed)
+   - Verify the seed script reads password from `process.env.OPERATOR_PASSWORD` and contains no string literal passwords
+   - `curl` the robots.txt URL — verify `/admin`, `/auth/callback`, `/reset-password`, and `/forgot-password` are in the Disallow list
 
 6. **Fix any issues found in steps 1–5 before considering this task complete.**
 
