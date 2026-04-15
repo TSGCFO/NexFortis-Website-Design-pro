@@ -175,9 +175,10 @@ export default function Home() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-xl text-white/80 mb-4 max-w-2xl mx-auto"
           >
-            {promo ? (
+            {!catalog ? (
+              <span className="inline-flex items-center gap-2">Starting at <span className="inline-block h-6 w-36 animate-pulse bg-muted rounded" /></span>
+            ) : promo ? (
               <>Starting at <span className="text-azure font-bold">{lowestPriceFormatted}</span> with our launch special <span className="text-white/50 text-base line-through">(reg. {regPriceFormatted})</span></>
-
             ) : (
               <>Starting at <span className="text-azure font-bold">{lowestPriceFormatted}</span></>
             )}
