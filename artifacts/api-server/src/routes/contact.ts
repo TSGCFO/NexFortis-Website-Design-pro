@@ -33,7 +33,7 @@ contactRouter.post("/", async (req: Request, res: Response) => {
   try {
     const rawBody = req.body as ContactBody;
     const name = rawBody.name ? sanitizeInput(rawBody.name) : undefined;
-    const email = rawBody.email;
+    const email = rawBody.email ? sanitizeInput(rawBody.email) : undefined;
     const phone = rawBody.phone;
     const company = rawBody.company ? sanitizeInput(rawBody.company) : undefined;
     const service = rawBody.service ? sanitizeInput(rawBody.service) : undefined;
