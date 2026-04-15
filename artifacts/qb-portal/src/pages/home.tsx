@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import { motion } from "framer-motion";
 import { Shield, Upload, Clock, CheckCircle, ArrowRight, Lock, DollarSign, MapPin, Zap, Award } from "lucide-react";
-import { formatPriceCAD, getActivePrice, getProductById, isPromoActive, loadProducts, type ProductCatalog } from "@/lib/products";
+import { formatPriceCAD, getActivePrice, getProductById, getProductBySlug, isPromoActive, loadProducts, type ProductCatalog } from "@/lib/products";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { SEO } from "@/components/seo";
@@ -27,11 +27,20 @@ const trustBadges = [
   { icon: Clock, label: "Under 1 Hour" },
 ];
 
-const steps = [
-  { num: "1", icon: Upload, title: "Create & Upload Your QBM", desc: "Export your Enterprise file as a Portable Company File (.QBM) and upload it securely." },
-  { num: "2", icon: DollarSign, title: "Choose Services & Pay", desc: "Select your conversion and any add-ons. Pay securely with Stripe. Starting at $75.00 CAD." },
-  { num: "3", icon: Zap, title: "Receive Your Converted File", desc: "Get your converted Premier/Pro file delivered in under 1 hour with a validation report." },
-];
+function getSteps(catalog: ProductCatalog | null) {
+  let priceSuffix = "";
+  if (catalog) {
+    const flagship = getProductBySlug(catalog, "enterprise-to-premier-standard");
+    if (flagship) {
+      priceSuffix = ` Starting at ${formatPriceCAD(getActivePrice(flagship))}.`;
+    }
+  }
+  return [
+    { num: "1", icon: Upload, title: "Create & Upload Your QBM", desc: "Export your Enterprise file as a Portable Company File (.QBM) and upload it securely." },
+    { num: "2", icon: DollarSign, title: "Choose Services & Pay", desc: `Select your conversion and any add-ons. Pay securely with Stripe.${priceSuffix}` },
+    { num: "3", icon: Zap, title: "Receive Your Converted File", desc: "Get your converted Premier/Pro file delivered in under 1 hour with a validation report." },
+  ];
+}
 
 const staticComparisonData = [
   { feature: "Price", nexfortis: `From ${formatPriceCAD(7500)}`, bigred: "$249 USD (~$344 CAD)", etech: "$299 USD (~$413 CAD)" },
@@ -95,6 +104,7 @@ const featuredServices = [
 export default function Home() {
   const [catalog, setCatalog] = useState<ProductCatalog | null>(null);
   const promo = isPromoActive();
+  const steps = getSteps(catalog);
 
   useEffect(() => {
     loadProducts().then(setCatalog);
