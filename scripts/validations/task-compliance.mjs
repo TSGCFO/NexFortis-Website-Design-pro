@@ -125,6 +125,7 @@ if (changedFiles.length === 0) {
 }
 
 let taskDescription = null;
+let taskDerivedScope = [];
 try {
   const tasksDir = join(PROJECT_ROOT, ".local/tasks");
   if (existsSync(tasksDir)) {
@@ -138,7 +139,46 @@ try {
       taskDescription = readFileSync(latestTaskFile, "utf-8");
       const titleMatch = taskDescription.match(/^title:\s*(.+)$/m);
       if (titleMatch) {
-        console.log(`Latest task: ${titleMatch[1]}\n`);
+        console.log(`Latest task: ${titleMatch[1]}`);
+      }
+
+      const relevantSection = taskDescription.match(/## Relevant files\s*\n([\s\S]*?)(?:\n##|$)/);
+      if (relevantSection) {
+        const fileLines = relevantSection[1].split("\n")
+          .map((l) => l.replace(/^[-*]\s*/, "").replace(/`/g, "").trim())
+          .filter(Boolean)
+          .map((l) => l.split(":")[0].trim());
+
+        for (const filePath of fileLines) {
+          const dir = filePath.substring(0, filePath.lastIndexOf("/") + 1);
+          if (dir && !taskDerivedScope.includes(dir)) {
+            taskDerivedScope.push(dir);
+          }
+        }
+      }
+
+      if (taskDerivedScope.length > 0) {
+        console.log(`  Derived scope from task: ${taskDerivedScope.join(", ")}`);
+      }
+      console.log("");
+
+      if (changedFiles.length > 0 && taskDerivedScope.length > 0) {
+        const outsideTaskScope = changedFiles.filter((f) => {
+          const inDerived = taskDerivedScope.some((d) => f.startsWith(d));
+          const inAllowed = ALLOWED_SCOPE_DIRS.some((d) =>
+            d.endsWith("/") ? f.startsWith(d) : f === d
+          );
+          return !inDerived && inAllowed;
+        });
+
+        if (outsideTaskScope.length > 0) {
+          console.log("Files in allowed scope but outside task's relevant files:");
+          for (const f of outsideTaskScope) {
+            warn(`File not listed in task's relevant files: ${f}`);
+            console.log(`  ${f}`);
+          }
+          console.log("");
+        }
       }
     }
   }
