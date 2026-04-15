@@ -3,26 +3,23 @@ import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 const supabaseUrl = process.env["SUPABASE_URL"];
 const serviceRoleKey = process.env["SUPABASE_SERVICE_ROLE_KEY"];
 
+let supabaseAdmin: SupabaseClient | null = null;
+
 if (!supabaseUrl || !serviceRoleKey) {
-  throw new Error(
-    "FATAL: SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY environment variables are required. " +
-    "Set them in Replit Secrets or .env before starting the server.",
+  console.warn(
+    "SUPABASE_URL and/or SUPABASE_SERVICE_ROLE_KEY environment variables are missing. " +
+    "Supabase admin client is disabled — auth-dependent routes will return 503.",
   );
-}
-
-const SUPABASE_URL: string = supabaseUrl;
-const SERVICE_ROLE_KEY: string = serviceRoleKey;
-
-export const supabaseAdmin: SupabaseClient = createClient(
-  SUPABASE_URL,
-  SERVICE_ROLE_KEY,
-  {
+} else {
+  supabaseAdmin = createClient(supabaseUrl, serviceRoleKey, {
     auth: {
       autoRefreshToken: false,
       persistSession: false,
     },
-  },
-);
+  });
+}
+
+export { supabaseAdmin };
 
 export function createSupabaseClient(accessToken: string): SupabaseClient {
   const anonKey = process.env["SUPABASE_ANON_KEY"];
@@ -30,8 +27,12 @@ export function createSupabaseClient(accessToken: string): SupabaseClient {
     throw new Error("SUPABASE_ANON_KEY environment variable is required.");
   }
 
+  if (!supabaseUrl) {
+    throw new Error("SUPABASE_URL environment variable is required.");
+  }
+
   return createClient(
-    SUPABASE_URL,
+    supabaseUrl,
     anonKey,
     {
       global: {

@@ -34,14 +34,9 @@ async function seedOperator() {
 
   console.log(`Looking up existing user: ${email}...`);
 
-  const { data: allUsersData, error: listError } = await supabase.auth.admin.listUsers({ page: 1, perPage: 1000 });
-
-  if (listError) {
-    console.error("Failed to query users:", listError.message);
-    process.exit(1);
-  }
-
-  const existingUser = allUsersData.users.find((u: { email?: string }) => u.email === email) || null;
+  // @ts-expect-error getUserByEmail may not be in the SDK type definitions yet
+  const { data: existingUserData, error: lookupError } = await supabase.auth.admin.getUserByEmail(email);
+  const existingUser = lookupError ? null : existingUserData?.user;
 
   let userId: string;
 
