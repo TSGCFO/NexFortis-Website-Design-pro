@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import { Link, useParams } from "wouter";
-import { loadProducts, type Product, type ProductCatalog, formatPriceCAD, getActivePrice, isPromoActive } from "@/lib/products";
+import { loadProducts, type Product, type ProductCatalog, formatPriceCAD, getActivePrice } from "@/lib/products";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowRight, Clock } from "lucide-react";
@@ -59,7 +59,7 @@ export default function Category() {
           <p className="text-white/70 text-lg">
             {products.length} service{products.length !== 1 ? "s" : ""} in this category
           </p>
-          {isPromoActive() && catalog.promo_label && (
+          {catalog.promo_active && catalog.promo_label && (
             <div className="mb-6 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-gold/20 text-rose-gold text-sm font-semibold mt-4">
               {catalog.promo_label}
             </div>
@@ -84,7 +84,7 @@ export default function Category() {
           )}
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {products.map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <ProductCard key={product.id} product={product} promo={catalog.promo_active} />
             ))}
           </div>
           <p className="text-xs text-muted-foreground text-center mt-8">
@@ -96,8 +96,7 @@ export default function Category() {
   );
 }
 
-function ProductCard({ product }: { product: Product }) {
-  const promo = isPromoActive();
+function ProductCard({ product, promo }: { product: Product; promo: boolean }) {
   const activePrice = getActivePrice(product);
 
   return (

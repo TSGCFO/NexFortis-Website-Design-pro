@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "wouter";
-import { loadProducts, type Product, type ProductCatalog, formatPriceCAD, getActivePrice, isPromoActive } from "@/lib/products";
+import { loadProducts, type Product, type ProductCatalog, formatPriceCAD, getActivePrice } from "@/lib/products";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Search, Filter } from "lucide-react";
@@ -45,7 +45,7 @@ export default function Catalog() {
           <p className="text-white/70 text-lg max-w-2xl mx-auto">
             20 QuickBooks services across 5 categories for Canadian businesses. Browse our complete catalog below.
           </p>
-          {isPromoActive() && catalog.promo_label && (
+          {catalog.promo_active && catalog.promo_label && (
             <div className="mt-4 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-gold/20 text-rose-gold text-sm font-semibold">
               {catalog.promo_label}
             </div>
@@ -109,7 +109,7 @@ export default function Catalog() {
                   </Link>
                   <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {products.map((product) => (
-                      <ProductCard key={product.id} product={product} />
+                      <ProductCard key={product.id} product={product} promo={catalog.promo_active} />
                     ))}
                   </div>
                 </div>
@@ -125,8 +125,7 @@ export default function Catalog() {
   );
 }
 
-function ProductCard({ product }: { product: Product }) {
-  const promo = isPromoActive();
+function ProductCard({ product, promo }: { product: Product; promo: boolean }) {
   const activePrice = getActivePrice(product);
   return (
     <Card className="hover:shadow-md transition-all">
