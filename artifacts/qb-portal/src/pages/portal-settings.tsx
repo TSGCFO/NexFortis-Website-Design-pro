@@ -28,20 +28,12 @@ interface SettingsProps {
   setProfilePhone: (v: string) => void;
   profileSaved: boolean;
   setProfileSaved: (v: boolean) => void;
-  currentPassword: string;
-  setCurrentPassword: (v: string) => void;
-  newPassword: string;
-  setNewPassword: (v: string) => void;
-  passwordError: string;
-  passwordSaved: boolean;
   onProfileSave: () => void;
-  onPasswordChange: () => void;
 }
 
 export function SettingsTab(props: SettingsProps) {
   const { profileName, setProfileName, profilePhone, setProfilePhone, profileSaved, setProfileSaved,
-    currentPassword, setCurrentPassword, newPassword, setNewPassword, passwordError, passwordSaved,
-    onProfileSave, onPasswordChange, user } = props;
+    onProfileSave, user } = props;
 
   return (
     <div>
@@ -65,14 +57,9 @@ export function SettingsTab(props: SettingsProps) {
             {profileSaved && <span className="text-sm text-green-600 flex items-center gap-1"><CheckCircle className="w-4 h-4" /> Saved</span>}
           </div>
           <div className="border-t pt-4 mt-4">
-            <h3 className="font-semibold font-display text-primary mb-3">Change Password</h3>
-            <div className="space-y-3">
-              <input type="password" placeholder="Current password" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm" />
-              <input type="password" placeholder="New password (min 8 characters)" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm" />
-              {passwordError && <p className="text-sm text-red-500">{passwordError}</p>}
-              {passwordSaved && <p className="text-sm text-green-600 flex items-center gap-1"><CheckCircle className="w-4 h-4" /> Password updated</p>}
-              <Button variant="outline" onClick={onPasswordChange}>Update Password</Button>
-            </div>
+            <p className="text-sm text-muted-foreground">
+              To change your password, use the <Link href="/forgot-password" className="text-accent hover:underline">password reset</Link> flow.
+            </p>
           </div>
         </CardContent>
       </Card>
@@ -103,7 +90,7 @@ export function SupportTab(props: SupportProps) {
           <CardContent className="p-8 text-center">
             <CheckCircle className="w-12 h-12 text-green-500 mx-auto mb-4" />
             <h3 className="text-lg font-bold font-display text-primary mb-2">Ticket Submitted</h3>
-            <p className="text-sm text-muted-foreground mb-4">We'll respond within 1–2 hours (30 minutes for Premium Support subscribers).</p>
+            <p className="text-sm text-muted-foreground mb-4">We'll respond within 1-2 hours (30 minutes for Premium Support subscribers).</p>
             <Button onClick={() => setTicketSubmitted(false)} variant="outline">Submit Another Ticket</Button>
           </CardContent>
         </Card>

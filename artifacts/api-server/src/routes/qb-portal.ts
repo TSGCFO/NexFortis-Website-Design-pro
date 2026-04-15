@@ -1,13 +1,14 @@
 import { Router, type Request, type Response, type NextFunction, type RequestHandler } from "express";
 import { db } from "@workspace/db";
-import { qbUsers, qbOrders, qbOrderFiles, qbWaitlistSignups, qbSupportTickets, qbPasswordResets } from "@workspace/db/schema";
+import { qbUsers, qbOrders, qbOrderFiles, qbWaitlistSignups, qbSupportTickets } from "@workspace/db/schema";
 import { eq, and, desc } from "drizzle-orm";
 import crypto from "crypto";
-import bcrypt from "bcrypt";
 import multer from "multer";
 import path from "path";
 import fs from "fs";
 import Stripe from "stripe";
+import { supabaseAdmin } from "../lib/supabase";
+import sanitizeHtml from "sanitize-html";
 
 const router = Router();
 
@@ -53,15 +54,6 @@ function computeOrderTotal(serviceId: number, addonIds: number[]): { total: numb
   return { total, serviceName: service.name, addonNames };
 }
 
-const BCRYPT_ROUNDS = 12;
-const TOKEN_SECRET = process.env["QB_TOKEN_SECRET"] || (() => {
-  console.warn("[WARN] QB_TOKEN_SECRET not set — generating ephemeral secret. Sessions will not survive restarts.");
-  return crypto.randomBytes(32).toString("hex");
-})();
-
-const SESSION_MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000;
-const COOKIE_NAME = "qb_session";
-
 const stripe = process.env["STRIPE_SECRET_KEY"]
   ? new Stripe(process.env["STRIPE_SECRET_KEY"])
   : null;
@@ -81,238 +73,83 @@ const upload = multer({
   },
 });
 
-function generateToken(userId: number): string {
-  const payload = Buffer.from(JSON.stringify({
-    uid: userId,
-    iat: Date.now(),
-    exp: Date.now() + SESSION_MAX_AGE_MS,
-  })).toString("base64url");
-  const sig = crypto.createHmac("sha256", TOKEN_SECRET).update(payload).digest("base64url");
-  return `${payload}.${sig}`;
+declare global {
+  namespace Express {
+    interface Request {
+      userId?: string;
+      userRole?: string;
+    }
+  }
 }
 
-function verifyToken(token: string): number | null {
-  const parts = token.split(".");
-  if (parts.length !== 2) return null;
-  const [payload, sig] = parts;
-  const expected = crypto.createHmac("sha256", TOKEN_SECRET).update(payload!).digest("base64url");
-  if (!crypto.timingSafeEqual(Buffer.from(sig!), Buffer.from(expected))) return null;
+function sanitizeInput(input: string): string {
+  return sanitizeHtml(input, {
+    allowedTags: [],
+    allowedAttributes: {},
+  }).trim();
+}
+
+const requireAuth: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const data = JSON.parse(Buffer.from(payload!, "base64url").toString());
-    if (typeof data.uid !== "number") return null;
-    if (data.exp && Date.now() > data.exp) return null;
-    return data.uid;
-  } catch {
-    return null;
-  }
-}
+    const authHeader = req.headers.authorization;
+    if (!authHeader?.startsWith("Bearer ")) {
+      res.status(401).json({ error: "Authentication required" });
+      return;
+    }
 
-function extractUserId(req: Request): number | null {
-  const cookieToken = (req as unknown as Record<string, Record<string, string>>).cookies?.[COOKIE_NAME];
-  if (cookieToken) {
-    const uid = verifyToken(cookieToken);
-    if (uid) return uid;
-  }
-  const authHeader = req.headers.authorization;
-  if (authHeader?.startsWith("Bearer ")) {
-    return verifyToken(authHeader.slice(7));
-  }
-  return null;
-}
+    const token = authHeader.slice(7);
+    const { data: { user }, error } = await supabaseAdmin.auth.getUser(token);
 
-function setSessionCookie(res: Response, token: string) {
-  res.cookie(COOKIE_NAME, token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
-    maxAge: SESSION_MAX_AGE_MS,
-    path: "/api/qb",
-  });
-}
+    if (error || !user) {
+      res.status(401).json({ error: "Invalid or expired token" });
+      return;
+    }
 
-const requireAuth: RequestHandler = (req: Request, res: Response, next: NextFunction) => {
-  const userId = extractUserId(req);
-  if (!userId) {
-    res.status(401).json({ error: "Authentication required" });
-    return;
+    const [profile] = await db.select().from(qbUsers).where(eq(qbUsers.id, user.id)).limit(1);
+    if (!profile) {
+      res.status(401).json({ error: "User profile not found" });
+      return;
+    }
+
+    req.userId = user.id;
+    req.userRole = profile.role;
+    next();
+  } catch (err) {
+    console.error("Auth middleware error:", err);
+    res.status(503).json({ error: "Authentication service unavailable" });
   }
-  (req as unknown as Record<string, unknown>)["userId"] = userId;
-  next();
 };
 
-function getUserId(req: Request): number {
-  return (req as unknown as Record<string, unknown>)["userId"] as number;
+const requireOperator: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
+  await (requireAuth as (req: Request, res: Response, next: NextFunction) => Promise<void>)(req, res, () => {
+    if (req.userRole !== "operator") {
+      res.status(403).json({ error: "forbidden" });
+      return;
+    }
+
+    // TODO(Prompt 03B): enforce AAL2 strictly — return 403 when aal !== 'aal2'
+    const authHeader = req.headers.authorization;
+    if (authHeader?.startsWith("Bearer ")) {
+      try {
+        const payload = authHeader.slice(7).split(".")[1];
+        if (payload) {
+          const decoded = JSON.parse(Buffer.from(payload, "base64url").toString());
+          if (decoded.aal !== "aal2") {
+            console.warn("Operator session is AAL1 — MFA not yet enrolled");
+          }
+        }
+      } catch {
+        console.warn("Could not decode JWT for AAL check");
+      }
+    }
+
+    next();
+  });
+};
+
+function getUserId(req: Request): string {
+  return req.userId!;
 }
-
-const loginAttempts = new Map<string, { count: number; lastAttempt: number }>();
-const RATE_LIMIT_MAX = 5;
-const RATE_LIMIT_WINDOW = 15 * 60 * 1000;
-
-function checkRateLimit(email: string): boolean {
-  const now = Date.now();
-  const record = loginAttempts.get(email);
-  if (!record) return true;
-  if (now - record.lastAttempt > RATE_LIMIT_WINDOW) {
-    loginAttempts.delete(email);
-    return true;
-  }
-  return record.count < RATE_LIMIT_MAX;
-}
-
-function recordLoginAttempt(email: string) {
-  const now = Date.now();
-  const record = loginAttempts.get(email);
-  if (!record || now - record.lastAttempt > RATE_LIMIT_WINDOW) {
-    loginAttempts.set(email, { count: 1, lastAttempt: now });
-  } else {
-    record.count++;
-    record.lastAttempt = now;
-  }
-}
-
-router.post("/auth/register", async (req: Request, res: Response) => {
-  try {
-    const { email, password, name, phone } = req.body;
-    if (!email || !password || !name) {
-      res.status(400).json({ error: "Email, password, and name are required" });
-      return;
-    }
-    if (password.length < 8) {
-      res.status(400).json({ error: "Password must be at least 8 characters" });
-      return;
-    }
-
-    const existing = await db.select().from(qbUsers).where(eq(qbUsers.email, email)).limit(1);
-    if (existing.length > 0) {
-      res.status(409).json({ error: "An account with this email already exists" });
-      return;
-    }
-
-    const passwordHash = await bcrypt.hash(password, BCRYPT_ROUNDS);
-    const [user] = await db.insert(qbUsers).values({ email, passwordHash, name, phone: phone || null }).returning();
-    const token = generateToken(user.id);
-    setSessionCookie(res, token);
-
-    res.status(201).json({ user: { id: user.id, email: user.email, name: user.name, phone: user.phone }, token });
-  } catch (err) {
-    console.error("Registration error:", err);
-    res.status(500).json({ error: "Registration failed" });
-  }
-});
-
-router.post("/auth/login", async (req: Request, res: Response) => {
-  try {
-    const { email, password } = req.body;
-    if (!email || !password) {
-      res.status(400).json({ error: "Email and password are required" });
-      return;
-    }
-
-    if (!checkRateLimit(email)) {
-      res.status(429).json({ error: "Too many login attempts. Please try again in 15 minutes." });
-      return;
-    }
-
-    const [user] = await db.select().from(qbUsers).where(eq(qbUsers.email, email)).limit(1);
-    if (!user) {
-      recordLoginAttempt(email);
-      res.status(401).json({ error: "Invalid email or password" });
-      return;
-    }
-
-    const passwordValid = await bcrypt.compare(password, user.passwordHash);
-    if (!passwordValid) {
-      recordLoginAttempt(email);
-      res.status(401).json({ error: "Invalid email or password" });
-      return;
-    }
-
-    const token = generateToken(user.id);
-    setSessionCookie(res, token);
-    res.json({ user: { id: user.id, email: user.email, name: user.name, phone: user.phone }, token });
-  } catch (err) {
-    console.error("Login error:", err);
-    res.status(500).json({ error: "Login failed" });
-  }
-});
-
-router.post("/auth/logout", (_req: Request, res: Response) => {
-  res.clearCookie(COOKIE_NAME, { path: "/api/qb" });
-  res.json({ success: true });
-});
-
-router.post("/auth/forgot-password", async (req: Request, res: Response) => {
-  try {
-    const { email } = req.body;
-    if (!email) {
-      res.status(400).json({ error: "Email is required" });
-      return;
-    }
-
-    const [user] = await db.select().from(qbUsers).where(eq(qbUsers.email, email)).limit(1);
-    if (!user) {
-      res.json({ success: true, message: "If an account exists with that email, a reset link has been sent." });
-      return;
-    }
-
-    const resetToken = crypto.randomBytes(32).toString("hex");
-    const tokenHash = crypto.createHash("sha256").update(resetToken).digest("hex");
-    const expiresAt = new Date(Date.now() + 60 * 60 * 1000);
-
-    await db.insert(qbPasswordResets).values({ userId: user.id, tokenHash, expiresAt });
-
-    const isDev = process.env.NODE_ENV !== "production";
-    if (isDev) {
-      console.log(`[Password Reset] Dev-mode reset link: /reset-password?token=${resetToken}`);
-    }
-
-    const response: Record<string, unknown> = {
-      success: true,
-      message: "If an account exists with that email, a reset link has been sent.",
-    };
-    if (isDev) {
-      response.resetToken = resetToken;
-      response.resetUrl = `/reset-password?token=${resetToken}`;
-    }
-    res.json(response);
-  } catch (err) {
-    console.error("Forgot password error:", err);
-    res.status(500).json({ error: "Failed to process request" });
-  }
-});
-
-router.post("/auth/reset-password", async (req: Request, res: Response) => {
-  try {
-    const { token, newPassword } = req.body;
-    if (!token || !newPassword) {
-      res.status(400).json({ error: "Token and new password are required" });
-      return;
-    }
-    if (newPassword.length < 8) {
-      res.status(400).json({ error: "Password must be at least 8 characters" });
-      return;
-    }
-
-    const tokenHash = crypto.createHash("sha256").update(token).digest("hex");
-    const [resetRecord] = await db.select().from(qbPasswordResets)
-      .where(and(eq(qbPasswordResets.tokenHash, tokenHash), eq(qbPasswordResets.used, false)))
-      .limit(1);
-
-    if (!resetRecord || new Date() > resetRecord.expiresAt) {
-      res.status(400).json({ error: "Invalid or expired reset token" });
-      return;
-    }
-
-    const newHash = await bcrypt.hash(newPassword, BCRYPT_ROUNDS);
-    await db.update(qbUsers).set({ passwordHash: newHash }).where(eq(qbUsers.id, resetRecord.userId));
-    await db.update(qbPasswordResets).set({ used: true }).where(eq(qbPasswordResets.id, resetRecord.id));
-
-    res.json({ success: true });
-  } catch (err) {
-    console.error("Reset password error:", err);
-    res.status(500).json({ error: "Failed to reset password" });
-  }
-});
 
 router.post("/waitlist", async (req: Request, res: Response) => {
   try {
@@ -358,7 +195,14 @@ router.post("/checkout/create-session", async (req: Request, res: Response) => {
       return;
     }
 
-    const userId = extractUserId(req);
+    const authHeader = req.headers.authorization;
+    let userId: string | null = null;
+    if (authHeader?.startsWith("Bearer ")) {
+      const token = authHeader.slice(7);
+      const { data: { user } } = await supabaseAdmin.auth.getUser(token);
+      if (user) userId = user.id;
+    }
+
     const uploadToken = crypto.randomBytes(32).toString("hex");
 
     const [order] = await db.insert(qbOrders).values({
@@ -526,10 +370,18 @@ router.post("/orders/:id/files", (req: Request, res: Response) => {
     return;
   }
 
-  const userId = extractUserId(req);
+  const authHeader = req.headers.authorization;
   const uploadTokenHeader = (req.headers["x-upload-token"] as string) || (req.query.uploadToken as string);
 
-  if (!userId && !uploadTokenHeader) {
+  let userIdPromise: Promise<string | null>;
+  if (authHeader?.startsWith("Bearer ")) {
+    const token = authHeader.slice(7);
+    userIdPromise = supabaseAdmin.auth.getUser(token).then(({ data: { user } }) => user?.id || null);
+  } else {
+    userIdPromise = Promise.resolve(null);
+  }
+
+  if (!authHeader?.startsWith("Bearer ") && !uploadTokenHeader) {
     res.status(401).json({ error: "Authentication or upload token required" });
     return;
   }
@@ -551,6 +403,7 @@ router.post("/orders/:id/files", (req: Request, res: Response) => {
     }
 
     try {
+      const userId = await userIdPromise;
       let orderQuery;
       if (userId) {
         orderQuery = await db.select().from(qbOrders)
@@ -595,8 +448,15 @@ router.get("/orders/:id/files/:fileId/download", async (req: Request, res: Respo
       return;
     }
 
-    const userId = extractUserId(req);
+    const authHeader = req.headers.authorization;
     const uploadTokenHeader = req.query.uploadToken as string;
+
+    let userId: string | null = null;
+    if (authHeader?.startsWith("Bearer ")) {
+      const token = authHeader.slice(7);
+      const { data: { user } } = await supabaseAdmin.auth.getUser(token);
+      userId = user?.id || null;
+    }
 
     if (!userId && !uploadTokenHeader) {
       res.status(401).json({ error: "Authentication or upload token required" });
@@ -656,8 +516,8 @@ router.post("/support-tickets", requireAuth, async (req: Request, res: Response)
 
     const [ticket] = await db.insert(qbSupportTickets).values({
       userId: uid,
-      subject,
-      message,
+      subject: sanitizeInput(subject),
+      message: sanitizeInput(message),
       status: "open",
     }).returning();
 
@@ -689,7 +549,7 @@ router.get("/me", requireAuth, async (req: Request, res: Response) => {
       res.status(404).json({ error: "User not found" });
       return;
     }
-    res.json({ user: { id: user.id, email: user.email, name: user.name, phone: user.phone } });
+    res.json({ user: { id: user.id, email: user.email, name: user.name, phone: user.phone, role: user.role } });
   } catch (err) {
     console.error("Get me error:", err);
     res.status(500).json({ error: "Failed to fetch user" });
@@ -701,7 +561,7 @@ router.put("/me", requireAuth, async (req: Request, res: Response) => {
     const uid = getUserId(req);
     const { name, phone } = req.body;
     const updates: Record<string, string | null> = {};
-    if (name) updates.name = name;
+    if (name) updates.name = sanitizeInput(name);
     if (phone !== undefined) updates.phone = phone || null;
 
     if (Object.keys(updates).length === 0) {
@@ -714,46 +574,12 @@ router.put("/me", requireAuth, async (req: Request, res: Response) => {
       .where(eq(qbUsers.id, uid))
       .returning();
 
-    res.json({ user: { id: user.id, email: user.email, name: user.name, phone: user.phone } });
+    res.json({ user: { id: user.id, email: user.email, name: user.name, phone: user.phone, role: user.role } });
   } catch (err) {
     console.error("Update me error:", err);
     res.status(500).json({ error: "Failed to update profile" });
   }
 });
 
-router.put("/me/password", requireAuth, async (req: Request, res: Response) => {
-  try {
-    const uid = getUserId(req);
-    const { currentPassword, newPassword } = req.body;
-    if (!currentPassword || !newPassword) {
-      res.status(400).json({ error: "Current and new passwords are required" });
-      return;
-    }
-    if (newPassword.length < 8) {
-      res.status(400).json({ error: "New password must be at least 8 characters" });
-      return;
-    }
-
-    const [user] = await db.select().from(qbUsers).where(eq(qbUsers.id, uid)).limit(1);
-    if (!user) {
-      res.status(401).json({ error: "User not found" });
-      return;
-    }
-
-    const passwordValid = await bcrypt.compare(currentPassword, user.passwordHash);
-    if (!passwordValid) {
-      res.status(401).json({ error: "Current password is incorrect" });
-      return;
-    }
-
-    const newHash = await bcrypt.hash(newPassword, BCRYPT_ROUNDS);
-    await db.update(qbUsers).set({ passwordHash: newHash }).where(eq(qbUsers.id, uid));
-
-    res.json({ success: true });
-  } catch (err) {
-    console.error("Password change error:", err);
-    res.status(500).json({ error: "Failed to change password" });
-  }
-});
-
+export { requireAuth, requireOperator };
 export default router;

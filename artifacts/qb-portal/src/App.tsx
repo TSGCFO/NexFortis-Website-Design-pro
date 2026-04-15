@@ -19,6 +19,7 @@ import Register from "@/pages/register";
 import Portal from "@/pages/portal";
 import ForgotPassword from "@/pages/forgot-password";
 import ResetPassword from "@/pages/reset-password";
+import AuthCallback from "@/pages/auth-callback";
 import ServiceDetail from "@/pages/service-detail";
 import Category from "@/pages/category";
 import OrderDetail from "@/pages/order-detail";
@@ -44,6 +45,7 @@ function Router() {
         <Route path="/register" component={Register} />
         <Route path="/forgot-password" component={ForgotPassword} />
         <Route path="/reset-password" component={ResetPassword} />
+        <Route path="/auth/callback" component={AuthCallback} />
         <Route path="/portal" component={Portal} />
         <Route path="/order/:id" component={OrderDetail} />
         <Route component={NotFound} />

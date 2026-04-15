@@ -1,18 +1,21 @@
-import { pgTable, serial, text, integer, boolean, timestamp, unique } from "drizzle-orm/pg-core";
+import { pgTable, serial, text, integer, boolean, timestamp, uuid, unique, check } from "drizzle-orm/pg-core";
+import { sql } from "drizzle-orm";
 import { createInsertSchema } from "drizzle-zod";
 
 export const qbUsers = pgTable("qb_users", {
-  id: serial("id").primaryKey(),
+  id: uuid("id").primaryKey(),
   email: text("email").notNull().unique(),
-  passwordHash: text("password_hash").notNull(),
-  name: text("name").notNull(),
+  name: text("name").notNull().default(""),
   phone: text("phone"),
+  role: text("role").notNull().default("customer"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
-});
+}, (table) => [
+  check("qb_users_role_check", sql`${table.role} IN ('customer', 'operator')`),
+]);
 
 export const qbOrders = pgTable("qb_orders", {
   id: serial("id").primaryKey(),
-  userId: integer("user_id").references(() => qbUsers.id),
+  userId: uuid("user_id").references(() => qbUsers.id),
   serviceId: integer("service_id").notNull(),
   serviceName: text("service_name").notNull(),
   addons: text("addons"),
@@ -35,6 +38,8 @@ export const qbOrderFiles = pgTable("qb_order_files", {
   fileName: text("file_name").notNull(),
   storagePath: text("storage_path"),
   fileSizeBytes: integer("file_size_bytes"),
+  expired: boolean("expired").default(false),
+  deletedAt: timestamp("deleted_at", { withTimezone: true }),
   uploadedAt: timestamp("uploaded_at").defaultNow().notNull(),
 });
 
@@ -50,21 +55,12 @@ export const qbWaitlistSignups = pgTable("qb_waitlist_signups", {
 
 export const qbSupportTickets = pgTable("qb_support_tickets", {
   id: serial("id").primaryKey(),
-  userId: integer("user_id").references(() => qbUsers.id),
+  userId: uuid("user_id").references(() => qbUsers.id),
   subject: text("subject").notNull(),
   message: text("message").notNull(),
   status: text("status").notNull().default("open"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
-});
-
-export const qbPasswordResets = pgTable("qb_password_resets", {
-  id: serial("id").primaryKey(),
-  userId: integer("user_id").references(() => qbUsers.id).notNull(),
-  tokenHash: text("token_hash").notNull(),
-  used: boolean("used").notNull().default(false),
-  expiresAt: timestamp("expires_at").notNull(),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
 export const insertQbUserSchema = createInsertSchema(qbUsers);

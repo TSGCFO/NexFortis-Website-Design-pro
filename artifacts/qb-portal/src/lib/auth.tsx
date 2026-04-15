@@ -1,93 +1,167 @@
 import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from "react";
+import { supabase } from "./supabase";
+import type { Session } from "@supabase/supabase-js";
 
 interface User {
-  id: number;
+  id: string;
   email: string;
   name: string;
   phone?: string;
+  role?: string;
 }
 
 interface AuthContextType {
   user: User | null;
+  session: Session | null;
   loading: boolean;
-  login: (email: string, password: string) => Promise<{ ok: boolean; error?: string }>;
-  register: (data: { email: string; password: string; name: string; phone?: string }) => Promise<{ ok: boolean; error?: string }>;
-  logout: () => void;
+  isOperator: boolean;
+  signUp: (email: string, password: string, name: string, phone?: string) => Promise<{ ok: boolean; error?: string }>;
+  signIn: (email: string, password: string) => Promise<{ ok: boolean; error?: string }>;
+  signInWithGoogle: () => Promise<void>;
+  signInWithMicrosoft: () => Promise<void>;
+  signOut: () => Promise<void>;
+  resetPassword: (email: string) => Promise<{ ok: boolean; error?: string }>;
+  getAccessToken: () => Promise<string | null>;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
 function apiUrl(path: string) {
-  return "/api/qb" + path;
+  const base = import.meta.env.BASE_URL || "/";
+  const prefix = base.endsWith("/") ? base.slice(0, -1) : base;
+  return prefix.replace(/\/qb-portal$/, "") + "/api/qb" + path;
+}
+
+async function fetchUserProfile(accessToken: string): Promise<User | null> {
+  try {
+    const res = await fetch(apiUrl("/me"), {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data.user;
+  } catch {
+    return null;
+  }
 }
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
+  const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const stored = localStorage.getItem("qb_user");
-    if (stored) {
-      try {
-        setUser(JSON.parse(stored));
-      } catch {
-        localStorage.removeItem("qb_user");
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, newSession) => {
+      setSession(newSession);
+      if (newSession?.access_token) {
+        const profile = await fetchUserProfile(newSession.access_token);
+        setUser(profile);
+      } else {
+        setUser(null);
       }
-    }
-    setLoading(false);
+      setLoading(false);
+    });
+
+    supabase.auth.getSession().then(async ({ data: { session: existingSession } }) => {
+      setSession(existingSession);
+      if (existingSession?.access_token) {
+        const profile = await fetchUserProfile(existingSession.access_token);
+        setUser(profile);
+      }
+      setLoading(false);
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
   }, []);
 
-  const login = useCallback(async (email: string, password: string) => {
+  const signUp = useCallback(async (email: string, password: string, name: string, phone?: string) => {
     try {
-      const res = await fetch(apiUrl("/auth/login"), {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ email, password }),
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: { name, phone },
+        },
       });
-      const data = await res.json();
-      if (!res.ok) return { ok: false, error: data.error || "Login failed" };
-      setUser(data.user);
-      localStorage.setItem("qb_user", JSON.stringify(data.user));
-      localStorage.setItem("qb_token", data.token);
+      if (error) return { ok: false, error: error.message };
+      if (data.session) {
+        return { ok: true };
+      }
+      return { ok: true, error: "Check your email to confirm your account." };
+    } catch {
+      return { ok: false, error: "Network error. Please try again." };
+    }
+  }, []);
+
+  const signIn = useCallback(async (email: string, password: string) => {
+    try {
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) return { ok: false, error: error.message };
       return { ok: true };
     } catch {
       return { ok: false, error: "Network error. Please try again." };
     }
   }, []);
 
-  const register = useCallback(async (data: { email: string; password: string; name: string; phone?: string }) => {
-    try {
-      const res = await fetch(apiUrl("/auth/register"), {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify(data),
-      });
-      const result = await res.json();
-      if (!res.ok) return { ok: false, error: result.error || "Registration failed" };
-      setUser(result.user);
-      localStorage.setItem("qb_user", JSON.stringify(result.user));
-      localStorage.setItem("qb_token", result.token);
-      return { ok: true };
-    } catch {
-      return { ok: false, error: "Network error. Please try again." };
-    }
+  const signInWithGoogle = useCallback(async () => {
+    await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: window.location.origin + "/qb-portal/auth/callback",
+      },
+    });
   }, []);
 
-  const logout = useCallback(async () => {
+  const signInWithMicrosoft = useCallback(async () => {
+    await supabase.auth.signInWithOAuth({
+      provider: "azure",
+      options: {
+        redirectTo: window.location.origin + "/qb-portal/auth/callback",
+      },
+    });
+  }, []);
+
+  const signOutFn = useCallback(async () => {
+    await supabase.auth.signOut();
     setUser(null);
-    localStorage.removeItem("qb_user");
-    localStorage.removeItem("qb_token");
+    setSession(null);
+  }, []);
+
+  const resetPasswordFn = useCallback(async (email: string) => {
     try {
-      await fetch(apiUrl("/auth/logout"), { method: "POST", credentials: "include" });
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: window.location.origin + "/qb-portal/reset-password",
+      });
+      if (error) return { ok: false, error: error.message };
+      return { ok: true };
     } catch {
-      // ignore logout API errors
+      return { ok: false, error: "Network error. Please try again." };
     }
   }, []);
+
+  const getAccessToken = useCallback(async (): Promise<string | null> => {
+    const { data: { session: currentSession } } = await supabase.auth.getSession();
+    return currentSession?.access_token || null;
+  }, []);
+
+  const isOperator = user?.role === "operator";
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, register, logout }}>
+    <AuthContext.Provider value={{
+      user,
+      session,
+      loading,
+      isOperator,
+      signUp,
+      signIn,
+      signInWithGoogle,
+      signInWithMicrosoft,
+      signOut: signOutFn,
+      resetPassword: resetPasswordFn,
+      getAccessToken,
+    }}>
       {children}
     </AuthContext.Provider>
   );
@@ -99,6 +173,7 @@ export function useAuth() {
   return ctx;
 }
 
-export function getAuthToken(): string | null {
-  return localStorage.getItem("qb_token");
+export async function getAccessToken(): Promise<string | null> {
+  const { data: { session } } = await supabase.auth.getSession();
+  return session?.access_token || null;
 }

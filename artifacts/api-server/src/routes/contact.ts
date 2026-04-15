@@ -1,5 +1,6 @@
 import { Router, type Request, type Response } from "express";
 import { logger } from "../lib/logger";
+import sanitizeHtml from "sanitize-html";
 
 interface ContactBody {
   name?: string;
@@ -10,13 +11,11 @@ interface ContactBody {
   message?: string;
 }
 
-function escapeHtml(str: string): string {
-  return str
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
+function sanitizeInput(input: string): string {
+  return sanitizeHtml(input, {
+    allowedTags: [],
+    allowedAttributes: {},
+  }).trim();
 }
 
 function validateContact(body: ContactBody): string | null {
@@ -32,7 +31,13 @@ const contactRouter = Router();
 
 contactRouter.post("/", async (req: Request, res: Response) => {
   try {
-    const { name, email, phone, company, service, message } = req.body as ContactBody;
+    const rawBody = req.body as ContactBody;
+    const name = rawBody.name ? sanitizeInput(rawBody.name) : undefined;
+    const email = rawBody.email;
+    const phone = rawBody.phone;
+    const company = rawBody.company ? sanitizeInput(rawBody.company) : undefined;
+    const service = rawBody.service ? sanitizeInput(rawBody.service) : undefined;
+    const message = rawBody.message ? sanitizeInput(rawBody.message) : undefined;
 
     const error = validateContact({ name, email, phone, company, service, message });
     if (error) {
@@ -43,6 +48,9 @@ contactRouter.post("/", async (req: Request, res: Response) => {
     const resendApiKey = process.env.RESEND_API_KEY;
 
     if (resendApiKey) {
+      const escapeHtml = (str: string) =>
+        str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+
       const response = await fetch("https://api.resend.com/emails", {
         method: "POST",
         headers: {

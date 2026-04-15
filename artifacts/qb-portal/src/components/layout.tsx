@@ -74,7 +74,7 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [location] = useLocation();
-  const { user, logout } = useAuth();
+  const { user, signOut } = useAuth();
   const { resolvedTheme } = useTheme();
 
   useEffect(() => {
@@ -144,7 +144,7 @@ export function Navbar() {
                   {user.name.split(" ")[0]}
                 </Button>
               </Link>
-              <Button variant="ghost" size="sm" onClick={logout}>
+              <Button variant="ghost" size="sm" onClick={signOut}>
                 <LogOut className="w-4 h-4" />
               </Button>
             </div>
@@ -198,7 +198,7 @@ export function Navbar() {
                 <Link href="/portal" onClick={() => setOpen(false)}>
                   <Button variant="outline" className="w-full font-display" size="sm">Dashboard</Button>
                 </Link>
-                <Button variant="ghost" className="w-full font-display" size="sm" onClick={() => { logout(); setOpen(false); }}>
+                <Button variant="ghost" className="w-full font-display" size="sm" onClick={() => { signOut(); setOpen(false); }}>
                   Sign Out
                 </Button>
               </>

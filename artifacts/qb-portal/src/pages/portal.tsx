@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { Link, useLocation } from "wouter";
-import { useAuth, getAuthToken } from "@/lib/auth";
+import { useAuth } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -19,13 +19,8 @@ const statusColors: Record<string, string> = {
   delivered: "bg-accent/10 text-accent",
 };
 
-function apiHeaders() {
-  const token = getAuthToken();
-  return { "Content-Type": "application/json", ...(token ? { Authorization: `Bearer ${token}` } : {}) };
-}
-
 export default function Portal() {
-  const { user, logout } = useAuth();
+  const { user, loading: authLoading, signOut, getAccessToken } = useAuth();
   const [, navigate] = useLocation();
   const [activeTab, setActiveTab] = useState("dashboard");
   const [orders, setOrders] = useState<Order[]>([]);
@@ -37,40 +32,64 @@ export default function Portal() {
   const [profileName, setProfileName] = useState("");
   const [profilePhone, setProfilePhone] = useState("");
   const [profileSaved, setProfileSaved] = useState(false);
-  const [currentPassword, setCurrentPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [passwordSaved, setPasswordSaved] = useState(false);
+
+  async function apiHeaders() {
+    const token = await getAccessToken();
+    return { "Content-Type": "application/json", ...(token ? { Authorization: `Bearer ${token}` } : {}) };
+  }
 
   const fetchOrders = useCallback(async () => {
-    try { const res = await fetch("/api/qb/orders", { headers: apiHeaders() }); if (res.ok) { const data = await res.json(); setOrders(data.orders || []); } } catch { /* ignore */ }
+    try {
+      const headers = await apiHeaders();
+      const res = await fetch("/api/qb/orders", { headers });
+      if (res.ok) { const data = await res.json(); setOrders(data.orders || []); }
+    } catch { /* ignore */ }
     setLoadingOrders(false);
   }, []);
 
   const fetchTickets = useCallback(async () => {
-    try { const res = await fetch("/api/qb/support-tickets", { headers: apiHeaders() }); if (res.ok) { const data = await res.json(); setTickets(data.tickets || []); } } catch { /* ignore */ }
+    try {
+      const headers = await apiHeaders();
+      const res = await fetch("/api/qb/support-tickets", { headers });
+      if (res.ok) { const data = await res.json(); setTickets(data.tickets || []); }
+    } catch { /* ignore */ }
   }, []);
 
-  useEffect(() => { if (user) { fetchOrders(); fetchTickets(); setProfileName(user.name); setProfilePhone(user.phone || ""); } }, [user, fetchOrders, fetchTickets]);
+  useEffect(() => {
+    if (user) {
+      fetchOrders();
+      fetchTickets();
+      setProfileName(user.name);
+      setProfilePhone(user.phone || "");
+    }
+  }, [user, fetchOrders, fetchTickets]);
+
+  if (authLoading) {
+    return <div className="min-h-screen flex items-center justify-center"><div className="animate-pulse text-muted-foreground">Loading...</div></div>;
+  }
 
   if (!user) { navigate("/login"); return null; }
 
   const handleTicketSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    try { const res = await fetch("/api/qb/support-tickets", { method: "POST", headers: apiHeaders(), body: JSON.stringify({ subject: ticketSubject, message: ticketMessage }) }); if (res.ok) { setTicketSubmitted(true); setTicketSubject(""); setTicketMessage(""); fetchTickets(); } } catch { /* ignore */ }
+    try {
+      const headers = await apiHeaders();
+      const res = await fetch("/api/qb/support-tickets", { method: "POST", headers, body: JSON.stringify({ subject: ticketSubject, message: ticketMessage }) });
+      if (res.ok) { setTicketSubmitted(true); setTicketSubject(""); setTicketMessage(""); fetchTickets(); }
+    } catch { /* ignore */ }
   };
 
   const handleProfileSave = async () => {
-    try { const res = await fetch("/api/qb/me", { method: "PUT", headers: apiHeaders(), body: JSON.stringify({ name: profileName, phone: profilePhone }) }); if (res.ok) setProfileSaved(true); } catch { /* ignore */ }
+    try {
+      const headers = await apiHeaders();
+      const res = await fetch("/api/qb/me", { method: "PUT", headers, body: JSON.stringify({ name: profileName, phone: profilePhone }) });
+      if (res.ok) setProfileSaved(true);
+    } catch { /* ignore */ }
   };
 
-  const handlePasswordChange = async () => {
-    setPasswordError("");
-    if (newPassword.length < 8) { setPasswordError("Password must be at least 8 characters"); return; }
-    try {
-      const res = await fetch("/api/qb/me/password", { method: "PUT", headers: apiHeaders(), body: JSON.stringify({ currentPassword, newPassword }) });
-      if (res.ok) { setPasswordSaved(true); setCurrentPassword(""); setNewPassword(""); } else { const data = await res.json(); setPasswordError(data.error || "Failed to change password"); }
-    } catch { setPasswordError("Network error"); }
+  const handleLogout = async () => {
+    await signOut();
+    navigate("/login");
   };
 
   const completedOrders = orders.filter((o) => o.status === "completed" || o.status === "delivered");
@@ -83,14 +102,19 @@ export default function Portal() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold font-display text-white">Welcome, {user.name.split(" ")[0]}</h1>
+              <h1 className="text-2xl font-bold font-display text-white">Welcome, {user.name.split(" ")[0] || "there"}</h1>
               <p className="text-white/70 text-sm">{user.email}</p>
             </div>
-            <Link href="/order">
-              <Button className="bg-rose-gold text-rose-gold-foreground hover:bg-rose-gold-hover font-display font-bold gap-2">
-                <Upload className="w-4 h-4" /> New Order
+            <div className="flex items-center gap-3">
+              <Link href="/order">
+                <Button className="bg-rose-gold text-rose-gold-foreground hover:bg-rose-gold-hover font-display font-bold gap-2">
+                  <Upload className="w-4 h-4" /> New Order
+                </Button>
+              </Link>
+              <Button variant="outline" className="text-white border-white/30 hover:bg-white/10" onClick={handleLogout}>
+                Sign Out
               </Button>
-            </Link>
+            </div>
           </div>
         </div>
       </div>
@@ -167,7 +191,7 @@ export default function Portal() {
 
           <TabsContent value="files"><FilesTab completedOrders={completedOrders} /></TabsContent>
           <TabsContent value="settings">
-            <SettingsTab user={user} profileName={profileName} setProfileName={setProfileName} profilePhone={profilePhone} setProfilePhone={setProfilePhone} profileSaved={profileSaved} setProfileSaved={setProfileSaved} currentPassword={currentPassword} setCurrentPassword={setCurrentPassword} newPassword={newPassword} setNewPassword={setNewPassword} passwordError={passwordError} passwordSaved={passwordSaved} onProfileSave={handleProfileSave} onPasswordChange={handlePasswordChange} />
+            <SettingsTab user={user} profileName={profileName} setProfileName={setProfileName} profilePhone={profilePhone} setProfilePhone={setProfilePhone} profileSaved={profileSaved} setProfileSaved={setProfileSaved} onProfileSave={handleProfileSave} />
           </TabsContent>
           <TabsContent value="support">
             <SupportTab tickets={tickets} ticketSubject={ticketSubject} setTicketSubject={setTicketSubject} ticketMessage={ticketMessage} setTicketMessage={setTicketMessage} ticketSubmitted={ticketSubmitted} setTicketSubmitted={setTicketSubmitted} onSubmit={handleTicketSubmit} />

@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { useSearch } from "wouter";
 import { Shield, Lock } from "lucide-react";
-import { useAuth, getAuthToken } from "@/lib/auth";
+import { useAuth } from "@/lib/auth";
 import { loadProducts, type ProductCatalog, formatPrice, getActivePrice } from "@/lib/products";
 import { SEO } from "@/components/seo";
 import OrderComplete from "@/pages/order-complete";
@@ -10,7 +10,7 @@ import OrderForm from "@/pages/order-form";
 interface SvcOption { id: number; name: string; price: number; }
 
 export default function Order() {
-  const { user } = useAuth();
+  const { user, getAccessToken } = useAuth();
   const searchString = useSearch();
   const params = new URLSearchParams(searchString);
   const preselectedService = params.get("service");
@@ -73,11 +73,11 @@ export default function Order() {
     if (!canSubmit || !selectedSvc) return;
     setSubmitting(true); setSubmitError("");
     try {
-      const token = getAuthToken();
+      const token = await getAccessToken();
       const headers: Record<string, string> = { "Content-Type": "application/json" };
       if (token) headers["Authorization"] = `Bearer ${token}`;
       const res = await fetch("/api/qb/checkout/create-session", {
-        method: "POST", headers, credentials: "include",
+        method: "POST", headers,
         body: JSON.stringify({ serviceId: selectedService, addonIds: selectedAddons, qbVersion, customerName: name, customerEmail: email, customerPhone: phone || null }),
       });
       const data = await res.json();
@@ -89,7 +89,7 @@ export default function Order() {
         const uploadHeaders: Record<string, string> = {};
         if (token) uploadHeaders["Authorization"] = `Bearer ${token}`;
         if (data.uploadToken) uploadHeaders["X-Upload-Token"] = data.uploadToken;
-        const uploadRes = await fetch(`/api/qb/orders/${createdOrderId}/files`, { method: "POST", headers: uploadHeaders, credentials: "include", body: formData });
+        const uploadRes = await fetch(`/api/qb/orders/${createdOrderId}/files`, { method: "POST", headers: uploadHeaders, body: formData });
         if (!uploadRes.ok) { const ud = await uploadRes.json().catch(() => ({})); throw new Error(ud.error || "File upload failed."); }
       }
       if (data.checkoutUrl) { window.location.href = data.checkoutUrl; return; }

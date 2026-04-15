@@ -1,22 +1,50 @@
-import { useState } from "react";
-import { Link, useSearch } from "wouter";
+import { useState, useEffect } from "react";
+import { Link, useLocation } from "wouter";
+import { supabase } from "@/lib/supabase";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { CheckCircle, AlertTriangle } from "lucide-react";
 import { SEO } from "@/components/seo";
 
 export default function ResetPassword() {
-  const searchString = useSearch();
-  const params = new URLSearchParams(searchString);
-  const token = params.get("token") || "";
-
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isRecoveryMode, setIsRecoveryMode] = useState(false);
+  const [checkingSession, setCheckingSession] = useState(true);
+  const [, navigate] = useLocation();
 
-  if (!token) {
+  useEffect(() => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
+      if (event === "PASSWORD_RECOVERY") {
+        setIsRecoveryMode(true);
+      }
+      setCheckingSession(false);
+    });
+
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) {
+        setIsRecoveryMode(true);
+      }
+      setCheckingSession(false);
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, []);
+
+  if (checkingSession) {
+    return (
+      <div className="min-h-[70vh] flex items-center justify-center">
+        <p className="text-muted-foreground">Verifying reset link...</p>
+      </div>
+    );
+  }
+
+  if (!isRecoveryMode && !success) {
     return (
       <div>
         <section className="section-brand-light py-16 min-h-[70vh]">
@@ -48,16 +76,12 @@ export default function ResetPassword() {
 
     setLoading(true);
     try {
-      const res = await fetch("/api/qb/auth/reset-password", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token, newPassword }),
-      });
-      const data = await res.json();
-      if (!res.ok) {
-        setError(data.error || "Failed to reset password");
+      const { error: updateError } = await supabase.auth.updateUser({ password: newPassword });
+      if (updateError) {
+        setError(updateError.message);
       } else {
         setSuccess(true);
+        setTimeout(() => navigate("/login"), 3000);
       }
     } catch {
       setError("Network error. Please try again.");

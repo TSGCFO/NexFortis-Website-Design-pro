@@ -6,5 +6,7 @@ Disallow: /register
 Disallow: /forgot-password
 Disallow: /reset-password
 Disallow: /order
+Disallow: /auth/callback
+Disallow: /admin
 
 Sitemap: https://qb.nexfortis.com/sitemap.xml

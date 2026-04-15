@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useParams, useSearch } from "wouter";
-import { getAuthToken } from "@/lib/auth";
+import { useAuth } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft, Package, Clock, CheckCircle, Download, FileText, Shield } from "lucide-react";
@@ -40,6 +40,7 @@ export default function OrderDetail() {
   const searchString = useSearch();
   const params = new URLSearchParams(searchString);
   const uploadTokenParam = params.get("uploadToken");
+  const { getAccessToken } = useAuth();
 
   const [order, setOrder] = useState<Order | null>(null);
   const [files, setFiles] = useState<OrderFile[]>([]);
@@ -49,13 +50,12 @@ export default function OrderDetail() {
   useEffect(() => {
     async function fetchOrder() {
       try {
-        const token = getAuthToken();
+        const token = await getAccessToken();
         let res: Response;
 
         if (token) {
           res = await fetch(`/api/qb/orders/${id}`, {
             headers: { Authorization: `Bearer ${token}` },
-            credentials: "include",
           });
         } else if (uploadTokenParam) {
           res = await fetch(`/api/qb/orders/lookup?orderId=${id}&uploadToken=${encodeURIComponent(uploadTokenParam)}`);
@@ -79,7 +79,7 @@ export default function OrderDetail() {
       setLoading(false);
     }
     fetchOrder();
-  }, [id, uploadTokenParam]);
+  }, [id, uploadTokenParam, getAccessToken]);
 
   if (loading) {
     return <div className="min-h-screen flex items-center justify-center"><div className="animate-pulse text-muted-foreground">Loading order...</div></div>;
@@ -192,13 +192,25 @@ export default function OrderDetail() {
                             size="sm"
                             variant="outline"
                             className="gap-1"
-                            onClick={() => {
-                              const token = getAuthToken();
+                            onClick={async () => {
+                              const token = await getAccessToken();
                               let url = `/api/qb/orders/${order.id}/files/${f.id}/download`;
-                              if (!token && uploadTokenParam) {
+                              if (token) {
+                                const link = document.createElement("a");
+                                link.href = url;
+                                const response = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
+                                if (response.ok) {
+                                  const blob = await response.blob();
+                                  const blobUrl = URL.createObjectURL(blob);
+                                  link.href = blobUrl;
+                                  link.download = f.fileName;
+                                  link.click();
+                                  URL.revokeObjectURL(blobUrl);
+                                }
+                              } else if (uploadTokenParam) {
                                 url += `?uploadToken=${encodeURIComponent(uploadTokenParam)}`;
+                                window.open(url, "_blank");
                               }
-                              window.open(url, "_blank");
                             }}
                           >
                             <Download className="w-3 h-3" /> Download

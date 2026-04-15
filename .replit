@@ -24,18 +24,6 @@ author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "workflow.run"
-args = "Start application"
-
-[[workflows.workflow.tasks]]
-task = "workflow.run"
-args = "API Server"
-
-[[workflows.workflow.tasks]]
-task = "workflow.run"
-args = "QB Portal"
-
-[[workflows.workflow.tasks]]
-task = "workflow.run"
 args = "typecheck"
 
 [[workflows.workflow.tasks]]
@@ -57,42 +45,6 @@ args = "api-health"
 [[workflows.workflow.tasks]]
 task = "workflow.run"
 args = "task-compliance"
-
-[[workflows.workflow]]
-name = "Start application"
-author = "agent"
-
-[workflows.workflow.metadata]
-outputType = "webview"
-
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "PORT=19446 BASE_PATH=/ pnpm --filter @workspace/nexfortis run dev"
-waitForPort = 19446
-
-[[workflows.workflow]]
-name = "API Server"
-author = "agent"
-
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "PORT=8080 pnpm --filter @workspace/api-server run dev"
-waitForPort = 8080
-
-[workflows.workflow.metadata]
-outputType = "console"
-
-[[workflows.workflow]]
-name = "QB Portal"
-author = "agent"
-
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "PORT=20914 BASE_PATH=/qb-portal/ pnpm --filter @workspace/qb-portal run dev"
-waitForPort = 20914
-
-[workflows.workflow.metadata]
-outputType = "webview"
 
 [[workflows.workflow]]
 name = "typecheck"
