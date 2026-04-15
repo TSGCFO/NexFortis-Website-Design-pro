@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import { motion } from "framer-motion";
 import { Shield, Upload, Clock, CheckCircle, ArrowRight, Lock, DollarSign, MapPin, Zap, Award } from "lucide-react";
-import { formatPriceCAD, isPromoActive, loadProducts, type ProductCatalog } from "@/lib/products";
+import { formatPriceCAD, getActivePrice, getProductById, isPromoActive, loadProducts, type ProductCatalog } from "@/lib/products";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { SEO } from "@/components/seo";
@@ -33,10 +33,9 @@ const steps = [
   { num: "3", icon: Zap, title: "Receive Your Converted File", desc: "Get your converted Premier/Pro file delivered in under 1 hour with a validation report." },
 ];
 
-const comparisonData = [
+const staticComparisonData = [
   { feature: "Price", nexfortis: `From ${formatPriceCAD(7500)}`, bigred: "$249 USD (~$344 CAD)", etech: "$299 USD (~$413 CAD)" },
   { feature: "Turnaround", nexfortis: "Under 1 hour", bigred: "Next business day", etech: "1 business day" },
-  { feature: "Same-day rush", nexfortis: `Included option (+${formatPriceCAD(2500)})`, bigred: "Not stated", etech: "$450 USD (~$621 CAD)" },
   { feature: "Canadian-first", nexfortis: "Yes", bigred: "No", etech: "Implied" },
   { feature: "GST/HST preserved", nexfortis: "Yes", bigred: "Unknown", etech: "Yes" },
   { feature: "Total services", nexfortis: "20", bigred: "28", etech: "7" },
@@ -100,6 +99,15 @@ export default function Home() {
   useEffect(() => {
     loadProducts().then(setCatalog);
   }, []);
+
+  const rushProduct = catalog ? getProductById(catalog, 5) : undefined;
+  const rushPriceCents = rushProduct ? getActivePrice(rushProduct) : 4900;
+  const comparisonData = [
+    staticComparisonData[0],
+    staticComparisonData[1],
+    { feature: "Same-day rush", nexfortis: `Included option (+${formatPriceCAD(rushPriceCents)})`, bigred: "Not stated", etech: "$450 USD (~$621 CAD)" },
+    ...staticComparisonData.slice(2),
+  ];
 
   return (
     <div>
