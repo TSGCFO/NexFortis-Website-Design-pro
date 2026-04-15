@@ -45,7 +45,7 @@ export default function Catalog() {
           <p className="text-white/70 text-lg max-w-2xl mx-auto">
             20 QuickBooks services across 5 categories for Canadian businesses. Browse our complete catalog below.
           </p>
-          {isPromoActive() && catalog.promo_label && (
+          {catalog.promo_active && catalog.promo_label && (
             <div className="mt-4 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-gold/20 text-rose-gold text-sm font-semibold">
               {catalog.promo_label}
             </div>
