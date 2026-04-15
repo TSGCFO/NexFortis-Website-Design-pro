@@ -42,13 +42,16 @@ function getSteps(catalog: ProductCatalog | null) {
   ];
 }
 
-const staticComparisonData = [
-  { feature: "Price", nexfortis: `From ${formatPriceCAD(7500)}`, bigred: "$249 USD (~$344 CAD)", etech: "$299 USD (~$413 CAD)" },
-  { feature: "Turnaround", nexfortis: "Under 1 hour", bigred: "Next business day", etech: "1 business day" },
-  { feature: "Canadian-first", nexfortis: "Yes", bigred: "No", etech: "Implied" },
-  { feature: "GST/HST preserved", nexfortis: "Yes", bigred: "Unknown", etech: "Yes" },
-  { feature: "Total services", nexfortis: "20", bigred: "28", etech: "7" },
-];
+function getComparisonData(lowestPriceFormatted: string, rushPriceFormatted: string) {
+  return [
+    { feature: "Price", nexfortis: `From ${lowestPriceFormatted}`, bigred: "$249 USD (~$344 CAD)", etech: "$299 USD (~$413 CAD)" },
+    { feature: "Turnaround", nexfortis: "Under 1 hour", bigred: "Next business day", etech: "1 business day" },
+    { feature: "Same-day rush", nexfortis: `Included option (+${rushPriceFormatted})`, bigred: "Not stated", etech: "$450 USD (~$621 CAD)" },
+    { feature: "Canadian-first", nexfortis: "Yes", bigred: "No", etech: "Implied" },
+    { feature: "GST/HST preserved", nexfortis: "Yes", bigred: "Unknown", etech: "Yes" },
+    { feature: "Total services", nexfortis: "20", bigred: "28", etech: "7" },
+  ];
+}
 
 const featuredServices = [
   {
@@ -110,14 +113,17 @@ export default function Home() {
     loadProducts().then(setCatalog);
   }, []);
 
+  const nonAddonPrices = catalog
+    ? catalog.services.filter((s) => !s.is_addon).map((s) => getActivePrice(s))
+    : [];
+  const lowestPrice = nonAddonPrices.length > 0
+    ? Math.min(...nonAddonPrices)
+    : promo ? 7500 : 14900;
+  const lowestPriceFormatted = formatPriceCAD(lowestPrice);
+
   const rushProduct = catalog ? getProductById(catalog, 5) : undefined;
   const rushPriceCents = rushProduct ? getActivePrice(rushProduct) : 4900;
-  const comparisonData = [
-    staticComparisonData[0],
-    staticComparisonData[1],
-    { feature: "Same-day rush", nexfortis: `Included option (+${formatPriceCAD(rushPriceCents)})`, bigred: "Not stated", etech: "$450 USD (~$621 CAD)" },
-    ...staticComparisonData.slice(2),
-  ];
+  const comparisonData = getComparisonData(lowestPriceFormatted, formatPriceCAD(rushPriceCents));
 
   return (
     <div>
@@ -153,9 +159,10 @@ export default function Home() {
             className="text-xl text-white/80 mb-4 max-w-2xl mx-auto"
           >
             {promo ? (
-              <>Starting at <span className="text-azure font-bold">{formatPriceCAD(7500)}</span> with our launch special <span className="text-white/50 text-base line-through">(reg. $149.00)</span></>
+              <>Starting at <span className="text-azure font-bold">{lowestPriceFormatted}</span> with our launch special <span className="text-white/50 text-base line-through">(reg. $149.00)</span></>
+
             ) : (
-              <>Starting at <span className="text-azure font-bold">{formatPriceCAD(14900)}</span></>
+              <>Starting at <span className="text-azure font-bold">{lowestPriceFormatted}</span></>
             )}
           </motion.p>
           {promo && catalog?.promo_label && (
