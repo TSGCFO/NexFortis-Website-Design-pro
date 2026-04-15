@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import { motion } from "framer-motion";
 import { Shield, Upload, Clock, CheckCircle, ArrowRight, Lock, DollarSign, MapPin, Zap, Award } from "lucide-react";
-import { formatPriceCAD, getActivePrice, getProductById, getProductBySlug, isPromoActive, loadProducts, type ProductCatalog } from "@/lib/products";
+import { formatPriceCAD, getActivePrice, getProductById, getProductBySlug, loadProducts, type ProductCatalog } from "@/lib/products";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { SEO } from "@/components/seo";
@@ -106,7 +106,7 @@ const featuredServices = [
 
 export default function Home() {
   const [catalog, setCatalog] = useState<ProductCatalog | null>(null);
-  const promo = isPromoActive();
+  const promo = catalog?.promo_active ?? false;
   const steps = getSteps(catalog);
 
   useEffect(() => {
