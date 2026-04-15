@@ -276,7 +276,7 @@ export default function ServiceDetail() {
                         <div className="flex items-center justify-between">
                           <div>
                             {rp.billing_type === "subscription" ? (
-                              isPromoActive() ? (
+                              promo ? (
                                 <>
                                   <span className="font-bold text-accent text-sm">{formatPriceCAD(getActivePrice(rp))}/mo</span>
                                   <span className="text-xs text-muted-foreground line-through ml-2">{formatPriceCAD(rp.base_price_cad)}/mo</span>
@@ -284,7 +284,7 @@ export default function ServiceDetail() {
                               ) : (
                                 <span className="font-bold text-accent text-sm">{formatPriceCAD(getActivePrice(rp))}/mo</span>
                               )
-                            ) : isPromoActive() ? (
+                            ) : promo ? (
                               <>
                                 <span className="font-bold text-accent text-sm">{formatPriceCAD(getActivePrice(rp))}</span>
                                 <span className="text-xs text-muted-foreground line-through ml-2">{formatPriceCAD(rp.base_price_cad)}</span>
