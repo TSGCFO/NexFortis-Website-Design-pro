@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import { motion } from "framer-motion";
 import { Shield, Upload, Clock, CheckCircle, ArrowRight, Lock, DollarSign, MapPin, Zap, Award } from "lucide-react";
-import { formatPriceCAD, getActivePrice, getProductById, getProductBySlug, loadProducts, type ProductCatalog } from "@/lib/products";
+import { formatPriceCAD, getActivePrice, getProductBySlug, loadProducts, type ProductCatalog } from "@/lib/products";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { SEO } from "@/components/seo";
@@ -124,7 +124,7 @@ export default function Home() {
     : promo ? 7500 : 14900;
   const lowestPriceFormatted = formatPriceCAD(lowestPrice);
 
-  const rushProduct = catalog ? getProductById(catalog, 5) : undefined;
+  const rushProduct = catalog ? getProductBySlug(catalog, "rush-delivery") : undefined;
   const rushPriceCents = rushProduct ? getActivePrice(rushProduct) : 4900;
   const comparisonData = getComparisonData(lowestPriceFormatted, formatPriceCAD(rushPriceCents));
 
