@@ -128,7 +128,7 @@ export default function Home() {
   }, []);
 
   const flagshipProduct = catalog ? getProductBySlug(catalog, "enterprise-to-premier-standard") : undefined;
-  const regPriceFormatted = flagshipProduct ? formatPriceCAD(flagshipProduct.base_price_cad) : "$149.00 CAD";
+  const regPriceFormatted = flagshipProduct ? formatPriceCAD(flagshipProduct.base_price_cad) : formatPriceCAD(14900);
 
   const nonAddonPrices = catalog
     ? catalog.services.filter((s) => !s.is_addon).map((s) => getActivePrice(s))
