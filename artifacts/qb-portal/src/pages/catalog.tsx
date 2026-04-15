@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "wouter";
-import { loadProducts, type Product, type ProductCatalog, formatPrice, getActivePrice, isPromoActive } from "@/lib/products";
+import { loadProducts, type Product, type ProductCatalog, formatPriceCAD, getActivePrice, isPromoActive } from "@/lib/products";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Search, Filter } from "lucide-react";
@@ -151,23 +151,23 @@ function ProductCard({ product }: { product: Product }) {
             {product.billing_type === "subscription" ? (
               promo ? (
                 <>
-                  <span className="font-bold text-accent">{formatPrice(activePrice)}/mo</span>
-                  <span className="text-xs text-muted-foreground line-through ml-2">{formatPrice(product.base_price_cad)}/mo</span>
+                  <span className="font-bold text-accent">{formatPriceCAD(activePrice)}/mo</span>
+                  <span className="text-xs text-muted-foreground line-through ml-2">{formatPriceCAD(product.base_price_cad)}/mo</span>
                 </>
               ) : (
-                <span className="font-bold text-accent">{formatPrice(activePrice)}/mo</span>
+                <span className="font-bold text-accent">{formatPriceCAD(activePrice)}/mo</span>
               )
             ) : promo ? (
               <>
-                <span className="font-bold text-accent">{formatPrice(activePrice)}</span>
-                <span className="text-xs text-muted-foreground line-through ml-2">{formatPrice(product.base_price_cad)}</span>
+                <span className="font-bold text-accent">{formatPriceCAD(activePrice)}</span>
+                <span className="text-xs text-muted-foreground line-through ml-2">{formatPriceCAD(product.base_price_cad)}</span>
               </>
             ) : (
-              <span className="font-bold text-accent">{formatPrice(activePrice)}</span>
+              <span className="font-bold text-accent">{formatPriceCAD(activePrice)}</span>
             )}
             {product.pack_size && (
               <div className="text-xs text-muted-foreground mt-1">
-                {`${formatPrice(Math.round(getActivePrice(product) / product.pack_size))}/conversion`}
+                {`${formatPriceCAD(Math.round(getActivePrice(product) / product.pack_size))}/conversion`}
               </div>
             )}
             {product.turnaround && <span className="text-xs text-muted-foreground ml-2">{product.turnaround}</span>}
