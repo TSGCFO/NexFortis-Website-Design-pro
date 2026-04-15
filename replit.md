@@ -159,6 +159,19 @@ Work is done through a sequence of 15 prompts executed via **Replit background t
 7. Not modify any files in `docs/`
 8. Not break existing functionality
 
+# Validation Checks
+
+Six named validation commands are registered and can be run on demand individually or all at once via the validation system. Scripts live in `scripts/validations/`.
+
+| Command | Script | What It Checks |
+|---------|--------|----------------|
+| `typecheck` | `typecheck.sh` | Zero TypeScript errors in qb-portal |
+| `product-integrity` | `product-integrity.mjs` | products.json structure: 20 products, required fields, valid prices, known categories, special chars (→, —) |
+| `route-check` | `route-check.mjs` | All internal link hrefs resolve to defined routes in App.tsx; all product/category slugs resolvable |
+| `price-consistency` | `price-consistency.mjs` | Hardcoded price strings in .tsx files match products.json values; flags stale/mismatched prices |
+| `api-health` | `api-health.sh` | API server /api/healthz returns 200 with valid JSON |
+| `task-compliance` | `task-compliance.mjs` | Post-merge regression detector: checks changed files against protected dirs, runs typecheck + product-integrity as sub-checks |
+
 # External Dependencies
 
 - **Database**: PostgreSQL
