@@ -274,7 +274,25 @@ export default function ServiceDetail() {
                         <h3 className="font-semibold text-sm font-display text-primary mb-1">{rp.name}</h3>
                         <p className="text-xs text-muted-foreground mb-2 line-clamp-2">{rp.description}</p>
                         <div className="flex items-center justify-between">
-                          <span className="font-bold text-accent text-sm">{formatPriceCAD(getActivePrice(rp))}</span>
+                          <div>
+                            {rp.billing_type === "subscription" ? (
+                              isPromoActive() ? (
+                                <>
+                                  <span className="font-bold text-accent text-sm">{formatPriceCAD(getActivePrice(rp))}/mo</span>
+                                  <span className="text-xs text-muted-foreground line-through ml-2">{formatPriceCAD(rp.base_price_cad)}/mo</span>
+                                </>
+                              ) : (
+                                <span className="font-bold text-accent text-sm">{formatPriceCAD(getActivePrice(rp))}/mo</span>
+                              )
+                            ) : isPromoActive() ? (
+                              <>
+                                <span className="font-bold text-accent text-sm">{formatPriceCAD(getActivePrice(rp))}</span>
+                                <span className="text-xs text-muted-foreground line-through ml-2">{formatPriceCAD(rp.base_price_cad)}</span>
+                              </>
+                            ) : (
+                              <span className="font-bold text-accent text-sm">{formatPriceCAD(getActivePrice(rp))}</span>
+                            )}
+                          </div>
                           <span className="px-2 py-0.5 rounded-full text-xs bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">
                             Available
                           </span>
