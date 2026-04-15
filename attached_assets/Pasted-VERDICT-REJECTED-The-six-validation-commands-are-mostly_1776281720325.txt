@@ -1,0 +1,43 @@
+VERDICT: REJECTED
+The six validation commands are mostly wired correctly and runnable, but the **task-compliance** check does not implement the core requirement and is therefore not sufficient for approval.
+
+Critical findings:
+- **What works:**
+ VERDICT: REJECTED
+ - All six scripts were added under `scripts/validations/` and are registered as named validation workflows in `.replit` (`isValidation = true`).
+  - `typecheck`, `product-integrity`, `route-check`, and `price-consistency` execute and produce clear outpuThe six validation commands are mostly wired correctly and runnable, but the **task-compliance** check does not implement the core requirement and is therefore not sufficient for approval.
+t; `product-integrity` and `route-check` correctly fail on e
+rrors and pass currently.
+  - `api-health` is impCritical findings:
+lemented and checks `/api/healthz` response code plus a- **What works:**
+ basic payload field.
+- **Blocking gap (core requirement miss  - All six scripts were added under `scripts/validations/` and are registered as named validation workflows in `.replit` (`isValidation = true`).
+ed):**
+  - `task-compliance.mjs` does **not** compare the  - `typecheck`, `product-integrity`, `route-check`, and `price-consistency` execute and produce clear output; `product-integrity` and `route-check` correctly fail on errors and pass currently.
+ latest merge diff against task scope/description as requeste  - `api-health` is implemented and checks `/api/healthz` response code plus a basic payload field.
+d. It only:
+    1) reads `HEAD~1..HEAD` (- **Blocking gap (core requirement missed):**
+not specifically the most recent merge com  - `task-compliance.mjs` does **not** compare the latest merge diff against task scope/description as requested. It only:
+mit), and
+    2) warns only for hardcoded    1) reads `HEAD~1..HEAD` (not specifically the most recent merge commit), and
+ `PROTECTED_DIRS`.
+  - `EXPECTED_SCOPE_DIRS` is declared but unused, confirming scope-validation logic is incomplete.
+  - This means the check cannot reliably flag out-of-scope file changes beyond a narrow protected-dir list, which is the main purpose of this sixth validator.
+
+Security:
+- None observed (no serious auth/injection/secret handling regressions in this diff).
+
+Next actions:
+1. Implement real scope enforcement in `task-compliance.mjs`: derive changed files from the latest merge commit (or robust fallback) and compare against an explicit allowed-scope list for the task; fail on out-of-scope changes.
+2. Use `EXPECTED_SCOPE_DIRS` (or equivalent) in enforcement logic, not just protected-directory warnings.
+3. Optionally harden `api-health` JSON validation (actual parse + required schema fields) to match “valid JSON” requirement precisely.    2) warns only for hardcoded `PROTECTED_DIRS`.
+  - `EXPECTED_SCOPE_DIRS` is declared but unused, confirming scope-validation logic is incomplete.
+  - This means the check cannot reliably flag out-of-scope file changes beyond a narrow protected-dir list, which is the main purpose of this sixth validator.
+
+Security:
+- None observed (no serious auth/injection/secret handling regressions in this diff).
+
+Next actions:
+1. Implement real scope enforcement in `task-compliance.mjs`: derive changed files from the latest merge commit (or robust fallback) and compare against an explicit allowed-scope list for the task; fail on out-of-scope changes.
+2. Use `EXPECTED_SCOPE_DIRS` (or equivalent) in enforcement logic, not just protected-directory warnings.
+3. Optionally harden `api-health` JSON validation (actual parse + required schema fields) to match “valid JSON” requirement precisely.
