@@ -271,13 +271,21 @@ router.post("/webhook/stripe", async (req: Request, res: Response) => {
   const sig = req.headers["stripe-signature"];
   const endpointSecret = process.env["STRIPE_WEBHOOK_SECRET"];
 
-  if (!sig || !endpointSecret) {
-    res.status(400).json({ error: "Missing signature or webhook secret" });
+  if (!endpointSecret) {
+    if (process.env.NODE_ENV === "production") {
+      res.status(400).json({ error: "Missing webhook secret" });
+      return;
+    }
+    console.warn("STRIPE_WEBHOOK_SECRET not set — skipping signature verification in development");
+  } else if (!sig) {
+    res.status(400).json({ error: "Missing signature" });
     return;
   }
 
   try {
-    const event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
+    const event = endpointSecret && sig
+      ? stripe.webhooks.constructEvent(req.body, sig, endpointSecret)
+      : JSON.parse(typeof req.body === "string" ? req.body : JSON.stringify(req.body));
 
     if (event.type === "checkout.session.completed") {
       const session = event.data.object;
