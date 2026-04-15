@@ -1,13 +1,15 @@
 # Launcher: Prompt 03B — MFA Enrollment + AAL2 Enforcement
 
-Before doing anything else:
-1. Read `replit.md` — project context and conventions.
-2. Read `docs/prd/qb-portal/feature-security-auth-storage.md` — sections 8.2–8.3.
-3. Read `docs/prompts/prompt-03b-mfa-enrollment-aal2.md` — full instructions.
-4. Execute all steps in order (Steps 0–6).
+Your task is to add TOTP-based MFA enrollment and AAL2 enforcement for the admin panel. Your PRIMARY INSTRUCTIONS are in `docs/prompts/prompt-03b-mfa-enrollment-aal2.md` — that file tells you exactly what to build, step by step (Steps 0–6). Follow it precisely.
 
-**Do not modify any files in `docs/`.**
+PREREQUISITE: Prompt 03 must be complete — Supabase client, auth context, and `requireOperator` middleware must already exist. If they don't, stop and report.
 
-PREREQUISITE: Prompt 03 must be complete — Supabase client, auth context, and `requireOperator` must exist.
+Before starting, read these files for context (do NOT modify them):
+- `replit.md` — project conventions and architecture.
+- `docs/prd/qb-portal/feature-security-auth-storage.md` — sections 8.2–8.3 (MFA requirements).
 
-6 steps: (1) MFA enrollment page: QR code display, manual secret, `challengeAndVerify` flow, NexFortis branding. (2) MFA challenge page: assurance level check on mount, auto-focused input, `challenge` + `verify` flow, redirect to `/admin` on AAL2. (3) Admin layout guard: verify AAL2 on every render, redirect to enrollment or challenge as needed. (4) Backend `requireOperator`: return 403 when JWT `aal` is not `aal2` — removes the Prompt 03 warning-only behavior. (5) Register both routes in App.tsx and robots.txt. (6) Verify: `pnpm typecheck`, test full enrollment and challenge flows, confirm customers unaffected, confirm AAL1 token returns 403 on admin routes.
+Then open `docs/prompts/prompt-03b-mfa-enrollment-aal2.md` and execute Steps 0 through 6 in order.
+
+6 steps: MFA enrollment page (QR + manual secret + verify), MFA challenge page (AAL check + auto-focused TOTP input), admin layout guard (AAL2 on every render), backend requireOperator upgrade (403 when not AAL2), route registration + robots.txt, full verification.
+
+Do not modify any files in `docs/`.

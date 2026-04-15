@@ -1,14 +1,14 @@
 # Launcher: Prompt 03 — Supabase Auth + Web Hardening
 
-Before doing anything else:
-1. Read `replit.md` — project context and conventions.
-2. Read `docs/prd/qb-portal/feature-security-auth-storage.md` — security PRD.
-3. Read `docs/specs/2026-04-14-supabase-auth-security-redesign.md` — design spec.
-4. Read `docs/prompts/prompt-03-supabase-auth-web-hardening.md` — full instructions.
-5. Execute every step in order (Steps 1–14).
+Your task is to implement Supabase Auth migration and web hardening for the QB Portal. Your PRIMARY INSTRUCTIONS are in `docs/prompts/prompt-03-supabase-auth-web-hardening.md` — that file tells you exactly what to build, step by step (Steps 1–14). Follow it precisely.
 
-**Do not modify any files in `docs/`.**
+Before starting implementation, read these files for context (do NOT modify them):
+- `replit.md` — project conventions and architecture.
+- `docs/prd/qb-portal/feature-security-auth-storage.md` — the security PRD (requirements and acceptance criteria).
+- `docs/specs/2026-04-14-supabase-auth-security-redesign.md` — the technical design spec (architecture decisions).
 
-14 steps: install deps, create Supabase clients, migrate DB schema (UUID PK, drop password_hash, RLS), rewrite backend auth (Supabase JWT), rewrite frontend auth (Supabase login/register/social/reset), add Helmet headers, CORS lockdown, rate limiting, Stripe webhook verification, input sanitization, update operator seed, env cleanup, robots.txt, full verification.
+Then open `docs/prompts/prompt-03-supabase-auth-web-hardening.md` and execute Steps 1 through 14 in order.
 
-CRITICAL: Supabase secrets must already be in Replit: SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY, VITE_SUPABASE_URL, VITE_SUPABASE_ANON_KEY. Stop if missing.
+CRITICAL: Verify these Replit secrets exist before writing any code: SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY, VITE_SUPABASE_URL, VITE_SUPABASE_ANON_KEY. If any are missing, stop immediately and report which ones.
+
+Do not modify any files in `docs/`.
