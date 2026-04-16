@@ -1,4 +1,4 @@
-import { Router, type Request, type Response } from "express";
+import { Router, type Request, type Response, type NextFunction } from "express";
 import { db } from "@workspace/db";
 import { qbOrders, qbOrderFiles, qbUsers, qbSupportTickets } from "@workspace/db/schema";
 import { eq, and, desc, asc, sql, ilike, or, inArray } from "drizzle-orm";
@@ -99,6 +99,10 @@ router.get("/orders", async (req: Request, res: Response) => {
 
     const conditions = [];
     if (status) {
+      if (!VALID_ORDER_STATUSES.includes(status)) {
+        res.status(400).json({ error: `Invalid status "${status}". Must be one of: ${VALID_ORDER_STATUSES.join(", ")}` });
+        return;
+      }
       conditions.push(eq(qbOrders.status, status));
     }
     if (search) {
@@ -269,12 +273,11 @@ router.get("/customers", async (req: Request, res: Response) => {
 
     const conditions = [eq(qbUsers.role, "customer")];
     if (search) {
-      conditions.push(
-        or(
-          ilike(qbUsers.name, `%${search}%`),
-          ilike(qbUsers.email, `%${search}%`),
-        )!
+      const searchCondition = or(
+        ilike(qbUsers.name, `%${search}%`),
+        ilike(qbUsers.email, `%${search}%`),
       );
+      if (searchCondition) conditions.push(searchCondition);
     }
     const whereClause = and(...conditions);
 
@@ -369,26 +372,11 @@ router.get("/orders/:orderId/files/:fileId/download", async (req: Request, res: 
   }
 });
 
-router.post("/orders/:orderId/files/upload", (req: Request, res: Response) => {
-  const orderId = parseInt(req.params.orderId as string);
-  if (isNaN(orderId)) {
-    res.status(400).json({ error: "Invalid order ID" });
-    return;
-  }
-
-  const singleUpload = adminUpload.single("file");
-  singleUpload(req, res, async (err) => {
-    if (err) {
-      if (err instanceof multer.MulterError && err.code === "LIMIT_FILE_SIZE") {
-        res.status(413).json({ error: "File too large. Maximum size is 500MB." });
-      } else {
-        res.status(400).json({ error: err.message || "Upload failed" });
-      }
-      return;
-    }
-
-    if (!req.file) {
-      res.status(400).json({ error: "No file provided" });
+router.post("/orders/:orderId/files/upload",
+  async (req: Request, res: Response, next: NextFunction) => {
+    const orderId = parseInt(req.params.orderId as string);
+    if (isNaN(orderId)) {
+      res.status(400).json({ error: "Invalid order ID" });
       return;
     }
 
@@ -402,49 +390,81 @@ router.post("/orders/:orderId/files/upload", (req: Request, res: Response) => {
         return;
       }
 
-      if (!supabaseAdmin) {
-        res.status(503).json({ error: "Storage unavailable" });
-        return;
-      }
-
-      if (!(await isStorageAvailable())) {
-        res.status(503).json({ error: "Storage service is not configured." });
-        return;
-      }
-
-      const ownerId = order.userId || "anonymous";
-      const storagePath = `${ownerId}/${orderId}/${Date.now()}-${req.file.originalname}`;
-      const { error: uploadError } = await supabaseAdmin.storage
-        .from("order-files")
-        .upload(storagePath, req.file.buffer, {
-          contentType: req.file.mimetype,
-          upsert: false,
-        });
-
-      if (uploadError) {
-        console.error("[Storage] Admin upload failed:", uploadError);
-        res.status(500).json({ error: `Storage upload failed: ${uploadError.message}` });
-        return;
-      }
-
-      const ext = path.extname(req.file.originalname).toLowerCase();
-      const fileType = ext.replace(".", "") || "unknown";
-      const [fileRecord] = await db.insert(qbOrderFiles).values({
-        orderId,
-        fileType,
-        fileName: req.file.originalname,
-        storagePath,
-        fileSizeBytes: req.file.size,
-      }).returning();
-
-      console.log(`[File Upload] Admin: Order ${orderId}: ${req.file.originalname} (${req.file.size} bytes) -> ${storagePath}`);
-
-      res.status(201).json({ file: fileRecord });
-    } catch (dbErr) {
-      console.error("Admin file upload error:", dbErr);
-      res.status(500).json({ error: "Failed to record file upload" });
+      (req as any)._validatedOrder = order;
+      next();
+    } catch (err) {
+      console.error("Admin file upload order check error:", err);
+      res.status(500).json({ error: "Failed to validate order" });
     }
-  });
-});
+  },
+  (req: Request, res: Response) => {
+    const singleUpload = adminUpload.single("file");
+    singleUpload(req, res, async (err) => {
+      if (err) {
+        if (err instanceof multer.MulterError && err.code === "LIMIT_FILE_SIZE") {
+          res.status(413).json({ error: "File too large. Maximum size is 500MB." });
+        } else {
+          res.status(400).json({ error: err.message || "Upload failed" });
+        }
+        return;
+      }
+
+      if (!req.file) {
+        res.status(400).json({ error: "No file provided" });
+        return;
+      }
+
+      try {
+        const order = (req as any)._validatedOrder;
+        const orderId = order.id as number;
+
+        if (!supabaseAdmin) {
+          res.status(503).json({ error: "Storage unavailable" });
+          return;
+        }
+
+        if (!(await isStorageAvailable())) {
+          res.status(503).json({ error: "Storage service is not configured." });
+          return;
+        }
+
+        const SAFE_EXT_ALLOWLIST = ["qbm", "qbw", "qbb", "csv", "xlsx", "pdf", "zip", "html", "txt"];
+        const rawExt = (req.file.originalname.split(".").pop() || "").toLowerCase();
+        const safeExt = SAFE_EXT_ALLOWLIST.includes(rawExt) ? rawExt : "bin";
+        const ownerId = order.userId || "anonymous";
+        const storagePath = `${ownerId}/${orderId}/${Date.now()}-${crypto.randomUUID()}.${safeExt}`;
+        const { error: uploadError } = await supabaseAdmin.storage
+          .from("order-files")
+          .upload(storagePath, req.file.buffer, {
+            contentType: req.file.mimetype,
+            upsert: false,
+          });
+
+        if (uploadError) {
+          console.error("[Storage] Admin upload failed:", uploadError);
+          res.status(500).json({ error: `Storage upload failed: ${uploadError.message}` });
+          return;
+        }
+
+        const fileType = safeExt === "bin" ? "unknown" : safeExt;
+        const safeFileName = req.file.originalname.replace(/[/\\]/g, "_");
+        const [fileRecord] = await db.insert(qbOrderFiles).values({
+          orderId,
+          fileType,
+          fileName: safeFileName,
+          storagePath,
+          fileSizeBytes: req.file.size,
+        }).returning();
+
+        console.log(`[File Upload] Admin: Order ${orderId}: ${safeFileName} (${req.file.size} bytes) -> ${storagePath}`);
+
+        res.status(201).json({ file: fileRecord });
+      } catch (dbErr) {
+        console.error("Admin file upload error:", dbErr);
+        res.status(500).json({ error: "Failed to record file upload" });
+      }
+    });
+  },
+);
 
 export default router;
