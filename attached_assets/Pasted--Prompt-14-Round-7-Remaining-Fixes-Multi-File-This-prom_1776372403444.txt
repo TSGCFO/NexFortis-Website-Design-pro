@@ -1,0 +1,115 @@
+# Prompt 14: Round 7 Remaining Fixes (Multi-File)
+
+This prompt addresses three issues from the Round 7 code review that require multi-file coordination.
+
+## Step 0: Setup
+
+Read these files before making any changes:
+1. `replit.md` — project overview, architecture, conventions
+2. `docs/prompts/prompt-14-round7-replit-fixes.md` — this file
+3. `artifacts/api-server/src/routes/qb-admin-promo.ts` — promo admin routes (all 3 fixes are here + 1 frontend file)
+
+**Do NOT modify any files in `docs/`.**
+
+---
+
+## Fix 1: P10-01 — Restructure Promo List Response Shape
+
+The promo code list endpoint returns a flat response shape that doesn't match the API spec. Both the backend and frontend need to be updated together.
+
+### Backend change
+
+**File:** `artifacts/api-server/src/routes/qb-admin-promo.ts`
+
+Find the GET endpoint that lists promo codes (the one with pagination). It currently returns something like:
+
+```json
+{ "promoCodes": [...], "total": 50, "page": 1, "limit": 20 }
+```
+
+Change the response shape to:
+
+```json
+{ "codes": [...], "pagination": { "page": 1, "limit": 25, "totalCount": 50, "totalPages": 2 } }
+```
+
+Specifically:
+- Rename the array key from `promoCodes` to `codes`
+- Nest `page`, `limit`, and `total` inside a `pagination` object
+- Rename `total` to `totalCount`
+- Add a computed `totalPages` field: `Math.ceil(totalCount / limit)`
+
+### Frontend change
+
+**File:** `artifacts/qb-portal/src/pages/admin/promo-codes.tsx`
+
+Update the frontend to match the new response shape:
+- Where it reads `data.promoCodes`, change to `data.codes`
+- Where it reads `data.total`, change to `data.pagination.totalCount`
+- Where it reads `data.page`, change to `data.pagination.page`
+- Where it reads `data.limit`, change to `data.pagination.limit`
+- If there's a `totalPages` computation on the frontend, replace it with `data.pagination.totalPages`
+
+Make sure the TypeScript types for the response are updated too if there's an interface defined.
+
+---
+
+## Fix 2: P10-09 — Reorder Stripe/DB Operations for Atomicity
+
+**File:** `artifacts/api-server/src/routes/qb-admin-promo.ts`
+
+In the POST endpoint that creates a new promo code, the current order is:
+1. Create Stripe coupon + promotion code
+2. Insert into `qb_promo_codes` table
+
+If the DB insert fails after Stripe creation, we get orphaned Stripe resources.
+
+Change the order to:
+1. Insert into `qb_promo_codes` table first (without Stripe IDs)
+2. Create Stripe coupon + promotion code
+3. Update the `qb_promo_codes` row with the Stripe IDs (`stripeCouponId`, `stripePromotionCodeId`)
+
+If the Stripe creation fails after the DB insert, log a warning but keep the promo code in the database with null Stripe IDs. The promo code still works for internal validation — it just won't have a Stripe counterpart until a retry or manual fix.
+
+If the Stripe update (step 3) fails, log a warning but don't roll back the DB insert or the Stripe creation. The Stripe IDs can be backfilled later.
+
+This ensures:
+- No orphaned Stripe resources (Stripe creation only happens after DB confirms)
+- Promo code always exists in the database first
+- Partial failures are recoverable
+
+---
+
+## Fix 3: P10-10 — Handle Stripe Deactivation Failure
+
+**File:** `artifacts/api-server/src/routes/qb-admin-promo.ts`
+
+In the deactivate endpoint, the current flow is:
+1. Update DB: set `isActive = false`
+2. Call `deactivateStripePromoCode()` — if this fails, it's logged but swallowed
+
+Add handling for Stripe deactivation failure:
+- After the Stripe call, check if it succeeded
+- If the Stripe deactivation failed, add a warning field to the response: `{ ...existingResponse, warning: "Promo code deactivated locally but Stripe sync failed. The code may still be active in Stripe." }`
+- The response status should still be 200 (the local deactivation succeeded)
+- Log the Stripe failure at the `warn` level (not just a generic error catch)
+
+Do the same for the reactivate endpoint if it has the same pattern — if the Stripe reactivation fails, include a warning in the response.
+
+---
+
+## Verification
+
+After completing all fixes:
+1. Run `pnpm typecheck` from the repo root — zero errors required
+2. Verify the promo list page still loads (the response shape change is the most likely to break something)
+3. Check that creating a promo code still works (the reordering shouldn't break the happy path)
+
+---
+
+## Summary of Files Modified
+
+| File | Changes |
+|------|---------|
+| `artifacts/api-server/src/routes/qb-admin-promo.ts` | Restructure list response, reorder create operations, add Stripe failure warning |
+| `artifacts/qb-portal/src/pages/admin/promo-codes.tsx` | Update to match new list response shape |

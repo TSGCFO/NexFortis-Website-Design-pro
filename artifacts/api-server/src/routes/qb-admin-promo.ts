@@ -214,10 +214,13 @@ router.get("/promo-codes", async (req: Request, res: Response) => {
       .offset(offset);
 
     res.json({
-      promoCodes: rows.map(withStatus),
-      total,
-      page: actualPage,
-      limit,
+      codes: rows.map(withStatus),
+      pagination: {
+        page: actualPage,
+        limit,
+        totalCount: total,
+        totalPages,
+      },
     });
   } catch (err) {
     console.error("[Admin Promo] list error:", err);
@@ -310,17 +313,8 @@ router.post("/promo-codes", async (req: Request, res: Response) => {
       return;
     }
 
-    const stripeInput: PromoCodeStripeInput = {
-      code,
-      type,
-      percentOff: percentOff ?? null,
-      amountOffCents: amountOffCents ?? null,
-      subscriptionDurationMonths: subscriptionDurationMonths ?? null,
-      maxUses: maxUses ?? null,
-      expiresAt: expiresAt ?? null,
-    };
-    const stripeIds = await createStripeCouponAndPromoCode(stripeInput);
-
+    // Step 1: Insert DB row first (without Stripe IDs) so no orphaned Stripe
+    // resources are ever created. If this fails, nothing else has happened.
     const insertValues: typeof qbPromoCodes.$inferInsert = {
       code,
       isActive: true,
@@ -339,14 +333,56 @@ router.post("/promo-codes", async (req: Request, res: Response) => {
       restrictedToEmail: body.restrictedToEmail ? String(body.restrictedToEmail).trim().toLowerCase() : null,
       appliesToBasePrice: asBool(body.appliesToBasePrice, false),
       description: body.description ? String(body.description).slice(0, 500) : null,
-      stripeCouponId: stripeIds.stripeCouponId,
-      stripePromotionCodeId: stripeIds.stripePromotionCodeId,
+      stripeCouponId: null,
+      stripePromotionCodeId: null,
     };
 
     const [inserted] = await db.insert(qbPromoCodes).values(insertValues).returning();
     await logAdminEvent(adminUserId, "created", inserted.id, null, inserted);
 
-    res.status(201).json({ promoCode: withStatus(inserted) });
+    // Step 2: Create the Stripe coupon + promotion code. If Stripe isn't
+    // configured or the call fails, leave Stripe IDs null — the promo code
+    // still works for internal validation and can be backfilled later.
+    const stripeInput: PromoCodeStripeInput = {
+      code,
+      type,
+      percentOff: percentOff ?? null,
+      amountOffCents: amountOffCents ?? null,
+      subscriptionDurationMonths: subscriptionDurationMonths ?? null,
+      maxUses: maxUses ?? null,
+      expiresAt: expiresAt ?? null,
+    };
+    const stripeIds = await createStripeCouponAndPromoCode(stripeInput);
+
+    let finalRow: PromoRow = inserted;
+
+    // Step 3: Write the Stripe IDs back to the row. A failure here is
+    // non-fatal — the IDs can be backfilled later.
+    if (stripeIds.stripeCouponId || stripeIds.stripePromotionCodeId) {
+      try {
+        const [updated] = await db
+          .update(qbPromoCodes)
+          .set({
+            stripeCouponId: stripeIds.stripeCouponId,
+            stripePromotionCodeId: stripeIds.stripePromotionCodeId,
+            updatedAt: new Date(),
+          })
+          .where(eq(qbPromoCodes.id, inserted.id))
+          .returning();
+        if (updated) finalRow = updated;
+      } catch (err) {
+        console.warn(
+          "[Admin Promo] Failed to write Stripe IDs to promo code; backfill required:",
+          err,
+        );
+      }
+    } else {
+      console.warn(
+        `[Admin Promo] Promo code ${inserted.code} created without Stripe counterpart (Stripe unavailable or creation failed).`,
+      );
+    }
+
+    res.status(201).json({ promoCode: withStatus(finalRow) });
   } catch (err) {
     console.error("[Admin Promo] create error:", err);
     res.status(500).json({ error: "Failed to create promo code" });
@@ -519,9 +555,17 @@ router.patch("/promo-codes/:id", async (req: Request, res: Response) => {
     const willToggleActive = "isActive" in updates && updates.isActive !== before.isActive;
 
     // Mirror to Stripe BEFORE persisting so any new promotion code ID is stored.
+    let stripeWarning: string | undefined;
     if (willToggleActive) {
       if (updates.isActive === false && before.stripePromotionCodeId) {
-        await deactivateStripePromoCode(before.stripePromotionCodeId);
+        const result = await deactivateStripePromoCode(before.stripePromotionCodeId);
+        if (!result.success && result.stripeConfigured) {
+          console.warn(
+            `[Admin Promo] Stripe deactivation failed for code ${before.code}; local state updated but Stripe may still be active.`,
+          );
+          stripeWarning =
+            "Promo code deactivated locally but Stripe sync failed. The code may still be active in Stripe.";
+        }
       } else if (updates.isActive === true) {
         const result = await reactivateStripePromoCode(
           before.stripeCouponId,
@@ -530,6 +574,13 @@ router.patch("/promo-codes/:id", async (req: Request, res: Response) => {
         );
         if (result.replaced && result.stripePromotionCodeId) {
           updates.stripePromotionCodeId = result.stripePromotionCodeId;
+        }
+        if (!result.success && result.stripeConfigured) {
+          console.warn(
+            `[Admin Promo] Stripe reactivation failed for code ${before.code}; local state updated but Stripe may still be inactive.`,
+          );
+          stripeWarning =
+            "Promo code reactivated locally but Stripe sync failed. The code may still be inactive in Stripe.";
         }
       }
     }
@@ -547,7 +598,11 @@ router.patch("/promo-codes/:id", async (req: Request, res: Response) => {
 
     await logAdminEvent(adminUserId, action, id, before, updated);
 
-    res.json({ promoCode: withStatus(updated) });
+    const response: { promoCode: PromoRow & { status: string }; warning?: string } = {
+      promoCode: withStatus(updated),
+    };
+    if (stripeWarning) response.warning = stripeWarning;
+    res.json(response);
   } catch (err) {
     console.error("[Admin Promo] update error:", err);
     res.status(500).json({ error: "Failed to update promo code" });
@@ -583,13 +638,25 @@ router.post("/promo-codes/:id/deactivate", async (req: Request, res: Response) =
       .where(eq(qbPromoCodes.id, id))
       .returning();
 
+    let stripeWarning: string | undefined;
     if (before.stripePromotionCodeId) {
-      await deactivateStripePromoCode(before.stripePromotionCodeId);
+      const result = await deactivateStripePromoCode(before.stripePromotionCodeId);
+      if (!result.success && result.stripeConfigured) {
+        console.warn(
+          `[Admin Promo] Stripe deactivation failed for code ${before.code}; local state updated but Stripe may still be active.`,
+        );
+        stripeWarning =
+          "Promo code deactivated locally but Stripe sync failed. The code may still be active in Stripe.";
+      }
     }
 
     await logAdminEvent(adminUserId, "deactivated", id, before, updated);
 
-    res.json({ promoCode: withStatus(updated) });
+    const response: { promoCode: PromoRow & { status: string }; warning?: string } = {
+      promoCode: withStatus(updated),
+    };
+    if (stripeWarning) response.warning = stripeWarning;
+    res.json(response);
   } catch (err) {
     console.error("[Admin Promo] deactivate error:", err);
     res.status(500).json({ error: "Failed to deactivate promo code" });

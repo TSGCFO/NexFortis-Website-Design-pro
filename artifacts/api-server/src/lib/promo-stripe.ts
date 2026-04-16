@@ -67,13 +67,22 @@ export async function createStripeCouponAndPromoCode(
   }
 }
 
-export async function deactivateStripePromoCode(stripePromotionCodeId: string): Promise<void> {
+export interface StripeSyncResult {
+  success: boolean;
+  stripeConfigured: boolean;
+}
+
+export async function deactivateStripePromoCode(
+  stripePromotionCodeId: string,
+): Promise<StripeSyncResult> {
   const stripe = await getStripeOrNull();
-  if (!stripe) return;
+  if (!stripe) return { success: true, stripeConfigured: false };
   try {
     await stripe.promotionCodes.update(stripePromotionCodeId, { active: false });
+    return { success: true, stripeConfigured: true };
   } catch (err) {
-    console.error("[Promo/Stripe] Failed to deactivate promo code:", err);
+    console.warn("[Promo/Stripe] Failed to deactivate promo code:", err);
+    return { success: false, stripeConfigured: true };
   }
 }
 
@@ -87,13 +96,25 @@ export async function reactivateStripePromoCode(
   stripeCouponId: string | null,
   stripePromotionCodeId: string | null,
   code: string,
-): Promise<{ stripePromotionCodeId: string | null; replaced: boolean }> {
+): Promise<{
+  stripePromotionCodeId: string | null;
+  replaced: boolean;
+  success: boolean;
+  stripeConfigured: boolean;
+}> {
   const stripe = await getStripeOrNull();
-  if (!stripe) return { stripePromotionCodeId, replaced: false };
+  if (!stripe) {
+    return { stripePromotionCodeId, replaced: false, success: true, stripeConfigured: false };
+  }
   if (stripePromotionCodeId) {
     try {
       const updated = await stripe.promotionCodes.update(stripePromotionCodeId, { active: true });
-      return { stripePromotionCodeId: updated.id, replaced: false };
+      return {
+        stripePromotionCodeId: updated.id,
+        replaced: false,
+        success: true,
+        stripeConfigured: true,
+      };
     } catch (err) {
       console.warn("[Promo/Stripe] Could not toggle promo code active=true, will recreate:", err);
     }
@@ -104,12 +125,17 @@ export async function reactivateStripePromoCode(
         { coupon: stripeCouponId, code } as unknown as Stripe.PromotionCodeCreateParams,
         { idempotencyKey: `promo_code_reactivate_${code}_${Date.now()}` },
       );
-      return { stripePromotionCodeId: promo.id, replaced: true };
+      return {
+        stripePromotionCodeId: promo.id,
+        replaced: true,
+        success: true,
+        stripeConfigured: true,
+      };
     } catch (err) {
-      console.error("[Promo/Stripe] Failed to recreate promo code on reactivate:", err);
+      console.warn("[Promo/Stripe] Failed to recreate promo code on reactivate:", err);
     }
   }
-  return { stripePromotionCodeId, replaced: false };
+  return { stripePromotionCodeId, replaced: false, success: false, stripeConfigured: true };
 }
 
 export async function applyStripeCouponToPayment(

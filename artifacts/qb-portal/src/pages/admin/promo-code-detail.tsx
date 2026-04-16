@@ -232,9 +232,13 @@ function PromoCodeDetailContent() {
       if (!res.ok) {
         toast({ title: "Action failed", description: json.error || "Unable to update status.", variant: "destructive" });
       } else {
+        const baseDescription = targetActive
+          ? "Customers can use this code again."
+          : "Code can no longer be redeemed.";
         toast({
           title: targetActive ? "Code reactivated" : "Code deactivated",
-          description: targetActive ? "Customers can use this code again." : "Code can no longer be redeemed.",
+          description: json.warning ? `${baseDescription} ${json.warning}` : baseDescription,
+          variant: json.warning ? "destructive" : undefined,
         });
         setConfirmDeactivate(false);
         setConfirmReactivate(false);

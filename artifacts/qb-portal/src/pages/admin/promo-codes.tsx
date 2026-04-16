@@ -54,7 +54,8 @@ function PromoCodesContent() {
   const [codes, setCodes] = useState<PromoCodeRow[]>([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
-  const [limit] = useState(20);
+  const [limit, setLimit] = useState(20);
+  const [totalPages, setTotalPages] = useState(1);
   const [status, setStatus] = useState("all");
   const [type, setType] = useState("all");
   const [search, setSearch] = useState("");
@@ -92,9 +93,11 @@ function PromoCodesContent() {
       const res = await adminFetch(`/promo-codes?${params}`);
       if (!res.ok) throw new Error();
       const data = await res.json();
-      setCodes(data.promoCodes);
-      setTotal(data.total);
-      setPage(data.page);
+      setCodes(data.codes);
+      setTotal(data.pagination.totalCount);
+      setPage(data.pagination.page);
+      setLimit(data.pagination.limit);
+      setTotalPages(data.pagination.totalPages);
     } catch {
       setError("Failed to load promo codes.");
     } finally {
@@ -104,8 +107,6 @@ function PromoCodesContent() {
 
   useEffect(() => { fetchAnalytics(); }, [fetchAnalytics]);
   useEffect(() => { fetchCodes(); }, [fetchCodes]);
-
-  const totalPages = Math.max(1, Math.ceil(total / limit));
 
   return (
     <div>
