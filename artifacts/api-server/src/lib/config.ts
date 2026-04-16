@@ -1,5 +1,8 @@
 const ALLOWED_ORIGINS: string[] = [
   "https://nex-fortis-website-design-pro.replit.app",
+  "https://qbportal.nexfortis.com",
+  "https://nexfortis.com",
+  "https://www.nexfortis.com",
   "http://localhost:5173",
   "http://localhost:5174",
   "http://localhost:3000",
