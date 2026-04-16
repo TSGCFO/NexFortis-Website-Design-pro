@@ -133,7 +133,7 @@ function OrderDetailContent() {
         return;
       }
       const data = await res.json();
-      window.open(data.signedUrl, "_blank");
+      window.open(data.signedUrl, "_blank", "noopener,noreferrer");
     } catch {
       toast({ title: "Error", description: "Download failed", variant: "destructive" });
     } finally {
@@ -211,12 +211,16 @@ function OrderDetailContent() {
               <dt className="text-gray-500">Service</dt>
               <dd className="font-medium">{order.serviceName}</dd>
             </div>
-            {order.addons && (
-              <div className="flex justify-between">
-                <dt className="text-gray-500">Add-ons</dt>
-                <dd className="font-medium">{JSON.parse(order.addons).join(", ")}</dd>
-              </div>
-            )}
+            {order.addons && (() => {
+              let parsed: string[] = [];
+              try { parsed = JSON.parse(order.addons); } catch { /* invalid JSON — skip */ }
+              return Array.isArray(parsed) && parsed.length > 0 ? (
+                <div className="flex justify-between">
+                  <dt className="text-gray-500">Add-ons</dt>
+                  <dd className="font-medium">{parsed.join(", ")}</dd>
+                </div>
+              ) : null;
+            })()}
             <div className="flex justify-between">
               <dt className="text-gray-500">Total</dt>
               <dd className="font-medium">{formatCurrency(order.totalCad)}</dd>
@@ -265,6 +269,7 @@ function OrderDetailContent() {
           <select
             value={selectedStatus}
             onChange={e => setSelectedStatus(e.target.value)}
+            aria-label="Order status"
             className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#B76E79]/30"
           >
             {ALL_STATUSES.map(s => (
@@ -290,6 +295,7 @@ function OrderDetailContent() {
               ref={fileInputRef}
               onChange={handleUpload}
               className="hidden"
+              aria-label="Upload file to order"
             />
             <button
               onClick={() => fileInputRef.current?.click()}
@@ -324,7 +330,7 @@ function OrderDetailContent() {
                 >
                   {downloadingFile === file.id ? (
                     <>
-                      <div className="w-3.5 h-3.5 border-2 border-gray-300 border-t-[#0A1628] rounded-full animate-spin" />
+                      <div className="w-3.5 h-3.5 border-2 border-gray-300 border-t-[#0A1628] rounded-full animate-spin" role="status" aria-label="Loading" />
                       Preparing…
                     </>
                   ) : (

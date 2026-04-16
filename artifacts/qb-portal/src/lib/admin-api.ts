@@ -21,10 +21,21 @@ export async function adminFetch(path: string, options: RequestInit = {}): Promi
     headers["Content-Type"] = "application/json";
   }
 
-  return fetch(apiUrl(path), {
+  const response = await fetch(apiUrl(path), {
     ...options,
     headers,
   });
+
+  if (response.status === 401) {
+    try {
+      const { supabase } = await import("./supabase");
+      await supabase.auth.signOut();
+    } catch { /* best-effort cleanup */ }
+    window.location.href = `${import.meta.env.BASE_URL}login`;
+    return response;
+  }
+
+  return response;
 }
 
 export function formatCurrency(cents: number): string {

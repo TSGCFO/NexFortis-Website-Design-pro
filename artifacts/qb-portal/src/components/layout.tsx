@@ -152,7 +152,7 @@ export function Navbar() {
                   {user.name.split(" ")[0]}
                 </Button>
               </Link>
-              <Button variant="ghost" size="sm" onClick={signOut}>
+              <Button variant="ghost" size="sm" onClick={signOut} aria-label="Sign out">
                 <LogOut className="w-4 h-4" />
               </Button>
             </div>

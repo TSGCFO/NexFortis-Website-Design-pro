@@ -8,7 +8,7 @@ interface TableSkeletonProps {
 
 export function TableSkeleton({ columns, rows = 5, showHeader = true }: TableSkeletonProps) {
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto" role="status" aria-label="Loading">
       <table className="w-full text-sm">
         {showHeader && (
           <thead className="bg-gray-50">
@@ -64,7 +64,7 @@ export function StatCardSkeleton({ count = 4 }: StatCardSkeletonProps) {
 
 export function DetailPageSkeleton() {
   return (
-    <div className="space-y-6">
+    <div className="space-y-6" role="status" aria-label="Loading">
       <div className="animate-pulse h-4 bg-gray-200 rounded w-28" />
       <div className="flex items-center gap-3">
         <div className="animate-pulse h-8 bg-gray-200 rounded w-48" />
