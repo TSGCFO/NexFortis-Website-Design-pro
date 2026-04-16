@@ -274,7 +274,7 @@ export function Footer() {
                 <li><Link href="/landing/quickbooks-file-too-large" className="hover:text-accent transition-colors">QuickBooks File Too Large</Link></li>
                 <li><Link href="/landing/quickbooks-running-slow" className="hover:text-accent transition-colors">QuickBooks Running Slow</Link></li>
                 <li><Link href="/landing/audit-trail-removal" className="hover:text-accent transition-colors">Audit Trail Removal</Link></li>
-                <li><Link href="/landing/super-condense" className="hover:text-accent transition-colors">Super Condense</Link></li>
+                <li><Link href="/landing/quickbooks-desktop-end-of-life" className="hover:text-accent transition-colors">QuickBooks Desktop End of Life</Link></li>
               </ul>
             </div>
 

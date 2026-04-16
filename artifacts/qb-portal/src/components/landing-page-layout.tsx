@@ -13,6 +13,7 @@ import {
   generateServiceSchema,
   generateFAQSchema,
   generateBreadcrumbSchema,
+  generateHowToSchema,
 } from "@/lib/seo-schemas";
 
 function resolveTokens(
@@ -46,6 +47,10 @@ export function LandingPageLayout({
   if (page.category === "service") {
     jsonLd.unshift(
       generateServiceSchema({ ...page, metaDescription }, product)
+    );
+  } else if (page.category === "educational" && page.process.length > 0) {
+    jsonLd.unshift(
+      generateHowToSchema({ ...page, metaDescription })
     );
   }
 

@@ -92,6 +92,27 @@ export function generateFAQSchema(faqs: { question: string; answer: string }[]) 
   };
 }
 
+export function generateHowToSchema(pageData: {
+  h1: string;
+  metaDescription: string;
+  slug: string;
+  process: { title: string; body: string }[];
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name: pageData.h1,
+    description: pageData.metaDescription,
+    url: `${BASE_URL}/landing/${pageData.slug}`,
+    step: pageData.process.map((s, i) => ({
+      "@type": "HowToStep",
+      position: i + 1,
+      name: s.title,
+      text: s.body,
+    })),
+  };
+}
+
 export function generateServiceSchema(
   pageData: { h1: string; metaDescription: string; slug: string; primaryKeyword: string },
   product: Product | undefined
