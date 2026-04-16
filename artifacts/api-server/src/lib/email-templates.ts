@@ -403,13 +403,16 @@ export function paidOrderOperatorEmail(
           <p style="margin:0 0 8px;font-size:13px;color:${BRAND_COLORS.textMuted};text-transform:uppercase;letter-spacing:0.5px;">Order #${orderId}</p>
           <p style="margin:0 0 4px;font-size:15px;color:${BRAND_COLORS.textDark};"><strong>Service:</strong> ${escapeHtml(serviceName)}</p>
           <p style="margin:0 0 4px;font-size:15px;color:${BRAND_COLORS.textDark};"><strong>Customer:</strong> ${escapeHtml(customerName)} (${escapeHtml(customerEmail)})</p>
-          <p style="margin:0;font-size:15px;color:${BRAND_COLORS.textDark};"><strong>Total:</strong> ${total} CAD</p>
+          <p style="margin:0;font-size:15px;color:${BRAND_COLORS.textDark};"><strong>Total Paid:</strong> ${total} CAD</p>
         </td>
       </tr>
-    </table>`;
+    </table>
+    <p style="margin:0;font-size:13px;color:${BRAND_COLORS.textMuted};font-style:italic;">
+      Payment confirmed via Stripe.
+    </p>`;
 
   return {
-    subject: `New Paid Order — #${orderId}`,
+    subject: `New Paid Order — #${orderId} — ${total} CAD`,
     html: baseLayout(content, "#"),
   };
 }
