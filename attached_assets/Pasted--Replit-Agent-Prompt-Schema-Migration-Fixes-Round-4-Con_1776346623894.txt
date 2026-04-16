@@ -1,0 +1,68 @@
+# Replit Agent Prompt — Schema Migration Fixes (Round 4)
+
+## Context
+
+Recent code changes (merged today) added a `pendingDowngradeTier` column to the Drizzle schema for `qb_subscriptions`, and we need to ensure all schema definitions are properly synced with the database. The Drizzle schema is the source of truth at `lib/db/src/schema/qb-portal.ts`.
+
+## Task 1 — Generate and Push Migration for `pending_downgrade_tier`
+
+The `qb_subscriptions` table in the Drizzle schema now includes a `pendingDowngradeTier: text("pending_downgrade_tier")` column (nullable text). This column does not yet exist in the database.
+
+Steps:
+1. Pull the latest `main` branch to get all recent changes
+2. Run `pnpm drizzle-kit generate` from the `lib/db/` directory to generate a new migration file for the schema diff
+3. Review the generated SQL — it should produce an `ALTER TABLE "qb_subscriptions" ADD COLUMN "pending_downgrade_tier" text;` statement
+4. If the generated migration looks correct, run `pnpm drizzle-kit push` to apply it to the database
+5. Verify the column exists by checking the table structure
+
+## Task 2 — Add CHECK Constraint on `qb_support_tickets.status`
+
+The `qb_support_tickets` table has a `status` column with no CHECK constraint. Other tables like `qb_subscriptions` and `qb_users` already have CHECK constraints on their enum-like columns.
+
+Steps:
+1. In `lib/db/src/schema/qb-portal.ts`, add a CHECK constraint to the `qb_support_tickets` table definition. Add it to the third argument (the constraint function) like the other tables have:
+   ```
+   check("qb_support_tickets_status_check", sql`${table.status} IN ('open', 'in_progress', 'resolved', 'closed')`)
+   ```
+2. Run `pnpm drizzle-kit generate` to generate the migration
+3. Run `pnpm drizzle-kit push` to apply it
+
+## Task 3 — Add Comment Explaining Intentional Missing FK
+
+In `lib/db/src/schema/qb-portal.ts`, the `qb_support_tickets` table has a `subscriptionId` field defined as:
+```ts
+subscriptionId: integer("subscription_id"),
+```
+
+This intentionally has NO `.references(() => qbSubscriptions.id)` foreign key constraint. This is by design — tickets must persist even after a subscription is canceled and removed.
+
+Add a code comment above or beside this field explaining the intentional design decision:
+```ts
+// No FK to qb_subscriptions — intentional. Tickets must persist after subscription cancellation.
+subscriptionId: integer("subscription_id"),
+```
+
+## Task 4 — Verify All Tables Exist
+
+After running the migrations, verify that ALL tables defined in the schema actually exist in the database:
+- `qb_users`
+- `qb_orders`
+- `qb_order_files`
+- `qb_waitlist_signups`
+- `qb_support_tickets`
+- `qb_subscriptions`
+- `qb_ticket_usage`
+- `qb_referrals`
+- `qb_referral_events`
+- `qb_ticket_replies`
+- `qb_notification_events`
+- `qb_notification_preferences`
+
+Run a quick SQL query against the database to confirm all tables exist.
+
+## Important Rules
+- Do NOT modify any files in the `docs/` directory
+- Do NOT change any route files, API logic, or frontend code — this is schema-only work
+- Run `pnpm drizzle-kit generate` before `push` so migration files are tracked in version control
+- Commit the generated migration files to git
+- If any migration fails, report the exact error — do not try to manually fix the database
