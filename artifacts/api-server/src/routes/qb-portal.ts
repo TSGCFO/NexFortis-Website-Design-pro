@@ -605,14 +605,7 @@ async function handleSubscriptionCheckout(session: Stripe.Checkout.Session) {
 
     // Promo-code-based referral code (atomic check-then-insert in a transaction)
     try {
-      // Pre-compute values that require external (non-transactional) calls before opening the tx.
       const [subscriberUser] = await db.select().from(qbUsers).where(eq(qbUsers.id, userId)).limit(1);
-      const candidateCode = await generateUniqueReferralCode();
-      const candidateStripeIds = await createStripeCouponAndPromoCode({
-        code: candidateCode,
-        type: "fixed_amount",
-        amountOffCents: 2500,
-      });
 
       await db.transaction(async (tx) => {
         const [existingPromo] = await tx
@@ -630,6 +623,13 @@ async function handleSubscriptionCheckout(session: Stripe.Checkout.Session) {
           }
           return;
         }
+
+        const candidateCode = await generateUniqueReferralCode();
+        const candidateStripeIds = await createStripeCouponAndPromoCode({
+          code: candidateCode,
+          type: "fixed_amount",
+          amountOffCents: 2500,
+        });
 
         await tx.insert(qbPromoCodes).values({
           code: candidateCode,
