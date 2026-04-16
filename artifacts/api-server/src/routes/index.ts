@@ -5,6 +5,7 @@ import blogRouter from "./blog";
 import contactRouter from "./contact";
 import qbPortalRouter, { requireAuth, requireOperator } from "./qb-portal";
 import qbSubscriptionsRouter from "./qb-subscriptions";
+import qbTicketsRouter from "./qb-tickets";
 import qbAdminSubscriptionsRouter from "./qb-admin-subscriptions";
 
 const router: IRouter = Router();
@@ -32,6 +33,7 @@ router.use("/contact", contactRouter);
 router.post("/qb/checkout/create-session", checkoutLimiter);
 router.use("/qb", qbPortalRouter);
 router.use("/qb/subscriptions", requireAuth, qbSubscriptionsRouter);
+router.use("/qb/tickets", requireAuth, qbTicketsRouter);
 router.use("/qb/admin", requireOperator, qbAdminSubscriptionsRouter);
 
 export default router;

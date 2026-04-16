@@ -62,7 +62,7 @@ Includes tables for `qb_users` (with `stripe_customer_id`), `qb_orders`, `qb_ord
 
 ### Express API Server (`artifacts/api-server`)
 - **Framework**: Express 5
-- **Routes**: `GET /api/healthz`, Blog CRUD, Contact form submission (`POST /api/contact`), QB Portal backend logic (`/api/qb/*`), Subscription routes (`/api/qb/subscriptions/*` — checkout, me, upgrade, downgrade, cancel, reactivate, tickets), Admin routes (`/api/qb/admin/*` — subscriptions list/detail, tickets list/reply/status).
+- **Routes**: `GET /api/healthz`, Blog CRUD, Contact form submission (`POST /api/contact`), QB Portal backend logic (`/api/qb/*`), Subscription routes (`/api/qb/subscriptions/*` — checkout, me, upgrade, downgrade, cancel, reactivate), Ticket routes (`/api/qb/tickets/*` — create with attachment, list, get by ID), Admin routes (`/api/qb/admin/*` — subscriptions list/detail, tickets list/reply/status).
 - **Subscription System**: 3 tiers (Essentials $49/mo, Professional $99/mo, Premium $149/mo) with per-cycle ticket limits (3/8/unlimited), SLA deadlines (60/60/30 min), subscriber discounts (0%/10%/20%), business-hours SLA calculation (Mon-Fri 9am-5pm ET), referral codes for Premium. Stripe setup script at `artifacts/api-server/src/scripts/setup-stripe-subscriptions.ts`.
 - **Data Persistence**: Uses `@workspace/db`.
 - **Validation**: Leverages `@workspace/api-zod`.

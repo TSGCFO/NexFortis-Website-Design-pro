@@ -1,18 +1,15 @@
-import { Router, type Request, type Response, type RequestHandler } from "express";
+import { Router, type Request, type Response } from "express";
 import rateLimit, { ipKeyGenerator } from "express-rate-limit";
 import { db } from "@workspace/db";
 import {
   qbUsers,
   qbSubscriptions,
   qbTicketUsage,
-  qbSupportTickets,
   qbReferrals,
-  qbReferralEvents,
 } from "@workspace/db/schema";
-import { eq, and, desc, gte, lte, sql } from "drizzle-orm";
+import { eq, and, sql } from "drizzle-orm";
 import crypto from "crypto";
 import Stripe from "stripe";
-import sanitizeHtml from "sanitize-html";
 import { supabaseAdmin } from "../lib/supabase";
 import {
   getTierConfig,
@@ -20,18 +17,9 @@ import {
   isUpgrade,
   isDowngrade,
   isUnlimitedTickets,
-  tierFromPriceId,
   getStripePriceIds,
   type SubscriptionTier,
 } from "../lib/subscription-config";
-import {
-  isBusinessHours,
-  isAfterHours,
-  calculateSlaDeadline,
-  getSlaMinutesForTier,
-  getTimeRemainingMinutes,
-  getSlaStatus,
-} from "../lib/business-hours";
 
 const router = Router();
 
@@ -56,18 +44,6 @@ const subscriptionLimiter = rateLimit({
   message: { error: "Too many requests. Please try again later." },
 });
 
-const ticketSubmitLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  limit: 10,
-  standardHeaders: true,
-  legacyHeaders: false,
-  keyGenerator: (req: any) => req.userId || ipKeyGenerator(req),
-  message: { error: "Too many requests. Please try again later." },
-});
-
-function sanitizeInput(input: string): string {
-  return sanitizeHtml(input, { allowedTags: [], allowedAttributes: {} }).trim();
-}
 
 async function getActiveSubscription(userId: string) {
   const [sub] = await db
@@ -426,140 +402,6 @@ router.post("/reactivate", subscriptionLimiter, async (req: Request, res: Respon
   } catch (err) {
     console.error("Subscription reactivate error:", err);
     res.status(500).json({ error: "Failed to reactivate subscription" });
-  }
-});
-
-router.post("/tickets", ticketSubmitLimiter, async (req: Request, res: Response) => {
-  try {
-    const userId = req.userId!;
-    const { subject, message, isCritical } = req.body;
-
-    if (!subject || !message) {
-      res.status(400).json({ error: "Subject and message are required" });
-      return;
-    }
-
-    const sub = await getActiveSubscription(userId);
-    if (!sub) {
-      res.status(403).json({ error: "An active subscription is required to submit tickets" });
-      return;
-    }
-
-    const tier = sub.tier as SubscriptionTier;
-    const tierConfig = getTierConfig(tier);
-
-    if (!isUnlimitedTickets(tier) && sub.currentPeriodStart && sub.currentPeriodEnd) {
-      const usage = await getOrCreateTicketUsage(
-        sub.id,
-        sub.currentPeriodStart,
-        sub.currentPeriodEnd,
-        tierConfig.ticketLimit,
-      );
-
-      if (usage.ticketsUsed >= tierConfig.ticketLimit) {
-        res.status(403).json({
-          error: "Ticket limit reached for this billing cycle",
-          ticketsUsed: usage.ticketsUsed,
-          ticketLimit: tierConfig.ticketLimit,
-          resetDate: sub.currentPeriodEnd.toISOString(),
-        });
-        return;
-      }
-    }
-
-    const now = new Date();
-    const critical = isCritical === true;
-    const afterHours = isAfterHours(now);
-    const slaMinutes = getSlaMinutesForTier(tier);
-    const slaDeadline = calculateSlaDeadline(now, slaMinutes, critical);
-
-    const [ticket] = await db
-      .insert(qbSupportTickets)
-      .values({
-        userId,
-        subscriptionId: sub.id,
-        tierAtSubmission: tier,
-        subject: sanitizeInput(subject),
-        message: sanitizeInput(message),
-        status: "open",
-        isCritical: critical,
-        isAfterHours: afterHours,
-        slaDeadline,
-      })
-      .returning();
-
-    if (!isUnlimitedTickets(tier) && sub.currentPeriodStart && sub.currentPeriodEnd) {
-      await db
-        .update(qbTicketUsage)
-        .set({ ticketsUsed: sql`${qbTicketUsage.ticketsUsed} + 1` })
-        .where(
-          and(
-            eq(qbTicketUsage.subscriptionId, sub.id),
-            eq(qbTicketUsage.periodStart, sub.currentPeriodStart),
-          ),
-        );
-    }
-
-    res.status(201).json({ ticket });
-  } catch (err) {
-    console.error("Ticket submission error:", err);
-    res.status(500).json({ error: "Failed to create ticket" });
-  }
-});
-
-router.get("/tickets", async (req: Request, res: Response) => {
-  try {
-    const userId = req.userId!;
-    const tickets = await db
-      .select()
-      .from(qbSupportTickets)
-      .where(eq(qbSupportTickets.userId, userId))
-      .orderBy(desc(qbSupportTickets.createdAt));
-
-    const ticketsWithSla = tickets.map(t => ({
-      ...t,
-      slaStatus: t.slaDeadline ? getSlaStatus(t.slaDeadline) : null,
-      slaRemainingMinutes: t.slaDeadline ? getTimeRemainingMinutes(t.slaDeadline) : null,
-    }));
-
-    res.json({ tickets: ticketsWithSla });
-  } catch (err) {
-    console.error("Get tickets error:", err);
-    res.status(500).json({ error: "Failed to fetch tickets" });
-  }
-});
-
-router.get("/tickets/:id", async (req: Request, res: Response) => {
-  try {
-    const userId = req.userId!;
-    const ticketId = parseInt(req.params.id as string);
-
-    if (isNaN(ticketId)) {
-      res.status(400).json({ error: "Invalid ticket ID" });
-      return;
-    }
-
-    const [ticket] = await db
-      .select()
-      .from(qbSupportTickets)
-      .where(and(eq(qbSupportTickets.id, ticketId), eq(qbSupportTickets.userId, userId)))
-      .limit(1);
-
-    if (!ticket) {
-      res.status(404).json({ error: "Ticket not found" });
-      return;
-    }
-
-    res.json({
-      ticket: {
-        ...ticket,
-        slaStatus: ticket.slaDeadline ? getSlaStatus(ticket.slaDeadline) : null,
-        slaRemainingMinutes: ticket.slaDeadline ? getTimeRemainingMinutes(ticket.slaDeadline) : null,
-      },
-    });
-  } catch (err) {
-    console.error("Get ticket error:", err);
-    res.status(500).json({ error: "Failed to fetch ticket" });
   }
 });
 

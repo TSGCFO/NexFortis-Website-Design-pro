@@ -8,6 +8,13 @@
       "when": 1776286913691,
       "tag": "0000_reflective_nuke",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1776311727062,
+      "tag": "0001_unknown_pyro",
+      "breakpoints": true
     }
   ]
 }

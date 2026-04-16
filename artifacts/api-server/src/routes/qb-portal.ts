@@ -407,10 +407,10 @@ function getSubPeriod(stripeSub: Stripe.Subscription): { start: number; end: num
   };
 }
 
-async function handleSubscriptionCheckout(session: any) {
+async function handleSubscriptionCheckout(session: Stripe.Checkout.Session) {
   const userId = session.metadata?.user_id;
   const tier = session.metadata?.tier;
-  const stripeSubId = session.subscription;
+  const stripeSubId = session.subscription as string | null;
 
   if (!userId || !tier || !stripeSubId || !stripe) return;
 
@@ -463,8 +463,14 @@ async function handleSubscriptionCheckout(session: any) {
   console.log(`[Stripe] Subscription created: ${tier} for user ${userId}`);
 }
 
-async function handleInvoicePaid(invoice: any) {
-  const stripeSubId = invoice.subscription;
+function getInvoiceSubscriptionId(invoice: Stripe.Invoice): string | null {
+  const sub = invoice.parent?.subscription_details?.subscription;
+  if (!sub) return null;
+  return typeof sub === "string" ? sub : sub.id;
+}
+
+async function handleInvoicePaid(invoice: Stripe.Invoice) {
+  const stripeSubId = getInvoiceSubscriptionId(invoice);
   if (!stripeSubId || !stripe) return;
 
   const [sub] = await db
@@ -522,8 +528,8 @@ async function handleInvoicePaid(invoice: any) {
   console.log(`[Stripe] Invoice paid for subscription ${stripeSubId}`);
 }
 
-async function handleInvoicePaymentFailed(invoice: any) {
-  const stripeSubId = invoice.subscription;
+async function handleInvoicePaymentFailed(invoice: Stripe.Invoice) {
+  const stripeSubId = getInvoiceSubscriptionId(invoice);
   if (!stripeSubId) return;
 
   await db
@@ -534,7 +540,7 @@ async function handleInvoicePaymentFailed(invoice: any) {
   console.log(`[Stripe] Payment failed for subscription ${stripeSubId}`);
 }
 
-async function handleSubscriptionUpdated(stripeSub: any) {
+async function handleSubscriptionUpdated(stripeSub: Stripe.Subscription) {
   const stripeSubId = stripeSub.id;
   if (!stripeSubId) return;
 
@@ -548,6 +554,7 @@ async function handleSubscriptionUpdated(stripeSub: any) {
 
   const newPriceId = stripeSub.items?.data?.[0]?.price?.id;
   const detectedTier = newPriceId ? tierFromPriceId(newPriceId) : null;
+  const period = getSubPeriod(stripeSub);
 
   let status: string = sub.status;
   if (stripeSub.status === "active") status = "active";
@@ -562,11 +569,11 @@ async function handleSubscriptionUpdated(stripeSub: any) {
       tier: detectedTier || sub.tier,
       stripePriceId: newPriceId || sub.stripePriceId,
       cancelAtPeriodEnd: stripeSub.cancel_at_period_end ?? sub.cancelAtPeriodEnd,
-      currentPeriodStart: stripeSub.current_period_start
-        ? new Date(stripeSub.current_period_start * 1000)
+      currentPeriodStart: period.start
+        ? new Date(period.start * 1000)
         : sub.currentPeriodStart,
-      currentPeriodEnd: stripeSub.current_period_end
-        ? new Date(stripeSub.current_period_end * 1000)
+      currentPeriodEnd: period.end
+        ? new Date(period.end * 1000)
         : sub.currentPeriodEnd,
       updatedAt: new Date(),
     })
@@ -575,7 +582,7 @@ async function handleSubscriptionUpdated(stripeSub: any) {
   console.log(`[Stripe] Subscription updated: ${stripeSubId} -> status=${status}`);
 }
 
-async function handleSubscriptionDeleted(stripeSub: any) {
+async function handleSubscriptionDeleted(stripeSub: Stripe.Subscription) {
   const stripeSubId = stripeSub.id;
   if (!stripeSubId) return;
 
