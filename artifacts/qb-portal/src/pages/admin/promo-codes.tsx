@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { AdminLayout } from "@/components/admin-layout";
 import {
   adminFetch,
@@ -49,6 +49,7 @@ const TABLE_COLUMNS = [
 ];
 
 function PromoCodesContent() {
+  const [, navigate] = useLocation();
   const [analytics, setAnalytics] = useState<Analytics | null>(null);
   const [codes, setCodes] = useState<PromoCodeRow[]>([]);
   const [total, setTotal] = useState(0);
@@ -191,7 +192,7 @@ function PromoCodesContent() {
               </thead>
               <tbody className="divide-y divide-gray-100">
                 {codes.map((c) => (
-                  <tr key={c.id} className="hover:bg-gray-50">
+                  <tr key={c.id} className="hover:bg-gray-50 cursor-pointer" onClick={() => navigate(`/admin/promo-codes/${c.id}`)}>
                     <td className="px-4 py-3 font-mono font-medium">{c.code}</td>
                     <td className="px-4 py-3">{PROMO_TYPE_LABELS[c.type] || c.type}</td>
                     <td className="px-4 py-3">{describePromoValue(c)}</td>
