@@ -287,12 +287,28 @@ router.post("/checkout/create-session", async (req: Request, res: Response) => {
       if (user) userId = user.id;
     }
 
+    // Subscriber tier discount: applies to all non-subscription orders, and stacks with promo codes.
+    let subscriberDiscountCents = 0;
+    if (userId && !pricing.isSubscription) {
+      const [activeSub] = await db.select().from(qbSubscriptions)
+        .where(and(eq(qbSubscriptions.userId, userId), eq(qbSubscriptions.status, "active")))
+        .limit(1);
+      if (activeSub) {
+        const subTierConfig = getTierConfig(activeSub.tier as SubscriptionTier);
+        const pct = Number(subTierConfig.discountPercent) || 0;
+        if (pct > 0) {
+          subscriberDiscountCents = Math.floor((pricing.total * pct) / 100);
+        }
+      }
+    }
+    const subAdjustedTotal = Math.max(0, pricing.total - subscriberDiscountCents);
+
     let promoRow: typeof qbPromoCodes.$inferSelect | null = null;
-    let serverComputedFinalTotal = pricing.total;
+    let serverComputedFinalTotal = subAdjustedTotal;
     let serverDiscountCents = 0;
     if (promoCode && typeof promoCode === "string") {
       const orderItems = [
-        { productId: String(serviceId), quantity: 1, unitPriceCents: pricing.total },
+        { productId: String(serviceId), quantity: 1, unitPriceCents: subAdjustedTotal },
       ];
       const { runValidation: runPromoValidation } = await import("./qb-promo");
       const vres = await runPromoValidation({
@@ -304,27 +320,11 @@ router.post("/checkout/create-session", async (req: Request, res: Response) => {
       });
       if (vres.ok) {
         promoRow = vres.row;
-        serverComputedFinalTotal = vres.finalTotal;
         serverDiscountCents = vres.codeDiscountCents + vres.launchPromoCents;
+        serverComputedFinalTotal = Math.max(0, pricing.total - subscriberDiscountCents - serverDiscountCents);
       } else if (freeOrder) {
         res.status(400).json({ error: "Promo code is not valid", message: vres.errorMessage });
         return;
-      }
-    }
-
-    // Subscriber tier discount: only for non-subscription orders, and only when no promo code applied
-    let subscriberDiscountCents = 0;
-    if (!promoRow && userId && !pricing.isSubscription) {
-      const [activeSub] = await db.select().from(qbSubscriptions)
-        .where(and(eq(qbSubscriptions.userId, userId), eq(qbSubscriptions.status, "active")))
-        .limit(1);
-      if (activeSub) {
-        const subTierConfig = getTierConfig(activeSub.tier as SubscriptionTier);
-        const pct = Number(subTierConfig.discountPercent) || 0;
-        if (pct > 0) {
-          subscriberDiscountCents = Math.floor((pricing.total * pct) / 100);
-          serverComputedFinalTotal = Math.max(0, pricing.total - subscriberDiscountCents);
-        }
       }
     }
 
@@ -368,7 +368,7 @@ router.post("/checkout/create-session", async (req: Request, res: Response) => {
         await runRedemption({
           rawCode: promoRow!.code,
           orderId: order.id,
-          orderItems: [{ productId: String(serviceId), quantity: 1, unitPriceCents: pricing.total }],
+          orderItems: [{ productId: String(serviceId), quantity: 1, unitPriceCents: subAdjustedTotal }],
           orderType: "one_time",
           userId: userId || undefined,
           guestEmail: userId ? undefined : customerEmail,
@@ -405,9 +405,10 @@ router.post("/checkout/create-session", async (req: Request, res: Response) => {
 
     const stripe = await getStripe();
     if (stripe) {
-      // Use server-computed discounted total. Subscriber discount is already applied to unit_amount.
-      // Promo code discount is applied via Stripe promotion_code so Stripe reflects the exact line-item breakdown.
-      const stripeUnitAmount = promoRow ? pricing.total : serverComputedFinalTotal;
+      // Use subscriber-adjusted subtotal as the Stripe line-item amount. Promo code discount is then
+      // applied on top via Stripe promotion_code so the breakdown matches our server-computed totals.
+      // For non-promo orders, serverComputedFinalTotal already equals subAdjustedTotal.
+      const stripeUnitAmount = promoRow ? subAdjustedTotal : serverComputedFinalTotal;
       const checkoutParams: Stripe.Checkout.SessionCreateParams = {
         mode: "payment",
         customer_email: customerEmail,
@@ -431,6 +432,24 @@ router.post("/checkout/create-session", async (req: Request, res: Response) => {
       const session = await stripe.checkout.sessions.create(checkoutParams);
 
       await db.update(qbOrders).set({ stripeSessionId: session.id }).where(eq(qbOrders.id, order.id));
+
+      // Server-side promo redemption for non-free paid orders.
+      // The frontend no longer calls /api/qb/promo/redeem — handled here authoritatively.
+      if (promoRow) {
+        try {
+          const { runRedemption } = await import("./qb-promo");
+          await runRedemption({
+            rawCode: promoRow.code,
+            orderId: order.id,
+            orderItems: [{ productId: String(serviceId), quantity: 1, unitPriceCents: subAdjustedTotal }],
+            orderType: "one_time",
+            userId: userId || undefined,
+            guestEmail: userId ? undefined : customerEmail,
+          });
+        } catch (redeemErr) {
+          console.error("[Checkout] Promo redemption recording failed:", redeemErr);
+        }
+      }
 
       res.status(201).json({
         orderId: order.id,
@@ -584,31 +603,36 @@ async function handleSubscriptionCheckout(session: Stripe.Checkout.Session) {
       await db.insert(qbReferrals).values({ userId, subscriptionId: sub.id, code: legacyCode });
     }
 
-    // Promo-code-based referral code
+    // Promo-code-based referral code (atomic check-then-insert in a transaction)
     try {
-      const [existingPromo] = await db
-        .select()
-        .from(qbPromoCodes)
-        .where(eq(qbPromoCodes.ownerUserId, userId))
-        .limit(1);
+      // Pre-compute values that require external (non-transactional) calls before opening the tx.
+      const [subscriberUser] = await db.select().from(qbUsers).where(eq(qbUsers.id, userId)).limit(1);
+      const candidateCode = await generateUniqueReferralCode();
+      const candidateStripeIds = await createStripeCouponAndPromoCode({
+        code: candidateCode,
+        type: "fixed_amount",
+        amountOffCents: 2500,
+      });
 
-      if (existingPromo) {
-        if (!existingPromo.isActive) {
-          await db
-            .update(qbPromoCodes)
-            .set({ isActive: true, updatedAt: new Date() })
-            .where(eq(qbPromoCodes.id, existingPromo.id));
+      await db.transaction(async (tx) => {
+        const [existingPromo] = await tx
+          .select()
+          .from(qbPromoCodes)
+          .where(eq(qbPromoCodes.ownerUserId, userId))
+          .limit(1);
+
+        if (existingPromo) {
+          if (!existingPromo.isActive) {
+            await tx
+              .update(qbPromoCodes)
+              .set({ isActive: true, updatedAt: new Date() })
+              .where(eq(qbPromoCodes.id, existingPromo.id));
+          }
+          return;
         }
-      } else {
-        const [subscriberUser] = await db.select().from(qbUsers).where(eq(qbUsers.id, userId)).limit(1);
-        const code = await generateUniqueReferralCode();
-        const stripeIds = await createStripeCouponAndPromoCode({
-          code,
-          type: "fixed_amount",
-          amountOffCents: 2500,
-        });
-        await db.insert(qbPromoCodes).values({
-          code,
+
+        await tx.insert(qbPromoCodes).values({
+          code: candidateCode,
           isActive: true,
           type: "fixed_amount",
           amountOffCents: 2500,
@@ -618,10 +642,10 @@ async function handleSubscriptionCheckout(session: Stripe.Checkout.Session) {
           categoryIds: null,
           description: `Referral code — ${subscriberUser?.name || subscriberUser?.email || userId}`,
           ownerUserId: userId,
-          stripeCouponId: stripeIds.stripeCouponId,
-          stripePromotionCodeId: stripeIds.stripePromotionCodeId,
+          stripeCouponId: candidateStripeIds.stripeCouponId,
+          stripePromotionCodeId: candidateStripeIds.stripePromotionCodeId,
         });
-      }
+      });
     } catch (err) {
       console.error("[Stripe] Failed to create referral promo code:", err);
     }

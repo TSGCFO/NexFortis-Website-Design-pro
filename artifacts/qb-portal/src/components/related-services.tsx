@@ -15,12 +15,12 @@ export function RelatedServices({ slugs }: { slugs: string[] }) {
       >
         Related services
       </h2>
-      <div className="flex md:grid overflow-x-auto md:overflow-visible snap-x md:grid-cols-2 gap-4 pb-2 md:pb-0">
+      <div className="flex md:grid overflow-x-auto md:overflow-visible snap-x md:grid-cols-2 gap-4 pb-2 md:pb-0 max-w-full">
         {pages.map((p) => (
           <Link
             key={p.slug}
             href={`/landing/${p.slug}`}
-            className="snap-start min-w-[260px] md:min-w-0 block rounded-xl border border-border bg-card hover:border-accent transition-colors p-5 group"
+            className="snap-start min-w-[240px] sm:min-w-[260px] md:min-w-0 block rounded-xl border border-border bg-card hover:border-accent transition-colors p-5 group"
           >
             <div className="flex items-start justify-between gap-3">
               <h3 className="font-display font-semibold text-base text-foreground group-hover:text-accent transition-colors">

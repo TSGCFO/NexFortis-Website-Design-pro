@@ -7,6 +7,7 @@ import {
   qbReferralCredits,
   qbOrders,
   qbUsers,
+  qbSubscriptions,
 } from "@workspace/db/schema";
 import { eq, and, sql, or, count } from "drizzle-orm";
 import { requireAuth } from "./qb-portal";
@@ -21,8 +22,12 @@ interface PromoCatalogProduct {
   category_slug?: string;
 }
 let promoCatalogCache: PromoCatalogProduct[] | null = null;
+let promoCatalogCacheTime = 0;
+const PROMO_CATALOG_CACHE_TTL_MS = 5 * 60 * 1000;
 function getCatalogProducts(): PromoCatalogProduct[] {
-  if (promoCatalogCache) return promoCatalogCache;
+  if (promoCatalogCache && Date.now() - promoCatalogCacheTime < PROMO_CATALOG_CACHE_TTL_MS) {
+    return promoCatalogCache;
+  }
   try {
     const catalogPath = path.resolve(__dirname, "../../../../artifacts/qb-portal/public/products.json");
     const raw = JSON.parse(fs.readFileSync(catalogPath, "utf-8")) as { services?: PromoCatalogProduct[] };
@@ -30,6 +35,7 @@ function getCatalogProducts(): PromoCatalogProduct[] {
   } catch {
     promoCatalogCache = [];
   }
+  promoCatalogCacheTime = Date.now();
   return promoCatalogCache!;
 }
 function categoryOfProduct(productId: string): string | null {
@@ -392,17 +398,88 @@ export async function runRedemption(input: RedemptionInput): Promise<
         return { error: { code: "RACE_EXHAUSTED", message: "This promo code was just used by another customer and has reached its limit. Please complete your order at the standard price." } };
       }
 
-      // Re-validate remaining constraints via existing runValidation (read-only queries within tx)
-      const reValidate = await runValidation({
-        code: rawCode,
-        orderItems: items,
-        orderType,
-        userId,
-        guestEmail,
-      });
-      if (!reValidate.ok) {
-        return { error: { code: reValidate.errorCode, message: reValidate.errorMessage } };
+      // Per-customer usage check (using tx)
+      if (row.maxUsesPerCustomer != null && (userId || guestEmail)) {
+        const conds: any[] = [];
+        if (userId) conds.push(eq(qbPromoCodeRedemptions.userId, userId));
+        if (guestEmail) conds.push(eq(qbPromoCodeRedemptions.guestEmail, guestEmail.toLowerCase()));
+        const [r] = await tx
+          .select({ c: count() })
+          .from(qbPromoCodeRedemptions)
+          .where(and(eq(qbPromoCodeRedemptions.promoCodeId, row.id), conds.length > 1 ? or(...conds) : conds[0]));
+        if (Number(r?.c || 0) >= row.maxUsesPerCustomer) {
+          return { error: { code: "ALREADY_USED_MAX_TIMES", message: "You have already used this code the maximum number of times." } };
+        }
       }
+
+      // Email restriction (using tx)
+      if (row.restrictedToEmail) {
+        const callerEmail = (guestEmail || "").toLowerCase();
+        let authEmail = "";
+        if (userId) {
+          const [u] = await tx.select().from(qbUsers).where(eq(qbUsers.id, userId)).limit(1);
+          authEmail = (u?.email || "").toLowerCase();
+        }
+        if (row.restrictedToEmail.toLowerCase() !== callerEmail && row.restrictedToEmail.toLowerCase() !== authEmail) {
+          return { error: { code: "EMAIL_RESTRICTED", message: "This promo code is not valid for your account." } };
+        }
+      }
+
+      // Product match (pure function)
+      if (!productMatches(row, items)) {
+        return { error: { code: "PRODUCT_MISMATCH", message: "This code is not valid for the selected product(s)." } };
+      }
+
+      // Min order amount (pure function)
+      const baseSubtotal = computeBaseSubtotal(items);
+      if (row.minOrderAmountCents != null && baseSubtotal < row.minOrderAmountCents) {
+        return {
+          error: {
+            code: "MINIMUM_NOT_MET",
+            message: `This code requires a minimum order of ${formatCad(row.minOrderAmountCents)} CAD. Your current subtotal is ${formatCad(baseSubtotal)}.`,
+          },
+        };
+      }
+
+      // First-time customer check (using tx)
+      if (row.firstTimeCustomerOnly && (userId || guestEmail)) {
+        const conds2: any[] = [];
+        if (userId) conds2.push(eq(qbOrders.userId, userId));
+        if (guestEmail) conds2.push(eq(qbOrders.customerEmail, guestEmail));
+        const [r2] = await tx
+          .select({ c: count() })
+          .from(qbOrders)
+          .where(and(
+            conds2.length > 1 ? or(...conds2) : conds2[0],
+            or(eq(qbOrders.status, "paid"), eq(qbOrders.status, "processing"), eq(qbOrders.status, "completed"))!,
+          ));
+        if (Number(r2?.c || 0) > 0) {
+          return { error: { code: "FIRST_TIME_ONLY", message: "This promo code is for first-time customers only." } };
+        }
+      }
+
+      // Compute discounts (pure functions)
+      const launchActive = launchPromoActive();
+      let launchPromoCents = 0;
+      let codeDiscountCents = 0;
+      if (launchActive && orderType === "one_time") {
+        launchPromoCents = Math.floor((baseSubtotal * LAUNCH_PROMO_PERCENT) / 100);
+      }
+      if (launchPromoCents > 0 && !row.stackableWithLaunchPromo) {
+        const codeOnBase = computeDiscount(row, baseSubtotal);
+        if (codeOnBase > launchPromoCents) {
+          codeDiscountCents = codeOnBase;
+          launchPromoCents = 0;
+        } else {
+          codeDiscountCents = 0;
+        }
+      } else if (launchPromoCents > 0 && row.stackableWithLaunchPromo) {
+        const basis = row.appliesToBasePrice ? baseSubtotal : (baseSubtotal - launchPromoCents);
+        codeDiscountCents = Math.min(basis, computeDiscount(row, basis));
+      } else {
+        codeDiscountCents = computeDiscount(row, baseSubtotal);
+      }
+      const finalTotal = Math.max(0, baseSubtotal - launchPromoCents - codeDiscountCents);
 
       // Increment redemption count
       await tx.execute(
@@ -417,9 +494,9 @@ export async function runRedemption(input: RedemptionInput): Promise<
           userId: userId || null,
           guestEmail: guestEmail ? guestEmail.toLowerCase() : null,
           orderId,
-          discountAmountCents: reValidate.codeDiscountCents,
-          orderTotalBeforeCents: reValidate.baseSubtotal,
-          orderTotalAfterCents: reValidate.finalTotal,
+          discountAmountCents: codeDiscountCents,
+          orderTotalBeforeCents: baseSubtotal,
+          orderTotalAfterCents: finalTotal,
           ownerUserId: row.ownerUserId || null,
         })
         .returning();
@@ -429,10 +506,10 @@ export async function runRedemption(input: RedemptionInput): Promise<
         .update(qbOrders)
         .set({
           promoCodeId: row.id,
-          discountAmountAppliedCents: reValidate.codeDiscountCents + reValidate.launchPromoCents,
-          subtotalBeforeDiscountCents: reValidate.baseSubtotal,
-          paymentStatus: reValidate.finalTotal === 0 ? "free_promo" : null,
-          totalCad: reValidate.finalTotal,
+          discountAmountAppliedCents: codeDiscountCents + launchPromoCents,
+          subtotalBeforeDiscountCents: baseSubtotal,
+          paymentStatus: finalTotal === 0 ? "free_promo" : null,
+          totalCad: finalTotal,
           updatedAt: new Date(),
         })
         .where(eq(qbOrders.id, orderId));
@@ -451,9 +528,9 @@ export async function runRedemption(input: RedemptionInput): Promise<
 
       return {
         ok: true as const,
-        discountAmountCents: reValidate.codeDiscountCents,
-        launchPromoDiscountCents: reValidate.launchPromoCents,
-        finalOrderTotalCents: reValidate.finalTotal,
+        discountAmountCents: codeDiscountCents,
+        launchPromoDiscountCents: launchPromoCents,
+        finalOrderTotalCents: finalTotal,
         redemptionId: redRow.id,
         promoCodeRow: row,
       };
@@ -547,7 +624,6 @@ router.get("/referral-stats", requireAuth, async (req: Request, res: Response) =
     const userId = (req as any).userId as string;
 
     // Only return if user has active premium subscription
-    const { qbSubscriptions } = await import("@workspace/db/schema");
     const [sub] = await db
       .select()
       .from(qbSubscriptions)
@@ -586,7 +662,7 @@ router.get("/referral-stats", requireAuth, async (req: Request, res: Response) =
         appliedCreditsCents: appliedCents,
         redemptions: credits.map((c) => ({
           orderId: c.orderId ?? null,
-          subscriptionId: (c as any).subscriptionId ?? null,
+          subscriptionId: null,
           redeemedAt: (c.createdAt as Date).toISOString(),
           creditAmountCents: c.amountCents,
           status: c.status,

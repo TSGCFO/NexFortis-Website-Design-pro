@@ -1,0 +1,384 @@
+# Round 6 Fixes — 15 Issues from Prompts 09 + 11 Code Review
+
+This prompt fixes all issues found during the line-by-line review of the Prompt 09 (promo code system) and Prompt 11 (SEO landing pages) implementations. Fixes are grouped by file to minimize context-switching.
+
+## Step 0: Setup
+
+Read these files before making any changes:
+1. `replit.md` — project overview, architecture, conventions
+2. `docs/prompts/prompt-round6-fixes.md` — this file
+3. `lib/db/src/schema/qb-portal.ts` — current Drizzle schema
+4. `artifacts/qb-portal/src/components/landing-page-layout.tsx` — landing page layout
+5. `artifacts/api-server/src/routes/qb-promo.ts` — promo validation and redemption
+6. `artifacts/api-server/src/routes/qb-portal.ts` — checkout and subscription webhook
+
+**Do NOT modify any files in `docs/`.**
+
+**PLATFORM REMINDERS:**
+- Do NOT throw errors for missing env vars — use `console.warn` + `null`
+- Do NOT create migration files manually — use `drizzle-kit push` from `lib/db/`
+- Do NOT add `express.static()` to the API server
+- Verify Replit Secrets still exist after completing all steps
+
+---
+
+## Fix 1 — CRITICAL: Landing pages not mobile-responsive (CRIT-01)
+
+The landing pages render at 828px-1105px layout width on mobile devices instead of the actual device width (393px). Text overflows and gets cut off. Multiple elements force the layout viewport to expand beyond the screen.
+
+### 1a. Add overflow guard on landing page root
+
+In `artifacts/qb-portal/src/components/landing-page-layout.tsx`, the outermost `<div>` wrapping the entire landing page must prevent any child from expanding the layout viewport. Change the root container from:
+
+```
+<div className="bg-background">
+```
+
+to include `overflow-x-hidden` and `max-w-full`:
+
+```
+<div className="bg-background overflow-x-hidden max-w-full">
+```
+
+### 1b. Fix hero grid breakpoints
+
+In the same file, the hero section uses `lg:grid-cols-5`. On screens between approximately 768px-1023px (the `md` breakpoint range), this grid doesn't collapse — it tries to render 5 columns in a space too narrow. Change the hero grid from:
+
+```
+<div className="grid lg:grid-cols-5 gap-10 items-start">
+```
+
+to explicitly start as single-column and only go multi-column on large screens:
+
+```
+<div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-10 items-start">
+```
+
+### 1c. Fix main content grid breakpoints
+
+The content + sidebar section uses `lg:grid-cols-10`. Same issue — needs to start as single-column. Change from:
+
+```
+<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-10 gap-10">
+```
+
+to:
+
+```
+<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-10 gap-8 lg:gap-10">
+```
+
+### 1d. Fix Related Services horizontal overflow
+
+In `artifacts/qb-portal/src/components/related-services.tsx`, the flex container with `overflow-x-auto` and `min-w-[260px]` children can expand the parent beyond the viewport. Constrain the scroll container. Change from:
+
+```
+<div className="flex md:grid overflow-x-auto md:overflow-visible snap-x md:grid-cols-2 gap-4 pb-2 md:pb-0">
+```
+
+to add `max-w-full` on the container:
+
+```
+<div className="flex md:grid overflow-x-auto md:overflow-visible snap-x md:grid-cols-2 gap-4 pb-2 md:pb-0 max-w-full">
+```
+
+And on each related service card, change `min-w-[260px]` to a slightly smaller minimum that fits within a 375px viewport minus padding:
+
+```
+className="snap-start min-w-[260px] md:min-w-0 ...
+```
+
+to:
+
+```
+className="snap-start min-w-[240px] sm:min-w-[260px] md:min-w-0 ...
+```
+
+### 1e. Fix hero section padding on mobile
+
+The hero section has `py-12 lg:py-20` which is fine, but the text inside may overflow on very small screens. Ensure the hero H1 uses responsive font sizes that don't force horizontal expansion. The current classes `text-3xl md:text-4xl lg:text-5xl` are correct — verify they are not being overridden.
+
+### 1f. Fix the hero image panel visibility
+
+The hero image panel is `hidden lg:block` which is correct for mobile. No change needed here — just verify it is not contributing to layout width.
+
+### Verification for Fix 1
+
+After making all changes, open the Replit preview and:
+1. Use Chrome DevTools → Toggle Device Toolbar → Select iPhone 14 Pro (393px)
+2. Navigate to `/qb-portal/landing/enterprise-to-premier-conversion`
+3. Confirm the page renders at 393px width (check `window.innerWidth` in console — it should equal 393)
+4. Confirm no horizontal scroll bar appears
+5. Confirm text does not get cut off at the right edge
+6. Confirm the CTA button is visible above the fold
+7. Repeat for `/qb-portal/landing/quickbooks-file-too-large`
+
+> **⚠️ DO NOT:**
+> - Remove the `max-w-7xl` containers — they are correct for desktop
+> - Change the landing page to use a completely different layout — only fix the responsive breakpoints
+> - Add `overflow-hidden` (without the `-x`) — that would clip vertical content
+
+---
+
+## Fix 2 — CRITICAL: Missing FK on `qb_orders.promoCodeId` (CRIT-02)
+
+In `lib/db/src/schema/qb-portal.ts`, the `promoCodeId` column on the `qb_orders` table is missing its foreign key reference. Change line 31 from:
+
+```
+promoCodeId: integer("promo_code_id"),
+```
+
+to:
+
+```
+promoCodeId: integer("promo_code_id").references(() => qbPromoCodes.id),
+```
+
+Note: `qbPromoCodes` is defined later in the same file. Drizzle handles forward references via the arrow function syntax, so this will work even though `qbPromoCodes` is declared below `qbOrders`. However, if the TypeScript compiler complains about the reference before declaration, move the `qbPromoCodes` table definition ABOVE `qbOrders` in the file — OR use `sql` to define the FK constraint in the table's constraint callback instead.
+
+After making this change, run `drizzle-kit push` from `lib/db/` to apply the FK constraint.
+
+---
+
+## Fix 3 — IMPORTANT: Subscriber discount should stack with promo codes (IMP-01)
+
+In `artifacts/api-server/src/routes/qb-portal.ts`, the checkout endpoint (`/checkout/create-session`) currently applies subscriber discount ONLY when no promo code is present. Per the PRD, subscriber discounts are automatic tier-based discounts that always apply, and promo codes stack on top.
+
+Find the block that starts with:
+
+```
+// Subscriber tier discount: only for non-subscription orders, and only when no promo code applied
+let subscriberDiscountCents = 0;
+if (!promoRow && userId && !pricing.isSubscription) {
+```
+
+Change the condition from `if (!promoRow && userId && !pricing.isSubscription)` to:
+
+```
+if (userId && !pricing.isSubscription) {
+```
+
+Remove the `!promoRow &&` condition so subscriber discounts are always computed.
+
+Then, the promo code validation block (which runs before the subscriber discount block) needs to be aware of the subscriber discount. Reorder the logic so that:
+
+1. First, compute the subscriber discount on `pricing.total`
+2. Then, compute the promo code discount on the post-subscriber-discount subtotal
+
+To do this:
+1. Move the subscriber discount block ABOVE the promo code validation block
+2. In the promo validation block, pass the subscriber-adjusted total as `unitPriceCents` in the `orderItems` array, not the original `pricing.total`
+3. Update `serverComputedFinalTotal` to account for both discounts
+
+The final `serverComputedFinalTotal` should be:
+```
+serverComputedFinalTotal = pricing.total - subscriberDiscountCents - serverDiscountCents
+```
+
+Ensure the `totalDiscount` variable (used to set `discountAmountAppliedCents`) sums both:
+```
+const totalDiscount = serverDiscountCents + subscriberDiscountCents;
+```
+
+This is already the case — just verify it still works after reordering.
+
+> **⚠️ DO NOT:**
+> - Apply subscriber discount for subscription orders — the `!pricing.isSubscription` guard must stay
+> - Apply subscriber discount to the base price before launch promo — the `runValidation` function already handles launch promo stacking internally
+
+---
+
+## Fix 4 — IMPORTANT: runValidation called outside transaction (IMP-02)
+
+In `artifacts/api-server/src/routes/qb-promo.ts`, inside the `runRedemption` function, the `runValidation()` call at line ~396 executes outside the transaction context. The critical race-condition checks (max uses, per-customer limit) should use the transaction.
+
+Replace the call to `runValidation(...)` inside the transaction with inline checks using the `tx` parameter for the per-customer and first-time-customer validations. Specifically:
+
+1. Keep the `SELECT FOR UPDATE` lock and the initial checks on the locked row (isActive, expiresAt, maxUses) — these are already correct.
+
+2. Replace the `runValidation(...)` call with direct checks using `tx` instead of `db`:
+   - Per-customer usage check: query `qb_promo_code_redemptions` using `tx` for the user/email count
+   - Email restriction check: query `qb_users` using `tx` to get the authenticated user's email
+   - Product match check: call `productMatches(row, items)` directly (this is a pure function, no DB)
+   - Min order amount check: call `computeBaseSubtotal(items)` directly (pure function)
+   - First-time customer check: query `qb_orders` using `tx` for previous completed orders
+
+3. After all checks pass, compute the discount using the existing pure functions (`computeDiscount`, `launchPromoActive`, etc.)
+
+This ensures all validation reads happen within the same transaction, under the same lock.
+
+> **⚠️ DO NOT:**
+> - Remove the `SELECT FOR UPDATE` — it is critical for preventing double-redemption
+> - Remove the re-validation entirely — the locked row values must be re-checked
+> - Change the external `runValidation` function — other callers (validate endpoint) use it correctly
+
+---
+
+## Fix 5 — IMPORTANT: Guest users cannot call redeem endpoint (IMP-03)
+
+In `artifacts/api-server/src/routes/qb-promo.ts`, the `/redeem` endpoint at line 501 has `requireAuth` middleware. But guest checkout users (no Supabase session) need to redeem promo codes too.
+
+The best fix is to handle all promo redemption server-side in the checkout flow, not from the frontend. This is already done for free orders (the checkout endpoint calls `runRedemption` directly). Extend this to non-free orders:
+
+In `artifacts/api-server/src/routes/qb-portal.ts`, in the checkout endpoint, after creating the Stripe checkout session, if `promoRow` is set and the order is NOT free, call `runRedemption` server-side (just like the free order path). This way the frontend never needs to call `/api/qb/promo/redeem` directly.
+
+After adding server-side redemption for all promo orders, the client-side call in `artifacts/qb-portal/src/pages/order.tsx` (lines 216-231) that calls `/api/qb/promo/redeem` from the frontend becomes redundant. Remove that block or convert it to a no-op fallback.
+
+Keep the `/redeem` endpoint with `requireAuth` as-is for potential future use (admin tools, manual redemption), but the primary checkout flow should not depend on it.
+
+> **⚠️ DO NOT:**
+> - Remove `requireAuth` from the redeem endpoint — it should stay protected
+> - Remove the `runRedemption` function — it is the core redemption logic used by both paths
+
+---
+
+## Fix 6 — IMPORTANT: Footer grid overflow on medium screens (IMP-04)
+
+In `artifacts/qb-portal/src/components/layout.tsx`, the footer grid was changed to `lg:grid-cols-5` to accommodate the new "Popular services" column. On screens between 1024px-1280px, 5 columns is cramped.
+
+Change the footer grid from:
+
+```
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-12">
+```
+
+to:
+
+```
+<div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 lg:grid-cols-3 gap-10 mb-12">
+```
+
+This makes the 5-column layout only activate at the `xl` breakpoint (1280px+), while `lg` (1024px-1279px) uses 3 columns.
+
+---
+
+## Fix 7 — MEDIUM: Redundant unique constraint on promo code (MED-02)
+
+In `lib/db/src/schema/qb-portal.ts`, line 163, the `code` column has `.unique()` which creates a case-SENSITIVE unique constraint. But line 188 has a `uniqueIndex` on `LOWER(code)` which is the correct case-INSENSITIVE constraint. Having both is redundant and confusing.
+
+Remove the `.unique()` from line 163. Change from:
+
+```
+code: text("code").notNull().unique(),
+```
+
+to:
+
+```
+code: text("code").notNull(),
+```
+
+The `uniqueIndex("qb_promo_codes_code_lower_idx").on(sql`LOWER(${table.code})`)` at line 188 is the correct one and should remain.
+
+After this change, run `drizzle-kit push` to drop the redundant unique constraint.
+
+---
+
+## Fix 8 — MEDIUM: Referral webhook race condition (MED-05)
+
+In `artifacts/api-server/src/routes/qb-portal.ts`, in the `handleSubscriptionCheckout` function, the referral code creation for Premium subscribers has a check-then-insert pattern without a transaction. Wrap the entire referral code creation block (from the `// Promo-code-based referral code` comment through the closing `catch`) in a database transaction.
+
+Inside the transaction, use `tx.select()` and `tx.insert()` instead of `db.select()` and `db.insert()`. This ensures the existence check and insert are atomic.
+
+---
+
+## Fix 9 — MEDIUM: Catalog cache never invalidates (MED-04)
+
+In `artifacts/api-server/src/routes/qb-promo.ts`, the `promoCatalogCache` variable at line 23 is set once and never cleared. Add a TTL-based invalidation. Replace the simple cache with a timestamped cache that reloads after 5 minutes:
+
+Add a `promoCatalogCacheTime` variable alongside `promoCatalogCache`. In `getCatalogProducts()`, check if the cache is older than 5 minutes. If so, set `promoCatalogCache = null` to force a reload.
+
+---
+
+## Fix 10 — MINOR: Remove `maximum-scale=1` from viewport meta (MIN-04)
+
+In `artifacts/qb-portal/index.html`, line 5, change:
+
+```
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+```
+
+to:
+
+```
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+```
+
+This allows users to pinch-zoom on mobile, which is important for accessibility.
+
+---
+
+## Fix 11 — MINOR: Remove unnecessary dynamic import (MIN-02)
+
+In `artifacts/api-server/src/routes/qb-promo.ts`, line 550, replace the dynamic import:
+
+```
+const { qbSubscriptions } = await import("@workspace/db/schema");
+```
+
+with a reference to the already-imported module. Add `qbSubscriptions` to the existing import at the top of the file (line 4-10). It may already be available through the schema barrel export — check and use the static import.
+
+---
+
+## Fix 12 — MINOR: Remove invalid `subscriptionId` cast (MIN-03)
+
+In `artifacts/api-server/src/routes/qb-promo.ts`, line 589, the expression `(c as any).subscriptionId` references a column that does not exist on `qb_referral_credits`. This will always return `null`. Remove the `as any` cast and replace `(c as any).subscriptionId ?? null` with simply `null`.
+
+---
+
+## Fix 13 — Note: Related slugs referencing future pages (MIN-01)
+
+No code change needed. Several landing pages reference slugs in their `relatedSlugs` array that will be created in Prompt 12 (batch 2): `affordable-enterprise-conversion`, `how-conversion-works`, `quickbooks-conversion-canada`, `quickbooks-desktop-end-of-life`. The `RelatedServices` component correctly filters these out. These will resolve when batch 2 is implemented.
+
+---
+
+## Fix 14 — Note: Missing promo details in non-free order emails (MED-03)
+
+No code change needed in this prompt. This will be addressed when the email templates are enhanced in a future prompt. The current order confirmation email (sent via Stripe webhook) does not include promo code details, which is acceptable for the MVP.
+
+---
+
+## Fix 15 — Note: Global schema duplication risk (MED-01)
+
+No code change needed. The architecture is correct — global schemas at the app level, page-specific schemas at the landing page level. Add a comment in `App.tsx` near the `<GlobalSchemas />` component:
+
+```
+{/* Global JSON-LD schemas — Organization, WebSite, LocalBusiness. Landing pages add their own Service/FAQ/Breadcrumb schemas. Do NOT duplicate global schemas in individual pages. */}
+```
+
+---
+
+## Step Last: Sync Database and Verify
+
+After all code changes are complete:
+
+1. Run `drizzle-kit push` from the `lib/db/` directory to apply schema changes (FK on `qb_orders.promo_code_id`, removed redundant unique on `qb_promo_codes.code`).
+
+2. Verify the FK exists by querying:
+   ```sql
+   SELECT * FROM information_schema.table_constraints WHERE constraint_type = 'FOREIGN KEY' AND table_name = 'qb_orders';
+   ```
+
+3. Run the build command and confirm zero TypeScript errors.
+
+4. Open the Replit preview in Chrome DevTools mobile emulation (393px width) and verify landing pages are responsive.
+
+---
+
+## Summary of Files to Modify
+
+| File | Fixes |
+|------|-------|
+| `artifacts/qb-portal/src/components/landing-page-layout.tsx` | Fix 1a, 1b, 1c |
+| `artifacts/qb-portal/src/components/related-services.tsx` | Fix 1d |
+| `artifacts/qb-portal/index.html` | Fix 10 |
+| `lib/db/src/schema/qb-portal.ts` | Fix 2, Fix 7 |
+| `artifacts/api-server/src/routes/qb-portal.ts` | Fix 3, Fix 5, Fix 8 |
+| `artifacts/api-server/src/routes/qb-promo.ts` | Fix 4, Fix 9, Fix 11, Fix 12 |
+| `artifacts/qb-portal/src/components/layout.tsx` | Fix 6 |
+| `artifacts/qb-portal/src/App.tsx` | Fix 15 (comment only) |
+| `artifacts/qb-portal/src/pages/order.tsx` | Fix 5 (remove client-side redeem call) |
+
+**Do NOT create or modify:**
+- Any files in `docs/`
+- Any migration files in `lib/db/drizzle/` — use `drizzle-kit push` only

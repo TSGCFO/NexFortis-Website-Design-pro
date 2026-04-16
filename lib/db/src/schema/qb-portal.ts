@@ -28,7 +28,7 @@ export const qbOrders = pgTable("qb_orders", {
   customerPhone: text("customer_phone"),
   stripeSessionId: text("stripe_session_id"),
   uploadToken: text("upload_token"),
-  promoCodeId: integer("promo_code_id"),
+  promoCodeId: integer("promo_code_id").references(() => qbPromoCodes.id),
   discountAmountAppliedCents: integer("discount_amount_applied_cents").default(0),
   subtotalBeforeDiscountCents: integer("subtotal_before_discount_cents"),
   paymentStatus: text("payment_status"),
@@ -160,7 +160,7 @@ export const qbNotificationPreferences = pgTable("qb_notification_preferences", 
 
 export const qbPromoCodes = pgTable("qb_promo_codes", {
   id: serial("id").primaryKey(),
-  code: text("code").notNull().unique(),
+  code: text("code").notNull(),
   isActive: boolean("is_active").notNull().default(true),
   type: text("type").notNull(),
   percentOff: integer("percent_off"),

@@ -50,7 +50,7 @@ export function LandingPageLayout({
   }
 
   return (
-    <div className="bg-background">
+    <div className="bg-background overflow-x-hidden max-w-full">
       <SEO
         title={page.metaTitle}
         description={metaDescription}
@@ -64,7 +64,7 @@ export function LandingPageLayout({
           <div className="mb-5 text-white/70">
             <Breadcrumbs items={page.breadcrumbs} />
           </div>
-          <div className="grid lg:grid-cols-5 gap-10 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-10 items-start">
             <div className="lg:col-span-3">
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold font-display tracking-tight text-white leading-tight mb-5">
                 {page.h1}
@@ -107,7 +107,7 @@ export function LandingPageLayout({
 
       {/* Main content + sidebar */}
       <section className="py-12 lg:py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-10 gap-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-10 gap-8 lg:gap-10">
           <div className="lg:col-span-7 space-y-10">
             <div className="prose prose-neutral dark:prose-invert max-w-none">
               <h2 className="font-display font-bold text-2xl md:text-3xl text-foreground mt-0">

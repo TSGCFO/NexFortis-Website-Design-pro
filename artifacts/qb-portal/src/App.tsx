@@ -110,6 +110,7 @@ function App() {
         <TooltipProvider>
           <ThemeProvider>
             <AuthProvider>
+              {/* Global JSON-LD schemas — Organization, WebSite, LocalBusiness. Landing pages add their own Service/FAQ/Breadcrumb schemas. Do NOT duplicate global schemas in individual pages. */}
               <GlobalSchemas />
               <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
                 <Router />

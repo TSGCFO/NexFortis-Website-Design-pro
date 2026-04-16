@@ -240,7 +240,7 @@ export function Footer() {
       <div className="brand-accent-bar" aria-hidden="true" />
       <footer className="section-brand-navy pt-16 pb-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 lg:grid-cols-3 gap-10 mb-12">
             <div className="lg:col-span-1">
               <Link href="/" className="inline-block mb-4">
                 <img

@@ -213,23 +213,8 @@ export default function Order() {
       const createdOrderId = data.order?.id || data.orderId || null;
       setOrderId(createdOrderId);
 
-      if (appliedPromo && createdOrderId) {
-        try {
-          await fetch("/api/qb/promo/redeem", {
-            method: "POST",
-            headers,
-            body: JSON.stringify({
-              code: appliedPromo.code,
-              orderId: createdOrderId,
-              orderItems: orderItemsForPromo(),
-              orderType: "one_time",
-              guestEmail: user ? undefined : email,
-            }),
-          });
-        } catch {
-          // non-fatal — server-side sync will catch up
-        }
-      }
+      // Promo redemption is now handled server-side inside /checkout/create-session.
+      // No client-side /api/qb/promo/redeem call needed.
 
       if (file && createdOrderId && showFileUpload) {
         const formData = new FormData(); formData.append("file", file);
