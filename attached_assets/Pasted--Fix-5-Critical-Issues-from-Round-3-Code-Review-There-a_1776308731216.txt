@@ -1,0 +1,142 @@
+# Fix 5 Critical Issues from Round 3 Code Review
+
+There are 5 critical bugs that need to be fixed across 4 files. Fix them in order. After each fix, run `pnpm typecheck` to confirm no TypeScript errors.
+
+Do NOT modify any files in `docs/`.
+
+---
+
+## Fix 1: Storage path uses "anonymous" for upload-token uploads
+
+**File:** `artifacts/api-server/src/routes/qb-portal.ts`, around line 513
+
+**Current code:**
+The upload handler sets `const ownerId = userId || "anonymous"` for the Supabase Storage path. When a customer uploads via `x-upload-token` instead of Bearer JWT, `userId` is null and files get stored under `anonymous/{orderId}/...`. This breaks per-user file isolation in Supabase Storage.
+
+**Fix:** The order record (variable `order`) is already fetched from the database at this point and it has a `userId` field (the order owner). Replace the `ownerId` line with:
+
+`const ownerId = userId || order.userId || "anonymous";`
+
+This way, when the uploader authenticates via upload-token, the file still gets stored under the actual order owner's user ID. The "anonymous" fallback should only trigger for guest checkout orders where even the order has no userId (which should be rare).
+
+**Verify:** After fixing, search the file for the string "anonymous" — it should only appear in this one fallback location, and the primary path should use `order.userId`.
+
+---
+
+## Fix 2: storageAvailable race condition on cold start
+
+**File:** `artifacts/api-server/src/lib/supabase.ts`, around lines 24-44
+
+**Current code:**
+`storageAvailable` starts as `false` and is set to `true` by the fire-and-forget async function `verifyStorageBucket()`. Any upload request that arrives before the verification completes gets a 503 "Storage service not configured" error, even when storage is perfectly healthy.
+
+**Fix:** Change the approach to lazy verification. Instead of checking a pre-computed flag, verify on the first upload request and cache the result. Replace the `storageAvailable` flag and `verifyStorageBucket` function with:
+
+1. Remove the `let storageAvailable = false` variable
+2. Remove the `verifyStorageBucket()` function and its fire-and-forget call
+3. Replace `isStorageAvailable()` with an async function that does the check lazily:
+   - On first call, do the bucket list check and cache the result
+   - On subsequent calls, return the cached result immediately
+   - If the check fails, return false (not cached, so it retries next request)
+
+The upload handler in qb-portal.ts that calls `isStorageAvailable()` will need to await it since it's now async. Find the line `if (!isStorageAvailable() || !supabaseAdmin)` and change it to `if (!(await isStorageAvailable()) || !supabaseAdmin)`.
+
+**Verify:** The upload handler should now work on cold start without a race window.
+
+---
+
+## Fix 3: Download route uses inline auth instead of requireAuth middleware
+
+**File:** `artifacts/api-server/src/routes/qb-portal.ts`, the route at `router.get("/orders/:id/files/:fileId/download", ...)`
+
+**Current code:**
+The download route implements its own auth logic inline — reading the Bearer token, calling `supabase.auth.getUser()`, checking upload tokens, etc. This duplicates what `requireAuth` already does, and it also accepts upload-token auth for downloads which is NOT in the spec. Upload tokens should only be valid for uploads, not downloads.
+
+**Fix:**
+1. Add `requireAuth` middleware to the download route: change the route declaration from `router.get("/orders/:id/files/:fileId/download", async (req, res) => {` to `router.get("/orders/:id/files/:fileId/download", requireAuth, async (req, res) => {`
+2. Remove all the inline auth logic at the top of the handler (the authHeader parsing, supabaseAdmin.auth.getUser call, uploadTokenHeader check, userId/isOperator variables). After `requireAuth` runs, `req.userId` and `req.userRole` are already populated.
+3. Use `req.userId` directly for the order ownership check and `req.userRole === "operator"` for the operator bypass.
+4. Remove the upload-token auth path entirely from this route — upload tokens are for uploads only.
+5. For the operator AAL2 check, you can keep the inline JWT decode for the `aal` claim since `requireOperator` is not applied to this route (regular customers also need to download).
+
+The simplified handler should:
+- Get `req.userId` from requireAuth
+- Check if `req.userRole === "operator"` (with optional AAL2 check for extra security)
+- If operator: query the order without user filter
+- If regular user: query the order with `userId` filter
+- Fetch the file record, check expiry, generate signed URL, redirect
+
+**Verify:** Test that `GET /api/qb/orders/1/files/1/download` without auth returns 401 (from requireAuth, not inline code).
+
+---
+
+## Fix 4: requireOperator catch returns 403 for infrastructure errors
+
+**File:** `artifacts/api-server/src/routes/qb-portal.ts`, the `requireOperator` middleware, around line 171
+
+**Current code:**
+The catch block in requireOperator returns 403 for ALL errors, including unexpected errors that could indicate infrastructure problems. The 403 status code tells the client "your credentials are wrong" when the real issue might be "the service is down."
+
+**Fix:** In the catch block, check if the error is a JSON parse error (from decoding the JWT payload). If it is, return 403 (the token is malformed — that's an auth error). For all other errors, return 503 with the message "Auth service unavailable. Please try again."
+
+Change the catch block from:
+```
+} catch {
+  res.status(403).json({ error: "MFA verification required..." });
+  return;
+}
+```
+
+To something that distinguishes error types:
+```
+} catch (err) {
+  if (err instanceof SyntaxError) {
+    res.status(403).json({ error: "MFA verification required. Please complete your two-factor authentication." });
+  } else {
+    console.error("requireOperator error:", err);
+    res.status(503).json({ error: "Auth service unavailable. Please try again." });
+  }
+  return;
+}
+```
+
+**Verify:** The catch block should now have two paths: SyntaxError → 403, everything else → 503.
+
+---
+
+## Fix 5: MFA pages flash content before auth redirect
+
+**File 1:** `artifacts/qb-portal/src/pages/admin/mfa-enroll.tsx`
+**File 2:** `artifacts/qb-portal/src/pages/admin/mfa-challenge.tsx`
+
+**Current code:**
+Both MFA pages check the session inside a `useEffect`, which means the component's JSX renders once before the effect runs and redirects unauthenticated users. For a brief frame, unauthenticated users see the MFA page content.
+
+**Fix:** In both files, add an early return with a loading spinner BEFORE the main JSX return. Right after the hooks are defined and before the main render, add:
+
+```
+if (authLoading || !session) {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-[#0A1628]">
+      <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#B76E79]" />
+    </div>
+  );
+}
+```
+
+This blocks rendering until the auth state is resolved. The useEffect still handles the redirect logic, but now the user sees a spinner instead of the MFA form content during that first frame.
+
+Place this early return AFTER the hooks but BEFORE any conditional JSX in both files. In mfa-enroll.tsx, place it right before the `if (alreadyEnrolled)` check. In mfa-challenge.tsx, place it right before the `if (state === "loading")` check.
+
+**Verify:** Both MFA pages should show a spinner for unauthenticated users, never the form content.
+
+---
+
+## After all 5 fixes
+
+1. Run `pnpm typecheck` — zero errors
+2. Verify Replit Secrets are still present
+3. Open the Replit preview and confirm:
+   - QB Portal loads at /qb-portal/
+   - Order page loads at /qb-portal/order
+   - API healthcheck at /api/healthz returns 200
