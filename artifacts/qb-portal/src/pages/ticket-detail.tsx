@@ -95,6 +95,7 @@ export default function TicketDetailPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [replyText, setReplyText] = useState("");
+  const [replyFile, setReplyFile] = useState<File | null>(null);
   const [sending, setSending] = useState(false);
 
   const fetchData = useCallback(async () => {
@@ -143,13 +144,18 @@ export default function TicketDetailPage() {
 
     setSending(true);
     try {
+      const formData = new FormData();
+      formData.append("message", replyText.trim());
+      if (replyFile) {
+        formData.append("attachment", replyFile);
+      }
+
       const res = await fetch(`/api/qb/tickets/${ticket.id}/replies`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ message: replyText.trim() }),
+        body: formData,
       });
 
       if (!res.ok) {
@@ -159,6 +165,7 @@ export default function TicketDetailPage() {
       }
 
       setReplyText("");
+      setReplyFile(null);
       toast({ title: "Reply sent" });
       await fetchData();
     } catch {
@@ -306,6 +313,27 @@ export default function TicketDetailPage() {
                   rows={4}
                   className="w-full border border-gray-200 rounded-lg p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#B76E79]/30 focus:border-[#B76E79] mb-3"
                 />
+                <div className="flex items-center gap-3 mb-3">
+                  <label className="inline-flex items-center gap-1 text-xs text-gray-500 cursor-pointer hover:text-[#B76E79]">
+                    <Paperclip className="w-3.5 h-3.5" />
+                    <span>{replyFile ? replyFile.name : "Attach file"}</span>
+                    <input
+                      type="file"
+                      className="hidden"
+                      accept=".pdf,.png,.jpg,.jpeg,.gif,.doc,.docx,.xlsx,.csv,.txt,.qbm,.qbb,.qbw"
+                      onChange={e => setReplyFile(e.target.files?.[0] || null)}
+                    />
+                  </label>
+                  {replyFile && (
+                    <button
+                      type="button"
+                      onClick={() => setReplyFile(null)}
+                      className="text-xs text-red-500 hover:underline"
+                    >
+                      Remove
+                    </button>
+                  )}
+                </div>
                 <button
                   onClick={handleSendReply}
                   disabled={sending || !replyText.trim()}

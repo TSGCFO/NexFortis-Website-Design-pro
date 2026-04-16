@@ -1,7 +1,26 @@
+import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { CheckCircle, Shield, Download } from "lucide-react";
+import { CheckCircle, Shield, Download, Clock } from "lucide-react";
+
+function isCurrentlyAfterHours(): boolean {
+  const now = new Date();
+  const et = new Intl.DateTimeFormat("en-US", {
+    timeZone: "America/Toronto",
+    hour: "numeric",
+    hour12: false,
+    weekday: "short",
+  }).formatToParts(now);
+
+  const hourPart = et.find(p => p.type === "hour");
+  const dayPart = et.find(p => p.type === "weekday");
+  const hour = parseInt(hourPart?.value || "0");
+  const day = dayPart?.value || "";
+
+  const isWeekend = day === "Sat" || day === "Sun";
+  return isWeekend || hour < 9 || hour >= 17;
+}
 
 interface Order {
   id: number;
@@ -82,9 +101,27 @@ export function SupportTab(props: SupportProps) {
   const { tickets, ticketSubject, setTicketSubject, ticketMessage, setTicketMessage,
     ticketSubmitted, setTicketSubmitted, onSubmit } = props;
 
+  const [afterHours, setAfterHours] = useState(false);
+
+  useEffect(() => {
+    setAfterHours(isCurrentlyAfterHours());
+    const interval = setInterval(() => setAfterHours(isCurrentlyAfterHours()), 60000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div>
       <h2 className="text-lg font-bold font-display text-primary mb-4">Support</h2>
+      {afterHours && (
+        <Card className="mb-4 border-amber-200 bg-amber-50 dark:border-amber-800 dark:bg-amber-900/20">
+          <CardContent className="p-4 flex items-center gap-3">
+            <Clock className="w-5 h-5 text-amber-600 dark:text-amber-400 flex-shrink-0" />
+            <p className="text-sm text-amber-800 dark:text-amber-300">
+              Our team is currently offline. Business hours are Mon–Fri, 9 AM – 5 PM ET. Tickets submitted now will receive a response on the next business day.
+            </p>
+          </CardContent>
+        </Card>
+      )}
       {ticketSubmitted ? (
         <Card>
           <CardContent className="p-8 text-center">

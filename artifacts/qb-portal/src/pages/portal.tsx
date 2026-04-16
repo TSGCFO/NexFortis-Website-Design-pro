@@ -50,7 +50,7 @@ export default function Portal() {
   const fetchTickets = useCallback(async () => {
     try {
       const headers = await apiHeaders();
-      const res = await fetch("/api/qb/support-tickets", { headers });
+      const res = await fetch("/api/qb/tickets", { headers });
       if (res.ok) { const data = await res.json(); setTickets(data.tickets || []); }
     } catch { /* ignore */ }
   }, []);
@@ -74,7 +74,7 @@ export default function Portal() {
     e.preventDefault();
     try {
       const headers = await apiHeaders();
-      const res = await fetch("/api/qb/support-tickets", { method: "POST", headers, body: JSON.stringify({ subject: ticketSubject, message: ticketMessage }) });
+      const res = await fetch("/api/qb/tickets", { method: "POST", headers, body: JSON.stringify({ subject: ticketSubject, message: ticketMessage }) });
       if (res.ok) { setTicketSubmitted(true); setTicketSubject(""); setTicketMessage(""); fetchTickets(); }
     } catch { /* ignore */ }
   };

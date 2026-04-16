@@ -1,4 +1,5 @@
 import { Router, type Request, type Response } from "express";
+import multer from "multer";
 import { db } from "@workspace/db";
 import {
   qbSubscriptions,
@@ -11,6 +12,31 @@ import { eq, and, desc, sql, asc, ilike, or, isNull, isNotNull, gte, lte, count 
 import sanitizeHtml from "sanitize-html";
 import { getSlaStatus, getTimeRemainingMinutes } from "../lib/business-hours";
 import { emitTicketNotification } from "../lib/ticket-notifications";
+import { supabaseAdmin } from "../lib/supabase";
+
+const TICKET_BUCKET = "ticket-attachments";
+
+const adminReplyUpload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 10 * 1024 * 1024 },
+});
+
+async function uploadAdminAttachment(ticketId: number, file: Express.Multer.File): Promise<string | null> {
+  if (!supabaseAdmin) return null;
+  const ext = file.originalname.split(".").pop() || "bin";
+  const storagePath = `ticket-${ticketId}/reply-${Date.now()}.${ext}`;
+  const { error } = await supabaseAdmin.storage
+    .from(TICKET_BUCKET)
+    .upload(storagePath, file.buffer, {
+      contentType: file.mimetype,
+      upsert: false,
+    });
+  if (error) {
+    console.warn(`[Admin Tickets] Attachment upload failed: ${error.message}`);
+    return null;
+  }
+  return storagePath;
+}
 
 const router = Router();
 
@@ -393,83 +419,101 @@ router.get("/tickets/:id", async (req: Request, res: Response) => {
   }
 });
 
-router.post("/tickets/:id/reply", async (req: Request, res: Response) => {
-  try {
-    const ticketId = parseInt(req.params.id as string);
-    if (isNaN(ticketId)) {
-      res.status(400).json({ error: "Invalid ticket ID" });
+router.post("/tickets/:id/reply", (req: Request, res: Response) => {
+  const singleUpload = adminReplyUpload.single("attachment");
+  singleUpload(req, res, async (uploadErr) => {
+    if (uploadErr) {
+      if (uploadErr instanceof multer.MulterError && uploadErr.code === "LIMIT_FILE_SIZE") {
+        res.status(413).json({ error: "Attachment too large. Maximum size is 10MB." });
+      } else {
+        res.status(400).json({ error: uploadErr.message || "Upload failed" });
+      }
       return;
     }
 
-    const { reply, internalNote, status } = req.body;
-    if (!reply) {
-      res.status(400).json({ error: "Reply is required" });
-      return;
+    try {
+      const ticketId = parseInt(req.params.id as string);
+      if (isNaN(ticketId)) {
+        res.status(400).json({ error: "Invalid ticket ID" });
+        return;
+      }
+
+      const { reply, internalNote, status } = req.body;
+      if (!reply) {
+        res.status(400).json({ error: "Reply is required" });
+        return;
+      }
+
+      const [ticket] = await db
+        .select()
+        .from(qbSupportTickets)
+        .where(eq(qbSupportTickets.id, ticketId))
+        .limit(1);
+
+      if (!ticket) {
+        res.status(404).json({ error: "Ticket not found" });
+        return;
+      }
+
+      const operatorId = req.userId!;
+
+      let attachmentPath: string | null = null;
+      if (req.file) {
+        attachmentPath = await uploadAdminAttachment(ticketId, req.file);
+      }
+
+      await db.insert(qbTicketReplies).values({
+        ticketId,
+        senderId: operatorId,
+        senderRole: "operator",
+        message: sanitizeInput(reply),
+        attachmentPath,
+      });
+
+      const updates: Partial<{
+        operatorReply: string;
+        updatedAt: Date;
+        firstResponseAt: Date;
+        internalNote: string;
+        status: string;
+      }> = {
+        operatorReply: sanitizeInput(reply),
+        updatedAt: new Date(),
+      };
+
+      if (!ticket.firstResponseAt) {
+        updates.firstResponseAt = new Date();
+        console.log(`[SLA] Ticket ${ticketId} first response at ${new Date().toISOString()}, SLA deadline was ${ticket.slaDeadline?.toISOString()}`);
+      }
+
+      if (internalNote) {
+        updates.internalNote = sanitizeInput(internalNote);
+      }
+
+      if (status && VALID_TICKET_TRANSITIONS[ticket.status]?.includes(status)) {
+        updates.status = status;
+        console.log(`[AUDIT] Ticket ${ticketId} status changed to ${status} by operator ${operatorId}`);
+      } else if (ticket.status === "open") {
+        updates.status = "in_progress";
+      }
+
+      const [updated] = await db
+        .update(qbSupportTickets)
+        .set(updates)
+        .where(eq(qbSupportTickets.id, ticketId))
+        .returning();
+
+      await emitTicketNotification("operator_replied", ticketId, ticket.userId!, {
+        subject: ticket.subject,
+        replyPreview: reply.substring(0, 200),
+      });
+
+      res.json({ ticket: updated });
+    } catch (err) {
+      console.error("Admin ticket reply error:", err);
+      res.status(500).json({ error: "Failed to reply to ticket" });
     }
-
-    const [ticket] = await db
-      .select()
-      .from(qbSupportTickets)
-      .where(eq(qbSupportTickets.id, ticketId))
-      .limit(1);
-
-    if (!ticket) {
-      res.status(404).json({ error: "Ticket not found" });
-      return;
-    }
-
-    const operatorId = req.userId!;
-
-    await db.insert(qbTicketReplies).values({
-      ticketId,
-      senderId: operatorId,
-      senderRole: "operator",
-      message: sanitizeInput(reply),
-    });
-
-    const updates: Partial<{
-      operatorReply: string;
-      updatedAt: Date;
-      firstResponseAt: Date;
-      internalNote: string;
-      status: string;
-    }> = {
-      operatorReply: sanitizeInput(reply),
-      updatedAt: new Date(),
-    };
-
-    if (!ticket.firstResponseAt) {
-      updates.firstResponseAt = new Date();
-      console.log(`[SLA] Ticket ${ticketId} first response at ${new Date().toISOString()}, SLA deadline was ${ticket.slaDeadline?.toISOString()}`);
-    }
-
-    if (internalNote) {
-      updates.internalNote = sanitizeInput(internalNote);
-    }
-
-    if (status && VALID_TICKET_TRANSITIONS[ticket.status]?.includes(status)) {
-      updates.status = status;
-      console.log(`[AUDIT] Ticket ${ticketId} status changed to ${status} by operator ${operatorId}`);
-    } else if (ticket.status === "open") {
-      updates.status = "in_progress";
-    }
-
-    const [updated] = await db
-      .update(qbSupportTickets)
-      .set(updates)
-      .where(eq(qbSupportTickets.id, ticketId))
-      .returning();
-
-    await emitTicketNotification("operator_replied", ticketId, ticket.userId!, {
-      subject: ticket.subject,
-      replyPreview: reply.substring(0, 200),
-    });
-
-    res.json({ ticket: updated });
-  } catch (err) {
-    console.error("Admin ticket reply error:", err);
-    res.status(500).json({ error: "Failed to reply to ticket" });
-  }
+  });
 });
 
 router.patch("/tickets/:id/status", async (req: Request, res: Response) => {

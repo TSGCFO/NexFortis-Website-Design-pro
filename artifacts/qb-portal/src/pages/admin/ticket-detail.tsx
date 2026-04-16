@@ -78,6 +78,7 @@ function TicketDetailContent() {
   const [error, setError] = useState("");
 
   const [replyText, setReplyText] = useState("");
+  const [replyFile, setReplyFile] = useState<File | null>(null);
   const [internalNote, setInternalNote] = useState("");
   const [saving, setSaving] = useState(false);
   const [statusUpdating, setStatusUpdating] = useState("");
@@ -127,9 +128,14 @@ function TicketDetailContent() {
     if (!ticket || !replyText.trim()) return;
     setSaving(true);
     try {
+      const formData = new FormData();
+      formData.append("reply", replyText.trim());
+      if (replyFile) {
+        formData.append("attachment", replyFile);
+      }
       const res = await adminFetch(`/tickets/${ticket.id}/reply`, {
         method: "POST",
-        body: JSON.stringify({ reply: replyText.trim() }),
+        body: formData,
       });
       if (!res.ok) {
         const data = await res.json();
@@ -137,6 +143,7 @@ function TicketDetailContent() {
         return;
       }
       setReplyText("");
+      setReplyFile(null);
       toast({ title: "Reply sent" });
       await fetchTicket();
     } catch {
@@ -364,6 +371,27 @@ function TicketDetailContent() {
               rows={4}
               className="w-full border border-gray-200 rounded-lg p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#B76E79]/30 focus:border-[#B76E79] mb-3"
             />
+            <div className="flex items-center gap-3 mb-3">
+              <label className="inline-flex items-center gap-1 text-xs text-gray-500 cursor-pointer hover:text-[#B76E79]">
+                <Paperclip className="w-3.5 h-3.5" />
+                <span>{replyFile ? replyFile.name : "Attach file"}</span>
+                <input
+                  type="file"
+                  className="hidden"
+                  accept=".pdf,.png,.jpg,.jpeg,.gif,.doc,.docx,.xlsx,.csv,.txt,.qbm,.qbb,.qbw"
+                  onChange={e => setReplyFile(e.target.files?.[0] || null)}
+                />
+              </label>
+              {replyFile && (
+                <button
+                  type="button"
+                  onClick={() => setReplyFile(null)}
+                  className="text-xs text-red-500 hover:underline"
+                >
+                  Remove
+                </button>
+              )}
+            </div>
             <button
               onClick={handleSendReply}
               disabled={saving || !replyText.trim()}
