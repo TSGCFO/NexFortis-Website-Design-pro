@@ -1,15 +1,15 @@
 # Launcher: Prompt 03B — MFA Enrollment + AAL2 Enforcement
 
-Your task is to add TOTP-based MFA enrollment and AAL2 enforcement for the admin panel. Your PRIMARY INSTRUCTIONS are in `docs/prompts/prompt-03b-mfa-enrollment-aal2.md` — that file tells you exactly what to build, step by step (Steps 0–6). Follow it precisely.
+Add TOTP-based MFA for the admin panel. PRIMARY INSTRUCTIONS: `docs/prompts/prompt-03b-mfa-enrollment-aal2.md` — follow Steps 0–6 precisely.
 
-PREREQUISITE: Prompt 03 must be complete — Supabase client, auth context, and `requireOperator` middleware must already exist. If they don't, stop and report.
+PREREQUISITE: Prompt 03 must be complete — Supabase client, auth context, `requireOperator` middleware must exist. If not, stop and report.
 
-Before starting, read these files for context (do NOT modify them):
-- `replit.md` — project conventions and architecture.
-- `docs/prd/qb-portal/feature-security-auth-storage.md` — sections 8.2–8.3 (MFA requirements).
+Before starting, read these files (do NOT modify them):
+- `replit.md` — read the ENTIRE file, especially "Replit Platform Constraints & Implementation Rules". It documents anti-patterns that caused bugs in previous tasks.
+- `docs/prd/qb-portal/feature-security-auth-storage.md` — sections 8.2–8.3.
 
-Then open `docs/prompts/prompt-03b-mfa-enrollment-aal2.md` and execute Steps 0 through 6 in order.
+Then execute Steps 0–6 in order. Pay close attention to every "COMMON MISTAKE" warning block in the prompt — these are real bugs from prior tasks.
 
-6 steps: MFA enrollment page (QR + manual secret + verify), MFA challenge page (AAL check + auto-focused TOTP input), admin layout guard (AAL2 on every render), backend requireOperator upgrade (403 when not AAL2), route registration + robots.txt, full verification.
+6 steps: MFA enrollment page (QR + manual secret + verify), MFA challenge page (3-way AAL state check), admin layout guard (AAL2 every render), backend requireOperator upgrade (403 when not AAL2), route registration + robots.txt, full verification.
 
-Do not modify any files in `docs/`.
+Do not modify `docs/`. After finishing, run all verification checks in the prompt AND in replit.md Section 7.

@@ -1,16 +1,15 @@
 # Launcher: Prompt 04 — Order Flow + Supabase Storage
 
-Your task is to build the order flow and migrate file uploads to Supabase Storage. Your PRIMARY INSTRUCTIONS are in `docs/prompts/prompt-04-order-flow-supabase-storage.md` — that file tells you exactly what to build, step by step (Steps 0–9). Follow it precisely.
+Build the order flow and migrate file uploads to Supabase Storage. PRIMARY INSTRUCTIONS: `docs/prompts/prompt-04-order-flow-supabase-storage.md` — follow Steps 0–9 precisely.
 
-PREREQUISITE: Prompt 03 must be complete — Supabase client, `requireAuth` middleware, and schema migration must already exist. If they don't, stop and report.
+PREREQUISITE: Prompt 03 must be complete — Supabase client, `requireAuth` middleware, schema migration must exist. If not, stop and report.
 
-Before starting, read these files for context (do NOT modify them):
-- `replit.md` — project conventions and architecture.
-- `docs/prd/qb-portal/feature-security-auth-storage.md` — Section 8.3 (storage requirements).
-- `docs/implementation-plan.md` — dependency graph.
+Before starting, read these files (do NOT modify them):
+- `replit.md` — read the ENTIRE file, especially "Replit Platform Constraints & Implementation Rules". It documents anti-patterns from previous tasks.
+- `docs/prd/qb-portal/feature-security-auth-storage.md` — Section 8.3.
 
-Then open `docs/prompts/prompt-04-order-flow-supabase-storage.md` and execute Steps 0 through 9 in order.
+Then execute Steps 0–9 in order. Pay close attention to every "COMMON MISTAKE" warning block — these are real bugs from prior tasks. The upload route supports Bearer AND upload-token auth — do NOT add requireAuth to it.
 
-9 steps: order form updates (product IDs, file types, volume packs), verify storage bucket, migrate uploads to Supabase Storage, OLE2 magic byte validation, signed download URLs, upload token header, pg_cron 7-day auto-delete, expired-file UI, full verification.
+9 steps: order form updates, storage bucket, Supabase Storage migration, OLE2 validation, signed downloads, upload token, pg_cron auto-delete, expired-file UI, verification.
 
-Do not modify any files in `docs/`.
+Do not modify `docs/`. After finishing, run all verification checks in the prompt AND in replit.md Section 7.
