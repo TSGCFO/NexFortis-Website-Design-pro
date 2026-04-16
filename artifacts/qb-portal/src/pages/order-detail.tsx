@@ -244,7 +244,7 @@ export default function OrderDetail() {
                             <Download className="w-3 h-3" /> {downloading === f.id ? "..." : "Download"}
                           </Button>
                         ) : (
-                          <Link href="/login">
+                          <Link href={`/login?returnTo=${encodeURIComponent(`/order/${id}${uploadTokenParam ? `?uploadToken=${encodeURIComponent(uploadTokenParam)}` : ""}`)}`}>
                             <span className="text-xs text-accent hover:underline cursor-pointer flex items-center gap-1">
                               <Download className="w-3 h-3" /> Sign in to download
                             </span>

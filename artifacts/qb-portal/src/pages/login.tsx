@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Link, useLocation } from "wouter";
+import { Link, useLocation, useSearch } from "wouter";
 import { useAuth } from "@/lib/auth";
+import { sanitizeReturnTo } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { SEO } from "@/components/seo";
@@ -34,6 +35,8 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const { signIn, signInWithGoogle, signInWithMicrosoft } = useAuth();
   const [, navigate] = useLocation();
+  const searchString = useSearch();
+  const returnTo = sanitizeReturnTo(new URLSearchParams(searchString).get("returnTo"));
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,10 +45,20 @@ export default function Login() {
     const result = await signIn(email, password);
     setLoading(false);
     if (result.ok) {
-      navigate("/portal");
+      navigate(returnTo);
     } else {
       setError(result.error || "Login failed");
     }
+  };
+
+  const handleGoogleSignIn = () => {
+    sessionStorage.setItem("authReturnTo", returnTo);
+    signInWithGoogle();
+  };
+
+  const handleMicrosoftSignIn = () => {
+    sessionStorage.setItem("authReturnTo", returnTo);
+    signInWithMicrosoft();
   };
 
   return (
@@ -65,7 +78,7 @@ export default function Login() {
                 type="button"
                 variant="outline"
                 className="w-full gap-3 font-medium"
-                onClick={signInWithGoogle}
+                onClick={handleGoogleSignIn}
               >
                 <GoogleIcon />
                 Sign in with Google
@@ -74,7 +87,7 @@ export default function Login() {
                 type="button"
                 variant="outline"
                 className="w-full gap-3 font-medium"
-                onClick={signInWithMicrosoft}
+                onClick={handleMicrosoftSignIn}
               >
                 <MicrosoftIcon />
                 Sign in with Microsoft

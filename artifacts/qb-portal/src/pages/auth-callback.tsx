@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, Link } from "wouter";
 import { useAuth } from "@/lib/auth";
+import { sanitizeReturnTo } from "@/lib/utils";
 import { Loader2, AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SEO } from "@/components/seo";
@@ -14,6 +15,7 @@ export default function AuthCallback() {
     const params = new URLSearchParams(window.location.hash.substring(1));
     const errorParam = params.get("error_description") || params.get("error");
     if (errorParam) {
+      sessionStorage.removeItem("authReturnTo");
       setError(errorParam);
       return;
     }
@@ -21,6 +23,7 @@ export default function AuthCallback() {
     const searchParams = new URLSearchParams(window.location.search);
     const searchError = searchParams.get("error_description") || searchParams.get("error");
     if (searchError) {
+      sessionStorage.removeItem("authReturnTo");
       setError(searchError);
       return;
     }
@@ -28,7 +31,9 @@ export default function AuthCallback() {
 
   useEffect(() => {
     if (!loading && user && !error) {
-      navigate("/portal");
+      const returnTo = sanitizeReturnTo(sessionStorage.getItem("authReturnTo"));
+      sessionStorage.removeItem("authReturnTo");
+      navigate(returnTo);
     }
   }, [user, loading, error, navigate]);
 
