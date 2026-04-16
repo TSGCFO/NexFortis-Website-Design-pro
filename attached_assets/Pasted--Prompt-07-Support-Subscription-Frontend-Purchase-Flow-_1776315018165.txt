@@ -1,0 +1,282 @@
+# Prompt 07: Support Subscription Frontend — Purchase Flow, Portal Tab, Tier Management
+
+This prompt builds the customer-facing subscription UI. It covers the tier comparison page, subscription checkout flow, portal subscription tab (manage/upgrade/downgrade/cancel), tier badge display, ticket submission with subscription awareness, and health check / video call / referral sections for Premium.
+
+## Step 0: Setup
+
+Read these files before making any changes:
+1. `replit.md` — project overview, architecture, conventions
+2. `docs/prd/qb-portal/feature-expert-support-subscription.md` — full PRD (especially Sections 5, 6, 7)
+3. `docs/implementation-plan.md` — understand what Prompts 01–06 have already built
+4. `artifacts/qb-portal/src/pages/portal.tsx` — current portal dashboard (has basic ticket submission)
+5. `artifacts/qb-portal/src/pages/portal-settings.tsx` — settings tabs
+6. `artifacts/qb-portal/src/lib/auth.ts` — auth context (useAuth hook)
+
+**Do NOT modify any files in `docs/`.**
+
+**PREREQUISITES (must exist from prior prompts):**
+- Subscription API at `/api/qb/subscriptions/checkout`, `/me`, `/upgrade`, `/downgrade`, `/cancel`, `/reactivate`
+- Ticket API at `/api/qb/tickets` with subscription awareness (ticket limits, tier tracking)
+- Auth system with `useAuth()` hook providing `user`, `getAccessToken()`, `signOut()`
+- Existing portal dashboard at `/qb-portal/portal` with tabs for orders, tickets, settings
+
+If any prerequisite API endpoints don't exist yet, build the frontend anyway pointing to those endpoints — they'll be available once Prompt 06 is deployed.
+
+---
+
+**DESIGN SYSTEM:**
+- Brand color: `#B76E79` (rose gold)
+- Dark background: `#1a1a2e` / `#0a0a1a`
+- Card backgrounds: `#1e1e3a` (dark mode), white (light mode)
+- Use existing Tailwind config and shadcn/ui components from `artifacts/qb-portal/src/components/ui/`
+- All prices displayed in CAD with explicit "CAD" label
+- Follow existing page patterns: SEO component at top, consistent spacing, responsive layout
+
+---
+
+## Step 1: Tier Comparison Page
+
+Create `artifacts/qb-portal/src/pages/subscription.tsx` — the public-facing subscription landing page at route `/qb-portal/subscription`.
+
+### 1a. Page Layout
+
+- SEO component with title "QB Expert Support — Monthly Plans | NexFortis", description about subscription tiers
+- Hero section: headline "Expert QuickBooks Desktop Support, On Your Schedule", subtext about guaranteed response times and human experts
+- Three-tier comparison cards side by side (stacked on mobile)
+- FAQ section at the bottom specific to subscriptions
+
+### 1b. Tier Cards
+
+Each card displays:
+
+| Field | Essentials | Professional | Premium |
+|---|---|---|---|
+| Price (promo) | $25/mo CAD | $50/mo CAD | $75/mo CAD |
+| Price (standard, strikethrough) | ~~$49/mo~~ | ~~$99/mo~~ | ~~$149/mo~~ |
+| Promo label | "Launch price — 50% off" | Same | Same |
+| Tickets/month | 3 | 8 | Unlimited |
+| Response time | Within 1 hour | Within 1 hour | Within 30 minutes |
+| File health check | Monthly | Monthly | Monthly |
+| Service discount | — | 10% off all services | 20% off all services |
+| Video call | — | — | Monthly 30-min call |
+| Referral program | — | — | $25 per referral |
+| CTA button | "Subscribe — $25/mo" | "Subscribe — $50/mo" | "Subscribe — $75/mo" |
+
+- Professional card should be visually highlighted as the "Most Popular" tier with a badge or border treatment
+- Premium card gets a "Best Value" badge
+- The promo price should be prominent; the standard price should appear as strikethrough above or beside it
+- Add a small note below the cards: "Promotional pricing for your first 3 months. Standard pricing applies from month 4. All prices in CAD + applicable taxes."
+
+### 1c. CTA Button Behavior
+
+When the user clicks a tier's CTA button:
+1. If NOT logged in → redirect to `/qb-portal/login?redirect=/qb-portal/subscription&tier=essentials` (preserving selected tier)
+2. If logged in → call `POST /api/qb/subscriptions/checkout` with `{ tier }` and redirect to the returned `checkoutUrl`
+3. If user already has an active subscription → show a toast/alert: "You already have an active {currentTier} subscription. Visit your portal to manage it." with a link to the portal
+
+### 1d. URL Query Params
+
+Handle `?success=true` and `?canceled=true` query params (Stripe redirects here after checkout):
+- `success=true`: Show a success banner "Welcome to {tier} support! Your subscription is active. Visit your portal to submit your first ticket." with a link to the portal
+- `canceled=true`: Show an info banner "Checkout was canceled. You can subscribe anytime."
+
+### 1e. Register the Route
+
+Add the route to the app's router configuration. The subscription page should be accessible without login (it's a marketing/sales page), but the CTA requires login.
+
+**Verify:** The page renders at `/qb-portal/subscription` with all three tier cards. CTA buttons redirect to login if not authenticated.
+
+---
+
+## Step 2: Portal Subscription Tab
+
+Add a new "Subscription" tab to the portal dashboard (`portal.tsx`).
+
+### 2a. Tab Integration
+
+Add a new tab alongside the existing tabs (Dashboard, Orders, Support, Settings). Use an icon like `CreditCard` or `Shield` from lucide-react.
+
+### 2b. No Subscription State
+
+If the user has no active subscription (`GET /api/qb/subscriptions/me` returns `{ subscription: null }`):
+- Show a card: "You don't have a support subscription yet."
+- Brief benefits summary (3 bullet points: expert support, guaranteed response times, service discounts)
+- CTA button: "View Plans" → links to `/qb-portal/subscription`
+
+### 2c. Active Subscription State
+
+If the user has an active subscription, display:
+
+**Subscription Status Card:**
+- Tier name with badge styling (color-coded: Essentials=blue, Professional=purple, Premium=gold)
+- Status: "Active" (green) or "Cancels on {date}" (yellow) or "Past Due" (red)
+- Current period: "{startDate} — {endDate}"
+- Next billing date: "{endDate}" (or "Subscription ends {endDate}" if canceling)
+
+**Ticket Usage Card:**
+- "Tickets Used This Month: {used} / {limit}" with a progress bar
+- For Premium: "Tickets Used: {used} (Unlimited)"
+- If 1 ticket remaining (Essentials/Professional): yellow warning "This is your last ticket this month"
+- If 0 remaining: red alert "You've used all tickets this cycle. Resets on {resetDate}. Upgrade for more."
+
+**Health Check Card:**
+- Status: "Available" / "Submitted" / "Completed — View Report"
+- If available: "Start Health Check" button that navigates to the ticket form pre-filled with subject "Monthly File Health Check" and type "health-check"
+- If completed: link to the ticket containing the report
+
+**Premium-Only: Video Call Card** (only render for Premium tier)
+- If not booked: "Book Your Monthly Call" button that opens the Microsoft Bookings URL in a new tab (read from a config or hardcoded env-provided URL)
+- If booked: "Call booked for {date}" display
+- Note: "30-minute call with a QB Desktop expert. Resets monthly."
+
+**Premium-Only: Referral Card** (only render for Premium tier)
+- Referral code displayed prominently with a "Copy" button (copies to clipboard)
+- Shareable link: `qb.nexfortis.com/?ref={CODE}` with copy button
+- Total earnings: "${totalEarnings}" display
+- Note: "Earn $25 for every customer who completes a purchase using your code."
+
+### 2d. Subscription Management Actions
+
+Below the status cards, add management buttons:
+
+**If subscription is active (not canceling):**
+- "Upgrade Plan" button → opens an upgrade modal showing available higher tiers with price difference info. On confirm, calls `POST /api/qb/subscriptions/upgrade` with `{ newTier }`. Show success toast on completion.
+- "Downgrade Plan" button (muted/secondary style) → opens a downgrade modal explaining it takes effect at period end. On confirm, calls `POST /api/qb/subscriptions/downgrade` with `{ newTier }`. Show confirmation message.
+- "Cancel Subscription" button (destructive/red text) → opens a confirmation dialog: "Are you sure? Your subscription will remain active until {periodEnd}. After that, you'll lose access to expert support." On confirm, calls `POST /api/qb/subscriptions/cancel`.
+
+**If subscription is canceling (cancel_at_period_end):**
+- Show yellow banner: "Your subscription will end on {periodEnd}. You can reactivate anytime before then."
+- "Reactivate Subscription" button → calls `POST /api/qb/subscriptions/reactivate`. Show success toast.
+- Hide upgrade/downgrade/cancel buttons.
+
+**If subscription is past_due:**
+- Show red banner: "Your payment failed. Please update your payment method to continue using support."
+- "Update Payment Method" button → redirect to Stripe Customer Portal (if available) or show instructions.
+
+**Verify:** Tab renders correctly for: no subscription, active subscription (each tier), canceling subscription, past_due subscription.
+
+---
+
+## Step 3: Enhanced Ticket Submission
+
+Update the ticket submission form in the portal to be subscription-aware.
+
+### 3a. Update Existing Ticket Form
+
+The current ticket form in `portal.tsx` is basic (subject + message). Enhance it:
+
+1. **Tier badge**: Show the user's current tier at the top of the form (if subscribed). Example: "Submitting as Professional subscriber — 1hr response guaranteed"
+2. **Tickets remaining**: Show "{remaining} of {limit} tickets remaining this month" below the tier badge
+3. **Last ticket warning**: If exactly 1 remaining, show yellow banner: "This is your last ticket this month. Need more? [Upgrade your plan]"
+4. **At limit block**: If 0 remaining, replace the form with: "You've used all {limit} tickets for this billing cycle. Your next tickets reset on {resetDate}. [Upgrade to {nextTier}] for {nextLimit} tickets/month."
+5. **Critical checkbox**: Add a "Mark as critical/urgent" checkbox below the message field. Label: "This is a critical issue (e.g., error code, company file won't open, data loss)"
+6. **File attachment**: Add a file upload field. Accept `.qbm`, `.png`, `.jpg`, `.pdf` up to 25MB. Use a simple file input with drag-and-drop zone.
+7. **Non-subscriber notice**: If the user has no subscription, show an info bar: "You're submitting a general inquiry. For guaranteed response times and expert support, [subscribe to a plan]."
+
+### 3b. Update Ticket Submission API Call
+
+Change the ticket submission to call `POST /api/qb/tickets` (new subscription-aware endpoint from Prompt 06) instead of `POST /api/qb/support-tickets`. Send:
+- `subject`
+- `message`
+- `isCritical` (boolean from checkbox)
+- `attachment` (multipart file if provided)
+
+Handle the response:
+- Success: show confirmation with ticket ID, response time guarantee, and remaining tickets
+- `403` with `ticket_limit_reached`: show the upgrade prompt (should already be handled by the limit block, but handle the API error too as a safety net)
+- Other errors: show generic error message
+
+### 3c. Update Ticket List Display
+
+Update the ticket list to show new fields from the enhanced ticket API:
+- Tier badge next to each ticket (the tier at time of submission)
+- Critical flag (red "CRITICAL" badge) if `isCritical`
+- "Responded" indicator if `firstResponseAt` is set
+- After-hours indicator if `isAfterHours`
+
+**Verify:** Submit a ticket as a subscriber — see remaining count, tier badge, critical checkbox. Submit as non-subscriber — see info notice, no limit enforcement.
+
+---
+
+## Step 4: Navigation Updates
+
+### 4a. Add Subscription Link to Navigation
+
+Add "Support Plans" or "Expert Support" to the QB Portal navigation (in the header/sidebar layout). Link to `/qb-portal/subscription`.
+
+### 4b. Add Subscription CTA to Home Page
+
+On the QB Portal home page (`home.tsx`), add a section promoting the subscription. Something like:
+- "Need Expert Help?" or "QB Desktop Expert Support"
+- Brief 2-line pitch
+- "View Plans" button → `/qb-portal/subscription`
+- Place it after the featured services section but before the FAQ
+
+### 4c. Portal Sidebar/Tab Order
+
+The portal tabs should be ordered: Dashboard, Orders, Subscription, Support, Settings.
+
+**Verify:** Navigation links work. Home page shows the subscription CTA. Portal tabs are in the correct order.
+
+---
+
+## Step 5: Subscription Tier Badge Component
+
+Create a reusable `TierBadge` component at `artifacts/qb-portal/src/components/tier-badge.tsx`.
+
+Props: `tier: "essentials" | "professional" | "premium" | null`, `size?: "sm" | "md" | "lg"`
+
+Styling:
+- Essentials: blue background/text
+- Professional: purple background/text
+- Premium: gold/amber background/text
+- null: gray "Free" badge
+
+Usage: render in the portal header next to the user's name, in ticket lists, in the subscription tab.
+
+**Verify:** Badge renders correctly for all tiers. Appears in the portal header.
+
+---
+
+## Step 6: Responsive and Accessibility
+
+### 6a. Mobile Layout
+
+- Tier comparison page: cards stack vertically on mobile, horizontal scroll or accordion on tablet
+- Portal subscription tab: cards stack in a single column
+- Ticket form: full width, file upload touch-friendly
+
+### 6b. Accessibility
+
+- Tier comparison table navigable by keyboard and screen reader
+- All form inputs have proper labels
+- Color contrast meets WCAG 2.1 AA (especially for tier badge colors on dark backgrounds)
+- CTA buttons have descriptive aria-labels ("Subscribe to Essentials plan at $25 per month")
+
+---
+
+## Step 7: Final Verification
+
+1. Run `pnpm typecheck` — zero errors
+2. Verify in the Replit preview:
+   - `/qb-portal/subscription` shows three tier cards with correct prices
+   - Clicking CTA while logged out → redirects to login
+   - Clicking CTA while logged in → redirects to Stripe checkout (or shows error if Stripe isn't configured yet — that's fine)
+   - Portal → Subscription tab shows correct state (no subscription / active / canceling)
+   - Portal → Support tab shows enhanced ticket form with tier info and critical checkbox
+   - Home page shows subscription CTA section
+   - Navigation includes "Support Plans" link
+   - All pages responsive on mobile viewport
+
+---
+
+## Constraints
+
+- Do NOT modify any files in `docs/`.
+- Do NOT modify backend API routes — those were built in Prompt 06.
+- Do NOT implement email sending — that is Prompt 14.
+- Do NOT implement promo code input — that is Prompt 09.
+- Do NOT build the admin/operator view of subscriptions or tickets — that was Prompt 05 (admin panel) and Prompt 08 (ticket enhancement).
+- All API calls must include the Authorization header via `getAccessToken()` from the auth context.
+- Handle API errors gracefully — never show raw error messages to users.
+- All prices displayed in CAD with "CAD" label.
