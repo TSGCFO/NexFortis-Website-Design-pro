@@ -1,5 +1,5 @@
-import type { Product } from "./products";
 import { BASE_URL } from "@/components/seo";
+import type { Product } from "@/lib/products";
 
 export const COMPANY_ADDRESS = {
   "@type": "PostalAddress",
@@ -8,31 +8,31 @@ export const COMPANY_ADDRESS = {
   addressRegion: "ON",
   postalCode: "L7B 0A1",
   addressCountry: "CA",
-} as const;
+};
 
-export const COMPANY_NAME = "NexFortis";
-export const COMPANY_EMAIL = "support@nexfortis.com";
-export const COMPANY_LOGO = `${BASE_URL}/images/logo-original.svg`;
+export const ORG_NAME = "NexFortis";
+export const SUPPORT_EMAIL = "support@nexfortis.com";
+export const SITE_NAME = "NexFortis QuickBooks Portal";
 export const AREA_SERVED = ["CA", "US", "GB", "AU"];
 
-export function generateOrganizationSchema() {
+export function organizationSchema() {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: COMPANY_NAME,
+    name: ORG_NAME,
     url: BASE_URL,
-    logo: COMPANY_LOGO,
-    email: COMPANY_EMAIL,
+    logo: `${BASE_URL}/images/logo-original.svg`,
+    email: SUPPORT_EMAIL,
     address: COMPANY_ADDRESS,
-    sameAs: [] as string[],
+    sameAs: [],
   };
 }
 
-export function generateWebSiteSchema() {
+export function websiteSchema() {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "NexFortis QuickBooks Portal",
+    name: SITE_NAME,
     url: BASE_URL,
     potentialAction: {
       "@type": "SearchAction",
@@ -45,56 +45,36 @@ export function generateWebSiteSchema() {
   };
 }
 
-export function generateLocalBusinessSchema() {
+export function localBusinessSchema() {
   return {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
-    name: COMPANY_NAME,
+    name: ORG_NAME,
     url: BASE_URL,
-    logo: COMPANY_LOGO,
-    email: COMPANY_EMAIL,
+    email: SUPPORT_EMAIL,
     address: COMPANY_ADDRESS,
     priceRange: "$$",
     areaServed: AREA_SERVED,
   };
 }
 
-export interface LandingPageSchemaInput {
+export interface PageBreadcrumb {
   name: string;
-  description: string;
-  slug: string;
-  primaryKeyword: string;
+  path: string;
 }
 
-export function generateServiceSchema(page: LandingPageSchemaInput, product: Product | null) {
-  const schema: Record<string, unknown> = {
+export function generateBreadcrumbSchema(breadcrumbs: PageBreadcrumb[]) {
+  const items = [{ name: "Home", path: "/" }, ...breadcrumbs];
+  return {
     "@context": "https://schema.org",
-    "@type": "Service",
-    name: page.name,
-    description: page.description,
-    url: `${BASE_URL}/landing/${page.slug}`,
-    serviceType: page.primaryKeyword,
-    provider: {
-      "@type": "ProfessionalService",
-      name: COMPANY_NAME,
-      url: BASE_URL,
-      email: COMPANY_EMAIL,
-      address: COMPANY_ADDRESS,
-    },
-    areaServed: AREA_SERVED,
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((b, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: b.name,
+      item: `${BASE_URL}${b.path}`,
+    })),
   };
-
-  if (product) {
-    schema.offers = {
-      "@type": "Offer",
-      price: (product.launch_price_cad / 100).toFixed(2),
-      priceCurrency: "CAD",
-      availability: "https://schema.org/InStock",
-      url: `${BASE_URL}/service/${product.slug}`,
-    };
-  }
-
-  return schema;
 }
 
 export function generateFAQSchema(faqs: { question: string; answer: string }[]) {
@@ -112,16 +92,33 @@ export function generateFAQSchema(faqs: { question: string; answer: string }[]) 
   };
 }
 
-export function generateBreadcrumbSchema(breadcrumbs: { name: string; path: string }[]) {
-  const items = [{ name: "Home", path: "/" }, ...breadcrumbs];
+export function generateServiceSchema(
+  pageData: { h1: string; metaDescription: string; slug: string; primaryKeyword: string },
+  product: Product | undefined
+) {
   return {
     "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: items.map((b, idx) => ({
-      "@type": "ListItem",
-      position: idx + 1,
-      name: b.name,
-      item: `${BASE_URL}${b.path}`,
-    })),
+    "@type": "Service",
+    name: pageData.h1,
+    description: pageData.metaDescription,
+    serviceType: pageData.primaryKeyword,
+    url: `${BASE_URL}/landing/${pageData.slug}`,
+    provider: {
+      "@type": "Organization",
+      name: ORG_NAME,
+      url: BASE_URL,
+      email: SUPPORT_EMAIL,
+      address: COMPANY_ADDRESS,
+    },
+    areaServed: AREA_SERVED,
+    ...(product && {
+      offers: {
+        "@type": "Offer",
+        priceCurrency: "CAD",
+        price: (product.launch_price_cad / 100).toFixed(2),
+        availability: "https://schema.org/InStock",
+        url: `${BASE_URL}/service/${product.slug}`,
+      },
+    }),
   };
 }

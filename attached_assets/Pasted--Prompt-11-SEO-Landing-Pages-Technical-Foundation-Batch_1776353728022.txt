@@ -1,0 +1,474 @@
+# Prompt 11: SEO Landing Pages — Technical Foundation + Batch 1 (13 Pages)
+
+This prompt builds the technical SEO foundation for the entire QB Portal and creates the first 13 landing pages (9 service-specific pages from Group A and 4 problem-focused pages from Group B). Comparison pages and educational pages are deferred to Prompt 12.
+
+## Step 0: Setup
+
+Read these files before making any changes:
+1. `replit.md` — project overview, architecture, conventions, current state
+2. `docs/prd/qb-portal/feature-seo-landing-pages.md` — the full SEO landing pages PRD (page inventory, content requirements, JSON-LD schemas, layout component contract, meta tag templates)
+3. `docs/implementation-plan.md` — understand what has been built so far
+4. `docs/prompts/prompt-11-seo-landing-pages-batch1.md` — this file
+5. `artifacts/qb-portal/src/components/seo.tsx` — existing SEO component (Helmet-based)
+6. `artifacts/qb-portal/public/robots.txt` — existing robots.txt
+7. `artifacts/qb-portal/public/products.json` — product catalog (source of truth for prices)
+8. `artifacts/qb-portal/src/lib/products.ts` — product data types and helpers
+9. `artifacts/qb-portal/src/App.tsx` — existing route definitions
+
+**Do NOT modify any files in `docs/`.**
+
+**PREREQUISITES — these must already exist from previous prompts:**
+- `react-helmet-async` installed and the `<HelmetProvider>` wrapping the app
+- The existing `SEO` component at `artifacts/qb-portal/src/components/seo.tsx`
+- The existing `robots.txt` at `artifacts/qb-portal/public/robots.txt`
+- The product catalog with all 20 products, their prices (base + launch), slugs, and category assignments
+- The existing QB Portal layout with header, footer, and navigation
+
+If any prerequisites are missing, stop and report what needs to be completed first.
+
+---
+
+**PLATFORM REMINDERS (read replit.md for full details):**
+- The QB Portal is a CSR React SPA (Vite + React 19 + Tailwind v4 + wouter for routing).
+- Static files are served by Replit, NOT by the API server.
+- Do NOT add `express.static()` to the API server.
+- All prices must come from the product catalog — never hardcode dollar amounts in landing page content.
+- The QB Portal base URL is `https://qb.nexfortis.com` in production but the Replit preview URL during development. The SEO component already handles this with a `BASE_URL` constant.
+
+> **⚠️ GLOBAL DO-NOTs:**
+> - Do NOT hardcode prices in landing page content — always read from the product catalog
+> - Do NOT create landing pages as separate HTML files — they are React components within the SPA
+> - Do NOT duplicate content between pages — every H1, intro paragraph, and FAQ must be unique
+> - Do NOT use placeholder content ("Lorem ipsum") — write real, SEO-optimized content
+> - Do NOT use the main site's layout or styles — landing pages use the QB Portal's existing design system
+> - Do NOT create a separate React app or Vite project for landing pages — they live inside `artifacts/qb-portal/`
+
+---
+
+## Step 1: Enhance the SEO Component
+
+The existing `SEO` component in `artifacts/qb-portal/src/components/seo.tsx` handles basic meta tags. Extend it to support the full requirements:
+
+### 1a. Add Twitter Card Tags
+
+Add `twitter:card` (value: `summary_large_image`), `twitter:title`, `twitter:description`, and `twitter:image` tags to the existing Helmet output. These should derive from the same props as the OG tags.
+
+### 1b. Add JSON-LD Injection
+
+Add an optional `jsonLd` prop (type: `object | object[]`) to the SEO component. When provided, render it as a `<script type="application/ld+json">` tag in the Helmet output. The JSON-LD must be serialized with `JSON.stringify`. If an array of schemas is passed, render each as a separate script tag.
+
+### 1c. Add Article and Breadcrumb Support
+
+Add optional props for `articlePublishedTime`, `articleModifiedTime`, and `articleAuthor` to support future educational/article pages. These emit `article:published_time`, `article:modified_time`, and `article:author` meta tags when the `og:type` is `article`.
+
+> **⚠️ DO NOT:**
+> - Replace the existing SEO component — extend it while keeping backward compatibility
+> - Hardcode any JSON-LD in the SEO component — it receives JSON-LD as a prop from each page
+
+---
+
+## Step 2: Global JSON-LD Schemas
+
+### 2a. Organization + WebSite + LocalBusiness Schemas
+
+In the root of the QB Portal app (likely `App.tsx` or the main layout component), inject the following JSON-LD schemas that appear on every page:
+
+**Organization schema:**
+- `@type`: Organization
+- `name`: NexFortis
+- `url`: https://qb.nexfortis.com
+- `logo`: URL to the NexFortis logo
+- `email`: support@nexfortis.com
+- `address`: 204 Hill Farm Rd, Nobleton, ON, L7B 0A1, CA
+- `sameAs`: array of social profile URLs (leave as empty array for now — will be populated later)
+
+**WebSite schema:**
+- `@type`: WebSite
+- `name`: NexFortis QuickBooks Portal
+- `url`: https://qb.nexfortis.com
+- `potentialAction`: SearchAction with target URL pattern pointing to the catalog search
+
+**LocalBusiness schema:**
+- `@type`: LocalBusiness (more specifically ProfessionalService)
+- `name`: NexFortis
+- `address`: same as Organization
+- `telephone`: (leave blank or omit — no public phone number yet)
+- `email`: support@nexfortis.com
+- `priceRange`: "$$"
+- `areaServed`: ["CA", "US", "GB", "AU"]
+
+These global schemas must be injected once, not repeated on every landing page.
+
+> **⚠️ DO NOT:**
+> - Put global schemas inside the landing page layout — they go in the app-level layout so they appear on ALL portal pages
+> - Hardcode the company address in multiple places — define it as a constant and reference it
+
+---
+
+## Step 3: Update Sitemap and Robots.txt
+
+### 3a. Dynamic Sitemap
+
+The current setup likely has a static `sitemap.xml` or none at all. Create a server-side route or a build-time generated sitemap that includes:
+
+- All existing portal routes (home, catalog, service detail pages, FAQ, etc.)
+- All 13 new landing page URLs from this prompt
+- Priority values: landing pages get `0.9`, service detail pages get `0.8`, other pages get `0.5`
+- `changefreq`: landing pages are `monthly`, other pages are `weekly`
+
+Because the QB Portal is a CSR SPA and the API server handles `/api/*` only, the sitemap must be served as a static file from the `public/` directory. Generate it at build time or create it as a static XML file. Update it whenever new landing pages are added.
+
+The sitemap URL is `https://qb.nexfortis.com/sitemap.xml`.
+
+### 3b. Update robots.txt
+
+The existing `robots.txt` already disallows portal auth routes and admin routes. Verify it:
+- Allows `/landing/*` routes
+- References the sitemap URL correctly
+- Does NOT disallow any landing page paths
+
+If the existing robots.txt is already correct, leave it unchanged.
+
+> **⚠️ DO NOT:**
+> - Create an API endpoint to serve the sitemap — it must be a static file in `public/`
+> - Include authenticated portal routes (portal dashboard, orders, tickets) in the sitemap
+> - Include `/api/*` routes in the sitemap
+
+---
+
+## Step 4: Landing Page Data Structure
+
+### 4a. Create `landingPages.ts` Content Config
+
+Create a typed content configuration file at `artifacts/qb-portal/src/data/landingPages.ts` that contains all landing page data. Each page entry must include:
+
+- `slug`: string — the URL path segment (e.g., `enterprise-to-premier-conversion`)
+- `metaTitle`: string — 50-60 characters, contains primary keyword
+- `metaDescription`: string — 150-160 characters
+- `h1`: string — primary keyword-containing heading (one per page)
+- `productSlug`: string — links to the product catalog for price display (if applicable)
+- `ctaLabel`: string — action-oriented CTA text (e.g., "Order Now — From $75 CAD")
+- `ctaHref`: string — link to the service order page (e.g., `/services/enterprise-to-premier-conversion`)
+- `heroImageAlt`: string — descriptive alt text for the hero image
+- `faqs`: array of `{ question: string, answer: string }` — 4-6 per page, all unique
+- `relatedSlugs`: array of 2-4 landing page slugs for the Related Services section
+- `breadcrumbs`: array of `{ name: string, path: string }` — excluding Home (auto-prepended by layout)
+- `category`: `service` | `problem` | `comparison` | `educational` — determines JSON-LD schema type
+- `primaryKeyword`: string — for internal reference and schema generation
+
+**Content for each page** is described in Steps 5a through 5m below. Do NOT use the `bodyContent` as a single markdown blob — break it into structured sections that the layout component can render with proper semantic HTML.
+
+Define the page sections as a typed array of content blocks:
+- `hero`: above-fold section with H1, intro paragraph (2-3 sentences), and CTA
+- `overview`: main body content (3-4 paragraphs, 400-600 words)
+- `features` or `benefits`: bullet list or card grid of key selling points
+- `process`: numbered steps showing how the service works (3-5 steps)
+- `pricing`: price display with strikethrough (reads from product catalog)
+- `trustSignals`: security badges, guarantee text, PIPEDA compliance note
+- `faq`: accordion section with 4-6 Q&As
+- `relatedServices`: card links to related landing pages
+
+### 4b. TypeScript Types
+
+Define a `LandingPageData` interface that strictly types all the above fields. Export both the interface and the data array. Use the interface as the return type for a `getLandingPageBySlug(slug: string)` helper function.
+
+> **⚠️ DO NOT:**
+> - Hardcode prices in the content — use a placeholder token like `{launchPrice}` and `{basePrice}` that the rendering component resolves from the product catalog at render time
+> - Write duplicate FAQ questions across pages — every FAQ must be unique
+> - Write meta descriptions shorter than 150 or longer than 160 characters
+> - Write meta titles shorter than 50 or longer than 60 characters
+
+---
+
+## Step 5: Landing Page Content — 13 Pages
+
+Write complete, original, SEO-optimized content for each page. Each page must have 800-1,500 words of unique body content (excluding navigation, footer, and sidebar). Content must be at a Grade 8-10 reading level. Define technical terms on first use. All prices are in CAD and must reference the product catalog.
+
+### Group A — Service-Specific Landing Pages (9 pages)
+
+### 5a. `/landing/enterprise-to-premier-conversion`
+
+**H1:** QuickBooks Enterprise to Premier Conversion Service  
+**Primary keyword:** convert quickbooks enterprise to premier  
+**Product:** Enterprise to Pro/Premier Conversion  
+**Target length:** 1,200-1,500 words (high-priority page, most content)
+
+Content must cover: what the conversion involves (direct database modification, not SDK), what data is preserved (100% — payroll, templates, linked transactions, memorized transactions, preferences), supported versions (Enterprise 6.0-24.0, output formats 2017-2024), Canadian file support (emphasize this — it's a key differentiator), turnaround time (next business day standard, same-day rush available), the process (upload .QBW → NexFortis processes → download converted file), pricing (flat fee from catalog with launch promo), money-back guarantee, and why businesses downgrade (reduce licensing costs, Enterprise features not needed).
+
+**FAQs (6 unique):** Will I lose any data? Does it work on Canadian QuickBooks? How long does it take? What versions are supported? Can I convert multiple files? What if something goes wrong?
+
+**Related pages:** super-condense, audit-trail-removal, affordable-enterprise-conversion, how-conversion-works
+
+### 5b. `/landing/audit-trail-removal`
+
+**H1:** QuickBooks Audit Trail Removal Service  
+**Primary keyword:** remove audit trail quickbooks  
+**Product:** Audit Trail Removal  
+**Target length:** 1,000-1,200 words
+
+Content must cover: what the audit trail is (transaction log recording every change), why it causes problems (file bloat, slow performance, privacy concerns during sale/transfer of business), what removal involves (permanent deletion of the audit trail data from the company file), file size reduction expectations (varies, but often 30-60% smaller), Canadian file support, privacy benefits (no transaction history visible to new owners), and pricing.
+
+**FAQs (5 unique):** Is audit trail removal permanent? Will it affect my current data? How much smaller will my file be? Is this safe for Canadian files? Can I remove the audit trail myself?
+
+**Related pages:** super-condense, enterprise-to-premier-conversion, quickbooks-file-too-large, quickbooks-running-slow
+
+### 5c. `/landing/super-condense`
+
+**H1:** QuickBooks Super Condense Service — Canadian Files Supported  
+**Primary keyword:** quickbooks super condense  
+**Product:** Super Condense  
+**Target length:** 1,000-1,200 words
+
+Content must cover: what Super Condense is (reduces file size by removing historical detail while preserving summary balances), why Canadian QuickBooks files cannot use Intuit's built-in condense utility (it fails on Canadian editions — this is a critical differentiator), what data is preserved vs removed, expected file size reduction, when to use Super Condense vs Audit Trail Removal, and pricing.
+
+**FAQs (5 unique):** Why can't I condense my Canadian QuickBooks file? What data is removed during condense? How much smaller will my file get? Is Super Condense the same as Intuit's condense? Can I condense an Enterprise file?
+
+**Related pages:** audit-trail-removal, quickbooks-file-too-large, enterprise-to-premier-conversion, list-reduction
+
+### 5d. `/landing/file-repair`
+
+**H1:** QuickBooks File Repair Service  
+**Primary keyword:** quickbooks file repair service  
+**Product:** File Repair  
+**Target length:** 800-1,000 words
+
+Content must cover: common file corruption scenarios (power failure during write, network drive issues, exceeding file size limits, software crashes), what repair involves (database-level repair of the company file structure), success rate expectations (be honest — not all files are recoverable), difference between repair and data recovery, and pricing.
+
+**FAQs (4 unique):** What causes QuickBooks file corruption? Can all corrupted files be repaired? What if repair fails? How long does file repair take?
+
+**Related pages:** quickbooks-company-file-error, super-condense, quickbooks-file-too-large, enterprise-to-premier-conversion
+
+### 5e. `/landing/accountedge-to-quickbooks`
+
+**H1:** AccountEdge to QuickBooks Migration Service  
+**Primary keyword:** accountedge to quickbooks  
+**Product:** AccountEdge to QuickBooks Migration  
+**Target length:** 800-1,000 words
+
+Content must cover: what AccountEdge is (formerly MYOB — popular in Canada and Australia), what data transfers (chart of accounts, customers, vendors, items, transactions, balances), the migration process, limitations (what doesn't transfer), Canadian-specific considerations (GST/HST accounts, CRA reporting periods), and pricing.
+
+**FAQs (4 unique):** What AccountEdge data transfers to QuickBooks? Do I need to keep AccountEdge installed? Will my GST/HST settings transfer? How long does the migration take?
+
+**Related pages:** sage-50-to-quickbooks, enterprise-to-premier-conversion, quickbooks-conversion-canada
+
+### 5f. `/landing/sage-50-to-quickbooks`
+
+**H1:** Sage 50 to QuickBooks Migration Service  
+**Primary keyword:** sage 50 to quickbooks migration  
+**Product:** Sage 50 to QuickBooks Migration  
+**Target length:** 800-1,000 words
+
+Content must cover: Sage 50 (formerly Simply Accounting — widely used in Canada), what data migrates, the process, Canadian-specific considerations (bilingual data, CRA integration differences), pricing, and common concerns.
+
+**FAQs (4 unique):** Is Sage 50 the same as Simply Accounting? What Sage 50 data transfers to QuickBooks? Will my historical transactions transfer? Can I migrate from Sage 50 Canadian Edition?
+
+**Related pages:** accountedge-to-quickbooks, enterprise-to-premier-conversion, quickbooks-conversion-canada
+
+### 5g. `/landing/multi-currency-removal`
+
+**H1:** QuickBooks Multi-Currency Removal Service  
+**Primary keyword:** quickbooks multi currency removal  
+**Product:** Multi-Currency Removal  
+**Target length:** 800-1,000 words
+
+Content must cover: why multi-currency causes problems (once enabled, cannot be disabled in QuickBooks — this is a key pain point), what removal involves, when it's needed (accidental enablement, no longer doing business in multiple currencies), and pricing.
+
+**FAQs (4 unique):** Can I turn off multi-currency myself in QuickBooks? What happens to my foreign currency transactions? Will my reports still be accurate? How does NexFortis remove multi-currency?
+
+**Related pages:** enterprise-to-premier-conversion, audit-trail-removal, super-condense
+
+### 5h. `/landing/list-reduction`
+
+**H1:** QuickBooks List Reduction Service  
+**Primary keyword:** quickbooks list reduction service  
+**Product:** List Reduction  
+**Target length:** 800-1,000 words
+
+Content must cover: what QuickBooks lists are (chart of accounts, items, customers, vendors), list limits in QuickBooks Desktop, why lists grow (years of usage, duplicate entries, inactive items), what reduction involves, and pricing.
+
+**FAQs (4 unique):** What are QuickBooks list limits? Can I reduce lists myself? What happens to inactive items? Will list reduction affect my reports?
+
+**Related pages:** super-condense, audit-trail-removal, quickbooks-running-slow
+
+### 5i. `/landing/qbo-readiness`
+
+**H1:** QuickBooks Desktop to Online Readiness Report  
+**Primary keyword:** quickbooks desktop to online migration  
+**Product:** QBO Readiness Report  
+**Target length:** 800-1,000 words
+
+Content must cover: what the readiness report analyzes (file compatibility, data volume, feature usage that may not transfer, third-party integrations), why it's important before migrating to QBO, what the report deliverable looks like, and pricing.
+
+**FAQs (4 unique):** What does the readiness report check? Do I need to migrate to QuickBooks Online? What if my file isn't ready for QBO? How long does the assessment take?
+
+**Related pages:** enterprise-to-premier-conversion, quickbooks-desktop-end-of-life, super-condense
+
+---
+
+### Group B — Problem-Focused Landing Pages (4 pages)
+
+### 5j. `/landing/quickbooks-file-too-large`
+
+**H1:** QuickBooks File Too Large — Fix It Fast  
+**Primary keyword:** quickbooks file too large  
+**Target length:** 1,000-1,200 words (high-volume keyword)
+
+This is a problem-focused page — the visitor doesn't know which service they need. Content must diagnose the problem (file size symptoms: slow opening, backup failures, lag during data entry), explain causes (years of transactions, audit trail growth, large lists, Canadian condense limitation), present solution options (Super Condense, Audit Trail Removal, or both), help the visitor choose the right service, and link to each relevant service page.
+
+Do NOT focus on a single product — guide the reader to the right solution. This page links to multiple services.
+
+**FAQs (5 unique):** What is the maximum QuickBooks file size? How do I check my file size? Why does my Canadian QuickBooks file keep growing? Which service reduces file size the most? Can I prevent my file from growing too large?
+
+**Related pages:** super-condense, audit-trail-removal, quickbooks-running-slow, list-reduction
+
+### 5k. `/landing/quickbooks-running-slow`
+
+**H1:** Why Is QuickBooks Running Slow? Solutions and Services  
+**Primary keyword:** quickbooks running slow  
+**Target length:** 1,000-1,200 words (high-volume keyword)
+
+Problem-focused page. Content must cover: common causes of slowness (large file, network issues, audit trail bloat, too many users, outdated hardware), which causes NexFortis can address (file-related causes), self-help tips for non-file causes (hardware, network), and which NexFortis service addresses each file-related cause.
+
+**FAQs (5 unique):** Why is my QuickBooks so slow all of a sudden? Does file size affect QuickBooks speed? Will Super Condense make QuickBooks faster? How do I know if my slow QuickBooks is a file problem? Can NexFortis help with network-related slowness?
+
+**Related pages:** quickbooks-file-too-large, super-condense, audit-trail-removal, file-repair
+
+### 5l. `/landing/quickbooks-company-file-error`
+
+**H1:** QuickBooks Company File Error — Fix and Recovery  
+**Primary keyword:** quickbooks company file error  
+**Target length:** 1,000-1,200 words (high-volume keyword)
+
+Problem-focused page. Content must cover: common error codes and what they mean (H202, H303, 6000-series errors, "company file needs to be updated"), when to use File Repair vs other services, self-help steps to try first (Verify/Rebuild Data, rename .TLG/.ND files), when professional help is needed, and NexFortis File Repair service details.
+
+**FAQs (5 unique):** What does QuickBooks error 6000 mean? Can I fix QuickBooks file errors myself? What if Verify and Rebuild Data doesn't work? How much does professional QuickBooks file repair cost? Is my data at risk with a corrupted file?
+
+**Related pages:** file-repair, quickbooks-file-too-large, quickbooks-running-slow
+
+### 5m. `/landing/quickbooks-multi-currency-problems`
+
+**H1:** QuickBooks Multi-Currency Problems and Removal  
+**Primary keyword:** quickbooks multi currency problems  
+**Target length:** 800-1,000 words
+
+Problem-focused page. Content must cover: common multi-currency issues (accidental enablement, exchange rate errors, reporting complications, performance impact), why you can't disable multi-currency yourself (it's a one-way toggle in QuickBooks), and NexFortis Multi-Currency Removal service.
+
+**FAQs (4 unique):** Can I turn off multi-currency in QuickBooks? What problems does multi-currency cause? Will removing multi-currency delete my data? How much does multi-currency removal cost?
+
+**Related pages:** multi-currency-removal, enterprise-to-premier-conversion, super-condense
+
+---
+
+## Step 6: Landing Page Layout Component
+
+### 6a. Create `LandingPageLayout` Component
+
+Create `artifacts/qb-portal/src/components/landing-page-layout.tsx` — a reusable layout component that wraps all landing pages and renders the structured content sections.
+
+The component must accept the `LandingPageData` interface as props and render:
+
+1. **SEO head** — using the enhanced SEO component with meta title, description, canonical URL, OG tags, Twitter cards, and JSON-LD (Service schema for service pages, FAQPage schema for all pages, BreadcrumbList schema)
+2. **Breadcrumb navigation** — visible breadcrumb trail matching the JSON-LD BreadcrumbList. Home → Services → [Page Name]. Styled as small, secondary text above the H1.
+3. **Hero section** — H1, intro paragraph, above-fold CTA button. The CTA must be visible without scrolling on both desktop (1280px) and mobile (375px). CTA text includes the launch price from the product catalog (e.g., "Order Now — From $75 CAD").
+4. **Main content** — the body content rendered with proper semantic HTML (H2 subheadings, paragraphs, lists). Use a two-column layout on desktop: main content (70%) and sidebar (30%). On mobile: single column, sidebar content moves below main content.
+5. **Process steps** — numbered steps showing how the service works. Use a clean, visual step layout (number circles with connecting lines or similar).
+6. **Trust signals block** — security badge ("256-bit encrypted upload"), PIPEDA compliance note, 100% data guarantee, process steps summary. This goes in the sidebar on desktop, below content on mobile.
+7. **Pricing preview** — display the base price crossed out and the launch price prominently. Pull prices from the product catalog — never hardcode. Include "Launch pricing — limited time" label.
+8. **FAQ accordion** — collapsible accordion with 4-6 Q&As. Each question is an H3. Must be keyboard-accessible and functional on touch devices (no hover-only interactions). Include FAQPage JSON-LD.
+9. **Related services section** — card links to 2-4 related landing pages. Desktop: sidebar cards. Mobile: horizontal scrollable card strip below the FAQ.
+
+### 6b. JSON-LD Generation
+
+Create helper functions that generate the correct JSON-LD schemas:
+
+- `generateServiceSchema(pageData, productData)` — for service landing pages. Must include `provider.address` (204 Hill Farm Rd, Nobleton ON L7B 0A1), `areaServed` (CA, US, GB, AU), `offers` with `priceCurrency: CAD` and the launch price from the catalog.
+- `generateFAQSchema(faqs)` — for all landing pages. Maps the FAQ array to FAQPage structured data.
+- `generateBreadcrumbSchema(breadcrumbs)` — for all landing pages. Prepends Home, uses full URLs.
+
+> **⚠️ DO NOT:**
+> - Use an image carousel or slider in the hero — use a single static hero image/illustration placeholder
+> - Make the FAQ hover-only — it must work with click/tap for accessibility
+> - Hardcode the company address in the schema generator — use the shared constant from Step 2
+> - Render JSON-LD that doesn't match the visible page content — Google penalizes schema/content mismatch
+> - Include testimonials with fake names or quotes — use clearly marked "Testimonial slot — to be populated" placeholders
+
+---
+
+## Step 7: Route Registration
+
+### 7a. Add Landing Page Routes
+
+In the QB Portal router configuration (check `App.tsx` or wherever wouter routes are defined), add routes for all 13 landing pages. Use a pattern that reads the slug from the URL and renders the `LandingPageLayout` with the corresponding data from `landingPages.ts`.
+
+Two approaches:
+1. **Dynamic route** — a single `/landing/:slug` route that looks up the page data by slug and renders the layout. Return a 404 component if the slug doesn't match any page.
+2. **Enumerated routes** — explicitly register each `/landing/enterprise-to-premier-conversion`, `/landing/audit-trail-removal`, etc.
+
+Either approach is acceptable. The dynamic route is cleaner but requires proper 404 handling.
+
+### 7b. Navigation Links
+
+Add a "Services" section to the QB Portal navigation that links to the catalog page. Do NOT add all 13 landing pages to the main navigation — they are discovered via search engines and internal links, not top-nav.
+
+Add a footer section with links to the most important landing pages (top 4-5 by search volume):
+- Enterprise to Premier Conversion
+- QuickBooks File Too Large
+- QuickBooks Running Slow
+- Audit Trail Removal
+- Super Condense
+
+> **⚠️ DO NOT:**
+> - Add all 13 landing pages to the main navigation header — that would be overwhelming
+> - Create landing page routes outside the QB Portal SPA — they must be part of the existing app
+
+---
+
+## Step 8: Verification
+
+After completing all steps, verify:
+
+1. **Route check:** Navigate to each of the 13 `/landing/[slug]` URLs in the Replit preview. Confirm each renders without errors.
+
+2. **H1 check:** Inspect each page and confirm exactly one `<h1>` tag per page containing the primary keyword.
+
+3. **Meta tag check:** View page source (or inspect with React DevTools) on 3 sample pages. Confirm `<title>`, `<meta name="description">`, `<link rel="canonical">`, OG tags, and Twitter Card tags are present and correctly populated.
+
+4. **JSON-LD check:** On a service landing page, inspect the page source for `<script type="application/ld+json">` tags. Confirm Service, FAQPage, and BreadcrumbList schemas are present. Paste the JSON-LD into Google's Rich Results Test and confirm zero errors.
+
+5. **Sitemap check:** Navigate to `/sitemap.xml` in the browser. Confirm all 13 landing page URLs are listed with correct priority values.
+
+6. **robots.txt check:** Navigate to `/robots.txt`. Confirm landing pages are not disallowed. Confirm the sitemap URL is referenced.
+
+7. **Mobile check:** Use Chrome DevTools to emulate a 375px viewport on 3 sample pages. Confirm the above-fold CTA is visible without scrolling, the FAQ accordion works on tap, and the layout is single-column.
+
+8. **Pricing check:** On 3 sample pages, confirm the displayed price matches the product catalog (both base price struck through and launch price). Change a price in `products.json`, reload, and confirm the landing page reflects the new price.
+
+9. **Content uniqueness check:** Confirm no two pages share the same H1, meta title, meta description, or FAQ questions.
+
+10. **Build check:** Run the build command and confirm zero TypeScript errors and zero build warnings related to the new code.
+
+11. **Global schema check:** On the portal home page, inspect page source for Organization, WebSite, and LocalBusiness JSON-LD schemas.
+
+---
+
+## Summary of Files to Create or Modify
+
+**New files:**
+- `artifacts/qb-portal/src/data/landingPages.ts` — all 13 landing page content configurations
+- `artifacts/qb-portal/src/components/landing-page-layout.tsx` — shared layout component
+- `artifacts/qb-portal/src/components/faq-accordion.tsx` — accessible FAQ accordion component
+- `artifacts/qb-portal/src/components/breadcrumbs.tsx` — breadcrumb navigation component
+- `artifacts/qb-portal/src/components/trust-signals.tsx` — trust signals block component
+- `artifacts/qb-portal/src/components/related-services.tsx` — related services card section
+- `artifacts/qb-portal/src/lib/seo-schemas.ts` — JSON-LD schema generation helpers
+
+**Modified files:**
+- `artifacts/qb-portal/src/components/seo.tsx` — add Twitter Cards, JSON-LD injection, article meta support
+- `artifacts/qb-portal/src/App.tsx` — add landing page routes, add global JSON-LD schemas
+- `artifacts/qb-portal/public/sitemap.xml` — add all 13 landing page URLs
+- `artifacts/qb-portal/src/components/layout.tsx` (or footer component) — add footer links to top landing pages
+
+**Do NOT create or modify:**
+- Any files in `docs/`
+- Any API server files — landing pages are frontend-only
+- Any migration files

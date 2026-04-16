@@ -240,7 +240,7 @@ export function Footer() {
       <div className="brand-accent-bar" aria-hidden="true" />
       <footer className="section-brand-navy pt-16 pb-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-12">
             <div className="lg:col-span-1">
               <Link href="/" className="inline-block mb-4">
                 <img
@@ -264,6 +264,17 @@ export function Footer() {
                 <li><Link href="/catalog" className="hover:text-accent transition-colors flex items-center gap-2"><ArrowRight className="w-3 h-3" /> All Services</Link></li>
                 <li><Link href="/order" className="hover:text-accent transition-colors flex items-center gap-2"><ArrowRight className="w-3 h-3" /> Order Now</Link></li>
                 <li><Link href="/qbm-guide" className="hover:text-accent transition-colors flex items-center gap-2"><ArrowRight className="w-3 h-3" /> QBM Guide</Link></li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-display font-semibold text-lg mb-4 text-white">Popular services</h4>
+              <ul className="space-y-3 text-sm text-white/60">
+                <li><Link href="/landing/enterprise-to-premier-conversion" className="hover:text-accent transition-colors">Enterprise to Premier Conversion</Link></li>
+                <li><Link href="/landing/quickbooks-file-too-large" className="hover:text-accent transition-colors">QuickBooks File Too Large</Link></li>
+                <li><Link href="/landing/quickbooks-running-slow" className="hover:text-accent transition-colors">QuickBooks Running Slow</Link></li>
+                <li><Link href="/landing/audit-trail-removal" className="hover:text-accent transition-colors">Audit Trail Removal</Link></li>
+                <li><Link href="/landing/super-condense" className="hover:text-accent transition-colors">Super Condense</Link></li>
               </ul>
             </div>
 

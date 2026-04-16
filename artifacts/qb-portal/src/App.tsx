@@ -34,8 +34,28 @@ import AdminCustomers from "@/pages/admin/customers";
 import AdminTickets from "@/pages/admin/tickets";
 import AdminTicketDetail from "@/pages/admin/ticket-detail";
 import TicketDetail from "@/pages/ticket-detail";
+import LandingPage from "@/pages/landing";
+import { Helmet } from "react-helmet-async";
+import {
+  organizationSchema,
+  websiteSchema,
+  localBusinessSchema,
+} from "@/lib/seo-schemas";
 
 const queryClient = new QueryClient();
+
+function GlobalSchemas() {
+  const schemas = [organizationSchema(), websiteSchema(), localBusinessSchema()];
+  return (
+    <Helmet>
+      {schemas.map((s, i) => (
+        <script key={i} type="application/ld+json">
+          {JSON.stringify(s)}
+        </script>
+      ))}
+    </Helmet>
+  );
+}
 
 function CustomerRoutes() {
   return (
@@ -60,6 +80,7 @@ function CustomerRoutes() {
         <Route path="/portal" component={Portal} />
         <Route path="/ticket/:id" component={TicketDetail} />
         <Route path="/order/:id" component={OrderDetail} />
+        <Route path="/landing/:slug" component={LandingPage} />
         <Route component={NotFound} />
       </Switch>
     </Layout>
@@ -89,6 +110,7 @@ function App() {
         <TooltipProvider>
           <ThemeProvider>
             <AuthProvider>
+              <GlobalSchemas />
               <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
                 <Router />
               </WouterRouter>
