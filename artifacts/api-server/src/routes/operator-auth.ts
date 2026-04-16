@@ -85,7 +85,7 @@ router.post("/logout", (_req: Request, res: Response) => {
 });
 
 router.get("/me", requireBlogAdmin, (req: Request, res: Response) => {
-  res.json({ operator: req.operatorUser });
+  res.json({ user: req.operatorUser });
 });
 
 export default router;
