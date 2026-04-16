@@ -54,7 +54,7 @@ function PromoCodesContent() {
   const [codes, setCodes] = useState<PromoCodeRow[]>([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(20);
+  const [limit] = useState(20);
   const [totalPages, setTotalPages] = useState(1);
   const [status, setStatus] = useState("all");
   const [type, setType] = useState("all");
@@ -96,7 +96,6 @@ function PromoCodesContent() {
       setCodes(data.codes);
       setTotal(data.pagination.totalCount);
       setPage(data.pagination.page);
-      setLimit(data.pagination.limit);
       setTotalPages(data.pagination.totalPages);
     } catch {
       setError("Failed to load promo codes.");
