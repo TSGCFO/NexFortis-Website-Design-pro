@@ -4,6 +4,7 @@ interface SEOProps {
   title: string;
   description: string;
   path?: string;
+  canonical?: string;
   noIndex?: boolean;
   ogType?: "website" | "article" | "product";
   ogImage?: string;
@@ -21,6 +22,7 @@ export function SEO({
   title,
   description,
   path,
+  canonical,
   noIndex,
   ogType = "website",
   ogImage,
@@ -30,7 +32,7 @@ export function SEO({
   articleAuthor,
 }: SEOProps) {
   const fullTitle = title.includes("NexFortis") ? title : `${title} | ${SITE_NAME}`;
-  const canonicalUrl = path ? `${BASE_URL}${path}` : undefined;
+  const canonicalUrl = canonical || (path ? `${BASE_URL}${path}` : undefined);
   const image = ogImage || DEFAULT_OG_IMAGE;
 
   const schemas = jsonLd

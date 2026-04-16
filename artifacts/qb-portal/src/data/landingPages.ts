@@ -1538,7 +1538,7 @@ export const landingPages: LandingPageData[] = [
           "There is no requirement to convert all users at once. The conversion produces a single converted .QBM file regardless of how many Enterprise users were in the source file — the user count in the destination file is determined by your Premier or Pro license, not by the number of Enterprise seats you previously had. Many businesses convert and license a smaller-than-Enterprise user count from day one, both to save licensing cost and because they have already reduced staff since they bought Enterprise.",
       },
     ],
-    relatedSlugs: ["enterprise-to-premier-conversion", "etech-alternative", "how-conversion-works", "5-pack-conversions"],
+    relatedSlugs: ["enterprise-to-premier-conversion", "etech-alternative", "how-conversion-works", "quickbooks-conversion-canada"],
     breadcrumbs: [SERVICES_CRUMB, { name: "Affordable Enterprise Conversion", path: "/landing/affordable-enterprise-conversion" }],
   },
   // ===== Group D — Educational / Trust =====

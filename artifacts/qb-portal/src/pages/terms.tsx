@@ -7,6 +7,7 @@ export default function Terms() {
         title="Terms of Service"
         description="Terms of Service for the NexFortis QuickBooks Service Portal. Read our terms before using our services."
         path="/terms"
+        canonical="https://nexfortis.com/terms"
       />
       <section className="section-brand-navy py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
