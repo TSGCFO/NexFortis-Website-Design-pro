@@ -1,0 +1,401 @@
+ Prompt 08: Ticket System Enhancement — Reply Thread, Status Updates, SLA Timer, Priority Routing
+
+This prompt enhances the ticket system into a full conversation thread with operator replies, real-time status updates, SLA timer display in the admin panel, priority-based routing, and ticket notification infrastructure.
+
+## Step 0: Setup
+
+Read these files before making any changes:
+1. `replit.md` — project overview, architecture, conventions
+2. `docs/prd/qb-portal/feature-expert-support-subscription.md` — Sections 5.2, 6, 7 (ticket requirements, SLA, operator dashboard)
+3. `docs/prd/qb-portal/feature-operator-admin-panel.md` — admin panel PRD
+4. `docs/implementation-plan.md` — understand what Prompts 01–07 have already built
+5. `artifacts/api-server/src/routes/qb-portal.ts` — existing ticket routes
+6. `artifacts/api-server/src/routes/qb-subscriptions.ts` — subscription routes (from Prompt 06)
+7. `artifacts/api-server/src/lib/business-hours.ts` — SLA timer logic (from Prompt 06)
+8. `lib/db/src/schema/qb-portal.ts` — DB schema including enhanced ticket columns
+9. `artifacts/qb-portal/src/pages/admin/` — existing admin pages (from Prompt 05)
+
+**Do NOT modify any files in `docs/`.**
+
+**PREREQUISITES (must exist from prior prompts):**
+- `qb_support_tickets` table with columns: `subscription_id`, `tier_at_submission`, `is_critical`, `is_after_hours`, `sla_deadline`, `first_response_at`, `operator_reply`, `internal_note`, `attachment_path`
+- Business hours utility at `artifacts/api-server/src/lib/business-hours.ts` with `getSlaStatus()`, `getTimeRemainingMinutes()`, `isBusinessHours()`
+- Admin panel at `/qb-portal/admin/` with ticket list (basic, from Prompt 05)
+- `requireAuth` and `requireOperator` middleware
+- Ticket submission route with subscription awareness (from Prompt 06)
+
+---
+
+## Step 1: Ticket Reply/Thread System — Backend
+
+### 1a. Create `qb_ticket_replies` Table
+
+Add a new table to `lib/db/src/schema/qb-portal.ts`:
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | `serial` (PK) | |
+| `ticket_id` | `integer` (FK → qb_support_tickets.id) | NOT NULL |
+| `sender_id` | `uuid` (FK → qb_users.id) | NOT NULL |
+| `sender_role` | `text` | NOT NULL, CHECK IN ('customer', 'operator') |
+| `message` | `text` | NOT NULL |
+| `attachment_path` | `text` | NULLABLE — Supabase Storage path |
+| `created_at` | `timestamp` | DEFAULT now() |
+
+Run the migration after defining the schema.
+
+### 1b. Post Reply Route
+
+`POST /api/qb/tickets/:id/replies` — requires `requireAuth`
+
+Request body: `{ message, attachment? (multipart) }`
+
+Logic:
+1. Fetch the ticket. Verify the requesting user is either the ticket owner OR an operator.
+2. Determine `sender_role`: if user is operator → 'operator', else → 'customer'.
+3. If attachment provided, upload to Supabase Storage under `tickets/{ticketId}/replies/` and store the path.
+4. Insert the reply into `qb_ticket_replies`.
+5. If this is the first operator reply (`sender_role === 'operator'`) and `first_response_at` is null on the ticket:
+   - Set `first_response_at = NOW()` on the ticket
+   - Log `[SLA] Ticket {id} first response at {timestamp}, SLA deadline was {slaDeadline}`
+6. If the operator is replying and the ticket status is 'open', automatically update status to 'in_progress'.
+7. Return the created reply.
+
+### 1c. Get Ticket Replies
+
+`GET /api/qb/tickets/:id/replies` — requires `requireAuth`
+
+Returns all replies for the ticket, ordered by `created_at ASC` (chronological).
+
+Logic:
+1. Fetch the ticket. Verify the requesting user is the ticket owner OR an operator.
+2. Query all replies for this ticket ID.
+3. For each reply with an `attachment_path`, generate a Supabase signed URL (1-hour expiry).
+4. Return the replies array. Include `sender_role` so the frontend knows who sent each message.
+
+Note: `internal_note` on the ticket is NOT included in replies — it's separate and only visible to operators.
+
+### 1d. Update Ticket Status
+
+`PATCH /api/qb/tickets/:id/status` — requires `requireAuth` + `requireOperator`
+
+Request body: `{ status, internalNote? }`
+
+Allowed status transitions:
+- `open` → `in_progress`, `resolved`, `closed`
+- `in_progress` → `resolved`, `closed`
+- `resolved` → `closed`, `open` (reopen)
+- `closed` → `open` (reopen)
+
+Logic:
+1. Validate the transition is allowed. Return 400 for invalid transitions.
+2. Update the ticket status and `updatedAt`.
+3. If `internalNote` provided, update `internal_note` on the ticket.
+4. Log `[AUDIT] Ticket {id} status changed to {status} by operator {userId}`.
+5. Return the updated ticket.
+
+**Verify Step 1:** `pnpm typecheck` — zero errors.
+
+---
+
+## Step 2: Admin Ticket Dashboard Enhancement
+
+Update the admin ticket list page (created in Prompt 05) with priority routing, SLA timers, and reply capability.
+
+### 2a. Ticket Queue with Priority Sorting
+
+The admin ticket list must be sorted by:
+1. Critical tickets first (regardless of tier)
+2. Then by tier: Premium → Professional → Essentials → non-subscriber
+3. Then by submission timestamp (oldest first within same tier)
+
+Fetch tickets from `GET /api/qb/admin/tickets` — add query params for filtering:
+- `status`: filter by status (open, in_progress, resolved, closed, all)
+- `tier`: filter by tier (essentials, professional, premium, non-subscriber, all)
+- `critical`: filter critical only (boolean)
+
+Default view: show `open` + `in_progress` tickets, sorted by priority.
+
+### 2b. SLA Timer Display
+
+Each ticket card in the admin list must show:
+
+**SLA Countdown:**
+- Calculate time remaining by calling a utility function or computing from `sla_deadline` vs current time (business hours only)
+- Display as "MM:SS remaining" or "X hr Y min remaining"
+- Color-coded badge:
+  - Green (`bg-green-100 text-green-700`): > 30 minutes remaining
+  - Yellow (`bg-yellow-100 text-yellow-700`): 10–30 minutes remaining
+  - Red (`bg-red-100 text-red-700`): < 10 minutes remaining
+  - Dark red / `bg-red-600 text-white`: SLA breached (deadline passed)
+- If `first_response_at` is set (already responded): show "Responded in X min" with a green check, no countdown
+- If ticket has no SLA (non-subscriber): show "No SLA" in gray
+
+**Update the timer periodically:** Use a `setInterval` (every 30 seconds) or a `useEffect` with a timer to refresh the countdown display without refetching from the API. The countdown can be computed client-side from `sla_deadline` and the business-hours logic.
+
+### 2c. Ticket Card Information
+
+Each ticket card should display:
+- **Ticket ID** and **Subject**
+- **Tier badge** (color-coded: Essentials=blue, Professional=purple, Premium=gold, None=gray)
+- **Critical badge** (red) if `is_critical`
+- **After-hours badge** (orange) if `is_after_hours`
+- **Status badge** (open=blue, in_progress=amber, resolved=green, closed=gray)
+- **SLA timer** (as described above)
+- **Submitted:** relative time ("2 hours ago")
+- **Customer name/email**
+- **First line of message** (truncated to ~100 chars)
+
+### 2d. Ticket Detail Modal or Page
+
+When the operator clicks a ticket, open a detail view (modal or full page) showing:
+
+**Header:**
+- Ticket ID, subject, all badges (tier, critical, after-hours, status)
+- SLA timer
+- Customer info (name, email, subscription tier)
+
+**Conversation Thread:**
+- Original ticket message at the top
+- All replies below in chronological order
+- Each reply shows: sender name, role badge ("Customer" / "Operator"), timestamp, message text, attachment link if any
+- Visual distinction between customer messages (left-aligned or different bg) and operator messages (right-aligned or different bg) — like a chat thread
+
+**Reply Box:**
+- Text area for the operator to type a reply
+- File attachment button (optional)
+- "Send Reply" button
+- On send: calls `POST /api/qb/tickets/:id/replies` with `{ message, attachment }`, then refreshes the thread
+
+**Internal Note:**
+- Separate text area (visually distinct, e.g., yellow background) labeled "Internal Note (not visible to customer)"
+- Save button that calls `PATCH /api/qb/tickets/:id/status` with `{ internalNote }`
+
+**Status Actions:**
+- Buttons for status transitions based on current status:
+  - If open: "Start Working" (→ in_progress), "Resolve" (→ resolved)
+  - If in_progress: "Resolve" (→ resolved), "Close" (→ closed)
+  - If resolved: "Close" (→ closed), "Reopen" (→ open)
+  - If closed: "Reopen" (→ open)
+
+**Verify Step 2:** Admin ticket list shows tickets sorted by priority. SLA timers display with correct colors. Clicking a ticket shows the conversation thread. Reply box works.
+
+---
+
+## Step 3: Customer Ticket Detail Page
+
+Create or update the customer-facing ticket detail view.
+
+### 3a. Ticket Detail Page
+
+Create `artifacts/qb-portal/src/pages/ticket-detail.tsx` at route `/qb-portal/ticket/:id`.
+
+Page layout:
+- SEO component with "Ticket #{id} | NexFortis"
+- Back link to portal → Support tab
+
+**Header:**
+- Ticket ID, subject, status badge, tier badge
+- If critical: red "CRITICAL" badge
+- Submitted date/time
+- SLA info: "Our team will respond within {slaWindow}" or "Responded in {responseTime}" if already replied
+
+**Conversation Thread:**
+- Same thread layout as admin but without internal notes
+- Original message at top
+- Replies in chronological order
+- Customer messages vs operator messages visually distinct
+
+**Reply Box (customer can reply):**
+- Text area + file attachment
+- "Send Reply" button
+- Calls `POST /api/qb/tickets/:id/replies`
+
+**Status Display:**
+- Current status with explanation:
+  - "Open — Waiting for our team to respond"
+  - "In Progress — Our team is working on this"
+  - "Resolved — This ticket has been resolved. Need more help? Reopen it."
+  - "Closed — This ticket is closed"
+
+### 3b. Link from Ticket List
+
+In the portal's Support tab, make each ticket in the list clickable → navigates to `/qb-portal/ticket/{id}`.
+
+### 3c. Register the Route
+
+Add `/qb-portal/ticket/:id` to the router. Requires authentication.
+
+**Verify Step 3:** Customer can view ticket detail, see the conversation thread, and post replies.
+
+---
+
+## Step 4: Priority Routing Backend
+
+### 4a. Admin Tickets Endpoint Enhancement
+
+Update `GET /api/qb/admin/tickets` (created in Prompt 05) to support:
+
+**Query params:**
+- `status` — filter: "open", "in_progress", "resolved", "closed", "all" (default: "open,in_progress")
+- `tier` — filter: "essentials", "professional", "premium", "none", "all"
+- `critical` — filter: "true" to show only critical tickets
+- `sort` — "priority" (default) or "newest" or "oldest"
+- `page` and `limit` for pagination (default: page 1, limit 50)
+
+**Priority sort order (when sort=priority):**
+```sql
+ORDER BY
+  is_critical DESC,
+  CASE tier_at_submission
+    WHEN 'premium' THEN 1
+    WHEN 'professional' THEN 2
+    WHEN 'essentials' THEN 3
+    ELSE 4
+  END,
+  created_at ASC
+```
+
+**Response shape:**
+```json
+{
+  "tickets": [...],
+  "total": 42,
+  "page": 1,
+  "limit": 50,
+  "slaBreached": 2,
+  "openCount": 15,
+  "criticalCount": 3
+}
+```
+
+Include `slaBreached` (count of tickets past their SLA deadline without a first response), `openCount`, and `criticalCount` as summary stats for the dashboard header.
+
+### 4b. SLA Stats Endpoint
+
+`GET /api/qb/admin/tickets/stats` — requires `requireAuth` + `requireOperator`
+
+Returns:
+```json
+{
+  "openTickets": 15,
+  "inProgressTickets": 8,
+  "criticalOpen": 3,
+  "slaBreached": 2,
+  "avgResponseMinutes": 23,
+  "slaCompliancePercent": 96.5,
+  "ticketsByTier": {
+    "premium": 5,
+    "professional": 12,
+    "essentials": 4,
+    "none": 2
+  }
+}
+```
+
+Calculate `avgResponseMinutes` from tickets that have `first_response_at` set (within the last 30 days). Calculate `slaCompliancePercent` as the percentage of tickets with `first_response_at <= sla_deadline` out of all tickets with a deadline (excluding non-subscriber tickets which have no SLA).
+
+### 4c. Admin Dashboard Stats Header
+
+At the top of the admin ticket list, display a stats bar using data from `/api/qb/admin/tickets/stats`:
+- Open tickets count
+- Critical tickets (red if > 0)
+- SLA breached (red alert if > 0)
+- Avg response time
+- SLA compliance rate (green if ≥ 98%, yellow if ≥ 95%, red if < 95%)
+
+**Verify Step 4:** Admin ticket list supports all filters and sorts. Stats header shows correct numbers.
+
+---
+
+## Step 5: Ticket Notification Hooks (Backend Prep)
+
+Set up the infrastructure for email notifications. The actual email sending is Prompt 14, but the trigger points need to exist now.
+
+### 5a. Create Notification Events Table (optional)
+
+If you want a durable event log, create `qb_notification_events`:
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | `serial` (PK) | |
+| `type` | `text` | NOT NULL — e.g., 'ticket_created', 'ticket_replied', 'ticket_resolved' |
+| `ticket_id` | `integer` (FK → qb_support_tickets.id) | |
+| `user_id` | `uuid` | The user to notify |
+| `payload` | `jsonb` | Event data (ticket subject, reply preview, etc.) |
+| `sent` | `boolean` | DEFAULT false — Prompt 14 will set this to true after sending |
+| `created_at` | `timestamp` | DEFAULT now() |
+
+### 5b. Emit Notification Events
+
+At each trigger point, insert a row into `qb_notification_events` (or call a helper function `emitTicketNotification(type, ticketId, userId, payload)`):
+
+1. **Ticket created** → notify operator (type: 'ticket_created', payload includes: subject, tier, isCritical, sla deadline)
+2. **Customer replies** → notify operator (type: 'customer_replied', payload includes: ticket subject, reply preview)
+3. **Operator replies** → notify customer (type: 'operator_replied', payload includes: ticket subject, reply preview)
+4. **Ticket resolved** → notify customer (type: 'ticket_resolved')
+5. **SLA about to breach (< 10 min)** → This is harder to trigger in real-time. For now, skip this — the admin dashboard SLA timer handles visibility. Prompt 14 can add a cron-based check.
+
+This is a lightweight approach. Prompt 14 will query `qb_notification_events WHERE sent = false` and send the actual emails.
+
+**Verify Step 5:** After posting a reply, check that a `qb_notification_events` row is created. `pnpm typecheck` — zero errors.
+
+---
+
+## Step 6: Business Hours Display for Customers
+
+### 6a. After-Hours Banner
+
+On the ticket submission form (in the portal), if the current time is outside Mon–Fri 9am–5pm ET:
+- Show an orange/amber banner: "Our team is currently offline. Tickets submitted now will receive a response by 9am ET on {nextBusinessDay}."
+- The `nextBusinessDay` should be computed client-side (check if current ET time is after 5pm Friday → Monday, otherwise next day if after 5pm on weekday)
+
+### 6b. Ticket Detail SLA Display (Customer View)
+
+On the customer ticket detail page, show SLA information:
+- If waiting for response: "Expected response within {timeWindow}" based on tier
+- If responded: "Our team responded in {elapsed}" (green text if within SLA, yellow if close, red if breached)
+- If after-hours: "Response expected by 9am ET {nextBusinessDay}"
+
+Keep this informational — don't show the raw countdown timer to customers (that's an operator tool).
+
+---
+
+## Step 7: Final Verification
+
+1. Run `pnpm typecheck` — zero errors.
+2. Run `pnpm drizzle-kit push` (or equivalent) if new tables were added.
+3. Verify in the Replit preview:
+
+**Admin side:**
+- `/qb-portal/admin/` → ticket list shows priority-sorted tickets
+- SLA timers display with correct color coding
+- Click a ticket → conversation thread loads
+- Post a reply → reply appears in thread, `first_response_at` set
+- Status transitions work (open → in_progress → resolved → closed)
+- Filters and sort options work
+- Stats header shows correct numbers
+
+**Customer side:**
+- Portal → Support → click ticket → detail page with conversation thread
+- Post a customer reply → appears in thread
+- After-hours banner shows when outside business hours
+- Ticket submission form shows tier info, critical checkbox, remaining count
+
+**Security:**
+- Customers cannot see other customers' tickets
+- Customers cannot see internal notes
+- Non-operators get 403 on admin endpoints
+- `requireAuth` on all ticket routes
+
+---
+
+## Constraints
+
+- Do NOT modify any files in `docs/`.
+- Do NOT send actual emails — that is Prompt 14. Only create the notification event records.
+- Do NOT build the promo code system — that is Prompt 09.
+- Do NOT modify subscription routes — those were built in Prompt 06.
+- Keep the admin layout consistent with what Prompt 05 built (sidebar, navigation, auth guards).
+- The reply thread is NOT real-time WebSocket — it's standard REST. Customer refreshes or uses a polling interval to see new replies. Real-time can be added later.
+- Business hours are America/Toronto timezone. Use the `Intl.DateTimeFormat` API on the frontend for timezone display.
