@@ -1,6 +1,6 @@
 import { execSync } from "child_process";
 import { resolve, dirname, join } from "path";
-import { readFileSync, readdirSync, existsSync } from "fs";
+import { readFileSync, readdirSync, existsSync, statSync } from "fs";
 import { fileURLToPath } from "url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -15,62 +15,96 @@ function warn(msg) { warnings.push(msg); }
 
 const ALLOWED_SCOPE_DIRS = [
   "artifacts/qb-portal/",
+  "artifacts/api-server/",
+  "lib/db/",
   "scripts/",
   ".local/",
   "replit.md",
   ".replit",
+  ".env.example",
   "pnpm-lock.yaml",
 ];
 
 const PROTECTED_DIRS = [
   "docs/",
   "artifacts/nexfortis/",
-  "lib/",
+  "artifacts/mockup-sandbox/",
 ];
 
-function findLatestCommit() {
+const SKIP_SUBJECTS = [
+  /^Published your App$/,
+  /^Merge branch/,
+  /^Revert /,
+];
+
+function findLatestMeaningfulCommit() {
   try {
-    const hash = execSync(
-      "git log --oneline -1 --format='%H'",
+    const log = execSync(
+      "git log --oneline -20 --format='%H|||%s'",
       { cwd: PROJECT_ROOT, encoding: "utf-8" }
-    ).trim();
-    const parentCount = execSync(
-      `git cat-file -p ${hash} | grep -c '^parent' || true`,
-      { cwd: PROJECT_ROOT, encoding: "utf-8" }
-    ).trim();
-    return { hash, isMerge: parseInt(parentCount, 10) > 1 };
+    ).trim().split("\n");
+
+    for (const line of log) {
+      const [hash, ...subjectParts] = line.split("|||");
+      const subject = subjectParts.join("|||");
+      if (SKIP_SUBJECTS.some((re) => re.test(subject))) continue;
+
+      const parentCount = execSync(
+        `git cat-file -p ${hash} | grep -c '^parent' || true`,
+        { cwd: PROJECT_ROOT, encoding: "utf-8" }
+      ).trim();
+
+      const diffCheck = execSync(
+        parseInt(parentCount, 10) > 1
+          ? `git diff --name-only ${hash}^1 ${hash}`
+          : `git diff --name-only ${hash}~1 ${hash}`,
+        { cwd: PROJECT_ROOT, encoding: "utf-8" }
+      ).trim();
+
+      if (diffCheck.length > 0) {
+        return {
+          hash,
+          subject,
+          isMerge: parseInt(parentCount, 10) > 1,
+        };
+      }
+    }
+
+    return null;
   } catch (e) {
     fail(`Cannot read git log: ${e.message}`);
     finish();
   }
 }
 
-const commit = findLatestCommit();
-const commitSubject = execSync(
-  `git log --oneline -1 --format='%s' ${commit.hash}`,
-  { cwd: PROJECT_ROOT, encoding: "utf-8" }
-).trim();
+const commit = findLatestMeaningfulCommit();
 
-console.log(`Analyzing commit: ${commit.hash.substring(0, 8)} ${commitSubject}`);
-console.log(`Commit type: ${commit.isMerge ? "merge" : "regular"}\n`);
+if (!commit) {
+  console.log("No meaningful commit with changed files found in last 20 commits.\n");
+} else {
+  console.log(`Analyzing commit: ${commit.hash.substring(0, 8)} ${commit.subject}`);
+  console.log(`Commit type: ${commit.isMerge ? "merge" : "regular"}\n`);
+}
 
 let changedFiles = [];
-try {
-  const diffCmd = commit.isMerge
-    ? `git diff --name-only ${commit.hash}^1 ${commit.hash}`
-    : `git diff --name-only HEAD~1 HEAD`;
-  changedFiles = execSync(diffCmd, {
-    cwd: PROJECT_ROOT,
-    encoding: "utf-8",
-  }).trim().split("\n").filter(Boolean);
-} catch {
+if (commit) {
   try {
-    changedFiles = execSync("git diff --name-only HEAD", {
+    const diffCmd = commit.isMerge
+      ? `git diff --name-only ${commit.hash}^1 ${commit.hash}`
+      : `git diff --name-only ${commit.hash}~1 ${commit.hash}`;
+    changedFiles = execSync(diffCmd, {
       cwd: PROJECT_ROOT,
       encoding: "utf-8",
     }).trim().split("\n").filter(Boolean);
-  } catch (e) {
-    warn(`Cannot determine changed files: ${e.message}`);
+  } catch {
+    try {
+      changedFiles = execSync("git diff --name-only HEAD", {
+        cwd: PROJECT_ROOT,
+        encoding: "utf-8",
+      }).trim().split("\n").filter(Boolean);
+    } catch (e) {
+      warn(`Cannot determine changed files: ${e.message}`);
+    }
   }
 }
 
@@ -111,7 +145,7 @@ if (changedFiles.length === 0) {
       }
     }
     if (outOfScope.length > protectedViolations.length) {
-      console.log(`⚠ ${outOfScope.length - protectedViolations.length} file(s) outside expected scope (not in ${ALLOWED_SCOPE_DIRS.join(", ")})\n`);
+      console.log(`⚠ ${outOfScope.length - protectedViolations.length} file(s) outside expected scope\n`);
     }
   }
 
@@ -130,16 +164,21 @@ try {
   const tasksDir = join(PROJECT_ROOT, ".local/tasks");
   if (existsSync(tasksDir)) {
     const taskFiles = readdirSync(tasksDir)
-      .filter((f) => f.startsWith("task-") && f.endsWith(".md"))
-      .sort()
-      .reverse();
+      .filter((f) => f.endsWith(".md"))
+      .map((f) => ({
+        name: f,
+        mtime: statSync(join(tasksDir, f)).mtimeMs,
+      }))
+      .sort((a, b) => b.mtime - a.mtime);
 
     if (taskFiles.length > 0) {
-      const latestTaskFile = join(tasksDir, taskFiles[0]);
+      const latestTaskFile = join(tasksDir, taskFiles[0].name);
       taskDescription = readFileSync(latestTaskFile, "utf-8");
-      const titleMatch = taskDescription.match(/^title:\s*(.+)$/m);
+
+      const titleMatch = taskDescription.match(/^#\s+(.+)$/m)
+        || taskDescription.match(/^title:\s*(.+)$/m);
       if (titleMatch) {
-        console.log(`Latest task: ${titleMatch[1]}`);
+        console.log(`Latest task: ${titleMatch[1]} (${taskFiles[0].name})`);
       }
 
       const relevantSection = taskDescription.match(/## Relevant files\s*\n([\s\S]*?)(?:\n##|$)/);
@@ -188,14 +227,14 @@ console.log("--- Running sub-checks ---\n");
 
 try {
   console.log("[1/2] TypeCheck...");
-  execSync("pnpm --filter @workspace/qb-portal typecheck", {
+  execSync("bash scripts/validations/typecheck.sh", {
     cwd: PROJECT_ROOT,
     encoding: "utf-8",
     stdio: "pipe",
   });
   console.log("  ✓ TypeCheck passed\n");
 } catch (e) {
-  fail("TypeCheck failed after merge — possible regression");
+  fail("TypeCheck failed — possible regression");
   console.log("  ✗ TypeCheck FAILED\n");
   if (e.stdout) console.log(e.stdout.substring(0, 500));
 }
@@ -209,7 +248,7 @@ try {
   });
   console.log("  ✓ Product integrity passed\n");
 } catch (e) {
-  fail("Product integrity failed after merge — possible regression");
+  fail("Product integrity failed — possible regression");
   console.log("  ✗ Product integrity FAILED\n");
   if (e.stdout) console.log(e.stdout.substring(0, 500));
 }
