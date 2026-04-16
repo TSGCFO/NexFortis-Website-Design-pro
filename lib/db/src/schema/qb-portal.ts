@@ -83,6 +83,7 @@ export const qbSubscriptions = pgTable("qb_subscriptions", {
   currentPeriodStart: timestamp("current_period_start", { withTimezone: true }),
   currentPeriodEnd: timestamp("current_period_end", { withTimezone: true }),
   cancelAtPeriodEnd: boolean("cancel_at_period_end").default(false),
+  pendingDowngradeTier: text("pending_downgrade_tier"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 }, (table) => [
