@@ -3,7 +3,7 @@ import rateLimit, { ipKeyGenerator } from "express-rate-limit";
 import { db } from "@workspace/db";
 import { qbUsers, qbOrders, qbOrderFiles, qbWaitlistSignups, qbSupportTickets, qbSubscriptions, qbTicketUsage, qbReferrals, qbPromoCodes, qbPromoCodeRedemptions } from "@workspace/db/schema";
 import { sendEmail } from "../lib/email-service";
-import { freeOrderCustomerEmail, freeOrderOperatorEmail } from "../lib/email-templates";
+import { freeOrderCustomerEmail, freeOrderOperatorEmail, paidOrderConfirmationEmail, paidOrderOperatorEmail, welcomeRegistrationEmail, waitlistConfirmationEmail } from "../lib/email-templates";
 import { generateUniqueReferralCode } from "../lib/referral-code";
 import { createStripeCouponAndPromoCode } from "../lib/promo-stripe";
 import { eq, and, desc } from "drizzle-orm";
@@ -252,11 +252,21 @@ router.post("/waitlist", async (req: Request, res: Response) => {
       return;
     }
 
+    const resolvedProductName = product_name || `Product #${parsedProductId}`;
     await db.insert(qbWaitlistSignups).values({
       email,
       productId: parsedProductId,
-      productName: product_name || `Product #${parsedProductId}`,
+      productName: resolvedProductName,
     });
+
+    try {
+      const tpl = waitlistConfirmationEmail(resolvedProductName);
+      sendEmail({ to: email, subject: tpl.subject, html: tpl.html }).catch((err) =>
+        console.error("[Waitlist] Email send failed:", err),
+      );
+    } catch (err) {
+      console.error("[Waitlist] Email build failed:", err);
+    }
 
     res.status(201).json({ success: true });
   } catch (err) {
@@ -516,6 +526,33 @@ router.post("/webhook/stripe", async (req: Request, res: Response) => {
               stripeSessionId: session.id,
             }).where(eq(qbOrders.id, orderId));
             console.log(`[Stripe] Payment confirmed for order ${orderId}`);
+
+            try {
+              let customerName = existing.customerName;
+              let customerEmail = existing.customerEmail;
+              if (existing.userId) {
+                const [profile] = await db.select({ name: qbUsers.name, email: qbUsers.email })
+                  .from(qbUsers).where(eq(qbUsers.id, existing.userId)).limit(1);
+                if (profile) {
+                  customerName = profile.name || customerName;
+                  customerEmail = profile.email || customerEmail;
+                }
+              }
+              const portalUrl = `${getValidOrigin(undefined)}/qb-portal`;
+              const unsubUrl = `${getValidOrigin(undefined)}/qb-portal/unsubscribe?email=${encodeURIComponent(customerEmail)}`;
+              const custTpl = paidOrderConfirmationEmail(
+                customerName, existing.id, existing.serviceName, existing.totalCad, portalUrl, unsubUrl,
+              );
+              sendEmail({ to: customerEmail, subject: custTpl.subject, html: custTpl.html })
+                .catch((err) => console.error("[Stripe] Paid order customer email failed:", err));
+              const opTpl = paidOrderOperatorEmail(
+                existing.id, existing.serviceName, existing.totalCad, customerName, customerEmail,
+              );
+              sendEmail({ to: "support@nexfortis.com", subject: opTpl.subject, html: opTpl.html })
+                .catch((err) => console.error("[Stripe] Paid order operator email failed:", err));
+            } catch (emailErr) {
+              console.error("[Stripe] Paid order email build failed:", emailErr);
+            }
           }
         }
       }
@@ -1142,6 +1179,8 @@ router.get("/support-tickets", requireAuth, async (req: Request, res: Response) 
   }
 });
 
+const welcomeEmailsSent = new Set<string>();
+
 router.get("/me", requireAuth, async (req: Request, res: Response) => {
   try {
     const uid = getUserId(req);
@@ -1150,6 +1189,22 @@ router.get("/me", requireAuth, async (req: Request, res: Response) => {
       res.status(404).json({ error: "User not found" });
       return;
     }
+
+    if (user.role === "customer" && !welcomeEmailsSent.has(user.id)) {
+      const createdAt = user.createdAt instanceof Date ? user.createdAt.getTime() : new Date(user.createdAt).getTime();
+      if (Date.now() - createdAt < 60_000) {
+        welcomeEmailsSent.add(user.id);
+        try {
+          const portalUrl = `${getValidOrigin(req.headers.origin)}/qb-portal`;
+          const tpl = welcomeRegistrationEmail(user.name || "there", portalUrl, "#");
+          sendEmail({ to: user.email, subject: tpl.subject, html: tpl.html })
+            .catch((err) => console.error("[Welcome] Email send failed:", err));
+        } catch (err) {
+          console.error("[Welcome] Email build failed:", err);
+        }
+      }
+    }
+
     res.json({ user: { id: user.id, email: user.email, name: user.name, phone: user.phone, role: user.role } });
   } catch (err) {
     console.error("Get me error:", err);

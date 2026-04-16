@@ -5,6 +5,9 @@ import { eq, and, desc, asc, sql, ilike, or, inArray } from "drizzle-orm";
 import multer from "multer";
 import path from "path";
 import { supabaseAdmin, isStorageAvailable } from "../lib/supabase";
+import { sendEmail } from "../lib/email-service";
+import { fileDeliveryEmail } from "../lib/email-templates";
+import { getValidOrigin } from "../lib/config";
 
 const router = Router();
 
@@ -457,6 +460,26 @@ router.post("/orders/:orderId/files/upload",
         }).returning();
 
         console.log(`[File Upload] Admin: Order ${orderId}: ${safeFileName} (${req.file.size} bytes) -> ${storagePath}`);
+
+        try {
+          if (order.userId) {
+            const [customer] = await db.select({ name: qbUsers.name, email: qbUsers.email })
+              .from(qbUsers).where(eq(qbUsers.id, order.userId)).limit(1);
+            if (customer) {
+              const portalUrl = `${getValidOrigin(req.headers.origin)}/qb-portal`;
+              const unsubUrl = `${getValidOrigin(req.headers.origin)}/qb-portal/unsubscribe?email=${encodeURIComponent(customer.email)}`;
+              const tpl = fileDeliveryEmail(customer.name || "there", orderId, safeFileName, portalUrl, unsubUrl);
+              sendEmail({ to: customer.email, subject: tpl.subject, html: tpl.html })
+                .catch((err) => console.error("[FileDelivery] Email send failed:", err));
+            } else {
+              console.warn(`[FileDelivery] Customer not found for order ${orderId}; skipping email.`);
+            }
+          } else {
+            console.warn(`[FileDelivery] Order ${orderId} has no userId; skipping email.`);
+          }
+        } catch (emailErr) {
+          console.error("[FileDelivery] Email build failed:", emailErr);
+        }
 
         res.status(201).json({ file: fileRecord });
       } catch (dbErr) {
