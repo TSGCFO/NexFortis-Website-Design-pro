@@ -1,0 +1,306 @@
+# Prompt 13: Main Website Pre-Launch Fixes
+
+This prompt addresses critical pre-launch gaps on the main `nexfortis.com` site: blog admin security, QB Portal cross-linking, contact form improvements, and dead code cleanup. These are Phase 0 and Phase 1 items from the Main Website PRD.
+
+## Step 0: Setup
+
+Read these files before making any changes:
+1. `replit.md` — project overview, architecture, conventions
+2. `docs/prompts/prompt-13-main-website-fixes.md` — this file
+3. `docs/prd/nexfortis-main/master-nexfortis-website-remaining-work.md` — main website PRD (sections 3.2.1, 3.2.2, 3.3.1 are most relevant)
+4. `artifacts/api-server/src/routes/blog.ts` — current blog routes (no auth middleware)
+5. `artifacts/api-server/src/routes/contact.ts` — current contact form handler
+6. `artifacts/nexfortis/src/pages/services/quickbooks.tsx` — QB services page with CTAs
+7. `artifacts/nexfortis/src/components/layout.tsx` — site layout with nav and footer
+8. `artifacts/nexfortis/src/pages/blog-admin.tsx` — blog admin page (no auth guard)
+9. `artifacts/nexfortis/src/pages/about.tsx` — about page with founder section
+10. `lib/db/src/schema/` — current Drizzle schema files
+
+**Do NOT modify any files in `docs/`.**
+
+**PLATFORM REMINDERS:**
+- Do NOT throw errors for missing env vars — use `console.warn` + `null`
+- Do NOT create migration files manually — use `drizzle-kit push` from `lib/db/`
+- Do NOT add `express.static()` to the API server
+- Verify Replit Secrets still exist after completing all steps
+
+---
+
+## Step 1: Blog Admin Authentication — Database & Backend
+
+The blog admin is currently wide open — anyone who knows the URL can create, edit, and delete posts. This step adds operator authentication.
+
+### 1a. Create the `operator_users` table
+
+Add a new table to the Drizzle schema in the existing schema file that contains the other QB tables. The table should store:
+
+- `id` — serial primary key
+- `email` — text, unique, not null
+- `passwordHash` — text, not null
+- `name` — text, not null
+- `createdAt` — timestamptz, default `NOW()`
+
+Name the table `operator_users`. This is intentionally separate from `qb_users` — operator accounts must never be mixed with customer accounts.
+
+After defining the schema, run `drizzle-kit push` from `lib/db/` to apply it.
+
+### 1b. Create the operator seed script
+
+Create a file `scripts/seed-operator.ts` that:
+
+1. Reads `OPERATOR_EMAIL` and `OPERATOR_PASSWORD` from environment variables (fall back to `h.sadiq@nexfortis.com` and a temporary default like `changeme123` if not set, but log a warning)
+2. Hashes the password using bcrypt (install `bcryptjs` if not already available — check existing dependencies first)
+3. Inserts the operator record into `operator_users` using an upsert (ON CONFLICT on email, update passwordHash and name)
+4. Logs success to console
+
+Add a note in `replit.md` under a "Setup" section that the operator account must be seeded by running this script.
+
+### 1c. Create the `requireBlogAdmin` middleware
+
+**Important:** There is already a `requireOperator` middleware in `qb-portal.ts` that uses Supabase JWT + MFA for the QB Portal admin. The blog admin uses a completely separate, simpler auth system. Name this middleware `requireBlogAdmin` to avoid any naming collision.
+
+Create a new middleware file at `artifacts/api-server/src/middleware/require-blog-admin.ts`. This middleware:
+
+1. Extracts the token from the `Authorization: Bearer <token>` header OR from an httpOnly cookie named `operator_session`
+2. Verifies the token is a valid HMAC-SHA256 signature (using the same `SESSION_SECRET` env var used elsewhere in the app — check what the existing QB auth uses)
+3. Decodes the token payload to get the operator user ID
+4. Looks up the user in the `operator_users` table to confirm they exist
+5. If validation fails at any step, returns 401 with `{ error: "Unauthorized" }`
+6. If valid, attaches the operator user object to `req` (e.g., `req.operatorUser`) and calls `next()`
+
+The blog admin auth is intentionally separate from the QB Portal's Supabase-based auth. Use a simple HMAC-SHA256 signed JSON token approach: the token payload contains `{ operatorId, exp }` as JSON, signed with the `SESSION_SECRET` env var (or a new `BLOG_ADMIN_SECRET` if `SESSION_SECRET` is not available). Verify the signature and check that the token hasn't expired.
+
+### 1d. Add `requireBlogAdmin` to all blog write routes
+
+In `artifacts/api-server/src/routes/blog.ts`, import and apply the `requireBlogAdmin` middleware to these routes:
+
+- `POST /posts` (create)
+- `PUT /posts/:id` (update)
+- `DELETE /posts/:id` (delete)
+- `GET /posts/all` (list all including drafts)
+
+The public read routes (`GET /posts` for published posts and `GET /posts/:slug` for single published post) must remain unauthenticated.
+
+### 1e. Create operator auth API routes
+
+Create a new route file `artifacts/api-server/src/routes/operator-auth.ts` with these endpoints:
+
+**`POST /api/operator/auth/login`**
+- Accepts `{ email, password }` in the request body
+- Looks up the operator in `operator_users` by email
+- Verifies password against the stored bcrypt hash
+- On success: generates an HMAC-signed token containing the operator ID and expiry (24 hours), sets it as an httpOnly cookie (`operator_session`) and returns `{ success: true, user: { id, email, name } }`
+- On failure: returns 401 with `{ error: "Invalid credentials" }`
+- Rate limit: maximum 5 login attempts per IP per 15 minutes using the same in-memory rate limiter pattern used elsewhere in the app
+
+**`POST /api/operator/auth/logout`**
+- Clears the `operator_session` cookie
+- Returns `{ success: true }`
+
+**`GET /api/operator/auth/me`**
+- Uses the `requireBlogAdmin` middleware
+- Returns `{ user: { id, email, name } }` from the authenticated operator
+
+Register these routes in the main route index file at the path prefix `/api/operator/auth`.
+
+---
+
+## Step 2: Blog Admin Frontend Auth Guard
+
+### 2a. Create the admin login page
+
+Create a new page `artifacts/nexfortis/src/pages/admin-login.tsx` with route `/admin/login`. This is a minimal, clean login form:
+
+- Two fields: email and password
+- A "Sign In" submit button
+- NexFortis branding (use the same logo/heading style as other pages)
+- Error message display for failed login attempts
+- On successful login, redirect to `/blog/admin`
+- Match the existing site design system (dark background, accent colors, etc.)
+
+The form should POST to `/api/operator/auth/login` and handle the response.
+
+### 2b. Add auth guard to the blog admin page
+
+In `artifacts/nexfortis/src/pages/blog-admin.tsx`:
+
+1. Add a `useEffect` on mount that calls `GET /api/operator/auth/me`
+2. If the response is 401 or fails, redirect to `/admin/login`
+3. While checking auth status, show a loading spinner (not the admin UI)
+4. Only render the admin panel after auth is confirmed
+5. Add a "Logout" button to the admin header that calls `POST /api/operator/auth/logout` and redirects to the home page
+
+### 2c. Register the admin login route
+
+Add the `/admin/login` route to the client-side router so the page is accessible. Follow the same pattern used for other page routes in the app.
+
+---
+
+## Step 3: QB Portal Cross-Linking on `/services/quickbooks`
+
+The QuickBooks services page currently links to `/contact` for all CTAs. These should direct users to the QB Portal where they can actually order services.
+
+### 3a. Update CTA buttons
+
+In `artifacts/nexfortis/src/pages/services/quickbooks.tsx`:
+
+1. Find the hero/primary CTA button that currently links to `/contact`. Change its:
+   - `href` to `https://qbportal.nexfortis.com/catalog`
+   - Label text to "Browse QB Services Portal" (or similar — the key is it must clearly indicate the QB Portal, not a contact form)
+   - Add `target="_blank"` and `rel="noopener noreferrer"` since this is an external link
+
+2. Find any secondary CTA buttons in the product/tool cards section that link to `/contact`. Update them the same way — link to `https://qbportal.nexfortis.com/catalog`
+
+3. Add a brief callout/info box above the product cards grid. It should say something like: "All QuickBooks services are ordered through our dedicated QB Services Portal — a secure platform for file uploads, order tracking, and support." Style it as a subtle info banner using the existing design tokens (e.g., a rounded card with a light accent background and a small icon).
+
+### 3b. Add QB Portal to main navigation
+
+In `artifacts/nexfortis/src/components/layout.tsx`, add a "QB Portal" link to the navigation. It should:
+
+- Appear in the Services dropdown (if one exists) or as a standalone nav item
+- Link to `https://qbportal.nexfortis.com`
+- Open in a new tab (`target="_blank"`)
+- Have a subtle visual indicator that it's an external link (e.g., a small external link icon)
+
+---
+
+## Step 4: Contact Form Improvements
+
+### 4a. Fix the response time message
+
+In `artifacts/api-server/src/routes/contact.ts`, find the success response message that says "within 24 business hours" and change it to "within 1–2 business hours".
+
+### 4b. Fix the sender address
+
+In the same file, the Resend email is currently sent with `from: "NexFortis Contact Form <onboarding@resend.dev>"`. This is a Resend test address. Change it to `from: "NexFortis <noreply@nexfortis.com>"`. Keep the fallback behavior — if `RESEND_API_KEY` is not set, it still logs to console without failing.
+
+### 4c. Add submitter acknowledgement email
+
+After sending the operator notification email (the one to `contact@nexfortis.com`), add a second email to the submitter. This acknowledges their message was received:
+
+- `from`: `NexFortis <noreply@nexfortis.com>`
+- `to`: the submitter's email address (from `email` in the form body)
+- `subject`: "We received your message — NexFortis"
+- HTML body: a clean, branded email that:
+  - Thanks them by name
+  - Confirms their message was received
+  - States the response time ("within 1–2 business hours")
+  - Includes the NexFortis website URL and support email
+
+Use inline styles for the email HTML (email clients don't support external CSS). Keep the template simple and professional.
+
+If the acknowledgement email fails to send, log the error but do not fail the overall request — the important thing is that the operator notification was sent.
+
+### 4d. Add rate limiting to the contact form
+
+Add rate limiting to the `POST /api/contact` endpoint: maximum 5 submissions per IP per hour. Use the same in-memory rate limiter pattern used by the login endpoints. If the limit is exceeded, return 429 with `{ error: "Too many requests. Please try again later." }`.
+
+---
+
+## Step 5: Dead Code and TODO Cleanup
+
+### 5a. Delete the placeholder page
+
+Delete the file `artifacts/nexfortis/src/pages/placeholder.tsx` — it is dead code not referenced by any route.
+
+### 5b. Remove TODO comments for LinkedIn URLs
+
+The LinkedIn URLs in `layout.tsx` (line ~341), `contact.tsx` (line ~119), and `about.tsx` are already set to `https://www.linkedin.com/company/nexfortis`. The TODO comments above them say "Update this URL when the LinkedIn page is live" — remove these TODO comments since the URL is set and correct. Do not change the actual URLs.
+
+### 5c. Update the founder section placeholder
+
+In `artifacts/nexfortis/src/pages/about.tsx`, the founder section has two issues:
+
+1. The TODO comment says "Replace with actual founder headshot" — keep the current team image for now but change the alt text from "Founder photo placeholder" to "NexFortis team"
+2. The founder name is hardcoded as "Alex Fortier" — this is a placeholder name. Change it to "Hassan Sadiq"
+3. The title "Founder & Principal IT Consultant" is fine — keep it
+
+### 5d. Update the contact form frontend success message
+
+In the frontend contact form component (likely in `artifacts/nexfortis/src/pages/contact.tsx`), check if there's a success message shown to the user after form submission. If it references "24 hours" or similar, update it to match the new "1–2 business hours" response time.
+
+---
+
+## Step 6: QB Portal Legal Page Links
+
+### 6a. Verify QB Portal footer legal links
+
+In `artifacts/qb-portal/src/components/layout.tsx`, the footer has links to Terms of Service and Privacy Policy. Verify these are using relative links (`/terms` and `/privacy`). Since the QB Portal will be on `qbportal.nexfortis.com` in production, these relative links would point to pages on the QB Portal domain.
+
+Change them to absolute URLs pointing to the main site:
+- Terms: `https://nexfortis.com/terms`
+- Privacy: `https://nexfortis.com/privacy`
+
+This ensures there's a single canonical source for legal pages on the main domain.
+
+### 6b. Add canonical meta tags to QB Portal legal pages
+
+If the QB Portal has its own `/terms` and `/privacy` routes/pages, add canonical meta tags pointing to the main site versions:
+```html
+<link rel="canonical" href="https://nexfortis.com/privacy" />
+<link rel="canonical" href="https://nexfortis.com/terms" />
+```
+
+If the QB Portal doesn't have its own legal pages (just links to the main site), skip this step.
+
+---
+
+## Verification Checklist
+
+After completing all steps, verify:
+
+1. **Blog admin auth:**
+   - [ ] `operator_users` table exists in the database
+   - [ ] Seed script creates/updates the operator account
+   - [ ] `POST /api/blog/posts` returns 401 without a valid blog admin token
+   - [ ] `GET /api/blog/posts` (public, published) still works without auth
+   - [ ] `/blog/admin` redirects to `/admin/login` when not authenticated
+   - [ ] Login → admin panel → logout flow works end to end
+
+2. **QB Portal CTAs:**
+   - [ ] `/services/quickbooks` primary CTA links to `https://qbportal.nexfortis.com/catalog`
+   - [ ] Info callout box appears above the service cards
+   - [ ] "QB Portal" appears in the main navigation
+
+3. **Contact form:**
+   - [ ] Success message says "1–2 business hours" not "24 business hours"
+   - [ ] Sender address is `noreply@nexfortis.com` not `onboarding@resend.dev`
+   - [ ] Submitter receives an acknowledgement email
+
+4. **Cleanup:**
+   - [ ] `placeholder.tsx` is deleted
+   - [ ] No TODO comments remain for LinkedIn URLs
+   - [ ] Founder name reads "Hassan Sadiq"
+   - [ ] Alt text is "NexFortis team" not "Founder photo placeholder"
+
+5. **Legal links:**
+   - [ ] QB Portal footer links point to `https://nexfortis.com/terms` and `https://nexfortis.com/privacy`
+
+---
+
+## Summary of Files to Create/Modify
+
+| File | Action |
+|------|--------|
+| `lib/db/src/schema/qb-portal.ts` | MODIFY — add `operator_users` table |
+| `scripts/seed-operator.ts` | CREATE — operator account seed script |
+| `artifacts/api-server/src/middleware/require-blog-admin.ts` | CREATE — blog admin auth middleware |
+| `artifacts/api-server/src/routes/operator-auth.ts` | CREATE — operator login/logout/me endpoints |
+| `artifacts/api-server/src/routes/blog.ts` | MODIFY — add `requireBlogAdmin` to write routes |
+| `artifacts/api-server/src/routes/index.ts` | MODIFY — register operator auth routes |
+| `artifacts/api-server/src/routes/contact.ts` | MODIFY — fix sender, response time, add acknowledgement email |
+| `artifacts/nexfortis/src/pages/admin-login.tsx` | CREATE — operator login page |
+| `artifacts/nexfortis/src/pages/blog-admin.tsx` | MODIFY — add auth guard and logout |
+| `artifacts/nexfortis/src/pages/services/quickbooks.tsx` | MODIFY — update CTAs to QB Portal |
+| `artifacts/nexfortis/src/components/layout.tsx` | MODIFY — add QB Portal nav link, remove LinkedIn TODO |
+| `artifacts/nexfortis/src/pages/about.tsx` | MODIFY — fix founder name, alt text, remove TODO |
+| `artifacts/nexfortis/src/pages/contact.tsx` | MODIFY — remove LinkedIn TODO, update success message |
+| `artifacts/nexfortis/src/pages/placeholder.tsx` | DELETE — dead code |
+| `artifacts/qb-portal/src/components/layout.tsx` | MODIFY — legal links to absolute URLs |
+| `artifacts/qb-portal/src/pages/privacy.tsx` | MODIFY — add canonical meta tag |
+| `artifacts/qb-portal/src/pages/terms.tsx` | MODIFY — add canonical meta tag |
+| `artifacts/nexfortis/src/App.tsx` | MODIFY — add `/admin/login` route and import |
+
+**Do NOT create or modify:**
+- Any files in `docs/`
+- Any migration files in `lib/db/drizzle/` — use `drizzle-kit push` only
