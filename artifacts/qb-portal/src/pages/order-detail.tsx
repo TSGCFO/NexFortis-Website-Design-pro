@@ -232,25 +232,23 @@ export default function OrderDetail() {
                           </div>
                         ) : !f.storagePath ? (
                           <span className="text-xs text-muted-foreground">File unavailable</span>
-                        ) : (order.status === "completed" || order.status === "delivered") ? (
-                          isAuthenticated ? (
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              className="gap-1"
-                              disabled={downloading === f.id}
-                              onClick={() => handleDownload(f)}
-                            >
-                              <Download className="w-3 h-3" /> {downloading === f.id ? "..." : "Download"}
-                            </Button>
-                          ) : (
-                            <Link href="/login">
-                              <span className="text-xs text-accent hover:underline cursor-pointer flex items-center gap-1">
-                                <Download className="w-3 h-3" /> Sign in to download
-                              </span>
-                            </Link>
-                          )
-                        ) : null}
+                        ) : isAuthenticated ? (
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            className="gap-1"
+                            disabled={downloading === f.id}
+                            onClick={() => handleDownload(f)}
+                          >
+                            <Download className="w-3 h-3" /> {downloading === f.id ? "..." : "Download"}
+                          </Button>
+                        ) : (
+                          <Link href="/login">
+                            <span className="text-xs text-accent hover:underline cursor-pointer flex items-center gap-1">
+                              <Download className="w-3 h-3" /> Sign in to download
+                            </span>
+                          </Link>
+                        )}
                       </div>
                     ))}
                   </div>

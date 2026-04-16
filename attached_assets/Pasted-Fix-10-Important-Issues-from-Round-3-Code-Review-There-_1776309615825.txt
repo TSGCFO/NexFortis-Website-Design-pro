@@ -1,0 +1,268 @@
+Fix 10 Important Issues from Round 3 Code Review
+
+There are 10 important bugs to fix across 6 files. Fix them in order. After each fix, run `pnpm typecheck` to confirm no TypeScript errors.
+
+Do NOT modify any files in `docs/`.
+
+---
+
+## Fix 1: isQbmProduct defaults to true when product not found
+
+**File:** `artifacts/api-server/src/routes/qb-portal.ts`, around line 491
+
+**Current code:**
+```
+const isQbmProduct = product ? product.accepted_file_types.includes(".qbm") : true;
+```
+
+When a product isn't in the catalog, `isQbmProduct` defaults to `true`, which forces QBM-specific validation (magic byte check) on files that might not be QBM files at all.
+
+**Fix:** Change the default to `false`:
+```
+const isQbmProduct = product ? product.accepted_file_types.includes(".qbm") : false;
+```
+
+If the product is unknown, skip QBM-specific validation rather than incorrectly enforcing it.
+
+---
+
+## Fix 2: uploadToken leaked into Stripe metadata
+
+**File:** `artifacts/api-server/src/routes/qb-portal.ts`, around line 280
+
+**Current code:**
+```
+metadata: { order_id: String(order.id), user_id: userId || "", uploadToken },
+```
+
+The `uploadToken` is an auth credential — storing it in Stripe checkout session metadata exposes it to a third-party payment system. It does not need to be in metadata.
+
+**Fix:** Remove `uploadToken` from the metadata object:
+```
+metadata: { order_id: String(order.id), user_id: userId || "" },
+```
+
+The upload token is already stored in the database on the order record and passed via the success_url query param. Stripe doesn't need it.
+
+---
+
+## Fix 3: Download button gated on order status
+
+**File:** `artifacts/qb-portal/src/pages/order-detail.tsx`, around line 234
+
+**Current code:**
+The download button only renders when `order.status === "completed" || order.status === "delivered"`. During "paid" or "processing" status, customers cannot download files they uploaded.
+
+**Fix:** Show the download button whenever the file has a valid `storagePath` and is not expired. Change the conditional from:
+```
+) : (order.status === "completed" || order.status === "delivered") ? (
+  <Button ...>Download</Button>
+) : null}
+```
+
+To:
+```
+) : (
+  <Button ...>Download</Button>
+)}
+```
+
+Remove the status check entirely from the download button. The preceding conditions already handle expired files and files without storage paths. Customers should be able to download their own uploaded files regardless of order status.
+
+---
+
+## Fix 4: Upload-token not validated before file parsing
+
+**File:** `artifacts/api-server/src/routes/qb-portal.ts`, the `router.post("/orders/:id/files", ...)` handler around line 423
+
+**Current code:**
+The route checks for auth headers (Bearer or x-upload-token), but the upload-token is only validated against the database AFTER multer processes the multipart body. This means an invalid upload-token still causes the server to buffer the entire file before returning 401/403.
+
+**Fix:** Add a pre-multer validation step. Before calling `singleUpload(req, res, ...)`, if the request uses `x-upload-token` auth (no Bearer header), do a quick database check to verify the token matches the order. If it doesn't match, return 401 immediately without parsing the file.
+
+The flow should be:
+1. Parse orderId from params
+2. Check which auth method is being used
+3. If Bearer token: proceed to multer (JWT validation happens after)
+4. If x-upload-token: query the database to verify `qbOrders` where `id = orderId AND uploadToken = uploadTokenHeader`. If no match, return `401 { error: "Invalid upload token" }` immediately. If match, proceed to multer.
+5. If neither: return 401 (this check already exists)
+
+This prevents wasting bandwidth and memory on unauthorized uploads.
+
+---
+
+## Fix 5: pg_cron DELETE + UPDATE not in a transaction
+
+**File:** `artifacts/api-server/src/migrations/supabase-storage-cron.sql`
+
+**Current code:**
+The cron job has two separate SQL statements: a DELETE from `storage.objects` and an UPDATE of `public.qb_order_files`. If one succeeds and the other fails, data is inconsistent (e.g., files deleted from storage but not marked expired in the database).
+
+**Fix:** Wrap both statements in a transaction block. Change the cron body from:
+```sql
+-- Step 1: Delete storage objects older than 7 days from the order-files bucket
+DELETE FROM storage.objects
+WHERE bucket_id = 'order-files'
+  AND created_at < NOW() - INTERVAL '7 days';
+
+-- Step 2: Mark qb_order_files records as expired (only those not already expired)
+UPDATE public.qb_order_files
+SET expired = true,
+    deleted_at = NOW()
+WHERE uploaded_at < NOW() - INTERVAL '7 days'
+  AND storage_path IS NOT NULL
+  AND expired = false;
+```
+
+To:
+```sql
+BEGIN;
+
+-- Step 1: Delete storage objects older than 7 days from the order-files bucket
+DELETE FROM storage.objects
+WHERE bucket_id = 'order-files'
+  AND created_at < NOW() - INTERVAL '7 days';
+
+-- Step 2: Mark qb_order_files records as expired (only those not already expired)
+UPDATE public.qb_order_files
+SET expired = true,
+    deleted_at = NOW()
+WHERE uploaded_at < NOW() - INTERVAL '7 days'
+  AND storage_path IS NOT NULL
+  AND expired = false;
+
+COMMIT;
+```
+
+---
+
+## Fix 6: checkedRef prevents re-check when session changes
+
+**File:** `artifacts/qb-portal/src/pages/admin/mfa-challenge.tsx`, around line 17 and 26
+
+**Current code:**
+```
+const checkedRef = useRef(false);
+...
+if (checkedRef.current) return;
+checkedRef.current = true;
+```
+
+Once `checkedRef` is set to `true`, the AAL check never runs again even if the session changes (e.g., token rotation, re-login). The useEffect has `[authLoading, session, navigate]` in its deps, but the ref blocks re-execution.
+
+**Fix:** Remove the `checkedRef` entirely. The `useEffect` dependency array already controls when the effect runs. Without the ref, the AAL check will re-run whenever `session` changes, which is the correct behavior. The early returns for `authLoading` and `!session` already prevent unnecessary runs.
+
+Remove these lines:
+- `const checkedRef = useRef(false);` (around line 17)
+- `if (checkedRef.current) return;` (inside the useEffect)
+- `checkedRef.current = true;` (inside the useEffect)
+
+Also remove `useRef` from the import if the only remaining ref is `codeInputRef` (which still needs useRef, so keep the import).
+
+---
+
+## Fix 7: Admin layout no cleanup on unmount
+
+**File:** `artifacts/qb-portal/src/components/admin-layout.tsx`, around lines 29-53
+
+**Current code:**
+The async IIFE inside useEffect has no cleanup. If the component unmounts while the async call is in flight, React will try to set state on an unmounted component.
+
+**Fix:** Add a cleanup flag to the useEffect. Add `let cancelled = false;` at the top of the effect, check `if (cancelled) return;` before each `setState` call inside the async IIFE, and return a cleanup function `return () => { cancelled = true; };` from the useEffect.
+
+The pattern:
+```
+useEffect(() => {
+  if (authLoading) return;
+  // ... early returns for !session, !isOperator ...
+
+  let cancelled = false;
+  (async () => {
+    setChecking(true);
+    try {
+      // ... existing logic ...
+      if (cancelled) return;
+      setAal2Verified(true);
+    } catch {
+      if (cancelled) return;
+      navigate("/admin/mfa-challenge");
+    } finally {
+      if (!cancelled) setChecking(false);
+    }
+  })();
+
+  return () => { cancelled = true; };
+}, [authLoading, session, user, isOperator, navigate]);
+```
+
+---
+
+## Fix 8: TOTP code not cleared on verify failure
+
+**File:** `artifacts/qb-portal/src/pages/admin/mfa-challenge.tsx`, in the `handleVerify` function
+
+**Current code:**
+When verification fails (wrong code), the error message shows but the 6-digit code input retains the old value. The user has to manually select and delete it.
+
+**Fix:** Add `setCode("");` in each error path inside `handleVerify`. There are three error paths:
+1. After `challengeError` — add `setCode("");` before `setVerifying(false);`
+2. After `verifyError` — add `setCode("");` before `setVerifying(false);`
+3. In the catch block — add `setCode("");` before `setVerifying(false);`
+
+---
+
+## Fix 9: aal2Verified not reset before re-check
+
+**File:** `artifacts/qb-portal/src/components/admin-layout.tsx`, around line 29
+
+**Current code:**
+When the useEffect re-runs (session changes), `aal2Verified` stays `true` from the previous check. There's a brief window where admin content is visible before the new AAL check completes.
+
+**Fix:** At the very start of the async IIFE (right after the early returns for !session and !isOperator), add `setAal2Verified(false);` before `setChecking(true);`. This ensures admin content is hidden while the re-check is in progress.
+
+Actually, since the component already renders a spinner when `!aal2Verified`, moving the reset before `setChecking(true)` handles both:
+```
+(async () => {
+  setAal2Verified(false);
+  setChecking(true);
+  // ... rest of existing code ...
+})();
+```
+
+---
+
+## Fix 10: Challenge page doesn't check nextLevel
+
+**File:** `artifacts/qb-portal/src/pages/admin/mfa-challenge.tsx`, around line 41
+
+**Current code:**
+```
+if (aalData.currentLevel === "aal2") {
+  setState("redirecting");
+  navigate("/admin");
+  return;
+}
+```
+
+Only checks `currentLevel` but not `nextLevel`. The Supabase AAL response includes both `currentLevel` and `nextLevel`. If `nextLevel === "aal2"` but `currentLevel !== "aal2"`, the user needs to complete MFA. But if somehow `currentLevel === "aal2"` and `nextLevel` is something unexpected, the redirect might be premature.
+
+**Fix:** Add a check for `nextLevel`. Only redirect to admin if the user truly doesn't need further verification:
+```
+if (aalData.currentLevel === "aal2" && aalData.nextLevel === "aal2") {
+  setState("redirecting");
+  navigate("/admin");
+  return;
+}
+```
+
+If `currentLevel` is "aal2" but `nextLevel` indicates more is needed, fall through to the challenge form.
+
+---
+
+## After all 10 fixes
+
+1. Run `pnpm typecheck` — zero errors
+2. Open the Replit preview and confirm:
+   - QB Portal loads at /qb-portal/
+   - Order form page loads at /qb-portal/order
+   - API healthcheck at /api/healthz returns 200

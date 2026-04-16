@@ -13,7 +13,6 @@ export default function MFAChallenge() {
   const [code, setCode] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [verifying, setVerifying] = useState(false);
-  const checkedRef = useRef(false);
   const codeInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -22,9 +21,6 @@ export default function MFAChallenge() {
       navigate("/login");
       return;
     }
-    if (checkedRef.current) return;
-    checkedRef.current = true;
-
     (async () => {
       try {
         const { data: aalData, error: aalError } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
@@ -34,7 +30,7 @@ export default function MFAChallenge() {
           return;
         }
 
-        if (aalData.currentLevel === "aal2") {
+        if (aalData.currentLevel === "aal2" && aalData.nextLevel === "aal2") {
           setState("redirecting");
           navigate("/admin");
           return;
@@ -71,6 +67,7 @@ export default function MFAChallenge() {
 
       if (challengeError) {
         setError("Verification failed. Please try again.");
+        setCode("");
         setVerifying(false);
         return;
       }
@@ -83,6 +80,7 @@ export default function MFAChallenge() {
 
       if (verifyError) {
         setError("Incorrect code. Please check your authenticator app and try again.");
+        setCode("");
         setVerifying(false);
         return;
       }
@@ -90,6 +88,7 @@ export default function MFAChallenge() {
       navigate("/admin");
     } catch {
       setError("Verification failed. Please try again.");
+      setCode("");
       setVerifying(false);
     }
   };

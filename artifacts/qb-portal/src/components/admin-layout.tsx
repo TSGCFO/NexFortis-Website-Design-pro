@@ -26,10 +26,13 @@ export function AdminLayout({ children }: AdminLayoutProps) {
       return;
     }
 
+    let cancelled = false;
     (async () => {
+      setAal2Verified(false);
       setChecking(true);
       try {
         const { data: factorsData } = await supabase.auth.mfa.listFactors();
+        if (cancelled) return;
         const totpFactors = factorsData?.totp?.filter((f) => f.status === "verified") ?? [];
 
         if (totpFactors.length === 0) {
@@ -38,6 +41,7 @@ export function AdminLayout({ children }: AdminLayoutProps) {
         }
 
         const { data: aalData } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
+        if (cancelled) return;
 
         if (!aalData || aalData.currentLevel !== "aal2") {
           navigate("/admin/mfa-challenge");
@@ -46,11 +50,14 @@ export function AdminLayout({ children }: AdminLayoutProps) {
 
         setAal2Verified(true);
       } catch {
+        if (cancelled) return;
         navigate("/admin/mfa-challenge");
       } finally {
-        setChecking(false);
+        if (!cancelled) setChecking(false);
       }
     })();
+
+    return () => { cancelled = true; };
   }, [authLoading, session, user, isOperator, navigate]);
 
   if (authLoading || checking || !aal2Verified) {

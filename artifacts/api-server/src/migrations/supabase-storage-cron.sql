@@ -22,6 +22,8 @@ SELECT cron.schedule(
   'order-files-7day-cleanup',
   '0 3 * * *',
   $$
+  BEGIN;
+
   -- Step 1: Delete storage objects older than 7 days from the order-files bucket
   DELETE FROM storage.objects
   WHERE bucket_id = 'order-files'
@@ -34,5 +36,7 @@ SELECT cron.schedule(
   WHERE uploaded_at < NOW() - INTERVAL '7 days'
     AND storage_path IS NOT NULL
     AND expired = false;
+
+  COMMIT;
   $$
 );

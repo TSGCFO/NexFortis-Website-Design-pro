@@ -282,7 +282,7 @@ router.post("/checkout/create-session", async (req: Request, res: Response) => {
           },
           quantity: 1,
         }],
-        metadata: { order_id: String(order.id), user_id: userId || "", uploadToken },
+        metadata: { order_id: String(order.id), user_id: userId || "" },
         success_url: `${req.headers.origin || "http://localhost"}/qb-portal/order/${order.id}?success=true&uploadToken=${uploadToken}`,
         cancel_url: `${req.headers.origin || "http://localhost"}/qb-portal/order?canceled=true`,
       });
@@ -425,7 +425,7 @@ router.get("/orders/:id", requireAuth, async (req: Request, res: Response) => {
   }
 });
 
-router.post("/orders/:id/files", orderLimiter, (req: Request, res: Response) => {
+router.post("/orders/:id/files", orderLimiter, async (req: Request, res: Response) => {
   const orderId = parseInt(req.params.id as string);
   if (isNaN(orderId)) {
     res.status(400).json({ error: "Invalid order ID" });
@@ -446,6 +446,16 @@ router.post("/orders/:id/files", orderLimiter, (req: Request, res: Response) => 
   if (!authHeader?.startsWith("Bearer ") && !uploadTokenHeader) {
     res.status(401).json({ error: "Authentication or upload token required" });
     return;
+  }
+
+  if (!authHeader?.startsWith("Bearer ") && uploadTokenHeader) {
+    const [tokenOrder] = await db.select().from(qbOrders)
+      .where(and(eq(qbOrders.id, orderId), eq(qbOrders.uploadToken, uploadTokenHeader)))
+      .limit(1);
+    if (!tokenOrder) {
+      res.status(401).json({ error: "Invalid upload token" });
+      return;
+    }
   }
 
   const singleUpload = upload.single("file");
@@ -493,7 +503,7 @@ router.post("/orders/:id/files", orderLimiter, (req: Request, res: Response) => 
 
       const cat = loadCatalog();
       const product = cat.services.find(s => s.id === order.serviceId);
-      const isQbmProduct = product ? product.accepted_file_types.includes(".qbm") : true;
+      const isQbmProduct = product ? product.accepted_file_types.includes(".qbm") : false;
       const ext = path.extname(req.file.originalname).toLowerCase();
 
       if (product && product.accepted_file_types.length > 0) {
