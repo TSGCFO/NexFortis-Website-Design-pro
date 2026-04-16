@@ -33,8 +33,28 @@ export default function Order() {
   const [appliedPromo, setAppliedPromo] = useState<AppliedPromo | null>(null);
   const [promoApplying, setPromoApplying] = useState(false);
   const [promoError, setPromoError] = useState("");
+  const [subscriberDiscountPercent, setSubscriberDiscountPercent] = useState<number>(0);
 
   useEffect(() => { loadProducts().then(setCatalog); }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        if (!user) { setSubscriberDiscountPercent(0); return; }
+        const token = await getAccessToken();
+        if (!token) return;
+        const base = import.meta.env.BASE_URL || "/";
+        const prefix = base.endsWith("/") ? base.slice(0, -1) : base;
+        const url = prefix.replace(/\/qb-portal$/, "") + "/api/qb/subscriptions/me";
+        const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
+        if (!res.ok) return;
+        const data = await res.json();
+        if (!cancelled) setSubscriberDiscountPercent(Number(data?.subscription?.discountPercent) || 0);
+      } catch { /* ignore */ }
+    })();
+    return () => { cancelled = true; };
+  }, [user, getAccessToken]);
 
   const { services, addons } = useMemo(() => {
     if (!catalog) return { services: [] as SvcOption[], addons: [] as SvcOption[] };
@@ -70,6 +90,12 @@ export default function Order() {
     }
     return sum;
   }, [selectedSvc, selectedAddons, addons]);
+
+  const subscriberDiscountCents = useMemo(() => {
+    if (!subscriberDiscountPercent || subscriberDiscountPercent <= 0) return 0;
+    if (isSubscription) return 0;
+    return Math.floor((total * subscriberDiscountPercent) / 100);
+  }, [total, subscriberDiscountPercent, isSubscription]);
 
   const canSubmit = isAvailableService
     && (showFileUpload ? !!file : true)
@@ -264,6 +290,8 @@ export default function Order() {
             appliedPromo={appliedPromo}
             promoApplying={promoApplying}
             promoError={promoError}
+            subscriberDiscountPercent={subscriberDiscountPercent || undefined}
+            subscriberDiscountCents={subscriberDiscountCents || undefined}
           />
         </div>
       </section>

@@ -83,7 +83,7 @@ function getActivePrice(product: CatalogProduct): number {
   return cat.promo_active ? product.launch_price_cad : product.base_price_cad;
 }
 
-function computeOrderTotal(serviceId: number, addonIds: number[]): { total: number; serviceName: string; addonNames: string[] } | null {
+function computeOrderTotal(serviceId: number, addonIds: number[]): { total: number; serviceName: string; addonNames: string[]; isSubscription: boolean } | null {
   const cat = loadCatalog();
   const service = cat.services.find(s => s.id === serviceId && !s.is_addon && s.badge === "available");
   if (!service) return null;
@@ -99,7 +99,8 @@ function computeOrderTotal(serviceId: number, addonIds: number[]): { total: numb
     addonNames.push(addon.name);
   }
 
-  return { total, serviceName: service.name, addonNames };
+  const isSubscription = (service as any).billing_type === "subscription";
+  return { total, serviceName: service.name, addonNames, isSubscription };
 }
 
 const VALID_STATUS_TRANSITIONS: Record<string, string[]> = {
@@ -311,6 +312,22 @@ router.post("/checkout/create-session", async (req: Request, res: Response) => {
       }
     }
 
+    // Subscriber tier discount: only for non-subscription orders, and only when no promo code applied
+    let subscriberDiscountCents = 0;
+    if (!promoRow && userId && !pricing.isSubscription) {
+      const [activeSub] = await db.select().from(qbSubscriptions)
+        .where(and(eq(qbSubscriptions.userId, userId), eq(qbSubscriptions.status, "active")))
+        .limit(1);
+      if (activeSub) {
+        const subTierConfig = getTierConfig(activeSub.tier as SubscriptionTier);
+        const pct = Number(subTierConfig.discountPercent) || 0;
+        if (pct > 0) {
+          subscriberDiscountCents = Math.floor((pricing.total * pct) / 100);
+          serverComputedFinalTotal = Math.max(0, pricing.total - subscriberDiscountCents);
+        }
+      }
+    }
+
     // Server-authoritative: free order only if computed total is 0
     const finalIsFree = !!promoRow && serverComputedFinalTotal === 0;
     if (freeOrder && !finalIsFree) {
@@ -323,15 +340,15 @@ router.post("/checkout/create-session", async (req: Request, res: Response) => {
 
     const uploadToken = crypto.randomBytes(32).toString("hex");
     const initialStatus = finalIsFree ? "submitted" : "pending_payment";
-    const initialPaymentStatus = finalIsFree ? "free" : "unpaid";
+    const initialPaymentStatus = finalIsFree ? "free_promo" : "unpaid";
+    const totalDiscount = serverDiscountCents + subscriberDiscountCents;
 
     const [order] = await db.insert(qbOrders).values({
       userId,
       serviceId,
       serviceName: pricing.serviceName,
       addons: pricing.addonNames.length > 0 ? JSON.stringify(pricing.addonNames) : null,
-      totalCad: finalIsFree ? 0 : pricing.total,
-      // discount/promo fields tracked below if promo applies
+      totalCad: finalIsFree ? 0 : serverComputedFinalTotal,
       qbVersion,
       customerName,
       customerEmail,
@@ -340,11 +357,26 @@ router.post("/checkout/create-session", async (req: Request, res: Response) => {
       status: initialStatus,
       paymentStatus: initialPaymentStatus,
       promoCodeId: promoRow?.id ?? null,
-      subtotalBeforeDiscountCents: promoRow ? pricing.total : null,
-      discountAmountAppliedCents: promoRow ? serverDiscountCents : 0,
+      subtotalBeforeDiscountCents: totalDiscount > 0 ? pricing.total : null,
+      discountAmountAppliedCents: totalDiscount,
     }).returning();
 
     if (finalIsFree) {
+      // Record promo redemption server-side (free path skips Stripe & client /redeem call)
+      try {
+        const { runRedemption } = await import("./qb-promo");
+        await runRedemption({
+          rawCode: promoRow!.code,
+          orderId: order.id,
+          orderItems: [{ productId: String(serviceId), quantity: 1, unitPriceCents: pricing.total }],
+          orderType: "one_time",
+          userId: userId || undefined,
+          guestEmail: userId ? undefined : customerEmail,
+        });
+      } catch (redeemErr) {
+        console.error("[FreeOrder] Redemption recording failed:", redeemErr);
+      }
+
       const origin = getValidOrigin(req.headers.origin);
       const portalUrl = `${origin}/qb-portal/order/${order.id}?uploadToken=${uploadToken}`;
       const unsubUrl = `${origin}/qb-portal/unsubscribe?email=${encodeURIComponent(customerEmail)}`;
@@ -373,6 +405,9 @@ router.post("/checkout/create-session", async (req: Request, res: Response) => {
 
     const stripe = await getStripe();
     if (stripe) {
+      // Use server-computed discounted total. Subscriber discount is already applied to unit_amount.
+      // Promo code discount is applied via Stripe promotion_code so Stripe reflects the exact line-item breakdown.
+      const stripeUnitAmount = promoRow ? pricing.total : serverComputedFinalTotal;
       const checkoutParams: Stripe.Checkout.SessionCreateParams = {
         mode: "payment",
         customer_email: customerEmail,
@@ -380,7 +415,7 @@ router.post("/checkout/create-session", async (req: Request, res: Response) => {
           price_data: {
             currency: "cad",
             product_data: { name: pricing.serviceName },
-            unit_amount: pricing.total,
+            unit_amount: stripeUnitAmount,
           },
           quantity: 1,
         }],
@@ -391,17 +426,6 @@ router.post("/checkout/create-session", async (req: Request, res: Response) => {
 
       if (promoRow?.stripePromotionCodeId) {
         checkoutParams.discounts = [{ promotion_code: promoRow.stripePromotionCodeId }];
-      } else if (userId) {
-        const [activeSub] = await db.select().from(qbSubscriptions)
-          .where(and(eq(qbSubscriptions.userId, userId), eq(qbSubscriptions.status, "active")))
-          .limit(1);
-
-        if (activeSub) {
-          const subTierConfig = getTierConfig(activeSub.tier as SubscriptionTier);
-          if (subTierConfig.stripeCouponId) {
-            checkoutParams.discounts = [{ coupon: subTierConfig.stripeCouponId }];
-          }
-        }
       }
 
       const session = await stripe.checkout.sessions.create(checkoutParams);

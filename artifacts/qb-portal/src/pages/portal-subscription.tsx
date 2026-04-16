@@ -247,14 +247,15 @@ export function SubscriptionTab({ onRefreshPortal }: SubscriptionTabProps) {
     }
   };
 
-  const referralLink = referral
-    ? `${window.location.origin}/qb-portal/subscription?ref=${referral.code}`
+  const activeReferralCode = referralStats?.code || referral?.code || null;
+  const referralLink = activeReferralCode
+    ? `${window.location.origin}/qb-portal/subscription?ref=${activeReferralCode}`
     : "";
 
   const copyReferralCode = async () => {
-    if (!referral) return;
+    if (!activeReferralCode) return;
     try {
-      await navigator.clipboard.writeText(referral.code);
+      await navigator.clipboard.writeText(activeReferralCode);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch { /* ignore */ }
@@ -575,23 +576,23 @@ export function SubscriptionTab({ onRefreshPortal }: SubscriptionTabProps) {
           </Card>
         )}
 
-        {tier === "premium" && referral ? (
+        {tier === "premium" && activeReferralCode ? (
           <Card className="md:col-span-2">
             <CardContent className="p-6">
               <div className="flex items-start justify-between mb-3">
                 <div>
-                  <p className="text-sm text-muted-foreground mb-1">Referral Program</p>
-                  <h3 className="font-bold font-display text-primary">Earn $10 Per Referral</h3>
+                  <p className="text-sm text-muted-foreground mb-1">Your Referral Code</p>
+                  <h3 className="font-bold font-display text-primary">Earn $25 Per Referral</h3>
                 </div>
                 <Gift className="w-5 h-5 text-muted-foreground" />
               </div>
               <p className="text-sm text-muted-foreground mb-4">
-                Share your referral code with colleagues. Earn $10 credit for each person who subscribes.
+                Share your referral code with colleagues. Earn $25 credit for each person who uses it at checkout.
               </p>
               <div className="space-y-3">
                 <div className="flex items-center gap-3">
                   <span className="text-xs text-muted-foreground w-12">Code:</span>
-                  <code className="px-4 py-2 bg-muted rounded-lg text-sm font-mono font-bold tracking-wider">{referral.code}</code>
+                  <code className="px-4 py-2 bg-muted rounded-lg text-sm font-mono font-bold tracking-wider">{activeReferralCode}</code>
                   <Button
                     size="sm"
                     variant="outline"
@@ -618,7 +619,7 @@ export function SubscriptionTab({ onRefreshPortal }: SubscriptionTabProps) {
                   </Button>
                 </div>
               </div>
-              {referral.totalEarnings && parseFloat(referral.totalEarnings) > 0 && (
+              {referral && referral.totalEarnings && parseFloat(referral.totalEarnings) > 0 && (
                 <p className="text-xs text-muted-foreground mt-3">
                   Total earned: ${parseFloat(referral.totalEarnings).toFixed(2)} CAD
                 </p>
@@ -674,13 +675,13 @@ export function SubscriptionTab({ onRefreshPortal }: SubscriptionTabProps) {
             <CardContent className="p-6">
               <div className="flex items-start justify-between mb-3">
                 <div>
-                  <p className="text-sm text-muted-foreground mb-1">Referral Program</p>
-                  <h3 className="font-bold font-display text-primary">Earn $10 Per Referral</h3>
+                  <p className="text-sm text-muted-foreground mb-1">Your Referral Code</p>
+                  <h3 className="font-bold font-display text-primary">Earn $25 Per Referral</h3>
                 </div>
                 <Gift className="w-5 h-5 text-muted-foreground" />
               </div>
               <p className="text-sm text-muted-foreground">
-                Upgrade to Premium to unlock the referral rewards program and earn $10 for each colleague you refer.
+                Upgrade to Premium to get your referral code and earn $25 per referral.
               </p>
             </CardContent>
           </Card>

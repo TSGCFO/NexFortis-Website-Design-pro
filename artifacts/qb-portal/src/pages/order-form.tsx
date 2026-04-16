@@ -73,8 +73,11 @@ export default function OrderForm(props: OrderFormProps) {
     name, setName, email, setEmail, phone, setPhone, total, submitting, submitError, canSubmit, onSubmit,
     promoCodeInput, setPromoCodeInput, onApplyPromo, onRemovePromo, appliedPromo, promoApplying, promoError,
     subscriberDiscountPercent, subscriberDiscountCents } = props;
-  const finalDisplayTotal = appliedPromo ? appliedPromo.finalOrderTotalCents : total;
-  const isFree = appliedPromo && appliedPromo.finalOrderTotalCents === 0;
+  const subDisc = subscriberDiscountCents || 0;
+  const finalDisplayTotal = appliedPromo
+    ? appliedPromo.finalOrderTotalCents
+    : Math.max(0, total - subDisc);
+  const isFree = !!appliedPromo && appliedPromo.finalOrderTotalCents === 0;
 
   let nextStep = 1;
   const step = () => nextStep++;

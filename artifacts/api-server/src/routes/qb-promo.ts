@@ -13,6 +13,31 @@ import { requireAuth } from "./qb-portal";
 import { sendEmail } from "../lib/email-service";
 import { referralCreditEarnedEmail } from "../lib/email-templates";
 import { supabaseAdmin } from "../lib/supabase";
+import path from "path";
+import fs from "fs";
+
+interface PromoCatalogProduct {
+  id: number;
+  category_slug?: string;
+}
+let promoCatalogCache: PromoCatalogProduct[] | null = null;
+function getCatalogProducts(): PromoCatalogProduct[] {
+  if (promoCatalogCache) return promoCatalogCache;
+  try {
+    const catalogPath = path.resolve(__dirname, "../../../../artifacts/qb-portal/public/products.json");
+    const raw = JSON.parse(fs.readFileSync(catalogPath, "utf-8")) as { services?: PromoCatalogProduct[] };
+    promoCatalogCache = Array.isArray(raw.services) ? raw.services : [];
+  } catch {
+    promoCatalogCache = [];
+  }
+  return promoCatalogCache!;
+}
+function categoryOfProduct(productId: string): string | null {
+  const idNum = Number(productId);
+  if (!Number.isFinite(idNum)) return null;
+  const p = getCatalogProducts().find((x) => x.id === idNum);
+  return p?.category_slug || null;
+}
 
 const router = Router();
 
@@ -64,15 +89,25 @@ function codeLabel(row: typeof qbPromoCodes.$inferSelect): string {
   return "Discount";
 }
 
-function productMatches(row: typeof qbPromoCodes.$inferSelect, orderItems: OrderItemInput[]): boolean {
-  const hasProductRestriction = row.productIds && row.productIds.length > 0;
-  const hasCategoryRestriction = row.categoryIds && row.categoryIds.length > 0;
+function itemMatches(row: typeof qbPromoCodes.$inferSelect, item: OrderItemInput): boolean {
+  const hasProductRestriction = !!(row.productIds && row.productIds.length > 0);
+  const hasCategoryRestriction = !!(row.categoryIds && row.categoryIds.length > 0);
   if (!hasProductRestriction && !hasCategoryRestriction) return true;
-  return orderItems.some((item) => {
-    const pid = String(item.productId);
-    if (hasProductRestriction && row.productIds!.includes(pid)) return true;
-    return false;
-  });
+  const pid = String(item.productId);
+  if (hasProductRestriction && row.productIds!.includes(pid)) return true;
+  if (hasCategoryRestriction) {
+    const cat = categoryOfProduct(pid);
+    if (cat && row.categoryIds!.includes(cat)) return true;
+  }
+  return false;
+}
+
+function productMatches(row: typeof qbPromoCodes.$inferSelect, orderItems: OrderItemInput[]): boolean {
+  return orderItems.some((item) => itemMatches(row, item));
+}
+
+function matchingProductIds(row: typeof qbPromoCodes.$inferSelect, orderItems: OrderItemInput[]): (string | number)[] {
+  return orderItems.filter((it) => itemMatches(row, it)).map((it) => it.productId);
 }
 
 function computeBaseSubtotal(items: OrderItemInput[]): number {
@@ -281,7 +316,7 @@ router.post("/validate", validateLimiter, async (req: Request, res: Response) =>
       discountValue: result.row.type === "fixed_amount" ? result.row.amountOffCents : result.row.percentOff,
       discountAmountCents: result.codeDiscountCents,
       launchPromoDiscountCents: result.launchPromoCents,
-      appliesToItems: items.map((i) => i.productId),
+      appliesToItems: matchingProductIds(result.row, items),
       stackable: result.row.stackableWithLaunchPromo,
       finalOrderTotalCents: result.finalTotal,
       previewLineItems: result.previewLineItems,
@@ -295,31 +330,20 @@ router.post("/validate", validateLimiter, async (req: Request, res: Response) =>
   }
 });
 
-router.post("/redeem", requireAuth, async (req: Request, res: Response) => {
-  try {
-    const rawCode = (req.body?.code || "").toString().trim();
-    const orderId = Number(req.body?.orderId);
-    const items = sanitizeItems(req.body?.orderItems);
-    const orderType = req.body?.orderType === "subscription" ? "subscription" : "one_time";
-    const guestEmail = typeof req.body?.guestEmail === "string" ? req.body.guestEmail : undefined;
+export interface RedemptionInput {
+  rawCode: string;
+  orderId: number;
+  orderItems: OrderItemInput[];
+  orderType: "one_time" | "subscription";
+  userId?: string;
+  guestEmail?: string;
+}
 
-    if (!rawCode || rawCode.length < 6 || !Number.isFinite(orderId) || orderId <= 0 || !items) {
-      res.status(400).json({ error: "Invalid input" });
-      return;
-    }
-
-    const userId = (req as any).userId as string | undefined;
-
-    // IDOR: verify the order belongs to the caller
-    const [orderRow] = await db.select().from(qbOrders).where(eq(qbOrders.id, orderId)).limit(1);
-    if (!orderRow) {
-      res.status(404).json({ error: "Order not found" });
-      return;
-    }
-    if (orderRow.userId && orderRow.userId !== userId) {
-      res.status(403).json({ error: "Forbidden" });
-      return;
-    }
+export async function runRedemption(input: RedemptionInput): Promise<
+  | { ok: true; discountAmountCents: number; launchPromoDiscountCents: number; finalOrderTotalCents: number; redemptionId: number; promoCodeRow: typeof qbPromoCodes.$inferSelect }
+  | { error: { code: string; message: string } }
+> {
+    const { rawCode, orderId, orderItems: items, orderType, userId, guestEmail } = input;
 
     const redemption = await db.transaction(async (tx) => {
       const [locked] = await tx.execute<any>(
@@ -436,8 +460,7 @@ router.post("/redeem", requireAuth, async (req: Request, res: Response) => {
     });
 
     if ("error" in redemption && redemption.error) {
-      res.status(409).json({ error: redemption.error.code, message: redemption.error.message });
-      return;
+      return { error: redemption.error };
     }
 
     const promoRow = (redemption as any).promoCodeRow as typeof qbPromoCodes.$inferSelect | undefined;
@@ -459,7 +482,7 @@ router.post("/redeem", requireAuth, async (req: Request, res: Response) => {
         }
 
         if (ownerEmail) {
-          const origin = (req.headers.origin as string) || process.env.PUBLIC_APP_URL || "https://nexfortis.com";
+          const origin = process.env.PUBLIC_APP_URL || "https://nexfortis.com";
           const portalUrl = `${origin}/qb-portal`;
           const unsubUrl = `${origin}/qb-portal/unsubscribe?email=${encodeURIComponent(ownerEmail)}`;
           const tpl = referralCreditEarnedEmail(
@@ -472,11 +495,46 @@ router.post("/redeem", requireAuth, async (req: Request, res: Response) => {
       }
     }
 
+    return redemption as any;
+}
+
+router.post("/redeem", requireAuth, async (req: Request, res: Response) => {
+  try {
+    const rawCode = (req.body?.code || "").toString().trim();
+    const orderId = Number(req.body?.orderId);
+    const items = sanitizeItems(req.body?.orderItems);
+    const orderType = req.body?.orderType === "subscription" ? "subscription" : "one_time";
+    const guestEmail = typeof req.body?.guestEmail === "string" ? req.body.guestEmail : undefined;
+
+    if (!rawCode || rawCode.length < 6 || !Number.isFinite(orderId) || orderId <= 0 || !items) {
+      res.status(400).json({ error: "Invalid input" });
+      return;
+    }
+
+    const userId = (req as any).userId as string | undefined;
+
+    // IDOR: verify the order belongs to the caller
+    const [orderRow] = await db.select().from(qbOrders).where(eq(qbOrders.id, orderId)).limit(1);
+    if (!orderRow) {
+      res.status(404).json({ error: "Order not found" });
+      return;
+    }
+    if (orderRow.userId && orderRow.userId !== userId) {
+      res.status(403).json({ error: "Forbidden" });
+      return;
+    }
+
+    const result = await runRedemption({ rawCode, orderId, orderItems: items, orderType, userId, guestEmail });
+    if ("error" in result) {
+      res.status(409).json({ error: result.error.code, message: result.error.message });
+      return;
+    }
+
     res.json({
       ok: true,
-      discountAmountCents: (redemption as any).discountAmountCents,
-      launchPromoDiscountCents: (redemption as any).launchPromoDiscountCents,
-      finalOrderTotalCents: (redemption as any).finalOrderTotalCents,
+      discountAmountCents: result.discountAmountCents,
+      launchPromoDiscountCents: result.launchPromoDiscountCents,
+      finalOrderTotalCents: result.finalOrderTotalCents,
     });
   } catch (err) {
     console.error("Promo redeem error:", err);
