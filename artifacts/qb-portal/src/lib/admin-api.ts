@@ -31,7 +31,7 @@ export async function adminFetch(path: string, options: RequestInit = {}): Promi
       const { supabase } = await import("./supabase");
       await supabase.auth.signOut();
     } catch { /* best-effort cleanup */ }
-    window.location.href = "/login";
+    window.location.href = `${import.meta.env.BASE_URL}login`;
     return response;
   }
 
