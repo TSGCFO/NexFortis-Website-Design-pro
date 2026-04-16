@@ -334,11 +334,15 @@ export function paidOrderConfirmationEmail(
   customerName: string,
   orderId: number,
   serviceName: string,
-  totalCents: number,
+  addonNames: string[],
+  totalCad: number,
   portalUrl: string,
   unsubscribeUrl: string,
 ): { subject: string; html: string } {
-  const total = `$${(totalCents / 100).toFixed(2)}`;
+  const total = `$${(totalCad / 100).toFixed(2)}`;
+  const addonLine = addonNames.length > 0
+    ? `<p style="margin:0 0 8px;font-size:14px;color:${BRAND_COLORS.textDark};">Add-ons: ${escapeHtml(addonNames.join(", "))}</p>`
+    : "";
   const content = `
     <h2 style="margin:0 0 16px;font-size:20px;color:${BRAND_COLORS.textDark};">
       Order Confirmed ${badge("PAID", "#ecfdf5", "#059669")}
@@ -347,24 +351,25 @@ export function paidOrderConfirmationEmail(
       Hi ${escapeHtml(customerName)},
     </p>
     <p style="margin:0 0 24px;font-size:15px;color:${BRAND_COLORS.textDark};line-height:1.6;">
-      Thank you for your order with NexFortis IT Solutions. Your payment has been received and your order is now being processed.
+      Thank you for your order with NexFortis IT Solutions! Your payment has been received and our team will begin processing shortly.
     </p>
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:${BRAND_COLORS.gray};border-radius:8px;padding:16px;margin-bottom:24px;">
       <tr>
         <td>
           <p style="margin:0 0 8px;font-size:13px;color:${BRAND_COLORS.textMuted};text-transform:uppercase;letter-spacing:0.5px;">Order #${orderId}</p>
           <p style="margin:0 0 8px;font-size:16px;font-weight:600;color:${BRAND_COLORS.textDark};">${escapeHtml(serviceName)}</p>
-          <p style="margin:0;font-size:14px;color:${BRAND_COLORS.textDark};"><strong>Total charged:</strong> ${total} CAD</p>
+          ${addonLine}
+          <p style="margin:0;font-size:14px;color:${BRAND_COLORS.textDark};"><strong>Total Paid:</strong> ${total} CAD</p>
         </td>
       </tr>
     </table>
     <p style="margin:0 0 16px;font-size:14px;color:${BRAND_COLORS.textDark};line-height:1.6;">
-      You can track your order status and upload any required files from your portal.
+      Next steps: please log in to your portal to upload your QuickBooks file and track your order status.
     </p>
     <table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 auto;">
       <tr>
         <td style="background-color:${BRAND_COLORS.azure};border-radius:8px;">
-          <a href="${portalUrl}" style="display:inline-block;padding:12px 32px;font-size:15px;font-weight:600;color:${BRAND_COLORS.white};text-decoration:none;">
+          <a href="${portalUrl}/orders" style="display:inline-block;padding:12px 32px;font-size:15px;font-weight:600;color:${BRAND_COLORS.white};text-decoration:none;">
             View Order
           </a>
         </td>
@@ -372,7 +377,7 @@ export function paidOrderConfirmationEmail(
     </table>`;
 
   return {
-    subject: `Order Confirmed — ${serviceName}`,
+    subject: `Your NexFortis QuickBooks Order — Confirmation #${orderId}`,
     html: baseLayout(content, unsubscribeUrl),
   };
 }
@@ -412,35 +417,48 @@ export function paidOrderOperatorEmail(
 export function fileDeliveryEmail(
   customerName: string,
   orderId: number,
+  serviceName: string,
   fileName: string,
   portalUrl: string,
   unsubscribeUrl: string,
 ): { subject: string; html: string } {
   const content = `
     <h2 style="margin:0 0 16px;font-size:20px;color:${BRAND_COLORS.textDark};">
-      Your File Is Ready ${badge("READY", "#ecfdf5", "#059669")}
+      Your File Is Ready ${badge("COMPLETE", "#ecfdf5", "#059669")}
     </h2>
     <p style="margin:0 0 16px;font-size:15px;color:${BRAND_COLORS.textDark};line-height:1.6;">
       Hi ${escapeHtml(customerName)},
     </p>
     <p style="margin:0 0 24px;font-size:15px;color:${BRAND_COLORS.textDark};line-height:1.6;">
-      Great news — your processed file is now available for download from your portal.
+      Great news! Your ${escapeHtml(serviceName)} order has been completed. The processed file is now available for download in your portal.
     </p>
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:${BRAND_COLORS.gray};border-radius:8px;padding:16px;margin-bottom:24px;">
       <tr>
         <td>
           <p style="margin:0 0 8px;font-size:13px;color:${BRAND_COLORS.textMuted};text-transform:uppercase;letter-spacing:0.5px;">Order #${orderId}</p>
-          <p style="margin:0;font-size:16px;font-weight:600;color:${BRAND_COLORS.textDark};">${escapeHtml(fileName)}</p>
+          <p style="margin:0 0 8px;font-size:16px;font-weight:600;color:${BRAND_COLORS.textDark};">${escapeHtml(serviceName)}</p>
+          <p style="margin:0;font-size:14px;color:${BRAND_COLORS.textDark};"><strong>File:</strong> ${escapeHtml(fileName)}</p>
         </td>
       </tr>
     </table>
-    <p style="margin:0 0 16px;font-size:14px;color:${BRAND_COLORS.textDark};line-height:1.6;">
-      Files are retained for 7 days — please download yours promptly.
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-left:3px solid ${BRAND_COLORS.azure};padding-left:16px;margin-bottom:24px;">
+      <tr>
+        <td>
+          <p style="margin:0 0 8px;font-size:12px;font-weight:600;color:${BRAND_COLORS.azure};">How to access your file:</p>
+          <p style="margin:0 0 4px;font-size:14px;color:${BRAND_COLORS.textDark};">1. Log in to your NexFortis portal</p>
+          <p style="margin:0 0 4px;font-size:14px;color:${BRAND_COLORS.textDark};">2. Navigate to your order</p>
+          <p style="margin:0 0 4px;font-size:14px;color:${BRAND_COLORS.textDark};">3. Click the Download button next to the file</p>
+          <p style="margin:0;font-size:14px;color:${BRAND_COLORS.textDark};">4. Your download link is valid for 15 minutes — if it expires, simply click Download again to generate a new link</p>
+        </td>
+      </tr>
+    </table>
+    <p style="margin:0 0 24px;font-size:14px;color:${BRAND_COLORS.textDark};line-height:1.6;">
+      Please verify your file by opening it and spot-checking a few transactions. If you notice any issues, please open a support ticket within 48 hours.
     </p>
     <table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 auto;">
       <tr>
         <td style="background-color:${BRAND_COLORS.azure};border-radius:8px;">
-          <a href="${portalUrl}" style="display:inline-block;padding:12px 32px;font-size:15px;font-weight:600;color:${BRAND_COLORS.white};text-decoration:none;">
+          <a href="${portalUrl}/orders/${orderId}" style="display:inline-block;padding:12px 32px;font-size:15px;font-weight:600;color:${BRAND_COLORS.white};text-decoration:none;">
             Download File
           </a>
         </td>
@@ -448,16 +466,21 @@ export function fileDeliveryEmail(
     </table>`;
 
   return {
-    subject: `Your file is ready — Order #${orderId}`,
+    subject: `Your Converted QuickBooks File Is Ready — Order #${orderId}`,
     html: baseLayout(content, unsubscribeUrl),
   };
 }
 
 export function welcomeRegistrationEmail(
   customerName: string,
+  email: string,
   portalUrl: string,
-  unsubscribeUrl: string,
 ): { subject: string; html: string } {
+  const registeredOn = new Date().toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
   const content = `
     <h2 style="margin:0 0 16px;font-size:20px;color:${BRAND_COLORS.textDark};">
       Welcome to NexFortis
@@ -466,62 +489,80 @@ export function welcomeRegistrationEmail(
       Hi ${escapeHtml(customerName)},
     </p>
     <p style="margin:0 0 24px;font-size:15px;color:${BRAND_COLORS.textDark};line-height:1.6;">
-      Thanks for creating your NexFortis account. Your portal is where you'll place QuickBooks orders, upload files, track progress, and open support tickets.
+      Your NexFortis account has been created. You can now browse our QuickBooks service catalog, place orders, track your files, and reach our support team — all from your portal.
     </p>
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:${BRAND_COLORS.gray};border-radius:8px;padding:16px;margin-bottom:24px;">
       <tr>
         <td>
-          <p style="margin:0 0 8px;font-size:13px;color:${BRAND_COLORS.textMuted};text-transform:uppercase;letter-spacing:0.5px;">What you can do</p>
-          <p style="margin:0 0 6px;font-size:14px;color:${BRAND_COLORS.textDark};">&bull; Place QuickBooks conversion &amp; recovery orders</p>
-          <p style="margin:0 0 6px;font-size:14px;color:${BRAND_COLORS.textDark};">&bull; Upload .QBM files securely</p>
-          <p style="margin:0 0 6px;font-size:14px;color:${BRAND_COLORS.textDark};">&bull; Track order status in real time</p>
-          <p style="margin:0;font-size:14px;color:${BRAND_COLORS.textDark};">&bull; Open support tickets anytime</p>
+          <p style="margin:0 0 8px;font-size:13px;color:${BRAND_COLORS.textMuted};text-transform:uppercase;letter-spacing:0.5px;">Your Account</p>
+          <p style="margin:0 0 8px;font-size:16px;font-weight:600;color:${BRAND_COLORS.textDark};">${escapeHtml(email)}</p>
+          <p style="margin:0;font-size:14px;color:${BRAND_COLORS.textMuted};">Registered on ${registeredOn}</p>
         </td>
       </tr>
     </table>
-    <table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 auto;">
+    <p style="margin:0 0 8px;font-size:14px;font-weight:600;color:${BRAND_COLORS.textDark};">What you can do:</p>
+    <p style="margin:0 0 6px;font-size:14px;color:${BRAND_COLORS.textDark};">&bull; Browse 20+ QuickBooks Desktop services</p>
+    <p style="margin:0 0 6px;font-size:14px;color:${BRAND_COLORS.textDark};">&bull; Upload your .QBM file securely (encrypted at rest)</p>
+    <p style="margin:0 0 6px;font-size:14px;color:${BRAND_COLORS.textDark};">&bull; Track order status in real-time</p>
+    <p style="margin:0 0 24px;font-size:14px;color:${BRAND_COLORS.textDark};">&bull; Open support tickets with guaranteed SLA response</p>
+    <table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 auto 16px;">
       <tr>
         <td style="background-color:${BRAND_COLORS.azure};border-radius:8px;">
           <a href="${portalUrl}" style="display:inline-block;padding:12px 32px;font-size:15px;font-weight:600;color:${BRAND_COLORS.white};text-decoration:none;">
-            Go to Portal
+            Visit Your Portal
+          </a>
+        </td>
+      </tr>
+    </table>
+    <p style="margin:16px 0 0;font-size:12px;color:${BRAND_COLORS.textMuted};text-align:center;">
+      If you did not create this account, you can safely ignore this email.
+    </p>`;
+
+  return {
+    subject: "Welcome to NexFortis — Your Account Is Ready",
+    html: baseLayout(content, "#"),
+  };
+}
+
+export function waitlistConfirmationEmail(
+  email: string,
+  productName: string,
+): { subject: string; html: string } {
+  void email;
+  const content = `
+    <h2 style="margin:0 0 16px;font-size:20px;color:${BRAND_COLORS.textDark};">
+      You're on the Waitlist ${badge("WAITLIST", "#eff6ff", "#2563eb")}
+    </h2>
+    <p style="margin:0 0 16px;font-size:15px;color:${BRAND_COLORS.textDark};line-height:1.6;">
+      Hi there,
+    </p>
+    <p style="margin:0 0 24px;font-size:15px;color:${BRAND_COLORS.textDark};line-height:1.6;">
+      Thank you for your interest in ${escapeHtml(productName)}! You've been added to our waitlist and we'll notify you as soon as this service becomes available.
+    </p>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:${BRAND_COLORS.gray};border-radius:8px;padding:16px;margin-bottom:24px;">
+      <tr>
+        <td>
+          <p style="margin:0 0 4px;font-size:13px;color:${BRAND_COLORS.textMuted};text-transform:uppercase;letter-spacing:0.5px;">Waitlisted Service</p>
+          <p style="margin:0;font-size:16px;font-weight:600;color:${BRAND_COLORS.textDark};">${escapeHtml(productName)}</p>
+        </td>
+      </tr>
+    </table>
+    <p style="margin:0 0 8px;font-size:14px;font-weight:600;color:${BRAND_COLORS.textDark};">What to expect:</p>
+    <p style="margin:0 0 6px;font-size:14px;color:${BRAND_COLORS.textDark};">&bull; We'll email you when this service launches</p>
+    <p style="margin:0 0 6px;font-size:14px;color:${BRAND_COLORS.textDark};">&bull; Waitlist members get early access</p>
+    <p style="margin:0 0 24px;font-size:14px;color:${BRAND_COLORS.textDark};">&bull; No payment required until you place an order</p>
+    <table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 auto;">
+      <tr>
+        <td style="background-color:${BRAND_COLORS.azure};border-radius:8px;">
+          <a href="https://nexfortis.com/qb-portal/catalog" style="display:inline-block;padding:12px 32px;font-size:15px;font-weight:600;color:${BRAND_COLORS.white};text-decoration:none;">
+            Browse Available Services
           </a>
         </td>
       </tr>
     </table>`;
 
   return {
-    subject: "Welcome to NexFortis",
-    html: baseLayout(content, unsubscribeUrl),
-  };
-}
-
-export function waitlistConfirmationEmail(
-  productName: string,
-): { subject: string; html: string } {
-  const content = `
-    <h2 style="margin:0 0 16px;font-size:20px;color:${BRAND_COLORS.textDark};">
-      You're on the waitlist ${badge("WAITLIST", "#eff6ff", "#2563eb")}
-    </h2>
-    <p style="margin:0 0 16px;font-size:15px;color:${BRAND_COLORS.textDark};line-height:1.6;">
-      Thanks for your interest in <strong>${escapeHtml(productName)}</strong>.
-    </p>
-    <p style="margin:0 0 24px;font-size:15px;color:${BRAND_COLORS.textDark};line-height:1.6;">
-      We've added you to the waitlist and will email you as soon as this service is available.
-    </p>
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:${BRAND_COLORS.gray};border-radius:8px;padding:16px;margin-bottom:16px;">
-      <tr>
-        <td>
-          <p style="margin:0 0 4px;font-size:13px;color:${BRAND_COLORS.textMuted};text-transform:uppercase;letter-spacing:0.5px;">Product</p>
-          <p style="margin:0;font-size:16px;font-weight:600;color:${BRAND_COLORS.textDark};">${escapeHtml(productName)}</p>
-        </td>
-      </tr>
-    </table>
-    <p style="margin:0;font-size:13px;color:${BRAND_COLORS.textMuted};font-style:italic;">
-      In the meantime, check out our currently available services at nexfortis.com.
-    </p>`;
-
-  return {
-    subject: `You're on the waitlist — ${productName}`,
+    subject: `You're on the Waitlist — ${productName}`,
     html: baseLayout(content, "#"),
   };
 }

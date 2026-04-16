@@ -466,10 +466,16 @@ router.post("/orders/:orderId/files/upload",
             const [customer] = await db.select({ name: qbUsers.name, email: qbUsers.email })
               .from(qbUsers).where(eq(qbUsers.id, order.userId)).limit(1);
             if (customer) {
-              const portalUrl = `${getValidOrigin(req.headers.origin)}/qb-portal`;
-              const unsubUrl = `${getValidOrigin(req.headers.origin)}/qb-portal/unsubscribe?email=${encodeURIComponent(customer.email)}`;
-              const tpl = fileDeliveryEmail(customer.name || "there", orderId, safeFileName, portalUrl, unsubUrl);
-              sendEmail({ to: customer.email, subject: tpl.subject, html: tpl.html })
+              const portalUrl = `${getValidOrigin(req.headers.origin as string | undefined)}/qb-portal`;
+              const tpl = fileDeliveryEmail(
+                customer.name || "Customer",
+                orderId,
+                order.serviceName || "QuickBooks Service",
+                safeFileName,
+                portalUrl,
+                "#",
+              );
+              sendEmail({ to: customer.email, subject: tpl.subject, html: tpl.html, replyTo: "support@nexfortis.com" })
                 .catch((err) => console.error("[FileDelivery] Email send failed:", err));
             } else {
               console.warn(`[FileDelivery] Customer not found for order ${orderId}; skipping email.`);

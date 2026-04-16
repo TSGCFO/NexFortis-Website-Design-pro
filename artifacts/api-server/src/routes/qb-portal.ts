@@ -260,7 +260,7 @@ router.post("/waitlist", async (req: Request, res: Response) => {
     });
 
     try {
-      const tpl = waitlistConfirmationEmail(resolvedProductName);
+      const tpl = waitlistConfirmationEmail(email, resolvedProductName);
       sendEmail({ to: email, subject: tpl.subject, html: tpl.html }).catch((err) =>
         console.error("[Waitlist] Email send failed:", err),
       );
@@ -538,12 +538,20 @@ router.post("/webhook/stripe", async (req: Request, res: Response) => {
                   customerEmail = profile.email || customerEmail;
                 }
               }
+              let addonNames: string[] = [];
+              if (existing.addons) {
+                try {
+                  const parsed = JSON.parse(existing.addons);
+                  if (Array.isArray(parsed)) addonNames = parsed.map((x) => String(x));
+                } catch {
+                  // ignore malformed addons JSON
+                }
+              }
               const portalUrl = `${getValidOrigin(undefined)}/qb-portal`;
-              const unsubUrl = `${getValidOrigin(undefined)}/qb-portal/unsubscribe?email=${encodeURIComponent(customerEmail)}`;
               const custTpl = paidOrderConfirmationEmail(
-                customerName, existing.id, existing.serviceName, existing.totalCad, portalUrl, unsubUrl,
+                customerName, existing.id, existing.serviceName, addonNames, existing.totalCad, portalUrl, "#",
               );
-              sendEmail({ to: customerEmail, subject: custTpl.subject, html: custTpl.html })
+              sendEmail({ to: customerEmail, subject: custTpl.subject, html: custTpl.html, replyTo: "support@nexfortis.com" })
                 .catch((err) => console.error("[Stripe] Paid order customer email failed:", err));
               const opTpl = paidOrderOperatorEmail(
                 existing.id, existing.serviceName, existing.totalCad, customerName, customerEmail,
@@ -1196,8 +1204,8 @@ router.get("/me", requireAuth, async (req: Request, res: Response) => {
         welcomeEmailsSent.add(user.id);
         try {
           const portalUrl = `${getValidOrigin(req.headers.origin)}/qb-portal`;
-          const tpl = welcomeRegistrationEmail(user.name || "there", portalUrl, "#");
-          sendEmail({ to: user.email, subject: tpl.subject, html: tpl.html })
+          const tpl = welcomeRegistrationEmail(user.name || "there", user.email, portalUrl);
+          sendEmail({ to: user.email, subject: tpl.subject, html: tpl.html, replyTo: "support@nexfortis.com" })
             .catch((err) => console.error("[Welcome] Email send failed:", err));
         } catch (err) {
           console.error("[Welcome] Email build failed:", err);
