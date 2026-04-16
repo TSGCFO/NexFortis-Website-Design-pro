@@ -1,0 +1,264 @@
+# Prompt 12: SEO Landing Pages — Batch 2 (7 Pages: Comparison + Educational)
+
+This prompt creates the remaining 7 landing pages — 3 comparison/alternative pages (Group C) and 4 educational/trust pages (Group D). The technical SEO foundation and the `LandingPageLayout` component already exist from Prompt 11. This prompt only adds new page data entries and updates the sitemap.
+
+## Step 0: Setup
+
+Read these files before making any changes:
+1. `replit.md` — project overview, architecture, conventions
+2. `docs/prompts/prompt-12-seo-landing-pages-batch2.md` — this file
+3. `docs/prd/qb-portal/feature-seo-landing-pages.md` — full SEO PRD, especially Groups C and D, Section 6.3 (schema requirements), and AC-6 (comparison page guidelines)
+4. `artifacts/qb-portal/src/data/landingPages.ts` — existing 13 landing page data entries from batch 1
+5. `artifacts/qb-portal/src/components/landing-page-layout.tsx` — existing layout component
+6. `artifacts/qb-portal/src/lib/seo-schemas.ts` — existing schema generators
+7. `artifacts/qb-portal/public/sitemap.xml` — existing sitemap (13 landing pages)
+8. `artifacts/qb-portal/public/products.json` — product catalog (source of truth for prices)
+
+**Do NOT modify any files in `docs/`.**
+
+**PLATFORM REMINDERS:**
+- The QB Portal is a CSR React SPA (Vite + React 19 + Tailwind v4 + wouter for routing).
+- All prices must come from the product catalog — never hardcode dollar amounts in landing page content.
+- Content must be original, unique per page, and at a Grade 8-10 reading level.
+- All prices are in CAD and must reference the product catalog via `{launchPrice}` and `{basePrice}` tokens.
+
+> **⚠️ GLOBAL DO-NOTs:**
+> - Do NOT hardcode prices in landing page content — always read from the product catalog
+> - Do NOT duplicate content between pages — every H1, intro paragraph, and FAQ must be unique
+> - Do NOT use placeholder content ("Lorem ipsum") — write real, SEO-optimized content
+> - Do NOT modify any existing batch 1 landing page data entries — only add new entries
+> - Do NOT make false or defamatory claims about competitors (especially on the E-Tech comparison page)
+
+---
+
+## Step 1: Add 7 New Landing Page Data Entries
+
+In `artifacts/qb-portal/src/data/landingPages.ts`, add 7 new entries to the `landingPages` array. Each entry follows the exact same `LandingPageData` interface used by the existing 13 pages.
+
+**Content Quality Requirements (same as batch 1):**
+- Each page must have 800-1,500 words of unique body content (intro + overview + benefits + process + FAQs)
+- Content must be at a Grade 8-10 reading level
+- Define technical terms on first use
+- All prices in CAD, referenced from the product catalog via tokens
+- Every H1 must contain the primary keyword verbatim or near-verbatim
+- Every FAQ question and answer must be unique across all 20 pages
+
+### Group C — Comparison / Alternative Pages (3 pages)
+
+### 1a. `/landing/etech-alternative`
+
+**H1:** E-Tech Alternative for QuickBooks Conversion — Canadian Files Supported
+**Category:** `comparison`
+**Primary keyword:** e-tech quickbooks alternative
+**Product:** Enterprise to Pro/Premier Conversion (use `enterprise-to-premier-standard` slug)
+**Target length:** 1,000-1,200 words
+
+Content must cover: an honest, factual comparison between NexFortis and E-Tech (the most common competitor for QuickBooks Enterprise conversions). Key differentiators to highlight factually:
+- NexFortis publishes all prices upfront on the website; E-Tech requires a phone call for pricing
+- NexFortis explicitly supports Canadian QuickBooks files; E-Tech's Canadian file support is not prominently documented
+- NexFortis offers next-business-day turnaround with same-day rush available; compare turnaround if E-Tech's is documented
+- NexFortis is based in Ontario, Canada — relevant for Canadian data residency (PIPEDA)
+- Both services perform direct database conversion (not SDK-based)
+
+**CRITICAL LEGAL GUIDELINE:** Every claim about E-Tech must be factually verifiable and currently accurate. Use hedging language where appropriate: "as of [date], E-Tech does not publish pricing on their website" rather than "E-Tech hides their prices." Do NOT make claims about E-Tech's quality, reliability, or customer satisfaction. Do NOT display E-Tech's actual prices even if you know them. Focus on what NexFortis offers, not on criticizing the competitor.
+
+**FAQs (5 unique):** How does NexFortis compare to E-Tech? Does NexFortis support Canadian files? Why should I choose NexFortis over E-Tech? What is E-Tech's pricing? Is NexFortis's conversion the same quality as E-Tech?
+
+**Related pages:** enterprise-to-premier-conversion, affordable-enterprise-conversion, quickbooks-conversion-canada
+
+### 1b. `/landing/quickbooks-conversion-canada`
+
+**H1:** QuickBooks Conversion Service — Canada
+**Category:** `comparison`
+**Primary keyword:** quickbooks conversion canada
+**Product:** Enterprise to Pro/Premier Conversion (use `enterprise-to-premier-standard` slug)
+**Target length:** 1,000-1,200 words
+
+Content must cover: why Canadian QuickBooks files are different (Canadian payroll module, GST/HST settings, T4/T5 reporting, Canadian chart of accounts templates), why most US-based conversion services fail on Canadian files, NexFortis's Canadian-first approach (Ontario-based, Canadian data residency, prices in CAD, PIPEDA compliance), all conversion services available for Canadian files (Enterprise conversion, Super Condense, Audit Trail Removal, migrations), and pricing in CAD.
+
+This page should explicitly state:
+- All prices are in Canadian dollars
+- Company files are processed in a Canadian data centre
+- NexFortis is incorporated in Ontario, Canada
+- Data handling complies with PIPEDA (Personal Information Protection and Electronic Documents Act)
+
+**FAQs (5 unique):** Can US conversion services handle Canadian QuickBooks files? Are NexFortis prices in Canadian dollars? Is my data kept in Canada? What Canadian-specific data is preserved during conversion? Does NexFortis support QuickBooks Canadian Edition payroll?
+
+**Related pages:** enterprise-to-premier-conversion, etech-alternative, accountedge-to-quickbooks, sage-50-to-quickbooks
+
+### 1c. `/landing/affordable-enterprise-conversion`
+
+**H1:** Affordable QuickBooks Enterprise to Premier Conversion
+**Category:** `comparison`
+**Primary keyword:** cheaper quickbooks enterprise conversion
+**Product:** Enterprise to Pro/Premier Conversion (use `enterprise-to-premier-standard` slug)
+**Target length:** 800-1,000 words
+
+Content must cover: the cost of staying on Enterprise (annual per-seat subscription, often $1,000+/user/year), the cost of NexFortis conversion (flat fee from catalog with launch promo), ROI calculation (one-time conversion cost vs. ongoing Enterprise licensing savings), what's included in the price (conversion + verification report + 30-day support), and why flat-fee pricing is better than hourly or quote-based pricing.
+
+**FAQs (4 unique):** How much does QuickBooks Enterprise conversion cost? Is NexFortis the cheapest option? What's included in the conversion price? How much will I save by converting from Enterprise?
+
+**Related pages:** enterprise-to-premier-conversion, etech-alternative, quickbooks-conversion-canada
+
+---
+
+### Group D — Educational / Trust Pages (4 pages)
+
+### 1d. `/landing/how-conversion-works`
+
+**H1:** How QuickBooks Enterprise to Premier Conversion Works
+**Category:** `educational`
+**Primary keyword:** how does quickbooks enterprise conversion work
+**Product:** Enterprise to Pro/Premier Conversion (use `enterprise-to-premier-standard` slug)
+**Target length:** 1,200-1,500 words (detailed process page)
+
+Content must cover a step-by-step explanation of the entire conversion process from start to finish:
+1. Pre-conversion: what the customer needs to prepare (backup, verify file, identify version)
+2. Upload: how the encrypted upload works (256-bit TLS, file size limits, accepted formats)
+3. Analysis: what NexFortis checks before converting (file integrity, version detection, feature inventory)
+4. Conversion: what the database-level modification does (not SDK-based — explain the difference), what data is preserved, what Enterprise-only features are handled
+5. Verification: the trial balance comparison, feature conversion report
+6. Delivery: how the customer receives the converted .QBM file
+7. Post-conversion: 30-day support window, what to check after restoring
+
+This page should use a `HowTo` JSON-LD schema type in addition to the standard `FAQPage` and `BreadcrumbList` schemas. Generate the `HowTo` schema from the process steps data.
+
+**FAQs (6 unique):** Is the conversion done by software or a person? How long does the conversion take? What happens to Enterprise-only features? Can I convert back to Enterprise later? Is my data secure during the conversion? What if the converted file has problems?
+
+**Related pages:** enterprise-to-premier-conversion, is-it-safe, affordable-enterprise-conversion
+
+### 1e. `/landing/is-it-safe`
+
+**H1:** Is It Safe to Convert QuickBooks Files?
+**Category:** `educational`
+**Primary keyword:** is it safe to convert quickbooks files
+**Product:** none (this is a trust page, not tied to a specific product)
+**Target length:** 1,000-1,200 words
+
+Content must cover: data security (256-bit encryption in transit, encrypted storage, Canadian data residency, no third-party access), privacy (PIPEDA compliance, data retention policy — files deleted within 30 days, earlier on request), what can go wrong (honest assessment — file corruption risk, mitigation strategies NexFortis uses), the money-back guarantee, the 30-day post-conversion support window, NexFortis's track record and approach, and what customers can do to protect themselves (keep a backup before uploading).
+
+This page should NOT have a `productSlug` since it's not tied to a specific service. The CTA should link to the catalog page: "Browse Services" linking to `/catalog`.
+
+**FAQs (6 unique):** Is my financial data safe with NexFortis? What happens to my file after conversion? Does NexFortis keep a copy of my data? What if something goes wrong with the conversion? Is NexFortis PIPEDA compliant? Do you have a money-back guarantee?
+
+**Related pages:** how-conversion-works, enterprise-to-premier-conversion, quickbooks-company-file-error
+
+### 1f. `/landing/quickbooks-desktop-end-of-life`
+
+**H1:** QuickBooks Desktop End of Life — What Are Your Options?
+**Category:** `educational`
+**Primary keyword:** quickbooks desktop end of life
+**Product:** none (educational page — links to multiple services)
+**Target length:** 1,200-1,500 words (high-volume keyword, detailed guide)
+
+Content must cover: the current state of QuickBooks Desktop (Intuit has been sunsetting features and pushing users toward QBO), the timeline of Desktop end-of-life announcements, what "end of life" means in practice (no more updates, no payroll support, no bank feed support, no Intuit support), the three main options for Desktop users:
+
+1. **Migrate to QuickBooks Online** — explain what transfers and what doesn't, who this is best for, and how NexFortis's QBO Readiness Report helps
+2. **Stay on Desktop but optimize** — explain why reducing file size and cleaning up data extends Desktop usability, link to Super Condense, Audit Trail Removal, List Reduction
+3. **Downgrade from Enterprise to Pro/Premier** — explain why this saves money if you don't need Enterprise features, link to Enterprise Conversion service
+
+Canadian context: emphasize that Canadian Desktop users face additional challenges because Canadian-specific features (payroll, GST/HST) may not transfer cleanly to QBO.
+
+This page should NOT have a `productSlug`. CTA: "Find the Right Service for You" linking to `/catalog`.
+
+**FAQs (6 unique):** When is QuickBooks Desktop being discontinued? What happens when Desktop reaches end of life? Can I still use Desktop after end of life? Should I migrate to QuickBooks Online? What are the alternatives to migrating to QBO? How can NexFortis help with the Desktop transition?
+
+**Related pages:** qbo-readiness, enterprise-to-premier-conversion, super-condense, quickbooks-file-too-large
+
+### 1g. `/landing/quickbooks-support-subscription`
+
+**H1:** Expert QuickBooks Support Subscription — Canada
+**Category:** `educational`
+**Primary keyword:** quickbooks support service canada
+**Product:** none (this page promotes the support subscription tiers, not a one-time product)
+**Target length:** 800-1,000 words
+
+Content must cover: why QuickBooks users need ongoing support (Intuit's official support is generic, wait times are long, Canadian-specific issues are poorly handled), what NexFortis's Expert Support subscription offers (3 tiers — Basic, Professional, Premium), what each tier includes (ticket support, response SLA, file health checks, priority queue, referral code for Premium), pricing overview (reference the subscription products from the catalog), who it's for (SMBs, bookkeepers, accountants managing multiple clients), and the difference between one-time services and ongoing support.
+
+CTA: "View Subscription Plans" linking to the subscription section of the catalog (or `/catalog?category=subscriptions`).
+
+**FAQs (5 unique):** What does the QuickBooks support subscription include? How fast is the response time? Can I cancel anytime? Do I get a discount on other services? Is the subscription available in Canada?
+
+**Related pages:** enterprise-to-premier-conversion, quickbooks-running-slow, quickbooks-desktop-end-of-life
+
+---
+
+## Step 2: Schema Enhancements for Educational Pages
+
+### 2a. Add `HowTo` Schema Generator
+
+In `artifacts/qb-portal/src/lib/seo-schemas.ts`, add a `generateHowToSchema` function that creates a valid `HowTo` JSON-LD schema from process steps data. The schema must include:
+- `@type`: "HowTo"
+- `name`: the page H1
+- `description`: the page meta description
+- `step`: array of `HowToStep` objects derived from the page's `process` array
+
+### 2b. Update Landing Page Layout for Educational Pages
+
+In `artifacts/qb-portal/src/components/landing-page-layout.tsx`, update the JSON-LD injection logic:
+- For `category === "educational"`: include `HowTo` schema (if process steps exist) in addition to `FAQPage` and `BreadcrumbList`
+- For `category === "comparison"`: include `FAQPage` and `BreadcrumbList` (same as problem pages — no `Service` schema)
+
+The existing logic already handles `category === "service"` (includes `Service` schema) and `category === "problem"` (no `Service` schema). Extend this for the two new categories.
+
+---
+
+## Step 3: Update Sitemap and Footer
+
+### 3a. Add batch 2 pages to sitemap
+
+In `artifacts/qb-portal/public/sitemap.xml`, add all 7 new landing page URLs at priority 0.9 (same as batch 1 pages).
+
+### 3b. Update footer links
+
+In `artifacts/qb-portal/src/components/layout.tsx`, the footer "Popular services" column currently shows the top 5 batch 1 landing pages. Consider whether any batch 2 pages should replace or supplement these. The most important batch 2 page for footer linking is `quickbooks-desktop-end-of-life` (high-volume keyword). Add it to the footer if there's space, or replace the least important batch 1 link.
+
+### 3c. Add cross-references between batches
+
+The batch 1 pages currently only reference other batch 1 pages in their `relatedSlugs` arrays. Now that batch 2 pages exist, update the most relevant batch 1 pages to include batch 2 cross-references:
+
+- `enterprise-to-premier-conversion` → add `affordable-enterprise-conversion`, `how-conversion-works`, `quickbooks-conversion-canada` to its `relatedSlugs`
+- `quickbooks-file-too-large` → add `quickbooks-desktop-end-of-life`
+- `quickbooks-running-slow` → add `quickbooks-desktop-end-of-life`
+- `quickbooks-company-file-error` → add `is-it-safe`
+- `accountedge-to-quickbooks` → add `quickbooks-conversion-canada`
+- `sage-50-to-quickbooks` → add `quickbooks-conversion-canada`
+
+Keep each page's `relatedSlugs` array to a maximum of 4-5 entries — replace the least relevant existing entry if needed.
+
+Verify that the related services sections on both batch 1 and batch 2 pages render correctly.
+
+---
+
+## Step 4: Verify
+
+After all changes are complete:
+
+1. Run the build command and confirm zero TypeScript errors.
+2. Navigate to each of the 7 new landing pages and verify:
+   - Content renders correctly
+   - FAQ accordion works (click/tap to expand)
+   - Breadcrumbs show the correct path
+   - CTA button links to the correct destination
+   - Pricing sidebar shows launch pricing (where applicable) from the product catalog
+   - Related services section shows correct cross-links
+3. Verify the comparison pages (especially `etech-alternative`) do NOT contain defamatory claims.
+4. Verify the sitemap includes all 20 landing pages.
+5. Open Chrome DevTools mobile emulation (393px width) and verify all 7 new pages render responsively as single-column layouts.
+
+---
+
+## Summary of Files to Modify
+
+| File | Action |
+|------|--------|
+| `artifacts/qb-portal/src/data/landingPages.ts` | MODIFY — add 7 new page data entries |
+| `artifacts/qb-portal/src/lib/seo-schemas.ts` | MODIFY — add `generateHowToSchema` function |
+| `artifacts/qb-portal/src/components/landing-page-layout.tsx` | MODIFY — handle educational/comparison category schemas |
+| `artifacts/qb-portal/public/sitemap.xml` | MODIFY — add 7 new URLs |
+| `artifacts/qb-portal/src/components/layout.tsx` | MODIFY — potentially update footer links |
+
+**Do NOT create or modify:**
+- Any files in `docs/`
+- Any existing batch 1 landing page data entries
+- The `LandingPageLayout` component structure (only the schema injection logic)

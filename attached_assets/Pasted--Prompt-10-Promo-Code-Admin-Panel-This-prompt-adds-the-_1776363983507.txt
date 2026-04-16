@@ -1,0 +1,274 @@
+# Prompt 10: Promo Code Admin Panel
+
+This prompt adds the promo code management section to the existing Operator Admin Panel. The promo code system (Prompt 09) is already fully implemented — this prompt builds the admin-facing UI and API to manage, monitor, and create codes.
+
+## Step 0: Setup
+
+Read these files before making any changes:
+1. `replit.md` — project overview, architecture, conventions
+2. `docs/prompts/prompt-10-promo-admin.md` — this file
+3. `docs/prd/qb-portal/feature-promo-code-system.md` — promo code PRD, especially sections FR-33 through FR-38 and NFR-10/NFR-11
+4. `artifacts/api-server/src/routes/qb-admin.ts` — existing admin API routes
+5. `artifacts/api-server/src/routes/qb-promo.ts` — existing promo validation/redemption logic
+6. `artifacts/qb-portal/src/pages/admin/` — existing admin pages
+7. `artifacts/qb-portal/src/components/admin-layout.tsx` — admin layout with sidebar nav
+8. `artifacts/qb-portal/src/lib/admin-api.ts` — existing admin API helpers
+9. `lib/db/src/schema/qb-portal.ts` — current Drizzle schema (promo tables already exist)
+
+**Do NOT modify any files in `docs/`.**
+
+**PLATFORM REMINDERS:**
+- Do NOT throw errors for missing env vars — use `console.warn` + `null`
+- Do NOT create migration files manually — use `drizzle-kit push` from `lib/db/`
+- Do NOT add `express.static()` to the API server
+- Verify Replit Secrets still exist after completing all steps
+- Admin routes must use the existing `requireOperator` middleware (Supabase JWT + AAL2 check)
+
+---
+
+## Step 1: Admin Promo Code API Routes
+
+Create a new file `artifacts/api-server/src/routes/qb-admin-promo.ts` with admin-only endpoints for promo code management. All routes must use the existing `requireOperator` middleware.
+
+### 1a. List all promo codes
+
+`GET /api/qb/admin/promo-codes`
+
+Return a paginated list of all promo codes with the following features:
+- Pagination: accept `page` (default 1) and `limit` (default 25, max 100) query params
+- Search: accept `search` query param — filter by code string (case-insensitive partial match)
+- Filter by status: accept `status` query param — `active`, `inactive`, `exhausted`, `expired`, or `all` (default `all`)
+- Filter by type: accept `type` query param — `percentage`, `fixed_amount`, `free_service`, `subscription`, or `all` (default `all`)
+- Sort: accept `sort` query param — `created_desc` (default), `created_asc`, `redemptions_desc`, `code_asc`
+
+Each code in the response must include:
+- All columns from `qb_promo_codes`
+- A computed `status` field: `active` (isActive + not expired + not exhausted), `inactive` (isActive = false), `expired` (expiresAt in the past), `exhausted` (redemptionCount >= maxUses)
+- `redemptionCount` (already in the table)
+
+Response shape:
+```
+{
+  codes: [...],
+  pagination: { page, limit, totalCount, totalPages }
+}
+```
+
+### 1b. Get single promo code with redemption log
+
+`GET /api/qb/admin/promo-codes/:id`
+
+Return the full promo code record plus its redemption log:
+- The promo code object with all columns
+- An array of `redemptions` — join `qb_promo_code_redemptions` with `qb_users` (for name/email) and `qb_orders` (for order status). Include: redemption ID, timestamp, customer email, customer name, order ID, order status, discount amount applied, order total before and after.
+- Paginate redemptions: accept `redemptionPage` and `redemptionLimit` query params
+
+### 1c. Create a new promo code
+
+`POST /api/qb/admin/promo-codes`
+
+Accept a JSON body with all promo code fields (per FR-35 in the PRD):
+- `code` — string, required. If empty or `"auto"`, auto-generate a unique 8-character uppercase alphanumeric code.
+- `type` — required, one of `percentage`, `fixed_amount`, `free_service`, `subscription`
+- `percentOff` — required if type is `percentage`, integer 1-100
+- `amountOffCents` — required if type is `fixed_amount`, integer > 0
+- `subscriptionDurationMonths` — required if type is `subscription`, integer > 0
+- `maxUses` — integer or null (null = unlimited)
+- `maxUsesPerCustomer` — integer or null (null = unlimited)
+- `expiresAt` — ISO date string or null (null = never)
+- `productIds` — array of product ID strings, or null (null = all products)
+- `categoryIds` — array of category slug strings, or null (null = all categories)
+- `minOrderAmountCents` — integer or null
+- `firstTimeCustomerOnly` — boolean, default false
+- `stackableWithLaunchPromo` — boolean, default true
+- `restrictedToEmail` — string or null
+- `appliesToBasePrice` — boolean, default false
+- `description` — string, internal operator notes
+
+Validation rules:
+- If type is `free_service`, `productIds` must not be empty (a free service code without product restriction is invalid)
+- If type is `percentage`, `percentOff` must be between 1 and 100
+- Code must be at least 6 characters
+- Code must be unique (case-insensitive) — check against existing codes
+
+After validation, insert the code into `qb_promo_codes`. Also create a corresponding Stripe Coupon and Promotion Code using the existing `createStripeCouponAndPromoCode` helper from `qb-promo.ts` (export it if not already exported). Store the returned `stripeCouponId` and `stripePromotionCodeId`.
+
+Log the creation to a new `qb_promo_code_admin_events` table (see Step 2).
+
+Return the created code object.
+
+### 1d. Update a promo code
+
+`PATCH /api/qb/admin/promo-codes/:id`
+
+Accept a partial update body. Only these fields may be updated:
+- `description` — always editable
+- `maxUses` — can be increased (not decreased below current redemptionCount)
+- `maxUsesPerCustomer` — can be changed
+- `expiresAt` — can be extended or set to null
+- `isActive` — can be toggled (for reactivation)
+
+Fields that cannot change after creation: `code`, `type`, `percentOff`, `amountOffCents`, `productIds`, `categoryIds`. These are locked because the Stripe Coupon was created with these parameters.
+
+Log the update to `qb_promo_code_admin_events` with before and after state.
+
+### 1e. Deactivate a promo code
+
+`POST /api/qb/admin/promo-codes/:id/deactivate`
+
+Set `isActive = false` on the code. If the code has a `stripePromotionCodeId`, deactivate it via the Stripe API as well (`stripe.promotionCodes.update(id, { active: false })`). Handle the case where Stripe is not configured (dev mode) — just update the DB.
+
+Log the deactivation to `qb_promo_code_admin_events`.
+
+### 1f. Promo analytics summary
+
+`GET /api/qb/admin/promo-analytics`
+
+Return a summary object:
+- `totalActiveCodes` — count of codes where isActive = true and not expired and not exhausted
+- `totalRedemptions` — sum of all redemptionCount values across all codes
+- `totalDiscountIssuedCents` — sum of `discountAmountCents` from all redemption records
+- `topCodes` — top 5 codes by redemptionCount, each with code string, type, redemptionCount, and total discount issued
+
+### 1g. Register the routes
+
+Import the new router in `artifacts/api-server/src/routes/index.ts` and add it to the existing `adminRouter` (the same router that contains `qbAdminRouter` and `qbAdminSubscriptionsRouter`). Since the admin router is already mounted at `/api/qb/admin` with `requireAuth` and `requireOperator` applied, the new promo routes will automatically inherit authentication. Use the path prefix `/promo-codes` within the admin router (and `/promo-analytics` for the analytics endpoint).
+
+---
+
+## Step 2: Admin Events Audit Table
+
+Add a new table `qb_promo_code_admin_events` to the schema in `lib/db/src/schema/qb-portal.ts`:
+
+- `id` — serial primary key
+- `adminUserId` — uuid, references `qb_users.id`, not null
+- `action` — text, not null (values: `created`, `updated`, `deactivated`, `reactivated`)
+- `promoCodeId` — integer, references `qb_promo_codes.id`, not null
+- `beforeState` — jsonb, nullable (null for `created` action)
+- `afterState` — jsonb, not null
+- `createdAt` — timestamp, default now
+
+Export the insert schema. Run `drizzle-kit push` from `lib/db/` to apply the new table.
+
+---
+
+## Step 3: Admin Promo Codes Page (Frontend)
+
+### 3a. Add sidebar navigation link
+
+In the admin layout component (`admin-layout.tsx`), add a "Promo Codes" link in the sidebar navigation. Use a tag/ticket icon. Position it after the existing nav items (Dashboard, Orders, Tickets, Customers).
+
+### 3b. Create the promo codes list page
+
+Create `artifacts/qb-portal/src/pages/admin/promo-codes.tsx`:
+
+**Analytics Summary Card** (top of page):
+- Display the 4 metrics from the analytics endpoint: total active codes, total redemptions, total discount issued (formatted as CAD), and top 5 codes.
+- Use a responsive grid of metric cards matching the existing admin dashboard card style.
+
+**Promo Codes Table:**
+- Columns: Code (monospace font), Type (badge), Value (formatted — e.g., "20%" or "$25.00"), Redemptions (count/max or count/∞), Expires, Status (colored badge), Actions
+- Status badge colors: green for active, gray for inactive, red for expired, orange for exhausted
+- Search input above the table — debounced 300ms, searches by code string
+- Filter dropdowns for status and type
+- Pagination controls below the table
+- Row click navigates to the code detail view
+
+**Create Code Button:**
+- A prominent "Create Code" button in the page header
+- Opens a modal or a slide-over panel with the creation form (see Step 3c)
+
+### 3c. Create Code Form
+
+Build either a modal dialog or a new page (`/admin/promo-codes/new`) with the full creation form:
+
+- Code field: text input with an "Auto-generate" button beside it. Auto-generate fills the field with a random 8-char uppercase alphanumeric code.
+- Type: select dropdown (Percentage, Fixed Amount, Free Service, Subscription)
+- Value: conditional — show "Percent off" number input (1-100) for percentage, "Amount off (CAD)" number input for fixed_amount, nothing for free_service, "Duration (months)" for subscription
+- Max uses: number input with an "Unlimited" toggle
+- Max uses per customer: number input with an "Unlimited" toggle
+- Expires at: date picker with a "Never" toggle
+- Product restrictions: multi-select from product catalog (loaded from `/api/qb/catalog`)
+- Category restrictions: multi-select from categories
+- Min order amount: optional number input (CAD)
+- First-time customer only: toggle switch
+- Stackable with launch promo: toggle switch (default on)
+- Restricted to email: optional text input
+- Applies to base price: toggle switch
+- Description: textarea for internal notes
+
+Validation: run the same rules as the backend before submitting. Show inline error messages for invalid fields.
+
+On submit, call `POST /api/admin/promo-codes`. On success, close the form, show a success toast, and refresh the code list.
+
+### 3d. Code Detail / Redemption Log View
+
+Create `artifacts/qb-portal/src/pages/admin/promo-code-detail.tsx` (route: `/admin/promo-codes/:id`):
+
+**Code Summary:**
+- Display all code fields in a two-column detail layout
+- Show the computed status badge
+- Action buttons: Deactivate (with confirmation dialog), Edit (opens inline editing for editable fields)
+
+**Redemption Log Table:**
+- Columns: Date, Customer Email, Customer Name, Order ID (link to admin order detail), Discount Applied (CAD), Order Total Before, Order Total After
+- Paginated, sorted by most recent first
+- If no redemptions, show an empty state message
+
+**Audit Events Log:**
+- Below the redemption log, show a timeline of admin events for this code (created, updated, deactivated)
+- Each event shows: timestamp, admin user, action, and a diff of changed fields
+
+### 3e. Register the new routes
+
+Add the new pages to the app router:
+- `/admin/promo-codes` → promo codes list page
+- `/admin/promo-codes/new` → create code page (if using a separate page instead of modal)
+- `/admin/promo-codes/:id` → code detail page
+
+---
+
+## Step 4: Deactivate Confirmation
+
+When the operator clicks "Deactivate" on a code:
+1. Show a confirmation dialog: "Deactivate code [CODE]? Customers will no longer be able to use this code. This action can be reversed by reactivating the code."
+2. On confirm, call `POST /api/admin/promo-codes/:id/deactivate`
+3. On success, show a success toast and update the status badge to "Inactive"
+4. On the detail page, if the code is inactive, show a "Reactivate" button that calls `PATCH /api/admin/promo-codes/:id` with `{ isActive: true }` and logs a `reactivated` event
+
+---
+
+## Step 5: Verify and Test
+
+After all changes are complete:
+
+1. Run `drizzle-kit push` from `lib/db/` to apply the new admin events table.
+2. Run the build command and confirm zero TypeScript errors.
+3. Navigate to the admin panel and verify:
+   - The "Promo Codes" link appears in the sidebar
+   - The promo codes list page loads with analytics cards and the table
+   - Search and filters work
+   - Creating a new code works (test with at least one percentage and one fixed_amount code)
+   - The code detail page shows the code info and redemption log
+   - Deactivating a code works and the status badge updates
+4. Verify that the existing referral codes (auto-generated for Premium subscribers) appear in the admin list.
+
+---
+
+## Summary of Files to Create/Modify
+
+| File | Action |
+|------|--------|
+| `artifacts/api-server/src/routes/qb-admin-promo.ts` | CREATE — admin promo code API routes |
+| `artifacts/api-server/src/routes/qb-promo.ts` | MODIFY — export `createStripeCouponAndPromoCode` if not exported |
+| `artifacts/api-server/src/index.ts` (or route registration file) | MODIFY — mount new admin promo routes |
+| `lib/db/src/schema/qb-portal.ts` | MODIFY — add `qb_promo_code_admin_events` table |
+| `artifacts/qb-portal/src/pages/admin/promo-codes.tsx` | CREATE — promo codes list + analytics |
+| `artifacts/qb-portal/src/pages/admin/promo-code-detail.tsx` | CREATE — code detail + redemption log |
+| `artifacts/qb-portal/src/components/admin-layout.tsx` | MODIFY — add sidebar nav link |
+| `artifacts/qb-portal/src/lib/admin-api.ts` | MODIFY — add promo admin API helpers |
+| `artifacts/qb-portal/src/App.tsx` | MODIFY — add admin promo routes |
+
+**Do NOT create or modify:**
+- Any files in `docs/`
+- Any migration files in `lib/db/drizzle/` — use `drizzle-kit push` only
