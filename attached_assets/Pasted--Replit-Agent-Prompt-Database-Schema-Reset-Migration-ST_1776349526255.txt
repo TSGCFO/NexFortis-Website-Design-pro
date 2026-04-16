@@ -1,0 +1,89 @@
+# Replit Agent Prompt — Database Schema Reset & Migration
+
+## STOP — Do Not Create Tables Manually
+
+The previous approach of creating tables with integer references was wrong. The entire database is in a pre-migration state and needs to be reset.
+
+## Problem
+
+The Replit database has never had any Drizzle migrations applied. It is running the original schema from before Supabase Auth integration:
+- `qb_users.id` is `integer` instead of `uuid`
+- `qb_users` still has a `password_hash` column that should not exist
+- `qb_users` is missing `role` and `stripe_customer_id` columns
+- Every `user_id` / `sender_id` FK column is `integer` instead of `uuid`
+- `qb_password_resets` table still exists (should have been dropped)
+
+The Drizzle schema in `lib/db/src/schema/qb-portal.ts` is the source of truth. It uses UUID for `qb_users.id` and all user references.
+
+## Solution — Run drizzle-kit push
+
+Since this is pre-production and there is no real user data to preserve, the cleanest approach is to use `drizzle-kit push` which will sync the database to match the Drizzle schema exactly.
+
+Steps:
+
+1. First, pull the latest code from `main` branch — it has all the Round 4 fixes merged today including the `pendingDowngradeTier` column and status CHECK constraints.
+
+2. Manually drop the legacy table that Drizzle does not know about:
+   ```sql
+   DROP TABLE IF EXISTS "qb_password_resets" CASCADE;
+   ```
+
+3. Run `drizzle-kit push` from the `lib/db/` directory. This will compare the Drizzle schema against the actual database and generate the necessary ALTER/DROP/CREATE statements to bring them in sync.
+   ```bash
+   cd lib/db && pnpm drizzle-kit push
+   ```
+
+4. When drizzle-kit shows the list of changes it wants to make, review them. It should:
+   - Drop `qb_password_resets` (if not already done)
+   - Alter `qb_users.id` from `integer` to `uuid`
+   - Drop `password_hash` from `qb_users`
+   - Add `role` and `stripe_customer_id` to `qb_users`
+   - Convert all `user_id` / `sender_id` columns from `integer` to `uuid`
+   - Add missing columns to `qb_support_tickets` (subscription_id, tier_at_submission, is_critical, is_after_hours, sla_deadline, first_response_at, operator_reply, internal_note, attachment_path)
+   - Add `pending_downgrade_tier` to `qb_subscriptions`
+   - Add CHECK constraints on `qb_users.role`, `qb_subscriptions.tier`, `qb_subscriptions.status`, `qb_ticket_replies.sender_role`
+   - Add all missing FK constraints
+
+5. If drizzle-kit cannot alter integer to uuid (type change may fail on columns with data), then drop ALL qb_ tables first and let push recreate them:
+   ```sql
+   DROP TABLE IF EXISTS "qb_password_resets" CASCADE;
+   DROP TABLE IF EXISTS "qb_referral_events" CASCADE;
+   DROP TABLE IF EXISTS "qb_referrals" CASCADE;
+   DROP TABLE IF EXISTS "qb_ticket_replies" CASCADE;
+   DROP TABLE IF EXISTS "qb_notification_events" CASCADE;
+   DROP TABLE IF EXISTS "qb_notification_preferences" CASCADE;
+   DROP TABLE IF EXISTS "qb_ticket_usage" CASCADE;
+   DROP TABLE IF EXISTS "qb_order_files" CASCADE;
+   DROP TABLE IF EXISTS "qb_support_tickets" CASCADE;
+   DROP TABLE IF EXISTS "qb_subscriptions" CASCADE;
+   DROP TABLE IF EXISTS "qb_waitlist_signups" CASCADE;
+   DROP TABLE IF EXISTS "qb_orders" CASCADE;
+   DROP TABLE IF EXISTS "qb_users" CASCADE;
+   ```
+   Then run `drizzle-kit push` again on the empty database.
+
+6. After push completes, verify the schema is correct:
+   ```sql
+   SELECT column_name, data_type FROM information_schema.columns 
+   WHERE table_name = 'qb_users' AND table_schema = 'public' 
+   ORDER BY ordinal_position;
+   ```
+   `id` should be `uuid`, `password_hash` should be gone, `role` and `stripe_customer_id` should exist.
+
+7. Also verify all tables:
+   ```sql
+   SELECT table_name FROM information_schema.tables 
+   WHERE table_schema = 'public' ORDER BY table_name;
+   ```
+
+8. Also add this code comment in `lib/db/src/schema/qb-portal.ts` — above the `subscriptionId` field in the `qb_support_tickets` table definition:
+   ```ts
+   // No FK to qb_subscriptions — intentional. Tickets must persist after subscription cancellation.
+   subscriptionId: integer("subscription_id"),
+   ```
+
+## Important Rules
+- Do NOT modify any files in the `docs/` directory
+- Do NOT change any route files, API logic, or frontend code — this is schema-only work
+- Commit any schema file changes to git
+- If drizzle-kit push fails, report the exact error
