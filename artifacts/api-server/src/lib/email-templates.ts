@@ -528,10 +528,8 @@ export function welcomeRegistrationEmail(
 }
 
 export function waitlistConfirmationEmail(
-  email: string,
   productName: string,
 ): { subject: string; html: string } {
-  void email;
   const content = `
     <h2 style="margin:0 0 16px;font-size:20px;color:${BRAND_COLORS.textDark};">
       You're on the Waitlist ${badge("WAITLIST", "#eff6ff", "#2563eb")}

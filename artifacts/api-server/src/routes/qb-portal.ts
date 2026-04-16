@@ -260,7 +260,7 @@ router.post("/waitlist", async (req: Request, res: Response) => {
     });
 
     try {
-      const tpl = waitlistConfirmationEmail(email, resolvedProductName);
+      const tpl = waitlistConfirmationEmail(resolvedProductName);
       sendEmail({ to: email, subject: tpl.subject, html: tpl.html }).catch((err) =>
         console.error("[Waitlist] Email send failed:", err),
       );
@@ -1205,7 +1205,7 @@ router.get("/me", requireAuth, async (req: Request, res: Response) => {
       if (Date.now() - createdAt < 60_000) {
         welcomeEmailsSent.add(user.id);
         try {
-          const portalUrl = `${getValidOrigin(req.headers.origin)}/qb-portal`;
+          const portalUrl = `${getValidOrigin(req.headers.origin as string | undefined)}/qb-portal`;
           const tpl = welcomeRegistrationEmail(user.name || "there", user.email, portalUrl);
           sendEmail({ to: user.email, subject: tpl.subject, html: tpl.html, replyTo: "support@nexfortis.com" })
             .catch((err) => console.error("[Welcome] Email send failed:", err));
