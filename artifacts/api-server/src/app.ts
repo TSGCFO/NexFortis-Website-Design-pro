@@ -48,7 +48,7 @@ const allowedOrigins = [
   "https://www.nexfortis.com",
   "https://qb.nexfortis.com",
   "https://nex-fortis-website-design-pro.replit.app",
-  ...(process.env.NODE_ENV !== "production" ? ["http://localhost:5173"] : []),
+  ...(process.env.NODE_ENV !== "production" ? ["http://localhost:5173", "http://localhost:5174"] : []),
 ];
 
 app.use(
@@ -58,6 +58,7 @@ app.use(
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
+        console.warn("CORS rejected origin:", origin);
         callback(null, false);
       }
     },
@@ -99,7 +100,7 @@ const globalLimiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
   message: { error: "Too many requests. Please try again later." },
-  skip: () => process.env.NODE_ENV !== "production",
+  skip: () => process.env.NODE_ENV === "development",
 });
 
 app.use(globalLimiter);

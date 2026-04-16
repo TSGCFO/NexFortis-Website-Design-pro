@@ -30,14 +30,15 @@ const contactLimiter = rateLimit({
 
 router.use(healthRouter);
 router.use("/blog", blogRouter);
-router.post("/contact", contactLimiter);
-router.use("/contact", contactRouter);
+router.use("/contact", contactLimiter, contactRouter);
 router.post("/qb/checkout/create-session", checkoutLimiter);
 router.use("/qb", qbPortalRouter);
 router.use("/qb/subscriptions", requireAuth, qbSubscriptionsRouter);
 router.use("/qb/tickets", requireAuth, qbTicketsRouter);
-router.use("/qb/admin", requireAuth, requireOperator, qbAdminSubscriptionsRouter);
-router.use("/qb/admin", requireAuth, requireOperator, qbAdminRouter);
+const adminRouter = Router();
+adminRouter.use(qbAdminSubscriptionsRouter);
+adminRouter.use(qbAdminRouter);
+router.use("/qb/admin", requireAuth, requireOperator, adminRouter);
 const notificationPrefLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   limit: 20,

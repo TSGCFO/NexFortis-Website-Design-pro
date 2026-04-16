@@ -23,21 +23,31 @@ export { supabaseAdmin };
 
 let storageChecked = false;
 let storageOk = false;
+let storageLastFailure = 0;
+const STORAGE_FAILURE_TTL_MS = 30_000;
 
 export async function isStorageAvailable(): Promise<boolean> {
   if (storageChecked) return storageOk;
   if (!supabaseAdmin) return false;
+
+  if (storageLastFailure && Date.now() - storageLastFailure < STORAGE_FAILURE_TTL_MS) {
+    return false;
+  }
+
   try {
     const { error } = await supabaseAdmin.storage.from("order-files").list("", { limit: 1 });
     if (error) {
       console.error(`[Storage] order-files bucket verification failed: ${error.message}`);
+      storageLastFailure = Date.now();
       return false;
     }
     storageChecked = true;
     storageOk = true;
+    storageLastFailure = 0;
     return true;
   } catch (err) {
     console.error("[Storage] order-files bucket verification failed:", err);
+    storageLastFailure = Date.now();
     return false;
   }
 }
