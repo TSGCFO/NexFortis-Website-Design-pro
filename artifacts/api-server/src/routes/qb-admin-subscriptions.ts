@@ -16,9 +16,28 @@ import { supabaseAdmin } from "../lib/supabase";
 
 const TICKET_BUCKET = "ticket-attachments";
 
+const ALLOWED_MIMETYPES = new Set([
+  "image/jpeg",
+  "image/png",
+  "image/gif",
+  "image/webp",
+  "application/pdf",
+  "application/msword",
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  "text/plain",
+  "text/csv",
+]);
+
 const adminReplyUpload = multer({
   storage: multer.memoryStorage(),
   limits: { fileSize: 10 * 1024 * 1024 },
+  fileFilter: (_req, file, cb) => {
+    if (ALLOWED_MIMETYPES.has(file.mimetype)) {
+      cb(null, true);
+    } else {
+      cb(new Error(`File type '${file.mimetype}' is not allowed. Accepted types: images, PDF, Word documents, plain text, and CSV.`));
+    }
+  },
 });
 
 async function uploadAdminAttachment(ticketId: number, file: Express.Multer.File): Promise<string | null> {
@@ -129,6 +148,8 @@ router.get("/subscriptions/:id", async (req: Request, res: Response) => {
   }
 });
 
+const VALID_TICKET_STATUSES = ["open", "in_progress", "resolved", "closed"] as const;
+
 const VALID_TICKET_TRANSITIONS: Record<string, string[]> = {
   open: ["in_progress", "resolved", "closed"],
   in_progress: ["resolved", "closed"],
@@ -165,6 +186,11 @@ router.get("/tickets", async (req: Request, res: Response) => {
 
     if (filterStatus && typeof filterStatus === "string" && filterStatus !== "all") {
       const statuses = filterStatus.split(",").map(s => s.trim()).filter(Boolean);
+      const invalidStatuses = statuses.filter(s => !(VALID_TICKET_STATUSES as readonly string[]).includes(s));
+      if (invalidStatuses.length > 0) {
+        res.status(400).json({ error: `Invalid status value(s): ${invalidStatuses.join(", ")}. Valid values: ${VALID_TICKET_STATUSES.join(", ")}` });
+        return;
+      }
       if (statuses.length === 1) {
         conditions.push(eq(qbSupportTickets.status, statuses[0]));
       } else if (statuses.length > 1) {
@@ -211,15 +237,13 @@ router.get("/tickets", async (req: Request, res: Response) => {
       .from(qbSupportTickets)
       .leftJoin(qbUsers, eq(qbSupportTickets.userId, qbUsers.id))
       .orderBy(...orderClauses)
-      .limit(limit)
-      .offset(offset)
       .$dynamic();
 
     if (whereClause) {
       query = query.where(whereClause);
     }
 
-    const results = await query;
+    const results = await query.limit(limit).offset(offset);
 
     const slaBreachedResult = await db
       .select({ count: sql<number>`count(*)` })
@@ -269,6 +293,7 @@ router.get("/tickets", async (req: Request, res: Response) => {
   }
 });
 
+// IMPORTANT: /tickets/stats must be defined before /tickets/:id to avoid :id capturing "stats" as a ticket ID
 router.get("/tickets/stats", async (req: Request, res: Response) => {
   try {
     const openResult = await db
@@ -439,7 +464,8 @@ router.post("/tickets/:id/reply", (req: Request, res: Response) => {
       }
 
       const { reply, internalNote, status } = req.body;
-      if (!reply) {
+      const trimmedReply = typeof reply === "string" ? reply.trim() : "";
+      if (!trimmedReply) {
         res.status(400).json({ error: "Reply is required" });
         return;
       }
@@ -462,13 +488,10 @@ router.post("/tickets/:id/reply", (req: Request, res: Response) => {
         attachmentPath = await uploadAdminAttachment(ticketId, req.file);
       }
 
-      await db.insert(qbTicketReplies).values({
-        ticketId,
-        senderId: operatorId,
-        senderRole: "operator",
-        message: sanitizeInput(reply),
-        attachmentPath,
-      });
+      if (!ticket.userId) {
+        res.status(400).json({ error: "Ticket has no associated user" });
+        return;
+      }
 
       const updates: Partial<{
         operatorReply: string;
@@ -497,19 +520,31 @@ router.post("/tickets/:id/reply", (req: Request, res: Response) => {
         updates.status = "in_progress";
       }
 
-      const [updated] = await db
-        .update(qbSupportTickets)
-        .set(updates)
-        .where(eq(qbSupportTickets.id, ticketId))
-        .returning();
+      const updated = await db.transaction(async (tx) => {
+        await tx.insert(qbTicketReplies).values({
+          ticketId,
+          senderId: operatorId,
+          senderRole: "operator",
+          message: sanitizeInput(reply),
+          attachmentPath,
+        });
 
-      await emitTicketNotification("operator_replied", ticketId, ticket.userId!, {
+        const [result] = await tx
+          .update(qbSupportTickets)
+          .set(updates)
+          .where(eq(qbSupportTickets.id, ticketId))
+          .returning();
+
+        return result;
+      });
+
+      await emitTicketNotification("operator_replied", ticketId, ticket.userId, {
         subject: ticket.subject,
         replyPreview: reply.substring(0, 200),
       });
 
       if (updates.status === "resolved") {
-        await emitTicketNotification("ticket_resolved", ticketId, ticket.userId!, {
+        await emitTicketNotification("ticket_resolved", ticketId, ticket.userId, {
           subject: ticket.subject,
         });
       }
@@ -580,7 +615,11 @@ router.patch("/tickets/:id/status", async (req: Request, res: Response) => {
     }
 
     if (updates.status === "resolved") {
-      await emitTicketNotification("ticket_resolved", ticketId, ticket.userId!, {
+      if (!ticket.userId) {
+        res.status(500).json({ error: "Ticket has no associated user" });
+        return;
+      }
+      await emitTicketNotification("ticket_resolved", ticketId, ticket.userId, {
         subject: ticket.subject,
       });
     }
