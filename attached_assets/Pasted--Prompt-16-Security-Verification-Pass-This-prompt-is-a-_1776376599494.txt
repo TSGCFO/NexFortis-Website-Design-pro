@@ -1,0 +1,718 @@
+# Prompt 16: Security Verification Pass
+
+This prompt is a security hardening and verification sweep across the entire application. It does NOT add new features — it audits, tightens, and fixes security gaps in the existing codebase. This is the final prompt before production launch.
+
+## Step 0: Setup
+
+Read these files before making any changes:
+1. `replit.md` — project overview, architecture, conventions, current state
+2. `docs/prompts/prompt-16-security-verification.md` — this file (complete instructions)
+3. `docs/prd/qb-portal/feature-security-auth-storage.md` — the security PRD (especially Section 6: Security Architecture, Section 8: Functional Requirements FR-WEB-01 through FR-WEB-15, and Section 10: NFRs)
+4. `artifacts/api-server/src/app.ts` — Express middleware stack (Helmet, CORS, rate limiting)
+5. `artifacts/api-server/src/routes/qb-portal.ts` — customer-facing routes including auth middleware, Stripe webhook, file upload
+6. `artifacts/api-server/src/routes/qb-admin.ts` — admin routes (operator-only)
+7. `artifacts/api-server/src/routes/qb-notifications.ts` — notification preferences routes
+8. `artifacts/api-server/src/lib/supabase.ts` — backend Supabase client (service role + user factory)
+9. `artifacts/api-server/src/lib/config.ts` — `ALLOWED_ORIGINS` array and `getValidOrigin()` helper
+10. `artifacts/api-server/src/lib/email-service.ts` — Resend integration
+11. `artifacts/api-server/src/lib/stripe-client.ts` — Stripe client initialization
+12. `lib/db/src/schema/qb-portal.ts` — Drizzle schema
+13. `artifacts/qb-portal/src/lib/supabase.ts` — frontend Supabase client
+14. `artifacts/qb-portal/src/lib/auth.tsx` — frontend auth context
+15. `artifacts/qb-portal/public/robots.txt` — existing crawler directives
+
+**Do NOT modify any files in `docs/`.**
+
+---
+
+**PLATFORM REMINDERS (read replit.md for full details):**
+- Do NOT throw errors for missing env vars — use `console.warn` + `null`.
+- Do NOT add `express.static()` to the API server.
+- CORS rejected origins: use `callback(null, false)`, NEVER `callback(new Error(...))`.
+- Helmet `hsts: false` — the hosting layer (Replit/Cloudflare) handles HSTS.
+- Do NOT create migration files manually — use `drizzle-kit push` from `lib/db/`.
+- Verify Replit Secrets are still present after completing all steps.
+- The `supabaseAdmin` export can be `null` (if env vars missing). Always null-check before using.
+- Admin routes: middleware chain is ALWAYS `requireAuth → requireOperator → handler`. Never skip `requireAuth`.
+
+> **⚠️ GLOBAL DO-NOTs:**
+> - Do NOT add new features or UI components — this prompt is security-only
+> - Do NOT change the application's behavior or user-facing functionality
+> - Do NOT remove any existing functionality
+> - Do NOT modify the database schema
+> - Do NOT modify any frontend page components — only security-related configuration files and backend routes
+> - Do NOT change the Stripe integration logic — only verify its security properties
+> - Do NOT change the email sending logic — only verify secrets are not leaked
+> - Do NOT change any files in `docs/`
+
+---
+
+## Step 1: CORS Allowlist Audit
+
+### 1a. Verify CORS Configuration in `app.ts`
+
+Open `artifacts/api-server/src/app.ts` and verify the CORS configuration (around line 46-69):
+
+**Required allowed origins:**
+- `https://nexfortis.com`
+- `https://www.nexfortis.com`
+- `https://qb.nexfortis.com`
+- `https://qbportal.nexfortis.com` ← **THIS IS LIKELY MISSING — the QB Portal will be served from this subdomain in production**
+- `https://nex-fortis-website-design-pro.replit.app` (development/staging)
+- `http://localhost:5173` and `http://localhost:5174` (development only — must be conditional on `NODE_ENV !== "production"`)
+
+**Currently configured (from app.ts lines 46-52):**
+```ts
+const allowedOrigins = [
+  "https://nexfortis.com",
+  "https://www.nexfortis.com",
+  "https://qb.nexfortis.com",
+  "https://nex-fortis-website-design-pro.replit.app",
+  ...(process.env.NODE_ENV !== "production" ? ["http://localhost:5173", "http://localhost:5174"] : []),
+];
+```
+
+**Action required:**
+- Add `"https://qbportal.nexfortis.com"` to the `allowedOrigins` array. This origin is already listed in `artifacts/api-server/src/lib/config.ts` (line 3) but is MISSING from the CORS allowlist in `app.ts`. Both lists must match.
+- Verify that `http://localhost:*` origins are ONLY included when `NODE_ENV !== "production"` — confirm the conditional spread is correct.
+- Verify the CORS error handler uses `callback(null, false)` (NOT `callback(new Error(...))`) — check line 61. The current implementation logs a warning and calls `callback(null, false)`, which is correct.
+
+### 1b. Synchronize CORS with `config.ts`
+
+Open `artifacts/api-server/src/lib/config.ts` and verify the `ALLOWED_ORIGINS` array matches the CORS allowlist in `app.ts`:
+
+**Currently in config.ts:**
+```ts
+const ALLOWED_ORIGINS: string[] = [
+  "https://nex-fortis-website-design-pro.replit.app",
+  "https://qbportal.nexfortis.com",
+  "https://nexfortis.com",
+  "https://www.nexfortis.com",
+  "http://localhost:5173",
+  "http://localhost:5174",
+  "http://localhost:3000",
+];
+```
+
+**Issues to fix:**
+- `config.ts` includes `http://localhost:3000` which is NOT in the CORS allowlist. Either add it to the CORS config too (dev only), or remove it from `config.ts` if it's not needed.
+- `config.ts` includes `https://qbportal.nexfortis.com` but the CORS config does not — fix in Step 1a above.
+- `config.ts` does NOT conditionally exclude localhost origins in production. The `ALLOWED_ORIGINS` in `config.ts` is used by `getValidOrigin()` to construct portal URLs in emails — it should NOT include localhost in production. Add a production guard: if `NODE_ENV === "production"`, filter out any origins starting with `http://localhost`.
+- `config.ts` is MISSING `https://qb.nexfortis.com` — add it for consistency with the CORS config.
+
+> **⚠️ DO NOT:**
+> - Use `origin: true` or `origin: '*'` in the CORS config — always use the explicit allowlist
+> - Throw errors in the CORS callback — rejected origins must fail silently with `callback(null, false)`
+> - Remove the Replit app URL from the allowlist — it's needed for development and staging
+
+---
+
+## Step 2: Helmet / Security Headers Audit
+
+### 2a. Verify Helmet Configuration in `app.ts`
+
+Open `artifacts/api-server/src/app.ts` and verify the Helmet configuration (lines 12-38):
+
+**Required security headers (per PRD Section 8.4):**
+
+| Header | Expected Value | Check |
+|---|---|---|
+| `Content-Security-Policy` | directives for `'self'`, Stripe, Supabase, Google Fonts | Verify below |
+| `X-Frame-Options` | `DENY` | `frameguard: { action: "deny" }` |
+| `X-Content-Type-Options` | `nosniff` | `noSniff: true` |
+| `X-XSS-Protection` | `0` | `xssFilter: false` + custom middleware setting header |
+| `Referrer-Policy` | `strict-origin-when-cross-origin` | Verify |
+| `Strict-Transport-Security` | NOT set by app | `hsts: false` (hosting layer handles this) |
+| `X-Powered-By` | NOT present | Helmet removes it by default |
+
+**CSP directives to verify:**
+- `defaultSrc`: `['self']` — correct
+- `scriptSrc`: `['self', 'https://js.stripe.com']` — verify no `'unsafe-eval'` or `'unsafe-inline'` for scripts
+- `styleSrc`: `['self', "'unsafe-inline'", 'https://fonts.googleapis.com']` — `'unsafe-inline'` is acceptable for styles (Tailwind needs it)
+- `imgSrc`: `['self', 'data:', 'https:']` — verify `data:` is present (needed for inline images in some components)
+- `fontSrc`: `['self', 'https://fonts.gstatic.com']` — correct
+- `connectSrc`: Must include `'self'`, the Supabase project URL, `https://*.supabase.co`, and `https://api.stripe.com`. Check if `https://api.resend.com` needs to be in the list — NO, because Resend calls are made from the backend, not the frontend.
+- `frameSrc`: `['https://js.stripe.com']` — needed for Stripe Elements iframe
+- `objectSrc`: `['none']` — correct
+- `baseUri`: `['self']` — correct
+- `formAction`: `['self']` — correct
+
+**Action required:**
+- Verify the CSP directives match the above. If any directive is missing, add it. If any has `'unsafe-eval'`, remove it.
+- Verify the `X-XSS-Protection: 0` header is explicitly set. The current code has a custom middleware at lines 41-44 that sets this header — verify it is present and not removed.
+- Verify `hsts: false` is set in the Helmet config — the hosting layer handles HSTS, and setting it in the app can cause issues with Replit's proxy.
+
+> **⚠️ DO NOT:**
+> - Add `'unsafe-eval'` to `scriptSrc` — this is a serious XSS risk
+> - Add `'unsafe-inline'` to `scriptSrc` — CSP should prevent inline script execution
+> - Set `hsts: true` — the hosting layer handles HSTS
+> - Remove the `X-XSS-Protection: 0` custom middleware — it explicitly disables the legacy XSS auditor
+
+---
+
+## Step 3: Rate Limiting Audit
+
+### 3a. Verify Global Rate Limiter
+
+Open `artifacts/api-server/src/app.ts` and verify the global rate limiter (lines 97-106):
+
+**Required configuration (per PRD FR-WEB-05):**
+- Window: 15 minutes (`windowMs: 15 * 60 * 1000`)
+- Max requests: 100 per IP
+- Standard headers enabled
+- Informative error message
+
+**Current configuration:**
+```ts
+const globalLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: "Too many requests. Please try again later." },
+  skip: () => process.env.NODE_ENV === "development",
+});
+```
+
+**Issue to verify:** The `skip` function bypasses rate limiting entirely in development mode. This is acceptable for local development, but ensure it uses `NODE_ENV` correctly and does not bypass in production.
+
+### 3b. Verify Per-Route Rate Limiters
+
+Open `artifacts/api-server/src/routes/qb-portal.ts` and verify the stricter per-route limiters:
+
+**Required limiters (per PRD FR-WEB-06 through FR-WEB-08):**
+
+| Route Pattern | Limit | Window | Key By | Already Exists? |
+|---|---|---|---|---|
+| `POST /api/qb/checkout/*` | 10 req | 15 min | IP | **CHECK** — search for a checkout-specific limiter |
+| `POST /api/qb/orders` | 10 req | 15 min | User ID | **CHECK** — `orderLimiter` at line 28-35 |
+| `POST /api/qb/support-tickets` | 5 req | 15 min | User ID | **CHECK** — `ticketLimiter` at line 37-44 |
+| `POST /api/contact` | 3 req | 15 min | IP | **CHECK** — search for a contact form limiter |
+
+**Action required:**
+1. Verify the `orderLimiter` (lines 28-35) is actually applied to the order creation route. Search for where `orderLimiter` is used as middleware — it should appear on the `POST /checkout/create-session` route or the order creation route.
+2. Verify the `ticketLimiter` (lines 37-44) is applied to `POST /support-tickets`.
+3. Check if a checkout-specific limiter exists. If `orderLimiter` is applied to the checkout route, that satisfies the requirement.
+4. Check if a contact form limiter exists. Search for `POST.*contact` or `contactLimiter` in the codebase. If the contact form route exists but has no specific limiter, create one:
+   ```ts
+   const contactLimiter = rateLimit({
+     windowMs: 15 * 60 * 1000,
+     limit: 3,
+     standardHeaders: true,
+     legacyHeaders: false,
+     message: { error: "Too many requests. Please try again later." },
+   });
+   ```
+   Apply it to the contact form route.
+
+5. **Verify limiter application on each route.** Search for each limiter name and confirm it appears as middleware on the correct route:
+   ```
+   grep -n "orderLimiter\|ticketLimiter\|contactLimiter" artifacts/api-server/src/routes/qb-portal.ts
+   ```
+   Each must appear both in its definition AND as middleware on the route handler.
+
+> **⚠️ DO NOT:**
+> - Remove or weaken any existing rate limiters
+> - Add rate limiters to read-only GET routes — only POST/PUT/PATCH/DELETE routes that create or modify data
+> - Rate limit the Stripe webhook route — Stripe needs to be able to send events freely
+
+---
+
+## Step 4: Stripe Webhook Verification Audit
+
+### 4a. Verify Webhook Signature Verification
+
+Open `artifacts/api-server/src/routes/qb-portal.ts` and find the Stripe webhook handler at `POST /webhook/stripe` (around line 478).
+
+**Verify the following:**
+
+1. The route reads the `stripe-signature` header (line 485):
+   ```ts
+   const sig = req.headers["stripe-signature"];
+   ```
+
+2. The endpoint secret is read from `STRIPE_WEBHOOK_SECRET` env var (line 486).
+
+3. **Production enforcement:** If `STRIPE_WEBHOOK_SECRET` is not set AND `NODE_ENV === "production"`, the handler MUST return 400 and reject the request. Verify this check at lines 488-493.
+
+4. **Development fallback:** If `STRIPE_WEBHOOK_SECRET` is not set AND `NODE_ENV !== "production"`, the handler logs a warning and parses the body without verification. This is acceptable ONLY for development. Verify the warning message is present.
+
+5. **Signature verification call:** When both `endpointSecret` and `sig` are present, the handler calls `stripe.webhooks.constructEvent(req.body, sig, endpointSecret)` (line 501). Verify this line exists and uses `req.body` (which should be a raw Buffer from the `express.raw()` middleware registered in `app.ts` at line 71).
+
+6. **Raw body middleware:** In `app.ts`, verify that `express.raw({ type: "application/json" })` is registered BEFORE `express.json()` for the webhook route (line 71):
+   ```ts
+   app.use("/api/qb/webhook/stripe", express.raw({ type: "application/json" }));
+   ```
+   This must appear BEFORE the global `app.use(express.json(...))` at line 73. If the order is wrong, `constructEvent()` will fail because the body will be parsed JSON instead of a raw Buffer.
+
+**Action required:**
+- If any of the above checks fail, fix them.
+- Verify the middleware ordering in `app.ts` is correct: Helmet → CORS → Stripe raw body → express.json → express.urlencoded → cookieParser → pinoHttp → globalLimiter → routes.
+
+> **⚠️ DO NOT:**
+> - Remove the development fallback — it's needed for local testing without a Stripe CLI
+> - Change the webhook route path — it must stay at `/api/qb/webhook/stripe`
+> - Add authentication middleware to the webhook route — Stripe sends webhooks without auth headers; signature verification IS the auth
+
+---
+
+## Step 5: Auth Middleware Audit
+
+### 5a. Verify `requireAuth` Middleware
+
+In `artifacts/api-server/src/routes/qb-portal.ts`, find the `requireAuth` middleware function. Verify:
+
+1. It reads the `Authorization: Bearer <token>` header.
+2. It calls `supabase.auth.getUser(token)` to verify the JWT (NOT `getSession()` — server-side must use `getUser()`).
+3. It returns 401 for missing or invalid tokens.
+4. It looks up the corresponding `qb_users` row to get the user's role.
+5. It attaches `userId` (UUID string) and `userRole` (string) to the request object.
+6. It handles Supabase service outages gracefully — returns 503, not a crash.
+
+### 5b. Verify `requireOperator` Middleware
+
+In the same file, find the `requireOperator` middleware function. Verify:
+
+1. It runs AFTER `requireAuth` (it reads `req.userId` and `req.userRole` which are set by `requireAuth`).
+2. It checks `req.userRole === "operator"` — returns 403 if not.
+3. It enforces AAL2 — checks the JWT's `aal` claim and returns 403 with `{ error: "MFA verification required..." }` if the claim is not `aal2`.
+4. It does NOT have the old "warn and continue" pattern from Prompt 03 — the AAL2 check must be a hard 403, not a warning.
+5. It handles missing `aal` claim as NOT AAL2 — returns 403.
+
+### 5c. Verify Admin Route Middleware Chains
+
+Every route under `/api/qb/admin/*` must use the middleware chain `requireAuth, requireOperator, handler`. Run this check:
+
+```
+grep -n "router\.\(get\|post\|put\|patch\|delete\)" artifacts/api-server/src/routes/qb-admin.ts
+```
+
+For every route found, verify that `requireAuth` and `requireOperator` appear as middleware. If the admin router is mounted with `requireAuth` and `requireOperator` at the mount point (e.g., `app.use("/api/qb/admin", requireAuth, requireOperator, adminRouter)`), that is also acceptable — verify the mount point in the routes index file.
+
+**Search for the mount point:**
+```
+grep -rn "qb-admin\|qb/admin\|adminRouter\|admin.*router" artifacts/api-server/src/routes/
+```
+
+**Action required:**
+- If ANY admin route is missing `requireAuth` or `requireOperator` in its middleware chain, add them.
+- If the admin router is mounted with both middleware at the mount point, verify that NO individual admin route ALSO adds them (double middleware application causes issues with rate limiting but not auth — still, it should be clean).
+
+> **⚠️ DO NOT:**
+> - Apply `requireOperator` to customer routes — only admin routes
+> - Remove `requireAuth` from the chain — `requireOperator` depends on it
+> - Change the AAL2 enforcement to a warning — it must be a hard 403
+
+---
+
+## Step 6: Environment Variable and Secrets Audit
+
+### 6a. Verify No Secrets in Source Code
+
+Run these grep checks across the entire codebase. Each check MUST return zero results:
+
+```bash
+# Check 1: No hardcoded passwords
+grep -rn "Hassan8488\|password.*=.*['\"]" artifacts/ lib/ --include="*.ts" --include="*.tsx" --include="*.js" | grep -v "node_modules" | grep -v ".test." | grep -v "type.*password\|password.*type\|name.*password\|password.*name\|placeholder.*password\|password.*placeholder\|label.*password\|password.*label\|Password\|PASSWORD.*=.*process\.env\|password.*=.*req\.body\|password.*=.*formData\|password.*:.*string\|\.password\b"
+
+# Check 2: Supabase service role key NEVER in frontend code
+grep -rn "SUPABASE_SERVICE_ROLE_KEY\|service_role" artifacts/qb-portal/ --include="*.ts" --include="*.tsx"
+
+# Check 3: No VITE_ prefixed service role key
+grep -rn "VITE_SUPABASE_SERVICE_ROLE_KEY" . --include="*.ts" --include="*.tsx" --include="*.env*"
+
+# Check 4: No old auth remnants
+grep -rn "QB_TOKEN_SECRET\|bcrypt\|password_hash\|passwordHash\|qbPasswordResets\|SESSION_MAX_AGE_MS\|COOKIE_NAME.*auth" artifacts/ lib/ --include="*.ts" --include="*.tsx"
+
+# Check 5: No API keys hardcoded
+grep -rn "sk_live_\|sk_test_\|rk_live_\|rk_test_\|re_[a-zA-Z0-9]\{20,\}\|eyJ[a-zA-Z0-9]" artifacts/ lib/ --include="*.ts" --include="*.tsx" | grep -v "node_modules" | grep -v "\.d\.ts"
+
+# Check 6: Resend API key only on backend
+grep -rn "RESEND_API_KEY" artifacts/qb-portal/ --include="*.ts" --include="*.tsx"
+```
+
+**For each check:**
+- If zero results: PASS — note in the log and move on
+- If any results: INVESTIGATE — determine if it is a false positive (e.g., a TypeScript type definition, a form label, a comment) or a real leak. Fix real leaks.
+
+### 6b. Verify Required Environment Variables Are Documented
+
+Check for a `.env.example` file or an environment variable documentation section:
+
+```bash
+find . -name ".env.example" -o -name ".env.template" | head -5
+```
+
+If no `.env.example` exists, create one at the monorepo root with all required environment variables listed (values should be placeholder descriptions, NOT real values):
+
+```
+# Supabase
+SUPABASE_URL=https://your-project.supabase.co
+SUPABASE_ANON_KEY=your-anon-key
+SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
+VITE_SUPABASE_URL=https://your-project.supabase.co
+VITE_SUPABASE_ANON_KEY=your-anon-key
+
+# Stripe
+STRIPE_SECRET_KEY=sk_test_...
+STRIPE_PUBLISHABLE_KEY=pk_test_...
+STRIPE_WEBHOOK_SECRET=whsec_...
+VITE_STRIPE_PUBLISHABLE_KEY=pk_test_...
+
+# Email
+RESEND_API_KEY=re_...
+EMAIL_FROM=NexFortis Support <support@nexfortis.com>
+
+# Application
+PORTAL_URL=https://nexfortis.com/qb-portal
+API_BASE_URL=https://nexfortis.com/api
+NODE_ENV=production
+
+# Operator
+OPERATOR_PASSWORD=set-a-strong-password
+
+# Database (Replit built-in PostgreSQL)
+DATABASE_URL=postgresql://...
+```
+
+### 6c. Verify No Secrets in Git History
+
+Check if any secrets were accidentally committed in the past:
+
+```bash
+git log --all --oneline -20 --diff-filter=A -- "*.env" ".env.*"
+```
+
+If any `.env` files were committed, note it in the verification log. They cannot be removed from git history in this prompt (that requires `git filter-branch` or BFG), but they should be added to `.gitignore`.
+
+### 6d. Verify `.gitignore` Includes Sensitive Files
+
+```bash
+grep -n "\.env\|node_modules\|\.secret\|\.key" .gitignore
+```
+
+Ensure `.env`, `.env.local`, `.env.production`, and `*.key` are listed. If any are missing, add them.
+
+> **⚠️ DO NOT:**
+> - Commit real secrets to `.env.example` — use placeholder descriptions only
+> - Remove environment variable reads from the source code — only verify they are not hardcoded values
+> - Run `git filter-branch` or BFG — that is outside the scope of this prompt
+
+---
+
+## Step 7: Input Sanitization Audit
+
+### 7a. Verify HTML Sanitization on User Inputs
+
+The `sanitize-html` package was installed in Prompt 03. Verify it is applied to ALL user-submitted free-text fields:
+
+**Routes that accept free-text input:**
+
+| Route | Fields | Sanitized? |
+|---|---|---|
+| `POST /api/qb/support-tickets` | `subject`, `message` | **CHECK** |
+| `PUT /api/qb/me` | `name` | **CHECK** |
+| `POST /api/qb/checkout/create-session` | `customerName` | **CHECK** |
+| `POST /api/contact` (if exists) | `name`, `email`, `subject`, `message` | **CHECK** |
+| `POST /api/qb/waitlist` | `product_name` | **CHECK** |
+| `PATCH /api/qb/admin/tickets/:id` | `operatorReply`, `internalNote` | **CHECK** — operator input is trusted but sanitization is still good practice |
+| `PATCH /api/qb/admin/orders/:id/status` | `status` | Validated against enum — no sanitization needed |
+
+**For each route:**
+
+1. Search for `sanitize` or `sanitizeHtml` in the route handler.
+2. If sanitization is missing, add it. The sanitization pattern is:
+   ```ts
+   const cleanName = sanitizeHtml(name, { allowedTags: [], allowedAttributes: {} });
+   ```
+   This strips ALL HTML tags and returns plain text.
+
+3. Verify the `sanitize-html` import exists at the top of the file:
+   ```ts
+   import sanitizeHtml from "sanitize-html";
+   ```
+
+**Action required:**
+- For every route listed above, verify sanitization is applied. If any free-text field is stored without sanitization, add it.
+- Pay special attention to `POST /api/qb/checkout/create-session` — the `customerName` and `customerEmail` are stored in the order record and later used in email templates. Without sanitization, an attacker could inject HTML into emails.
+
+### 7b. Verify SQL Injection Protection
+
+Drizzle ORM parameterizes all queries automatically. However, check for any raw SQL:
+
+```bash
+grep -rn "db\.execute\|sql\`.*\${\|\.raw(" artifacts/api-server/ --include="*.ts" | grep -v "node_modules" | grep -v "sql<"
+```
+
+For each result:
+- If it uses `sql` template literals with Drizzle's tagged template (`` sql`...` ``), the parameters are auto-escaped — SAFE.
+- If it uses string concatenation to build SQL (`"SELECT * FROM " + tableName`), that is a SQL injection risk — FIX IT by switching to parameterized queries.
+
+> **⚠️ DO NOT:**
+> - Add sanitization to fields that are validated against enums (like `status`) — enum validation is sufficient
+> - Sanitize email addresses — they should be validated with a regex or library, not HTML-sanitized (sanitization would strip valid email characters)
+> - Add sanitization to the Stripe webhook body — Stripe sends signed JSON that must not be modified
+
+---
+
+## Step 8: File Upload Security Audit
+
+### 8a. Verify Customer File Upload Validation
+
+In `artifacts/api-server/src/routes/qb-portal.ts`, find the customer file upload route (search for `upload.single("file")` or `POST.*upload`).
+
+**Verify:**
+1. File size limit is enforced by multer (`limits: { fileSize: ... }`)
+2. File type validation exists — check the `fileFilter` callback
+3. Magic bytes validation exists — the `validateQbmMagicBytes` function (imported from `file-validation.ts`) should be called on the uploaded buffer to verify the file is actually a QBM file, not a renamed executable
+4. Storage path is constructed safely — no user input is used directly in the storage path (it should use UUIDs or sanitized values)
+5. The original filename is sanitized before storage — check for path traversal characters (`/`, `\`, `..`)
+
+### 8b. Verify Admin File Upload Validation
+
+In `artifacts/api-server/src/routes/qb-admin.ts`, find the admin file upload route at `POST /orders/:orderId/files/upload` (around line 375).
+
+**Verify:**
+1. File size limit: 500MB max (`MAX_UPLOAD_BYTES = 500 * 1024 * 1024` at line 11)
+2. File extension allowlist: `.qbm`, `.qbw`, `.qbb`, `.csv`, `.xlsx`, `.pdf`, `.zip`, `.html`, `.txt` (line 12)
+3. File filter callback rejects disallowed extensions (lines 17-25)
+4. Storage path uses the customer's user ID (from `order.userId`), NOT the operator's ID (line 434-435)
+5. Filename is sanitized: `req.file.originalname.replace(/[/\\]/g, "_")` (line 450)
+6. The file extension is double-checked against the safe allowlist before constructing the storage path (lines 431-433)
+
+**Action required:**
+- If any of the above checks fail, fix them.
+- Verify that uploaded files are stored in Supabase Storage, NOT on the local filesystem. There should be no `fs.writeFileSync()` or `fs.createWriteStream()` calls in the upload handlers.
+
+> **⚠️ DO NOT:**
+> - Change the file extension allowlist — it has been validated in previous prompts
+> - Add additional file type checks that would break existing functionality
+> - Change the Supabase Storage bucket configuration
+
+---
+
+## Step 9: robots.txt Verification
+
+### 9a. Verify Disallow Rules
+
+Open `artifacts/qb-portal/public/robots.txt` and verify the following paths are disallowed:
+
+```
+User-agent: *
+Disallow: /admin
+Disallow: /auth/callback
+Disallow: /reset-password
+Disallow: /forgot-password
+Disallow: /portal
+Disallow: /qb-portal/admin
+Disallow: /qb-portal/admin/mfa-enroll
+Disallow: /qb-portal/admin/mfa-challenge
+Sitemap: https://qb.nexfortis.com/sitemap.xml
+```
+
+**Key paths that must be disallowed:**
+- `/admin` and `/qb-portal/admin` — admin panel
+- `/auth/callback` — OAuth callback
+- `/reset-password` and `/forgot-password` — auth flows
+- `/portal` — authenticated customer area
+- MFA pages — security-sensitive
+
+**Key paths that must be ALLOWED (NOT in the Disallow list):**
+- `/` — homepage
+- `/landing/*` — SEO landing pages
+- `/catalog` — product catalog
+- `/sitemap.xml` — sitemap
+
+**Action required:**
+- If any required Disallow path is missing, add it.
+- If any SEO-important path is accidentally disallowed, remove that Disallow rule.
+- Verify the Sitemap directive points to the correct URL.
+
+> **⚠️ DO NOT:**
+> - Disallow landing pages — they are SEO content and must be crawlable
+> - Disallow the catalog — it is public content
+> - Remove existing Disallow rules without verifying they are wrong
+
+---
+
+## Step 10: Frontend Security Audit
+
+### 10a. Verify Supabase Client Configuration
+
+Open `artifacts/qb-portal/src/lib/supabase.ts` and verify:
+
+1. The client is initialized with `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` (both VITE-prefixed, meaning they are intentionally exposed to the frontend).
+2. `auth.autoRefreshToken: true` — prevents token expiration during long sessions
+3. `auth.persistSession: true` — maintains session across page reloads
+4. `auth.detectSessionInUrl: true` — needed for OAuth callback handling
+5. The file does NOT import or reference `SUPABASE_SERVICE_ROLE_KEY` in any form
+
+### 10b. Verify Auth Context Security
+
+Open `artifacts/qb-portal/src/lib/auth.tsx` and verify:
+
+1. The auth context uses `supabase.auth.onAuthStateChange()` to listen for session changes
+2. The `getAccessToken()` function reads from the session, not localStorage directly
+3. API calls use `Authorization: Bearer ${accessToken}` headers
+4. There are no references to the old homegrown auth system (no `localStorage.getItem("token")`, no `QB_TOKEN`, no cookie-based auth)
+
+**Run this check:**
+```bash
+grep -rn "localStorage.*token\|QB_TOKEN\|getAuthToken\|COOKIE_NAME\|cookie.*auth" artifacts/qb-portal/src/ --include="*.ts" --include="*.tsx" | grep -v "node_modules"
+```
+
+If any results reference the old auth system, they must be removed.
+
+### 10c. Verify No Service Role Key in Frontend Build
+
+The Vite build process exposes any environment variable prefixed with `VITE_` to the frontend bundle. Verify:
+
+```bash
+grep -rn "VITE_.*SERVICE\|VITE_.*SECRET\|VITE_.*ROLE" artifacts/qb-portal/ --include="*.ts" --include="*.tsx" --include="*.env*"
+```
+
+Must return zero results. If any `VITE_`-prefixed variable references a secret key, it MUST be removed.
+
+> **⚠️ DO NOT:**
+> - Change the Supabase client configuration — only verify it
+> - Modify the auth context logic — only verify security properties
+> - Add new VITE-prefixed environment variables for secrets
+
+---
+
+## Step 11: Dependency Audit
+
+### 11a. Check for Known Vulnerabilities
+
+Run the package manager's audit command:
+
+```bash
+cd artifacts/api-server && pnpm audit --production 2>&1 | tail -20
+cd artifacts/qb-portal && pnpm audit --production 2>&1 | tail -20
+```
+
+Or from the monorepo root:
+```bash
+pnpm audit --production 2>&1 | tail -30
+```
+
+**Action required:**
+- Log the audit results.
+- If there are CRITICAL or HIGH severity vulnerabilities, note them in the verification log. Do NOT attempt to fix dependency vulnerabilities in this prompt — that requires careful version bumps and testing. Just log them.
+- If `pnpm audit` is not available or errors, try `npm audit --production` or skip this step and note it.
+
+### 11b. Verify No Unused Security Packages
+
+Check if `bcrypt` is still in the dependencies (it was used by the old auth system):
+
+```bash
+grep -n "bcrypt" artifacts/api-server/package.json lib/db/package.json 2>/dev/null
+```
+
+If `bcrypt` is still listed as a dependency but is no longer imported anywhere in the source code, note it in the verification log as a cleanup item for later. Do NOT remove it in this prompt — package.json changes need careful testing.
+
+---
+
+## Step 12: Compile Security Verification Report
+
+After completing all steps, create a verification log file at `artifacts/api-server/SECURITY_AUDIT.md` with the following structure:
+
+```markdown
+# Security Verification Report
+
+**Date:** [current date]
+**Audited by:** Replit Agent (Prompt 16)
+**Scope:** Full application security review before production launch
+
+## Summary
+
+| Category | Status | Notes |
+|---|---|---|
+| CORS | PASS/FAIL | [notes] |
+| Security Headers | PASS/FAIL | [notes] |
+| Rate Limiting | PASS/FAIL | [notes] |
+| Stripe Webhook | PASS/FAIL | [notes] |
+| Auth Middleware | PASS/FAIL | [notes] |
+| Environment Variables | PASS/FAIL | [notes] |
+| Input Sanitization | PASS/FAIL | [notes] |
+| File Upload | PASS/FAIL | [notes] |
+| robots.txt | PASS/FAIL | [notes] |
+| Frontend Security | PASS/FAIL | [notes] |
+| Dependencies | PASS/FAIL | [notes] |
+
+## Issues Found and Fixed
+
+[List each issue found, what was wrong, and what was done to fix it]
+
+## Issues Noted (Not Fixed)
+
+[List any issues noted for future resolution, e.g., dependency vulnerabilities, bcrypt cleanup]
+
+## Grep Verification Results
+
+[Paste the output of each grep check from Step 6a, showing pass/fail]
+```
+
+---
+
+## Step 13: Final Verification
+
+After completing all fixes and creating the report:
+
+### TypeScript Check
+- [ ] Run `pnpm typecheck` from the monorepo root — zero errors
+
+### Build Check
+- [ ] Run `pnpm build` — zero build errors
+
+### Security Headers Check
+- [ ] Start the server and make a request to any API endpoint. Inspect response headers:
+  - `Content-Security-Policy` header is present
+  - `X-Frame-Options: DENY` is present
+  - `X-Content-Type-Options: nosniff` is present
+  - `X-XSS-Protection: 0` is present
+  - `Referrer-Policy: strict-origin-when-cross-origin` is present
+  - `X-Powered-By` is NOT present
+
+### CORS Check
+- [ ] Verify the CORS config includes `qbportal.nexfortis.com`
+
+### Rate Limit Check
+- [ ] Verify that rate limiters are applied to all sensitive POST routes
+
+### Secrets Check
+- [ ] All grep checks from Step 6a return zero real leaks
+
+### Existing Functionality Check
+- [ ] The application still starts without errors
+- [ ] Customer login/registration works
+- [ ] Operator login with MFA works
+- [ ] Order creation works
+- [ ] File upload works
+- [ ] Stripe webhook processes events
+- [ ] No frontend pages are broken
+
+---
+
+## Summary of Files to Create or Modify
+
+| File | Action | Changes |
+|---|---|---|
+| `artifacts/api-server/src/app.ts` | MODIFY | Add `qbportal.nexfortis.com` to CORS allowlist |
+| `artifacts/api-server/src/lib/config.ts` | MODIFY | Add `qb.nexfortis.com` to `ALLOWED_ORIGINS`; add production guard for localhost origins |
+| `artifacts/api-server/src/routes/qb-portal.ts` | MODIFY (if needed) | Fix any missing sanitization, rate limiter application, or auth middleware issues found during audit |
+| `artifacts/api-server/src/routes/qb-admin.ts` | MODIFY (if needed) | Fix any missing auth middleware chain issues |
+| `artifacts/qb-portal/public/robots.txt` | MODIFY (if needed) | Add any missing Disallow rules |
+| `.env.example` | CREATE (if missing) | Document all required environment variables with placeholder values |
+| `.gitignore` | MODIFY (if needed) | Add missing entries for .env files and secrets |
+| `artifacts/api-server/SECURITY_AUDIT.md` | CREATE | Security verification report with pass/fail for each category |
+
+**Do NOT create or modify:**
+- Any files in `docs/`
+- Any frontend page components (`.tsx` pages)
+- `artifacts/api-server/src/lib/email-service.ts`
+- `artifacts/api-server/src/lib/email-templates.ts`
+- `artifacts/api-server/src/lib/subscription-emails.ts`
+- Any database migration files
+- Any Stripe integration logic (only verify, do not change)
+- Any Supabase configuration (only verify, do not change)

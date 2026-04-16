@@ -1,0 +1,565 @@
+# Prompt 15: Remaining Transactional Emails
+
+This prompt adds the remaining transactional email notifications that are currently missing from the application. The email infrastructure (Resend integration, branded templates, `sendEmail()` helper) already exists from previous prompts — this prompt creates the missing email templates and wires them into the correct trigger points in the backend routes.
+
+## Step 0: Setup
+
+Read these files before making any changes:
+1. `replit.md` — project overview, architecture, conventions, current state
+2. `docs/prompts/prompt-15-transactional-emails.md` — this file (complete instructions)
+3. `docs/email_templates.md` — the original email content specifications (6 templates with exact copy and structure)
+4. `artifacts/api-server/src/lib/email-service.ts` — the existing Resend `sendEmail()` helper (uses `RESEND_API_KEY` env var, `FROM_ADDRESS` constant, returns `boolean`)
+5. `artifacts/api-server/src/lib/email-templates.ts` — the existing branded email templates (exports `baseLayout`, `BRAND_COLORS`, `badge`, `escapeHtml`, plus `ticketCreatedEmail`, `operatorRepliedEmail`, `ticketResolvedEmail`, `freeOrderCustomerEmail`, `freeOrderOperatorEmail`, `referralCreditEarnedEmail`)
+6. `artifacts/api-server/src/lib/subscription-emails.ts` — subscription lifecycle email templates (uses its own `BRAND` colors, `baseLayout`, and `sendEmail` — separate from the main `email-service.ts`)
+7. `artifacts/api-server/src/lib/ticket-notifications.ts` — the notification preference system (`emitTicketNotification`, `getOrCreateUnsubscribeToken`, `isNotificationEnabled`)
+8. `artifacts/api-server/src/routes/qb-portal.ts` — customer-facing routes including checkout, Stripe webhook, waitlist
+9. `artifacts/api-server/src/routes/qb-admin.ts` — admin routes including operator file upload
+10. `artifacts/api-server/src/lib/config.ts` — `getValidOrigin()` helper and `ALLOWED_ORIGINS` array
+11. `lib/db/src/schema/qb-portal.ts` — Drizzle schema including `qbNotificationPreferences` table (has `ticketCreated`, `operatorReplied`, `ticketResolved` boolean columns and `unsubscribeToken`)
+
+**Do NOT modify any files in `docs/`.**
+
+---
+
+**PLATFORM REMINDERS (read replit.md for full details):**
+- Do NOT throw errors for missing env vars — use `console.warn` + `null`.
+- Do NOT add `express.static()` to the API server.
+- CORS rejected origins: use `callback(null, false)`, NEVER `callback(new Error(...))`.
+- Do NOT create migration files manually — use `drizzle-kit push` from `lib/db/`.
+- Verify Replit Secrets are still present after completing all steps.
+- The QB Portal base URL is `https://nexfortis.com/qb-portal` in production but the Replit preview URL during development. Use `getValidOrigin(req.headers.origin)` from `artifacts/api-server/src/lib/config.ts` to construct portal links in emails, appending `/qb-portal` to the result.
+- The email FROM address is already configured in `email-service.ts` as `process.env.EMAIL_FROM || "NexFortis Support <onboarding@resend.dev>"`. Do NOT change this.
+- The `sendEmail()` function in `email-service.ts` gracefully handles missing `RESEND_API_KEY` — it logs and returns `false`. Do NOT add duplicate checks.
+
+> **⚠️ GLOBAL DO-NOTs:**
+> - Do NOT replace or restructure the existing email templates — add new template functions alongside the existing ones in `email-templates.ts`
+> - Do NOT create a separate email service file — use the existing `sendEmail()` from `email-service.ts`
+> - Do NOT duplicate the `escapeHtml()` function — it already exists in `email-templates.ts` (it is not exported; if needed elsewhere, export it from there)
+> - Do NOT duplicate the `baseLayout()` function — reuse the existing one from `email-templates.ts`
+> - Do NOT hardcode portal URLs — always derive from `getValidOrigin(req.headers.origin)` + `/qb-portal`
+> - Do NOT block the request/response cycle waiting for email delivery — call `sendEmail()` asynchronously (fire-and-forget with `.catch()` error logging) so the API response is not delayed
+> - Do NOT modify the existing `subscription-emails.ts` file — it has its own layout and sending logic for subscription lifecycle emails and must remain untouched
+> - Do NOT modify the `ticket-notifications.ts` file — ticket notification emails already work correctly
+> - Do NOT change the existing notification preferences schema — the `qb_notification_preferences` table has three boolean columns (`ticketCreated`, `operatorReplied`, `ticketResolved`) and those must not be modified. New email types added in this prompt are always-on (no opt-out) because they are transactional order notifications
+
+---
+
+## Step 1: Export `escapeHtml` from `email-templates.ts`
+
+The `escapeHtml()` function at the bottom of `artifacts/api-server/src/lib/email-templates.ts` (around line 333) is currently a private module function. It needs to be exported so the new email template functions can use it if they are defined in a helper file, OR if they are defined in the same file, this step is unnecessary.
+
+Since the new templates in Step 2 will be added directly to `email-templates.ts` (to reuse `baseLayout`, `BRAND_COLORS`, `badge`, and `escapeHtml`), this step only requires verifying that `escapeHtml` is accessible within the file. **No code change needed here if templates are added to the same file.**
+
+If for any reason you place new templates in a separate file, you must export `escapeHtml` from `email-templates.ts`:
+- Change `function escapeHtml(str: string): string {` to `export function escapeHtml(str: string): string {`
+
+---
+
+## Step 2: Create New Email Template Functions
+
+Add the following four new template functions to `artifacts/api-server/src/lib/email-templates.ts`. Place them after the existing `referralCreditEarnedEmail` function and before the `escapeHtml` function. Each template must follow the exact same pattern as the existing templates: accept typed parameters, construct HTML using `baseLayout`, `BRAND_COLORS`, `badge`, and `escapeHtml`, and return `{ subject: string; html: string }`.
+
+### 2a. Paid Order Confirmation Email — `paidOrderConfirmationEmail`
+
+This email is sent to the customer after their Stripe checkout session completes successfully (i.e., when the order status transitions to `paid`).
+
+**Function signature:**
+```
+paidOrderConfirmationEmail(
+  customerName: string,
+  orderId: number,
+  serviceName: string,
+  addonNames: string[],
+  totalCad: number,
+  portalUrl: string,
+  unsubscribeUrl: string,
+): { subject: string; html: string }
+```
+
+**Subject line:** `Your NexFortis QuickBooks Order — Confirmation #[orderId]`
+
+**Email content structure — follow the exact layout from `docs/email_templates.md` Template 1:**
+
+1. **Heading:** "Order Confirmed" with a green badge showing "PAID" — use the existing `badge()` helper with background `#ecfdf5` and text `#059669` (same as the "FREE" badge in `freeOrderCustomerEmail`).
+
+2. **Greeting:** "Hi [customerName]," — use `escapeHtml` on the customer name.
+
+3. **Body paragraph:** "Thank you for your order with NexFortis IT Solutions! Your payment has been received and our team will begin processing shortly."
+
+4. **Order summary info block** — use the same gray rounded card pattern as `freeOrderCustomerEmail` (background `BRAND_COLORS.gray`, border-radius 8px, 16px padding):
+   - "Order #[orderId]" — small uppercase muted text
+   - "[serviceName]" — 16px bold dark text
+   - "Add-ons: [addonNames joined by comma]" — only show this line if `addonNames.length > 0`. If no add-ons, omit this line entirely.
+   - "Total Paid: $[totalCad formatted to 2 decimals] CAD" — 14px dark text with "Total Paid:" bolded. Format `totalCad` as a dollar amount: `$${(totalCad / 100).toFixed(2)}` — the value stored in the database is in cents.
+
+5. **Next steps paragraph:** "Next steps: please log in to your portal to upload your QuickBooks file and track your order status."
+
+6. **CTA button:** "View Order" — azure background (`BRAND_COLORS.azure`), white text, links to `${portalUrl}/orders`. Same button style as existing templates.
+
+> **⚠️ DO NOT:**
+> - Use the subscription-emails layout — use the main `baseLayout` from `email-templates.ts`
+> - Hardcode dollar amounts — always calculate from the `totalCad` parameter (which is in cents)
+> - Include the word "conversion" in the template — the service name is dynamic and may be any product
+> - Include rush delivery or turnaround time — the order record does not carry those fields; the operator will communicate timelines separately
+
+### 2b. File Delivery Notification Email — `fileDeliveryEmail`
+
+This email is sent to the customer when the operator uploads a processed file to their order (operator file upload in the admin panel).
+
+**Function signature:**
+```
+fileDeliveryEmail(
+  customerName: string,
+  orderId: number,
+  serviceName: string,
+  fileName: string,
+  portalUrl: string,
+  unsubscribeUrl: string,
+): { subject: string; html: string }
+```
+
+**Subject line:** `Your Converted QuickBooks File Is Ready — Order #[orderId]`
+
+**Email content structure — follow `docs/email_templates.md` Template 2:**
+
+1. **Heading:** "Your File Is Ready" with a green badge "COMPLETE" — use `badge()` with background `#ecfdf5` and text `#059669`.
+
+2. **Greeting:** "Hi [customerName],"
+
+3. **Body paragraph:** "Great news! Your [serviceName] order has been completed. The processed file is now available for download in your portal."
+
+4. **Order info block** (same gray card pattern):
+   - "Order #[orderId]" — small uppercase muted text
+   - "[serviceName]" — 16px bold dark text
+   - "File: [fileName]" — 14px dark text with "File:" bolded. Use `escapeHtml` on the file name.
+
+5. **Instructions block:** Use a bordered left block (same pattern as the reply preview in `operatorRepliedEmail` — border-left 3px solid azure):
+   - "How to access your file:" — 12px bold azure text
+   - "1. Log in to your NexFortis portal" — 14px dark text
+   - "2. Navigate to your order" — 14px dark text
+   - "3. Click the Download button next to the file" — 14px dark text
+   - "4. Your download link is valid for 15 minutes — if it expires, simply click Download again to generate a new link" — 14px dark text
+
+6. **Verification paragraph:** "Please verify your file by opening it and spot-checking a few transactions. If you notice any issues, please open a support ticket within 48 hours."
+
+7. **CTA button:** "Download File" — azure background, white text, links to `${portalUrl}/orders/${orderId}`.
+
+> **⚠️ DO NOT:**
+> - Include the actual file as an attachment — files are downloaded via Supabase Storage signed URLs from the portal
+> - Hardcode the conversion-specific instructions from Template 2 in `docs/email_templates.md` — use generic language because this template serves ALL services, not just conversions
+> - Include "converted.qbm" or "report.html" file names — the actual file name comes from the `fileName` parameter
+
+### 2c. Welcome/Registration Email — `welcomeRegistrationEmail`
+
+This email is sent to new customers when their `qb_users` profile is created for the first time (initial account creation).
+
+**Function signature:**
+```
+welcomeRegistrationEmail(
+  customerName: string,
+  email: string,
+  portalUrl: string,
+): { subject: string; html: string }
+```
+
+**Subject line:** `Welcome to NexFortis — Your Account Is Ready`
+
+**Email content structure:**
+
+1. **Heading:** "Welcome to NexFortis" — no badge.
+
+2. **Greeting:** "Hi [customerName],"
+
+3. **Body paragraph:** "Your NexFortis account has been created. You can now browse our QuickBooks service catalog, place orders, track your files, and reach our support team — all from your portal."
+
+4. **Account info block** (gray card):
+   - "Your Account" — small uppercase muted text
+   - "[email]" — 16px bold dark text. Use `escapeHtml`.
+   - "Registered on [formatted current date]" — 14px muted text. Use `new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })`.
+
+5. **What you can do list** — use a clean bulleted list:
+   - "Browse 20+ QuickBooks Desktop services"
+   - "Upload your .QBM file securely (encrypted at rest)"
+   - "Track order status in real-time"
+   - "Open support tickets with guaranteed SLA response"
+
+6. **CTA button:** "Visit Your Portal" — azure background, white text, links to `${portalUrl}`.
+
+7. **Footer note** (below button, small muted text): "If you did not create this account, you can safely ignore this email."
+
+> **⚠️ DO NOT:**
+> - Include the user's password in the email — passwords are managed by Supabase Auth and are never sent via email
+> - Include an email verification link — Supabase Auth handles email verification natively (currently disabled in this project)
+> - Pass an `unsubscribeUrl` parameter — this is a one-time transactional email, not a notification series. The `baseLayout` requires an `unsubscribeUrl` string, so pass `"#"` (same pattern as `freeOrderOperatorEmail`)
+
+### 2d. Waitlist Confirmation Email — `waitlistConfirmationEmail`
+
+This email is sent when a user signs up for the waitlist for a product that is not yet available.
+
+**Function signature:**
+```
+waitlistConfirmationEmail(
+  email: string,
+  productName: string,
+): { subject: string; html: string }
+```
+
+**Subject line:** `You're on the Waitlist — [productName]`
+
+**Email content structure — follow `docs/email_templates.md` Template 6:**
+
+1. **Heading:** "You're on the Waitlist" with a blue badge "WAITLIST" — use `badge()` with background `#eff6ff` and text `#2563eb`.
+
+2. **Greeting:** "Hi there," — no customer name available for waitlist signups (the waitlist table only stores email and product ID, not a name).
+
+3. **Body paragraph:** "Thank you for your interest in [productName]! You've been added to our waitlist and we'll notify you as soon as this service becomes available."
+
+4. **Product info block** (gray card):
+   - "Waitlisted Service" — small uppercase muted text
+   - "[productName]" — 16px bold dark text. Use `escapeHtml`.
+
+5. **What to expect list:**
+   - "We'll email you when this service launches"
+   - "Waitlist members get early access"
+   - "No payment required until you place an order"
+
+6. **CTA button:** "Browse Available Services" — azure background, white text, links to `https://nexfortis.com/qb-portal/catalog`. Use a static URL here since waitlist signups are unauthenticated and don't have a request origin context — default to the production URL.
+
+> **⚠️ DO NOT:**
+> - Include a price or launch date — those are not stored in the waitlist record
+> - Use `unsubscribeUrl` — pass `"#"` to `baseLayout` since this is a one-time transactional email
+> - Attempt to look up the customer name — the waitlist endpoint is unauthenticated and only receives `email`, `product_id`, and `product_name`
+
+---
+
+## Step 3: Wire Paid Order Confirmation Email into Stripe Webhook
+
+The Stripe webhook handler in `artifacts/api-server/src/routes/qb-portal.ts` at the `checkout.session.completed` event (around line 504) updates the order status to `paid` but does NOT send a confirmation email. Add the email send here.
+
+### 3a. Import the New Template
+
+At the top of `qb-portal.ts`, update the import from `email-templates.ts` to include the new `paidOrderConfirmationEmail` function. The existing import (around line 6) is:
+```ts
+import { freeOrderCustomerEmail, freeOrderOperatorEmail } from "../lib/email-templates";
+```
+
+Add `paidOrderConfirmationEmail` to this import statement.
+
+Also import `getValidOrigin` from `../lib/config` if not already imported — check line 24 which should already have:
+```ts
+import { getValidOrigin } from "../lib/config";
+```
+
+### 3b. Add Email Send After Status Update to "paid"
+
+Inside the `checkout.session.completed` handler (the `else` branch at line 509 that handles one-time payment sessions, NOT subscription checkouts), after the line that logs `[Stripe] Payment confirmed for order ${orderId}` (line 518), add the email send logic.
+
+The trigger point is after this block succeeds:
+```ts
+await db.update(qbOrders).set({
+  status: "paid",
+  stripeSessionId: session.id,
+}).where(eq(qbOrders.id, orderId));
+```
+
+**What to add — described step by step:**
+
+1. After the `console.log` confirming payment, query the full order record to get the customer details. The `existing` variable from the `if` condition above (line 512) already has the order, but it may not have all fields needed. Query the order with a join to `qb_users` to get the customer's name and email:
+   - Select `qbOrders.serviceName`, `qbOrders.totalCad`, `qbOrders.addonNames` (check if this column exists in the schema — if not, use an empty array), `qbUsers.name`, `qbUsers.email` from `qbOrders` left-joined with `qbUsers` on `qbOrders.userId = qbUsers.id`, where `qbOrders.id = orderId`.
+   - Alternatively, if `qbOrders` stores `customerName` and `customerEmail` directly (check the existing order creation code around line 343), read those fields from the `existing` variable or from the order record.
+
+2. Determine the portal URL using `getValidOrigin(undefined)` — inside a webhook handler there is no browser origin header, so pass `undefined` which defaults to the Replit app URL. Append `/qb-portal` to get the full portal base URL.
+
+3. Call the email template function:
+   ```
+   const emailContent = paidOrderConfirmationEmail(
+     customerName,
+     orderId,
+     serviceName,
+     addonNames,  // string array — parse from order record if stored, or pass []
+     totalCad,     // number in cents
+     portalUrl,
+     "#",          // no unsubscribe for order confirmations
+   );
+   ```
+
+4. Send the email fire-and-forget — do NOT `await` it in the webhook handler path:
+   ```
+   sendEmail({
+     to: customerEmail,
+     subject: emailContent.subject,
+     html: emailContent.html,
+     replyTo: "support@nexfortis.com",
+   }).catch(err => console.error("[Email] Failed to send order confirmation:", err));
+   ```
+
+5. Also send an operator notification email for paid orders — call the existing `freeOrderOperatorEmail` pattern but adapted for paid orders. Create a new template `paidOrderOperatorEmail` OR simply send a concise notification to `support@nexfortis.com` with the order ID, service name, customer name, and total. Keep it simple — the operator already sees orders in the admin panel.
+
+**Operator notification — add to `email-templates.ts`:**
+
+Create a `paidOrderOperatorEmail` function:
+
+**Function signature:**
+```
+paidOrderOperatorEmail(
+  orderId: number,
+  serviceName: string,
+  totalCad: number,
+  customerName: string,
+  customerEmail: string,
+): { subject: string; html: string }
+```
+
+**Subject line:** `New Paid Order — #[orderId] — $[totalCad formatted] CAD`
+
+**Content:** Simple operator notification — same structure as the existing `freeOrderOperatorEmail`. Include: Order ID, Service name, Customer name + email, Total paid (formatted from cents), "Payment confirmed via Stripe" note.
+
+Send to `support@nexfortis.com` fire-and-forget.
+
+> **⚠️ DO NOT:**
+> - Await the email send in the webhook handler — Stripe expects a fast 200 response. Fire-and-forget with `.catch()`.
+> - Send the confirmation email for subscription checkout sessions — only for one-time payment orders (the `else` branch, not the `session.mode === "subscription"` branch). Subscription emails are handled separately in `subscription-emails.ts`.
+> - Send a duplicate email for free promo orders — those already have their own email via `freeOrderCustomerEmail` (sent in the checkout create-session route around line 387). The webhook `paid` path is only for non-free Stripe orders.
+> - Crash the webhook if the email fails — wrap in `.catch()` and log the error.
+
+---
+
+## Step 4: Wire File Delivery Email into Admin File Upload
+
+The operator file upload route in `artifacts/api-server/src/routes/qb-admin.ts` at `POST /orders/:orderId/files/upload` (around line 375) uploads a file to Supabase Storage and inserts a `qb_order_files` record, but does NOT notify the customer. Add the email send after the file record is created.
+
+### 4a. Add Imports to `qb-admin.ts`
+
+At the top of `artifacts/api-server/src/routes/qb-admin.ts`, add these imports:
+```ts
+import { sendEmail } from "../lib/email-service";
+import { fileDeliveryEmail } from "../lib/email-templates";
+import { getValidOrigin } from "../lib/config";
+```
+
+Check if these are already imported. If `sendEmail` is not imported, add it. If `fileDeliveryEmail` does not exist yet (because Step 2 hasn't been reached), it will exist after Step 2 — the import should reference the function you created in Step 2b.
+
+### 4b. Add Email Send After File Record Creation
+
+Inside the file upload handler, after the line that logs the upload (around line 459):
+```
+console.log(`[File Upload] Admin: Order ${orderId}: ${safeFileName} (${req.file.size} bytes) -> ${storagePath}`);
+```
+
+And after the successful response `res.status(201).json({ file: fileRecord });` — actually, the email must be sent BEFORE the response to ensure the data is available. But to avoid delaying the response, send fire-and-forget BEFORE `res.status(201)`:
+
+**What to add — described step by step:**
+
+1. The `order` variable is already available from `(req as any)._validatedOrder` (set in the first middleware at line 393). This has the order's `userId`, `serviceName`, and `id`. However, it does NOT have the customer's email and name directly.
+
+2. Query the customer's name and email from `qb_users` using the order's `userId`:
+   - `const [customer] = await db.select({ name: qbUsers.name, email: qbUsers.email }).from(qbUsers).where(eq(qbUsers.id, order.userId)).limit(1);`
+   - If `customer` is null (edge case — orphaned order), skip the email and log a warning.
+
+3. Construct the portal URL: `const portalUrl = getValidOrigin(req.headers.origin as string | undefined) + "/qb-portal";`
+
+4. Generate the email content:
+   ```
+   const emailContent = fileDeliveryEmail(
+     customer.name || "Customer",
+     orderId,
+     order.serviceName || "QuickBooks Service",
+     safeFileName,
+     portalUrl,
+     "#",
+   );
+   ```
+
+5. Send fire-and-forget:
+   ```
+   sendEmail({
+     to: customer.email,
+     subject: emailContent.subject,
+     html: emailContent.html,
+     replyTo: "support@nexfortis.com",
+   }).catch(err => console.error("[Email] Failed to send file delivery notification:", err));
+   ```
+
+6. Place this AFTER `console.log` and BEFORE `res.status(201)`. The email is fire-and-forget so it does not delay the API response.
+
+> **⚠️ DO NOT:**
+> - Block the response waiting for the email — fire-and-forget with `.catch()`
+> - Send the email if `customer` is null — log a warning and skip
+> - Send file delivery emails for customer uploads — this is ONLY for operator uploads (the route is under `/api/qb/admin/orders/:orderId/files/upload`, which is already operator-only)
+> - Import `db` or `qbUsers` if they are not already imported in `qb-admin.ts` — check the existing imports at the top of the file. `db` and `qbUsers` should already be imported (line 2-3 of `qb-admin.ts`).
+
+---
+
+## Step 5: Wire Welcome Email into User Profile Creation
+
+New users are created via a Supabase Auth trigger (`handle_new_user()` function) that automatically inserts a `qb_users` row when someone signs up. The trigger runs in Supabase's PostgreSQL — it cannot call the application's email service directly.
+
+Instead, wire the welcome email into the first successful `GET /api/qb/me` call after the user is created. This is the profile fetch that happens immediately after login/registration in the auth flow.
+
+### 5a. Approach — "First Login" Detection
+
+In `artifacts/api-server/src/routes/qb-portal.ts`, find the `GET /me` route handler (search for `router.get("/me"` or `"/me"`). This route is called by the frontend auth context after every successful authentication to fetch the user's profile.
+
+Add logic to detect first-time logins and send the welcome email:
+
+1. After fetching the user profile from `qb_users`, check if this is the user's first login. Use a simple heuristic: if the `qb_users.createdAt` timestamp is within the last 60 seconds of `new Date()`, this is a brand-new account and the welcome email should be sent.
+
+2. To prevent duplicate sends on rapid sequential `/me` calls (which happen during the auth flow), use an in-memory `Set<string>` to track user IDs that have already received the welcome email in this server process lifetime:
+   ```
+   const welcomeEmailSent = new Set<string>();
+   ```
+   Before sending, check `if (welcomeEmailSent.has(userId)) return;`. After sending, add `welcomeEmailSent.add(userId);`.
+
+3. Import `welcomeRegistrationEmail` from `email-templates.ts` at the top of `qb-portal.ts`.
+
+4. Inside the `GET /me` handler, after the profile is fetched and returned, add the first-login check and email send (fire-and-forget):
+   ```
+   // First-login welcome email
+   const createdAt = new Date(user.createdAt);
+   const now = new Date();
+   const isNewAccount = (now.getTime() - createdAt.getTime()) < 60_000;
+   if (isNewAccount && !welcomeEmailSent.has(userId)) {
+     welcomeEmailSent.add(userId);
+     const portalUrl = getValidOrigin(req.headers.origin as string | undefined) + "/qb-portal";
+     const emailContent = welcomeRegistrationEmail(
+       user.name || "there",
+       user.email,
+       portalUrl,
+     );
+     sendEmail({
+       to: user.email,
+       subject: emailContent.subject,
+       html: emailContent.html,
+       replyTo: "support@nexfortis.com",
+     }).catch(err => console.error("[Email] Failed to send welcome email:", err));
+   }
+   ```
+
+> **⚠️ DO NOT:**
+> - Add a new column to the database to track "welcome email sent" — the in-memory Set is sufficient for preventing duplicates within a server process, and the 60-second window prevents sends on subsequent logins. If the server restarts within 60 seconds of a registration, the worst case is a duplicate welcome email, which is acceptable.
+> - Hook into the Supabase trigger — the trigger runs in PostgreSQL and cannot call HTTP endpoints or the Resend API
+> - Send the welcome email on every `/me` call — only on first login (within 60 seconds of account creation)
+> - Send welcome emails to operators — check that `user.role === "customer"` before sending
+
+### 5b. Add Role Check
+
+The welcome email should only go to customer accounts, not to the operator. Before the `isNewAccount` check, add: `if (user.role !== "customer") return;` (or wrap the entire welcome email block in `if (user.role === "customer" && isNewAccount && ...)`).
+
+---
+
+## Step 6: Wire Waitlist Confirmation Email into Waitlist Route
+
+The waitlist signup route in `artifacts/api-server/src/routes/qb-portal.ts` at `POST /waitlist` (around line 237) inserts a record but does NOT send a confirmation email.
+
+### 6a. Import the New Template
+
+Add `waitlistConfirmationEmail` to the import from `email-templates.ts` at the top of `qb-portal.ts`.
+
+### 6b. Add Email Send After Successful Signup
+
+Inside the `POST /waitlist` handler, after the successful database insert (line 255-259) and before the `res.status(201).json({ success: true })` response (line 261):
+
+1. Construct the email:
+   ```
+   const emailContent = waitlistConfirmationEmail(
+     email,
+     product_name || `Product #${parsedProductId}`,
+   );
+   ```
+
+2. Send fire-and-forget:
+   ```
+   sendEmail({
+     to: email,
+     subject: emailContent.subject,
+     html: emailContent.html,
+   }).catch(err => console.error("[Email] Failed to send waitlist confirmation:", err));
+   ```
+
+3. Do NOT send an email for duplicate signups (the route returns 409 for duplicates at line 251-253). The email should only be sent on successful NEW signups.
+
+> **⚠️ DO NOT:**
+> - Await the email send — fire-and-forget
+> - Send the email before the database insert — the insert must succeed first
+> - Send the email for duplicate signups (409 responses)
+> - Include `replyTo` for waitlist emails — these are automated notifications, not support conversations
+
+---
+
+## Step 7: Add Notification Preference Migration for New Email Types
+
+The `qb_notification_preferences` table currently has three boolean columns: `ticketCreated`, `operatorReplied`, `ticketResolved`. The new email types added in this prompt (order confirmation, file delivery, welcome, waitlist) are transactional emails that do NOT require opt-out — they are essential order lifecycle notifications.
+
+**No schema change is needed.** The existing notification preference system is specifically for ticket notifications. Order-related emails and one-time transactional emails are always-on.
+
+If in the future the user requests notification preferences for order emails, a new set of boolean columns (e.g., `orderConfirmation`, `fileDelivery`) can be added. For now, do nothing.
+
+---
+
+## Step 8: Verify
+
+After completing all steps, verify the following:
+
+### TypeScript Check
+- [ ] Run `pnpm typecheck` from the monorepo root — zero errors
+
+### Build Check
+- [ ] Run `pnpm build` — zero build errors
+
+### Template Verification
+- [ ] `grep -n "paidOrderConfirmationEmail\|fileDeliveryEmail\|welcomeRegistrationEmail\|waitlistConfirmationEmail\|paidOrderOperatorEmail" artifacts/api-server/src/lib/email-templates.ts` — all five new functions must appear
+- [ ] `grep -n "export function" artifacts/api-server/src/lib/email-templates.ts` — count the exports. Should show: `ticketCreatedEmail`, `operatorRepliedEmail`, `ticketResolvedEmail`, `freeOrderCustomerEmail`, `freeOrderOperatorEmail`, `referralCreditEarnedEmail`, `paidOrderConfirmationEmail`, `paidOrderOperatorEmail`, `fileDeliveryEmail`, `welcomeRegistrationEmail`, `waitlistConfirmationEmail` — 11 total
+
+### Wiring Verification
+- [ ] `grep -n "paidOrderConfirmationEmail" artifacts/api-server/src/routes/qb-portal.ts` — must appear in the import AND in the webhook handler
+- [ ] `grep -n "fileDeliveryEmail" artifacts/api-server/src/routes/qb-admin.ts` — must appear in the import AND in the upload handler
+- [ ] `grep -n "welcomeRegistrationEmail" artifacts/api-server/src/routes/qb-portal.ts` — must appear in the import AND in the `/me` handler
+- [ ] `grep -n "waitlistConfirmationEmail" artifacts/api-server/src/routes/qb-portal.ts` — must appear in the import AND in the `/waitlist` handler
+- [ ] `grep -n "paidOrderOperatorEmail" artifacts/api-server/src/routes/qb-portal.ts` — must appear in the import AND in the webhook handler
+
+### Fire-and-Forget Verification
+- [ ] `grep -n "\.catch(" artifacts/api-server/src/routes/qb-portal.ts` — every `sendEmail()` call added in this prompt must have `.catch()` error handling
+- [ ] `grep -n "\.catch(" artifacts/api-server/src/routes/qb-admin.ts` — the file delivery `sendEmail()` call must have `.catch()` error handling
+- [ ] No `await sendEmail()` in the webhook handler — confirm by checking that the `sendEmail` calls inside `checkout.session.completed` are NOT preceded by `await`
+
+### Content Verification
+- [ ] Open each template function and verify:
+  - Customer name is passed through `escapeHtml()`
+  - Service name is passed through `escapeHtml()`
+  - File name is passed through `escapeHtml()` (in `fileDeliveryEmail`)
+  - Dollar amounts are formatted correctly: `$${(cents / 100).toFixed(2)}`
+  - All templates use the main `baseLayout` from `email-templates.ts`, NOT from `subscription-emails.ts`
+  - All templates use `BRAND_COLORS` from `email-templates.ts`
+  - Portal URLs are constructed with `getValidOrigin()` + `/qb-portal`, not hardcoded
+
+### Existing Functionality Check
+- [ ] `grep -n "freeOrderCustomerEmail\|freeOrderOperatorEmail" artifacts/api-server/src/routes/qb-portal.ts` — existing free order email logic (around line 387) must be unchanged
+- [ ] `grep -rn "emitTicketNotification" artifacts/api-server/src/` — ticket notification system must be unchanged
+- [ ] `grep -n "sendWelcomeEmail\|sendPaymentFailedEmail" artifacts/api-server/src/routes/qb-portal.ts` — subscription email imports must be unchanged
+- [ ] Verify no changes to `subscription-emails.ts` — the file should be completely untouched
+
+### Manual Tests (in Replit Preview)
+- [ ] **Waitlist email:** Submit a waitlist signup at `/qb-portal/catalog` for an unavailable product. Check the server logs for `[Email] Sent successfully` with the waitlist confirmation subject line. If `RESEND_API_KEY` is set, verify the email arrives.
+- [ ] **Welcome email:** Register a new account. After redirect to portal, check server logs for the welcome email send. Verify it only fires once (refresh the page — should not trigger again).
+- [ ] **Paid order email:** Place a test order and complete the Stripe checkout. Check server logs for the order confirmation email after the webhook fires. Also check for the operator notification email to `support@nexfortis.com`.
+- [ ] **File delivery email:** Log in as operator, navigate to an order in the admin panel, upload a processed file. Check server logs for the file delivery notification email to the customer.
+- [ ] **Duplicate prevention:** Log out and log back in with the same account — verify no welcome email is sent on subsequent logins.
+
+---
+
+## Summary of Files to Create or Modify
+
+| File | Action | Changes |
+|---|---|---|
+| `artifacts/api-server/src/lib/email-templates.ts` | MODIFY | Add 5 new template functions: `paidOrderConfirmationEmail`, `paidOrderOperatorEmail`, `fileDeliveryEmail`, `welcomeRegistrationEmail`, `waitlistConfirmationEmail` |
+| `artifacts/api-server/src/routes/qb-portal.ts` | MODIFY | Wire paid order confirmation email into Stripe `checkout.session.completed` webhook handler; wire welcome email into `GET /me`; wire waitlist email into `POST /waitlist`; add `welcomeEmailSent` Set |
+| `artifacts/api-server/src/routes/qb-admin.ts` | MODIFY | Wire file delivery email into `POST /orders/:orderId/files/upload`; add imports for `sendEmail`, `fileDeliveryEmail`, `getValidOrigin` |
+
+**Do NOT create or modify:**
+- Any files in `docs/`
+- `artifacts/api-server/src/lib/subscription-emails.ts`
+- `artifacts/api-server/src/lib/ticket-notifications.ts`
+- `artifacts/api-server/src/lib/email-service.ts`
+- `artifacts/api-server/src/routes/qb-notifications.ts`
+- Any frontend files — this prompt is backend-only
+- Any migration files — no schema changes needed
