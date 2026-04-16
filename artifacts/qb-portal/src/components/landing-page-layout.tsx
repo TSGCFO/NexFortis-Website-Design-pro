@@ -1,6 +1,6 @@
 import { Link } from "wouter";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
-import { SEO } from "@/components/seo";
+import { SEO, BASE_URL } from "@/components/seo";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { FAQAccordion } from "@/components/faq-accordion";
 import { TrustSignals } from "@/components/trust-signals";
@@ -60,6 +60,7 @@ export function LandingPageLayout({
         title={page.metaTitle}
         description={metaDescription}
         path={`/landing/${page.slug}`}
+        ogImage={`${BASE_URL}/og/${page.slug}.jpg`}
         jsonLd={jsonLd}
       />
 
