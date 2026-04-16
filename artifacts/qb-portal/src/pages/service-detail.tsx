@@ -3,8 +3,9 @@ import { Link, useParams } from "wouter";
 import { loadProducts, getProductBySlug, type Product, type ProductCatalog, formatPriceCAD, getActivePrice, isPromoActive } from "@/lib/products";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { CheckCircle, Clock, Shield, Lock, ArrowRight, Star, FileCheck } from "lucide-react";
+import { CheckCircle, Clock, Shield, Lock, ArrowRight, Star, FileCheck, BookOpen } from "lucide-react";
 import { SEO } from "@/components/seo";
+import { getServiceLandingLinks } from "@/data/serviceLandingLinks";
 
 export default function ServiceDetail() {
   const { slug } = useParams<{ slug: string }>();
@@ -260,6 +261,32 @@ export default function ServiceDetail() {
                   </Link>
                 </CardContent>
               </Card>
+
+              {(() => {
+                const landingLinks = getServiceLandingLinks(product.slug);
+                if (landingLinks.length === 0) return null;
+                return (
+                  <Card>
+                    <CardContent className="p-6">
+                      <h3 className="font-bold font-display text-primary mb-3 flex items-center gap-2">
+                        <BookOpen className="w-4 h-4 text-accent" /> Learn More
+                      </h3>
+                      <ul className="space-y-3 text-sm">
+                        {landingLinks.map((link) => (
+                          <li key={link.slug} className="leading-snug">
+                            <Link
+                              href={`/landing/${link.slug}`}
+                              className="text-accent hover:underline"
+                            >
+                              {link.anchor}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </CardContent>
+                  </Card>
+                );
+              })()}
             </div>
           </div>
 

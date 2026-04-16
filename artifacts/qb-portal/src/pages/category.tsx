@@ -3,8 +3,9 @@ import { Link, useParams } from "wouter";
 import { loadProducts, type Product, type ProductCatalog, formatPriceCAD, getActivePrice } from "@/lib/products";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowRight, Clock } from "lucide-react";
+import { ArrowRight, Clock, BookOpen } from "lucide-react";
 import { SEO } from "@/components/seo";
+import { getCategoryLandingLinks } from "@/data/serviceLandingLinks";
 
 export default function Category() {
   const { slug } = useParams<{ slug: string }>();
@@ -87,6 +88,34 @@ export default function Category() {
               <ProductCard key={product.id} product={product} promo={catalog.promo_active} />
             ))}
           </div>
+          {(() => {
+            const landingLinks = getCategoryLandingLinks(slug ?? "");
+            if (landingLinks.length === 0) return null;
+            return (
+              <div className="mt-12">
+                <div className="flex items-center gap-2 mb-4">
+                  <BookOpen className="w-5 h-5 text-accent" />
+                  <h2 className="text-xl font-bold font-display text-primary">
+                    Guides & Articles on {categoryName}
+                  </h2>
+                </div>
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {landingLinks.map((link) => (
+                    <Link key={link.slug} href={`/landing/${link.slug}`}>
+                      <Card className="h-full hover:shadow-md transition-shadow cursor-pointer">
+                        <CardContent className="p-4 flex items-start gap-3">
+                          <ArrowRight className="w-4 h-4 text-accent mt-1 shrink-0" />
+                          <span className="text-sm font-medium text-primary leading-snug">
+                            {link.anchor}
+                          </span>
+                        </CardContent>
+                      </Card>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            );
+          })()}
           <p className="text-xs text-muted-foreground text-center mt-8">
             All prices in Canadian dollars (CAD). GST/HST will be added at checkout based on your province.
           </p>
