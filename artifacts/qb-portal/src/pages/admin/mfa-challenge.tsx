@@ -99,7 +99,7 @@ export default function MFAChallenge() {
     setCode(val);
   };
 
-  if (authLoading || state === "loading") {
+  if (authLoading || !session) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#0A1628]">
         <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#B76E79]" />
@@ -107,7 +107,13 @@ export default function MFAChallenge() {
     );
   }
 
-  if (!session) return null;
+  if (state === "loading") {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#0A1628]">
+        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#B76E79]" />
+      </div>
+    );
+  }
 
   if (state === "redirecting") {
     return (

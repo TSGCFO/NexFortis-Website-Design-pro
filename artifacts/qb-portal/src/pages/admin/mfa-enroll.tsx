@@ -101,15 +101,13 @@ export default function MFAEnroll() {
     setCode(val);
   };
 
-  if (authLoading) {
+  if (authLoading || !session) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#0A1628]">
         <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#B76E79]" />
       </div>
     );
   }
-
-  if (!session) return null;
 
   if (alreadyEnrolled) {
     return (

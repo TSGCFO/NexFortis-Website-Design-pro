@@ -21,26 +21,25 @@ if (!supabaseUrl || !serviceRoleKey) {
 
 export { supabaseAdmin };
 
-let storageAvailable = false;
+let storageChecked = false;
+let storageOk = false;
 
-async function verifyStorageBucket(): Promise<void> {
-  if (!supabaseAdmin) return;
+export async function isStorageAvailable(): Promise<boolean> {
+  if (storageChecked) return storageOk;
+  if (!supabaseAdmin) return false;
   try {
     const { error } = await supabaseAdmin.storage.from("order-files").list("", { limit: 1 });
     if (error) {
       console.error(`[Storage] order-files bucket verification failed: ${error.message}`);
-      return;
+      return false;
     }
-    storageAvailable = true;
+    storageChecked = true;
+    storageOk = true;
+    return true;
   } catch (err) {
     console.error("[Storage] order-files bucket verification failed:", err);
+    return false;
   }
-}
-
-verifyStorageBucket();
-
-export function isStorageAvailable(): boolean {
-  return storageAvailable;
 }
 
 export function createSupabaseClient(accessToken: string): SupabaseClient | null {

@@ -184,8 +184,13 @@ const requireOperator: RequestHandler = async (req: Request, res: Response, next
         res.status(403).json({ error: "MFA verification required. Please complete your two-factor authentication." });
         return;
       }
-    } catch {
-      res.status(403).json({ error: "MFA verification required. Please complete your two-factor authentication." });
+    } catch (err) {
+      if (err instanceof SyntaxError) {
+        res.status(403).json({ error: "MFA verification required. Please complete your two-factor authentication." });
+      } else {
+        console.error("requireOperator error:", err);
+        res.status(503).json({ error: "Auth service unavailable. Please try again." });
+      }
       return;
     }
 
@@ -505,12 +510,12 @@ router.post("/orders/:id/files", orderLimiter, (req: Request, res: Response) => 
         }
       }
 
-      if (!isStorageAvailable() || !supabaseAdmin) {
+      if (!(await isStorageAvailable()) || !supabaseAdmin) {
         res.status(503).json({ error: "Storage service is not configured. Please try again later." });
         return;
       }
 
-      const ownerId = userId || "anonymous";
+      const ownerId = userId || order.userId || "anonymous";
       const storagePath = `${ownerId}/${orderId}/${Date.now()}-${req.file.originalname}`;
       const { error: uploadError } = await supabaseAdmin.storage
         .from("order-files")
@@ -544,7 +549,7 @@ router.post("/orders/:id/files", orderLimiter, (req: Request, res: Response) => 
   });
 });
 
-router.get("/orders/:id/files/:fileId/download", async (req: Request, res: Response) => {
+router.get("/orders/:id/files/:fileId/download", requireAuth, async (req: Request, res: Response) => {
   try {
     const orderId = parseInt(req.params.id as string);
     const fileId = parseInt(req.params.fileId as string);
@@ -553,32 +558,19 @@ router.get("/orders/:id/files/:fileId/download", async (req: Request, res: Respo
       return;
     }
 
-    const authHeader = req.headers.authorization;
-    const uploadTokenHeader = req.headers["x-upload-token"] as string | undefined;
-
-    let userId: string | null = null;
+    const userId = req.userId!;
     let isOperator = false;
-    if (supabaseAdmin && authHeader?.startsWith("Bearer ")) {
-      const token = authHeader.slice(7);
-      const { data: { user } } = await supabaseAdmin.auth.getUser(token);
-      userId = user?.id || null;
-      if (userId) {
-        const [profile] = await db.select().from(qbUsers).where(eq(qbUsers.id, userId)).limit(1);
-        if (profile?.role === "operator") {
-          try {
-            const payload = token.split(".")[1];
-            if (payload) {
-              const decoded = JSON.parse(Buffer.from(payload, "base64url").toString());
-              if (decoded.aal === "aal2") isOperator = true;
-            }
-          } catch { /* not operator */ }
-        }
+    if (req.userRole === "operator") {
+      const authHeader = req.headers.authorization;
+      if (authHeader?.startsWith("Bearer ")) {
+        try {
+          const payload = authHeader.slice(7).split(".")[1];
+          if (payload) {
+            const decoded = JSON.parse(Buffer.from(payload, "base64url").toString());
+            if (decoded.aal === "aal2") isOperator = true;
+          }
+        } catch { /* not operator-level access */ }
       }
-    }
-
-    if (!userId && !uploadTokenHeader) {
-      res.status(401).json({ error: "Authentication or upload token required" });
-      return;
     }
 
     let orderQuery;
@@ -586,17 +578,10 @@ router.get("/orders/:id/files/:fileId/download", async (req: Request, res: Respo
       orderQuery = await db.select().from(qbOrders)
         .where(eq(qbOrders.id, orderId))
         .limit(1);
-    } else if (userId) {
+    } else {
       orderQuery = await db.select().from(qbOrders)
         .where(and(eq(qbOrders.id, orderId), eq(qbOrders.userId, userId)))
         .limit(1);
-    } else if (uploadTokenHeader) {
-      orderQuery = await db.select().from(qbOrders)
-        .where(and(eq(qbOrders.id, orderId), eq(qbOrders.uploadToken, uploadTokenHeader)))
-        .limit(1);
-    } else {
-      res.status(401).json({ error: "Authentication or upload token required" });
-      return;
     }
 
     const [order] = orderQuery;
@@ -629,7 +614,7 @@ router.get("/orders/:id/files/:fileId/download", async (req: Request, res: Respo
       return;
     }
 
-    if (!isStorageAvailable() || !supabaseAdmin) {
+    if (!(await isStorageAvailable()) || !supabaseAdmin) {
       res.status(503).json({ error: "Storage service is not configured." });
       return;
     }
