@@ -171,7 +171,13 @@ router.post("/tickets/:id/reply", async (req: Request, res: Response) => {
       return;
     }
 
-    const updates: Record<string, any> = {
+    const updates: Partial<{
+      operatorReply: string;
+      updatedAt: Date;
+      firstResponseAt: Date;
+      internalNote: string;
+      status: string;
+    }> = {
       operatorReply: sanitizeInput(reply),
       updatedAt: new Date(),
     };

@@ -1,28 +1,42 @@
 import type { SubscriptionTier } from "./subscription-config";
 import { getTierConfig } from "./subscription-config";
+import { toZonedTime, fromZonedTime } from "date-fns-tz";
 
 const BH_START_HOUR = 9;
 const BH_END_HOUR = 17;
-const BH_MINUTES_PER_DAY = (BH_END_HOUR - BH_START_HOUR) * 60;
 const ET_TZ = "America/New_York";
 
-function toET(date: Date): Date {
-  const str = date.toLocaleString("en-US", { timeZone: ET_TZ });
-  return new Date(str);
+function getETComponents(date: Date): { year: number; month: number; day: number; hours: number; minutes: number; dayOfWeek: number } {
+  const zoned = toZonedTime(date, ET_TZ);
+  return {
+    year: zoned.getFullYear(),
+    month: zoned.getMonth(),
+    day: zoned.getDate(),
+    hours: zoned.getHours(),
+    minutes: zoned.getMinutes(),
+    dayOfWeek: zoned.getDay(),
+  };
+}
+
+function etMinuteOfDay(date: Date): number {
+  const { hours, minutes } = getETComponents(date);
+  return hours * 60 + minutes;
 }
 
 function isWeekday(date: Date): boolean {
-  const day = date.getDay();
-  return day >= 1 && day <= 5;
+  const { dayOfWeek } = getETComponents(date);
+  return dayOfWeek >= 1 && dayOfWeek <= 5;
+}
+
+function makeETDate(year: number, month: number, day: number, hour: number, minute: number): Date {
+  const wallClock = new Date(year, month, day, hour, minute, 0, 0);
+  return fromZonedTime(wallClock, ET_TZ);
 }
 
 export function isBusinessHours(date: Date = new Date()): boolean {
-  const et = toET(date);
-  if (!isWeekday(et)) return false;
-  const hours = et.getHours();
-  const minutes = et.getMinutes();
-  const totalMinutes = hours * 60 + minutes;
-  return totalMinutes >= BH_START_HOUR * 60 && totalMinutes < BH_END_HOUR * 60;
+  if (!isWeekday(date)) return false;
+  const minute = etMinuteOfDay(date);
+  return minute >= BH_START_HOUR * 60 && minute < BH_END_HOUR * 60;
 }
 
 export function calculateSlaDeadline(submittedAt: Date, slaMinutes: number, isCritical: boolean): Date {
@@ -31,58 +45,50 @@ export function calculateSlaDeadline(submittedAt: Date, slaMinutes: number, isCr
   }
 
   let remaining = slaMinutes;
-  const cursor = new Date(submittedAt.getTime());
-  const et = toET(cursor);
+  let current = new Date(submittedAt.getTime());
 
-  if (!isWeekday(et) || et.getHours() * 60 + et.getMinutes() >= BH_END_HOUR * 60) {
-    advanceToNextBusinessStart(cursor);
-  } else if (et.getHours() * 60 + et.getMinutes() < BH_START_HOUR * 60) {
-    setToBusinessStart(cursor);
+  if (!isWeekday(current) || etMinuteOfDay(current) >= BH_END_HOUR * 60) {
+    current = advanceToNextBusinessStart(current);
+  } else if (etMinuteOfDay(current) < BH_START_HOUR * 60) {
+    current = setToBusinessStart(current);
   }
 
   while (remaining > 0) {
-    const cursorET = toET(cursor);
-
-    if (!isWeekday(cursorET)) {
-      advanceToNextBusinessStart(cursor);
+    if (!isWeekday(current)) {
+      current = advanceToNextBusinessStart(current);
       continue;
     }
 
-    const currentMinute = cursorET.getHours() * 60 + cursorET.getMinutes();
-    const endMinute = BH_END_HOUR * 60;
-    const availableToday = endMinute - currentMinute;
+    const currentMinute = etMinuteOfDay(current);
+    const availableToday = BH_END_HOUR * 60 - currentMinute;
 
     if (remaining <= availableToday) {
-      cursor.setTime(cursor.getTime() + remaining * 60 * 1000);
-      remaining = 0;
-    } else {
-      remaining -= availableToday;
-      cursor.setTime(cursor.getTime() + (availableToday + 1) * 60 * 1000);
-      advanceToNextBusinessStart(cursor);
+      return new Date(current.getTime() + remaining * 60 * 1000);
     }
+
+    remaining -= availableToday;
+    current = advanceToNextBusinessStart(
+      new Date(current.getTime() + availableToday * 60 * 1000),
+    );
   }
 
-  return cursor;
+  return current;
 }
 
-function advanceToNextBusinessStart(cursor: Date): void {
-  const et = toET(cursor);
+function advanceToNextBusinessStart(date: Date): Date {
+  const et = getETComponents(date);
   let daysToAdd = 1;
-  const day = et.getDay();
 
-  if (day === 5) daysToAdd = 3;
-  else if (day === 6) daysToAdd = 2;
+  if (et.dayOfWeek === 5) daysToAdd = 3;
+  else if (et.dayOfWeek === 6) daysToAdd = 2;
+  else if (et.dayOfWeek === 0) daysToAdd = 1;
 
-  cursor.setTime(cursor.getTime() + daysToAdd * 24 * 60 * 60 * 1000);
-  setToBusinessStart(cursor);
+  return makeETDate(et.year, et.month, et.day + daysToAdd, BH_START_HOUR, 0);
 }
 
-function setToBusinessStart(cursor: Date): void {
-  const et = toET(cursor);
-  const currentMinute = et.getHours() * 60 + et.getMinutes();
-  const targetMinute = BH_START_HOUR * 60;
-  const diff = targetMinute - currentMinute;
-  cursor.setTime(cursor.getTime() + diff * 60 * 1000);
+function setToBusinessStart(date: Date): Date {
+  const et = getETComponents(date);
+  return makeETDate(et.year, et.month, et.day, BH_START_HOUR, 0);
 }
 
 export function getSlaMinutesForTier(tier: SubscriptionTier): number {
