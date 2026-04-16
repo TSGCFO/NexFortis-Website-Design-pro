@@ -88,3 +88,4 @@ Includes tables for `qb_users` (with `stripe_customer_id`), `qb_orders`, `qb_ord
 - **API Definition**: OpenAPI 3.1
 - **Icons**: Lucide React
 - **UI Animations**: Framer Motion
+- **HMR Stability**: Custom `stableHmr` Vite plugin (`lib/vite-plugin-stable-hmr.ts`) prevents full-page reloads caused by WebSocket disconnections through the Replit proxy
