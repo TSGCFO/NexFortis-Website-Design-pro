@@ -8,7 +8,7 @@ export function RelatedServices({ slugs }: { slugs: string[] }) {
     .filter((p): p is NonNullable<ReturnType<typeof getLandingPageBySlug>> => !!p);
   if (pages.length === 0) return null;
   return (
-    <section aria-labelledby="related-heading" className="mt-12">
+    <section aria-labelledby="related-heading" className="mt-12 overflow-x-hidden">
       <h2
         id="related-heading"
         className="font-display font-bold text-2xl mb-5 text-foreground"
