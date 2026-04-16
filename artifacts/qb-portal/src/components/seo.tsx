@@ -29,7 +29,7 @@ export function SEO({
   articleModifiedTime,
   articleAuthor,
 }: SEOProps) {
-  const fullTitle = `${title} | ${SITE_NAME}`;
+  const fullTitle = title.includes("NexFortis") ? title : `${title} | ${SITE_NAME}`;
   const canonicalUrl = path ? `${BASE_URL}${path}` : undefined;
   const image = ogImage || DEFAULT_OG_IMAGE;
 

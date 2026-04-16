@@ -19,8 +19,8 @@ export function TrustSignals() {
     },
     {
       icon: Clock,
-      title: "Files auto-deleted after 7 days",
-      body: "Original and converted files are permanently removed from our storage one week after delivery.",
+      title: "Files auto-deleted after 30 days",
+      body: "Original and converted files are permanently removed from our storage 30 days after delivery.",
     },
   ];
   return (

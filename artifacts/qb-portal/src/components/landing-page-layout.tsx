@@ -44,7 +44,9 @@ export function LandingPageLayout({
     generateBreadcrumbSchema(page.breadcrumbs),
   ];
   if (page.category === "service") {
-    jsonLd.unshift(generateServiceSchema(page, product));
+    jsonLd.unshift(
+      generateServiceSchema({ ...page, metaDescription }, product)
+    );
   }
 
   return (
