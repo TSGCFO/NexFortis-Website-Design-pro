@@ -140,6 +140,16 @@ export const qbNotificationEvents = pgTable("qb_notification_events", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
+export const qbNotificationPreferences = pgTable("qb_notification_preferences", {
+  id: serial("id").primaryKey(),
+  userId: uuid("user_id").references(() => qbUsers.id).notNull().unique(),
+  ticketCreated: boolean("ticket_created").default(true).notNull(),
+  operatorReplied: boolean("operator_replied").default(true).notNull(),
+  ticketResolved: boolean("ticket_resolved").default(true).notNull(),
+  unsubscribeToken: text("unsubscribe_token").notNull().unique(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
 export const insertQbUserSchema = createInsertSchema(qbUsers);
 export const insertQbOrderSchema = createInsertSchema(qbOrders);
 export const insertQbWaitlistSchema = createInsertSchema(qbWaitlistSignups);
@@ -150,3 +160,4 @@ export const insertQbReferralSchema = createInsertSchema(qbReferrals);
 export const insertQbReferralEventSchema = createInsertSchema(qbReferralEvents);
 export const insertQbTicketReplySchema = createInsertSchema(qbTicketReplies);
 export const insertQbNotificationEventSchema = createInsertSchema(qbNotificationEvents);
+export const insertQbNotificationPreferenceSchema = createInsertSchema(qbNotificationPreferences);

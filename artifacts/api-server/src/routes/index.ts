@@ -8,6 +8,7 @@ import qbSubscriptionsRouter from "./qb-subscriptions";
 import qbTicketsRouter from "./qb-tickets";
 import qbAdminSubscriptionsRouter from "./qb-admin-subscriptions";
 import qbAdminRouter from "./qb-admin";
+import qbNotificationsRouter from "./qb-notifications";
 
 const router: IRouter = Router();
 
@@ -37,5 +38,13 @@ router.use("/qb/subscriptions", requireAuth, qbSubscriptionsRouter);
 router.use("/qb/tickets", requireAuth, qbTicketsRouter);
 router.use("/qb/admin", requireAuth, requireOperator, qbAdminSubscriptionsRouter);
 router.use("/qb/admin", requireAuth, requireOperator, qbAdminRouter);
+const notificationPrefLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 20,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: "Too many requests. Please try again later." },
+});
+router.use("/qb/notifications", notificationPrefLimiter, qbNotificationsRouter);
 
 export default router;

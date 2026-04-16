@@ -15,6 +15,13 @@
       "when": 1776311727062,
       "tag": "0001_unknown_pyro",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1776318120655,
+      "tag": "0002_add-notification-preferences",
+      "breakpoints": true
     }
   ]
 }
