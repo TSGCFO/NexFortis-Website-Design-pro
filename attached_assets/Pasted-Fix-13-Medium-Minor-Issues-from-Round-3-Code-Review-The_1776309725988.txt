@@ -1,0 +1,336 @@
+Fix 13 Medium + Minor Issues from Round 3 Code Review
+
+There are 7 medium and 6 minor bugs to fix across several files. Fix them in order. After every 3-4 fixes, run `pnpm typecheck` to confirm no TypeScript errors.
+
+Do NOT modify any files in `docs/`.
+
+---
+
+## MEDIUM FIXES (7)
+
+### Fix M1: multer missing fileFilter — all files fully buffered
+
+**File:** `artifacts/api-server/src/routes/qb-portal.ts`, around line 106
+
+**Current code:**
+```js
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: MAX_UPLOAD_BYTES },
+});
+```
+
+There is no `fileFilter` on the multer config. Any file type is accepted and fully buffered into memory before the handler runs. This wastes memory on obviously invalid files (e.g., someone uploading a .exe).
+
+**Fix:** Add a `fileFilter` that checks the file extension against a whitelist of allowed extensions. The product catalog defines `accepted_file_types` per product, but since multer runs before the handler knows which product was selected, use a union of all possible valid extensions: `.qbm`, `.qbw`, `.qbb`, `.csv`, `.xlsx`, `.pdf`, `.zip`. Reject anything else with a multer error.
+
+```js
+const ALLOWED_EXTENSIONS = [".qbm", ".qbw", ".qbb", ".csv", ".xlsx", ".pdf", ".zip"];
+
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: MAX_UPLOAD_BYTES },
+  fileFilter: (_req, file, cb) => {
+    const ext = path.extname(file.originalname).toLowerCase();
+    if (ALLOWED_EXTENSIONS.includes(ext)) {
+      cb(null, true);
+    } else {
+      cb(new Error(`File type ${ext} is not allowed. Accepted: ${ALLOWED_EXTENSIONS.join(", ")}`));
+    }
+  },
+});
+```
+
+---
+
+### Fix M2: Step counter produces non-sequential numbers
+
+**File:** `artifacts/qb-portal/src/pages/order-form.tsx`, around lines 55, 81, 97, 114, 133, 153, 187
+
+**Current code:**
+`let stepNumber = 2;` with `{++stepNumber - 1}` and `{stepNumber++}` scattered throughout. Since some sections are conditionally rendered (Add-Ons, Pack Details, Subscription Details), the step numbers jump when sections are hidden. For example, if Add-Ons is hidden, the user sees steps 1, 2, 4, 5 instead of 1, 2, 3, 4.
+
+**Fix:** Replace the mutable counter with a computed approach. Create a `steps` array at the top of the component that tracks which sections are visible, then use the array index + 1 for the step number. A simpler alternative: use a local counter variable that only increments for rendered sections.
+
+The simplest fix: change all step headers to use a self-incrementing helper function that only runs when the JSX renders:
+
+```tsx
+let nextStep = 1;
+const step = () => nextStep++;
+```
+
+Then replace:
+- Hard-coded "1. Your Information" → `{step()}. Your Information`
+- `{++stepNumber - 1}. Select Service` → `{step()}. Select Service`
+- `{stepNumber++}. Add-Ons` → `{step()}. Add-Ons`
+- `{stepNumber++}. Pack Details` → `{step()}. Pack Details`
+- `{stepNumber++}. Subscription Details` → `{step()}. Subscription Details`
+- `{stepNumber++}. Upload Your File` → `{step()}. Upload Your File`
+- `{stepNumber++}. QuickBooks Version` → `{step()}. QuickBooks Version`
+
+Remove the old `let stepNumber = 2;` line. Place `let nextStep = 1; const step = () => nextStep++;` right before the return statement (inside the render, not inside useEffect).
+
+---
+
+### Fix M3: Bundle "What's included" hardcoded to one slug
+
+**File:** `artifacts/qb-portal/src/pages/order-form.tsx`, around line 221
+
+**Current code:**
+```tsx
+{selectedProduct?.slug === "audit-trail-cra-bundle" && (
+  <div ...>
+    <p>What's included:</p>
+    <ul>
+      <li>Audit Trail Removal</li>
+      <li>CRA Period Copy</li>
+    </ul>
+  </div>
+)}
+```
+
+This only shows "What's included" for one specific bundle. If new bundles are added to the product catalog, they won't get this treatment.
+
+**Fix:** Instead of hardcoding the slug, check if the product has a `bundle_includes` or `includes` array in its catalog data. If the product catalog doesn't have such a field yet, check if the product's `category` is "bundle" or if the slug contains "bundle". Then read the included items from the catalog rather than hardcoding them.
+
+Simplest safe fix: Check if `selectedProduct?.includes` exists and is a non-empty array, and render each item. If the catalog doesn't have an `includes` field, keep the current hardcoded approach but add a comment noting it should be data-driven when the catalog adds an `includes` field.
+
+---
+
+### Fix M4: CORS preflight returns 200 without proper headers
+
+**File:** `artifacts/api-server/src/app.ts`, around line 53
+
+**Current code:**
+The `cors()` middleware config doesn't specify `optionsSuccessStatus`. The default behavior varies by browser, and some older browsers expect 204 for preflight.
+
+**Fix:** Add `optionsSuccessStatus: 204` to the cors config:
+
+```js
+app.use(
+  cors({
+    credentials: true,
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(null, false);
+      }
+    },
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "X-Upload-Token"],
+    optionsSuccessStatus: 204,
+  }),
+);
+```
+
+Also add the Replit app URL to the allowedOrigins array so CORS works in production:
+```js
+const allowedOrigins = [
+  "https://nexfortis.com",
+  "https://www.nexfortis.com",
+  "https://qb.nexfortis.com",
+  "https://nex-fortis-website-design-pro.replit.app",
+  ...(process.env.NODE_ENV !== "production" ? ["http://localhost:5173"] : []),
+];
+```
+
+---
+
+### Fix M5: Waitlist endpoint returns 500 on valid input
+
+**File:** `artifacts/api-server/src/routes/qb-portal.ts`, around line 200
+
+**Current code:**
+The waitlist handler does `db.insert(qbWaitlistSignups).values({ email, productId: product_id, ... })`. The schema defines `productId` as `integer`, but the request body sends `product_id` as a string (e.g., `"qb-pro"`). Drizzle/Postgres rejects inserting a string into an integer column, causing a 500 error.
+
+**Fix:** Parse `product_id` as an integer. Add validation:
+```js
+const parsedProductId = parseInt(product_id, 10);
+if (!email || isNaN(parsedProductId)) {
+  res.status(400).json({ error: "Email and a valid numeric product_id are required" });
+  return;
+}
+```
+
+Then use `parsedProductId` instead of `product_id` in the query and insert:
+```js
+const existing = await db.select().from(qbWaitlistSignups)
+  .where(and(eq(qbWaitlistSignups.email, email), eq(qbWaitlistSignups.productId, parsedProductId)))
+  .limit(1);
+...
+await db.insert(qbWaitlistSignups).values({
+  email,
+  productId: parsedProductId,
+  productName: product_name || `Product #${parsedProductId}`,
+});
+```
+
+---
+
+### Fix M6: Stale QR displayed on retry in MFA enrollment
+
+**File:** `artifacts/qb-portal/src/pages/admin/mfa-enroll.tsx`, in the `doEnroll` callback
+
+**Current code:**
+The retry button calls `doEnroll()` again, but the old QR code and secret remain visible during the new enrollment call. If `doEnroll` sets `setEnrolling(true)` at the top, the QR disappears because the JSX only shows the QR when `qrCode && !enrolling`. But the old `qrCode` state is stale.
+
+**Fix:** Clear the QR and secret state at the beginning of `doEnroll`:
+```js
+const doEnroll = useCallback(async () => {
+  setEnrolling(true);
+  setError(null);
+  setQrCode(null);
+  setSecret(null);
+  setFactorId(null);
+  setCode("");
+  // ... rest of existing code ...
+}, [navigate]);
+```
+
+---
+
+### Fix M7: No visible label for TOTP code input on challenge page
+
+**File:** `artifacts/qb-portal/src/pages/admin/mfa-challenge.tsx`, around line 142
+
+**Current code:**
+The TOTP input has `aria-label="6-digit verification code"` (good for screen readers) but no visible `<label>` element. The enroll page (mfa-enroll.tsx) has a proper visible label ("Enter the 6-digit code...") but the challenge page does not.
+
+**Fix:** Add a visible label above the input, similar to the enroll page:
+```tsx
+<label htmlFor="mfa-code" className="block text-sm font-medium text-gray-700 mb-2">
+  Enter the 6-digit code from your authenticator app
+</label>
+<input
+  id="mfa-code"
+  ref={codeInputRef}
+  ...existing props...
+/>
+```
+
+---
+
+## MINOR FIXES (6)
+
+### Fix m1: Redundant .qbm extension check after validation
+
+**File:** `artifacts/api-server/src/routes/qb-portal.ts`, around lines 497-510
+
+**Current code:**
+After the `isQbmProduct` check and `validateQbmMagicBytes()` call, there's likely a redundant check of the file extension against `.qbm`. The magic bytes validation already confirms the file is a valid QBM file.
+
+**Fix:** Review the code after `validateQbmMagicBytes()`. If there's a separate `if (ext === ".qbm")` check that re-validates what was already checked, remove the redundant check. Keep only the magic bytes validation for QBM files.
+
+---
+
+### Fix m2: Non-null assertion order!.id in handleDownload
+
+**File:** `artifacts/qb-portal/src/pages/order-detail.tsx`, around line 93
+
+**Current code:**
+```tsx
+const url = `/api/qb/orders/${order!.id}/files/${fileItem.id}/download`;
+```
+
+The `order!` non-null assertion bypasses TypeScript's null checks. If `order` is somehow null, this will crash at runtime.
+
+**Fix:** Add an early guard at the top of `handleDownload`:
+```tsx
+const handleDownload = async (fileItem: OrderFile) => {
+  if (!order) return;
+  // ... rest of the function, now use order.id without the !
+};
+```
+
+---
+
+### Fix m3: QB Version selector shown for migration products
+
+**File:** `artifacts/qb-portal/src/pages/order-form.tsx`, around line 184
+
+**Current code:**
+The QB Version selector renders for all products that have `showFileUpload`. But migration products (like QBO Readiness Report) don't need a QB version selection — the version is irrelevant for migration.
+
+**Fix:** Only show the QB Version selector when the selected product requires it. Check if the product is a conversion/data service that actually needs to know the QB version. If the product catalog has a flag for this, use it. Otherwise, filter out products whose slugs indicate migration (e.g., slugs containing "migration", "qbo-readiness"). The simplest approach: add a check like `selectedProduct?.requires_qb_version !== false` or exclude specific slugs.
+
+---
+
+### Fix m4: setTimeout for auto-focus is fragile
+
+**Files:** `artifacts/qb-portal/src/pages/admin/mfa-challenge.tsx` and `mfa-enroll.tsx`
+
+**Current code:**
+Both files use `setTimeout(() => codeInputRef.current?.focus(), 100)` to focus the code input after state changes. The 100ms timeout is arbitrary and may fail on slow devices or fast devices.
+
+**Fix:** Replace the `setTimeout` with a `useEffect` that focuses when the relevant state is ready. For mfa-challenge.tsx, focus when `state === "challenge"` and `factorId` is set. For mfa-enroll.tsx, focus when `qrCode` is available:
+
+In mfa-challenge.tsx, remove the setTimeout line and add:
+```tsx
+useEffect(() => {
+  if (state === "challenge" && factorId) {
+    codeInputRef.current?.focus();
+  }
+}, [state, factorId]);
+```
+
+In mfa-enroll.tsx, remove the setTimeout line and add:
+```tsx
+useEffect(() => {
+  if (qrCode && !enrolling) {
+    codeInputRef.current?.focus();
+  }
+}, [qrCode, enrolling]);
+```
+
+---
+
+### Fix m5: Wrong error message on challenge creation failure
+
+**File:** `artifacts/qb-portal/src/pages/admin/mfa-challenge.tsx`, around line 73
+
+**Current code:**
+When `supabase.auth.mfa.challenge()` fails, the error message says "Verification failed. Please try again." But the challenge step is not verification — it's requesting a challenge from the server. The verification step comes after.
+
+**Fix:** Change the error message for challenge failure to be more accurate:
+```js
+setError("Unable to create verification challenge. Please try again.");
+```
+
+Keep the verify error message as "Incorrect code. Please check your authenticator app and try again."
+
+---
+
+### Fix m6: Invisible disabled button (no background color)
+
+**Files:** `artifacts/qb-portal/src/pages/admin/mfa-challenge.tsx` (line 160) and `mfa-enroll.tsx` (line 203)
+
+**Current code:**
+```tsx
+style={{ backgroundColor: code.length === 6 && !verifying ? "#B76E79" : undefined }}
+```
+
+When the button is disabled (code < 6 digits or verifying), `backgroundColor` is `undefined`. Combined with `text-white` in the className, the button text becomes invisible against the white card background. The `disabled:opacity-50` class applies 50% opacity to an already invisible button.
+
+**Fix:** Always set a background color. Use a muted version for the disabled state:
+```tsx
+style={{ backgroundColor: code.length === 6 && !verifying ? "#B76E79" : "#d4a0a8" }}
+```
+
+Or better, move the color to Tailwind classes:
+```tsx
+className="mt-4 w-full py-3 px-4 rounded-lg font-semibold text-white transition-all bg-[#B76E79] disabled:bg-[#B76E79]/50 disabled:cursor-not-allowed"
+```
+
+And remove the `style` prop entirely. Apply this fix in both `mfa-challenge.tsx` and `mfa-enroll.tsx`.
+
+---
+
+## After all 13 fixes
+
+1. Run `pnpm typecheck` — zero errors
+2. Open the Replit preview and confirm:
+   - QB Portal loads at /qb-portal/
+   - Order form at /qb-portal/order shows sequential step numbers
+   - MFA challenge page shows visible disabled button with label
+   - API healthcheck at /api/healthz returns 200

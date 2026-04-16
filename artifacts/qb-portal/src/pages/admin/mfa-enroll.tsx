@@ -21,6 +21,10 @@ export default function MFAEnroll() {
   const doEnroll = useCallback(async () => {
     setEnrolling(true);
     setError(null);
+    setQrCode(null);
+    setSecret(null);
+    setFactorId(null);
+    setCode("");
     try {
       const { data, error: enrollError } = await supabase.auth.mfa.enroll({
         factorType: "totp",
@@ -43,7 +47,6 @@ export default function MFAEnroll() {
         setFactorId(data.id);
         setQrCode(data.totp.qr_code);
         setSecret(data.totp.secret);
-        setTimeout(() => codeInputRef.current?.focus(), 100);
       }
     } catch {
       setError("Failed to start MFA enrollment. Please try again.");
@@ -62,6 +65,12 @@ export default function MFAEnroll() {
     enrollCalledRef.current = true;
     doEnroll();
   }, [authLoading, session, navigate, doEnroll]);
+
+  useEffect(() => {
+    if (qrCode && !enrolling) {
+      codeInputRef.current?.focus();
+    }
+  }, [qrCode, enrolling]);
 
   const handleVerify = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -197,8 +206,7 @@ export default function MFAEnroll() {
               <button
                 type="submit"
                 disabled={code.length !== 6 || verifying}
-                className="mt-4 w-full py-3 px-4 rounded-lg font-semibold text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                style={{ backgroundColor: code.length === 6 && !verifying ? "#B76E79" : undefined }}
+                className="mt-4 w-full py-3 px-4 rounded-lg font-semibold text-white transition-all bg-[#B76E79] disabled:bg-[#B76E79]/50 disabled:cursor-not-allowed"
               >
                 {verifying ? "Verifying..." : "Activate MFA"}
               </button>

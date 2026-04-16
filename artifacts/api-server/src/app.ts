@@ -47,6 +47,7 @@ const allowedOrigins = [
   "https://nexfortis.com",
   "https://www.nexfortis.com",
   "https://qb.nexfortis.com",
+  "https://nex-fortis-website-design-pro.replit.app",
   ...(process.env.NODE_ENV !== "production" ? ["http://localhost:5173"] : []),
 ];
 
@@ -62,6 +63,7 @@ app.use(
     },
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization", "X-Upload-Token"],
+    optionsSuccessStatus: 204,
   }),
 );
 

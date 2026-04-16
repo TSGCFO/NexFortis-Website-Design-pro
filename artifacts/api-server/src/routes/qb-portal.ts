@@ -102,10 +102,19 @@ const stripe = process.env["STRIPE_SECRET_KEY"]
   : null;
 
 const MAX_UPLOAD_BYTES = 500 * 1024 * 1024;
+const ALLOWED_EXTENSIONS = [".qbm", ".qbw", ".qbb", ".csv", ".xlsx", ".pdf", ".zip"];
 
 const upload = multer({
   storage: multer.memoryStorage(),
   limits: { fileSize: MAX_UPLOAD_BYTES },
+  fileFilter: (_req, file, cb) => {
+    const ext = path.extname(file.originalname).toLowerCase();
+    if (ALLOWED_EXTENSIONS.includes(ext)) {
+      cb(null, true);
+    } else {
+      cb(new Error(`File type ${ext} is not allowed. Accepted: ${ALLOWED_EXTENSIONS.join(", ")}`));
+    }
+  },
 });
 
 declare global {
@@ -205,13 +214,14 @@ function getUserId(req: Request): string {
 router.post("/waitlist", async (req: Request, res: Response) => {
   try {
     const { email, product_id, product_name } = req.body;
-    if (!email || !product_id) {
-      res.status(400).json({ error: "Email and product_id are required" });
+    const parsedProductId = parseInt(product_id, 10);
+    if (!email || isNaN(parsedProductId)) {
+      res.status(400).json({ error: "Email and a valid numeric product_id are required" });
       return;
     }
 
     const existing = await db.select().from(qbWaitlistSignups)
-      .where(and(eq(qbWaitlistSignups.email, email), eq(qbWaitlistSignups.productId, product_id)))
+      .where(and(eq(qbWaitlistSignups.email, email), eq(qbWaitlistSignups.productId, parsedProductId)))
       .limit(1);
 
     if (existing.length > 0) {
@@ -221,8 +231,8 @@ router.post("/waitlist", async (req: Request, res: Response) => {
 
     await db.insert(qbWaitlistSignups).values({
       email,
-      productId: product_id,
-      productName: product_name || `Product #${product_id}`,
+      productId: parsedProductId,
+      productName: product_name || `Product #${parsedProductId}`,
     });
 
     res.status(201).json({ success: true });
@@ -513,7 +523,7 @@ router.post("/orders/:id/files", orderLimiter, async (req: Request, res: Respons
         }
       }
 
-      if (isQbmProduct && ext === ".qbm") {
+      if (isQbmProduct && ext === ".qbm" && req.file.buffer) {
         if (!validateQbmMagicBytes(req.file.buffer)) {
           res.status(400).json({ error: "Invalid file format. Expected a QuickBooks backup file (.QBM). The uploaded file does not appear to be a valid QuickBooks backup." });
           return;

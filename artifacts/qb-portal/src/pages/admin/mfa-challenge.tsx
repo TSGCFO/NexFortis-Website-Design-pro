@@ -46,13 +46,18 @@ export default function MFAChallenge() {
 
         setFactorId(totpFactors[0].id);
         setState("challenge");
-        setTimeout(() => codeInputRef.current?.focus(), 100);
       } catch {
         setError("Unable to check authentication level. Please try logging in again.");
         setState("challenge");
       }
     })();
   }, [authLoading, session, navigate]);
+
+  useEffect(() => {
+    if (state === "challenge" && factorId) {
+      codeInputRef.current?.focus();
+    }
+  }, [state, factorId]);
 
   const handleVerify = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -66,7 +71,7 @@ export default function MFAChallenge() {
       });
 
       if (challengeError) {
-        setError("Verification failed. Please try again.");
+        setError("Unable to create verification challenge. Please try again.");
         setCode("");
         setVerifying(false);
         return;
@@ -140,7 +145,11 @@ export default function MFAChallenge() {
         </div>
 
         <form onSubmit={handleVerify}>
+          <label htmlFor="mfa-code" className="block text-sm font-medium text-gray-700 mb-2">
+            Enter the 6-digit code from your authenticator app
+          </label>
           <input
+            id="mfa-code"
             ref={codeInputRef}
             type="text"
             inputMode="numeric"
@@ -161,8 +170,7 @@ export default function MFAChallenge() {
           <button
             type="submit"
             disabled={code.length !== 6 || verifying}
-            className="mt-4 w-full py-3 px-4 rounded-lg font-semibold text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-            style={{ backgroundColor: code.length === 6 && !verifying ? "#B76E79" : undefined }}
+            className="mt-4 w-full py-3 px-4 rounded-lg font-semibold text-white transition-all bg-[#B76E79] disabled:bg-[#B76E79]/50 disabled:cursor-not-allowed"
           >
             {verifying ? "Verifying..." : "Verify"}
           </button>

@@ -52,13 +52,14 @@ export default function OrderForm(props: OrderFormProps) {
     file, fileError, fileWarning, handleFileChange, qbVersion, setQbVersion, confirmed, setConfirmed,
     name, setName, email, setEmail, phone, setPhone, total, submitting, submitError, canSubmit, onSubmit } = props;
 
-  let stepNumber = 2;
+  let nextStep = 1;
+  const step = () => nextStep++;
 
   return (
     <form onSubmit={onSubmit} className="space-y-6">
       <Card>
         <CardContent className="p-6">
-          <h2 className="text-lg font-bold font-display text-primary mb-4">1. Your Information</h2>
+          <h2 className="text-lg font-bold font-display text-primary mb-4">{step()}. Your Information</h2>
           <div className="grid md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium mb-1">Full Name *</label>
@@ -78,7 +79,7 @@ export default function OrderForm(props: OrderFormProps) {
 
       <Card>
         <CardContent className="p-6">
-          <h2 className="text-lg font-bold font-display text-primary mb-4">{++stepNumber - 1}. Select Service</h2>
+          <h2 className="text-lg font-bold font-display text-primary mb-4">{step()}. Select Service</h2>
           <div className="space-y-3">
             {services.map((svc) => (
               <label key={svc.id} className={`flex items-center gap-3 p-4 rounded-lg border transition-colors ${selectedService === svc.id ? "border-accent bg-accent/5 cursor-pointer" : "border-border hover:border-accent/30 cursor-pointer"}`}>
@@ -94,7 +95,7 @@ export default function OrderForm(props: OrderFormProps) {
       {isAvailableService && !isVolumePack && !isSubscription && addons.length > 0 && (
         <Card>
           <CardContent className="p-6">
-            <h2 className="text-lg font-bold font-display text-primary mb-4">{stepNumber++}. Add-Ons</h2>
+            <h2 className="text-lg font-bold font-display text-primary mb-4">{step()}. Add-Ons</h2>
             <div className="space-y-3">
               {addons.map((addon) => (
                 <label key={addon.id} className={`flex items-center gap-3 p-4 rounded-lg border transition-colors ${selectedAddons.includes(addon.id) ? "border-accent bg-accent/5 cursor-pointer" : "border-border hover:border-accent/30 cursor-pointer"}`}>
@@ -111,7 +112,7 @@ export default function OrderForm(props: OrderFormProps) {
       {isAvailableService && isVolumePack && selectedProduct && (
         <Card>
           <CardContent className="p-6">
-            <h2 className="text-lg font-bold font-display text-primary mb-4">{stepNumber++}. Pack Details</h2>
+            <h2 className="text-lg font-bold font-display text-primary mb-4">{step()}. Pack Details</h2>
             <div className="flex items-start gap-3 p-4 bg-blue-50 dark:bg-blue-950/30 rounded-lg border border-blue-200 dark:border-blue-800">
               <Package className="w-5 h-5 text-blue-600 dark:text-blue-400 mt-0.5 flex-shrink-0" />
               <div>
@@ -130,7 +131,7 @@ export default function OrderForm(props: OrderFormProps) {
       {isAvailableService && isSubscription && (
         <Card>
           <CardContent className="p-6">
-            <h2 className="text-lg font-bold font-display text-primary mb-4">{stepNumber++}. Subscription Details</h2>
+            <h2 className="text-lg font-bold font-display text-primary mb-4">{step()}. Subscription Details</h2>
             <div className="flex items-start gap-3 p-4 bg-accent/5 rounded-lg border border-accent/20">
               <Info className="w-5 h-5 text-accent mt-0.5 flex-shrink-0" />
               <div>
@@ -150,7 +151,7 @@ export default function OrderForm(props: OrderFormProps) {
         <Card>
           <CardContent className="p-6">
             <h2 className="text-lg font-bold font-display text-primary mb-4">
-              {stepNumber++}. Upload Your File
+              {step()}. Upload Your File
             </h2>
             <div className="border-2 border-dashed border-border rounded-lg p-8 text-center">
               <Upload className="w-8 h-8 text-muted-foreground mx-auto mb-3" />
@@ -181,10 +182,10 @@ export default function OrderForm(props: OrderFormProps) {
         </Card>
       )}
 
-      {isAvailableService && showFileUpload && (
+      {isAvailableService && showFileUpload && selectedProduct?.category_slug !== "platform-migrations" && (
         <Card>
           <CardContent className="p-6">
-            <h2 className="text-lg font-bold font-display text-primary mb-4">{stepNumber++}. QuickBooks Version</h2>
+            <h2 className="text-lg font-bold font-display text-primary mb-4">{step()}. QuickBooks Version</h2>
             <select value={qbVersion} onChange={(e) => setQbVersion(e.target.value)} className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-accent/50">
               <option value="">Select your QuickBooks version year</option>
               {qbVersions.map((v) => <option key={v} value={v}>{v}</option>)}
@@ -218,7 +219,7 @@ export default function OrderForm(props: OrderFormProps) {
             </div>
           </div>
 
-          {selectedProduct?.slug === "audit-trail-cra-bundle" && (
+          {selectedProduct?.slug?.includes("bundle") && (
             <div className="mt-4 p-3 bg-muted rounded-lg">
               <p className="text-xs font-medium text-primary mb-1">What's included:</p>
               <ul className="text-xs text-muted-foreground space-y-1 list-disc list-inside">

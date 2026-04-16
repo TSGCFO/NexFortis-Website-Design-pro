@@ -87,11 +87,12 @@ export default function OrderDetail() {
   }, [id, uploadTokenParam, getAccessToken]);
 
   const handleDownload = async (fileItem: OrderFile) => {
+    if (!order) return;
     if (fileItem.expired || !fileItem.storagePath) return;
     setDownloading(fileItem.id);
     try {
       const token = await getAccessToken();
-      const url = `/api/qb/orders/${order!.id}/files/${fileItem.id}/download`;
+      const url = `/api/qb/orders/${order.id}/files/${fileItem.id}/download`;
       const headers: Record<string, string> = {};
       if (token) headers["Authorization"] = `Bearer ${token}`;
       if (uploadTokenParam) headers["X-Upload-Token"] = uploadTokenParam;
