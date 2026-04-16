@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { AdminLayout } from "@/components/admin-layout";
 import { adminFetch, formatDate } from "@/lib/admin-api";
+import { TableSkeleton, ErrorBanner } from "@/components/admin-skeletons";
 import { Search, ChevronLeft, ChevronRight } from "lucide-react";
 
 interface CustomerRow {
@@ -12,6 +13,15 @@ interface CustomerRow {
   orderCount: number;
   openTicketCount: number;
 }
+
+const TABLE_COLUMNS = [
+  { width: "w-28" },
+  { width: "w-36" },
+  { width: "w-24" },
+  { width: "w-20" },
+  { width: "w-12" },
+  { width: "w-16" },
+];
 
 function CustomersContent() {
   const [customers, setCustomers] = useState<CustomerRow[]>([]);
@@ -45,7 +55,7 @@ function CustomersContent() {
       setTotal(data.total);
       setPage(data.page);
     } catch {
-      setError("Failed to load data. Please refresh.");
+      setError("Failed to load customers.");
     } finally {
       setLoading(false);
     }
@@ -64,11 +74,7 @@ function CustomersContent() {
         Customers
       </h1>
 
-      {error && (
-        <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-700 mb-4">
-          {error}
-        </div>
-      )}
+      {error && <ErrorBanner message={error} onRetry={fetchCustomers} className="mb-4" />}
 
       <div className="bg-white rounded-xl shadow-sm border border-gray-100">
         <div className="p-4 border-b border-gray-100">
@@ -85,14 +91,7 @@ function CustomersContent() {
         </div>
 
         {loading ? (
-          <div className="p-4 space-y-3">
-            {[1, 2, 3, 4].map(i => (
-              <div key={i} className="animate-pulse flex gap-4">
-                <div className="h-4 bg-gray-200 rounded flex-1" />
-                <div className="h-4 bg-gray-200 rounded w-20" />
-              </div>
-            ))}
-          </div>
+          <TableSkeleton columns={TABLE_COLUMNS} rows={4} />
         ) : customers.length === 0 ? (
           <div className="p-8 text-center text-gray-500">No customers yet.</div>
         ) : (

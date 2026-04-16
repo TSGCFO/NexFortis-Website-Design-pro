@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Link } from "wouter";
 import { AdminLayout } from "@/components/admin-layout";
 import { adminFetch, formatCurrency, formatDate, STATUS_LABELS, STATUS_COLORS } from "@/lib/admin-api";
+import { StatCardSkeleton, TableSkeleton, ErrorBanner } from "@/components/admin-skeletons";
 import { ShoppingCart, Users, AlertCircle, CheckCircle } from "lucide-react";
 
 interface DashboardData {
@@ -22,29 +23,47 @@ interface DashboardData {
   }>;
 }
 
+const RECENT_ORDERS_COLUMNS = [
+  { width: "w-10" },
+  { width: "w-28" },
+  { width: "w-36" },
+  { width: "w-16" },
+  { width: "w-20" },
+  { width: "w-20" },
+  { width: "w-10" },
+];
+
 function DashboardContent() {
   const [data, setData] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const res = await adminFetch("/dashboard");
-        if (!res.ok) throw new Error("Failed to load dashboard");
-        setData(await res.json());
-      } catch {
-        setError("Failed to load data. Please refresh.");
-      } finally {
-        setLoading(false);
-      }
-    })();
+  const fetchDashboard = useCallback(async () => {
+    setLoading(true);
+    setError("");
+    try {
+      const res = await adminFetch("/dashboard");
+      if (!res.ok) throw new Error("Failed to load dashboard");
+      setData(await res.json());
+    } catch {
+      setError("Failed to load dashboard data.");
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
-  if (error) {
+  useEffect(() => { fetchDashboard(); }, [fetchDashboard]);
+
+  if (error && !data) {
     return (
-      <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-700">
-        {error}
+      <div>
+        <h1
+          className="text-2xl md:text-3xl font-bold text-[#0A1628] mb-6"
+          style={{ fontFamily: "'Alegreya Sans SC', sans-serif" }}
+        >
+          Dashboard
+        </h1>
+        <ErrorBanner message={error} onRetry={fetchDashboard} />
       </div>
     );
   }
@@ -65,41 +84,35 @@ function DashboardContent() {
         Dashboard
       </h1>
 
+      {error && <ErrorBanner message={error} onRetry={fetchDashboard} className="mb-4" />}
+
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        {stats.map((stat) => {
-          const Icon = stat.icon;
-          return (
-            <div key={stat.label} className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 md:p-5">
-              {loading ? (
-                <div className="animate-pulse space-y-3">
-                  <div className="h-4 bg-gray-200 rounded w-20" />
-                  <div className="h-8 bg-gray-200 rounded w-16" />
-                </div>
-              ) : (
-                <>
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className={`p-1.5 rounded-lg ${stat.color}`}>
-                      <Icon className="w-4 h-4" />
-                    </div>
-                    <span className="text-sm text-gray-500">{stat.label}</span>
+        {loading ? (
+          <StatCardSkeleton count={4} />
+        ) : (
+          stats.map((stat) => {
+            const Icon = stat.icon;
+            return (
+              <div key={stat.label} className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 md:p-5">
+                <div className="flex items-center gap-2 mb-2">
+                  <div className={`p-1.5 rounded-lg ${stat.color}`}>
+                    <Icon className="w-4 h-4" />
                   </div>
-                  <p className="text-2xl md:text-3xl font-bold text-[#0A1628]">{stat.value}</p>
-                </>
-              )}
-            </div>
-          );
-        })}
+                  <span className="text-sm text-gray-500">{stat.label}</span>
+                </div>
+                <p className="text-2xl md:text-3xl font-bold text-[#0A1628]">{stat.value}</p>
+              </div>
+            );
+          })
+        )}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-8">
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 md:p-5">
-          {loading ? (
-            <div className="animate-pulse space-y-3">
-              <div className="h-4 bg-gray-200 rounded w-24" />
-              <div className="h-8 bg-gray-200 rounded w-16" />
-            </div>
-          ) : (
-            <>
+        {loading ? (
+          <StatCardSkeleton count={2} />
+        ) : (
+          <>
+            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 md:p-5">
               <div className="flex items-center gap-2 mb-2">
                 <div className="p-1.5 rounded-lg bg-indigo-50 text-indigo-700">
                   <Users className="w-4 h-4" />
@@ -107,17 +120,8 @@ function DashboardContent() {
                 <span className="text-sm text-gray-500">Total Customers</span>
               </div>
               <p className="text-2xl md:text-3xl font-bold text-[#0A1628]">{data?.totalCustomers ?? 0}</p>
-            </>
-          )}
-        </div>
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 md:p-5">
-          {loading ? (
-            <div className="animate-pulse space-y-3">
-              <div className="h-4 bg-gray-200 rounded w-24" />
-              <div className="h-8 bg-gray-200 rounded w-16" />
             </div>
-          ) : (
-            <>
+            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 md:p-5">
               <div className="flex items-center gap-2 mb-2">
                 <div className="p-1.5 rounded-lg bg-orange-50 text-orange-700">
                   <AlertCircle className="w-4 h-4" />
@@ -125,9 +129,9 @@ function DashboardContent() {
                 <span className="text-sm text-gray-500">Open Tickets</span>
               </div>
               <p className="text-2xl md:text-3xl font-bold text-[#0A1628]">{data?.openTickets ?? 0}</p>
-            </>
-          )}
-        </div>
+            </div>
+          </>
+        )}
       </div>
 
       <div className="bg-white rounded-xl shadow-sm border border-gray-100">
@@ -135,15 +139,7 @@ function DashboardContent() {
           <h2 className="text-lg font-semibold text-[#0A1628]">Recent Orders</h2>
         </div>
         {loading ? (
-          <div className="p-4 space-y-3">
-            {[1, 2, 3].map(i => (
-              <div key={i} className="animate-pulse flex gap-4">
-                <div className="h-4 bg-gray-200 rounded w-12" />
-                <div className="h-4 bg-gray-200 rounded flex-1" />
-                <div className="h-4 bg-gray-200 rounded w-20" />
-              </div>
-            ))}
-          </div>
+          <TableSkeleton columns={RECENT_ORDERS_COLUMNS} rows={3} />
         ) : !data?.recentOrders.length ? (
           <div className="p-8 text-center text-gray-500">No orders yet.</div>
         ) : (

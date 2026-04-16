@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { Link } from "wouter";
 import { AdminLayout } from "@/components/admin-layout";
 import { adminFetch, formatCurrency, formatDate, STATUS_LABELS, STATUS_COLORS } from "@/lib/admin-api";
+import { TableSkeleton, ErrorBanner } from "@/components/admin-skeletons";
 import { Search, ChevronLeft, ChevronRight, ArrowUpDown } from "lucide-react";
 
 interface OrderRow {
@@ -16,6 +17,16 @@ interface OrderRow {
 }
 
 const STATUS_FILTERS = ["all", "pending_payment", "submitted", "paid", "processing", "completed", "failed", "cancelled"];
+
+const TABLE_COLUMNS = [
+  { width: "w-10" },
+  { width: "w-32" },
+  { width: "w-36" },
+  { width: "w-16" },
+  { width: "w-20" },
+  { width: "w-20" },
+  { width: "w-10" },
+];
 
 function OrdersContent() {
   const [orders, setOrders] = useState<OrderRow[]>([]);
@@ -55,7 +66,7 @@ function OrdersContent() {
       setTotal(data.total);
       setPage(data.page);
     } catch {
-      setError("Failed to load data. Please refresh.");
+      setError("Failed to load orders.");
     } finally {
       setLoading(false);
     }
@@ -84,11 +95,7 @@ function OrdersContent() {
         Orders
       </h1>
 
-      {error && (
-        <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-700 mb-4">
-          {error}
-        </div>
-      )}
+      {error && <ErrorBanner message={error} onRetry={fetchOrders} className="mb-4" />}
 
       <div className="bg-white rounded-xl shadow-sm border border-gray-100">
         <div className="p-4 space-y-3 border-b border-gray-100">
@@ -121,15 +128,7 @@ function OrdersContent() {
         </div>
 
         {loading ? (
-          <div className="p-4 space-y-3">
-            {[1, 2, 3, 4, 5].map(i => (
-              <div key={i} className="animate-pulse flex gap-4">
-                <div className="h-4 bg-gray-200 rounded w-12" />
-                <div className="h-4 bg-gray-200 rounded flex-1" />
-                <div className="h-4 bg-gray-200 rounded w-20" />
-              </div>
-            ))}
-          </div>
+          <TableSkeleton columns={TABLE_COLUMNS} rows={5} />
         ) : orders.length === 0 ? (
           <div className="p-8 text-center text-gray-500">No orders found.</div>
         ) : (

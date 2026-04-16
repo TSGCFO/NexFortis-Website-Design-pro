@@ -1,7 +1,8 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useRoute, Link } from "wouter";
 import { AdminLayout } from "@/components/admin-layout";
 import { adminFetch, formatCurrency, formatDate, formatDateTime, STATUS_LABELS, STATUS_COLORS } from "@/lib/admin-api";
+import { DetailPageSkeleton, ErrorBanner } from "@/components/admin-skeletons";
 import { useToast } from "@/hooks/use-toast";
 import { ArrowLeft, Download, Upload, FileText } from "lucide-react";
 
@@ -60,39 +61,47 @@ function OrderDetailContent() {
 
   const [downloadingFile, setDownloadingFile] = useState<number | null>(null);
 
-  useEffect(() => {
+  const fetchOrder = useCallback(async () => {
     if (!orderId) return;
-    (async () => {
-      try {
-        const res = await adminFetch(`/orders/${orderId}`);
-        if (res.status === 404) {
-          setError("Order not found.");
-          setLoading(false);
-          return;
-        }
-        if (!res.ok) throw new Error();
-        const data = await res.json();
-        setOrder(data.order);
-        setCustomer(data.customer);
-        setFiles(data.files || []);
-        setSelectedStatus(data.order.status);
-      } catch {
-        setError("Failed to load data. Please refresh.");
-      } finally {
+    setLoading(true);
+    setError("");
+    try {
+      const res = await adminFetch(`/orders/${orderId}`);
+      if (res.status === 404) {
+        setError("Order not found.");
         setLoading(false);
+        return;
       }
-    })();
+      if (!res.ok) throw new Error();
+      const data = await res.json();
+      setOrder(data.order);
+      setCustomer(data.customer);
+      setFiles(data.files || []);
+      setSelectedStatus(data.order.status);
+    } catch {
+      setError("Failed to load order details.");
+    } finally {
+      setLoading(false);
+    }
   }, [orderId]);
+
+  useEffect(() => { fetchOrder(); }, [fetchOrder]);
 
   const handleStatusUpdate = async () => {
     if (!order || selectedStatus === order.status) return;
+
+    const previousStatus = order.status;
+    setOrder(prev => prev ? { ...prev, status: selectedStatus } : null);
     setStatusSaving(true);
+
     try {
       const res = await adminFetch(`/orders/${order.id}/status`, {
         method: "PATCH",
         body: JSON.stringify({ status: selectedStatus }),
       });
       if (!res.ok) {
+        setOrder(prev => prev ? { ...prev, status: previousStatus } : null);
+        setSelectedStatus(previousStatus);
         const data = await res.json();
         toast({ title: "Error", description: data.error || "Failed to update status", variant: "destructive" });
         return;
@@ -101,6 +110,8 @@ function OrderDetailContent() {
       setOrder(data.order);
       toast({ title: `Status updated to ${STATUS_LABELS[selectedStatus] || selectedStatus}` });
     } catch {
+      setOrder(prev => prev ? { ...prev, status: previousStatus } : null);
+      setSelectedStatus(previousStatus);
       toast({ title: "Error", description: "Failed to update status", variant: "destructive" });
     } finally {
       setStatusSaving(false);
@@ -158,12 +169,7 @@ function OrderDetailContent() {
   };
 
   if (loading) {
-    return (
-      <div className="space-y-4">
-        <div className="animate-pulse h-8 bg-gray-200 rounded w-48" />
-        <div className="animate-pulse h-64 bg-gray-200 rounded" />
-      </div>
-    );
+    return <DetailPageSkeleton />;
   }
 
   if (error) {
@@ -172,7 +178,7 @@ function OrderDetailContent() {
         <Link href="/admin/orders" className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700 mb-4">
           <ArrowLeft className="w-4 h-4" /> Back to Orders
         </Link>
-        <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-700">{error}</div>
+        <ErrorBanner message={error} onRetry={error !== "Order not found." ? fetchOrder : undefined} />
       </div>
     );
   }
@@ -314,10 +320,19 @@ function OrderDetailContent() {
                 <button
                   onClick={() => handleDownload(file.id)}
                   disabled={file.expired || downloadingFile === file.id}
-                  className="inline-flex items-center gap-1 px-3 py-1.5 text-sm text-[#0A1628] bg-white border border-gray-200 rounded-lg hover:bg-gray-50 disabled:opacity-40 flex-shrink-0"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm text-[#0A1628] bg-white border border-gray-200 rounded-lg hover:bg-gray-50 disabled:opacity-40 flex-shrink-0"
                 >
-                  <Download className="w-3.5 h-3.5" />
-                  {file.expired ? "Expired" : downloadingFile === file.id ? "..." : "Download"}
+                  {downloadingFile === file.id ? (
+                    <>
+                      <div className="w-3.5 h-3.5 border-2 border-gray-300 border-t-[#0A1628] rounded-full animate-spin" />
+                      Preparing…
+                    </>
+                  ) : (
+                    <>
+                      <Download className="w-3.5 h-3.5" />
+                      {file.expired ? "Expired" : "Download"}
+                    </>
+                  )}
                 </button>
               </div>
             ))}

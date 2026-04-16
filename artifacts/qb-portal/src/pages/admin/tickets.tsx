@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { Link } from "wouter";
 import { AdminLayout } from "@/components/admin-layout";
 import { adminFetch, formatDate, TICKET_STATUS_LABELS, TICKET_STATUS_COLORS } from "@/lib/admin-api";
+import { TableSkeleton, ErrorBanner } from "@/components/admin-skeletons";
 import { Search } from "lucide-react";
 
 interface TicketRow {
@@ -17,6 +18,15 @@ interface TicketRow {
 }
 
 const STATUS_FILTERS = ["all", "open", "resolved", "closed"];
+
+const TABLE_COLUMNS = [
+  { width: "w-10" },
+  { width: "w-40" },
+  { width: "w-28" },
+  { width: "w-20" },
+  { width: "w-20" },
+  { width: "w-10" },
+];
 
 function TicketsContent() {
   const [tickets, setTickets] = useState<TicketRow[]>([]);
@@ -44,7 +54,7 @@ function TicketsContent() {
       const data = await res.json();
       setTickets(data.tickets);
     } catch {
-      setError("Failed to load data. Please refresh.");
+      setError("Failed to load tickets.");
     } finally {
       setLoading(false);
     }
@@ -61,11 +71,7 @@ function TicketsContent() {
         Tickets
       </h1>
 
-      {error && (
-        <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-700 mb-4">
-          {error}
-        </div>
-      )}
+      {error && <ErrorBanner message={error} onRetry={fetchTickets} className="mb-4" />}
 
       <div className="bg-white rounded-xl shadow-sm border border-gray-100">
         <div className="p-4 space-y-3 border-b border-gray-100">
@@ -98,14 +104,7 @@ function TicketsContent() {
         </div>
 
         {loading ? (
-          <div className="p-4 space-y-3">
-            {[1, 2, 3].map(i => (
-              <div key={i} className="animate-pulse flex gap-4">
-                <div className="h-4 bg-gray-200 rounded flex-1" />
-                <div className="h-4 bg-gray-200 rounded w-20" />
-              </div>
-            ))}
-          </div>
+          <TableSkeleton columns={TABLE_COLUMNS} rows={3} />
         ) : tickets.length === 0 ? (
           <div className="p-8 text-center text-gray-500">No tickets yet.</div>
         ) : (

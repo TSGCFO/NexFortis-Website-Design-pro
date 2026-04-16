@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useRoute, Link } from "wouter";
 import { AdminLayout } from "@/components/admin-layout";
 import { adminFetch, formatDateTime, TICKET_STATUS_LABELS, TICKET_STATUS_COLORS } from "@/lib/admin-api";
+import { DetailPageSkeleton, ErrorBanner } from "@/components/admin-skeletons";
 import { useToast } from "@/hooks/use-toast";
 import { ArrowLeft } from "lucide-react";
 
@@ -36,32 +37,39 @@ function TicketDetailContent() {
   const [selectedStatus, setSelectedStatus] = useState("");
   const [saving, setSaving] = useState(false);
 
-  useEffect(() => {
+  const fetchTicket = useCallback(async () => {
     if (!ticketId) return;
-    (async () => {
-      try {
-        const res = await adminFetch(`/tickets/${ticketId}`);
-        if (res.status === 404) {
-          setError("Ticket not found.");
-          setLoading(false);
-          return;
-        }
-        if (!res.ok) throw new Error();
-        const data = await res.json();
-        setTicket(data.ticket);
-        setSelectedStatus(data.ticket.status);
-        setReply("");
-      } catch {
-        setError("Failed to load data. Please refresh.");
-      } finally {
+    setLoading(true);
+    setError("");
+    try {
+      const res = await adminFetch(`/tickets/${ticketId}`);
+      if (res.status === 404) {
+        setError("Ticket not found.");
         setLoading(false);
+        return;
       }
-    })();
+      if (!res.ok) throw new Error();
+      const data = await res.json();
+      setTicket(data.ticket);
+      setSelectedStatus(data.ticket.status);
+      setReply("");
+    } catch {
+      setError("Failed to load ticket details.");
+    } finally {
+      setLoading(false);
+    }
   }, [ticketId]);
+
+  useEffect(() => { fetchTicket(); }, [fetchTicket]);
 
   const handleSaveReply = async () => {
     if (!ticket) return;
     if (!reply.trim() && selectedStatus === ticket.status) return;
+
+    const previousStatus = ticket.status;
+    if (selectedStatus !== ticket.status) {
+      setTicket(prev => prev ? { ...prev, status: selectedStatus } : null);
+    }
 
     setSaving(true);
     try {
@@ -70,10 +78,12 @@ function TicketDetailContent() {
           method: "POST",
           body: JSON.stringify({
             reply: reply.trim(),
-            status: selectedStatus !== ticket.status ? selectedStatus : undefined,
+            status: selectedStatus !== previousStatus ? selectedStatus : undefined,
           }),
         });
         if (!res.ok) {
+          setTicket(prev => prev ? { ...prev, status: previousStatus } : null);
+          setSelectedStatus(previousStatus);
           const data = await res.json();
           toast({ title: "Error", description: data.error || "Failed to save reply", variant: "destructive" });
           return;
@@ -82,12 +92,14 @@ function TicketDetailContent() {
         setTicket(prev => prev ? { ...prev, ...data.ticket, userName: prev.userName, userEmail: prev.userEmail } : null);
         setReply("");
         toast({ title: "Reply saved" });
-      } else if (selectedStatus !== ticket.status) {
+      } else if (selectedStatus !== previousStatus) {
         const res = await adminFetch(`/tickets/${ticket.id}/status`, {
           method: "PATCH",
           body: JSON.stringify({ status: selectedStatus }),
         });
         if (!res.ok) {
+          setTicket(prev => prev ? { ...prev, status: previousStatus } : null);
+          setSelectedStatus(previousStatus);
           const data = await res.json();
           toast({ title: "Error", description: data.error || "Failed to update status", variant: "destructive" });
           return;
@@ -97,6 +109,8 @@ function TicketDetailContent() {
         toast({ title: `Status updated to ${TICKET_STATUS_LABELS[selectedStatus] || selectedStatus}` });
       }
     } catch {
+      setTicket(prev => prev ? { ...prev, status: previousStatus } : null);
+      setSelectedStatus(previousStatus);
       toast({ title: "Error", description: "Failed to save", variant: "destructive" });
     } finally {
       setSaving(false);
@@ -104,12 +118,7 @@ function TicketDetailContent() {
   };
 
   if (loading) {
-    return (
-      <div className="space-y-4">
-        <div className="animate-pulse h-8 bg-gray-200 rounded w-48" />
-        <div className="animate-pulse h-64 bg-gray-200 rounded" />
-      </div>
-    );
+    return <DetailPageSkeleton />;
   }
 
   if (error) {
@@ -118,7 +127,7 @@ function TicketDetailContent() {
         <Link href="/admin/tickets" className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700 mb-4">
           <ArrowLeft className="w-4 h-4" /> Back to Tickets
         </Link>
-        <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-700">{error}</div>
+        <ErrorBanner message={error} onRetry={error !== "Ticket not found." ? fetchTicket : undefined} />
       </div>
     );
   }
