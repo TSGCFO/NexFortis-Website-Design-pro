@@ -6,6 +6,19 @@ This pnpm workspace monorepo, built with TypeScript, provides NexFortis IT Solut
 
 I prefer concise and clear explanations. When making changes, please prioritize iterative development and ask for confirmation before implementing major architectural shifts. Do not make changes to files in the `docs/` directory.
 
+**Project-specific rules (MUST follow):**
+- Do NOT add `requireAuth` to the file upload route `POST /api/qb/orders/:id/files` — it intentionally supports upload-token auth via `x-upload-token` header as an alternative to Bearer auth.
+- Rate limiter `keyGenerator` for authenticated routes must be `(req) => req.userId || req.ip` — falls back to IP when no userId (upload-token path).
+- Rate limiters for authenticated routes must be applied AFTER `requireAuth` in the middleware chain.
+- Do NOT use `supabase.auth.admin.listUsers()` to find a single user — use `getUserByEmail(email)` for direct lookup.
+- Do NOT use `throw new Error()` for missing env vars at module load time — use `console.warn()` and set the export to null. Add 503 checks in route handlers.
+- Do NOT use `callback(new Error(...))` in the CORS origin function — use `callback(null, false)`.
+- Helmet config must set `hsts: false` (hosting layer handles HSTS) and `xssFilter: false` plus a separate middleware for `X-XSS-Protection: 0`.
+- Stripe webhook route must be registered BEFORE `express.json()` middleware.
+- For missing optional service credentials (Supabase, Stripe): warn in dev, reject in production (`NODE_ENV === 'production'`).
+- All prices are in CAD cents (14900 = $149.00). Base prices 15-20% below competitors, 50% launch promo.
+- After completing any task, verify Replit Secrets are still present and run `pnpm typecheck` with zero errors.
+
 # System Architecture
 
 The monorepo is structured into `artifacts/` for deployable applications and `lib/` for shared libraries, leveraging pnpm workspaces, Node.js 24, and TypeScript 5.9.
