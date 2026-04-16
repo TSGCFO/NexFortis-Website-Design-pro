@@ -5,11 +5,18 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { SEO } from "@/components/seo";
-import { SettingsTab, SupportTab, FilesTab } from "@/pages/portal-settings";
-import { LayoutDashboard, Package, FileText, Settings, HelpCircle, Upload, Clock, CheckCircle } from "lucide-react";
+import { SettingsTab, EnhancedSupportTab } from "@/pages/portal-settings";
+import { SubscriptionTab } from "@/pages/portal-subscription";
+import { LayoutDashboard, Package, CreditCard, HelpCircle, Settings, Upload, Clock, CheckCircle } from "lucide-react";
 
 interface Order { id: number; serviceName: string; addons: string | null; totalCad: number; status: string; createdAt: string; }
-interface Ticket { id: number; subject: string; message: string; status: string; createdAt: string; }
+
+interface SubscriptionInfo {
+  tier: string;
+  ticketsUsed: number;
+  ticketLimit: number;
+  ticketsRemaining: number;
+}
 
 const statusColors: Record<string, string> = {
   submitted: "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400",
@@ -19,19 +26,22 @@ const statusColors: Record<string, string> = {
   delivered: "bg-accent/10 text-accent",
 };
 
+function subApiUrl(path: string) {
+  const base = import.meta.env.BASE_URL || "/";
+  const prefix = base.endsWith("/") ? base.slice(0, -1) : base;
+  return prefix.replace(/\/qb-portal$/, "") + "/api/qb/subscriptions" + path;
+}
+
 export default function Portal() {
   const { user, loading: authLoading, signOut, getAccessToken } = useAuth();
   const [, navigate] = useLocation();
   const [activeTab, setActiveTab] = useState("dashboard");
   const [orders, setOrders] = useState<Order[]>([]);
-  const [tickets, setTickets] = useState<Ticket[]>([]);
   const [loadingOrders, setLoadingOrders] = useState(true);
-  const [ticketSubject, setTicketSubject] = useState("");
-  const [ticketMessage, setTicketMessage] = useState("");
-  const [ticketSubmitted, setTicketSubmitted] = useState(false);
   const [profileName, setProfileName] = useState("");
   const [profilePhone, setProfilePhone] = useState("");
   const [profileSaved, setProfileSaved] = useState(false);
+  const [subscriptionInfo, setSubscriptionInfo] = useState<SubscriptionInfo | null>(null);
 
   async function apiHeaders() {
     const token = await getAccessToken();
@@ -47,37 +57,42 @@ export default function Portal() {
     setLoadingOrders(false);
   }, []);
 
-  const fetchTickets = useCallback(async () => {
+  const fetchSubscriptionInfo = useCallback(async () => {
     try {
-      const headers = await apiHeaders();
-      const res = await fetch("/api/qb/tickets", { headers });
-      if (res.ok) { const data = await res.json(); setTickets(data.tickets || []); }
+      const token = await getAccessToken();
+      const res = await fetch(subApiUrl("/me"), {
+        headers: { ...(token ? { Authorization: `Bearer ${token}` } : {}) },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.subscription) {
+          setSubscriptionInfo({
+            tier: data.subscription.tier,
+            ticketsUsed: data.subscription.ticketsUsed,
+            ticketLimit: data.subscription.ticketLimit,
+            ticketsRemaining: data.subscription.ticketsRemaining,
+          });
+        } else {
+          setSubscriptionInfo(null);
+        }
+      }
     } catch { /* ignore */ }
-  }, []);
+  }, [getAccessToken]);
 
   useEffect(() => {
     if (user) {
       fetchOrders();
-      fetchTickets();
+      fetchSubscriptionInfo();
       setProfileName(user.name);
       setProfilePhone(user.phone || "");
     }
-  }, [user, fetchOrders, fetchTickets]);
+  }, [user, fetchOrders, fetchSubscriptionInfo]);
 
   if (authLoading) {
     return <div className="min-h-screen flex items-center justify-center"><div className="animate-pulse text-muted-foreground">Loading...</div></div>;
   }
 
   if (!user) { navigate("/login"); return null; }
-
-  const handleTicketSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      const headers = await apiHeaders();
-      const res = await fetch("/api/qb/tickets", { method: "POST", headers, body: JSON.stringify({ subject: ticketSubject, message: ticketMessage }) });
-      if (res.ok) { setTicketSubmitted(true); setTicketSubject(""); setTicketMessage(""); fetchTickets(); }
-    } catch { /* ignore */ }
-  };
 
   const handleProfileSave = async () => {
     try {
@@ -98,6 +113,7 @@ export default function Portal() {
   return (
     <div className="min-h-screen bg-background">
       <SEO title="Dashboard" description="Manage your QuickBooks orders, files, and account settings." path="/portal" noIndex />
+
       <div className="section-brand-navy py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
@@ -121,12 +137,12 @@ export default function Portal() {
       <div className="brand-divider" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="mb-8">
+          <TabsList className="mb-8 flex-wrap">
             <TabsTrigger value="dashboard" className="gap-2"><LayoutDashboard className="w-4 h-4" /> Dashboard</TabsTrigger>
             <TabsTrigger value="orders" className="gap-2"><Package className="w-4 h-4" /> My Orders</TabsTrigger>
-            <TabsTrigger value="files" className="gap-2"><FileText className="w-4 h-4" /> My Files</TabsTrigger>
-            <TabsTrigger value="settings" className="gap-2"><Settings className="w-4 h-4" /> Settings</TabsTrigger>
+            <TabsTrigger value="subscription" className="gap-2"><CreditCard className="w-4 h-4" /> Subscription</TabsTrigger>
             <TabsTrigger value="support" className="gap-2"><HelpCircle className="w-4 h-4" /> Support</TabsTrigger>
+            <TabsTrigger value="settings" className="gap-2"><Settings className="w-4 h-4" /> Settings</TabsTrigger>
           </TabsList>
 
           <TabsContent value="dashboard">
@@ -189,12 +205,16 @@ export default function Portal() {
             )}
           </TabsContent>
 
-          <TabsContent value="files"><FilesTab completedOrders={completedOrders} /></TabsContent>
+          <TabsContent value="subscription">
+            <SubscriptionTab onRefreshPortal={fetchSubscriptionInfo} />
+          </TabsContent>
+
+          <TabsContent value="support">
+            <EnhancedSupportTab subscriptionInfo={subscriptionInfo} getAccessToken={getAccessToken} />
+          </TabsContent>
+
           <TabsContent value="settings">
             <SettingsTab user={user} profileName={profileName} setProfileName={setProfileName} profilePhone={profilePhone} setProfilePhone={setProfilePhone} profileSaved={profileSaved} setProfileSaved={setProfileSaved} onProfileSave={handleProfileSave} />
-          </TabsContent>
-          <TabsContent value="support">
-            <SupportTab tickets={tickets} ticketSubject={ticketSubject} setTicketSubject={setTicketSubject} ticketMessage={ticketMessage} setTicketMessage={setTicketMessage} ticketSubmitted={ticketSubmitted} setTicketSubmitted={setTicketSubmitted} onSubmit={handleTicketSubmit} />
           </TabsContent>
         </Tabs>
       </div>

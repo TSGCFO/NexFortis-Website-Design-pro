@@ -1,8 +1,20 @@
-import { useState, useEffect } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { CheckCircle, Shield, Download, Clock } from "lucide-react";
+import { TierBadge } from "@/components/tier-badge";
+import {
+  CheckCircle,
+  Shield,
+  Download,
+  AlertTriangle,
+  XCircle,
+  Paperclip,
+  Loader2,
+  Clock,
+  MessageCircle,
+  AlertOctagon,
+} from "lucide-react";
 
 function isCurrentlyAfterHours(): boolean {
   const now = new Date();
@@ -31,12 +43,24 @@ interface Order {
   createdAt: string;
 }
 
-interface Ticket {
+interface EnhancedTicket {
   id: number;
   subject: string;
   message: string;
   status: string;
   createdAt: string;
+  tierAtSubmission?: string | null;
+  isCritical?: boolean;
+  isAfterHours?: boolean;
+  respondedAt?: string | null;
+  attachmentPath?: string | null;
+}
+
+interface SubscriptionInfo {
+  tier: string;
+  ticketsUsed: number;
+  ticketLimit: number;
+  ticketsRemaining: number;
 }
 
 interface SettingsProps {
@@ -60,16 +84,16 @@ export function SettingsTab(props: SettingsProps) {
       <Card>
         <CardContent className="p-6 space-y-4">
           <div>
-            <label className="block text-sm font-medium mb-1">Name</label>
-            <input type="text" value={profileName} onChange={(e) => { setProfileName(e.target.value); setProfileSaved(false); }} className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm" />
+            <label htmlFor="settings-name" className="block text-sm font-medium mb-1">Name</label>
+            <input id="settings-name" type="text" value={profileName} onChange={(e) => { setProfileName(e.target.value); setProfileSaved(false); }} className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm" />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1">Email</label>
-            <input type="email" defaultValue={user.email} className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm" disabled />
+            <label htmlFor="settings-email" className="block text-sm font-medium mb-1">Email</label>
+            <input id="settings-email" type="email" defaultValue={user.email} className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm" disabled />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1">Phone</label>
-            <input type="tel" value={profilePhone} onChange={(e) => { setProfilePhone(e.target.value); setProfileSaved(false); }} className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm" />
+            <label htmlFor="settings-phone" className="block text-sm font-medium mb-1">Phone</label>
+            <input id="settings-phone" type="tel" value={profilePhone} onChange={(e) => { setProfilePhone(e.target.value); setProfileSaved(false); }} className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm" />
           </div>
           <div className="flex items-center gap-3">
             <Button className="bg-navy text-white hover:bg-navy/90 font-display" onClick={onProfileSave}>Save Changes</Button>
@@ -86,20 +110,114 @@ export function SettingsTab(props: SettingsProps) {
   );
 }
 
-interface SupportProps {
-  tickets: Ticket[];
-  ticketSubject: string;
-  setTicketSubject: (v: string) => void;
-  ticketMessage: string;
-  setTicketMessage: (v: string) => void;
-  ticketSubmitted: boolean;
-  setTicketSubmitted: (v: boolean) => void;
-  onSubmit: (e: React.FormEvent) => void;
+const ALLOWED_FILE_TYPES = [".qbm", ".png", ".jpg", ".jpeg", ".pdf"];
+const MAX_FILE_SIZE = 25 * 1024 * 1024;
+
+function ticketApiUrl(path: string) {
+  const base = import.meta.env.BASE_URL || "/";
+  const prefix = base.endsWith("/") ? base.slice(0, -1) : base;
+  return prefix.replace(/\/qb-portal$/, "") + "/api/qb/tickets" + path;
 }
 
-export function SupportTab(props: SupportProps) {
-  const { tickets, ticketSubject, setTicketSubject, ticketMessage, setTicketMessage,
-    ticketSubmitted, setTicketSubmitted, onSubmit } = props;
+interface EnhancedSupportProps {
+  subscriptionInfo: SubscriptionInfo | null;
+  getAccessToken: () => Promise<string | null>;
+}
+
+export function EnhancedSupportTab({ subscriptionInfo, getAccessToken }: EnhancedSupportProps) {
+  const [tickets, setTickets] = useState<EnhancedTicket[]>([]);
+  const [ticketSubject, setTicketSubject] = useState("");
+  const [ticketMessage, setTicketMessage] = useState("");
+  const [isCritical, setIsCritical] = useState(false);
+  const [attachment, setAttachment] = useState<File | null>(null);
+  const [ticketSubmitted, setTicketSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [fileError, setFileError] = useState<string | null>(null);
+
+  const fetchTickets = useCallback(async () => {
+    try {
+      const token = await getAccessToken();
+      const res = await fetch(ticketApiUrl(""), {
+        headers: { ...(token ? { Authorization: `Bearer ${token}` } : {}) },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setTickets(data.tickets || []);
+      }
+    } catch { /* ignore */ }
+  }, [getAccessToken]);
+
+  useEffect(() => {
+    fetchTickets();
+  }, [fetchTickets]);
+
+  const hasSub = subscriptionInfo !== null;
+  const isUnlimited = hasSub && subscriptionInfo.ticketsRemaining === -1;
+  const atLimit = hasSub && !isUnlimited && subscriptionInfo.ticketsRemaining <= 0;
+  const lastTicket = hasSub && !isUnlimited && subscriptionInfo.ticketsRemaining === 1;
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFileError(null);
+    const file = e.target.files?.[0];
+    if (!file) { setAttachment(null); return; }
+
+    const ext = "." + file.name.split(".").pop()?.toLowerCase();
+    if (!ALLOWED_FILE_TYPES.includes(ext)) {
+      setFileError(`Invalid file type. Allowed: ${ALLOWED_FILE_TYPES.join(", ")}`);
+      e.target.value = "";
+      return;
+    }
+
+    if (file.size > MAX_FILE_SIZE) {
+      setFileError("File too large. Maximum size is 25MB.");
+      e.target.value = "";
+      return;
+    }
+
+    setAttachment(file);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!hasSub || atLimit) return;
+
+    setSubmitting(true);
+    setSubmitError(null);
+
+    try {
+      const token = await getAccessToken();
+      const formData = new FormData();
+      formData.append("subject", ticketSubject);
+      formData.append("message", ticketMessage);
+      formData.append("isCritical", String(isCritical));
+      if (attachment) {
+        formData.append("attachment", attachment);
+      }
+
+      const res = await fetch(ticketApiUrl(""), {
+        method: "POST",
+        headers: { ...(token ? { Authorization: `Bearer ${token}` } : {}) },
+        body: formData,
+      });
+
+      if (res.ok) {
+        setTicketSubmitted(true);
+        setTicketSubject("");
+        setTicketMessage("");
+        setIsCritical(false);
+        setAttachment(null);
+        fetchTickets();
+      } else {
+        const data = await res.json();
+        setSubmitError(data.error || "Failed to submit ticket");
+      }
+    } catch {
+      setSubmitError("Network error. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   const [afterHours, setAfterHours] = useState(false);
 
@@ -122,55 +240,222 @@ export function SupportTab(props: SupportProps) {
           </CardContent>
         </Card>
       )}
+
+      {!hasSub && (
+        <Card className="mb-6 border-amber-200 dark:border-amber-800 bg-amber-50/50 dark:bg-amber-900/10">
+          <CardContent className="p-4 flex items-start gap-3">
+            <AlertTriangle className="w-5 h-5 text-amber-600 dark:text-amber-400 mt-0.5 flex-shrink-0" />
+            <div>
+              <p className="text-sm font-medium text-amber-700 dark:text-amber-300 mb-1">Subscription Required</p>
+              <p className="text-sm text-muted-foreground mb-3">
+                An active support plan is required to submit tickets. Get priority support starting at $25 CAD/month.
+              </p>
+              <Link href="/subscription">
+                <Button size="sm" className="bg-rose-gold text-rose-gold-foreground hover:bg-rose-gold-hover font-display gap-1">
+                  View Support Plans
+                </Button>
+              </Link>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {hasSub && (
+        <div className="mb-6 flex flex-wrap items-center gap-3">
+          <TierBadge tier={subscriptionInfo.tier as "essentials" | "professional" | "premium"} size="lg" />
+          {!isUnlimited && (
+            <span className="text-sm text-muted-foreground">
+              {subscriptionInfo.ticketsRemaining} of {subscriptionInfo.ticketLimit} tickets remaining
+            </span>
+          )}
+          {isUnlimited && (
+            <span className="text-sm text-muted-foreground">Unlimited tickets</span>
+          )}
+        </div>
+      )}
       {ticketSubmitted ? (
         <Card>
           <CardContent className="p-8 text-center">
             <CheckCircle className="w-12 h-12 text-green-500 mx-auto mb-4" />
             <h3 className="text-lg font-bold font-display text-primary mb-2">Ticket Submitted</h3>
-            <p className="text-sm text-muted-foreground mb-4">We'll respond within 1-2 hours (30 minutes for Premium Support subscribers).</p>
+            <p className="text-sm text-muted-foreground mb-4">
+              We'll respond within{" "}
+              {subscriptionInfo?.tier === "premium" ? "30 minutes" : "1 hour"}{" "}
+              during business hours.
+            </p>
             <Button onClick={() => setTicketSubmitted(false)} variant="outline">Submit Another Ticket</Button>
           </CardContent>
         </Card>
-      ) : (
+      ) : hasSub ? (
         <Card>
           <CardContent className="p-6">
-            <form onSubmit={onSubmit} className="space-y-4">
+            {atLimit && (
+              <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg flex items-center gap-3">
+                <XCircle className="w-4 h-4 text-red-600 dark:text-red-400 flex-shrink-0" />
+                <p className="text-sm text-red-700 dark:text-red-300">
+                  You've reached your ticket limit for this billing period. Tickets reset at the start of your next billing cycle, or you can upgrade for more.
+                </p>
+              </div>
+            )}
+
+            {lastTicket && (
+              <div className="mb-4 p-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg flex items-center gap-3">
+                <AlertTriangle className="w-4 h-4 text-amber-600 dark:text-amber-400 flex-shrink-0" />
+                <p className="text-sm text-amber-700 dark:text-amber-300">
+                  This is your last ticket for this billing period. Consider upgrading for more tickets.
+                </p>
+              </div>
+            )}
+
+            {submitError && (
+              <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg flex items-center gap-3">
+                <XCircle className="w-4 h-4 text-red-600 dark:text-red-400 flex-shrink-0" />
+                <p className="text-sm text-red-700 dark:text-red-300">{submitError}</p>
+              </div>
+            )}
+
+            <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium mb-1">Subject</label>
-                <input type="text" required value={ticketSubject} onChange={(e) => setTicketSubject(e.target.value)} className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm" placeholder="Brief description of your issue" />
+                <label htmlFor="ticket-subject" className="block text-sm font-medium mb-1">Subject</label>
+                <input
+                  id="ticket-subject"
+                  type="text"
+                  required
+                  disabled={atLimit}
+                  value={ticketSubject}
+                  onChange={(e) => setTicketSubject(e.target.value)}
+                  className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm disabled:opacity-50"
+                  placeholder="Brief description of your issue"
+                />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-1">Message</label>
-                <textarea required value={ticketMessage} onChange={(e) => setTicketMessage(e.target.value)} rows={5} className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm resize-none" placeholder="Please describe your issue in detail..." />
+                <label htmlFor="ticket-message" className="block text-sm font-medium mb-1">Message</label>
+                <textarea
+                  id="ticket-message"
+                  required
+                  disabled={atLimit}
+                  value={ticketMessage}
+                  onChange={(e) => setTicketMessage(e.target.value)}
+                  rows={5}
+                  className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm resize-none disabled:opacity-50"
+                  placeholder="Please describe your issue in detail..."
+                />
               </div>
-              <Button type="submit" className="bg-navy text-white hover:bg-navy/90 font-display">Submit Ticket</Button>
+
+              <div className="flex items-center gap-3">
+                <input
+                  id="ticket-critical"
+                  type="checkbox"
+                  checked={isCritical}
+                  disabled={atLimit}
+                  onChange={(e) => setIsCritical(e.target.checked)}
+                  className="w-4 h-4 rounded border-border"
+                />
+                <label htmlFor="ticket-critical" className="text-sm font-medium flex items-center gap-1">
+                  <AlertOctagon className="w-3.5 h-3.5 text-red-500" />
+                  Mark as Critical/Urgent
+                </label>
+              </div>
+
+              <div>
+                <label htmlFor="ticket-attachment" className="block text-sm font-medium mb-1">
+                  Attachment <span className="text-muted-foreground font-normal">(optional)</span>
+                </label>
+                <div className="flex items-center gap-3">
+                  <label
+                    htmlFor="ticket-attachment"
+                    className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-border text-sm cursor-pointer hover:bg-muted transition-colors ${atLimit ? "opacity-50 pointer-events-none" : ""}`}
+                  >
+                    <Paperclip className="w-4 h-4 text-muted-foreground" />
+                    {attachment ? attachment.name : "Choose file"}
+                  </label>
+                  <input
+                    id="ticket-attachment"
+                    type="file"
+                    disabled={atLimit}
+                    accept={ALLOWED_FILE_TYPES.join(",")}
+                    onChange={handleFileChange}
+                    className="hidden"
+                  />
+                  {attachment && (
+                    <button
+                      type="button"
+                      onClick={() => setAttachment(null)}
+                      className="text-xs text-muted-foreground hover:text-foreground"
+                      aria-label="Remove attachment"
+                    >
+                      Remove
+                    </button>
+                  )}
+                </div>
+                {fileError && (
+                  <p className="text-xs text-red-600 dark:text-red-400 mt-1">{fileError}</p>
+                )}
+                <p className="text-xs text-muted-foreground mt-1">
+                  Accepted: .qbm, .png, .jpg, .pdf — Max 25MB
+                </p>
+              </div>
+
+              <Button
+                type="submit"
+                disabled={atLimit || submitting}
+                className="bg-navy text-white hover:bg-navy/90 font-display gap-1"
+                aria-label="Submit support ticket"
+              >
+                {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
+                {submitting ? "Submitting..." : "Submit Ticket"}
+              </Button>
             </form>
           </CardContent>
         </Card>
-      )}
+      ) : null}
+
       {tickets.length > 0 && (
         <div className="mt-6">
           <h3 className="font-semibold font-display text-primary mb-3">Previous Tickets</h3>
           <div className="space-y-3">
             {tickets.map((ticket) => (
-              <Link key={ticket.id} href={`/ticket/${ticket.id}`}>
-                <Card className="hover:shadow-md transition-shadow cursor-pointer">
-                  <CardContent className="p-4">
-                    <div className="flex items-center justify-between">
-                      <div>
+              <Card key={ticket.id}>
+                <CardContent className="p-4">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-2 flex-wrap mb-1">
                         <p className="font-semibold text-sm">{ticket.subject}</p>
-                        <p className="text-xs text-muted-foreground">{new Date(ticket.createdAt).toLocaleDateString()}</p>
+                        {ticket.tierAtSubmission && (
+                          <TierBadge tier={ticket.tierAtSubmission as "essentials" | "professional" | "premium"} size="sm" />
+                        )}
+                        {ticket.isCritical && (
+                          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400 text-[10px] font-bold">
+                            <AlertOctagon className="w-3 h-3" /> CRITICAL
+                          </span>
+                        )}
                       </div>
-                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                        ticket.status === "open" ? "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400"
-                        : ticket.status === "in_progress" ? "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400"
-                        : ticket.status === "resolved" ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"
-                        : "bg-gray-100 text-gray-700 dark:bg-gray-900/30 dark:text-gray-400"
-                      }`}>{ticket.status === "in_progress" ? "In Progress" : ticket.status.charAt(0).toUpperCase() + ticket.status.slice(1)}</span>
+                      <div className="flex items-center gap-3 text-xs text-muted-foreground flex-wrap">
+                        <span>{new Date(ticket.createdAt).toLocaleDateString()}</span>
+                        {ticket.isAfterHours && (
+                          <span className="inline-flex items-center gap-1">
+                            <Clock className="w-3 h-3" /> After hours
+                          </span>
+                        )}
+                        {ticket.respondedAt && (
+                          <span className="inline-flex items-center gap-1 text-green-600 dark:text-green-400">
+                            <MessageCircle className="w-3 h-3" /> Responded
+                          </span>
+                        )}
+                      </div>
                     </div>
-                  </CardContent>
-                </Card>
-              </Link>
+                    <span className={`px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap ${
+                      ticket.status === "open"
+                        ? "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400"
+                        : ticket.status === "in_progress"
+                        ? "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400"
+                        : "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"
+                    }`}>
+                      {ticket.status === "in_progress" ? "In Progress" : ticket.status}
+                    </span>
+                  </div>
+                </CardContent>
+              </Card>
             ))}
           </div>
         </div>
@@ -219,3 +504,5 @@ export function FilesTab({ completedOrders }: FilesProps) {
     </div>
   );
 }
+
+export { type EnhancedTicket };

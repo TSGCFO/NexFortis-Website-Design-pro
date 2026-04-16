@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/catalog", label: "Services & Tools" },
+  { href: "/subscription", label: "Support Plans" },
   { href: "/faq", label: "FAQ" },
   { href: "/qbm-guide", label: "QBM Guide" },
 ];
@@ -269,6 +270,7 @@ export function Footer() {
             <div>
               <h4 className="font-display font-semibold text-lg mb-4 text-white">Support</h4>
               <ul className="space-y-3 text-sm text-white/60">
+                <li><Link href="/subscription" className="hover:text-accent transition-colors">Support Plans</Link></li>
                 <li><Link href="/faq" className="hover:text-accent transition-colors">FAQ</Link></li>
                 <li><a href="mailto:support@nexfortis.com" className="hover:text-accent transition-colors">Contact Us</a></li>
               </ul>

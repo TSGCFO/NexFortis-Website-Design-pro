@@ -20,6 +20,7 @@ import Portal from "@/pages/portal";
 import ForgotPassword from "@/pages/forgot-password";
 import ResetPassword from "@/pages/reset-password";
 import AuthCallback from "@/pages/auth-callback";
+import Subscription from "@/pages/subscription";
 import ServiceDetail from "@/pages/service-detail";
 import Category from "@/pages/category";
 import OrderDetail from "@/pages/order-detail";
@@ -48,6 +49,7 @@ function CustomerRoutes() {
         <Route path="/privacy" component={Privacy} />
         <Route path="/waitlist" component={Waitlist} />
         <Route path="/order" component={Order} />
+        <Route path="/subscription" component={Subscription} />
         <Route path="/service/:slug" component={ServiceDetail} />
         <Route path="/category/:slug" component={Category} />
         <Route path="/login" component={Login} />

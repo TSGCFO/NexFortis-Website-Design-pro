@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { Link } from "wouter";
 import { motion } from "framer-motion";
-import { Shield, Upload, Clock, CheckCircle, ArrowRight, Lock, DollarSign, MapPin, Zap, Award } from "lucide-react";
+import { Shield, Upload, Clock, CheckCircle, ArrowRight, Lock, DollarSign, MapPin, Zap, Award, Headphones } from "lucide-react";
 import { formatPriceCAD, getActivePrice, getProductBySlug, loadProducts, type ProductCatalog } from "@/lib/products";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -364,6 +364,54 @@ export default function Home() {
             <Link href="/catalog">
               <Button variant="outline" className="gap-2 font-display">
                 View All 20 Services <ArrowRight className="w-4 h-4" />
+              </Button>
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+
+      <section className="py-16 section-brand-light">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div {...fadeInUp} className="text-center mb-10">
+            <h2 className="text-3xl font-bold font-display tracking-tight text-primary mb-4">Need Expert QuickBooks Support?</h2>
+            <p className="text-muted-foreground max-w-xl mx-auto">Priority support from Canadian QuickBooks experts with guaranteed response times.</p>
+          </motion.div>
+          <motion.div {...fadeInUp} className="grid md:grid-cols-3 gap-6 mb-8">
+            <Card className="text-center">
+              <CardContent className="p-6">
+                <div className="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mx-auto mb-3">
+                  <Headphones className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+                </div>
+                <h3 className="font-bold font-display text-primary mb-1">Essentials</h3>
+                <p className="text-2xl font-bold text-accent mb-1">$25<span className="text-sm font-normal text-muted-foreground">/mo</span></p>
+                <p className="text-xs text-muted-foreground">3 tickets, 1-hr SLA</p>
+              </CardContent>
+            </Card>
+            <Card className="text-center border-accent ring-2 ring-accent/20">
+              <CardContent className="p-6">
+                <div className="w-12 h-12 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center mx-auto mb-3">
+                  <Headphones className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+                </div>
+                <h3 className="font-bold font-display text-primary mb-1">Professional</h3>
+                <p className="text-2xl font-bold text-accent mb-1">$50<span className="text-sm font-normal text-muted-foreground">/mo</span></p>
+                <p className="text-xs text-muted-foreground">8 tickets, 10% discount</p>
+              </CardContent>
+            </Card>
+            <Card className="text-center">
+              <CardContent className="p-6">
+                <div className="w-12 h-12 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center mx-auto mb-3">
+                  <Headphones className="w-6 h-6 text-amber-600 dark:text-amber-400" />
+                </div>
+                <h3 className="font-bold font-display text-primary mb-1">Premium</h3>
+                <p className="text-2xl font-bold text-accent mb-1">$75<span className="text-sm font-normal text-muted-foreground">/mo</span></p>
+                <p className="text-xs text-muted-foreground">Unlimited, 30-min SLA</p>
+              </CardContent>
+            </Card>
+          </motion.div>
+          <motion.div {...fadeInUp} className="text-center">
+            <Link href="/subscription">
+              <Button className="bg-rose-gold text-rose-gold-foreground hover:bg-rose-gold-hover font-display font-bold gap-2 rounded-full px-8" aria-label="View all support plans">
+                View All Plans <ArrowRight className="w-4 h-4" />
               </Button>
             </Link>
           </motion.div>

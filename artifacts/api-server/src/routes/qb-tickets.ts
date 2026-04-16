@@ -32,7 +32,7 @@ const TICKET_BUCKET = "ticket-attachments";
 
 const upload = multer({
   storage: multer.memoryStorage(),
-  limits: { fileSize: 10 * 1024 * 1024 },
+  limits: { fileSize: 25 * 1024 * 1024 },
 });
 
 const ticketSubmitLimiter = rateLimit({
@@ -107,7 +107,7 @@ router.post("/", ticketSubmitLimiter, (req: Request, res: Response) => {
   singleUpload(req, res, async (err) => {
     if (err) {
       if (err instanceof multer.MulterError && err.code === "LIMIT_FILE_SIZE") {
-        res.status(413).json({ error: "Attachment too large. Maximum size is 10MB." });
+        res.status(413).json({ error: "Attachment too large. Maximum size is 25MB." });
       } else {
         res.status(400).json({ error: err.message || "Upload failed" });
       }
