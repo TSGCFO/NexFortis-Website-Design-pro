@@ -32,6 +32,7 @@ import AdminOrderDetail from "@/pages/admin/order-detail";
 import AdminCustomers from "@/pages/admin/customers";
 import AdminTickets from "@/pages/admin/tickets";
 import AdminTicketDetail from "@/pages/admin/ticket-detail";
+import TicketDetail from "@/pages/ticket-detail";
 
 const queryClient = new QueryClient();
 
@@ -55,6 +56,7 @@ function CustomerRoutes() {
         <Route path="/reset-password" component={ResetPassword} />
         <Route path="/auth/callback" component={AuthCallback} />
         <Route path="/portal" component={Portal} />
+        <Route path="/ticket/:id" component={TicketDetail} />
         <Route path="/order/:id" component={OrderDetail} />
         <Route component={NotFound} />
       </Switch>

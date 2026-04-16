@@ -71,12 +71,54 @@ export const STATUS_COLORS: Record<string, string> = {
 
 export const TICKET_STATUS_LABELS: Record<string, string> = {
   open: "Open",
+  in_progress: "In Progress",
   resolved: "Resolved",
   closed: "Closed",
 };
 
 export const TICKET_STATUS_COLORS: Record<string, string> = {
-  open: "bg-yellow-100 text-yellow-800",
+  open: "bg-blue-100 text-blue-800",
+  in_progress: "bg-amber-100 text-amber-800",
   resolved: "bg-green-100 text-green-800",
   closed: "bg-gray-100 text-gray-800",
 };
+
+export const TIER_LABELS: Record<string, string> = {
+  essentials: "Essentials",
+  professional: "Professional",
+  premium: "Premium",
+};
+
+export const TIER_COLORS: Record<string, string> = {
+  essentials: "bg-blue-100 text-blue-700",
+  professional: "bg-purple-100 text-purple-700",
+  premium: "bg-amber-100 text-amber-700",
+};
+
+export const SLA_COLORS: Record<string, string> = {
+  green: "bg-green-100 text-green-700",
+  yellow: "bg-yellow-100 text-yellow-700",
+  red: "bg-red-100 text-red-700",
+  breached: "bg-red-600 text-white",
+};
+
+export function formatRelativeTime(dateStr: string | Date): string {
+  const date = new Date(dateStr);
+  const now = new Date();
+  const diffMs = now.getTime() - date.getTime();
+  const diffMin = Math.floor(diffMs / 60000);
+  if (diffMin < 1) return "just now";
+  if (diffMin < 60) return `${diffMin}m ago`;
+  const diffHr = Math.floor(diffMin / 60);
+  if (diffHr < 24) return `${diffHr}h ago`;
+  const diffDays = Math.floor(diffHr / 24);
+  return `${diffDays}d ago`;
+}
+
+export function formatSlaRemaining(minutes: number): string {
+  if (minutes <= 0) return "Breached";
+  if (minutes < 60) return `${minutes} min remaining`;
+  const hrs = Math.floor(minutes / 60);
+  const mins = minutes % 60;
+  return `${hrs}h ${mins}m remaining`;
+}

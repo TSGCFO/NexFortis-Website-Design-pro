@@ -1,4 +1,4 @@
-import { pgTable, serial, text, integer, boolean, timestamp, uuid, unique, check } from "drizzle-orm/pg-core";
+import { pgTable, serial, text, integer, boolean, timestamp, uuid, unique, check, jsonb } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
 import { createInsertSchema } from "drizzle-zod";
 
@@ -118,6 +118,28 @@ export const qbReferralEvents = pgTable("qb_referral_events", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
+export const qbTicketReplies = pgTable("qb_ticket_replies", {
+  id: serial("id").primaryKey(),
+  ticketId: integer("ticket_id").references(() => qbSupportTickets.id).notNull(),
+  senderId: uuid("sender_id").references(() => qbUsers.id).notNull(),
+  senderRole: text("sender_role").notNull(),
+  message: text("message").notNull(),
+  attachmentPath: text("attachment_path"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+}, (table) => [
+  check("qb_ticket_replies_sender_role_check", sql`${table.senderRole} IN ('customer', 'operator')`),
+]);
+
+export const qbNotificationEvents = pgTable("qb_notification_events", {
+  id: serial("id").primaryKey(),
+  type: text("type").notNull(),
+  ticketId: integer("ticket_id").references(() => qbSupportTickets.id),
+  userId: uuid("user_id"),
+  payload: jsonb("payload"),
+  sent: boolean("sent").default(false).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
 export const insertQbUserSchema = createInsertSchema(qbUsers);
 export const insertQbOrderSchema = createInsertSchema(qbOrders);
 export const insertQbWaitlistSchema = createInsertSchema(qbWaitlistSignups);
@@ -126,3 +148,5 @@ export const insertQbSubscriptionSchema = createInsertSchema(qbSubscriptions);
 export const insertQbTicketUsageSchema = createInsertSchema(qbTicketUsage);
 export const insertQbReferralSchema = createInsertSchema(qbReferrals);
 export const insertQbReferralEventSchema = createInsertSchema(qbReferralEvents);
+export const insertQbTicketReplySchema = createInsertSchema(qbTicketReplies);
+export const insertQbNotificationEventSchema = createInsertSchema(qbNotificationEvents);

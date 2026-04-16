@@ -6,8 +6,10 @@ import {
   qbSubscriptions,
   qbTicketUsage,
   qbSupportTickets,
+  qbTicketReplies,
+  qbUsers,
 } from "@workspace/db/schema";
-import { eq, and, desc, sql } from "drizzle-orm";
+import { eq, and, desc, asc, sql } from "drizzle-orm";
 import sanitizeHtml from "sanitize-html";
 import { supabaseAdmin } from "../lib/supabase";
 import {
@@ -22,6 +24,7 @@ import {
   getTimeRemainingMinutes,
   getSlaStatus,
 } from "../lib/business-hours";
+import { emitTicketNotification } from "../lib/ticket-notifications";
 
 const router = Router();
 
@@ -192,6 +195,13 @@ router.post("/", ticketSubmitLimiter, (req: Request, res: Response) => {
           );
       }
 
+      await emitTicketNotification("ticket_created", ticket.id, userId, {
+        subject: ticket.subject,
+        tier,
+        isCritical: critical,
+        slaDeadline: slaDeadline.toISOString(),
+      });
+
       res.status(201).json({
         ticket: { ...ticket, attachmentPath },
       });
@@ -212,7 +222,17 @@ router.get("/", async (req: Request, res: Response) => {
       .orderBy(desc(qbSupportTickets.createdAt));
 
     const ticketsWithSla = tickets.map(t => ({
-      ...t,
+      id: t.id,
+      subject: t.subject,
+      message: t.message,
+      status: t.status,
+      isCritical: t.isCritical,
+      isAfterHours: t.isAfterHours,
+      tierAtSubmission: t.tierAtSubmission,
+      firstResponseAt: t.firstResponseAt,
+      slaDeadline: t.slaDeadline,
+      createdAt: t.createdAt,
+      updatedAt: t.updatedAt,
       slaStatus: t.slaDeadline ? getSlaStatus(t.slaDeadline) : null,
       slaRemainingMinutes: t.slaDeadline ? getTimeRemainingMinutes(t.slaDeadline) : null,
     }));
@@ -247,7 +267,17 @@ router.get("/:id", async (req: Request, res: Response) => {
 
     res.json({
       ticket: {
-        ...ticket,
+        id: ticket.id,
+        subject: ticket.subject,
+        message: ticket.message,
+        status: ticket.status,
+        isCritical: ticket.isCritical,
+        isAfterHours: ticket.isAfterHours,
+        tierAtSubmission: ticket.tierAtSubmission,
+        firstResponseAt: ticket.firstResponseAt,
+        slaDeadline: ticket.slaDeadline,
+        createdAt: ticket.createdAt,
+        updatedAt: ticket.updatedAt,
         slaStatus: ticket.slaDeadline ? getSlaStatus(ticket.slaDeadline) : null,
         slaRemainingMinutes: ticket.slaDeadline ? getTimeRemainingMinutes(ticket.slaDeadline) : null,
       },
@@ -255,6 +285,191 @@ router.get("/:id", async (req: Request, res: Response) => {
   } catch (err) {
     console.error("Get ticket error:", err);
     res.status(500).json({ error: "Failed to fetch ticket" });
+  }
+});
+
+const replyUpload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 10 * 1024 * 1024 },
+});
+
+router.post("/:id/replies", (req: Request, res: Response) => {
+  const singleUpload = replyUpload.single("attachment");
+  singleUpload(req, res, async (err) => {
+    if (err) {
+      if (err instanceof multer.MulterError && err.code === "LIMIT_FILE_SIZE") {
+        res.status(413).json({ error: "Attachment too large. Maximum size is 10MB." });
+      } else {
+        res.status(400).json({ error: err.message || "Upload failed" });
+      }
+      return;
+    }
+
+    try {
+      const userId = req.userId!;
+      const userRole = req.userRole || "customer";
+      const ticketId = parseInt(req.params.id as string);
+
+      if (isNaN(ticketId)) {
+        res.status(400).json({ error: "Invalid ticket ID" });
+        return;
+      }
+
+      const message = typeof req.body.message === "string" ? req.body.message.trim() : "";
+      if (!message) {
+        res.status(400).json({ error: "Message is required" });
+        return;
+      }
+
+      const [ticket] = await db
+        .select()
+        .from(qbSupportTickets)
+        .where(eq(qbSupportTickets.id, ticketId))
+        .limit(1);
+
+      if (!ticket) {
+        res.status(404).json({ error: "Ticket not found" });
+        return;
+      }
+
+      const isOperator = userRole === "operator";
+      if (!isOperator && ticket.userId !== userId) {
+        res.status(403).json({ error: "Not authorized to reply to this ticket" });
+        return;
+      }
+
+      const senderRole = isOperator ? "operator" : "customer";
+
+      let attachmentPath: string | null = null;
+      if (req.file) {
+        attachmentPath = await uploadTicketAttachment(ticketId, req.file);
+      }
+
+      const [reply] = await db
+        .insert(qbTicketReplies)
+        .values({
+          ticketId,
+          senderId: userId,
+          senderRole,
+          message: sanitizeInput(message),
+          attachmentPath,
+        })
+        .returning();
+
+      const ticketUpdates: Record<string, unknown> = { updatedAt: new Date() };
+
+      if (isOperator && !ticket.firstResponseAt) {
+        ticketUpdates.firstResponseAt = new Date();
+        console.log(`[SLA] Ticket ${ticketId} first response at ${new Date().toISOString()}, SLA deadline was ${ticket.slaDeadline?.toISOString()}`);
+      }
+
+      if (isOperator && ticket.status === "open") {
+        ticketUpdates.status = "in_progress";
+      }
+
+      await db
+        .update(qbSupportTickets)
+        .set(ticketUpdates)
+        .where(eq(qbSupportTickets.id, ticketId));
+
+      if (isOperator) {
+        await emitTicketNotification("operator_replied", ticketId, ticket.userId!, {
+          subject: ticket.subject,
+          replyPreview: message.substring(0, 200),
+        });
+      } else {
+        await emitTicketNotification("customer_replied", ticketId, userId, {
+          subject: ticket.subject,
+          replyPreview: message.substring(0, 200),
+        });
+      }
+
+      res.status(201).json({ reply });
+    } catch (replyErr) {
+      console.error("Reply submission error:", replyErr);
+      res.status(500).json({ error: "Failed to post reply" });
+    }
+  });
+});
+
+router.get("/:id/replies", async (req: Request, res: Response) => {
+  try {
+    const userId = req.userId!;
+    const userRole = req.userRole || "customer";
+    const ticketId = parseInt(req.params.id as string);
+
+    if (isNaN(ticketId)) {
+      res.status(400).json({ error: "Invalid ticket ID" });
+      return;
+    }
+
+    const [ticket] = await db
+      .select()
+      .from(qbSupportTickets)
+      .where(eq(qbSupportTickets.id, ticketId))
+      .limit(1);
+
+    if (!ticket) {
+      res.status(404).json({ error: "Ticket not found" });
+      return;
+    }
+
+    const isOperator = userRole === "operator";
+    if (!isOperator && ticket.userId !== userId) {
+      res.status(403).json({ error: "Not authorized to view replies" });
+      return;
+    }
+
+    const replies = await db
+      .select({
+        reply: qbTicketReplies,
+        senderName: qbUsers.name,
+        senderEmail: qbUsers.email,
+      })
+      .from(qbTicketReplies)
+      .leftJoin(qbUsers, eq(qbTicketReplies.senderId, qbUsers.id))
+      .where(eq(qbTicketReplies.ticketId, ticketId))
+      .orderBy(asc(qbTicketReplies.createdAt));
+
+    const filteredReplies = isOperator
+      ? replies
+      : replies.filter(r => r.reply.senderRole !== "internal");
+
+    const repliesWithUrls = await Promise.all(
+      filteredReplies.map(async (r) => {
+        let attachmentUrl: string | null = null;
+        if (r.reply.attachmentPath && supabaseAdmin) {
+          const { data } = await supabaseAdmin.storage
+            .from(TICKET_BUCKET)
+            .createSignedUrl(r.reply.attachmentPath, 3600);
+          attachmentUrl = data?.signedUrl || null;
+        }
+
+        if (isOperator) {
+          return {
+            ...r.reply,
+            senderName: r.senderName,
+            senderEmail: r.senderEmail,
+            attachmentUrl,
+          };
+        }
+
+        return {
+          id: r.reply.id,
+          ticketId: r.reply.ticketId,
+          senderRole: r.reply.senderRole,
+          senderName: r.reply.senderRole === "operator" ? "NexFortis Support" : r.senderName,
+          message: r.reply.message,
+          createdAt: r.reply.createdAt,
+          attachmentUrl,
+        };
+      }),
+    );
+
+    res.json({ replies: repliesWithUrls });
+  } catch (err) {
+    console.error("Get replies error:", err);
+    res.status(500).json({ error: "Failed to fetch replies" });
   }
 });
 
