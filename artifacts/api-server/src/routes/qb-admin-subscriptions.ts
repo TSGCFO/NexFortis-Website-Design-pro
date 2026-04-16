@@ -508,6 +508,12 @@ router.post("/tickets/:id/reply", (req: Request, res: Response) => {
         replyPreview: reply.substring(0, 200),
       });
 
+      if (updates.status === "resolved") {
+        await emitTicketNotification("ticket_resolved", ticketId, ticket.userId!, {
+          subject: ticket.subject,
+        });
+      }
+
       res.json({ ticket: updated });
     } catch (err) {
       console.error("Admin ticket reply error:", err);
