@@ -525,7 +525,7 @@ router.post("/tickets/:id/reply", (req: Request, res: Response) => {
           ticketId,
           senderId: operatorId,
           senderRole: "operator",
-          message: sanitizeInput(reply),
+          message: sanitizeInput(trimmedReply),
           attachmentPath,
         });
 
