@@ -68,7 +68,7 @@ Includes tables for `qb_users` (with `stripe_customer_id`), `qb_orders`, `qb_ord
 - **Subscription System**: 3 tiers (Essentials $49/mo, Professional $99/mo, Premium $149/mo) with per-cycle ticket limits (3/8/unlimited), SLA deadlines (60/60/30 min), subscriber discounts (0%/10%/20%), business-hours SLA calculation (Mon-Fri 9am-5pm ET), referral codes for Premium. Stripe setup script at `artifacts/api-server/src/scripts/setup-stripe-subscriptions.ts`.
 - **Data Persistence**: Uses `@workspace/db`.
 - **Validation**: Leverages `@workspace/api-zod`.
-- **Email**: Resend integration for contact form submissions and ticket event notifications (ticket_created, operator_replied, ticket_resolved). Branded HTML email templates with NexFortis styling. Notification preferences with per-type opt-out and unsubscribe token management via `qb_notification_preferences` table. Preference endpoints at `/api/qb/notifications/preferences`.
+- **Email**: Resend integration for contact form submissions, ticket event notifications (ticket_created, operator_replied, ticket_resolved), and subscription lifecycle events (welcome, upgrade, downgrade, cancellation, payment failure). Branded HTML email templates with NexFortis styling (navy/rose-gold). Notification preferences with per-type opt-out and unsubscribe token management via `qb_notification_preferences` table. Preference endpoints at `/api/qb/notifications/preferences`. Subscription emails module at `src/lib/subscription-emails.ts`.
 
 **Replit Platform Constraints & Implementation Rules:**
 - **Static File Serving**: Replit's multi-artifact routing serves static files directly; Express middleware does not apply to them.

@@ -20,6 +20,11 @@ import {
   getStripePriceIds,
   type SubscriptionTier,
 } from "../lib/subscription-config";
+import {
+  sendUpgradeEmail,
+  sendDowngradeEmail,
+  sendCancellationEmail,
+} from "../lib/subscription-emails";
 
 const router = Router();
 
@@ -239,6 +244,11 @@ router.post("/upgrade", subscriptionLimiter, async (req: Request, res: Response)
       .set({ tier: newTier, stripePriceId: priceId, updatedAt: new Date() })
       .where(eq(qbSubscriptions.id, sub.id));
 
+    const [upgradeUser] = await db.select().from(qbUsers).where(eq(qbUsers.id, userId)).limit(1);
+    if (upgradeUser) {
+      sendUpgradeEmail(upgradeUser.email, upgradeUser.name, currentTier, newTier).catch(() => {});
+    }
+
     if (newTier === "premium") {
       const existingRef = await db
         .select()
@@ -326,10 +336,17 @@ router.post("/downgrade", subscriptionLimiter, async (req: Request, res: Respons
       await stripe.subscriptionSchedules.update(schedule.id, { phases });
     }
 
+    const effectiveDate = new Date(period.end * 1000);
+
+    const [downgradeUser] = await db.select().from(qbUsers).where(eq(qbUsers.id, userId)).limit(1);
+    if (downgradeUser) {
+      sendDowngradeEmail(downgradeUser.email, downgradeUser.name, currentTier, newTier, effectiveDate).catch(() => {});
+    }
+
     res.json({
       message: "Downgrade scheduled for next billing cycle",
       newTier,
-      effectiveDate: new Date(period.end * 1000).toISOString(),
+      effectiveDate: effectiveDate.toISOString(),
     });
   } catch (err) {
     console.error("Subscription downgrade error:", err);
@@ -359,6 +376,11 @@ router.post("/cancel", subscriptionLimiter, async (req: Request, res: Response) 
       .update(qbSubscriptions)
       .set({ cancelAtPeriodEnd: true, updatedAt: new Date() })
       .where(eq(qbSubscriptions.id, sub.id));
+
+    const [cancelUser] = await db.select().from(qbUsers).where(eq(qbUsers.id, userId)).limit(1);
+    if (cancelUser && sub.currentPeriodEnd) {
+      sendCancellationEmail(cancelUser.email, cancelUser.name, sub.tier as SubscriptionTier, sub.currentPeriodEnd).catch(() => {});
+    }
 
     res.json({
       message: "Subscription will cancel at end of current period",

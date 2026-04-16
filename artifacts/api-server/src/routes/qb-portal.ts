@@ -11,6 +11,10 @@ import Stripe from "stripe";
 import { supabaseAdmin, isStorageAvailable } from "../lib/supabase";
 import { validateQbmMagicBytes } from "../lib/file-validation";
 import { tierFromPriceId, getTierConfig, isUnlimitedTickets, type SubscriptionTier } from "../lib/subscription-config";
+import {
+  sendWelcomeEmail,
+  sendPaymentFailedEmail,
+} from "../lib/subscription-emails";
 import sanitizeHtml from "sanitize-html";
 
 const router = Router();
@@ -458,6 +462,11 @@ async function handleSubscriptionCheckout(session: Stripe.Checkout.Session) {
     });
   }
 
+  const [welcomeUser] = await db.select().from(qbUsers).where(eq(qbUsers.id, userId)).limit(1);
+  if (welcomeUser) {
+    sendWelcomeEmail(welcomeUser.email, welcomeUser.name, tier as SubscriptionTier).catch(() => {});
+  }
+
   console.log(`[Stripe] Subscription created: ${tier} for user ${userId}`);
 }
 
@@ -530,10 +539,23 @@ async function handleInvoicePaymentFailed(invoice: Stripe.Invoice) {
   const stripeSubId = getInvoiceSubscriptionId(invoice);
   if (!stripeSubId) return;
 
+  const [sub] = await db
+    .select()
+    .from(qbSubscriptions)
+    .where(eq(qbSubscriptions.stripeSubscriptionId, stripeSubId))
+    .limit(1);
+
   await db
     .update(qbSubscriptions)
     .set({ status: "past_due", updatedAt: new Date() })
     .where(eq(qbSubscriptions.stripeSubscriptionId, stripeSubId));
+
+  if (sub) {
+    const [failedUser] = await db.select().from(qbUsers).where(eq(qbUsers.id, sub.userId)).limit(1);
+    if (failedUser) {
+      sendPaymentFailedEmail(failedUser.email, failedUser.name, sub.tier as SubscriptionTier).catch(() => {});
+    }
+  }
 
   console.log(`[Stripe] Payment failed for subscription ${stripeSubId}`);
 }
