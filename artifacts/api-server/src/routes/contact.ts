@@ -31,12 +31,12 @@ function validateContact(body: ContactBody): string | null {
 const contactRouter = Router();
 
 const contactSubmitLimiter = rateLimit({
-  windowMs: 60 * 60 * 1000,
-  limit: 5,
+  windowMs: 15 * 60 * 1000,
+  limit: 3,
   standardHeaders: true,
   legacyHeaders: false,
   keyGenerator: (req) => ipKeyGenerator(req as never),
-  message: { error: "Too many submissions. Please try again in an hour." },
+  message: { error: "Too many submissions. Please try again later." },
 });
 
 const escapeHtml = (str: string) =>

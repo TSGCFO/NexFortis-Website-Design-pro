@@ -252,7 +252,7 @@ router.post("/waitlist", async (req: Request, res: Response) => {
       return;
     }
 
-    const resolvedProductName = product_name || `Product #${parsedProductId}`;
+    const resolvedProductName = product_name ? sanitizeInput(String(product_name)) : `Product #${parsedProductId}`;
     await db.insert(qbWaitlistSignups).values({
       email,
       productId: parsedProductId,
@@ -277,11 +277,13 @@ router.post("/waitlist", async (req: Request, res: Response) => {
 
 router.post("/checkout/create-session", async (req: Request, res: Response) => {
   try {
-    const { serviceId, addonIds, qbVersion, customerName, customerEmail, customerPhone, promoCode, freeOrder } = req.body;
-    if (!serviceId || !customerName || !customerEmail) {
+    const { serviceId, addonIds, qbVersion, customerName: rawCustomerName, customerEmail, customerPhone: rawCustomerPhone, promoCode, freeOrder } = req.body;
+    if (!serviceId || !rawCustomerName || !customerEmail) {
       res.status(400).json({ error: "Missing required fields" });
       return;
     }
+    const customerName = sanitizeInput(String(rawCustomerName));
+    const customerPhone = rawCustomerPhone ? sanitizeInput(String(rawCustomerPhone)) : rawCustomerPhone;
 
     const pricing = computeOrderTotal(serviceId, addonIds || []);
     if (!pricing) {
