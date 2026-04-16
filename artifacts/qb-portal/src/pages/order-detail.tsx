@@ -43,7 +43,8 @@ export default function OrderDetail() {
   const searchString = useSearch();
   const params = new URLSearchParams(searchString);
   const uploadTokenParam = params.get("uploadToken");
-  const { getAccessToken } = useAuth();
+  const { getAccessToken, session } = useAuth();
+  const isAuthenticated = !!session;
 
   const [order, setOrder] = useState<Order | null>(null);
   const [files, setFiles] = useState<OrderFile[]>([]);
@@ -232,15 +233,23 @@ export default function OrderDetail() {
                         ) : !f.storagePath ? (
                           <span className="text-xs text-muted-foreground">File unavailable</span>
                         ) : (order.status === "completed" || order.status === "delivered") ? (
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            className="gap-1"
-                            disabled={downloading === f.id}
-                            onClick={() => handleDownload(f)}
-                          >
-                            <Download className="w-3 h-3" /> {downloading === f.id ? "..." : "Download"}
-                          </Button>
+                          isAuthenticated ? (
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              className="gap-1"
+                              disabled={downloading === f.id}
+                              onClick={() => handleDownload(f)}
+                            >
+                              <Download className="w-3 h-3" /> {downloading === f.id ? "..." : "Download"}
+                            </Button>
+                          ) : (
+                            <Link href="/login">
+                              <span className="text-xs text-accent hover:underline cursor-pointer flex items-center gap-1">
+                                <Download className="w-3 h-3" /> Sign in to download
+                              </span>
+                            </Link>
+                          )
                         ) : null}
                       </div>
                     ))}
