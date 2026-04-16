@@ -8,7 +8,7 @@ I prefer concise and clear explanations. When making changes, please prioritize 
 
 **Project-specific rules (MUST follow):**
 - Do NOT add `requireAuth` to the file upload route `POST /api/qb/orders/:id/files` — it intentionally supports upload-token auth via `x-upload-token` header as an alternative to Bearer auth.
-- Rate limiter `keyGenerator` for authenticated routes must be `(req) => req.userId || req.ip` — falls back to IP when no userId (upload-token path).
+- Rate limiter `keyGenerator` for authenticated routes must be `(req) => req.userId || ipKeyGenerator(req)` — uses `ipKeyGenerator` from `express-rate-limit` for IPv6 safety, falls back to IP when no userId (upload-token path).
 - Rate limiters for authenticated routes must be applied AFTER `requireAuth` in the middleware chain.
 - Do NOT use `supabase.auth.admin.listUsers()` to find a single user — use `getUserByEmail(email)` for direct lookup.
 - Do NOT use `throw new Error()` for missing env vars at module load time — use `console.warn()` and set the export to null. Add 503 checks in route handlers.
@@ -39,7 +39,7 @@ The monorepo is structured into `artifacts/` for deployable applications and `li
 All packages extend a base `tsconfig.base.json` with `composite: true`, enabling root-level type-checking and efficient build processes.
 
 **Database Schema (Drizzle ORM):**
-Includes tables for `qb_users`, `qb_orders`, `qb_order_files`, `qb_support_tickets`, and `qb_waitlist_signups`.
+Includes tables for `qb_users` (with `stripe_customer_id`), `qb_orders`, `qb_order_files`, `qb_support_tickets` (with subscription-aware columns: `subscription_id`, `tier_at_submission`, `is_critical`, `sla_deadline`, `first_response_at`, `operator_reply`, `internal_note`, `attachment_path`, `is_after_hours`), `qb_waitlist_signups`, `qb_subscriptions` (3 tiers: essentials/professional/premium), `qb_ticket_usage` (per-cycle tracking), `qb_referrals`, and `qb_referral_events`.
 
 **Applications:**
 
@@ -62,7 +62,8 @@ Includes tables for `qb_users`, `qb_orders`, `qb_order_files`, `qb_support_ticke
 
 ### Express API Server (`artifacts/api-server`)
 - **Framework**: Express 5
-- **Routes**: `GET /api/healthz`, Blog CRUD, Contact form submission (`POST /api/contact`), QB Portal backend logic (`/api/qb/*`).
+- **Routes**: `GET /api/healthz`, Blog CRUD, Contact form submission (`POST /api/contact`), QB Portal backend logic (`/api/qb/*`), Subscription routes (`/api/qb/subscriptions/*` — checkout, me, upgrade, downgrade, cancel, reactivate, tickets), Admin routes (`/api/qb/admin/*` — subscriptions list/detail, tickets list/reply/status).
+- **Subscription System**: 3 tiers (Essentials $49/mo, Professional $99/mo, Premium $149/mo) with per-cycle ticket limits (3/8/unlimited), SLA deadlines (60/60/30 min), subscriber discounts (0%/10%/20%), business-hours SLA calculation (Mon-Fri 9am-5pm ET), referral codes for Premium. Stripe setup script at `artifacts/api-server/src/scripts/setup-stripe-subscriptions.ts`.
 - **Data Persistence**: Uses `@workspace/db`.
 - **Validation**: Leverages `@workspace/api-zod`.
 - **Email**: Optional Resend integration for contact form submissions.

@@ -3,7 +3,9 @@ import rateLimit from "express-rate-limit";
 import healthRouter from "./health";
 import blogRouter from "./blog";
 import contactRouter from "./contact";
-import qbPortalRouter from "./qb-portal";
+import qbPortalRouter, { requireAuth, requireOperator } from "./qb-portal";
+import qbSubscriptionsRouter from "./qb-subscriptions";
+import qbAdminSubscriptionsRouter from "./qb-admin-subscriptions";
 
 const router: IRouter = Router();
 
@@ -29,5 +31,7 @@ router.post("/contact", contactLimiter);
 router.use("/contact", contactRouter);
 router.post("/qb/checkout/create-session", checkoutLimiter);
 router.use("/qb", qbPortalRouter);
+router.use("/qb/subscriptions", requireAuth, qbSubscriptionsRouter);
+router.use("/qb/admin", requireOperator, qbAdminSubscriptionsRouter);
 
 export default router;

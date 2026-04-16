@@ -1,7 +1,7 @@
 import { Router, type Request, type Response, type NextFunction, type RequestHandler } from "express";
-import rateLimit from "express-rate-limit";
+import rateLimit, { ipKeyGenerator } from "express-rate-limit";
 import { db } from "@workspace/db";
-import { qbUsers, qbOrders, qbOrderFiles, qbWaitlistSignups, qbSupportTickets } from "@workspace/db/schema";
+import { qbUsers, qbOrders, qbOrderFiles, qbWaitlistSignups, qbSupportTickets, qbSubscriptions, qbTicketUsage, qbReferrals } from "@workspace/db/schema";
 import { eq, and, desc } from "drizzle-orm";
 import crypto from "crypto";
 import multer from "multer";
@@ -10,6 +10,7 @@ import fs from "fs";
 import Stripe from "stripe";
 import { supabaseAdmin, isStorageAvailable } from "../lib/supabase";
 import { validateQbmMagicBytes } from "../lib/file-validation";
+import { tierFromPriceId, getTierConfig, isUnlimitedTickets, type SubscriptionTier } from "../lib/subscription-config";
 import sanitizeHtml from "sanitize-html";
 
 const router = Router();
@@ -19,7 +20,7 @@ const orderLimiter = rateLimit({
   limit: 10,
   standardHeaders: true,
   legacyHeaders: false,
-  keyGenerator: (req: any) => req.userId || req.ip,
+  keyGenerator: (req: any) => req.userId || ipKeyGenerator(req),
   message: { error: "Too many requests. Please try again later." },
 });
 
@@ -28,7 +29,7 @@ const ticketLimiter = rateLimit({
   limit: 5,
   standardHeaders: true,
   legacyHeaders: false,
-  keyGenerator: (req: any) => req.userId || req.ip,
+  keyGenerator: (req: any) => req.userId || ipKeyGenerator(req),
   message: { error: "Too many requests. Please try again later." },
 });
 
@@ -281,7 +282,7 @@ router.post("/checkout/create-session", async (req: Request, res: Response) => {
     }).returning();
 
     if (stripe) {
-      const session = await stripe.checkout.sessions.create({
+      const checkoutParams: Stripe.Checkout.SessionCreateParams = {
         mode: "payment",
         customer_email: customerEmail,
         line_items: [{
@@ -295,7 +296,22 @@ router.post("/checkout/create-session", async (req: Request, res: Response) => {
         metadata: { order_id: String(order.id), user_id: userId || "" },
         success_url: `${req.headers.origin || "http://localhost"}/qb-portal/order/${order.id}?success=true&uploadToken=${uploadToken}`,
         cancel_url: `${req.headers.origin || "http://localhost"}/qb-portal/order?canceled=true`,
-      });
+      };
+
+      if (userId) {
+        const [activeSub] = await db.select().from(qbSubscriptions)
+          .where(and(eq(qbSubscriptions.userId, userId), eq(qbSubscriptions.status, "active")))
+          .limit(1);
+
+        if (activeSub) {
+          const subTierConfig = getTierConfig(activeSub.tier as SubscriptionTier);
+          if (subTierConfig.stripeCouponId) {
+            checkoutParams.discounts = [{ coupon: subTierConfig.stripeCouponId }];
+          }
+        }
+      }
+
+      const session = await stripe.checkout.sessions.create(checkoutParams);
 
       await db.update(qbOrders).set({ stripeSessionId: session.id }).where(eq(qbOrders.id, order.id));
 
@@ -350,17 +366,30 @@ router.post("/webhook/stripe", async (req: Request, res: Response) => {
 
     if (event.type === "checkout.session.completed") {
       const session = event.data.object;
-      const orderId = parseInt(session.metadata?.order_id || session.metadata?.orderId || "0");
-      if (orderId) {
-        const [existing] = await db.select().from(qbOrders).where(eq(qbOrders.id, orderId)).limit(1);
-        if (existing && (existing.status === "pending_payment" || existing.status === "submitted")) {
-          await db.update(qbOrders).set({
-            status: "paid",
-            stripeSessionId: session.id,
-          }).where(eq(qbOrders.id, orderId));
-          console.log(`[Stripe] Payment confirmed for order ${orderId}`);
+
+      if (session.mode === "subscription") {
+        await handleSubscriptionCheckout(session);
+      } else {
+        const orderId = parseInt(session.metadata?.order_id || session.metadata?.orderId || "0");
+        if (orderId) {
+          const [existing] = await db.select().from(qbOrders).where(eq(qbOrders.id, orderId)).limit(1);
+          if (existing && (existing.status === "pending_payment" || existing.status === "submitted")) {
+            await db.update(qbOrders).set({
+              status: "paid",
+              stripeSessionId: session.id,
+            }).where(eq(qbOrders.id, orderId));
+            console.log(`[Stripe] Payment confirmed for order ${orderId}`);
+          }
         }
       }
+    } else if (event.type === "invoice.paid") {
+      await handleInvoicePaid(event.data.object);
+    } else if (event.type === "invoice.payment_failed") {
+      await handleInvoicePaymentFailed(event.data.object);
+    } else if (event.type === "customer.subscription.updated") {
+      await handleSubscriptionUpdated(event.data.object);
+    } else if (event.type === "customer.subscription.deleted") {
+      await handleSubscriptionDeleted(event.data.object);
     }
 
     res.json({ received: true });
@@ -369,6 +398,194 @@ router.post("/webhook/stripe", async (req: Request, res: Response) => {
     res.status(400).json({ error: "Webhook verification failed" });
   }
 });
+
+function getSubPeriod(stripeSub: Stripe.Subscription): { start: number; end: number } {
+  const item = stripeSub.items.data[0];
+  return {
+    start: item?.current_period_start ?? 0,
+    end: item?.current_period_end ?? 0,
+  };
+}
+
+async function handleSubscriptionCheckout(session: any) {
+  const userId = session.metadata?.user_id;
+  const tier = session.metadata?.tier;
+  const stripeSubId = session.subscription;
+
+  if (!userId || !tier || !stripeSubId || !stripe) return;
+
+  const [existing] = await db
+    .select()
+    .from(qbSubscriptions)
+    .where(eq(qbSubscriptions.stripeSubscriptionId, stripeSubId))
+    .limit(1);
+
+  if (existing) {
+    console.log(`[Stripe] Subscription ${stripeSubId} already recorded, skipping`);
+    return;
+  }
+
+  const stripeSub = await stripe.subscriptions.retrieve(stripeSubId);
+  const priceId = stripeSub.items.data[0]?.price?.id || null;
+  const period = getSubPeriod(stripeSub);
+
+  const [sub] = await db
+    .insert(qbSubscriptions)
+    .values({
+      userId,
+      tier,
+      status: "active",
+      stripeSubscriptionId: stripeSubId,
+      stripePriceId: priceId,
+      currentPeriodStart: new Date(period.start * 1000),
+      currentPeriodEnd: new Date(period.end * 1000),
+    })
+    .returning();
+
+  const tierConfig = getTierConfig(tier as SubscriptionTier);
+  await db.insert(qbTicketUsage).values({
+    subscriptionId: sub.id,
+    periodStart: new Date(period.start * 1000),
+    periodEnd: new Date(period.end * 1000),
+    ticketLimit: tierConfig.ticketLimit,
+    ticketsUsed: 0,
+  });
+
+  if (tier === "premium") {
+    const code = crypto.randomBytes(4).toString("hex").toUpperCase();
+    await db.insert(qbReferrals).values({
+      userId,
+      subscriptionId: sub.id,
+      code,
+    });
+  }
+
+  console.log(`[Stripe] Subscription created: ${tier} for user ${userId}`);
+}
+
+async function handleInvoicePaid(invoice: any) {
+  const stripeSubId = invoice.subscription;
+  if (!stripeSubId || !stripe) return;
+
+  const [sub] = await db
+    .select()
+    .from(qbSubscriptions)
+    .where(eq(qbSubscriptions.stripeSubscriptionId, stripeSubId))
+    .limit(1);
+
+  if (!sub) return;
+
+  const stripeSub = await stripe.subscriptions.retrieve(stripeSubId);
+  const newPriceId = stripeSub.items.data[0]?.price?.id || sub.stripePriceId;
+  const detectedTier = newPriceId ? tierFromPriceId(newPriceId) : null;
+  const period = getSubPeriod(stripeSub);
+
+  await db
+    .update(qbSubscriptions)
+    .set({
+      status: "active",
+      stripePriceId: newPriceId,
+      tier: detectedTier || sub.tier,
+      currentPeriodStart: new Date(period.start * 1000),
+      currentPeriodEnd: new Date(period.end * 1000),
+      updatedAt: new Date(),
+    })
+    .where(eq(qbSubscriptions.id, sub.id));
+
+  const currentTier = (detectedTier || sub.tier) as SubscriptionTier;
+  const tierConfig = getTierConfig(currentTier);
+
+  const periodStart = new Date(period.start * 1000);
+  const periodEnd = new Date(period.end * 1000);
+
+  const [existingUsage] = await db
+    .select()
+    .from(qbTicketUsage)
+    .where(
+      and(
+        eq(qbTicketUsage.subscriptionId, sub.id),
+        eq(qbTicketUsage.periodStart, periodStart),
+      ),
+    )
+    .limit(1);
+
+  if (!existingUsage) {
+    await db.insert(qbTicketUsage).values({
+      subscriptionId: sub.id,
+      periodStart,
+      periodEnd,
+      ticketLimit: tierConfig.ticketLimit,
+      ticketsUsed: 0,
+    });
+  }
+
+  console.log(`[Stripe] Invoice paid for subscription ${stripeSubId}`);
+}
+
+async function handleInvoicePaymentFailed(invoice: any) {
+  const stripeSubId = invoice.subscription;
+  if (!stripeSubId) return;
+
+  await db
+    .update(qbSubscriptions)
+    .set({ status: "past_due", updatedAt: new Date() })
+    .where(eq(qbSubscriptions.stripeSubscriptionId, stripeSubId));
+
+  console.log(`[Stripe] Payment failed for subscription ${stripeSubId}`);
+}
+
+async function handleSubscriptionUpdated(stripeSub: any) {
+  const stripeSubId = stripeSub.id;
+  if (!stripeSubId) return;
+
+  const [sub] = await db
+    .select()
+    .from(qbSubscriptions)
+    .where(eq(qbSubscriptions.stripeSubscriptionId, stripeSubId))
+    .limit(1);
+
+  if (!sub) return;
+
+  const newPriceId = stripeSub.items?.data?.[0]?.price?.id;
+  const detectedTier = newPriceId ? tierFromPriceId(newPriceId) : null;
+
+  let status: string = sub.status;
+  if (stripeSub.status === "active") status = "active";
+  else if (stripeSub.status === "past_due") status = "past_due";
+  else if (stripeSub.status === "canceled") status = "canceled";
+  else if (stripeSub.status === "incomplete") status = "incomplete";
+
+  await db
+    .update(qbSubscriptions)
+    .set({
+      status,
+      tier: detectedTier || sub.tier,
+      stripePriceId: newPriceId || sub.stripePriceId,
+      cancelAtPeriodEnd: stripeSub.cancel_at_period_end ?? sub.cancelAtPeriodEnd,
+      currentPeriodStart: stripeSub.current_period_start
+        ? new Date(stripeSub.current_period_start * 1000)
+        : sub.currentPeriodStart,
+      currentPeriodEnd: stripeSub.current_period_end
+        ? new Date(stripeSub.current_period_end * 1000)
+        : sub.currentPeriodEnd,
+      updatedAt: new Date(),
+    })
+    .where(eq(qbSubscriptions.id, sub.id));
+
+  console.log(`[Stripe] Subscription updated: ${stripeSubId} -> status=${status}`);
+}
+
+async function handleSubscriptionDeleted(stripeSub: any) {
+  const stripeSubId = stripeSub.id;
+  if (!stripeSubId) return;
+
+  await db
+    .update(qbSubscriptions)
+    .set({ status: "canceled", updatedAt: new Date() })
+    .where(eq(qbSubscriptions.stripeSubscriptionId, stripeSubId));
+
+  console.log(`[Stripe] Subscription deleted: ${stripeSubId}`);
+}
 
 router.get("/orders/lookup", async (req: Request, res: Response) => {
   try {
@@ -687,29 +904,6 @@ router.put("/orders/:id/status", requireOperator, async (req: Request, res: Resp
   } catch (err) {
     console.error("Update order status error:", err);
     res.status(500).json({ error: "Failed to update order status" });
-  }
-});
-
-router.post("/support-tickets", requireAuth, ticketLimiter, async (req: Request, res: Response) => {
-  try {
-    const uid = getUserId(req);
-    const { subject, message } = req.body;
-    if (!subject || !message) {
-      res.status(400).json({ error: "Subject and message are required" });
-      return;
-    }
-
-    const [ticket] = await db.insert(qbSupportTickets).values({
-      userId: uid,
-      subject: sanitizeInput(subject),
-      message: sanitizeInput(message),
-      status: "open",
-    }).returning();
-
-    res.status(201).json({ ticket });
-  } catch (err) {
-    console.error("Support ticket error:", err);
-    res.status(500).json({ error: "Failed to create ticket" });
   }
 });
 
