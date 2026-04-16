@@ -11,12 +11,13 @@ import Stripe from "stripe";
 import { supabaseAdmin, isStorageAvailable } from "../lib/supabase";
 import { getStripeClient, isTestMode } from "../lib/stripe-client";
 import { validateQbmMagicBytes } from "../lib/file-validation";
-import { tierFromPriceId, getTierConfig, isUnlimitedTickets, type SubscriptionTier } from "../lib/subscription-config";
+import { tierFromPriceId, getTierConfig, isValidTier, isUnlimitedTickets, type SubscriptionTier } from "../lib/subscription-config";
 import {
   sendWelcomeEmail,
   sendPaymentFailedEmail,
 } from "../lib/subscription-emails";
 import sanitizeHtml from "sanitize-html";
+import { getValidOrigin } from "../lib/config";
 
 const router = Router();
 
@@ -62,8 +63,13 @@ interface ProductCatalog {
 let catalog: ProductCatalog | null = null;
 function loadCatalog(): ProductCatalog {
   if (!catalog) {
-    const catalogPath = path.resolve(__dirname, "../../../../artifacts/qb-portal/public/products.json");
-    catalog = JSON.parse(fs.readFileSync(catalogPath, "utf-8"));
+    try {
+      const catalogPath = path.resolve(__dirname, "../../../../artifacts/qb-portal/public/products.json");
+      catalog = JSON.parse(fs.readFileSync(catalogPath, "utf-8"));
+    } catch (err) {
+      console.warn("[Catalog] Failed to load product catalog:", err);
+      catalog = { promo_active: false, promo_label: "", services: [] };
+    }
   }
   return catalog!;
 }
@@ -306,8 +312,8 @@ router.post("/checkout/create-session", async (req: Request, res: Response) => {
           quantity: 1,
         }],
         metadata: { order_id: String(order.id), user_id: userId || "" },
-        success_url: `${req.headers.origin || "http://localhost"}/qb-portal/order/${order.id}?success=true&uploadToken=${uploadToken}`,
-        cancel_url: `${req.headers.origin || "http://localhost"}/qb-portal/order?canceled=true`,
+        success_url: `${getValidOrigin(req.headers.origin)}/qb-portal/order/${order.id}?success=true&uploadToken=${uploadToken}`,
+        cancel_url: `${getValidOrigin(req.headers.origin)}/qb-portal/order?canceled=true`,
       };
 
       if (userId) {
@@ -413,10 +419,9 @@ router.post("/webhook/stripe", async (req: Request, res: Response) => {
 });
 
 function getSubPeriod(stripeSub: Stripe.Subscription): { start: number; end: number } {
-  const item = stripeSub.items.data[0];
   return {
-    start: item?.current_period_start ?? 0,
-    end: item?.current_period_end ?? 0,
+    start: (stripeSub as any).current_period_start ?? 0,
+    end: (stripeSub as any).current_period_end ?? 0,
   };
 }
 
@@ -426,6 +431,11 @@ async function handleSubscriptionCheckout(session: Stripe.Checkout.Session) {
   const stripeSubId = session.subscription as string | null;
 
   if (!userId || !tier || !stripeSubId) return;
+
+  if (!isValidTier(tier)) {
+    console.warn(`[Stripe] Invalid tier "${tier}" in subscription metadata for user ${userId}, skipping`);
+    return;
+  }
 
   const stripe = await getStripe();
   if (!stripe) return;
@@ -599,6 +609,8 @@ async function handleSubscriptionUpdated(stripeSub: Stripe.Subscription) {
   else if (stripeSub.status === "canceled") status = "canceled";
   else if (stripeSub.status === "incomplete") status = "incomplete";
 
+  const tierChanged = detectedTier && detectedTier !== sub.tier;
+
   await db
     .update(qbSubscriptions)
     .set({
@@ -612,6 +624,7 @@ async function handleSubscriptionUpdated(stripeSub: Stripe.Subscription) {
       currentPeriodEnd: period.end
         ? new Date(period.end * 1000)
         : sub.currentPeriodEnd,
+      ...(tierChanged ? { pendingDowngradeTier: null } : {}),
       updatedAt: new Date(),
     })
     .where(eq(qbSubscriptions.id, sub.id));

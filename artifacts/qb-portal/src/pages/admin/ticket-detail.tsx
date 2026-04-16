@@ -90,14 +90,7 @@ function TicketDetailContent() {
     try {
       const [ticketRes, repliesRes] = await Promise.all([
         adminFetch(`/tickets/${ticketId}`),
-        fetch(
-          `${(import.meta.env.BASE_URL || "/").replace(/\/qb-portal\/?$/, "")}/api/qb/tickets/${ticketId}/replies`,
-          {
-            headers: {
-              Authorization: `Bearer ${await (await import("@/lib/auth")).getAccessToken()}`,
-            },
-          },
-        ),
+        adminFetch(`/tickets/${ticketId}/replies`),
       ]);
 
       if (ticketRes.status === 404) {

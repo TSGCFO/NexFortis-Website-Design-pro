@@ -74,24 +74,24 @@ export async function emitTicketNotification(
   userId: string,
   payload: Record<string, unknown>,
 ): Promise<void> {
-  const [event] = await db.insert(qbNotificationEvents).values({
-    type,
-    ticketId,
-    userId,
-    payload,
-    sent: false,
-  }).returning();
-
-  logger.info({ type, ticketId, userId, eventId: event.id }, "[Notification] Event emitted");
-
-  if (type === "customer_replied") {
-    return;
-  }
-
-  const prefField = PREF_FIELD_MAP[type];
-  if (!prefField) return;
-
   try {
+    const [event] = await db.insert(qbNotificationEvents).values({
+      type,
+      ticketId,
+      userId,
+      payload,
+      sent: false,
+    }).returning();
+
+    logger.info({ type, ticketId, userId, eventId: event.id }, "[Notification] Event emitted");
+
+    if (type === "customer_replied") {
+      return;
+    }
+
+    const prefField = PREF_FIELD_MAP[type];
+    if (!prefField) return;
+
     const enabled = await isNotificationEnabled(userId, type);
     if (!enabled) {
       logger.info({ type, ticketId, userId }, "[Notification] User opted out of this notification type");
@@ -159,6 +159,6 @@ export async function emitTicketNotification(
       }
     }
   } catch (err) {
-    logger.error({ err, type, ticketId, userId }, "[Notification] Failed to send email");
+    logger.error({ err, type, ticketId, userId }, "[Notification] Failed to process notification");
   }
 }

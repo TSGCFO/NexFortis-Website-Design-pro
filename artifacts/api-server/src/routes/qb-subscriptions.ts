@@ -4,10 +4,9 @@ import { db } from "@workspace/db";
 import {
   qbUsers,
   qbSubscriptions,
-  qbTicketUsage,
   qbReferrals,
 } from "@workspace/db/schema";
-import { eq, and, sql } from "drizzle-orm";
+import { eq, and } from "drizzle-orm";
 import crypto from "crypto";
 import Stripe from "stripe";
 import { supabaseAdmin } from "../lib/supabase";
@@ -26,14 +25,15 @@ import {
   sendDowngradeEmail,
   sendCancellationEmail,
 } from "../lib/subscription-emails";
+import { getOrCreateTicketUsage } from "../lib/ticket-usage";
+import { getValidOrigin } from "../lib/config";
 
 const router = Router();
 
 function getSubPeriod(stripeSub: Stripe.Subscription): { start: number; end: number } {
-  const item = stripeSub.items.data[0];
   return {
-    start: item?.current_period_start ?? 0,
-    end: item?.current_period_end ?? 0,
+    start: (stripeSub as any).current_period_start ?? 0,
+    end: (stripeSub as any).current_period_end ?? 0,
   };
 }
 
@@ -54,27 +54,6 @@ async function getActiveSubscription(userId: string) {
     .where(and(eq(qbSubscriptions.userId, userId), eq(qbSubscriptions.status, "active")))
     .limit(1);
   return sub || null;
-}
-
-async function getOrCreateTicketUsage(subscriptionId: number, periodStart: Date, periodEnd: Date, ticketLimit: number) {
-  const [existing] = await db
-    .select()
-    .from(qbTicketUsage)
-    .where(
-      and(
-        eq(qbTicketUsage.subscriptionId, subscriptionId),
-        eq(qbTicketUsage.periodStart, periodStart),
-      ),
-    )
-    .limit(1);
-
-  if (existing) return existing;
-
-  const [created] = await db
-    .insert(qbTicketUsage)
-    .values({ subscriptionId, periodStart, periodEnd, ticketLimit, ticketsUsed: 0 })
-    .returning();
-  return created;
 }
 
 router.post("/checkout", subscriptionLimiter, async (req: Request, res: Response) => {
@@ -134,8 +113,8 @@ router.post("/checkout", subscriptionLimiter, async (req: Request, res: Response
       subscription_data: {
         metadata: { user_id: userId, tier },
       },
-      success_url: `${req.headers.origin || "http://localhost"}/qb-portal/subscription?success=true`,
-      cancel_url: `${req.headers.origin || "http://localhost"}/qb-portal/subscription?canceled=true`,
+      success_url: `${getValidOrigin(req.headers.origin)}/qb-portal/subscription?success=true`,
+      cancel_url: `${getValidOrigin(req.headers.origin)}/qb-portal/subscription?canceled=true`,
     });
 
     res.status(201).json({ checkoutUrl: session.url });
@@ -223,11 +202,12 @@ router.post("/upgrade", subscriptionLimiter, async (req: Request, res: Response)
     }
 
     const priceIds = getStripePriceIds(newTier);
-    const priceId = priceIds.standard || priceIds.promo;
-    if (!priceId) {
-      res.status(503).json({ error: "Subscription pricing not configured" });
+    if (!priceIds.standard) {
+      console.error(`[Subscription] Standard price not configured for tier "${newTier}"`);
+      res.status(500).json({ error: "Standard subscription price is not configured for this tier" });
       return;
     }
+    const priceId = priceIds.standard;
 
     const stripeSub = await stripe.subscriptions.retrieve(sub.stripeSubscriptionId);
     const itemId = stripeSub.items.data[0]?.id;
@@ -242,30 +222,32 @@ router.post("/upgrade", subscriptionLimiter, async (req: Request, res: Response)
       metadata: { user_id: userId, tier: newTier },
     });
 
-    await db
-      .update(qbSubscriptions)
-      .set({ tier: newTier, stripePriceId: priceId, updatedAt: new Date() })
-      .where(eq(qbSubscriptions.id, sub.id));
+    await db.transaction(async (tx) => {
+      await tx
+        .update(qbSubscriptions)
+        .set({ tier: newTier, stripePriceId: priceId, updatedAt: new Date() })
+        .where(eq(qbSubscriptions.id, sub.id));
+
+      if (newTier === "premium") {
+        const existingRef = await tx
+          .select()
+          .from(qbReferrals)
+          .where(eq(qbReferrals.subscriptionId, sub.id))
+          .limit(1);
+        if (existingRef.length === 0) {
+          const code = crypto.randomBytes(4).toString("hex").toUpperCase();
+          await tx.insert(qbReferrals).values({
+            userId,
+            subscriptionId: sub.id,
+            code,
+          });
+        }
+      }
+    });
 
     const [upgradeUser] = await db.select().from(qbUsers).where(eq(qbUsers.id, userId)).limit(1);
     if (upgradeUser) {
       sendUpgradeEmail(upgradeUser.email, upgradeUser.name, currentTier, newTier).catch(() => {});
-    }
-
-    if (newTier === "premium") {
-      const existingRef = await db
-        .select()
-        .from(qbReferrals)
-        .where(eq(qbReferrals.subscriptionId, sub.id))
-        .limit(1);
-      if (existingRef.length === 0) {
-        const code = crypto.randomBytes(4).toString("hex").toUpperCase();
-        await db.insert(qbReferrals).values({
-          userId,
-          subscriptionId: sub.id,
-          code,
-        });
-      }
     }
 
     res.json({ message: "Subscription upgraded successfully", tier: newTier });
@@ -306,11 +288,12 @@ router.post("/downgrade", subscriptionLimiter, async (req: Request, res: Respons
     }
 
     const priceIds = getStripePriceIds(newTier);
-    const priceId = priceIds.standard || priceIds.promo;
-    if (!priceId) {
-      res.status(503).json({ error: "Subscription pricing not configured" });
+    if (!priceIds.standard) {
+      console.error(`[Subscription] Standard price not configured for tier "${newTier}"`);
+      res.status(500).json({ error: "Standard subscription price is not configured for this tier" });
       return;
     }
+    const priceId = priceIds.standard;
 
     const stripeSub = await stripe.subscriptions.retrieve(sub.stripeSubscriptionId);
     const period = getSubPeriod(stripeSub);
@@ -343,6 +326,11 @@ router.post("/downgrade", subscriptionLimiter, async (req: Request, res: Respons
     }
 
     const effectiveDate = new Date(period.end * 1000);
+
+    await db
+      .update(qbSubscriptions)
+      .set({ pendingDowngradeTier: newTier, updatedAt: new Date() })
+      .where(eq(qbSubscriptions.id, sub.id));
 
     const [downgradeUser] = await db.select().from(qbUsers).where(eq(qbUsers.id, userId)).limit(1);
     if (downgradeUser) {

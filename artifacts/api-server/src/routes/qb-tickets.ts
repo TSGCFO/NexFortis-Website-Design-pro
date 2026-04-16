@@ -25,14 +25,36 @@ import {
   getSlaStatus,
 } from "../lib/business-hours";
 import { emitTicketNotification } from "../lib/ticket-notifications";
+import { getOrCreateTicketUsage } from "../lib/ticket-usage";
 
 const router = Router();
 
 const TICKET_BUCKET = "ticket-attachments";
 
+const ALLOWED_TICKET_MIMETYPES = [
+  "image/jpeg",
+  "image/png",
+  "image/gif",
+  "image/webp",
+  "application/pdf",
+  "application/msword",
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  "text/plain",
+  "text/csv",
+];
+
+const ticketFileFilter: multer.Options["fileFilter"] = (_req, file, cb) => {
+  if (ALLOWED_TICKET_MIMETYPES.includes(file.mimetype)) {
+    cb(null, true);
+  } else {
+    cb(new Error(`File type "${file.mimetype}" is not allowed. Accepted: images, PDF, Word documents, plain text, and CSV.`));
+  }
+};
+
 const upload = multer({
   storage: multer.memoryStorage(),
   limits: { fileSize: 25 * 1024 * 1024 },
+  fileFilter: ticketFileFilter,
 });
 
 const ticketSubmitLimiter = rateLimit({
@@ -55,27 +77,6 @@ async function getActiveSubscription(userId: string) {
     .where(and(eq(qbSubscriptions.userId, userId), eq(qbSubscriptions.status, "active")))
     .limit(1);
   return sub || null;
-}
-
-async function getOrCreateTicketUsage(subscriptionId: number, periodStart: Date, periodEnd: Date, ticketLimit: number) {
-  const [existing] = await db
-    .select()
-    .from(qbTicketUsage)
-    .where(
-      and(
-        eq(qbTicketUsage.subscriptionId, subscriptionId),
-        eq(qbTicketUsage.periodStart, periodStart),
-      ),
-    )
-    .limit(1);
-
-  if (existing) return existing;
-
-  const [created] = await db
-    .insert(qbTicketUsage)
-    .values({ subscriptionId, periodStart, periodEnd, ticketLimit, ticketsUsed: 0 })
-    .returning();
-  return created;
 }
 
 async function uploadTicketAttachment(
@@ -132,45 +133,61 @@ router.post("/", ticketSubmitLimiter, (req: Request, res: Response) => {
       const tier = sub.tier as SubscriptionTier;
       const tierConfig = getTierConfig(tier);
 
-      if (!isUnlimitedTickets(tier) && sub.currentPeriodStart && sub.currentPeriodEnd) {
-        const usage = await getOrCreateTicketUsage(
-          sub.id,
-          sub.currentPeriodStart,
-          sub.currentPeriodEnd,
-          tierConfig.ticketLimit,
-        );
-
-        if (usage.ticketsUsed >= tierConfig.ticketLimit) {
-          res.status(403).json({
-            error: "Ticket limit reached for this billing cycle",
-            ticketsUsed: usage.ticketsUsed,
-            ticketLimit: tierConfig.ticketLimit,
-            resetDate: sub.currentPeriodEnd.toISOString(),
-          });
-          return;
-        }
-      }
-
       const now = new Date();
       const critical = isCritical === "true" || isCritical === true;
       const afterHours = isAfterHours(now);
       const slaMinutes = getSlaMinutesForTier(tier);
       const slaDeadline = calculateSlaDeadline(now, slaMinutes, critical);
 
-      const [ticket] = await db
-        .insert(qbSupportTickets)
-        .values({
-          userId,
-          subscriptionId: sub.id,
-          tierAtSubmission: tier,
-          subject: sanitizeInput(subject),
-          message: sanitizeInput(message),
-          status: "open",
-          isCritical: critical,
-          isAfterHours: afterHours,
-          slaDeadline,
-        })
-        .returning();
+      const ticket = await db.transaction(async (tx) => {
+        if (!isUnlimitedTickets(tier) && sub.currentPeriodStart && sub.currentPeriodEnd) {
+          const usage = await getOrCreateTicketUsage(
+            sub.id,
+            sub.currentPeriodStart,
+            sub.currentPeriodEnd,
+            tierConfig.ticketLimit,
+            tx,
+          );
+
+          if (usage.ticketsUsed >= tierConfig.ticketLimit) {
+            throw Object.assign(new Error("Ticket limit reached for this billing cycle"), {
+              limitReached: true,
+              ticketsUsed: usage.ticketsUsed,
+              ticketLimit: tierConfig.ticketLimit,
+              resetDate: sub.currentPeriodEnd!.toISOString(),
+            });
+          }
+        }
+
+        const [created] = await tx
+          .insert(qbSupportTickets)
+          .values({
+            userId,
+            subscriptionId: sub.id,
+            tierAtSubmission: tier,
+            subject: sanitizeInput(subject),
+            message: sanitizeInput(message),
+            status: "open",
+            isCritical: critical,
+            isAfterHours: afterHours,
+            slaDeadline,
+          })
+          .returning();
+
+        if (!isUnlimitedTickets(tier) && sub.currentPeriodStart && sub.currentPeriodEnd) {
+          await tx
+            .update(qbTicketUsage)
+            .set({ ticketsUsed: sql`${qbTicketUsage.ticketsUsed} + 1` })
+            .where(
+              and(
+                eq(qbTicketUsage.subscriptionId, sub.id),
+                eq(qbTicketUsage.periodStart, sub.currentPeriodStart),
+              ),
+            );
+        }
+
+        return created;
+      });
 
       let attachmentPath: string | null = null;
       if (req.file) {
@@ -183,29 +200,26 @@ router.post("/", ticketSubmitLimiter, (req: Request, res: Response) => {
         }
       }
 
-      if (!isUnlimitedTickets(tier) && sub.currentPeriodStart && sub.currentPeriodEnd) {
-        await db
-          .update(qbTicketUsage)
-          .set({ ticketsUsed: sql`${qbTicketUsage.ticketsUsed} + 1` })
-          .where(
-            and(
-              eq(qbTicketUsage.subscriptionId, sub.id),
-              eq(qbTicketUsage.periodStart, sub.currentPeriodStart),
-            ),
-          );
-      }
-
-      await emitTicketNotification("ticket_created", ticket.id, userId, {
+      emitTicketNotification("ticket_created", ticket.id, userId, {
         subject: ticket.subject,
         tier,
         isCritical: critical,
         slaDeadline: slaDeadline.toISOString(),
-      });
+      }).catch((err) => console.error("[Notification] Failed:", err));
 
       res.status(201).json({
         ticket: { ...ticket, attachmentPath },
       });
-    } catch (ticketErr) {
+    } catch (ticketErr: any) {
+      if (ticketErr?.limitReached) {
+        res.status(403).json({
+          error: ticketErr.message,
+          ticketsUsed: ticketErr.ticketsUsed,
+          ticketLimit: ticketErr.ticketLimit,
+          resetDate: ticketErr.resetDate,
+        });
+        return;
+      }
       console.error("Ticket submission error:", ticketErr);
       res.status(500).json({ error: "Failed to create ticket" });
     }
@@ -291,6 +305,7 @@ router.get("/:id", async (req: Request, res: Response) => {
 const replyUpload = multer({
   storage: multer.memoryStorage(),
   limits: { fileSize: 10 * 1024 * 1024 },
+  fileFilter: ticketFileFilter,
 });
 
 router.post("/:id/replies", (req: Request, res: Response) => {
