@@ -21,14 +21,38 @@ if (!supabaseUrl || !serviceRoleKey) {
 
 export { supabaseAdmin };
 
-export function createSupabaseClient(accessToken: string): SupabaseClient {
+let storageAvailable = false;
+
+async function verifyStorageBucket(): Promise<void> {
+  if (!supabaseAdmin) return;
+  try {
+    const { error } = await supabaseAdmin.storage.from("order-files").list("", { limit: 1 });
+    if (error) {
+      console.error(`[Storage] order-files bucket verification failed: ${error.message}`);
+      return;
+    }
+    storageAvailable = true;
+  } catch (err) {
+    console.error("[Storage] order-files bucket verification failed:", err);
+  }
+}
+
+verifyStorageBucket();
+
+export function isStorageAvailable(): boolean {
+  return storageAvailable;
+}
+
+export function createSupabaseClient(accessToken: string): SupabaseClient | null {
   const anonKey = process.env["SUPABASE_ANON_KEY"];
   if (!anonKey) {
-    throw new Error("SUPABASE_ANON_KEY environment variable is required.");
+    console.warn("SUPABASE_ANON_KEY is missing — createSupabaseClient unavailable.");
+    return null;
   }
 
   if (!supabaseUrl) {
-    throw new Error("SUPABASE_URL environment variable is required.");
+    console.warn("SUPABASE_URL is missing — createSupabaseClient unavailable.");
+    return null;
   }
 
   return createClient(

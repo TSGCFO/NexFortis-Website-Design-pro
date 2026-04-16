@@ -8,7 +8,8 @@ import multer from "multer";
 import path from "path";
 import fs from "fs";
 import Stripe from "stripe";
-import { supabaseAdmin } from "../lib/supabase";
+import { supabaseAdmin, isStorageAvailable } from "../lib/supabase";
+import { validateQbmMagicBytes } from "../lib/file-validation";
 import sanitizeHtml from "sanitize-html";
 
 const router = Router();
@@ -35,13 +36,20 @@ interface CatalogProduct {
   id: number;
   slug: string;
   name: string;
-  price_cad: number;
+  base_price_cad: number;
+  launch_price_cad: number;
   is_addon: boolean;
   badge: string;
   requires_service: number | null;
+  accepted_file_types: string[];
+  category_slug: string;
+  pack_size?: number;
+  billing_type?: string;
 }
 
 interface ProductCatalog {
+  promo_active: boolean;
+  promo_label: string;
   services: CatalogProduct[];
 }
 
@@ -54,42 +62,50 @@ function loadCatalog(): ProductCatalog {
   return catalog!;
 }
 
+function getActivePrice(product: CatalogProduct): number {
+  const cat = loadCatalog();
+  return cat.promo_active ? product.launch_price_cad : product.base_price_cad;
+}
+
 function computeOrderTotal(serviceId: number, addonIds: number[]): { total: number; serviceName: string; addonNames: string[] } | null {
   const cat = loadCatalog();
   const service = cat.services.find(s => s.id === serviceId && !s.is_addon && s.badge === "available");
   if (!service) return null;
 
-  let total = service.price_cad;
+  let total = getActivePrice(service);
   const addonNames: string[] = [];
 
   for (const addonId of addonIds) {
     const addon = cat.services.find(s => s.id === addonId && s.is_addon && s.badge === "available");
     if (!addon) return null;
     if (addon.requires_service !== null && addon.requires_service !== serviceId) return null;
-    total += addon.price_cad;
+    total += getActivePrice(addon);
     addonNames.push(addon.name);
   }
 
   return { total, serviceName: service.name, addonNames };
 }
 
+const VALID_STATUS_TRANSITIONS: Record<string, string[]> = {
+  pending_payment: ["paid"],
+  submitted: ["paid"],
+  paid: ["processing"],
+  processing: ["completed"],
+};
+
+function isValidStatusTransition(from: string, to: string): boolean {
+  return VALID_STATUS_TRANSITIONS[from]?.includes(to) ?? false;
+}
+
 const stripe = process.env["STRIPE_SECRET_KEY"]
   ? new Stripe(process.env["STRIPE_SECRET_KEY"])
   : null;
 
-const UPLOADS_DIR = path.resolve(process.cwd(), "uploads");
 const MAX_UPLOAD_BYTES = 500 * 1024 * 1024;
 
 const upload = multer({
-  dest: UPLOADS_DIR,
+  storage: multer.memoryStorage(),
   limits: { fileSize: MAX_UPLOAD_BYTES },
-  fileFilter: (_req, file, cb) => {
-    if (file.originalname.toLowerCase().endsWith(".qbm")) {
-      cb(null, true);
-    } else {
-      cb(new Error("Only .QBM files are accepted"));
-    }
-  },
 });
 
 declare global {
@@ -257,11 +273,11 @@ router.post("/checkout/create-session", async (req: Request, res: Response) => {
           price_data: {
             currency: "cad",
             product_data: { name: pricing.serviceName },
-            unit_amount: pricing.total * 100,
+            unit_amount: pricing.total,
           },
           quantity: 1,
         }],
-        metadata: { orderId: String(order.id), uploadToken },
+        metadata: { order_id: String(order.id), user_id: userId || "", uploadToken },
         success_url: `${req.headers.origin || "http://localhost"}/qb-portal/order/${order.id}?success=true&uploadToken=${uploadToken}`,
         cancel_url: `${req.headers.origin || "http://localhost"}/qb-portal/order?canceled=true`,
       });
@@ -319,13 +335,16 @@ router.post("/webhook/stripe", async (req: Request, res: Response) => {
 
     if (event.type === "checkout.session.completed") {
       const session = event.data.object;
-      const orderId = parseInt(session.metadata?.orderId || "0");
+      const orderId = parseInt(session.metadata?.order_id || session.metadata?.orderId || "0");
       if (orderId) {
-        await db.update(qbOrders).set({
-          status: "submitted",
-          stripeSessionId: session.id,
-        }).where(eq(qbOrders.id, orderId));
-        console.log(`[Stripe] Payment confirmed for order ${orderId}`);
+        const [existing] = await db.select().from(qbOrders).where(eq(qbOrders.id, orderId)).limit(1);
+        if (existing && (existing.status === "pending_payment" || existing.status === "submitted")) {
+          await db.update(qbOrders).set({
+            status: "paid",
+            stripeSessionId: session.id,
+          }).where(eq(qbOrders.id, orderId));
+          console.log(`[Stripe] Payment confirmed for order ${orderId}`);
+        }
       }
     }
 
@@ -401,9 +420,6 @@ router.get("/orders/:id", requireAuth, async (req: Request, res: Response) => {
   }
 });
 
-// orderLimiter targets file uploads (not order creation) because orders are
-// created via Stripe checkout, which is already protected by checkoutLimiter.
-// File upload is the authenticated order-related write that needs per-user limiting.
 router.post("/orders/:id/files", orderLimiter, (req: Request, res: Response) => {
   const orderId = parseInt(req.params.id as string);
   if (isNaN(orderId)) {
@@ -412,7 +428,7 @@ router.post("/orders/:id/files", orderLimiter, (req: Request, res: Response) => 
   }
 
   const authHeader = req.headers.authorization;
-  const uploadTokenHeader = (req.headers["x-upload-token"] as string) || (req.query.uploadToken as string);
+  const uploadTokenHeader = req.headers["x-upload-token"] as string | undefined;
 
   let userIdPromise: Promise<string | null>;
   if (supabaseAdmin && authHeader?.startsWith("Bearer ")) {
@@ -431,7 +447,7 @@ router.post("/orders/:id/files", orderLimiter, (req: Request, res: Response) => 
   singleUpload(req, res, async (err) => {
     if (err) {
       if (err instanceof multer.MulterError && err.code === "LIMIT_FILE_SIZE") {
-        res.status(413).json({ error: "File exceeds 500 MB limit" });
+        res.status(413).json({ error: "File too large. Maximum size is 500MB." });
       } else {
         res.status(400).json({ error: err.message || "Upload failed" });
       }
@@ -450,31 +466,79 @@ router.post("/orders/:id/files", orderLimiter, (req: Request, res: Response) => 
         orderQuery = await db.select().from(qbOrders)
           .where(and(eq(qbOrders.id, orderId), eq(qbOrders.userId, userId)))
           .limit(1);
-      } else {
+      } else if (uploadTokenHeader) {
         orderQuery = await db.select().from(qbOrders)
           .where(and(eq(qbOrders.id, orderId), eq(qbOrders.uploadToken, uploadTokenHeader)))
           .limit(1);
+      } else {
+        res.status(401).json({ error: "Authentication or upload token required" });
+        return;
       }
 
       const [order] = orderQuery;
       if (!order) {
-        res.status(404).json({ error: "Order not found" });
+        res.status(404).json({ error: "Order not found." });
         return;
       }
 
+      if (userId && order.userId !== userId) {
+        res.status(403).json({ error: "Forbidden." });
+        return;
+      }
+
+      const cat = loadCatalog();
+      const product = cat.services.find(s => s.id === order.serviceId);
+      const isQbmProduct = product ? product.accepted_file_types.includes(".qbm") : true;
+      const ext = path.extname(req.file.originalname).toLowerCase();
+
+      if (product && product.accepted_file_types.length > 0) {
+        if (!product.accepted_file_types.includes(ext)) {
+          res.status(400).json({ error: `Invalid file type. Accepted types: ${product.accepted_file_types.join(", ")}` });
+          return;
+        }
+      }
+
+      if (isQbmProduct && ext === ".qbm") {
+        if (!validateQbmMagicBytes(req.file.buffer)) {
+          res.status(400).json({ error: "Invalid file format. Expected a QuickBooks backup file (.QBM). The uploaded file does not appear to be a valid QuickBooks backup." });
+          return;
+        }
+      }
+
+      if (!isStorageAvailable() || !supabaseAdmin) {
+        res.status(503).json({ error: "Storage service is not configured. Please try again later." });
+        return;
+      }
+
+      const ownerId = userId || "anonymous";
+      const storagePath = `${ownerId}/${orderId}/${Date.now()}-${req.file.originalname}`;
+      const { error: uploadError } = await supabaseAdmin.storage
+        .from("order-files")
+        .upload(storagePath, req.file.buffer, {
+          contentType: req.file.mimetype,
+          upsert: false,
+        });
+
+      if (uploadError) {
+        console.error("[Storage] Upload failed:", uploadError);
+        res.status(500).json({ error: `Storage upload failed: ${uploadError.message}` });
+        return;
+      }
+
+      const fileType = ext.replace(".", "") || "unknown";
       const [fileRecord] = await db.insert(qbOrderFiles).values({
         orderId,
-        fileType: "qbm",
+        fileType,
         fileName: req.file.originalname,
-        storagePath: req.file.filename,
+        storagePath,
         fileSizeBytes: req.file.size,
       }).returning();
 
-      console.log(`[File Upload] Order ${orderId}: ${req.file.originalname} (${req.file.size} bytes) -> ${req.file.filename}`);
+      console.log(`[File Upload] Order ${orderId}: ${req.file.originalname} (${req.file.size} bytes) -> ${storagePath}`);
 
       res.status(201).json({ file: fileRecord });
     } catch (dbErr) {
-      console.error("File upload DB error:", dbErr);
+      console.error("File upload error:", dbErr);
       res.status(500).json({ error: "Failed to record file upload" });
     }
   });
@@ -490,13 +554,26 @@ router.get("/orders/:id/files/:fileId/download", async (req: Request, res: Respo
     }
 
     const authHeader = req.headers.authorization;
-    const uploadTokenHeader = req.query.uploadToken as string;
+    const uploadTokenHeader = req.headers["x-upload-token"] as string | undefined;
 
     let userId: string | null = null;
+    let isOperator = false;
     if (supabaseAdmin && authHeader?.startsWith("Bearer ")) {
       const token = authHeader.slice(7);
       const { data: { user } } = await supabaseAdmin.auth.getUser(token);
       userId = user?.id || null;
+      if (userId) {
+        const [profile] = await db.select().from(qbUsers).where(eq(qbUsers.id, userId)).limit(1);
+        if (profile?.role === "operator") {
+          try {
+            const payload = token.split(".")[1];
+            if (payload) {
+              const decoded = JSON.parse(Buffer.from(payload, "base64url").toString());
+              if (decoded.aal === "aal2") isOperator = true;
+            }
+          } catch { /* not operator */ }
+        }
+      }
     }
 
     if (!userId && !uploadTokenHeader) {
@@ -505,14 +582,21 @@ router.get("/orders/:id/files/:fileId/download", async (req: Request, res: Respo
     }
 
     let orderQuery;
-    if (userId) {
+    if (isOperator) {
+      orderQuery = await db.select().from(qbOrders)
+        .where(eq(qbOrders.id, orderId))
+        .limit(1);
+    } else if (userId) {
       orderQuery = await db.select().from(qbOrders)
         .where(and(eq(qbOrders.id, orderId), eq(qbOrders.userId, userId)))
         .limit(1);
-    } else {
+    } else if (uploadTokenHeader) {
       orderQuery = await db.select().from(qbOrders)
         .where(and(eq(qbOrders.id, orderId), eq(qbOrders.uploadToken, uploadTokenHeader)))
         .limit(1);
+    } else {
+      res.status(401).json({ error: "Authentication or upload token required" });
+      return;
     }
 
     const [order] = orderQuery;
@@ -521,28 +605,83 @@ router.get("/orders/:id/files/:fileId/download", async (req: Request, res: Respo
       return;
     }
 
+    if (userId && !isOperator && order.userId !== userId) {
+      res.status(403).json({ error: "Forbidden." });
+      return;
+    }
+
     const [file] = await db.select().from(qbOrderFiles)
       .where(and(eq(qbOrderFiles.id, fileId), eq(qbOrderFiles.orderId, orderId)))
       .limit(1);
 
-    if (!file || !file.storagePath) {
+    if (!file) {
       res.status(404).json({ error: "File not found" });
       return;
     }
 
-    const filePath = path.join(UPLOADS_DIR, file.storagePath);
-    if (!fs.existsSync(filePath)) {
-      res.status(404).json({ error: "File no longer available" });
+    if (file.expired) {
+      res.status(410).json({ error: "This file has expired and been deleted per our 7-day retention policy." });
       return;
     }
 
-    res.setHeader("Content-Disposition", `attachment; filename="${file.fileName}"`);
-    res.setHeader("Content-Type", "application/octet-stream");
-    const stream = fs.createReadStream(filePath);
-    stream.pipe(res);
+    if (!file.storagePath) {
+      res.status(410).json({ error: "File is no longer available." });
+      return;
+    }
+
+    if (!isStorageAvailable() || !supabaseAdmin) {
+      res.status(503).json({ error: "Storage service is not configured." });
+      return;
+    }
+
+    const expiresIn = isOperator ? 900 : 3600;
+    const { data: signedUrlData, error: signError } = await supabaseAdmin.storage
+      .from("order-files")
+      .createSignedUrl(file.storagePath, expiresIn);
+
+    if (signError || !signedUrlData?.signedUrl) {
+      console.error("[Storage] Signed URL error:", signError);
+      res.status(500).json({ error: "Failed to generate download URL" });
+      return;
+    }
+
+    res.json({ signedUrl: signedUrlData.signedUrl });
   } catch (err) {
     console.error("File download error:", err);
     res.status(500).json({ error: "Download failed" });
+  }
+});
+
+router.put("/orders/:id/status", requireOperator, async (req: Request, res: Response) => {
+  try {
+    const orderId = parseInt(req.params.id as string);
+    const { status } = req.body;
+
+    if (isNaN(orderId) || !status) {
+      res.status(400).json({ error: "Order ID and status are required" });
+      return;
+    }
+
+    const [order] = await db.select().from(qbOrders).where(eq(qbOrders.id, orderId)).limit(1);
+    if (!order) {
+      res.status(404).json({ error: "Order not found" });
+      return;
+    }
+
+    if (!isValidStatusTransition(order.status, status)) {
+      res.status(400).json({ error: "Invalid status transition." });
+      return;
+    }
+
+    const [updated] = await db.update(qbOrders)
+      .set({ status, updatedAt: new Date() })
+      .where(eq(qbOrders.id, orderId))
+      .returning();
+
+    res.json({ order: updated });
+  } catch (err) {
+    console.error("Update order status error:", err);
+    res.status(500).json({ error: "Failed to update order status" });
   }
 });
 

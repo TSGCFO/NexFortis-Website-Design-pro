@@ -54,9 +54,11 @@ Includes tables for `qb_users`, `qb_orders`, `qb_order_files`, `qb_support_ticke
 - **Framework**: React 19 + Vite + Tailwind CSS v4
 - **Routing**: Wouter
 - **Design Language**: NexFortis brand-consistent design with specific color palette (navy, azure, rose-gold), Inter and Alegreya Sans SC fonts, dark mode support, glassmorphism, sticky scroll-aware navbar, and branded footer.
-- **Features**: Product catalog (`public/products.json` with 20 products), order flow with .qbm file upload (500MB limit via Multer), waitlist, FAQ, QBM guide, client portal, Stripe integration (test mode).
-- **Auth**: Supabase Auth (email/password, Google/Microsoft OAuth) with JWT Bearer tokens. Social login redirects to `/auth/callback`.
-- **API**: Dedicated routes at `/api/qb/` for various functionalities.
+- **Features**: Product catalog (`public/products.json` with 20 products across 5 categories), dynamic order flow with per-product file type validation, volume pack and subscription flows (no file upload), bundle handling, waitlist, FAQ, QBM guide, client portal, Stripe integration (test mode).
+- **File Storage**: Supabase Storage (`order-files` bucket) with memoryStorage multer, magic byte validation for QBM files (OLE2 header), signed download URLs (1hr customer, 15min operator), 7-day auto-deletion cron via pg_cron. Graceful degradation via `isStorageAvailable()` flag.
+- **Auth**: Supabase Auth (email/password, Google/Microsoft OAuth) with JWT Bearer tokens. Social login redirects to `/auth/callback`. MFA (TOTP) required for operator access (AAL2 enforcement).
+- **API**: Dedicated routes at `/api/qb/` for orders, files, checkout, webhooks, support tickets, waitlist, and user management. Status transitions enforced: `pending_payment → paid → processing → completed`.
+- **Upload Security**: Upload token transmitted via `X-Upload-Token` header only (no query parameter). File validation includes extension check against product's `accepted_file_types` and QBM magic byte verification.
 
 ### Express API Server (`artifacts/api-server`)
 - **Framework**: Express 5
@@ -70,8 +72,8 @@ Includes tables for `qb_users`, `qb_orders`, `qb_order_files`, `qb_support_ticke
 - **Hosting Layer**: Replit adds `strict-transport-security` (HSTS) headers; Helmet's HSTS should be disabled to avoid duplicates.
 - **Environment Variables**: Managed via Replit's Secrets panel; `.env` files are not used.
 - **Express Middleware Order**: Strict order for security, body parsing, CORS, logging, and rate limiting. Stripe webhook route must precede `express.json()`.
-- **Authentication**: `requireAuth` middleware for Supabase JWT verification; special `x-upload-token` auth for file uploads. Per-user rate limiters use `req.userId || req.ip`.
-- **Anti-Patterns**: Avoid throwing errors for missing optional environment variables at module load, using `supabase.auth.admin.listUsers()` for single user lookups, `new Error()` in CORS callbacks, `express.static()` on the API server, `hsts` in Helmet, and incorrect webhook body parsing.
+- **Authentication**: `requireAuth` middleware for Supabase JWT verification; special `X-Upload-Token` header auth for file uploads (no query param fallback). Per-user rate limiters use `req.userId || req.ip`.
+- **Anti-Patterns**: Avoid throwing errors for missing optional environment variables at module load (use console.warn + null), using `supabase.auth.admin.listUsers()` for single user lookups, `new Error()` in CORS callbacks, `express.static()` on the API server, `hsts` in Helmet, and incorrect webhook body parsing.
 
 # External Dependencies
 
@@ -79,7 +81,7 @@ Includes tables for `qb_users`, `qb_orders`, `qb_order_files`, `qb_support_ticke
 - **ORM**: Drizzle ORM
 - **Authentication**: Supabase Auth (@supabase/supabase-js)
 - **Security**: Helmet, express-rate-limit, sanitize-html, CORS
-- **File Uploads**: multer
+- **File Uploads**: multer (memoryStorage), Supabase Storage
 - **Payment Processing**: Stripe
 - **Email Sending**: Resend (optional)
 - **API Definition**: OpenAPI 3.1

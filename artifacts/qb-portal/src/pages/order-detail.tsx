@@ -3,7 +3,7 @@ import { Link, useParams, useSearch } from "wouter";
 import { useAuth } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowLeft, Package, Clock, CheckCircle, Download, FileText, Shield } from "lucide-react";
+import { ArrowLeft, Package, Clock, CheckCircle, Download, FileText, Shield, AlertCircle } from "lucide-react";
 import { SEO } from "@/components/seo";
 
 interface OrderFile {
@@ -12,6 +12,8 @@ interface OrderFile {
   fileType: string;
   fileSizeBytes: number;
   uploadedAt: string;
+  expired?: boolean;
+  storagePath?: string | null;
 }
 
 interface Order {
@@ -30,6 +32,7 @@ interface Order {
 const statusConfig: Record<string, { color: string; icon: typeof Clock; label: string }> = {
   submitted: { color: "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400", icon: Clock, label: "Submitted" },
   pending_payment: { color: "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400", icon: Clock, label: "Pending Payment" },
+  paid: { color: "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400", icon: CheckCircle, label: "Paid" },
   processing: { color: "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400", icon: Package, label: "Processing" },
   completed: { color: "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400", icon: CheckCircle, label: "Completed" },
   delivered: { color: "bg-accent/10 text-accent", icon: CheckCircle, label: "Delivered" },
@@ -46,6 +49,7 @@ export default function OrderDetail() {
   const [files, setFiles] = useState<OrderFile[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [downloading, setDownloading] = useState<number | null>(null);
 
   useEffect(() => {
     async function fetchOrder() {
@@ -81,6 +85,39 @@ export default function OrderDetail() {
     fetchOrder();
   }, [id, uploadTokenParam, getAccessToken]);
 
+  const handleDownload = async (fileItem: OrderFile) => {
+    if (fileItem.expired || !fileItem.storagePath) return;
+    setDownloading(fileItem.id);
+    try {
+      const token = await getAccessToken();
+      const url = `/api/qb/orders/${order!.id}/files/${fileItem.id}/download`;
+      const headers: Record<string, string> = {};
+      if (token) headers["Authorization"] = `Bearer ${token}`;
+      if (uploadTokenParam) headers["X-Upload-Token"] = uploadTokenParam;
+
+      const response = await fetch(url, { headers });
+      if (!response.ok) {
+        const errData = await response.json().catch(() => ({}));
+        console.error("Download failed:", errData.error || response.statusText);
+        return;
+      }
+      const data = await response.json();
+      if (data.signedUrl) {
+        const link = document.createElement("a");
+        link.href = data.signedUrl;
+        link.download = fileItem.fileName;
+        link.rel = "noopener noreferrer";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+    } catch (err) {
+      console.error("Download error:", err);
+    } finally {
+      setDownloading(null);
+    }
+  };
+
   if (loading) {
     return <div className="min-h-screen flex items-center justify-center"><div className="animate-pulse text-muted-foreground">Loading order...</div></div>;
   }
@@ -98,7 +135,7 @@ export default function OrderDetail() {
 
   const config = statusConfig[order.status] || statusConfig.submitted;
   const StatusIcon = config.icon;
-  const progress = order.status === "completed" || order.status === "delivered" ? 100 : order.status === "processing" ? 66 : 33;
+  const progress = order.status === "completed" || order.status === "delivered" ? 100 : order.status === "processing" ? 66 : order.status === "paid" ? 50 : 33;
 
   return (
     <div>
@@ -132,10 +169,10 @@ export default function OrderDetail() {
                 <div className="h-full rounded-full bg-accent transition-all" style={{ width: `${progress}%` }} />
               </div>
               <div className="flex justify-between text-xs text-muted-foreground">
-                <span className={order.status !== "submitted" ? "text-primary font-medium" : "text-accent font-medium"}>Submitted</span>
+                <span className={order.status !== "submitted" && order.status !== "pending_payment" ? "text-primary font-medium" : "text-accent font-medium"}>Submitted</span>
+                <span className={order.status === "paid" ? "text-accent font-medium" : order.status === "processing" || order.status === "completed" || order.status === "delivered" ? "text-primary font-medium" : ""}>Paid</span>
                 <span className={order.status === "processing" ? "text-accent font-medium" : order.status === "completed" || order.status === "delivered" ? "text-primary font-medium" : ""}>Processing</span>
                 <span className={order.status === "completed" || order.status === "delivered" ? "text-accent font-medium" : ""}>Completed</span>
-                <span className={order.status === "delivered" ? "text-accent font-medium" : ""}>Delivered</span>
               </div>
             </CardContent>
           </Card>
@@ -187,35 +224,24 @@ export default function OrderDetail() {
                             </p>
                           </div>
                         </div>
-                        {(order.status === "completed" || order.status === "delivered") && (
+                        {f.expired ? (
+                          <div className="flex items-center gap-1.5 text-muted-foreground">
+                            <AlertCircle className="w-3.5 h-3.5" />
+                            <span className="text-xs">Expired — deleted after 7 days</span>
+                          </div>
+                        ) : !f.storagePath ? (
+                          <span className="text-xs text-muted-foreground">File unavailable</span>
+                        ) : (order.status === "completed" || order.status === "delivered") ? (
                           <Button
                             size="sm"
                             variant="outline"
                             className="gap-1"
-                            onClick={async () => {
-                              const token = await getAccessToken();
-                              let url = `/api/qb/orders/${order.id}/files/${f.id}/download`;
-                              if (token) {
-                                const link = document.createElement("a");
-                                link.href = url;
-                                const response = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
-                                if (response.ok) {
-                                  const blob = await response.blob();
-                                  const blobUrl = URL.createObjectURL(blob);
-                                  link.href = blobUrl;
-                                  link.download = f.fileName;
-                                  link.click();
-                                  URL.revokeObjectURL(blobUrl);
-                                }
-                              } else if (uploadTokenParam) {
-                                url += `?uploadToken=${encodeURIComponent(uploadTokenParam)}`;
-                                window.open(url, "_blank");
-                              }
-                            }}
+                            disabled={downloading === f.id}
+                            onClick={() => handleDownload(f)}
                           >
-                            <Download className="w-3 h-3" /> Download
+                            <Download className="w-3 h-3" /> {downloading === f.id ? "..." : "Download"}
                           </Button>
-                        )}
+                        ) : null}
                       </div>
                     ))}
                   </div>

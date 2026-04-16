@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from "react";
 import { useSearch } from "wouter";
 import { Shield, Lock } from "lucide-react";
 import { useAuth } from "@/lib/auth";
-import { loadProducts, type ProductCatalog, formatPrice, getActivePrice } from "@/lib/products";
+import { loadProducts, type ProductCatalog, type Product, formatPrice, getActivePrice, getProductById } from "@/lib/products";
 import { SEO } from "@/components/seo";
 import OrderComplete from "@/pages/order-complete";
 import OrderForm from "@/pages/order-form";
@@ -40,8 +40,23 @@ export default function Order() {
     };
   }, [catalog]);
 
+  const selectedProduct: Product | undefined = catalog && selectedService ? getProductById(catalog, selectedService) : undefined;
+
   const selectedSvc = services.find((s) => s.id === selectedService);
   const isAvailableService = !!selectedSvc;
+
+  const requiresFileUpload = selectedProduct
+    ? selectedProduct.accepted_file_types.length > 0
+    : false;
+
+  const isVolumePack = selectedProduct?.category_slug === "volume-packs";
+  const isSubscription = selectedProduct?.billing_type === "subscription";
+  const showFileUpload = requiresFileUpload && !isVolumePack && !isSubscription;
+
+  const acceptedFileTypes = selectedProduct?.accepted_file_types ?? [];
+  const acceptAttr = acceptedFileTypes.length > 0
+    ? acceptedFileTypes.map(t => `${t},${t.toUpperCase()}`).join(",")
+    : undefined;
 
   const total = useMemo(() => {
     let sum = selectedSvc?.price || 0;
@@ -52,16 +67,35 @@ export default function Order() {
     return sum;
   }, [selectedSvc, selectedAddons, addons]);
 
-  const canSubmit = isAvailableService && !!file && !!qbVersion && confirmed && !!name && !!email;
+  const canSubmit = isAvailableService
+    && (showFileUpload ? !!file : true)
+    && (showFileUpload ? !!qbVersion : true)
+    && confirmed
+    && !!name
+    && !!email;
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const f = e.target.files?.[0];
     setFileError(""); setFileWarning("");
     if (!f) { setFile(null); return; }
-    if (!f.name.toLowerCase().endsWith(".qbm")) { setFileError("Only .QBM files accepted."); setFile(null); return; }
+
+    const ext = f.name.toLowerCase().split(".").pop() || "";
+    const dotExt = `.${ext}`;
+    if (acceptedFileTypes.length > 0 && !acceptedFileTypes.includes(dotExt)) {
+      setFileError(`Only ${acceptedFileTypes.join(", ")} files accepted.`);
+      setFile(null);
+      return;
+    }
     if (f.size > 500 * 1024 * 1024) { setFileError("File exceeds 500 MB limit."); setFile(null); return; }
     if (f.size > 100 * 1024 * 1024) { setFileWarning("Large file detected (>100 MB). Processing may take longer."); }
     setFile(f);
+  };
+
+  const handleServiceChange = (id: number) => {
+    setSelectedService(id);
+    setFile(null);
+    setFileError("");
+    setFileWarning("");
   };
 
   const toggleAddon = (id: number) => {
@@ -78,13 +112,13 @@ export default function Order() {
       if (token) headers["Authorization"] = `Bearer ${token}`;
       const res = await fetch("/api/qb/checkout/create-session", {
         method: "POST", headers,
-        body: JSON.stringify({ serviceId: selectedService, addonIds: selectedAddons, qbVersion, customerName: name, customerEmail: email, customerPhone: phone || null }),
+        body: JSON.stringify({ serviceId: selectedService, addonIds: selectedAddons, qbVersion: qbVersion || null, customerName: name, customerEmail: email, customerPhone: phone || null }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Failed to create order");
       const createdOrderId = data.order?.id || data.orderId || null;
       setOrderId(createdOrderId);
-      if (file && createdOrderId) {
+      if (file && createdOrderId && showFileUpload) {
         const formData = new FormData(); formData.append("file", file);
         const uploadHeaders: Record<string, string> = {};
         if (token) uploadHeaders["Authorization"] = `Bearer ${token}`;
@@ -123,9 +157,14 @@ export default function Order() {
         <div className="max-w-3xl mx-auto px-4">
           <OrderForm
             services={services} addons={addons}
-            selectedService={selectedService} setSelectedService={setSelectedService}
+            selectedService={selectedService} setSelectedService={handleServiceChange}
             selectedAddons={selectedAddons} toggleAddon={toggleAddon}
             isAvailableService={isAvailableService}
+            showFileUpload={showFileUpload}
+            isVolumePack={isVolumePack}
+            isSubscription={isSubscription}
+            selectedProduct={selectedProduct}
+            acceptAttr={acceptAttr}
             file={file} fileError={fileError} fileWarning={fileWarning} handleFileChange={handleFileChange}
             qbVersion={qbVersion} setQbVersion={setQbVersion}
             confirmed={confirmed} setConfirmed={setConfirmed}
