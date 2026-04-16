@@ -1,0 +1,2 @@
+ALTER TABLE "qb_subscriptions" ADD COLUMN "pending_downgrade_tier" text;--> statement-breakpoint
+ALTER TABLE "qb_support_tickets" ADD CONSTRAINT "qb_support_tickets_status_check" CHECK ("qb_support_tickets"."status" IN ('open', 'in_progress', 'resolved', 'closed'));

@@ -57,6 +57,7 @@ export const qbWaitlistSignups = pgTable("qb_waitlist_signups", {
 export const qbSupportTickets = pgTable("qb_support_tickets", {
   id: serial("id").primaryKey(),
   userId: uuid("user_id").references(() => qbUsers.id),
+  // No FK to qb_subscriptions — intentional. Tickets must persist after subscription cancellation.
   subscriptionId: integer("subscription_id"),
   tierAtSubmission: text("tier_at_submission"),
   subject: text("subject").notNull(),
@@ -71,7 +72,9 @@ export const qbSupportTickets = pgTable("qb_support_tickets", {
   attachmentPath: text("attachment_path"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
-});
+}, (table) => [
+  check("qb_support_tickets_status_check", sql`${table.status} IN ('open', 'in_progress', 'resolved', 'closed')`),
+]);
 
 export const qbSubscriptions = pgTable("qb_subscriptions", {
   id: serial("id").primaryKey(),
