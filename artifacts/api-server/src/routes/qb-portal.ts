@@ -151,20 +151,26 @@ const requireOperator: RequestHandler = async (req: Request, res: Response, next
       return;
     }
 
-    // TODO(Prompt 03B): enforce AAL2 strictly — return 403 when aal !== 'aal2'
     const authHeader = req.headers.authorization;
-    if (authHeader?.startsWith("Bearer ")) {
-      try {
-        const payload = authHeader.slice(7).split(".")[1];
-        if (payload) {
-          const decoded = JSON.parse(Buffer.from(payload, "base64url").toString());
-          if (decoded.aal !== "aal2") {
-            console.warn("Operator session is AAL1 — MFA not yet enrolled");
-          }
-        }
-      } catch {
-        console.warn("Could not decode JWT for AAL check");
+    if (!authHeader?.startsWith("Bearer ")) {
+      res.status(403).json({ error: "MFA verification required. Please complete your two-factor authentication." });
+      return;
+    }
+
+    try {
+      const payload = authHeader.slice(7).split(".")[1];
+      if (!payload) {
+        res.status(403).json({ error: "MFA verification required. Please complete your two-factor authentication." });
+        return;
       }
+      const decoded = JSON.parse(Buffer.from(payload, "base64url").toString());
+      if (decoded.aal !== "aal2") {
+        res.status(403).json({ error: "MFA verification required. Please complete your two-factor authentication." });
+        return;
+      }
+    } catch {
+      res.status(403).json({ error: "MFA verification required. Please complete your two-factor authentication." });
+      return;
     }
 
     next();

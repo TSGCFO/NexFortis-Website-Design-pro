@@ -24,6 +24,9 @@ import ServiceDetail from "@/pages/service-detail";
 import Category from "@/pages/category";
 import OrderDetail from "@/pages/order-detail";
 import NotFound from "@/pages/not-found";
+import AdminPage from "@/pages/admin/index";
+import MFAEnroll from "@/pages/admin/mfa-enroll";
+import MFAChallenge from "@/pages/admin/mfa-challenge";
 
 const queryClient = new QueryClient();
 
@@ -48,6 +51,9 @@ function Router() {
         <Route path="/auth/callback" component={AuthCallback} />
         <Route path="/portal" component={Portal} />
         <Route path="/order/:id" component={OrderDetail} />
+        <Route path="/admin/mfa-enroll" component={MFAEnroll} />
+        <Route path="/admin/mfa-challenge" component={MFAChallenge} />
+        <Route path="/admin" component={AdminPage} />
         <Route component={NotFound} />
       </Switch>
     </Layout>

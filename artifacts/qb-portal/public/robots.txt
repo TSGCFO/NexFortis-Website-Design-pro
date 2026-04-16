@@ -8,5 +8,7 @@ Disallow: /reset-password
 Disallow: /order
 Disallow: /auth/callback
 Disallow: /admin
+Disallow: /admin/mfa-enroll
+Disallow: /admin/mfa-challenge
 
 Sitemap: https://qb.nexfortis.com/sitemap.xml
