@@ -13,16 +13,12 @@ export async function emitTicketNotification(
   userId: string,
   payload: Record<string, unknown>,
 ): Promise<void> {
-  try {
-    await db.insert(qbNotificationEvents).values({
-      type,
-      ticketId,
-      userId,
-      payload,
-      sent: false,
-    });
-    console.log(`[Notification] ${type} emitted for ticket ${ticketId}`);
-  } catch (err) {
-    console.error(`[Notification] Failed to emit ${type} for ticket ${ticketId}:`, err);
-  }
+  await db.insert(qbNotificationEvents).values({
+    type,
+    ticketId,
+    userId,
+    payload,
+    sent: false,
+  });
+  console.log(`[Notification] ${type} emitted for ticket ${ticketId}`);
 }
