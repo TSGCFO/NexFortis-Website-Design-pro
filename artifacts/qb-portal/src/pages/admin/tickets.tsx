@@ -232,6 +232,7 @@ function TicketsContent() {
             <input
               type="text"
               placeholder="Search by subject or email..."
+              aria-label="Search tickets by subject or email"
               value={search}
               onChange={e => setSearch(e.target.value)}
               className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#B76E79]/30 focus:border-[#B76E79]"

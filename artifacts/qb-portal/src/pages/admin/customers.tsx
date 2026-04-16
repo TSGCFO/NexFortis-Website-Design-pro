@@ -83,6 +83,7 @@ function CustomersContent() {
             <input
               type="text"
               placeholder="Search by name or email..."
+              aria-label="Search customers by name or email"
               value={search}
               onChange={e => { setSearch(e.target.value); setPage(1); }}
               className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#B76E79]/30 focus:border-[#B76E79]"
@@ -132,6 +133,7 @@ function CustomersContent() {
               <button
                 onClick={() => setPage(p => Math.max(1, p - 1))}
                 disabled={page <= 1}
+                aria-label="Previous page"
                 className="p-1.5 rounded hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 <ChevronLeft className="w-4 h-4" />
@@ -140,6 +142,7 @@ function CustomersContent() {
               <button
                 onClick={() => setPage(p => Math.min(totalPages, p + 1))}
                 disabled={page >= totalPages}
+                aria-label="Next page"
                 className="p-1.5 rounded hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 <ChevronRight className="w-4 h-4" />
