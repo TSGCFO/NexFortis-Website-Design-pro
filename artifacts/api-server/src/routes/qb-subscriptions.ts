@@ -11,6 +11,7 @@ import { eq, and, sql } from "drizzle-orm";
 import crypto from "crypto";
 import Stripe from "stripe";
 import { supabaseAdmin } from "../lib/supabase";
+import { getStripeClient } from "../lib/stripe-client";
 import {
   getTierConfig,
   isValidTier,
@@ -27,10 +28,6 @@ import {
 } from "../lib/subscription-emails";
 
 const router = Router();
-
-const stripe = process.env["STRIPE_SECRET_KEY"]
-  ? new Stripe(process.env["STRIPE_SECRET_KEY"])
-  : null;
 
 function getSubPeriod(stripeSub: Stripe.Subscription): { start: number; end: number } {
   const item = stripeSub.items.data[0];
@@ -82,7 +79,10 @@ async function getOrCreateTicketUsage(subscriptionId: number, periodStart: Date,
 
 router.post("/checkout", subscriptionLimiter, async (req: Request, res: Response) => {
   try {
-    if (!stripe) {
+    let stripe: Stripe;
+    try {
+      stripe = await getStripeClient();
+    } catch {
       res.status(503).json({ error: "Payment service unavailable" });
       return;
     }
@@ -194,7 +194,10 @@ router.get("/me", async (req: Request, res: Response) => {
 
 router.post("/upgrade", subscriptionLimiter, async (req: Request, res: Response) => {
   try {
-    if (!stripe) {
+    let stripe: Stripe;
+    try {
+      stripe = await getStripeClient();
+    } catch {
       res.status(503).json({ error: "Payment service unavailable" });
       return;
     }
@@ -274,7 +277,10 @@ router.post("/upgrade", subscriptionLimiter, async (req: Request, res: Response)
 
 router.post("/downgrade", subscriptionLimiter, async (req: Request, res: Response) => {
   try {
-    if (!stripe) {
+    let stripe: Stripe;
+    try {
+      stripe = await getStripeClient();
+    } catch {
       res.status(503).json({ error: "Payment service unavailable" });
       return;
     }
@@ -356,7 +362,10 @@ router.post("/downgrade", subscriptionLimiter, async (req: Request, res: Respons
 
 router.post("/cancel", subscriptionLimiter, async (req: Request, res: Response) => {
   try {
-    if (!stripe) {
+    let stripe: Stripe;
+    try {
+      stripe = await getStripeClient();
+    } catch {
       res.status(503).json({ error: "Payment service unavailable" });
       return;
     }
@@ -394,7 +403,10 @@ router.post("/cancel", subscriptionLimiter, async (req: Request, res: Response) 
 
 router.post("/reactivate", subscriptionLimiter, async (req: Request, res: Response) => {
   try {
-    if (!stripe) {
+    let stripe: Stripe;
+    try {
+      stripe = await getStripeClient();
+    } catch {
       res.status(503).json({ error: "Payment service unavailable" });
       return;
     }

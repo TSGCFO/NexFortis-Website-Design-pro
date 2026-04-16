@@ -19,6 +19,7 @@ env = { "CI" = "true" }
 [agent]
 stack = "PNPM_WORKSPACE"
 expertMode = true
+integrations = ["stripe:1.0.0"]
 
 [postMerge]
 path = "scripts/post-merge.sh"
@@ -26,3 +27,15 @@ timeoutMs = 20000
 
 [nix]
 channel = "stable-25_05"
+
+[userenv]
+
+[userenv.shared]
+STRIPE_PRICE_ESSENTIALS = "price_1TMj4LCsnLlfv2j7P9032NSu"
+STRIPE_PRICE_ESSENTIALS_PROMO = "price_1TMj4LCsnLlfv2j7LbUTfj3q"
+STRIPE_PRICE_PROFESSIONAL = "price_1TMj4MCsnLlfv2j7KfWx6hI9"
+STRIPE_PRICE_PROFESSIONAL_PROMO = "price_1TMj4MCsnLlfv2j74jkNoPUY"
+STRIPE_PRICE_PREMIUM = "price_1TMj4NCsnLlfv2j7RAtc6I3c"
+STRIPE_PRICE_PREMIUM_PROMO = "price_1TMj4NCsnLlfv2j7bMwLDRd3"
+STRIPE_COUPON_PRO_10 = "pro_service_10"
+STRIPE_COUPON_PREMIUM_20 = "premium_service_20"

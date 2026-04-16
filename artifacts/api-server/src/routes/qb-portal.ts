@@ -9,6 +9,7 @@ import path from "path";
 import fs from "fs";
 import Stripe from "stripe";
 import { supabaseAdmin, isStorageAvailable } from "../lib/supabase";
+import { getStripeClient, isTestMode } from "../lib/stripe-client";
 import { validateQbmMagicBytes } from "../lib/file-validation";
 import { tierFromPriceId, getTierConfig, isUnlimitedTickets, type SubscriptionTier } from "../lib/subscription-config";
 import {
@@ -102,9 +103,17 @@ function isValidStatusTransition(from: string, to: string): boolean {
   return VALID_STATUS_TRANSITIONS[from]?.includes(to) ?? false;
 }
 
-const stripe = process.env["STRIPE_SECRET_KEY"]
-  ? new Stripe(process.env["STRIPE_SECRET_KEY"])
-  : null;
+let stripeClient: Stripe | null = null;
+
+async function getStripe(): Promise<Stripe | null> {
+  if (stripeClient) return stripeClient;
+  try {
+    stripeClient = await getStripeClient();
+    return stripeClient;
+  } catch {
+    return null;
+  }
+}
 
 const MAX_UPLOAD_BYTES = 500 * 1024 * 1024;
 const ALLOWED_EXTENSIONS = [".qbm", ".qbw", ".qbb", ".csv", ".xlsx", ".pdf", ".zip"];
@@ -283,6 +292,7 @@ router.post("/checkout/create-session", async (req: Request, res: Response) => {
       status: "pending_payment",
     }).returning();
 
+    const stripe = await getStripe();
     if (stripe) {
       const checkoutParams: Stripe.Checkout.SessionCreateParams = {
         mode: "payment",
@@ -321,7 +331,7 @@ router.post("/checkout/create-session", async (req: Request, res: Response) => {
         orderId: order.id,
         uploadToken,
         checkoutUrl: session.url,
-        testMode: !process.env["STRIPE_SECRET_KEY"]?.startsWith("sk_live"),
+        testMode: await isTestMode(),
       });
     } else {
       await db.update(qbOrders).set({ status: "submitted" }).where(eq(qbOrders.id, order.id));
@@ -342,6 +352,7 @@ router.post("/checkout/create-session", async (req: Request, res: Response) => {
 });
 
 router.post("/webhook/stripe", async (req: Request, res: Response) => {
+  const stripe = await getStripe();
   if (!stripe) {
     res.json({ received: true, message: "Stripe not configured" });
     return;
@@ -414,7 +425,10 @@ async function handleSubscriptionCheckout(session: Stripe.Checkout.Session) {
   const tier = session.metadata?.tier;
   const stripeSubId = session.subscription as string | null;
 
-  if (!userId || !tier || !stripeSubId || !stripe) return;
+  if (!userId || !tier || !stripeSubId) return;
+
+  const stripe = await getStripe();
+  if (!stripe) return;
 
   const [existing] = await db
     .select()
@@ -478,7 +492,10 @@ function getInvoiceSubscriptionId(invoice: Stripe.Invoice): string | null {
 
 async function handleInvoicePaid(invoice: Stripe.Invoice) {
   const stripeSubId = getInvoiceSubscriptionId(invoice);
-  if (!stripeSubId || !stripe) return;
+  if (!stripeSubId) return;
+
+  const stripe = await getStripe();
+  if (!stripe) return;
 
   const [sub] = await db
     .select()

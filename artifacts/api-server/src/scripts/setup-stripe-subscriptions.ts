@@ -1,12 +1,5 @@
 import Stripe from "stripe";
-
-const STRIPE_SECRET_KEY = process.env["STRIPE_SECRET_KEY"];
-if (!STRIPE_SECRET_KEY) {
-  console.error("STRIPE_SECRET_KEY is required");
-  process.exit(1);
-}
-
-const stripe = new Stripe(STRIPE_SECRET_KEY);
+import { getStripeClient } from "../lib/stripe-client";
 
 interface TierSetup {
   name: string;
@@ -22,27 +15,28 @@ const TIERS: TierSetup[] = [
 ];
 
 const COUPONS = [
-  { id: "pro_service_10", name: "Professional Subscriber — 10% Off Services", percentOff: 10 },
-  { id: "premium_service_20", name: "Premium Subscriber — 20% Off Services", percentOff: 20 },
+  { id: "pro_service_10", name: "Pro Subscriber — 10% Off", percentOff: 10 },
+  { id: "premium_service_20", name: "Premium Sub — 20% Off", percentOff: 20 },
 ];
 
-async function findExistingProduct(name: string): Promise<Stripe.Product | null> {
-  const products = await stripe.products.list({ limit: 100 });
-  return products.data.find(p => p.name === name) || null;
-}
-
-async function findExistingCoupon(id: string): Promise<Stripe.Coupon | null> {
-  try {
-    return await stripe.coupons.retrieve(id);
-  } catch {
-    return null;
-  }
-}
-
 async function main() {
+  const stripe = await getStripeClient();
   console.log("Setting up Stripe subscription products...\n");
 
   const envLines: string[] = [];
+
+  async function findExistingProduct(name: string): Promise<Stripe.Product | null> {
+    const products = await stripe.products.list({ limit: 100 });
+    return products.data.find(p => p.name === name) || null;
+  }
+
+  async function findExistingCoupon(id: string): Promise<Stripe.Coupon | null> {
+    try {
+      return await stripe.coupons.retrieve(id);
+    } catch {
+      return null;
+    }
+  }
 
   for (const tier of TIERS) {
     let product = await findExistingProduct(tier.name);
