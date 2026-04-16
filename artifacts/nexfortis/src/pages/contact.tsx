@@ -40,7 +40,7 @@ export default function Contact() {
       }
       toast({
         title: "Message Sent Successfully!",
-        description: "We'll get back to you within 24 business hours.",
+        description: "We'll get back to you within 1–2 business hours.",
       });
       reset();
     } catch (err: unknown) {
@@ -116,7 +116,6 @@ export default function Contact() {
                 </div>
               </div>
 
-              {/* TODO: Update this URL when the LinkedIn page is live */}
               <div className="flex gap-4 items-start">
                 <div className="w-12 h-12 bg-card rounded-xl shadow-sm flex items-center justify-center text-accent shrink-0 border border-border" aria-hidden="true">
                   <Linkedin className="w-5 h-5" />

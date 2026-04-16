@@ -43,6 +43,9 @@ Includes tables for `qb_users` (with `stripe_customer_id`), `qb_orders`, `qb_ord
 
 **Applications:**
 
+**Operator Authentication (Blog Admin):**
+Blog admin write routes (`POST/PUT/DELETE /api/blog/posts`, `GET /api/blog/posts/all`) are guarded by `requireBlogAdmin` middleware (HMAC-SHA256 session token, 24h TTL, signed with `SESSION_SECRET` and falling back to `BLOG_ADMIN_SECRET`). Operators authenticate at `/admin/login` (Nexfortis site) → `POST /api/operator/auth/login`, which sets an httpOnly `operator_session` cookie. Login is rate-limited (5/15min per IP). Seed/upsert an operator with `OPERATOR_EMAIL=... OPERATOR_PASSWORD=... pnpm --filter @workspace/scripts run seed-operator` (hashes via bcryptjs into `operator_users`; uses `ON CONFLICT (email) DO UPDATE`).
+
 ### NexFortis IT Solutions Website (`artifacts/nexfortis`)
 - **Framework**: React 19 + Vite + Tailwind CSS v4
 - **UI/UX**: Framer Motion for animations, React Hook Form + Zod for forms, Wouter for routing.

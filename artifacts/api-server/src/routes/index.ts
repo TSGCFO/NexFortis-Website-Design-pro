@@ -11,6 +11,7 @@ import qbAdminRouter from "./qb-admin";
 import qbAdminPromoRouter from "./qb-admin-promo";
 import qbNotificationsRouter from "./qb-notifications";
 import qbPromoRouter from "./qb-promo";
+import operatorAuthRouter from "./operator-auth";
 
 const router: IRouter = Router();
 
@@ -22,17 +23,9 @@ const checkoutLimiter = rateLimit({
   message: { error: "Too many requests. Please try again later." },
 });
 
-const contactLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  limit: 3,
-  standardHeaders: true,
-  legacyHeaders: false,
-  message: { error: "Too many requests. Please try again later." },
-});
-
 router.use(healthRouter);
 router.use("/blog", blogRouter);
-router.use("/contact", contactLimiter, contactRouter);
+router.use("/contact", contactRouter);
 router.post("/qb/checkout/create-session", checkoutLimiter);
 router.use("/qb", qbPortalRouter);
 router.use("/qb/subscriptions", requireAuth, qbSubscriptionsRouter);
@@ -51,5 +44,6 @@ const notificationPrefLimiter = rateLimit({
 });
 router.use("/qb/notifications", notificationPrefLimiter, qbNotificationsRouter);
 router.use("/qb/promo", qbPromoRouter);
+router.use("/operator/auth", operatorAuthRouter);
 
 export default router;

@@ -1,6 +1,6 @@
 import { PageHero, Section, SectionHeader, FAQItem, PageBreadcrumbs } from "@/components/ui-elements";
 import { SEO, ServiceSchema, BreadcrumbSchema, FAQSchema } from "@/components/seo";
-import { ArrowRight, Database, Wrench, ShieldAlert, CheckCircle2, DollarSign, ClipboardList, Zap, FileCheck, Headphones } from "lucide-react";
+import { ArrowRight, Database, Wrench, ShieldAlert, CheckCircle2, DollarSign, ClipboardList, Zap, FileCheck, Headphones, ExternalLink, Info } from "lucide-react";
 import { Link } from "wouter";
 import { motion } from "framer-motion";
 import { useState } from "react";
@@ -187,7 +187,15 @@ export default function QuickBooks() {
           subtitle="Powerful tools to extend the functionality of your QuickBooks software — one-time purchase, no subscriptions."
           centered 
         />
-        
+
+        <div className="max-w-3xl mx-auto mt-8 mb-4 flex items-start gap-3 p-4 rounded-xl bg-accent/5 border border-accent/20">
+          <Info className="w-5 h-5 text-accent shrink-0 mt-0.5" aria-hidden="true" />
+          <p className="text-sm text-foreground leading-relaxed">
+            <strong>Orders are processed through our QB Services Portal.</strong> Browse the full catalog, place orders, manage subscriptions, and submit support tickets at{" "}
+            <a href="https://qbportal.nexfortis.com/catalog" target="_blank" rel="noopener noreferrer" className="text-accent font-semibold hover:underline">qbportal.nexfortis.com</a>.
+          </p>
+        </div>
+
         <div className="grid lg:grid-cols-2 gap-12 mt-12">
           {products.map((category, i) => (
             <motion.div
@@ -208,9 +216,14 @@ export default function QuickBooks() {
                       <h4 className="font-bold text-foreground">{item.name}</h4>
                       <p className="text-accent font-semibold">{item.price}</p>
                     </div>
-                    <Link href="/contact" className="px-4 py-2 rounded-lg bg-primary/10 dark:bg-primary/20 text-primary hover:bg-accent hover:text-white transition-colors text-sm font-bold">
-                      Request a License
-                    </Link>
+                    <a
+                      href="https://qbportal.nexfortis.com/catalog"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-primary/10 dark:bg-primary/20 text-primary hover:bg-accent hover:text-white transition-colors text-sm font-bold"
+                    >
+                      Browse QB Services Portal <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
+                    </a>
                   </div>
                 ))}
               </div>
@@ -227,12 +240,14 @@ export default function QuickBooks() {
           <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
             Our web-based QuickBooks add-on tools are available directly in your browser — no installation required. Generate statements, process payments, and import data with just a few clicks.
           </p>
-          <Link
-            href="/qb-portal/"
+          <a
+            href="https://qbportal.nexfortis.com/catalog"
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-accent text-white font-bold text-lg hover:bg-accent/90 transition-all hover:-translate-y-0.5 shadow-lg"
           >
-            Open QuickBooks Tools Portal <ArrowRight className="w-5 h-5" />
-          </Link>
+            Browse QB Services Portal <ExternalLink className="w-5 h-5" aria-hidden="true" />
+          </a>
         </div>
       </Section>
 

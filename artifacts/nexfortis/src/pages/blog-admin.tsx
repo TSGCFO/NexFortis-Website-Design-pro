@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Section } from "@/components/ui-elements";
 import { SEO } from "@/components/seo";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiFetch } from "@/lib/api";
-import { Plus, Pencil, Trash2, Eye, EyeOff, ArrowLeft, Save, X } from "lucide-react";
-import { Link } from "wouter";
+import { Plus, Pencil, Trash2, Eye, EyeOff, ArrowLeft, Save, X, LogOut, Loader2 } from "lucide-react";
+import { Link, useLocation } from "wouter";
 
 interface BlogPost {
   id: number;
@@ -183,11 +183,49 @@ function PostEditor({ post, onClose }: { post?: BlogPost; onClose: () => void })
 
 export default function BlogAdmin() {
   const queryClient = useQueryClient();
+  const [, setLocation] = useLocation();
   const [editing, setEditing] = useState<BlogPost | "new" | null>(null);
+  const [authState, setAuthState] = useState<"checking" | "ok" | "unauthorized">("checking");
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/operator/auth/me", { credentials: "include" })
+      .then((res) => {
+        if (cancelled) return;
+        if (res.status === 401) {
+          setAuthState("unauthorized");
+          setLocation("/admin/login");
+        } else if (res.ok) {
+          setAuthState("ok");
+        } else {
+          setAuthState("unauthorized");
+          setLocation("/admin/login");
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setAuthState("unauthorized");
+          setLocation("/admin/login");
+        }
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [setLocation]);
+
+  async function handleLogout() {
+    try {
+      await fetch("/api/operator/auth/logout", { method: "POST", credentials: "include" });
+    } catch {
+      // ignore
+    }
+    setLocation("/");
+  }
 
   const { data: posts = [], isLoading } = useQuery<BlogPost[]>({
     queryKey: ["blog-posts-admin"],
     queryFn: () => apiFetch<BlogPost[]>("/blog/posts/all"),
+    enabled: authState === "ok",
   });
 
   const deleteMutation = useMutation({
@@ -200,6 +238,21 @@ export default function BlogAdmin() {
       apiFetch(`/blog/posts/${id}`, { method: "PUT", body: JSON.stringify({ published }) }),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["blog-posts-admin"] }),
   });
+
+  if (authState === "checking") {
+    return (
+      <Section bg="white">
+        <div className="max-w-4xl mx-auto pt-32 pb-32 flex flex-col items-center justify-center text-muted-foreground">
+          <Loader2 className="w-6 h-6 animate-spin mb-3" />
+          <p className="text-sm">Checking session…</p>
+        </div>
+      </Section>
+    );
+  }
+
+  if (authState !== "ok") {
+    return null;
+  }
 
   if (editing) {
     return (
@@ -220,9 +273,17 @@ export default function BlogAdmin() {
       <div className="relative pt-32 pb-12 md:pt-44 md:pb-16 bg-primary overflow-hidden">
         <div className="absolute top-0 right-0 -mr-40 -mt-40 w-[600px] h-[600px] bg-accent/20 rounded-full blur-[100px] mix-blend-screen pointer-events-none" aria-hidden="true" />
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <Link href="/blog" className="text-white/70 hover:text-white text-sm font-medium inline-flex items-center gap-2 mb-6 transition-colors">
-            <ArrowLeft className="w-4 h-4" /> Back to Blog
-          </Link>
+          <div className="flex items-center justify-between mb-6">
+            <Link href="/blog" className="text-white/70 hover:text-white text-sm font-medium inline-flex items-center gap-2 transition-colors">
+              <ArrowLeft className="w-4 h-4" /> Back to Blog
+            </Link>
+            <button
+              onClick={handleLogout}
+              className="text-white/70 hover:text-white text-sm font-medium inline-flex items-center gap-2 transition-colors px-3 py-1.5 rounded-lg hover:bg-white/10"
+            >
+              <LogOut className="w-4 h-4" /> Logout
+            </button>
+          </div>
           <h1 className="text-3xl md:text-5xl font-display font-extrabold text-white">Blog Manager</h1>
         </div>
       </div>

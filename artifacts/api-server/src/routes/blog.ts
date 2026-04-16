@@ -2,6 +2,7 @@ import { Router, type Request, type Response } from "express";
 import { db } from "@workspace/db";
 import { blogPostsTable, insertBlogPostSchema } from "@workspace/db/schema";
 import { eq, desc, and } from "drizzle-orm";
+import { requireBlogAdmin } from "../middleware/require-blog-admin";
 
 const ALLOWED_UPDATE_FIELDS = ["title", "slug", "excerpt", "content", "category", "coverImage", "published"] as const;
 type AllowedField = typeof ALLOWED_UPDATE_FIELDS[number];
@@ -31,7 +32,7 @@ blogRouter.get("/posts", async (_req: Request, res: Response) => {
   }
 });
 
-blogRouter.get("/posts/all", async (_req: Request, res: Response) => {
+blogRouter.get("/posts/all", requireBlogAdmin, async (_req: Request, res: Response) => {
   try {
     const posts = await db
       .select()
@@ -64,7 +65,7 @@ blogRouter.get("/posts/:slug", async (req: Request, res: Response) => {
   }
 });
 
-blogRouter.post("/posts", async (req: Request, res: Response) => {
+blogRouter.post("/posts", requireBlogAdmin, async (req: Request, res: Response) => {
   try {
     const parsed = insertBlogPostSchema.safeParse(req.body);
     if (!parsed.success) {
@@ -82,7 +83,7 @@ blogRouter.post("/posts", async (req: Request, res: Response) => {
   }
 });
 
-blogRouter.put("/posts/:id", async (req: Request, res: Response) => {
+blogRouter.put("/posts/:id", requireBlogAdmin, async (req: Request, res: Response) => {
   try {
     const id = parseInt(req.params.id as string);
     if (isNaN(id)) {
@@ -115,7 +116,7 @@ blogRouter.put("/posts/:id", async (req: Request, res: Response) => {
   }
 });
 
-blogRouter.delete("/posts/:id", async (req: Request, res: Response) => {
+blogRouter.delete("/posts/:id", requireBlogAdmin, async (req: Request, res: Response) => {
   try {
     const id = parseInt(req.params.id as string);
     if (isNaN(id)) {

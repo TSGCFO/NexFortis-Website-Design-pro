@@ -229,6 +229,16 @@ export const insertQbPromoCodeRedemptionSchema = createInsertSchema(qbPromoCodeR
 export const insertQbReferralCreditSchema = createInsertSchema(qbReferralCredits);
 export const insertQbPromoCodeAdminEventSchema = createInsertSchema(qbPromoCodeAdminEvents);
 
+export const operatorUsers = pgTable("operator_users", {
+  id: serial("id").primaryKey(),
+  email: text("email").notNull().unique(),
+  passwordHash: text("password_hash").notNull(),
+  name: text("name").notNull().default(""),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const insertOperatorUserSchema = createInsertSchema(operatorUsers);
+
 export const insertQbUserSchema = createInsertSchema(qbUsers);
 export const insertQbOrderSchema = createInsertSchema(qbOrders);
 export const insertQbWaitlistSchema = createInsertSchema(qbWaitlistSignups);

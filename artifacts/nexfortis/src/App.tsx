@@ -17,6 +17,7 @@ const Contact = lazy(() => import("@/pages/contact"));
 const Blog = lazy(() => import("@/pages/blog"));
 const BlogPostPage = lazy(() => import("@/pages/blog-post"));
 const BlogAdmin = lazy(() => import("@/pages/blog-admin"));
+const AdminLogin = lazy(() => import("@/pages/admin-login"));
 const Privacy = lazy(() => import("@/pages/privacy"));
 const Terms = lazy(() => import("@/pages/terms"));
 const NotFound = lazy(() => import("@/pages/not-found"));
@@ -46,6 +47,7 @@ function Router() {
           <Route path="/services/automation-software" component={AutomationSoftware} />
           <Route path="/contact" component={Contact} />
           <Route path="/blog" component={Blog} />
+          <Route path="/admin/login" component={AdminLogin} />
           <Route path="/blog/admin" component={BlogAdmin} />
           <Route path="/blog/:slug">
             {(params) => <BlogPostPage slug={params.slug} />}
