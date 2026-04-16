@@ -12,3 +12,15 @@ id = "x9Q__X8-RR5aVmJzYWUvQ"
 uri = "file://nexfortis_brandkit/final-logo/original-vertical-from-jpg.svg"
 type = "image"
 title = "original-vertical-from-jpg.svg (from JPG)"
+
+[[outputs]]
+id = "j4q4TFlvOi2VrQjQf212z"
+uri = "file://nexfortis_brandkit/final-logo/emblem-transparent.png"
+type = "image"
+title = "NexFortis 3D Emblem (transparent PNG, no background)"
+
+[[outputs]]
+id = "ZPQsrGIBvO2rHHpuurkCO"
+uri = "file://nexfortis_brandkit/final-logo/emblem.svg"
+type = "image"
+title = "NexFortis 3D Emblem (vector, transparent)"
