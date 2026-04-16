@@ -26,358 +26,311 @@ If any prerequisites are missing, stop and report what needs to be completed fir
 
 ---
 
+**PLATFORM REMINDERS (read replit.md for full details):**
+- The API server only handles `/api/*` routes. Static files are served by Replit.
+- Do NOT add `express.static()` to the API server.
+- Do NOT throw errors for missing env vars — use `console.warn` + `null`.
+- Admin routes: middleware chain is ALWAYS `requireAuth → requireOperator → handler`. Never skip `requireAuth`.
+- The `supabaseAdmin` export can be `null` (if env vars missing). Always null-check before using.
+- Verify Replit Secrets are still present after completing all steps.
+
+> **⚠️ COMMON MISTAKE — DO NOT:**
+> - Register frontend admin routes under `/admin/*` — they MUST be under `/qb-portal/admin/*`
+> - Register API routes under `/api/admin/*` — they MUST be under `/api/qb/admin/*`
+> - Create a separate React app or layout for admin — reuse the existing QB Portal app and theme
+
+---
+
 ## Step 1: Admin API Routes (Backend)
 
-Create the admin API routes in the Express server. All routes in this step are protected by the `requireOperator` middleware, which enforces Supabase JWT validation + operator role check + AAL2 assurance level. No route in this section is accessible without a valid AAL2 operator session.
+Create the admin API routes in the Express server. All routes are protected by `requireOperator`, which enforces Supabase JWT validation + operator role + AAL2. No route is accessible without a valid AAL2 operator session.
 
-These routes should be prefixed with `/api/qb/admin/` to make the pattern clear. Check `replit.md` for the exact router setup — the routes may go into the existing `qb-portal.ts` file or a new router file. Use whichever pattern fits the existing architecture.
+Routes must be prefixed with `/api/qb/admin/`. Check `replit.md` for whether they go into `qb-portal.ts` or a new router file.
+
+**EXACT middleware chain for every admin route:**
+```ts
+router.get('/qb/admin/path', requireAuth, requireOperator, handler);
+```
+`requireAuth` MUST come before `requireOperator`. `requireAuth` validates the JWT; `requireOperator` additionally checks the operator role AND AAL2. Never call `requireOperator` alone.
+
+> **⚠️ COMMON MISTAKE — DO NOT:**
+> - Use only `requireOperator` without `requireAuth` first
+> - Use only `requireAuth` on admin routes — customers pass `requireAuth` too
+> - Reuse or recreate auth middleware — use exactly the ones from Prompt 03B
+
+**Edge case — operator hasn't enrolled MFA:** `requireOperator` must return `403` with `{ redirect: '/qb-portal/admin/mfa-enroll' }`. It must NOT crash with 500.
 
 ### 1a. Dashboard Stats Route
 
 `GET /api/qb/admin/dashboard`
 
-Returns a JSON object with these stats:
-- `totalOrders` — total count of all `qb_orders` records
-- `pendingOrders` — count of orders with status `'pending'`
-- `processingOrders` — count of orders with status `'processing'`
-- `completedOrders` — count of orders with status `'completed'`
-- `totalCustomers` — count of all `qb_users` records where `role = 'customer'`
-- `openTickets` — count of `qb_support_tickets` with status `'open'`
-- `recentOrders` — the 5 most recent orders, ordered by `created_at` descending, joined with customer name and email from `qb_users`
+Returns: `totalOrders`, `pendingOrders`, `processingOrders`, `completedOrders`, `totalCustomers`, `openTickets`, `recentOrders` (5 most recent, joined with customer name/email).
 
-All counts should be computed in a single efficient database query or a minimal set of parallel queries. Do not make N+1 queries.
+Use `Promise.all` for parallel queries — no N+1. All counts must be `0` (not `null`) when no data exists. `recentOrders` must be `[]` when empty.
 
 ### 1b. Orders List Route
 
 `GET /api/qb/admin/orders`
 
-Returns a paginated list of all orders. Query parameters:
-- `page` (integer, default 1) — the page number
-- `limit` (integer, default 20, max 100) — orders per page
-- `status` (string, optional) — filter by order status (`'pending'`, `'processing'`, `'completed'`, `'failed'`, `'cancelled'`)
-- `search` (string, optional) — filter by customer name or email (case-insensitive partial match)
+Paginated. Query params: `page` (default 1), `limit` (default 20, max 100), `status` (optional filter), `search` (optional, case-insensitive match on customer name/email), `sort` and `order` for sorting (sorting MUST be implemented now — do not defer).
 
-Each order in the response should include: `id`, `status`, `productId`, `productName` (joined from the products data or stored in the order), `totalCad`, `createdAt`, and the customer's `name` and `email` from `qb_users`. Also include a boolean `hasUploadedFile` indicating whether any `qb_order_files` record exists for the order.
+Response: `{ orders: [...], total: number, page: number, limit: number }`. Each order includes `id`, `status`, `productId`, `productName`, `totalCad`, `createdAt`, customer `name`/`email`, and `hasUploadedFile` boolean.
 
-Return the response as `{ orders: [...], total: number, page: number, limit: number }`.
+> **⚠️ COMMON MISTAKE — DO NOT:**
+> - Return `orders: null` or omit `total` — always return the full shape even when empty
+> - Accept `limit > 100` — clamp silently: `Math.min(parseInt(limit) || 20, 100)`
+
+**Edge case — page exceeds total pages:** Return the last page of results, not an empty array or 500. Set `page` in the response to the actual page returned.
+
+**Edge case — no orders:** Return `{ orders: [], total: 0, page: 1, limit: 20 }`.
 
 ### 1c. Order Detail Route
 
 `GET /api/qb/admin/orders/:id`
 
-Returns the full detail of a single order, including:
-- All order fields from `qb_orders`
-- The customer's profile from `qb_users` (name, email, phone, createdAt)
-- All associated `qb_order_files` records (including `storage_path`, `expired`, `created_at`, and `original_filename` if stored)
-- The payment status (if Stripe payment intent ID is stored, include it so the operator can reference it)
+Returns all `qb_orders` fields, the customer profile from `qb_users`, all `qb_order_files` records (or `files: []` if none), and the Stripe payment intent ID if stored.
+
+**Edge case — order not found:** Return `404 { error: 'Order not found' }`. Never return 500 for a missing row.
 
 ### 1d. Order Status Update Route
 
 `PATCH /api/qb/admin/orders/:id/status`
 
-Updates the status of an order. Accepts a JSON body with `status` (the new status string). Valid transitions: any status can be set by the operator — do not enforce a state machine on this endpoint. The operator may need to manually set any status to handle edge cases.
+Accepts `{ status }`. Any status is valid (no state machine enforcement). Validate against the allowed list; return `400` for invalid values.
 
-After updating, return the updated order record. Log the status change with the operator's user ID and a timestamp (you can do this in the application log, or add an internal notes field if the schema supports it).
+**Audit trail required:** Log `[AUDIT] Order {id} status changed from {old} to {new} by operator {userId} at {timestamp}` to application log minimum. Use a DB audit table if the schema supports it.
+
+**The operator CANNOT delete orders.** Do not expose a DELETE endpoint.
+
+Return the updated order record.
+
+**Edge cases:** `404` if order not found. `400` if status is invalid.
 
 ### 1e. Tickets List Route
 
 `GET /api/qb/admin/tickets`
 
-Returns all support tickets, ordered by creation date descending (newest first). Query parameters:
-- `status` (optional) — filter by `'open'`, `'in_progress'`, `'resolved'`, `'closed'`
-- `search` (optional) — partial match on ticket subject or customer email
+Returns all tickets ordered by `created_at` descending. Query params: `status` filter, `search` (subject or customer email). Response includes `id`, `subject`, `status`, `createdAt`, `updatedAt`, customer `name`/`email` — no full message body in the list.
 
-Each ticket in the response should include: `id`, `subject`, `status`, `createdAt`, `updatedAt`, and the customer's `name` and `email` from `qb_users`. Do not include the full message body in the list — only the subject.
+**Edge case — no tickets:** Return `[]`, not an error.
 
 ### 1f. Ticket Detail + Reply Route
 
-`GET /api/qb/admin/tickets/:id` — Returns the full ticket including the original message body and any stored reply.
+`GET /api/qb/admin/tickets/:id` — Full ticket including message body and any stored reply.
 
-`PATCH /api/qb/admin/tickets/:id` — Updates the ticket. Accepts a JSON body with any combination of:
-- `status` — new status for the ticket
-- `operatorReply` — the operator's reply text (plain text; HTML sanitization should already be applied)
-- `internalNote` — an optional internal note not shown to the customer (if the schema supports it)
+`PATCH /api/qb/admin/tickets/:id` — Accepts `{ status?, operatorReply?, internalNote? }`. Returns updated ticket. Do NOT send email here — that is Prompt 14.
 
-After saving the reply, return the updated ticket record. Email notification to the customer is out of scope for this prompt — that is Prompt 14 (Transactional Emails). Store the reply text in the database but do not send an email here.
+**Edge case — ticket not found:** Return `404 { error: 'Ticket not found' }`.
 
 ### 1g. Customers List Route
 
 `GET /api/qb/admin/customers`
 
-Returns a paginated list of all `qb_users` records where `role = 'customer'`. Query parameters:
-- `page` and `limit` for pagination (same defaults as orders)
-- `search` — partial match on name or email
+Paginated list of `qb_users` where `role = 'customer'`. Same `page`/`limit` defaults and clamping as 1b. Each record includes `id`, `name`, `email`, `phone`, `createdAt`, `orderCount`, `openTicketCount`. Use a JOIN/subquery — no N+1 per customer.
 
-Each customer record should include: `id`, `name`, `email`, `phone`, `createdAt`, a count of their `qb_orders`, and a count of their open `qb_support_tickets`.
+**Edge cases:** Empty → `{ customers: [], total: 0, page: 1, limit: 20 }`. Page overflow → return last page.
 
 ### 1h. Operator File Download (Signed URL)
 
 `GET /api/qb/admin/orders/:orderId/files/:fileId/download`
 
-Protected by `requireOperator`. Generates a Supabase Storage signed URL for the specified file with a 15-minute expiry. Returns `{ signedUrl: "..." }`.
+Verifies the file belongs to the order. Generates a 15-minute Supabase Storage signed URL. Returns `{ signedUrl: "..." }`.
 
-Verify that the file belongs to the order specified in the route (simple join check). If the file is expired (`expired = true`), return 410.
+**Do NOT stream file bytes through Express.** The signed URL must point to the Supabase Storage domain.
 
-### 1i. Operator File Upload (Processed File Back to Customer)
+Null-check `supabaseAdmin` — return `503 { error: 'Storage unavailable' }` if null.
+
+**Edge cases:** `410` if `expired = true`. `404` if file not found or doesn't belong to order.
+
+### 1i. Operator File Upload
 
 `POST /api/qb/admin/orders/:orderId/files/upload`
 
-Protected by `requireOperator`. Accepts a multipart form upload with a single file field. The operator uses this to upload the processed conversion output (e.g., the converted file, a health report) back against the customer's order record.
+Multer memory storage (same config as Prompt 04). Uploads to Supabase Storage under `{customer_user_id}/{order_id}/{filename}` — `customer_user_id` is from `qb_orders.user_id`, NOT the operator's ID. Creates a `qb_order_files` record with `expired = false`. Returns the new record.
 
-Use multer with memory storage (same configuration as Prompt 04). Upload the file to Supabase Storage under the customer's path: `{customer_user_id}/{order_id}/{filename}`. The `customer_user_id` is the `user_id` from the `qb_orders` record (not the operator's ID).
+**Edge case — order not found:** Return `404` before attempting the upload.
 
-Create a new `qb_order_files` record for the uploaded file. Set `expired = false` and `storage_path` to the Supabase Storage path.
-
-Return the new file record as JSON.
+**Verify Steps 1a–1i:**
+- Run `pnpm typecheck` — zero errors
+- `grep -rn "requireOperator" artifacts/api-server/src/routes/qb-portal.ts` — every `/api/qb/admin/*` route must appear; each must also have `requireAuth` before it on the same line
+- `curl "...api/qb/admin/orders?page=9999"` — returns last page, not 500
+- Upload a file; confirm it appears in Supabase Storage under the **customer's** path, not the operator's
 
 ---
 
 ## Step 2: Admin Layout Component
 
-The admin layout component should already exist at `artifacts/qb-portal/src/components/admin-layout.tsx` from Prompt 03B (it contains the AAL2 guard). If it does not exist yet, create it now.
+The layout at `artifacts/qb-portal/src/components/admin-layout.tsx` (exists from Prompt 03B or create now) wraps all admin pages and provides:
 
-The layout component wraps all admin pages and provides:
+1. **AAL2 guard** (from Prompt 03B — do not duplicate): redirects if not AAL2.
+2. **Sidebar navigation** to: Dashboard (`/qb-portal/admin`), Orders (`/qb-portal/admin/orders`), Customers (`/qb-portal/admin/customers`), Tickets (`/qb-portal/admin/tickets`), Sign Out (`supabase.auth.signOut()` → `/qb-portal/login`).
+3. **Operator name** in sidebar header from the auth context `user` object.
+4. **Active link styling** using `useLocation` and the NexFortis navy/rose-gold palette.
+5. **Mobile responsiveness** — collapsible sidebar or hamburger below `md`. All actions must be reachable on 375px viewport.
 
-1. **The AAL2 guard** (from Prompt 03B — ensure it's already present; do not duplicate it): checks the operator's assurance level on every render and redirects if not AAL2.
+> **⚠️ COMMON MISTAKE — DO NOT:**
+> - Create a separate React app, separate `index.html`, or separate Vite config for admin
+> - Use `/admin/*` paths — all admin frontend routes are `/qb-portal/admin/*`
+> - Duplicate the AAL2 guard — one copy in `admin-layout.tsx` only
 
-2. **A sidebar navigation** with links to:
-   - Dashboard (`/admin`) — icon: a grid or home icon
-   - Orders (`/admin/orders`) — icon: a clipboard or list icon
-   - Customers (`/admin/customers`) — icon: a users/people icon
-   - Tickets (`/admin/tickets`) — icon: a message/chat icon
-   - A "Sign Out" action at the bottom of the sidebar — calls `supabase.auth.signOut()` and redirects to `/login`
+**Edge case — API unreachable:** Any page fetch failure must show a visible error banner ("Failed to load data. Please refresh."), not a blank screen.
 
-3. **The current user's name** displayed somewhere in the sidebar header (e.g., "Hassan Sadiq" above the navigation links). Read this from the auth context's `user` object.
-
-4. **Active link styling** — highlight the current route's link in the sidebar using the NexFortis navy/rose-gold palette. Use the React Router `useLocation` hook to detect the active route.
-
-5. **Mobile responsiveness** — on small screens (below `md` breakpoint), the sidebar should be collapsible or replaced with a top navigation bar / hamburger menu. All critical admin actions must be completable on a 375px viewport per the PRD.
-
-The main content area renders the page's `children` prop next to (or below, on mobile) the sidebar.
+**Verify:** `pnpm typecheck` — zero errors. Navigate to `/qb-portal/admin` as customer → redirected. As operator → sidebar renders.
 
 ---
 
 ## Step 3: Admin Page Components
 
-Create the admin page components. Each page imports and uses the admin layout from Step 2.
+Each page imports `AdminLayout` from Step 2. All navigation links use `/qb-portal/admin/*` paths.
 
-### 3a. Dashboard Page
+### 3a. Dashboard — `artifacts/qb-portal/src/pages/admin/dashboard.tsx`
+Fetches `GET /api/qb/admin/dashboard`. Shows 4 stat cards (2-col mobile / 4-col desktop) and Recent Orders table with "View" links to `/qb-portal/admin/orders/:id`. Skeleton placeholders while loading.
 
-**File:** `artifacts/qb-portal/src/pages/admin/dashboard.tsx`
+**Empty state:** All cards show `0`; Recent Orders shows "No orders yet." — never an error.
 
-Fetches data from `GET /api/qb/admin/dashboard` on mount. Displays:
+### 3b. Orders Table — `artifacts/qb-portal/src/pages/admin/orders.tsx`
+Fetches `GET /api/qb/admin/orders`. Shows search input (300ms debounce), status filter pills, table (Order ID, Customer, Product, Total as `$XX.XX CAD`, Status badge, Date, View link to `/qb-portal/admin/orders/:id`), pagination. Sorting by Date/Status/Total passed as API query params — no client-side-only sort.
 
-1. **Stat cards row** — four cards in a responsive grid (2 columns on mobile, 4 on desktop):
-   - "Pending Orders" — count with a clock or hourglass icon
-   - "Processing Orders" — count with a spinner icon
-   - "Open Tickets" — count with a message icon
-   - "Total Customers" — count with a users icon
-   Use the NexFortis navy and rose-gold palette for card headers or icon colors.
+**Empty state:** "No orders found." — not an error. Pagination controls must disable/hide at boundaries.
 
-2. **Recent Orders table** — shows the 5 most recent orders from the `recentOrders` field in the dashboard response. Columns: Order ID (truncated), Customer Name, Status badge, and a "View" link to the order detail page. Status badges should be color-coded: pending = amber, processing = blue, completed = green, failed/cancelled = red.
+### 3c. Order Detail — `artifacts/qb-portal/src/pages/admin/order-detail.tsx`
+Fetches `GET /api/qb/admin/orders/:id`. Shows: order header, customer info, status dropdown + "Save Status" button (updates badge in place on success — no full reload), customer files list with Download buttons, operator upload section.
 
-3. **Loading state** — show skeleton placeholders while the data loads. Do not show a blank page or an empty table.
+> **⚠️ COMMON MISTAKE — DO NOT:**
+> - Redirect to signed URL before the API responds — wait for the response
+> - Show a blank files section — show "No files uploaded yet" when empty
+> - Add a delete button — orders cannot be deleted
 
-### 3b. Orders Table Page
+**Edge cases:** `404` → "Order not found" error page. Expired file (`410`) → "Deleted per 7-day retention policy." — no redirect attempt.
 
-**File:** `artifacts/qb-portal/src/pages/admin/orders.tsx`
+### 3d. Customers Table — `artifacts/qb-portal/src/pages/admin/customers.tsx`
+Fetches `GET /api/qb/admin/customers`. Table: Name, Email, Phone, Joined Date, Total Orders, Open Tickets. Pagination + search. **Empty state:** "No customers yet."
 
-Fetches from `GET /api/qb/admin/orders` with pagination and search/filter controls.
+### 3e. Tickets Table — `artifacts/qb-portal/src/pages/admin/tickets.tsx`
+Fetches `GET /api/qb/admin/tickets`. Status filter pills. Table: Subject, Customer, Status badge, Created Date, View link to `/qb-portal/admin/tickets/:id`. **Empty state:** "No tickets yet."
 
-Displays:
-- A search input at the top (searches customer name or email)
-- Status filter pills or a dropdown: All / Pending / Processing / Completed / Failed / Cancelled
-- A table with columns: Order ID, Customer, Product, Total (formatted as $XX.XX CAD), Status badge, Date, and a "View" link
-- Pagination controls at the bottom (Previous / Next, current page / total pages)
+### 3f. Ticket Detail — `artifacts/qb-portal/src/pages/admin/ticket-detail.tsx`
+Fetches `GET /api/qb/admin/tickets/:id`. Shows ticket header, read-only message block, reply textarea + "Save Reply" button, status dropdown. If a previous reply exists, show it with timestamp. Do NOT attempt to send email — that is Prompt 14.
 
-Clicking "View" navigates to `/admin/orders/:id`.
+**Edge cases:** `404` → "Ticket not found" error page. Empty `operatorReply` in DB → empty textarea (not an error).
 
-Use the same status badge color scheme as the dashboard.
-
-### 3c. Order Detail Page
-
-**File:** `artifacts/qb-portal/src/pages/admin/order-detail.tsx`
-
-Fetches from `GET /api/qb/admin/orders/:id`. Displays:
-
-1. **Order header** — Order ID, status badge, product name, total, created date.
-
-2. **Customer info section** — customer name, email, phone.
-
-3. **Status update control** — a select/dropdown with all valid status values, pre-filled with the current status. A "Save Status" button that calls `PATCH /api/qb/admin/orders/:id/status`. Show a success or error toast/alert after the update.
-
-4. **Customer files section** — a list of files the customer has uploaded (`qb_order_files` records where the file was uploaded by the customer). For each file: show the filename, upload date, and either a "Download" button or an expired message. The download button calls `GET /api/qb/admin/orders/:orderId/files/:fileId/download`, receives the signed URL, and redirects the browser to it.
-
-5. **Operator upload section** — a file input and "Upload Processed File" button. When the operator selects a file and clicks the button, the frontend submits a multipart POST to `POST /api/qb/admin/orders/:orderId/files/upload`. Show upload progress if possible, or at minimum a loading state. On success, refresh the files list so the new file appears.
-
-### 3d. Customers Table Page
-
-**File:** `artifacts/qb-portal/src/pages/admin/customers.tsx`
-
-Fetches from `GET /api/qb/admin/customers`.
-
-Displays:
-- A search input
-- A table with columns: Name, Email, Phone, Joined Date, Total Orders, Open Tickets
-- Pagination controls
-
-No customer detail page is required in this prompt — the table is sufficient for the MVP.
-
-### 3e. Tickets Table Page
-
-**File:** `artifacts/qb-portal/src/pages/admin/tickets.tsx`
-
-Fetches from `GET /api/qb/admin/tickets`.
-
-Displays:
-- Status filter pills: All / Open / In Progress / Resolved / Closed
-- A table with columns: Subject, Customer, Status badge, Created Date, and a "View" link
-
-### 3f. Ticket Detail Page
-
-**File:** `artifacts/qb-portal/src/pages/admin/ticket-detail.tsx`
-
-Fetches from `GET /api/qb/admin/tickets/:id`. Displays:
-
-1. **Ticket header** — Subject, status badge, created date, customer name and email.
-
-2. **Original message** — the customer's full ticket message displayed in a read-only text block.
-
-3. **Reply section** — a textarea for the operator's reply text. A "Save Reply" button that calls `PATCH /api/qb/admin/tickets/:id` with the `operatorReply` and optionally a new `status`. Show success/error feedback.
-
-4. **Status update** — a dropdown to change the ticket status (Open, In Progress, Resolved, Closed). This can be part of the same save action as the reply, or a separate control.
-
-5. If a previous reply exists, show it in a styled read-only block with the timestamp.
+**Verify Steps 2–3:** `pnpm typecheck` — zero errors. All empty states render messages, not errors. All "View" links navigate to correct `/qb-portal/admin/*` paths.
 
 ---
 
 ## Step 4: Register Admin Routes in App.tsx
 
-Update `artifacts/qb-portal/src/App.tsx` to register all admin page routes:
-- `/admin` → Dashboard page
-- `/admin/orders` → Orders table page
-- `/admin/orders/:id` → Order detail page
-- `/admin/customers` → Customers table page
-- `/admin/tickets` → Tickets table page
-- `/admin/tickets/:id` → Ticket detail page
+Update `artifacts/qb-portal/src/App.tsx`:
 
-All of these routes should be wrapped in the admin layout. The admin layout's AAL2 guard (from Prompt 03B) will handle all auth and MFA redirects — the route wrappers in App.tsx do not need to duplicate that logic.
+| Path | Component |
+|---|---|
+| `/qb-portal/admin` | Dashboard |
+| `/qb-portal/admin/orders` | Orders table |
+| `/qb-portal/admin/orders/:id` | Order detail |
+| `/qb-portal/admin/customers` | Customers table |
+| `/qb-portal/admin/tickets` | Tickets table |
+| `/qb-portal/admin/tickets/:id` | Ticket detail |
 
-Also add all `/admin/*` routes (collectively as `Disallow: /admin`) to `artifacts/qb-portal/public/robots.txt` if not already present.
+All wrapped in `AdminLayout`. Do not add a second AAL2 guard in App.tsx. The customer-facing `<Header />` must NOT render on any `/qb-portal/admin/*` route.
+
+Add `Disallow: /qb-portal/admin` to `artifacts/qb-portal/public/robots.txt`.
+
+> **⚠️ COMMON MISTAKE — DO NOT:**
+> - Register routes as `/admin/*` — must be `/qb-portal/admin/*`
+> - Render the customer header inside admin routes
+
+**Verify:** `pnpm typecheck` — zero errors. `/qb-portal/admin` as logged-out user → redirected to login. Customer header absent on admin pages.
 
 ---
 
 ## Step 5: Admin Link in Header
 
-Update the customer-facing header component (check `replit.md` for the file location — likely `artifacts/qb-portal/src/components/header.tsx` or similar) to add an "Admin" link that is only visible when the current user is an operator.
+Add an "Admin" link in the customer-facing header, visible only when `isOperator === true` from auth context. Link navigates to `/qb-portal/admin`. Use secondary/muted styling (not primary CTA).
 
-Condition: `isOperator` from the auth context must be true. When visible, the link navigates to `/admin`. Style it subtly — use the secondary/muted style, not the primary CTA style, so it doesn't distract customers who happen to see a flash during rendering.
+The customer header must not render on `/qb-portal/admin/*` routes — use `useLocation` or conditional rendering in App.tsx.
 
-On the admin pages themselves, the header is replaced by the admin layout's sidebar — the customer-facing header should not appear on `/admin/*` routes. Ensure these routes do not render the customer header. This may require conditional rendering in App.tsx or in the header component itself based on the current route.
+> **⚠️ COMMON MISTAKE — DO NOT:**
+> - Guard with `isLoggedIn` instead of `isOperator` — customers must never see the link
+> - Render the customer header on admin pages
+
+**Verify:** `pnpm typecheck` — zero errors. Operator on customer page → "Admin" link visible. Customer on any page → link absent. Admin page → customer header absent.
 
 ---
 
 ## Step 6: Order Status Update — UX Detail
 
-The status update on the order detail page should behave as follows:
+1. Operator changes dropdown → clicks "Save Status."
+2. Frontend calls `PATCH /api/qb/admin/orders/:id/status`.
+3. On success: update status badge in local state (no full reload). Show success toast: "Status updated to Processing."
+4. On error: show error message from API response.
+5. Disable the "Save Status" button while request is in flight.
 
-1. The operator changes the dropdown to a new status.
-2. The operator clicks "Save Status."
-3. The frontend calls `PATCH /api/qb/admin/orders/:id/status` with the selected status.
-4. On success: update the status badge on the page in place (do not do a full page reload). Show a brief success message ("Status updated to Processing").
-5. On error: show an error message with the error text returned from the API.
-
-The status values and their display labels:
-- `pending` → "Pending"
-- `processing` → "Processing"
-- `completed` → "Completed"
-- `failed` → "Failed"
-- `cancelled` → "Cancelled"
+Status display labels: `pending` → "Pending" / `processing` → "Processing" / `completed` → "Completed" / `failed` → "Failed" / `cancelled` → "Cancelled".
 
 ---
 
 ## Step 7: Operator File Download (Frontend Detail)
 
-The download flow for operator files:
+1. Operator clicks "Download."
+2. Frontend calls `GET /api/qb/admin/orders/:orderId/files/:fileId/download` with `Authorization: Bearer <token>`.
+3. On success: redirect browser to `signedUrl`.
+4. On `410`: show "This file has been deleted per the 7-day retention policy." — no redirect.
+5. On any other error: show error message.
 
-1. Operator clicks "Download" on a customer file in the order detail page.
-2. Frontend calls `GET /api/qb/admin/orders/:orderId/files/:fileId/download` with the operator's access token in the Authorization header.
-3. Receives `{ signedUrl: "..." }` (15-minute expiry).
-4. Frontend redirects browser to `signedUrl` — the browser downloads the file directly from Supabase Storage.
-
-If the server returns 410 (file expired), show a message instead of attempting the download: "This file has been deleted per the 7-day retention policy."
+> **⚠️ COMMON MISTAKE — DO NOT:**
+> - Redirect before the API call resolves
+> - Fetch file bytes into a blob — always use the Supabase signed URL directly
 
 ---
 
 ## Step 8: Update robots.txt
 
-Confirm that `artifacts/qb-portal/public/robots.txt` disallows all admin paths. The file should contain at minimum:
-- `Disallow: /admin`
-- `Disallow: /admin/mfa-enroll` (from Prompt 03B)
-- `Disallow: /admin/mfa-challenge` (from Prompt 03B)
+`artifacts/qb-portal/public/robots.txt` must contain:
+```
+Disallow: /qb-portal/admin
+Disallow: /qb-portal/admin/mfa-enroll
+Disallow: /qb-portal/admin/mfa-challenge
+```
+A single `Disallow: /qb-portal/admin` covers subpaths. Keep existing entries.
 
-A single `Disallow: /admin` covers all subpaths. Keep any existing disallow entries.
+> **⚠️ COMMON MISTAKE — DO NOT:**
+> - Add `Disallow: /admin` (missing `/qb-portal` prefix) and consider the job done
 
 ---
 
 ## Step 9: Verify
 
-Run `pnpm typecheck` from the monorepo root. Fix all TypeScript errors before proceeding with manual testing.
+Run `pnpm typecheck` from the monorepo root. Fix all TypeScript errors before manual testing.
 
-### Manual test sequence:
+**Security grep (run before manual tests):**
+```bash
+grep -rn "requireOperator" artifacts/api-server/src/routes/qb-portal.ts
+# Every /api/qb/admin/* route must appear
+grep -rn "requireAuth" artifacts/api-server/src/routes/qb-portal.ts
+# Every requireOperator line must also have requireAuth before it
+grep -rn "isOperator" artifacts/qb-portal/src/components/
+# Admin link visibility condition must appear here
+```
 
-**Test 1 — Dashboard:**
-1. Log in as the operator (complete MFA challenge if prompted — see Prompt 03B).
-2. Navigate to `/admin`.
-3. The dashboard should display stat cards with real counts from the database.
-4. Recent orders should appear in the table.
+**Test 1 — Dashboard:** Log in as operator → MFA challenge → `/qb-portal/admin`. Stat cards show real counts. With empty DB: all `0`, Recent Orders shows empty-state message.
 
-**Test 2 — Order list and detail:**
-1. Navigate to `/admin/orders`.
-2. The orders list should show all orders with pagination.
-3. Use the search input to filter by a customer name or email — confirm the list updates.
-4. Click "View" on an order. The detail page should load with customer info, file list, and status update control.
-5. Change the order status using the dropdown and click "Save Status." Confirm the status badge updates in place and a success message appears.
+**Test 2 — Orders list + detail:** `/qb-portal/admin/orders` shows paginated list. Search filters work. "View" → detail page loads. Status change → badge updates in place, success toast shown. Confirm no delete button.
 
-**Test 3 — Operator file download:**
-1. On an order detail page where the customer has uploaded a file, click "Download."
-2. The browser should redirect to a Supabase Storage signed URL and start the download.
-3. Confirm the URL contains the Supabase storage domain (not a local filesystem path or Express stream).
+**Test 3 — File download:** Click "Download" on a customer-uploaded file → browser redirects to Supabase Storage signed URL. URL contains Supabase domain, not localhost.
 
-**Test 4 — Operator file upload:**
-1. On an order detail page, select a file using the "Upload Processed File" input.
-2. Click the upload button. The upload should succeed.
-3. Refresh the files section — the newly uploaded file should appear.
-4. Check the Supabase Storage dashboard — the file should appear under the customer's path (not the operator's path).
+**Test 4 — File upload:** Upload a processed file → success. Supabase Storage shows file under `{customer_user_id}/{order_id}/` — NOT the operator's path.
 
-**Test 5 — Ticket list and reply:**
-1. Navigate to `/admin/tickets`.
-2. The tickets list should show all tickets.
-3. Click "View" on a ticket. The detail page should show the customer's message.
-4. Enter a reply text and click "Save Reply." Confirm success feedback.
-5. The reply text should be saved in the database (verify in Supabase dashboard or by fetching the ticket again).
+**Test 5 — Tickets:** `/qb-portal/admin/tickets` list loads. View ticket → message shown. Save reply → success feedback. Reply stored in DB.
 
-**Test 6 — Customer list:**
-1. Navigate to `/admin/customers`.
-2. A list of customers should appear with their order and ticket counts.
-3. Use the search input — confirm filtering works.
+**Test 6 — Customers:** `/qb-portal/admin/customers` list shows `orderCount` and `openTicketCount`. Search works.
 
-**Test 7 — Security (customer cannot access admin routes):**
-1. Log out of the operator account.
-2. Register or log in as a customer.
-3. Attempt to navigate to `/admin`. The admin layout guard should redirect to `/login` or `/portal`.
-4. Attempt to call `GET /api/qb/admin/orders` with the customer's access token. Should receive 403.
+**Test 7 — Security:** Customer token → `GET /api/qb/admin/orders` returns `403`. Customer navigates to `/qb-portal/admin` → redirected.
 
-**Test 8 — Admin header link:**
-1. Logged in as operator, navigate to the customer-facing pages (catalog, portal).
-2. Confirm the "Admin" link is visible in the header.
-3. Log out and log in as a customer. Confirm the "Admin" link is NOT visible.
+**Test 8 — Admin header link:** Operator on catalog page → "Admin" link visible. Customer → not visible.
 
-### Security grep check:
+**Test 9 — Empty states:** All list pages with no data show empty-state messages, not errors.
 
-Run from the repo root:
-- `grep -rn "requireOperator" artifacts/api-server/src/routes/qb-portal.ts` — all `/api/qb/admin/*` routes must use `requireOperator`.
-- `grep -rn "isOperator" artifacts/qb-portal/src/components/` — the admin link visibility condition should appear here.
+**Final check:** Verify all Replit Secrets (Supabase URL, anon key, service role key) are still present.
 
 ---
 
@@ -385,10 +338,13 @@ Run from the repo root:
 
 - Do NOT modify any files in `docs/`.
 - Do NOT modify `artifacts/qb-portal/public/products.json`.
-- Do NOT implement subscription billing, subscription management, or Stripe subscriptions — that is Prompt 06.
-- Do NOT implement the promo code system — that is Prompt 09/10.
-- Do NOT implement SLA timers, ticket priority routing, or ticket email notifications — that is Prompt 08.
-- Do NOT implement product/pricing management in the admin panel — products are static JSON at this stage.
-- Do NOT implement a Stripe refund action from the admin panel — that is a later prompt.
-- The admin panel pages in this prompt are the MVP: dashboard, orders, customers, tickets. Scope is exactly what is defined here — do not build additional admin sections not covered in these steps.
-- All admin routes (frontend and backend) must use the Supabase Auth operator verification from Prompts 03 and 03B. Do NOT introduce any new auth mechanism.
+- Do NOT implement subscription billing, Stripe subscriptions — Prompt 06.
+- Do NOT implement the promo code system — Prompt 09/10.
+- Do NOT implement SLA timers, ticket priority routing, or ticket email notifications — Prompt 08.
+- Do NOT implement product/pricing management — products are static JSON at this stage.
+- Do NOT implement a Stripe refund action — later prompt.
+- Do NOT implement a delete action for orders — operators may only update status.
+- Admin MVP scope is exactly: dashboard, orders, customers, tickets. Do not build additional sections.
+- All admin routes use Supabase Auth operator verification from Prompts 03 and 03B. Do NOT introduce any new auth mechanism.
+- Frontend admin routes are under `/qb-portal/admin/*`. API admin routes are under `/api/qb/admin/*`. No exceptions.
+- List endpoints (orders, tickets, customers) MUST support pagination, sorting, and filtering from the start — do not defer.

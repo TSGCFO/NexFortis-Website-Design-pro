@@ -23,6 +23,16 @@ If any of these prerequisites are missing, stop and report what needs to be comp
 
 ---
 
+**PLATFORM REMINDERS (read replit.md for full details):**
+- The API server only handles `/api/*` routes. Static files are served by Replit, not Express.
+- Do NOT add `express.static()` to the API server.
+- Do NOT throw errors for missing env vars — use `console.warn` + null.
+- CORS rejected origins: use `callback(null, false)`, NEVER `callback(new Error(...))`.
+- Helmet `hsts: false` (hosting layer handles HSTS).
+- Verify Replit Secrets are still present after completing all steps.
+
+---
+
 ## Step 1: MFA Enrollment Page
 
 Create a new page component at `artifacts/qb-portal/src/pages/admin/mfa-enroll.tsx`.
@@ -32,6 +42,8 @@ This page is displayed to the operator the first time they log in, before they c
 ### What the page does:
 
 On mount, call `supabase.auth.mfa.enroll({ factorType: 'totp' })`. This returns a factor object that includes a `totp.qr_code` (a data URI for the QR code image) and a `totp.secret` (the plain-text secret for manual entry). Store both in component state. If the enrollment call fails, display the error message and a retry button.
+
+**AAL2 error handling for the enrollment call:** If `enroll()` returns an error with message containing "already enrolled" or error code `MFA_FACTOR_NAME_CONFLICT` or similar, do NOT crash — display a message: "MFA is already set up for this account." and redirect to `/admin/mfa-challenge` after 2 seconds. For all other errors, display the error message text and show a "Try Again" button that re-calls `enroll()`.
 
 The page should show:
 
@@ -44,6 +56,14 @@ The page should show:
 7. **Submit button:** "Activate MFA". Disabled when the input is not exactly 6 digits, or while the verification call is in-flight.
 8. **Error display:** If the verification fails (wrong code), show an inline error message below the input: "Incorrect code. Please try again." Do not clear the input — let the user correct it.
 
+> **⚠️ COMMON MISTAKE — DO NOT:**
+> - Log or store `totp.secret` anywhere (console.log, server, analytics). This is a security key — it must only exist in component state and be displayed to the user.
+> - Use `input type="number"` for the code field — it causes mobile keyboard issues and strips leading zeros.
+> - Call `enroll()` on every render — call it only once on mount (use a ref guard or empty-dep `useEffect`).
+> - Assume `enroll()` always succeeds — if the factor already exists, handle it gracefully (redirect to challenge, not an error page).
+> - Clear the code input on a wrong-code error — leave it populated so the user can correct it.
+> - Redirect to `/admin` directly after enrollment without first verifying `challengeAndVerify()` — the session is only AAL2 after a successful verify call.
+
 ### Verification flow:
 
 When the user submits the 6-digit code:
@@ -51,9 +71,16 @@ When the user submits the 6-digit code:
 2. If the call returns an error, display the error and let the user retry.
 3. If the call succeeds, the session is now upgraded to AAL2. Redirect the user to `/admin` using the React Router `useNavigate` hook.
 
+**Brute-force note:** Supabase handles TOTP rate limiting server-side. Do NOT add client-side lockout.
+
 ### Styling:
 
 Use the NexFortis brand — navy background for the header/card, rose-gold accent color for buttons and highlights, Inter font (already in the project). The page should feel like a security-focused setup wizard, not a generic form. Use a centered card layout with reasonable max-width (around 480px). Keep it clean and focused — no sidebar, no navigation chrome.
+
+**Verify this step:**
+- Run `pnpm typecheck` — zero errors before moving on.
+- Confirm `grep -rn "console.log\|console.debug" artifacts/qb-portal/src/pages/admin/mfa-enroll.tsx` returns no lines that include `secret` or `qr_code`.
+- Open the enrollment page in the Replit preview — confirm QR code renders and input auto-focuses.
 
 ---
 
@@ -71,6 +98,18 @@ This page is displayed to the operator after they complete their password login 
 4. If the user is not authenticated at all, redirect to `/login`.
 
 Also check whether the user has any enrolled TOTP factors. You can get the list of enrolled factors from the session or by calling `supabase.auth.mfa.listFactors()`. If the user has no enrolled TOTP factors (empty list or no factor with type `totp`), redirect them to `/admin/mfa-enroll` instead — they need to complete enrollment first.
+
+**AAL2 state distinction — these three cases MUST be handled differently:**
+- **No factors enrolled** → redirect to `/admin/mfa-enroll`
+- **Factors enrolled, `currentLevel` is `aal1`** → stay on this page, show challenge input
+- **`currentLevel` is `aal2`** → redirect to `/admin` immediately
+
+> **⚠️ COMMON MISTAKE — DO NOT:**
+> - Return 403 or show an error page when the user has no enrolled factors — redirect to enrollment instead.
+> - Skip the `listFactors()` check and assume any AAL1 user is enrolled — they may not be.
+> - Show a blank page while the `getAuthenticatorAssuranceLevels()` call is in-flight — render a loading indicator.
+> - Use a stale `factorId` — always read it from the `listFactors()` response on mount, not from a hardcoded constant.
+> - Require the user to restart from the challenge step after a wrong code — let them retry with a new code.
 
 ### What the page shows:
 
@@ -90,9 +129,16 @@ When the user submits the 6-digit code:
 4. If successful, the session is now AAL2. Redirect to `/admin`.
 5. If either call fails, display the error and allow retry. The user can correct the code and try again — do not require them to restart from the challenge step.
 
+**Brute-force note:** Supabase enforces TOTP rate limiting server-side. Do NOT add client-side lockout.
+
 ### Styling:
 
 Match the MFA enrollment page style exactly — same centered card layout, same brand colors, same font. This page is part of the same auth flow and should feel visually consistent.
+
+**Verify this step:**
+- Run `pnpm typecheck` — zero errors.
+- Confirm auto-focus works in preview: open `/admin/mfa-challenge` and verify the input is focused without clicking.
+- Confirm the loading spinner appears on mount before the assurance level check resolves.
 
 ---
 
@@ -118,6 +164,17 @@ While the assurance level check is in-flight, render a loading indicator (a cent
 
 Import the frontend Supabase client directly from `@/lib/supabase` (or the appropriate path alias) for the MFA calls. Also use the auth context's `user` and `isOperator` values for the role check.
 
+> **⚠️ COMMON MISTAKE — DO NOT:**
+> - Render children before the AAL2 check resolves — even a single-frame flash of the admin UI is a security leak.
+> - Put the guard logic in `componentDidMount` equivalent only — it must re-run when auth state changes (include auth state in the `useEffect` dependency array).
+> - Use `router.push` inside a render body — always call navigation inside `useEffect` or an event handler, never during render.
+> - Redirect ALL non-AAL2 operators to `/admin/mfa-enroll` — first check whether factors are enrolled; if they are, redirect to `/admin/mfa-challenge` instead.
+
+**Verify this step:**
+- Run `pnpm typecheck` — zero errors.
+- While unauthenticated, navigate to `/admin` in the preview — confirm redirect to `/login`.
+- Log in as operator (AAL1 only, before MFA) — confirm redirect to `/admin/mfa-challenge` (or `/admin/mfa-enroll` if first time).
+
 ---
 
 ## Step 4: Backend AAL2 Strict Enforcement
@@ -132,11 +189,29 @@ The middleware currently logs a warning when the JWT's assurance level is not `a
 
 Remove the "log warning and continue" behavior. Replace it with strict enforcement:
 
+The middleware chain for every admin route must be: `router.get('/admin/path', requireAuth, requireOperator, handler)`. `requireAuth` MUST come before `requireOperator`. Do not reorder them and do not merge them into one middleware.
+
 1. After verifying the JWT and confirming the user's role is `operator`, inspect the `aal` claim in the decoded JWT payload. The claim is at `aal` in the JWT's AMR (Authentication Methods References) section, or it may be a top-level claim depending on the Supabase JWT structure. The exact field to check is the session's assurance level — use the value returned by `supabase.auth.getUser(token)` which includes the AAL in its response, or decode the JWT and read the `aal` claim directly.
 2. If the `aal` claim is not `"aal2"`, return a 403 response with the JSON body: `{ "error": "MFA verification required. Please complete your two-factor authentication." }`.
 3. Do not log a warning — return 403 immediately.
 
+**If the Supabase `getUser()` call fails** (network error, service unavailable): return `503` with body `{ "error": "Auth service unavailable. Please try again." }`. Do NOT let the middleware crash the process with an unhandled rejection.
+
+**If the `aal` claim is missing entirely from the JWT** (e.g., older token format): treat it as NOT `aal2` and return 403. Do not assume a missing claim means AAL2.
+
 This means every single request to any `/api/qb/admin/*` route (all routes protected by `requireOperator`) will require a valid AAL2 session token. A customer impersonating an operator, or an operator who hasn't completed MFA, will receive a 403 and cannot access any admin data.
+
+> **⚠️ COMMON MISTAKE — DO NOT:**
+> - Apply this strict `aal2` check inside `requireAuth` — only `requireOperator` enforces AAL2. Customer routes use `requireAuth` only and must NOT be affected.
+> - Throw an unhandled error if `getUser()` rejects — catch it and return 503.
+> - Return 401 when the issue is AAL level (not authentication) — use 403.
+> - Leave the old "warn and continue" code as a commented-out block — delete it entirely.
+
+**Verify this step:**
+- Run `pnpm typecheck` — zero errors.
+- `grep -rn "aal" artifacts/api-server/src/routes/qb-portal.ts` — must show the strict 403 enforcement, no "warn and continue" pattern.
+- Using curl or the browser console, obtain an AAL1 JWT for the operator and make a request to `GET /api/qb/admin/orders` — confirm a 403 response.
+- Confirm that a customer JWT against a customer route (e.g., `GET /api/qb/orders`) still returns 200.
 
 ---
 
@@ -154,6 +229,17 @@ Also add both paths to `artifacts/qb-portal/public/robots.txt` under the Disallo
 - `Disallow: /admin/mfa-challenge`
 
 These pages should not be indexed by search engines.
+
+> **⚠️ COMMON MISTAKE — DO NOT:**
+> - Wrap `/admin/mfa-enroll` or `/admin/mfa-challenge` in the admin layout guard — the user will be stuck in a redirect loop (guard requires AAL2, but the user is on the way to getting AAL2).
+> - Forget to update `robots.txt` — both paths must be disallowed.
+> - Use a lazy session check that allows a flash of the page before redirecting unauthenticated users — the session check should block render, not run in a `useEffect` after first render.
+
+**Verify this step:**
+- Run `pnpm typecheck` — zero errors.
+- `grep -rn "mfa-enroll\|mfa-challenge" artifacts/qb-portal/src/App.tsx` — must show both routes registered.
+- `grep -n "Disallow" artifacts/qb-portal/public/robots.txt` — must show both paths.
+- Navigate to `/admin/mfa-enroll` while logged out in the preview — confirm redirect to `/login`.
 
 ---
 
@@ -205,6 +291,7 @@ Run these from the monorepo root and confirm the output:
 - `grep -rn "aal" artifacts/api-server/src/routes/qb-portal.ts` — should show the strict AAL2 enforcement code that returns 403 when AAL is not `aal2`.
 - `grep -rn "mfa-enroll\|mfa-challenge" artifacts/qb-portal/src/App.tsx` — should show both routes registered.
 - `grep -rn "getAuthenticatorAssuranceLevels\|listFactors" artifacts/qb-portal/src/` — should show usage in the admin layout and the MFA challenge page.
+- `grep -rn "secret\|qr_code" artifacts/qb-portal/src/pages/admin/mfa-enroll.tsx` — confirm no `console.log` lines reference these values.
 
 ---
 

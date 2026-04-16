@@ -185,3 +185,170 @@ Six named validation commands are registered and can be run on demand individual
 - **API Definition**: OpenAPI 3.1
 - **Icons**: Lucide React
 - **UI Animations**: Framer Motion
+
+---
+
+# Replit Platform Constraints & Implementation Rules
+
+This section documents critical Replit platform constraints and common implementation pitfalls. Read this before starting any task.
+
+---
+
+## 1. Static File Serving Architecture
+
+Replit uses a **multi-artifact routing system**. Each artifact has its own `artifact.toml` with `serve = "static"` and a `publicDir` pointing to its built output.
+
+| Artifact | Path | publicDir |
+|---|---|---|
+| NexFortis frontend | `/` | `artifacts/nexfortis/dist/public` |
+| QB Portal frontend | `/qb-portal/` | `artifacts/qb-portal/dist/public` |
+| API server (Express) | `/api/*` | n/a — Express on port 8080 |
+
+Replit's router proxies based on path prefix:
+- `/api/*` → Express server (port 8080)
+- Everything else → Replit's static infrastructure
+
+**CONSEQUENCE:** Express middleware (Helmet, custom headers, `express.static()`) **never applies** to static file responses. Static files bypass Express entirely. Do NOT add `express.static()` to the API server — it will either never be reached or create routing conflicts.
+
+**CONSEQUENCE:** Security headers on frontend HTML must be added via HTML `<meta>` tags, NOT Express middleware. Express middleware only covers `/api/*` responses.
+
+---
+
+## 2. Hosting Layer Behavior
+
+Replit's hosting layer sits in front of all traffic and automatically injects certain HTTP headers before responses reach the client.
+
+- Replit automatically adds `strict-transport-security` (HSTS) headers. If Helmet also sets HSTS, responses will have **duplicate headers**. **ALWAYS set `hsts: false` in the Helmet config.**
+- Replit's hosting layer may inject other headers — always test the **live deployed app**, not just the Replit dev preview. The dev preview does not replicate all hosting-layer behavior.
+
+---
+
+## 3. Environment Variables / Secrets
+
+- All environment variables are configured in **Replit's Secrets panel** (UI). Do NOT use `.env` files for secrets — they will not work as expected in deployed environments.
+- Secrets persist across deployments but **can be accidentally cleared by background tasks**. Always verify that existing secrets are still present after a task completes.
+- The application reads from `process.env`. This works because Replit injects Secrets into the process environment at runtime.
+- **Never hardcode secrets in source code.** The `.env.example` file documents required variables but contains only placeholder values.
+
+**Critical secrets that MUST be configured in the Secrets panel:**
+
+| Secret | Purpose |
+|---|---|
+| `SUPABASE_URL` | Supabase project URL (server-side) |
+| `SUPABASE_ANON_KEY` | Supabase anon key (server-side) |
+| `SUPABASE_SERVICE_ROLE_KEY` | Supabase service role key (server-side) |
+| `VITE_SUPABASE_URL` | Supabase project URL (injected into frontend build) |
+| `VITE_SUPABASE_ANON_KEY` | Supabase anon key (injected into frontend build) |
+| `DATABASE_URL` | Direct Postgres connection string |
+| `STRIPE_SECRET_KEY` | Stripe API key |
+
+---
+
+## 4. Express Middleware Order
+
+This is the **exact required middleware order** for the API server. Do not reorder these. When adding new middleware, insert it at the correct position in this chain.
+
+```
+1. helmet()                        — security headers (MUST be first)
+2. Custom header middleware         — e.g., X-XSS-Protection: 0
+3. Stripe webhook route             — express.raw() body parser, BEFORE express.json()
+4. express.json()                  — JSON body parser
+5. express.urlencoded()            — URL-encoded body parser
+6. cookieParser()                  — cookie parsing
+7. cors()                          — CORS with explicit origin allowlist
+8. pinoHttp()                      — request logging
+9. Global rate limiter
+10. Routes
+```
+
+**Critical ordering constraints:**
+- The Stripe webhook route **MUST** be registered before `express.json()`. If `express.json()` processes the body first, it will consume the raw bytes that Stripe's signature verification requires, causing all webhook signature checks to fail.
+- Helmet **MUST** be first so that all API responses receive security headers.
+- CORS must use `callback(null, false)` to reject disallowed origins — never `callback(new Error(...))`, which causes unhandled errors and 500 responses to the client.
+
+---
+
+## 5. Authentication Architecture
+
+**Primary auth — Supabase JWT:**
+The `requireAuth` middleware verifies Bearer tokens via `supabase.auth.getUser(token)` and populates `req.userId` and `req.userRole` on the request object. All standard protected routes use this middleware.
+
+**Upload-token auth — file upload route:**
+The route `POST /api/qb/orders/:id/files` supports an alternative auth path via `x-upload-token` header or `uploadToken` query param. This is **intentional design** — do NOT add `requireAuth` to this route. It handles its own token verification internally.
+
+**Per-user rate limiters:**
+`orderLimiter`, `ticketLimiter`, and similar per-user limiters MUST use:
+```js
+keyGenerator: (req) => req.userId || req.ip
+```
+This handles both auth paths. When `req.userId` is not populated (e.g., upload-token path), the limiter falls back to IP-based keying.
+
+**Rate limiter placement:**
+Rate limiters for authenticated routes MUST be applied **after** `requireAuth` in the middleware chain so that `req.userId` is already populated when the key generator runs.
+
+---
+
+## 6. Common Anti-Patterns (DO NOT DO THESE)
+
+**Module initialization:**
+- DO NOT use `throw new Error()` for missing environment variables at module load time. This crashes the entire server on startup, even if the missing variable is for an optional or rarely-used feature. Instead, use `console.warn()` and set the export to `null`. Add a runtime 503 check inside the relevant route handlers.
+
+**Supabase user lookup:**
+- DO NOT use `supabase.auth.admin.listUsers()` to find a single user — it fetches all users and filters in memory, which is slow and wasteful. Use `supabase.auth.admin.getUserByEmail(email)` for direct lookup.
+
+**CORS origin rejection:**
+- DO NOT use `callback(new Error("Not allowed by CORS"))` in the CORS origin function. Use `callback(null, false)` to reject the origin silently. Throwing inside the origin function causes Express to emit an unhandled error, resulting in a 500 response instead of a proper CORS rejection.
+
+**Static file serving:**
+- DO NOT add `express.static()` to the API server. Replit handles static file serving via its own infrastructure. Adding `express.static()` to Express creates routing conflicts and will never be reached for the paths it targets.
+
+**HSTS / Helmet:**
+- DO NOT configure `hsts` in Helmet. Replit's hosting layer already adds HSTS headers. Configuring both results in duplicate `strict-transport-security` headers.
+
+**Webhook body parsing:**
+- DO NOT assume `req.body` is always a string in webhook handlers. The body may arrive as a `Buffer` depending on the body parser configuration. Always handle both cases:
+  ```js
+  const payload = Buffer.isBuffer(req.body) ? req.body.toString("utf-8") : req.body;
+  ```
+
+**X-XSS-Protection header:**
+- DO NOT use `xssFilter: false` in Helmet and assume it emits `X-XSS-Protection: 0`. Setting `xssFilter: false` **disables the module entirely** — it does not emit the header with value `0`. To explicitly send `X-XSS-Protection: 0`, add a separate middleware after Helmet:
+  ```js
+  app.use((_req, res, next) => {
+    res.setHeader("X-XSS-Protection", "0");
+    next();
+  });
+  ```
+
+---
+
+## 7. Post-Implementation Verification
+
+After completing any task, run through this checklist before marking the task done.
+
+**1. TypeScript — zero errors:**
+```bash
+pnpm typecheck
+```
+Fix all errors before proceeding. Do not suppress errors with `// @ts-ignore` unless there is a documented reason.
+
+**2. Secrets verification:**
+Open the Replit Secrets panel and confirm all required secrets listed in Section 3 are still present. Background tasks can accidentally clear secrets.
+
+**3. Live preview verification:**
+Open the Replit preview and confirm:
+- Main site loads at `/`
+- QB Portal loads at `/qb-portal/`
+- API healthcheck at `/api/healthz` returns HTTP 200
+
+**4. Auth flow (if the task touched auth):**
+Verify the login flow works end-to-end in the preview. Check both the NexFortis and QB Portal login paths if either was modified.
+
+**5. CORS (if the task touched CORS config or added new origins):**
+```bash
+curl -X OPTIONS [endpoint] -H "Origin: https://example.com" -v
+```
+Verify the response is a proper CORS rejection (no `Access-Control-Allow-Origin` header for disallowed origins) and that no 500 errors occur.
+
+**6. Rate limiting (if the task touched rate limiters or auth middleware):**
+Review the middleware chain order and confirm that rate limiters for authenticated routes are registered **after** `requireAuth`. Check that `keyGenerator` falls back to `req.ip` for unauthenticated paths.
