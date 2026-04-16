@@ -7,13 +7,8 @@ async function main() {
   const name = process.env.OPERATOR_NAME || "Operator";
 
   if (!email || !password) {
-    console.warn(
-      "[seed-operator] OPERATOR_EMAIL and/or OPERATOR_PASSWORD not set. " +
-        "Falling back to default operator credentials. " +
-        "DO NOT use defaults in production — set OPERATOR_EMAIL and OPERATOR_PASSWORD env vars."
-    );
-    email = email || "operator@nexfortis.com";
-    password = password || "ChangeMe123!";
+    console.error("[seed-operator] OPERATOR_EMAIL and OPERATOR_PASSWORD must both be set as environment variables.");
+    process.exit(1);
   }
 
   const passwordHash = await bcrypt.hash(password, 12);

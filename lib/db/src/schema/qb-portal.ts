@@ -216,11 +216,11 @@ export const qbReferralCredits = pgTable("qb_referral_credits", {
 
 export const qbPromoCodeAdminEvents = pgTable("qb_promo_code_admin_events", {
   id: serial("id").primaryKey(),
-  adminUserId: uuid("admin_user_id").references(() => qbUsers.id).notNull(),
+  adminUserId: uuid("admin_user_id").notNull(),
   action: text("action").notNull(),
   promoCodeId: integer("promo_code_id").references(() => qbPromoCodes.id).notNull(),
   beforeState: jsonb("before_state"),
-  afterState: jsonb("after_state"),
+  afterState: jsonb("after_state").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 

@@ -31,7 +31,7 @@ const ALLOWED_CATEGORIES = [
 
 type PromoRow = typeof qbPromoCodes.$inferSelect;
 type AdminEventInsert = typeof qbPromoCodeAdminEvents.$inferInsert;
-type AdminEventAction = "create" | "update" | "deactivate" | "reactivate";
+type AdminEventAction = "created" | "updated" | "deactivated" | "reactivated";
 type JsonState = AdminEventInsert["beforeState"];
 
 function computeStatus(row: PromoRow): "active" | "inactive" | "expired" | "exhausted" {
@@ -164,7 +164,7 @@ router.get("/promo-analytics", async (_req: Request, res: Response) => {
 router.get("/promo-codes", async (req: Request, res: Response) => {
   try {
     const page = Math.max(1, parseInt(req.query.page as string) || 1);
-    const limit = Math.min(100, Math.max(1, parseInt(req.query.limit as string) || 20));
+    const limit = Math.min(100, Math.max(1, parseInt(req.query.limit as string) || 25));
     const search = (req.query.search as string | undefined)?.trim();
     const status = req.query.status as string | undefined;
     const type = req.query.type as string | undefined;
@@ -344,7 +344,7 @@ router.post("/promo-codes", async (req: Request, res: Response) => {
     };
 
     const [inserted] = await db.insert(qbPromoCodes).values(insertValues).returning();
-    await logAdminEvent(adminUserId, "create", inserted.id, null, inserted);
+    await logAdminEvent(adminUserId, "created", inserted.id, null, inserted);
 
     res.status(201).json({ promoCode: withStatus(inserted) });
   } catch (err) {
@@ -543,7 +543,7 @@ router.patch("/promo-codes/:id", async (req: Request, res: Response) => {
       .returning();
 
     const action: AdminEventAction =
-      willToggleActive ? (updates.isActive ? "reactivate" : "deactivate") : "update";
+      willToggleActive ? (updates.isActive ? "reactivated" : "deactivated") : "updated";
 
     await logAdminEvent(adminUserId, action, id, before, updated);
 
@@ -587,7 +587,7 @@ router.post("/promo-codes/:id/deactivate", async (req: Request, res: Response) =
       await deactivateStripePromoCode(before.stripePromotionCodeId);
     }
 
-    await logAdminEvent(adminUserId, "deactivate", id, before, updated);
+    await logAdminEvent(adminUserId, "deactivated", id, before, updated);
 
     res.json({ promoCode: withStatus(updated) });
   } catch (err) {
