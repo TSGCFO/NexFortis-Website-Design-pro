@@ -1,0 +1,433 @@
+# Prompt 09: Promo Code System — Backend, Checkout Integration, Referral Wiring
+
+This prompt builds the full promo code system: database schema, validation API, redemption API, checkout UI integration, Stripe coupon sync, referral code auto-generation for Premium subscribers, and the subscriber discount at checkout. Admin panel management of promo codes is deferred to Prompt 10.
+
+## Step 0: Setup
+
+Read these files before making any changes:
+1. `replit.md` — project overview, architecture, conventions, current state
+2. `docs/prd/qb-portal/feature-promo-code-system.md` — the full promo code PRD (all 40 functional requirements, all acceptance criteria)
+3. `docs/prd/qb-portal/feature-support-subscription.md` — subscription PRD (for referral code context)
+4. `docs/implementation-plan.md` — understand what has been built so far (Prompts 01–08)
+5. `docs/prompts/prompt-09-promo-code-system.md` — this file
+6. `lib/db/src/schema/qb-portal.ts` — current Drizzle schema (you will extend it)
+7. `artifacts/qb-portal/src/pages/order-form.tsx` — existing checkout page (you will modify it)
+8. `artifacts/api-server/src/routes/qb-portal.ts` — existing portal routes (check route registration patterns)
+9. `artifacts/api-server/src/routes/qb-subscriptions.ts` — existing subscription/webhook routes (for referral wiring)
+
+**Do NOT modify any files in `docs/`.**
+
+**PREREQUISITES — these must already exist from previous prompts:**
+- Drizzle ORM schema in `lib/db/src/schema/qb-portal.ts` with all `qb_*` tables
+- `qb_orders` table with `status`, `total_cad`, `stripe_session_id` columns
+- `qb_subscriptions` table with `tier`, `status`, `stripe_subscription_id` columns
+- `qb_referrals` and `qb_referral_events` tables (from Prompt 06)
+- Stripe integration in `artifacts/api-server/src/lib/stripe-client.ts`
+- Subscription webhooks in `artifacts/api-server/src/routes/qb-subscriptions.ts`
+- `requireAuth` and `requireOperator` middleware in the portal routes
+- The frontend Supabase client at `artifacts/qb-portal/src/lib/supabase.ts`
+- Product catalog data in `artifacts/qb-portal/src/lib/products.ts` and `artifacts/qb-portal/public/products.json`
+
+If any prerequisites are missing, stop and report what needs to be completed first.
+
+---
+
+**PLATFORM REMINDERS (read replit.md for full details):**
+- The API server only handles `/api/*` routes. Static files are served by Replit.
+- Do NOT add `express.static()` to the API server.
+- Do NOT throw errors for missing env vars — use `console.warn` + `null`.
+- All monetary values are stored in integer cents (CAD). Never use floats for money.
+- The `supabaseAdmin` export can be `null`. Always null-check before using.
+- Verify Replit Secrets are still present after completing all steps.
+- Do NOT create or modify any migration files manually. Schema changes go through Drizzle schema → `drizzle-kit push`.
+
+> **⚠️ GLOBAL DO-NOTs:**
+> - Do NOT hardcode prices — always read from the product catalog or database
+> - Do NOT calculate discounts on the frontend only — the server is the authority
+> - Do NOT create Stripe PaymentIntents for $0 orders — bypass Stripe entirely
+> - Do NOT expose `restricted_to_email`, `owner_user_id`, or internal `description` fields in any customer-facing API response
+> - Do NOT return different error messages for non-existent vs deactivated codes — both must return `NOT_FOUND` with the same generic message to prevent code enumeration
+
+---
+
+## Step 1: Database Schema — Promo Code Tables
+
+Extend the Drizzle schema in `lib/db/src/schema/qb-portal.ts` with four new tables and three new columns on the existing `qb_orders` table.
+
+### 1a. `qb_promo_codes` Table
+
+This is the master promo codes table. Columns:
+
+- `id`: serial primary key
+- `code`: text, not null, unique — the customer-facing code string (stored uppercase, lookups are case-insensitive)
+- `isActive`: boolean, not null, default true
+- `type`: text, not null — constrained to: `percentage`, `fixed_amount`, `free_service`, `subscription`. Add a CHECK constraint.
+- `percentOff`: integer, nullable — 1 to 100, used for percentage and free_service types
+- `amountOffCents`: integer, nullable — CAD cents, used for fixed_amount type
+- `subscriptionDurationMonths`: integer, nullable — used for subscription type only
+- `maxUses`: integer, nullable — null means unlimited
+- `maxUsesPerCustomer`: integer, nullable — null means unlimited per customer
+- `redemptionCount`: integer, not null, default 0
+- `expiresAt`: timestamp with time zone, nullable — null means never expires
+- `productIds`: text array, nullable — specific product IDs this code applies to; null/empty means all products
+- `categoryIds`: text array, nullable — category slugs: `conversion`, `data_services`, `migration`, `subscription`, `volume_pack`; null/empty means all categories
+- `minOrderAmountCents`: integer, nullable — null means no minimum
+- `firstTimeCustomerOnly`: boolean, not null, default false
+- `stackableWithLaunchPromo`: boolean, not null, default true
+- `restrictedToEmail`: text, nullable — stored lowercase; null means no restriction
+- `appliesToBasePrice`: boolean, not null, default false — if true, stacked discount applies to base price, not post-launch-promo price
+- `ownerUserId`: uuid, nullable, references `qb_users.id` — set for referral codes
+- `stripeCouponId`: text, nullable
+- `stripePromotionCodeId`: text, nullable
+- `description`: text, nullable — internal operator notes
+- `createdAt`: timestamp, not null, default now
+- `updatedAt`: timestamp, not null, default now
+
+> **⚠️ DO NOT:**
+> - Use uuid for the `id` column — keep it serial integer like all other `qb_*` tables
+> - Forget the CHECK constraint on `type` — it must restrict to the 4 valid values
+> - Make `code` case-sensitive in the database — add a unique index on `LOWER(code)` using a Drizzle raw SQL index
+
+### 1b. `qb_promo_code_redemptions` Table
+
+Records each time a code is successfully redeemed. Columns:
+
+- `id`: serial primary key
+- `promoCodeId`: integer, not null, references `qb_promo_codes.id`
+- `userId`: uuid, nullable, references `qb_users.id` — null for guest orders
+- `guestEmail`: text, nullable — populated for guest orders
+- `orderId`: integer, not null, references `qb_orders.id`
+- `discountAmountCents`: integer, not null
+- `orderTotalBeforeCents`: integer, not null
+- `orderTotalAfterCents`: integer, not null
+- `ownerUserId`: uuid, nullable, references `qb_users.id` — copied from the promo code's owner at redemption time
+- `redeemedAt`: timestamp with time zone, not null, default now
+
+### 1c. `qb_referral_credits` Table
+
+Tracks credits earned by Premium subscribers through referral code redemptions. Columns:
+
+- `id`: serial primary key
+- `beneficiaryUserId`: uuid, not null, references `qb_users.id` — the Premium subscriber earning the credit
+- `amountCents`: integer, not null
+- `source`: text, not null, default `promo_code_redemption`
+- `promoCodeRedemptionId`: integer, nullable, references `qb_promo_code_redemptions.id`
+- `orderId`: integer, nullable, references `qb_orders.id`
+- `status`: text, not null, default `pending` — constrained to: `pending`, `applied`, `paid_out`. Add a CHECK constraint.
+- `createdAt`: timestamp, not null, default now
+
+### 1d. `qb_promo_code_admin_events` Table
+
+Audit log for all admin actions on promo codes. Columns:
+
+- `id`: serial primary key
+- `adminUserId`: uuid, not null, references `qb_users.id`
+- `action`: text, not null — `created`, `updated`, `deactivated`, `reactivated`
+- `promoCodeId`: integer, not null, references `qb_promo_codes.id`
+- `beforeState`: jsonb, nullable
+- `afterState`: jsonb, nullable
+- `createdAt`: timestamp, not null, default now
+
+### 1e. Extend `qb_orders` Table
+
+Add three new columns to the existing `qb_orders` table:
+
+- `promoCodeId`: integer, nullable, references `qb_promo_codes.id`
+- `discountAmountAppliedCents`: integer, nullable, default 0
+- `subtotalBeforeDiscountCents`: integer, nullable
+- `paymentStatus`: text, nullable — add to support `free_promo` alongside existing statuses
+
+### 1f. Create Insert Schemas
+
+Add `createInsertSchema` exports for all four new tables, following the existing pattern in the schema file.
+
+### 1g. Sync the Database
+
+After making all schema changes, run `drizzle-kit push` from the `lib/db/` directory to sync the database. Verify the new tables and columns exist by querying `information_schema.tables` and `information_schema.columns`.
+
+> **⚠️ DO NOT:**
+> - Create migration files manually — use `drizzle-kit push`
+> - Forget to drop the legacy `qb_password_resets` table first if it still exists (it blocks push)
+> - Use uuid for primary keys on the new tables — match the serial integer pattern of existing tables
+
+---
+
+## Step 2: Promo Code Validation API
+
+Create a new route file `artifacts/api-server/src/routes/qb-promo.ts` for promo code endpoints. Register it in the route index.
+
+### 2a. `POST /api/qb/promo/validate`
+
+This endpoint validates a promo code against an order without consuming it. It does NOT increment the usage counter.
+
+**Request body:**
+- `code` (string, required) — the promo code entered by the customer
+- `orderItems` (array, required) — each item has `productId` (string), `quantity` (number), `unitPriceCents` (number)
+- `userId` (string, optional) — UUID of authenticated user
+- `guestEmail` (string, optional) — email for guest checkout
+- `orderType` (string, required) — `one_time` or `subscription`
+
+**Validation constraint check order** (perform in this exact sequence to return the most actionable error first):
+
+1. Look up the code (case-insensitive). If not found OR `is_active = false` → return `NOT_FOUND`: "This promo code is invalid or has expired."
+2. Check `expires_at`. If past → return `EXPIRED`: "This promo code expired on [formatted date]."
+3. Check `redemption_count >= max_uses` (when max_uses is not null) → return `EXHAUSTED`: "This promo code has reached its usage limit."
+4. Check per-customer usage by querying `qb_promo_code_redemptions` for the user's ID or email. If `>= max_uses_per_customer` → return `ALREADY_USED_MAX_TIMES`: "You have already used this code the maximum number of times."
+5. Check `restricted_to_email`. If set and doesn't match the authenticated user's email or guest email → return `EMAIL_RESTRICTED`: "This promo code is not valid for your account." (generic message — do NOT reveal the restricted email)
+6. Check `product_ids` and `category_ids`. If set and none of the order items match → return `PRODUCT_MISMATCH`: "This code is not valid for the selected product(s)."
+7. Check `min_order_amount_cents`. If order subtotal is below → return `MINIMUM_NOT_MET`: "This code requires a minimum order of $[amount] CAD. Your current subtotal is $[amount]."
+8. Check `first_time_customer_only`. Query `qb_orders` for any completed order by the user/email. If exists → return `FIRST_TIME_ONLY`: "This promo code is for first-time customers only."
+9. All checks pass → compute discount amount and return success.
+
+**Success response:**
+- `valid`: true
+- `discountType`: the code's type
+- `discountValue`: the percentage or cent amount
+- `discountAmountCents`: the computed discount for this specific order
+- `appliesToItems`: which order items receive the discount
+- `stackable`: whether this code stacks with the launch promo
+- `finalOrderTotalCents`: the final total after discount (and after launch promo if applicable)
+- `previewLineItems`: array of line items showing each discount separately
+- `codeDescription`: optional display-friendly label (NOT the internal description — generate one like "25% off" or "$25.00 off")
+
+**Failure response:** `{ valid: false, errorCode: string, errorMessage: string }`
+
+**Launch promo stacking logic:**
+- Read a `LAUNCH_PROMO_ACTIVE` environment variable (boolean). If active, the automatic 50% launch promo is in effect.
+- If the code has `stackable_with_launch_promo = true`: apply launch promo first (50% off base price), then apply code discount to the post-promo price (unless `applies_to_base_price = true`, in which case apply code to base price).
+- If `stackable_with_launch_promo = false`: compute both discounts, apply whichever is greater. Include a notice in the response explaining which was applied and why.
+
+**Rate limiting:** This endpoint must be rate-limited to 10 requests per minute per IP address to prevent code enumeration attacks. Use the existing `express-rate-limit` setup pattern from the project.
+
+> **⚠️ DO NOT:**
+> - Increment `redemption_count` in the validate endpoint — validation is read-only
+> - Return the code's `description`, `restricted_to_email`, or `owner_user_id` in the response
+> - Use different error messages for non-existent vs deactivated codes
+> - Accept codes with fewer than 6 characters — reject at the input validation level
+> - Calculate monetary values with floating point — use integer cents throughout
+
+### 2b. `POST /api/qb/promo/redeem`
+
+This endpoint is called server-side at order confirmation time (after Stripe payment succeeds or for $0 order bypass). It atomically redeems the code.
+
+**This endpoint must:**
+1. Re-validate ALL constraints (same checks as validate — a race condition may have changed state between validate and redeem)
+2. Use a database transaction with `SELECT FOR UPDATE` on the promo code row to prevent double-redemption
+3. Atomically increment `redemption_count` on the `qb_promo_codes` record
+4. Create a `qb_promo_code_redemptions` record with all required fields
+5. If the code has an `owner_user_id` (referral code): create a `qb_referral_credits` record for the referring subscriber
+6. Apply the Stripe Coupon to the PaymentIntent or Subscription (for non-$0 orders)
+7. Return the final confirmed discount amount
+
+**Race condition handling:** If the usage limit is reached between validate and redeem (concurrent redemptions), return a graceful error: "This promo code was just used by another customer and has reached its limit. Please complete your order at the standard price." The order must NOT be cancelled — the customer proceeds without the discount.
+
+**For $0 orders:** Do NOT create a Stripe PaymentIntent. Record the discount in the redemptions table only. The order's `payment_status` must be set to `free_promo`.
+
+> **⚠️ DO NOT:**
+> - Skip the re-validation step — all constraints must be checked again inside the transaction
+> - Forget the `SELECT FOR UPDATE` — without it, two concurrent requests can both succeed on a single-use code
+> - Call Stripe APIs for $0 orders — there is no payment to process
+
+---
+
+## Step 3: Stripe Coupon Integration
+
+### 3a. Create Stripe Coupon and Promotion Code
+
+When a promo code is created (admin creation will be in Prompt 10, but the utility function is needed now for referral auto-generation), create both a Stripe `Coupon` and a Stripe `PromotionCode` object.
+
+Create a utility module `artifacts/api-server/src/lib/promo-stripe.ts` that exports helper functions:
+
+- `createStripeCouponAndPromoCode(codeData)` — creates the Stripe Coupon (with `percent_off` or `amount_off` depending on type, `currency: 'cad'` for fixed amounts, `duration` and `duration_in_months` for subscription types, `max_redemptions` matching `max_uses`, `redeem_by` matching `expires_at`), then creates a Stripe PromotionCode linked to the Coupon with the code string. Returns both Stripe IDs.
+
+- `deactivateStripePromoCode(stripePromotionCodeId)` — calls `stripe.promotionCodes.update(id, { active: false })`.
+
+- `applyStripeCouponToPayment(stripeCouponId, paymentIntentId)` — applies the coupon to the PaymentIntent via the `discounts` parameter.
+
+- `applyStripeCouponToSubscription(stripeCouponId, subscriptionId)` — applies the coupon to the Subscription.
+
+**All Stripe calls must use idempotency keys** derived from `promoCodeId + orderId` to prevent duplicate discount application on retry.
+
+**If Stripe keys are not configured** (dev mode without Stripe), log a warning and skip the Stripe operations. The database-side promo code logic must still work without Stripe.
+
+> **⚠️ DO NOT:**
+> - Use `amount_off` without specifying `currency: 'cad'` — Stripe requires it for fixed-amount coupons
+> - Create a Coupon without setting `max_redemptions` when `max_uses` is set — Stripe and the database must be in sync
+> - Forget idempotency keys on Stripe calls — retries must not create duplicate coupons
+
+---
+
+## Step 4: Referral Code Auto-Generation
+
+### 4a. Referral Code Generator Utility
+
+Create a utility function that generates unique referral codes. The code format is `REF` followed by 6 uppercase alphanumeric characters, using a readable charset that excludes easily confused characters (O, 0, I, 1). The function must attempt up to 5 times to generate a unique code, checking the database for collisions. If all 5 attempts collide, throw an error.
+
+### 4b. Wire Into Premium Subscription Activation
+
+In the existing subscription webhook handler (in `qb-subscriptions.ts`), when a `checkout.session.completed` event activates a Premium subscription:
+
+1. Check if the subscriber already has a referral code in `qb_promo_codes` with their `owner_user_id`. If yes, reactivate it (set `is_active = true`) instead of creating a new one.
+2. If no existing code, generate a new one using the utility from 4a.
+3. Insert into `qb_promo_codes` with: `type = fixed_amount`, `amount_off_cents = 2500` ($25 CAD), `max_uses = null` (unlimited total), `max_uses_per_customer = 1`, `stackable_with_launch_promo = true`, `category_ids = null` (all products), `description = 'Referral code — [subscriber name or email]'`, `owner_user_id` = subscriber's user ID.
+4. Also create the corresponding Stripe Coupon and PromotionCode via the utility from Step 3.
+5. Store the code on the subscriber's record so it can be displayed in their portal Settings > My Plan section.
+
+### 4c. Referral Credit on Redemption
+
+In the redemption endpoint (Step 2b), when a referral code is redeemed (identified by `owner_user_id` being set on the code):
+
+1. Create a `qb_referral_credits` record: `beneficiary_user_id` = the code's `owner_user_id`, `amount_cents = 2500`, `source = 'promo_code_redemption'`, `promo_code_redemption_id` = the redemption record ID, `order_id` = the order, `status = 'pending'`.
+2. This credit is tracked and displayed to the subscriber but NOT automatically applied to invoices at this stage (manual application by Hassan is the v1 approach).
+
+> **⚠️ DO NOT:**
+> - Generate a new referral code if one already exists for the subscriber — reactivate the existing one
+> - Make referral codes single-use globally — they are `max_uses = null` (unlimited) but `max_uses_per_customer = 1`
+> - Auto-apply referral credits to invoices — that is a v2 feature
+
+---
+
+## Step 5: Checkout UI Integration
+
+Modify the existing checkout page (`artifacts/qb-portal/src/pages/order-form.tsx` or whichever component handles the order summary and payment) to add the promo code input.
+
+### 5a. Promo Code Input Field
+
+Add a "Promo Code" input field to the order summary section of the checkout page:
+
+- The field must be directly visible (not collapsed behind a toggle link)
+- It must be visually secondary to the main order total and CTA — smaller font, lower contrast
+- An "Apply" button must be adjacent to the field
+- Validation triggers on button click or Enter key press — NOT on every keystroke
+- The field must accept case-insensitive input (uppercase before sending to API)
+- Minimum 6 characters — disable the Apply button for shorter input
+
+### 5b. Validation Feedback
+
+When the customer clicks Apply:
+
+- Show a loading spinner on the Apply button during the API call
+- On success: display a green checkmark, the discount as a named line item in the order summary (e.g., "Promo: NEXREF25 — –$25.00"), and a "Remove" (X) button next to the applied code
+- On failure: display a red error message below the input with the specific error text from the API response
+- Error messages must use `aria-live="polite"` for screen reader announcement
+
+### 5c. Order Summary Updates
+
+When a valid code is applied:
+
+- If the code stacks with the launch promo: show both discounts as separate line items (e.g., "Launch Promo (50% off): –$74.50" and "Promo: CODE — –$25.00")
+- If the code doesn't stack: show only the greater discount with a notice explaining why only one applies
+- Update the final order total immediately
+- If the final total is $0.00: show "Free Order" styling and change the CTA from "Proceed to Payment" to "Confirm Free Order"
+
+### 5d. Code Removal
+
+When the customer clicks the Remove (X) button:
+
+- Remove the discount line item from the order summary
+- Revert the total to the pre-code price (launch promo still applied if active)
+- Clear the promo code input field
+- No API call needed for removal (it was only a validate, not a redeem)
+
+### 5e. $0 Order Flow
+
+When a promo code results in a $0.00 total:
+
+- Hide the Stripe payment form / card entry fields entirely
+- Show a "Confirm Free Order" button instead
+- On click, call the redeem endpoint directly (no Stripe PaymentIntent creation)
+- On success, navigate to the order confirmation page
+- The order is created with `payment_status = free_promo`, `amount_charged_cents = 0`
+
+### 5f. Subscriber Discount Display
+
+If the logged-in user has an active subscription with a subscriber discount (10% off for Professional, 20% off for Premium — per the subscription PRD), show this as an automatic line item in the order summary. This is NOT a promo code — it is a tier-based discount applied automatically. The promo code field remains available for additional codes (stacking rules apply).
+
+> **⚠️ DO NOT:**
+> - Calculate the discount on the frontend and send it to the server — the frontend only displays the preview from the validate endpoint
+> - Show the payment form for $0 orders — bypass it completely
+> - Collapse the promo code field behind a "Have a promo code?" link — it must be directly visible
+> - Make the promo code field more prominent than the order total — it should be visually secondary
+
+---
+
+## Step 6: Email Notifications for Promo Orders
+
+### 6a. Free Order Confirmation Email
+
+When a $0 order is completed via a free service code, send two emails using the existing Resend integration:
+
+1. **Customer email:** Subject "Order Confirmed — [Service Name]". Body confirms the order, notes the promo code was applied, states $0.00 charged, and provides next steps (upload instructions).
+
+2. **Operator email (support@nexfortis.com):** Subject "New Free Promo Order — #[ID]". Body includes the order details, the promo code used, the customer info, and a note: "Order fulfilled via promo code — no payment collected."
+
+### 6b. Referral Credit Earned Email
+
+When a referral code is redeemed, send an email to the referring Premium subscriber:
+
+- Subject: "You earned a $25 referral credit"
+- Body: Informs the subscriber that someone used their referral code, credits the $25, and shows their total accumulated credits. Include a link to Settings > My Plan.
+
+Use the existing email template patterns from `artifacts/api-server/src/lib/email-templates.ts`.
+
+> **⚠️ DO NOT:**
+> - Send the referral credit email to the customer who used the code — only to the referring subscriber
+> - Include the new customer's name or email in the referral credit email — privacy
+
+---
+
+## Step 7: Portal — Referral Code Display
+
+### 7a. Settings > My Plan Section
+
+In the existing subscription management page (portal Settings or My Plan section), add a "Your Referral Code" card for Premium subscribers:
+
+- Display the subscriber's unique referral code prominently with a "Copy" button
+- Show "Credits Earned" total (sum of all `qb_referral_credits` for this user)
+- Show a brief table of referral redemptions: date, discount amount, status (pending/applied/paid out)
+- If the subscriber is not on the Premium tier, show a disabled/locked state with a message: "Upgrade to Premium to get your referral code and earn $25 per referral."
+
+### 7b. API Endpoint for Referral Data
+
+Create `GET /api/qb/portal/referral-stats` (protected by `requireAuth`) that returns the authenticated user's referral code, total credits earned, and recent referral events. This endpoint must NOT return data for users who don't have an active Premium subscription.
+
+---
+
+## Step 8: Verification
+
+After completing all steps, verify:
+
+1. **Schema check:** Query `information_schema.tables` to confirm `qb_promo_codes`, `qb_promo_code_redemptions`, `qb_referral_credits`, and `qb_promo_code_admin_events` tables exist.
+
+2. **Column check:** Query `information_schema.columns` for `qb_orders` to confirm `promo_code_id`, `discount_amount_applied_cents`, `subtotal_before_discount_cents`, and `payment_status` columns exist.
+
+3. **API check — validate endpoint:** Using curl or the Replit preview, send a POST to `/api/qb/promo/validate` with a non-existent code. Confirm it returns `{ valid: false, errorCode: "NOT_FOUND", errorMessage: "This promo code is invalid or has expired." }`.
+
+4. **Rate limit check:** Send 11 rapid requests to the validate endpoint from the same IP. Confirm the 11th returns HTTP 429.
+
+5. **Checkout UI check:** Navigate to the order form in the Replit preview. Confirm the promo code input field is visible in the order summary section.
+
+6. **Build check:** Run the build command and confirm zero TypeScript errors and zero build warnings related to the new code.
+
+7. **Route registration check:** Confirm all new routes are properly registered in the route index and accessible.
+
+---
+
+## Summary of Files to Create or Modify
+
+**New files:**
+- `artifacts/api-server/src/routes/qb-promo.ts` — validate and redeem endpoints
+- `artifacts/api-server/src/lib/promo-stripe.ts` — Stripe coupon/promotion code utilities
+- `artifacts/api-server/src/lib/referral-code.ts` — referral code generation utility
+
+**Modified files:**
+- `lib/db/src/schema/qb-portal.ts` — add 4 new tables, extend qb_orders
+- `artifacts/api-server/src/routes/index.ts` — register promo routes
+- `artifacts/api-server/src/routes/qb-subscriptions.ts` — wire referral code generation into Premium webhook
+- `artifacts/qb-portal/src/pages/order-form.tsx` — add promo code input, discount display, $0 order flow
+- `artifacts/qb-portal/src/pages/portal-subscription.tsx` (or equivalent My Plan page) — add referral code display
+- `artifacts/api-server/src/lib/email-templates.ts` — add free order and referral credit email templates
+
+**Do NOT create or modify:**
+- Any files in `docs/`
+- Any migration files in `lib/db/drizzle/` — use `drizzle-kit push` only

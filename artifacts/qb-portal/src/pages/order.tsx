@@ -5,7 +5,7 @@ import { useAuth } from "@/lib/auth";
 import { loadProducts, type ProductCatalog, type Product, formatPrice, getActivePrice, getProductById } from "@/lib/products";
 import { SEO } from "@/components/seo";
 import OrderComplete from "@/pages/order-complete";
-import OrderForm from "@/pages/order-form";
+import OrderForm, { type AppliedPromo } from "@/pages/order-form";
 
 interface SvcOption { id: number; name: string; price: number; }
 
@@ -29,6 +29,10 @@ export default function Order() {
   const [orderComplete, setOrderComplete] = useState(false);
   const [orderId, setOrderId] = useState<number | null>(null);
   const [submitError, setSubmitError] = useState("");
+  const [promoCodeInput, setPromoCodeInput] = useState("");
+  const [appliedPromo, setAppliedPromo] = useState<AppliedPromo | null>(null);
+  const [promoApplying, setPromoApplying] = useState(false);
+  const [promoError, setPromoError] = useState("");
 
   useEffect(() => { loadProducts().then(setCatalog); }, []);
 
@@ -102,6 +106,60 @@ export default function Order() {
     setSelectedAddons((prev) => prev.includes(id) ? prev.filter((a) => a !== id) : [...prev, id]);
   };
 
+  const orderItemsForPromo = () => {
+    const items: { productId: string; quantity: number; unitPriceCents: number }[] = [];
+    if (selectedSvc) items.push({ productId: String(selectedSvc.id), quantity: 1, unitPriceCents: selectedSvc.price });
+    for (const id of selectedAddons) {
+      const a = addons.find((x) => x.id === id);
+      if (a) items.push({ productId: String(a.id), quantity: 1, unitPriceCents: a.price });
+    }
+    return items;
+  };
+
+  const handleApplyPromo = async () => {
+    const code = promoCodeInput.trim().toUpperCase();
+    if (code.length < 6 || !selectedSvc) return;
+    setPromoError(""); setPromoApplying(true);
+    try {
+      const res = await fetch("/api/qb/promo/validate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          code,
+          orderItems: orderItemsForPromo(),
+          orderType: "one_time",
+          userId: user?.id,
+          guestEmail: user ? undefined : email,
+        }),
+      });
+      const data = await res.json();
+      if (!data.valid) {
+        setPromoError(data.errorMessage || "This promo code is not valid.");
+        setAppliedPromo(null);
+        return;
+      }
+      setAppliedPromo({
+        code: data.code || code,
+        discountAmountCents: data.discountAmountCents,
+        launchPromoDiscountCents: data.launchPromoDiscountCents || 0,
+        finalOrderTotalCents: data.finalOrderTotalCents,
+        previewLineItems: data.previewLineItems || [],
+        codeDescription: data.codeDescription || "Discount",
+        stackingNotice: data.stackingNotice,
+      });
+    } catch {
+      setPromoError("Unable to apply the code right now. Please try again.");
+    } finally {
+      setPromoApplying(false);
+    }
+  };
+
+  const handleRemovePromo = () => {
+    setAppliedPromo(null);
+    setPromoCodeInput("");
+    setPromoError("");
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!canSubmit || !selectedSvc) return;
@@ -110,14 +168,43 @@ export default function Order() {
       const token = await getAccessToken();
       const headers: Record<string, string> = { "Content-Type": "application/json" };
       if (token) headers["Authorization"] = `Bearer ${token}`;
+      const isFree = !!appliedPromo && appliedPromo.finalOrderTotalCents === 0;
       const res = await fetch("/api/qb/checkout/create-session", {
         method: "POST", headers,
-        body: JSON.stringify({ serviceId: selectedService, addonIds: selectedAddons, qbVersion: qbVersion || null, customerName: name, customerEmail: email, customerPhone: phone || null }),
+        body: JSON.stringify({
+          serviceId: selectedService,
+          addonIds: selectedAddons,
+          qbVersion: qbVersion || null,
+          customerName: name,
+          customerEmail: email,
+          customerPhone: phone || null,
+          promoCode: appliedPromo?.code || null,
+          freeOrder: isFree,
+        }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Failed to create order");
       const createdOrderId = data.order?.id || data.orderId || null;
       setOrderId(createdOrderId);
+
+      if (appliedPromo && createdOrderId) {
+        try {
+          await fetch("/api/qb/promo/redeem", {
+            method: "POST",
+            headers,
+            body: JSON.stringify({
+              code: appliedPromo.code,
+              orderId: createdOrderId,
+              orderItems: orderItemsForPromo(),
+              orderType: "one_time",
+              guestEmail: user ? undefined : email,
+            }),
+          });
+        } catch {
+          // non-fatal — server-side sync will catch up
+        }
+      }
+
       if (file && createdOrderId && showFileUpload) {
         const formData = new FormData(); formData.append("file", file);
         const uploadHeaders: Record<string, string> = {};
@@ -126,7 +213,7 @@ export default function Order() {
         const uploadRes = await fetch(`/api/qb/orders/${createdOrderId}/files`, { method: "POST", headers: uploadHeaders, body: formData });
         if (!uploadRes.ok) { const ud = await uploadRes.json().catch(() => ({})); throw new Error(ud.error || "File upload failed."); }
       }
-      if (data.checkoutUrl) { window.location.href = data.checkoutUrl; return; }
+      if (!isFree && data.checkoutUrl) { window.location.href = data.checkoutUrl; return; }
       setOrderComplete(true);
     } catch (err: unknown) {
       setSubmitError(err instanceof Error ? err.message : "Something went wrong.");
@@ -170,6 +257,13 @@ export default function Order() {
             confirmed={confirmed} setConfirmed={setConfirmed}
             name={name} setName={setName} email={email} setEmail={setEmail} phone={phone} setPhone={setPhone}
             total={total} submitting={submitting} submitError={submitError} canSubmit={canSubmit} onSubmit={handleSubmit}
+            promoCodeInput={promoCodeInput}
+            setPromoCodeInput={setPromoCodeInput}
+            onApplyPromo={handleApplyPromo}
+            onRemovePromo={handleRemovePromo}
+            appliedPromo={appliedPromo}
+            promoApplying={promoApplying}
+            promoError={promoError}
           />
         </div>
       </section>

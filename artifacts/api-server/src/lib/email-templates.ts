@@ -207,6 +207,129 @@ export function ticketResolvedEmail(
   };
 }
 
+export function freeOrderCustomerEmail(
+  customerName: string,
+  orderId: number,
+  serviceName: string,
+  promoCode: string,
+  portalUrl: string,
+  unsubscribeUrl: string,
+): { subject: string; html: string } {
+  const content = `
+    <h2 style="margin:0 0 16px;font-size:20px;color:${BRAND_COLORS.textDark};">
+      Order Confirmed ${badge("FREE", "#ecfdf5", "#059669")}
+    </h2>
+    <p style="margin:0 0 16px;font-size:15px;color:${BRAND_COLORS.textDark};line-height:1.6;">
+      Hi ${escapeHtml(customerName)},
+    </p>
+    <p style="margin:0 0 24px;font-size:15px;color:${BRAND_COLORS.textDark};line-height:1.6;">
+      Your order has been confirmed using promo code <strong>${escapeHtml(promoCode)}</strong>. No payment was charged.
+    </p>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:${BRAND_COLORS.gray};border-radius:8px;padding:16px;margin-bottom:24px;">
+      <tr>
+        <td>
+          <p style="margin:0 0 8px;font-size:13px;color:${BRAND_COLORS.textMuted};text-transform:uppercase;letter-spacing:0.5px;">Order #${orderId}</p>
+          <p style="margin:0 0 8px;font-size:16px;font-weight:600;color:${BRAND_COLORS.textDark};">${escapeHtml(serviceName)}</p>
+          <p style="margin:0;font-size:14px;color:${BRAND_COLORS.textDark};"><strong>Total charged:</strong> $0.00 CAD</p>
+        </td>
+      </tr>
+    </table>
+    <p style="margin:0 0 16px;font-size:14px;color:${BRAND_COLORS.textDark};line-height:1.6;">
+      Next steps: please log in to your portal to upload any required files and track your order status.
+    </p>
+    <table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 auto;">
+      <tr>
+        <td style="background-color:${BRAND_COLORS.azure};border-radius:8px;">
+          <a href="${portalUrl}" style="display:inline-block;padding:12px 32px;font-size:15px;font-weight:600;color:${BRAND_COLORS.white};text-decoration:none;">
+            View Order
+          </a>
+        </td>
+      </tr>
+    </table>`;
+
+  return {
+    subject: `Order Confirmed — ${serviceName}`,
+    html: baseLayout(content, unsubscribeUrl),
+  };
+}
+
+export function freeOrderOperatorEmail(
+  orderId: number,
+  serviceName: string,
+  promoCode: string,
+  customerName: string,
+  customerEmail: string,
+): { subject: string; html: string } {
+  const content = `
+    <h2 style="margin:0 0 16px;font-size:20px;color:${BRAND_COLORS.textDark};">
+      New Free Promo Order
+    </h2>
+    <p style="margin:0 0 16px;font-size:14px;color:${BRAND_COLORS.textDark};line-height:1.6;">
+      A new order was completed at $0.00 via promo code.
+    </p>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:${BRAND_COLORS.gray};border-radius:8px;padding:16px;margin-bottom:16px;">
+      <tr>
+        <td>
+          <p style="margin:0 0 8px;font-size:13px;color:${BRAND_COLORS.textMuted};text-transform:uppercase;letter-spacing:0.5px;">Order #${orderId}</p>
+          <p style="margin:0 0 4px;font-size:15px;color:${BRAND_COLORS.textDark};"><strong>Service:</strong> ${escapeHtml(serviceName)}</p>
+          <p style="margin:0 0 4px;font-size:15px;color:${BRAND_COLORS.textDark};"><strong>Customer:</strong> ${escapeHtml(customerName)} (${escapeHtml(customerEmail)})</p>
+          <p style="margin:0;font-size:15px;color:${BRAND_COLORS.textDark};"><strong>Promo:</strong> ${escapeHtml(promoCode)}</p>
+        </td>
+      </tr>
+    </table>
+    <p style="margin:0;font-size:13px;color:${BRAND_COLORS.textMuted};font-style:italic;">
+      Order fulfilled via promo code — no payment collected.
+    </p>`;
+
+  return {
+    subject: `New Free Promo Order — #${orderId}`,
+    html: baseLayout(content, "#"),
+  };
+}
+
+export function referralCreditEarnedEmail(
+  subscriberName: string,
+  creditAmountCents: number,
+  totalCreditsCents: number,
+  portalUrl: string,
+  unsubscribeUrl: string,
+): { subject: string; html: string } {
+  const amount = `$${(creditAmountCents / 100).toFixed(2)}`;
+  const total = `$${(totalCreditsCents / 100).toFixed(2)}`;
+  const content = `
+    <h2 style="margin:0 0 16px;font-size:20px;color:${BRAND_COLORS.textDark};">
+      You earned a ${amount} referral credit ${badge("CREDIT", "#ecfdf5", "#059669")}
+    </h2>
+    <p style="margin:0 0 16px;font-size:15px;color:${BRAND_COLORS.textDark};line-height:1.6;">
+      Hi ${escapeHtml(subscriberName)},
+    </p>
+    <p style="margin:0 0 24px;font-size:15px;color:${BRAND_COLORS.textDark};line-height:1.6;">
+      Someone just used your referral code. You have earned a <strong>${amount} credit</strong>, which will be applied to a future invoice.
+    </p>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:${BRAND_COLORS.gray};border-radius:8px;padding:16px;margin-bottom:24px;">
+      <tr>
+        <td>
+          <p style="margin:0 0 4px;font-size:13px;color:${BRAND_COLORS.textMuted};text-transform:uppercase;letter-spacing:0.5px;">Total credits earned</p>
+          <p style="margin:0;font-size:24px;font-weight:700;color:${BRAND_COLORS.textDark};">${total}</p>
+        </td>
+      </tr>
+    </table>
+    <table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 auto;">
+      <tr>
+        <td style="background-color:${BRAND_COLORS.azure};border-radius:8px;">
+          <a href="${portalUrl}/subscription" style="display:inline-block;padding:12px 32px;font-size:15px;font-weight:600;color:${BRAND_COLORS.white};text-decoration:none;">
+            View My Plan
+          </a>
+        </td>
+      </tr>
+    </table>`;
+
+  return {
+    subject: "You earned a $25 referral credit",
+    html: baseLayout(content, unsubscribeUrl),
+  };
+}
+
 function escapeHtml(str: string): string {
   return str
     .replace(/&/g, "&amp;")

@@ -77,6 +77,7 @@ Includes tables for `qb_users` (with `stripe_customer_id`), `qb_orders`, `qb_ord
 - **Express Middleware Order**: Strict order for security, body parsing, CORS, logging, and rate limiting. Stripe webhook route must precede `express.json()`.
 - **Authentication**: `requireAuth` middleware for Supabase JWT verification; special `X-Upload-Token` header auth for file uploads (no query param fallback). Per-user rate limiters use `req.userId || req.ip`.
 - **Anti-Patterns**: Avoid throwing errors for missing optional environment variables at module load (use console.warn + null), using `supabase.auth.admin.listUsers()` for single user lookups, `new Error()` in CORS callbacks, `express.static()` on the API server, `hsts` in Helmet, and incorrect webhook body parsing.
+- **Promo Code System (Prompt 09)**: Tables `qb_promo_codes`, `qb_promo_code_redemptions`, `qb_referral_credits`, `qb_promo_code_admin_events`. Validation helper `runValidation` in `routes/qb-promo.ts`, imported dynamically from `qb-portal.ts` to avoid circular dependency with `requireAuth`. Checkout endpoint re-validates server-side and only allows free orders when computed total is $0. Paid-order redemptions are currently recorded at order-creation time (known limitation: abandoned carts still consume a redemption slot — to be moved to the `checkout.session.completed` webhook in a future task). Referral credits stored as `pending`; no automatic application to invoices.
 
 # External Dependencies
 

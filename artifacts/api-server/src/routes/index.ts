@@ -9,6 +9,7 @@ import qbTicketsRouter from "./qb-tickets";
 import qbAdminSubscriptionsRouter from "./qb-admin-subscriptions";
 import qbAdminRouter from "./qb-admin";
 import qbNotificationsRouter from "./qb-notifications";
+import qbPromoRouter from "./qb-promo";
 
 const router: IRouter = Router();
 
@@ -47,5 +48,6 @@ const notificationPrefLimiter = rateLimit({
   message: { error: "Too many requests. Please try again later." },
 });
 router.use("/qb/notifications", notificationPrefLimiter, qbNotificationsRouter);
+router.use("/qb/promo", qbPromoRouter);
 
 export default router;

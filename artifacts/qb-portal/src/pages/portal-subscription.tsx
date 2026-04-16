@@ -51,6 +51,23 @@ interface ReferralData {
   totalEarnings: string;
 }
 
+interface ReferralStatsRedemption {
+  orderId: number | null;
+  subscriptionId: number | null;
+  redeemedAt: string;
+  creditAmountCents: number;
+  status: string;
+}
+
+interface ReferralStats {
+  code: string | null;
+  totalRedemptions: number;
+  totalCreditsEarnedCents: number;
+  pendingCreditsCents: number;
+  appliedCreditsCents: number;
+  redemptions: ReferralStatsRedemption[];
+}
+
 const tierNames: Record<SubscriptionTier, string> = {
   essentials: "Essentials",
   professional: "Professional",
@@ -77,6 +94,7 @@ export function SubscriptionTab({ onRefreshPortal }: SubscriptionTabProps) {
   const { getAccessToken } = useAuth();
   const [subscription, setSubscription] = useState<SubscriptionData | null>(null);
   const [referral, setReferral] = useState<ReferralData | null>(null);
+  const [referralStats, setReferralStats] = useState<ReferralStats | null>(null);
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState(false);
   const [upgradeOpen, setUpgradeOpen] = useState(false);
@@ -98,6 +116,21 @@ export function SubscriptionTab({ onRefreshPortal }: SubscriptionTabProps) {
         setReferral(data.referral || null);
       }
     } catch { /* ignore */ }
+
+    try {
+      const token2 = await getAccessToken();
+      const base = import.meta.env.BASE_URL || "/";
+      const prefix = base.endsWith("/") ? base.slice(0, -1) : base;
+      const statsUrl = prefix.replace(/\/qb-portal$/, "") + "/api/qb/promo/referral-stats";
+      const statsRes = await fetch(statsUrl, {
+        headers: { ...(token2 ? { Authorization: `Bearer ${token2}` } : {}) },
+      });
+      if (statsRes.ok) {
+        const sdata = await statsRes.json();
+        setReferralStats(sdata.stats || null);
+      }
+    } catch { /* ignore */ }
+
     setLoading(false);
   }, [getAccessToken]);
 
@@ -589,6 +622,50 @@ export function SubscriptionTab({ onRefreshPortal }: SubscriptionTabProps) {
                 <p className="text-xs text-muted-foreground mt-3">
                   Total earned: ${parseFloat(referral.totalEarnings).toFixed(2)} CAD
                 </p>
+              )}
+              {referralStats && (
+                <div className="mt-4 pt-4 border-t border-border/50">
+                  <div className="grid grid-cols-3 gap-3 mb-4">
+                    <div className="p-3 rounded-lg bg-muted text-center">
+                      <p className="text-[11px] uppercase tracking-wide text-muted-foreground">Redemptions</p>
+                      <p className="text-lg font-bold font-display">{referralStats.totalRedemptions}</p>
+                    </div>
+                    <div className="p-3 rounded-lg bg-muted text-center">
+                      <p className="text-[11px] uppercase tracking-wide text-muted-foreground">Credits Earned</p>
+                      <p className="text-lg font-bold font-display text-emerald-600">
+                        ${(referralStats.totalCreditsEarnedCents / 100).toFixed(2)}
+                      </p>
+                    </div>
+                    <div className="p-3 rounded-lg bg-muted text-center">
+                      <p className="text-[11px] uppercase tracking-wide text-muted-foreground">Pending</p>
+                      <p className="text-lg font-bold font-display">
+                        ${(referralStats.pendingCreditsCents / 100).toFixed(2)}
+                      </p>
+                    </div>
+                  </div>
+                  {referralStats.redemptions.length > 0 && (
+                    <div>
+                      <p className="text-xs font-medium text-muted-foreground mb-2">Recent redemptions</p>
+                      <div className="space-y-1 max-h-48 overflow-y-auto">
+                        {referralStats.redemptions.slice(0, 10).map((r, idx) => (
+                          <div key={idx} className="flex justify-between text-xs p-2 rounded bg-muted/50">
+                            <span>{new Date(r.redeemedAt).toLocaleDateString()}</span>
+                            <span className="text-muted-foreground">
+                              {r.subscriptionId ? "Subscription" : "Order"}
+                            </span>
+                            <span className="font-medium text-emerald-600">
+                              +${(r.creditAmountCents / 100).toFixed(2)}
+                            </span>
+                            <span className="capitalize text-muted-foreground">{r.status}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  <p className="text-[11px] text-muted-foreground mt-3 italic">
+                    Credits are applied manually to future invoices by our team.
+                  </p>
+                </div>
               )}
             </CardContent>
           </Card>

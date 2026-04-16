@@ -1,8 +1,19 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Upload, Shield, Lock, AlertTriangle, Info, CheckCircle, Package } from "lucide-react";
+import { Upload, Shield, Lock, AlertTriangle, Info, CheckCircle, Package, X } from "lucide-react";
 import { formatPrice, type Product } from "@/lib/products";
+
+export interface PromoLineItem { label: string; amountCents: number }
+export interface AppliedPromo {
+  code: string;
+  discountAmountCents: number;
+  launchPromoDiscountCents: number;
+  finalOrderTotalCents: number;
+  previewLineItems: PromoLineItem[];
+  codeDescription: string;
+  stackingNotice?: string;
+}
 
 interface SvcOption {
   id: number;
@@ -42,6 +53,15 @@ interface OrderFormProps {
   submitError: string;
   canSubmit: boolean;
   onSubmit: (e: React.FormEvent) => void;
+  promoCodeInput: string;
+  setPromoCodeInput: (v: string) => void;
+  onApplyPromo: () => void;
+  onRemovePromo: () => void;
+  appliedPromo: AppliedPromo | null;
+  promoApplying: boolean;
+  promoError: string;
+  subscriberDiscountPercent?: number;
+  subscriberDiscountCents?: number;
 }
 
 const qbVersions = ["2024", "2023", "2022", "2021", "2020", "2019"];
@@ -50,7 +70,11 @@ export default function OrderForm(props: OrderFormProps) {
   const { services, addons, selectedService, setSelectedService, selectedAddons, toggleAddon, isAvailableService,
     showFileUpload, isVolumePack, isSubscription, selectedProduct, acceptAttr,
     file, fileError, fileWarning, handleFileChange, qbVersion, setQbVersion, confirmed, setConfirmed,
-    name, setName, email, setEmail, phone, setPhone, total, submitting, submitError, canSubmit, onSubmit } = props;
+    name, setName, email, setEmail, phone, setPhone, total, submitting, submitError, canSubmit, onSubmit,
+    promoCodeInput, setPromoCodeInput, onApplyPromo, onRemovePromo, appliedPromo, promoApplying, promoError,
+    subscriberDiscountPercent, subscriberDiscountCents } = props;
+  const finalDisplayTotal = appliedPromo ? appliedPromo.finalOrderTotalCents : total;
+  const isFree = appliedPromo && appliedPromo.finalOrderTotalCents === 0;
 
   let nextStep = 1;
   const step = () => nextStep++;
@@ -213,10 +237,78 @@ export default function OrderForm(props: OrderFormProps) {
                 </div>
               ) : null;
             })}
+            {subscriberDiscountPercent && subscriberDiscountCents ? (
+              <div className="flex justify-between text-emerald-700 dark:text-emerald-400 text-xs">
+                <span>Subscriber discount ({subscriberDiscountPercent}% off)</span>
+                <span>−{formatPrice(subscriberDiscountCents)}</span>
+              </div>
+            ) : null}
+            {appliedPromo?.previewLineItems?.map((li, idx) => (
+              <div key={idx} className="flex justify-between text-emerald-700 dark:text-emerald-400 text-xs">
+                <span>{li.label}</span>
+                <span>{li.amountCents < 0 ? "−" : ""}{formatPrice(Math.abs(li.amountCents))}</span>
+              </div>
+            ))}
+            {appliedPromo?.stackingNotice && (
+              <p className="text-[11px] text-muted-foreground italic">{appliedPromo.stackingNotice}</p>
+            )}
             <div className="border-t pt-2 flex justify-between font-bold text-lg">
               <span>Total</span>
-              <span className="text-accent">{formatPrice(total)}</span>
+              <span className={isFree ? "text-emerald-600" : "text-accent"}>
+                {formatPrice(finalDisplayTotal)}
+              </span>
             </div>
+          </div>
+
+          <div className="mt-4 pt-4 border-t border-border/50">
+            {!appliedPromo ? (
+              <div>
+                <label className="block text-xs font-medium text-muted-foreground mb-1">Promo code</label>
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    value={promoCodeInput}
+                    onChange={(e) => setPromoCodeInput(e.target.value.toUpperCase())}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") { e.preventDefault(); onApplyPromo(); }
+                    }}
+                    placeholder="Enter code"
+                    maxLength={32}
+                    className="flex-1 px-3 py-2 rounded-lg border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-accent/50"
+                  />
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    disabled={promoApplying || promoCodeInput.trim().length < 6}
+                    onClick={onApplyPromo}
+                  >
+                    {promoApplying ? "Applying..." : "Apply"}
+                  </Button>
+                </div>
+                {promoError && (
+                  <p className="mt-2 text-xs text-red-600 flex items-center gap-1" aria-live="polite">
+                    <AlertTriangle className="w-3 h-3" /> {promoError}
+                  </p>
+                )}
+              </div>
+            ) : (
+              <div className="flex items-center justify-between gap-2 p-2 rounded-lg bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800">
+                <div className="flex items-center gap-2 text-xs">
+                  <CheckCircle className="w-4 h-4 text-emerald-600" />
+                  <span className="font-medium">Code applied: {appliedPromo.code}</span>
+                  <span className="text-muted-foreground">({appliedPromo.codeDescription})</span>
+                </div>
+                <button
+                  type="button"
+                  aria-label="Remove promo code"
+                  onClick={onRemovePromo}
+                  className="p-1 rounded hover:bg-emerald-100 dark:hover:bg-emerald-900"
+                >
+                  <X className="w-4 h-4 text-emerald-700" />
+                </button>
+              </div>
+            )}
           </div>
 
           {selectedProduct?.slug?.includes("bundle") && (
@@ -239,19 +331,25 @@ export default function OrderForm(props: OrderFormProps) {
               </span>
             </label>
           </div>
-          <div className="mt-6" id="stripe-payment-element">
-            <div className="p-4 bg-muted rounded-lg text-center text-sm text-muted-foreground">
-              <Lock className="w-5 h-5 mx-auto mb-2 text-accent" />
-              Stripe payment integration - test mode
+          {!isFree && (
+            <div className="mt-6" id="stripe-payment-element">
+              <div className="p-4 bg-muted rounded-lg text-center text-sm text-muted-foreground">
+                <Lock className="w-5 h-5 mx-auto mb-2 text-accent" />
+                Stripe payment integration - test mode
+              </div>
             </div>
-          </div>
+          )}
           {submitError && (
             <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700 dark:bg-red-950/30 dark:border-red-800 dark:text-red-400">
               {submitError}
             </div>
           )}
-          <Button type="submit" disabled={!canSubmit || submitting} className="w-full mt-6 bg-rose-gold text-rose-gold-foreground hover:bg-rose-gold-hover font-display font-bold text-lg py-3" size="lg">
-            {submitting ? "Processing..." : `${showFileUpload ? "Upload & " : ""}Pay ${formatPrice(total)}`}
+          <Button type="submit" disabled={!canSubmit || submitting} className={`w-full mt-6 font-display font-bold text-lg py-3 ${isFree ? "bg-emerald-600 hover:bg-emerald-700 text-white" : "bg-rose-gold text-rose-gold-foreground hover:bg-rose-gold-hover"}`} size="lg">
+            {submitting
+              ? "Processing..."
+              : isFree
+                ? "Confirm Free Order"
+                : `${showFileUpload ? "Upload & " : ""}Pay ${formatPrice(finalDisplayTotal)}`}
           </Button>
           <div className="flex justify-center gap-4 mt-4 text-xs text-muted-foreground">
             <span className="flex items-center gap-1"><Lock className="w-3 h-3" /> Encrypted</span>

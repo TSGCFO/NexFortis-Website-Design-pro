@@ -1,4 +1,4 @@
-import { pgTable, serial, text, integer, boolean, timestamp, uuid, unique, check, jsonb } from "drizzle-orm/pg-core";
+import { pgTable, serial, text, integer, boolean, timestamp, uuid, unique, check, jsonb, uniqueIndex } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
 import { createInsertSchema } from "drizzle-zod";
 
@@ -28,6 +28,10 @@ export const qbOrders = pgTable("qb_orders", {
   customerPhone: text("customer_phone"),
   stripeSessionId: text("stripe_session_id"),
   uploadToken: text("upload_token"),
+  promoCodeId: integer("promo_code_id"),
+  discountAmountAppliedCents: integer("discount_amount_applied_cents").default(0),
+  subtotalBeforeDiscountCents: integer("subtotal_before_discount_cents"),
+  paymentStatus: text("payment_status"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
@@ -153,6 +157,77 @@ export const qbNotificationPreferences = pgTable("qb_notification_preferences", 
   unsubscribeToken: text("unsubscribe_token").notNull().unique(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
+
+export const qbPromoCodes = pgTable("qb_promo_codes", {
+  id: serial("id").primaryKey(),
+  code: text("code").notNull().unique(),
+  isActive: boolean("is_active").notNull().default(true),
+  type: text("type").notNull(),
+  percentOff: integer("percent_off"),
+  amountOffCents: integer("amount_off_cents"),
+  subscriptionDurationMonths: integer("subscription_duration_months"),
+  maxUses: integer("max_uses"),
+  maxUsesPerCustomer: integer("max_uses_per_customer"),
+  redemptionCount: integer("redemption_count").notNull().default(0),
+  expiresAt: timestamp("expires_at", { withTimezone: true }),
+  productIds: text("product_ids").array(),
+  categoryIds: text("category_ids").array(),
+  minOrderAmountCents: integer("min_order_amount_cents"),
+  firstTimeCustomerOnly: boolean("first_time_customer_only").notNull().default(false),
+  stackableWithLaunchPromo: boolean("stackable_with_launch_promo").notNull().default(true),
+  restrictedToEmail: text("restricted_to_email"),
+  appliesToBasePrice: boolean("applies_to_base_price").notNull().default(false),
+  ownerUserId: uuid("owner_user_id").references(() => qbUsers.id),
+  stripeCouponId: text("stripe_coupon_id"),
+  stripePromotionCodeId: text("stripe_promotion_code_id"),
+  description: text("description"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+}, (table) => [
+  check("qb_promo_codes_type_check", sql`${table.type} IN ('percentage', 'fixed_amount', 'free_service', 'subscription')`),
+  uniqueIndex("qb_promo_codes_code_lower_idx").on(sql`LOWER(${table.code})`),
+]);
+
+export const qbPromoCodeRedemptions = pgTable("qb_promo_code_redemptions", {
+  id: serial("id").primaryKey(),
+  promoCodeId: integer("promo_code_id").references(() => qbPromoCodes.id).notNull(),
+  userId: uuid("user_id").references(() => qbUsers.id),
+  guestEmail: text("guest_email"),
+  orderId: integer("order_id").references(() => qbOrders.id).notNull(),
+  discountAmountCents: integer("discount_amount_cents").notNull(),
+  orderTotalBeforeCents: integer("order_total_before_cents").notNull(),
+  orderTotalAfterCents: integer("order_total_after_cents").notNull(),
+  ownerUserId: uuid("owner_user_id").references(() => qbUsers.id),
+  redeemedAt: timestamp("redeemed_at", { withTimezone: true }).defaultNow().notNull(),
+});
+
+export const qbReferralCredits = pgTable("qb_referral_credits", {
+  id: serial("id").primaryKey(),
+  beneficiaryUserId: uuid("beneficiary_user_id").references(() => qbUsers.id).notNull(),
+  amountCents: integer("amount_cents").notNull(),
+  source: text("source").notNull().default("promo_code_redemption"),
+  promoCodeRedemptionId: integer("promo_code_redemption_id").references(() => qbPromoCodeRedemptions.id),
+  orderId: integer("order_id").references(() => qbOrders.id),
+  status: text("status").notNull().default("pending"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+}, (table) => [
+  check("qb_referral_credits_status_check", sql`${table.status} IN ('pending', 'applied', 'paid_out')`),
+]);
+
+export const qbPromoCodeAdminEvents = pgTable("qb_promo_code_admin_events", {
+  id: serial("id").primaryKey(),
+  adminUserId: uuid("admin_user_id").references(() => qbUsers.id).notNull(),
+  action: text("action").notNull(),
+  promoCodeId: integer("promo_code_id").references(() => qbPromoCodes.id).notNull(),
+  beforeState: jsonb("before_state"),
+  afterState: jsonb("after_state"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const insertQbPromoCodeSchema = createInsertSchema(qbPromoCodes);
+export const insertQbPromoCodeRedemptionSchema = createInsertSchema(qbPromoCodeRedemptions);
+export const insertQbReferralCreditSchema = createInsertSchema(qbReferralCredits);
+export const insertQbPromoCodeAdminEventSchema = createInsertSchema(qbPromoCodeAdminEvents);
 
 export const insertQbUserSchema = createInsertSchema(qbUsers);
 export const insertQbOrderSchema = createInsertSchema(qbOrders);

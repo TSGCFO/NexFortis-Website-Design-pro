@@ -1,7 +1,11 @@
 import { Router, type Request, type Response, type NextFunction, type RequestHandler } from "express";
 import rateLimit, { ipKeyGenerator } from "express-rate-limit";
 import { db } from "@workspace/db";
-import { qbUsers, qbOrders, qbOrderFiles, qbWaitlistSignups, qbSupportTickets, qbSubscriptions, qbTicketUsage, qbReferrals } from "@workspace/db/schema";
+import { qbUsers, qbOrders, qbOrderFiles, qbWaitlistSignups, qbSupportTickets, qbSubscriptions, qbTicketUsage, qbReferrals, qbPromoCodes, qbPromoCodeRedemptions } from "@workspace/db/schema";
+import { sendEmail } from "../lib/email-service";
+import { freeOrderCustomerEmail, freeOrderOperatorEmail } from "../lib/email-templates";
+import { generateUniqueReferralCode } from "../lib/referral-code";
+import { createStripeCouponAndPromoCode } from "../lib/promo-stripe";
 import { eq, and, desc } from "drizzle-orm";
 import crypto from "crypto";
 import multer from "multer";
@@ -262,7 +266,7 @@ router.post("/waitlist", async (req: Request, res: Response) => {
 
 router.post("/checkout/create-session", async (req: Request, res: Response) => {
   try {
-    const { serviceId, addonIds, qbVersion, customerName, customerEmail, customerPhone } = req.body;
+    const { serviceId, addonIds, qbVersion, customerName, customerEmail, customerPhone, promoCode, freeOrder } = req.body;
     if (!serviceId || !customerName || !customerEmail) {
       res.status(400).json({ error: "Missing required fields" });
       return;
@@ -282,21 +286,90 @@ router.post("/checkout/create-session", async (req: Request, res: Response) => {
       if (user) userId = user.id;
     }
 
+    let promoRow: typeof qbPromoCodes.$inferSelect | null = null;
+    let serverComputedFinalTotal = pricing.total;
+    let serverDiscountCents = 0;
+    if (promoCode && typeof promoCode === "string") {
+      const orderItems = [
+        { productId: String(serviceId), quantity: 1, unitPriceCents: pricing.total },
+      ];
+      const { runValidation: runPromoValidation } = await import("./qb-promo");
+      const vres = await runPromoValidation({
+        code: promoCode.trim(),
+        orderItems,
+        orderType: "one_time",
+        userId: userId || undefined,
+        guestEmail: userId ? undefined : customerEmail,
+      });
+      if (vres.ok) {
+        promoRow = vres.row;
+        serverComputedFinalTotal = vres.finalTotal;
+        serverDiscountCents = vres.codeDiscountCents + vres.launchPromoCents;
+      } else if (freeOrder) {
+        res.status(400).json({ error: "Promo code is not valid", message: vres.errorMessage });
+        return;
+      }
+    }
+
+    // Server-authoritative: free order only if computed total is 0
+    const finalIsFree = !!promoRow && serverComputedFinalTotal === 0;
+    if (freeOrder && !finalIsFree) {
+      res.status(400).json({
+        error: "Free order not allowed",
+        message: "The provided promo code does not bring the order total to $0.",
+      });
+      return;
+    }
+
     const uploadToken = crypto.randomBytes(32).toString("hex");
+    const initialStatus = finalIsFree ? "submitted" : "pending_payment";
+    const initialPaymentStatus = finalIsFree ? "free" : "unpaid";
 
     const [order] = await db.insert(qbOrders).values({
       userId,
       serviceId,
       serviceName: pricing.serviceName,
       addons: pricing.addonNames.length > 0 ? JSON.stringify(pricing.addonNames) : null,
-      totalCad: pricing.total,
+      totalCad: finalIsFree ? 0 : pricing.total,
+      // discount/promo fields tracked below if promo applies
       qbVersion,
       customerName,
       customerEmail,
       customerPhone,
       uploadToken,
-      status: "pending_payment",
+      status: initialStatus,
+      paymentStatus: initialPaymentStatus,
+      promoCodeId: promoRow?.id ?? null,
+      subtotalBeforeDiscountCents: promoRow ? pricing.total : null,
+      discountAmountAppliedCents: promoRow ? serverDiscountCents : 0,
     }).returning();
+
+    if (finalIsFree) {
+      const origin = getValidOrigin(req.headers.origin);
+      const portalUrl = `${origin}/qb-portal/order/${order.id}?uploadToken=${uploadToken}`;
+      const unsubUrl = `${origin}/qb-portal/unsubscribe?email=${encodeURIComponent(customerEmail)}`;
+      try {
+        const customerEmailTpl = freeOrderCustomerEmail(
+          customerName, order.id, pricing.serviceName, promoRow!.code, portalUrl, unsubUrl,
+        );
+        await sendEmail({ to: customerEmail, subject: customerEmailTpl.subject, html: customerEmailTpl.html });
+        const opTpl = freeOrderOperatorEmail(
+          order.id, pricing.serviceName, promoRow!.code, customerName, customerEmail,
+        );
+        await sendEmail({ to: "support@nexfortis.com", subject: opTpl.subject, html: opTpl.html });
+      } catch (emailErr) {
+        console.error("[FreeOrder] Email send failed:", emailErr);
+      }
+
+      res.status(201).json({
+        orderId: order.id,
+        order,
+        uploadToken,
+        checkoutUrl: null,
+        free: true,
+      });
+      return;
+    }
 
     const stripe = await getStripe();
     if (stripe) {
@@ -316,7 +389,9 @@ router.post("/checkout/create-session", async (req: Request, res: Response) => {
         cancel_url: `${getValidOrigin(req.headers.origin)}/qb-portal/order?canceled=true`,
       };
 
-      if (userId) {
+      if (promoRow?.stripePromotionCodeId) {
+        checkoutParams.discounts = [{ promotion_code: promoRow.stripePromotionCodeId }];
+      } else if (userId) {
         const [activeSub] = await db.select().from(qbSubscriptions)
           .where(and(eq(qbSubscriptions.userId, userId), eq(qbSubscriptions.status, "active")))
           .limit(1);
@@ -478,12 +553,54 @@ async function handleSubscriptionCheckout(session: Stripe.Checkout.Session) {
   });
 
   if (tier === "premium") {
-    const code = crypto.randomBytes(4).toString("hex").toUpperCase();
-    await db.insert(qbReferrals).values({
-      userId,
-      subscriptionId: sub.id,
-      code,
-    });
+    // Legacy referral record (kept for backward compat)
+    const [existingLegacy] = await db.select().from(qbReferrals).where(eq(qbReferrals.subscriptionId, sub.id)).limit(1);
+    if (!existingLegacy) {
+      const legacyCode = crypto.randomBytes(4).toString("hex").toUpperCase();
+      await db.insert(qbReferrals).values({ userId, subscriptionId: sub.id, code: legacyCode });
+    }
+
+    // Promo-code-based referral code
+    try {
+      const [existingPromo] = await db
+        .select()
+        .from(qbPromoCodes)
+        .where(eq(qbPromoCodes.ownerUserId, userId))
+        .limit(1);
+
+      if (existingPromo) {
+        if (!existingPromo.isActive) {
+          await db
+            .update(qbPromoCodes)
+            .set({ isActive: true, updatedAt: new Date() })
+            .where(eq(qbPromoCodes.id, existingPromo.id));
+        }
+      } else {
+        const [subscriberUser] = await db.select().from(qbUsers).where(eq(qbUsers.id, userId)).limit(1);
+        const code = await generateUniqueReferralCode();
+        const stripeIds = await createStripeCouponAndPromoCode({
+          code,
+          type: "fixed_amount",
+          amountOffCents: 2500,
+        });
+        await db.insert(qbPromoCodes).values({
+          code,
+          isActive: true,
+          type: "fixed_amount",
+          amountOffCents: 2500,
+          maxUses: null,
+          maxUsesPerCustomer: 1,
+          stackableWithLaunchPromo: true,
+          categoryIds: null,
+          description: `Referral code — ${subscriberUser?.name || subscriberUser?.email || userId}`,
+          ownerUserId: userId,
+          stripeCouponId: stripeIds.stripeCouponId,
+          stripePromotionCodeId: stripeIds.stripePromotionCodeId,
+        });
+      }
+    } catch (err) {
+      console.error("[Stripe] Failed to create referral promo code:", err);
+    }
   }
 
   const [welcomeUser] = await db.select().from(qbUsers).where(eq(qbUsers.id, userId)).limit(1);
