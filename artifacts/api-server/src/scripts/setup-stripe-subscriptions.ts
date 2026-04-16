@@ -19,6 +19,11 @@ const COUPONS = [
   { id: "premium_service_20", name: "Premium Sub — 20% Off", percentOff: 20 },
 ];
 
+const COUPON_ENV_KEYS: Record<string, string> = {
+  pro_service_10: "PRO_10",
+  premium_service_20: "PREMIUM_20",
+};
+
 async function main() {
   const stripe = await getStripeClient();
   console.log("Setting up Stripe subscription products...\n");
@@ -26,13 +31,15 @@ async function main() {
   const envLines: string[] = [];
 
   async function findExistingProduct(name: string): Promise<Stripe.Product | null> {
-    const products = await stripe.products.list({ limit: 100 });
-    return products.data.find(p => p.name === name) || null;
+    const allProducts = await stripe.products.list({ limit: 100 }).autoPagingToArray({ limit: 10_000 });
+    return allProducts.find(p => p.name === name) || null;
   }
 
   async function findExistingCoupon(id: string): Promise<Stripe.Coupon | null> {
     try {
-      return await stripe.coupons.retrieve(id);
+      const coupon = await stripe.coupons.retrieve(id);
+      if (coupon.deleted) return null;
+      return coupon;
     } catch {
       return null;
     }
@@ -104,7 +111,8 @@ async function main() {
     } else {
       console.log(`Coupon exists: ${coupon.name} (${existing.id})`);
     }
-    envLines.push(`STRIPE_COUPON_${coupon.id === "pro_service_10" ? "PRO_10" : "PREMIUM_20"}=${coupon.id}`);
+    const couponEnvKey = COUPON_ENV_KEYS[coupon.id] ?? coupon.id.toUpperCase();
+    envLines.push(`STRIPE_COUPON_${couponEnvKey}=${coupon.id}`);
   }
 
   console.log("\n--- Environment Variables ---\n");
