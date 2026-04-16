@@ -77,6 +77,41 @@ export async function deactivateStripePromoCode(stripePromotionCodeId: string): 
   }
 }
 
+/**
+ * Reactivate a Stripe promotion code. If the existing promotion code can be
+ * re-enabled (Stripe allows toggling `active` back to true), do that. If
+ * Stripe rejects the update (e.g. coupon was deleted), create a fresh
+ * promotion code on the existing coupon and return its new ID.
+ */
+export async function reactivateStripePromoCode(
+  stripeCouponId: string | null,
+  stripePromotionCodeId: string | null,
+  code: string,
+): Promise<{ stripePromotionCodeId: string | null; replaced: boolean }> {
+  const stripe = await getStripeOrNull();
+  if (!stripe) return { stripePromotionCodeId, replaced: false };
+  if (stripePromotionCodeId) {
+    try {
+      const updated = await stripe.promotionCodes.update(stripePromotionCodeId, { active: true });
+      return { stripePromotionCodeId: updated.id, replaced: false };
+    } catch (err) {
+      console.warn("[Promo/Stripe] Could not toggle promo code active=true, will recreate:", err);
+    }
+  }
+  if (stripeCouponId) {
+    try {
+      const promo = await stripe.promotionCodes.create(
+        { coupon: stripeCouponId, code } as unknown as Stripe.PromotionCodeCreateParams,
+        { idempotencyKey: `promo_code_reactivate_${code}_${Date.now()}` },
+      );
+      return { stripePromotionCodeId: promo.id, replaced: true };
+    } catch (err) {
+      console.error("[Promo/Stripe] Failed to recreate promo code on reactivate:", err);
+    }
+  }
+  return { stripePromotionCodeId, replaced: false };
+}
+
 export async function applyStripeCouponToPayment(
   stripeCouponId: string,
   paymentIntentId: string,

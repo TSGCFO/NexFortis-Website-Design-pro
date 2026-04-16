@@ -2,7 +2,7 @@ import { useState, useEffect, type ReactNode } from "react";
 import { Link, useLocation } from "wouter";
 import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/lib/auth";
-import { LayoutDashboard, ShoppingCart, Users, MessageSquare, LogOut, Menu, X } from "lucide-react";
+import { LayoutDashboard, ShoppingCart, Users, MessageSquare, Tag, LogOut, Menu, X } from "lucide-react";
 
 interface AdminLayoutProps {
   children: ReactNode;
@@ -12,6 +12,7 @@ const navItems = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
   { href: "/admin/orders", label: "Orders", icon: ShoppingCart },
   { href: "/admin/customers", label: "Customers", icon: Users },
+  { href: "/admin/promo-codes", label: "Promo Codes", icon: Tag },
   { href: "/admin/tickets", label: "Tickets", icon: MessageSquare },
 ];
 

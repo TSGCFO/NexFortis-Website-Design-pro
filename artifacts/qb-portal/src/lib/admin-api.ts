@@ -126,6 +126,43 @@ export function formatRelativeTime(dateStr: string | Date): string {
   return `${diffDays}d ago`;
 }
 
+export const PROMO_TYPE_LABELS: Record<string, string> = {
+  percentage: "Percentage",
+  fixed_amount: "Fixed amount",
+  free_service: "Free service",
+  subscription: "Subscription",
+};
+
+export const PROMO_STATUS_LABELS: Record<string, string> = {
+  active: "Active",
+  inactive: "Inactive",
+  expired: "Expired",
+  exhausted: "Exhausted",
+};
+
+export const PROMO_STATUS_COLORS: Record<string, string> = {
+  active: "bg-green-100 text-green-800",
+  inactive: "bg-gray-200 text-gray-700",
+  expired: "bg-yellow-100 text-yellow-800",
+  exhausted: "bg-red-100 text-red-800",
+};
+
+export function describePromoValue(row: {
+  type: string;
+  percentOff: number | null;
+  amountOffCents: number | null;
+  subscriptionDurationMonths: number | null;
+}): string {
+  if (row.type === "percentage") return `${row.percentOff ?? 0}% off`;
+  if (row.type === "free_service") return "100% off";
+  if (row.type === "fixed_amount") return `${formatCurrency(row.amountOffCents ?? 0)} off`;
+  if (row.type === "subscription") {
+    const m = row.subscriptionDurationMonths ?? 1;
+    return `${row.percentOff ?? 100}% off (${m} month${m > 1 ? "s" : ""})`;
+  }
+  return "Discount";
+}
+
 export function formatSlaRemaining(minutes: number): string {
   if (minutes <= 0) return "Breached";
   if (minutes < 60) return `${minutes} min remaining`;

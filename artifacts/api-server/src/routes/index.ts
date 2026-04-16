@@ -8,6 +8,7 @@ import qbSubscriptionsRouter from "./qb-subscriptions";
 import qbTicketsRouter from "./qb-tickets";
 import qbAdminSubscriptionsRouter from "./qb-admin-subscriptions";
 import qbAdminRouter from "./qb-admin";
+import qbAdminPromoRouter from "./qb-admin-promo";
 import qbNotificationsRouter from "./qb-notifications";
 import qbPromoRouter from "./qb-promo";
 
@@ -38,6 +39,7 @@ router.use("/qb/subscriptions", requireAuth, qbSubscriptionsRouter);
 router.use("/qb/tickets", requireAuth, qbTicketsRouter);
 const adminRouter = Router();
 adminRouter.use(qbAdminSubscriptionsRouter);
+adminRouter.use(qbAdminPromoRouter);
 adminRouter.use(qbAdminRouter);
 router.use("/qb/admin", requireAuth, requireOperator, adminRouter);
 const notificationPrefLimiter = rateLimit({

@@ -31,6 +31,9 @@ import AdminDashboard from "@/pages/admin/dashboard";
 import AdminOrders from "@/pages/admin/orders";
 import AdminOrderDetail from "@/pages/admin/order-detail";
 import AdminCustomers from "@/pages/admin/customers";
+import AdminPromoCodes from "@/pages/admin/promo-codes";
+import AdminPromoCodeNew from "@/pages/admin/promo-code-new";
+import AdminPromoCodeDetail from "@/pages/admin/promo-code-detail";
 import AdminTickets from "@/pages/admin/tickets";
 import AdminTicketDetail from "@/pages/admin/ticket-detail";
 import TicketDetail from "@/pages/ticket-detail";
@@ -95,6 +98,9 @@ function Router() {
       <Route path="/admin/orders/:id" component={AdminOrderDetail} />
       <Route path="/admin/orders" component={AdminOrders} />
       <Route path="/admin/customers" component={AdminCustomers} />
+      <Route path="/admin/promo-codes/new" component={AdminPromoCodeNew} />
+      <Route path="/admin/promo-codes/:id" component={AdminPromoCodeDetail} />
+      <Route path="/admin/promo-codes" component={AdminPromoCodes} />
       <Route path="/admin/tickets/:id" component={AdminTicketDetail} />
       <Route path="/admin/tickets" component={AdminTickets} />
       <Route path="/admin" component={AdminDashboard} />
