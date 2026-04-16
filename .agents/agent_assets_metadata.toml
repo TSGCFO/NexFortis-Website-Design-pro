@@ -1,0 +1,14 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "-daQIxADYKaDs4M2hFvbL"
+uri = "file://nexfortis_brandkit/final-logo/original-vertical.svg"
+type = "image"
+title = "original-vertical.svg (from PNG)"
+
+[[outputs]]
+id = "x9Q__X8-RR5aVmJzYWUvQ"
+uri = "file://nexfortis_brandkit/final-logo/original-vertical-from-jpg.svg"
+type = "image"
+title = "original-vertical-from-jpg.svg (from JPG)"
