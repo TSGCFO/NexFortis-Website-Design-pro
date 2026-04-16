@@ -1,0 +1,503 @@
+# Prompt 06: Support Subscription Backend — Stripe, DB, Webhooks, Ticket Counting, SLA
+
+This prompt builds the backend infrastructure for the QB Expert Support Subscription feature. It covers Stripe subscription products, new database tables, expanded webhook handling, per-cycle ticket counting, SLA timer calculation, and business-hours logic. No frontend changes — Prompt 07 handles the subscription UI.
+
+## Step 0: Setup
+
+Read these files before making any changes:
+1. `replit.md` — project overview, architecture, conventions
+2. `docs/prd/qb-portal/feature-expert-support-subscription.md` — the full subscription PRD (especially Sections 6, 7, 9)
+3. `docs/prd/qb-portal/feature-security-auth-storage.md` — auth middleware reference
+4. `docs/implementation-plan.md` — understand what Prompts 01–05 have already built
+5. `lib/db/src/schema/qb-portal.ts` — current DB schema
+6. `artifacts/api-server/src/routes/qb-portal.ts` — current API routes including Stripe webhook
+
+**Do NOT modify any files in `docs/`.**
+
+**PREREQUISITES — the following must already exist from prior prompts:**
+- Stripe SDK initialized in qb-portal.ts with `STRIPE_SECRET_KEY`
+- Stripe webhook handler at `POST /api/qb/webhook/stripe` with signature verification
+- `requireAuth` and `requireOperator` middleware
+- `qb_users`, `qb_orders`, `qb_order_files`, `qb_support_tickets` tables
+- Supabase Auth integration (login, register, JWT verification)
+
+If any prerequisites are missing, stop and report what needs to be completed first.
+
+---
+
+**PLATFORM REMINDERS:**
+- The API server only handles `/api/*` routes. Static files are served by Replit.
+- Do NOT add `express.static()` to the API server.
+- Do NOT throw errors for missing env vars — use `console.warn` + `null`.
+- The `supabaseAdmin` export can be `null`. Always null-check before using.
+- Verify Replit Secrets are still present after completing all steps.
+- All prices are in CAD. Store amounts in cents (integer) in the database.
+
+> **⚠️ COMMON MISTAKE — DO NOT:**
+> - Create Stripe products/prices programmatically on every server start — create them once via a seed/setup script or route
+> - Store credit card data anywhere — Stripe handles all payment data
+> - Skip idempotency checks in webhook handlers — Stripe can re-deliver events
+
+---
+
+## Step 1: Database Schema — Subscription Tables
+
+Add the following tables to `lib/db/src/schema/qb-portal.ts`. Follow the exact same patterns as existing tables (pgTable, Drizzle ORM, timestamps, etc.).
+
+### 1a. `qb_subscriptions` table
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | `uuid` (PK) | Use `gen_random_uuid()` default |
+| `user_id` | `uuid` (FK → qb_users.id) | NOT NULL |
+| `stripe_customer_id` | `text` | NOT NULL |
+| `stripe_subscription_id` | `text` | NOT NULL, UNIQUE |
+| `stripe_price_id` | `text` | NOT NULL |
+| `tier` | `text` | NOT NULL, CHECK IN ('essentials', 'professional', 'premium') |
+| `status` | `text` | NOT NULL, DEFAULT 'active', CHECK IN ('active', 'past_due', 'canceled', 'cancel_at_period_end') |
+| `current_period_start` | `timestamp with time zone` | NOT NULL |
+| `current_period_end` | `timestamp with time zone` | NOT NULL |
+| `cancel_at_period_end` | `boolean` | DEFAULT false |
+| `created_at` | `timestamp` | DEFAULT now() |
+| `updated_at` | `timestamp` | DEFAULT now() |
+
+### 1b. `qb_ticket_usage` table
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | `serial` (PK) | |
+| `subscription_id` | `uuid` (FK → qb_subscriptions.id) | NOT NULL |
+| `user_id` | `uuid` (FK → qb_users.id) | NOT NULL |
+| `cycle_start` | `date` | NOT NULL |
+| `cycle_end` | `date` | NOT NULL |
+| `tickets_used` | `integer` | DEFAULT 0 |
+| `health_check_used` | `boolean` | DEFAULT false |
+| `video_call_used` | `boolean` | DEFAULT false |
+
+Add a unique constraint on `(subscription_id, cycle_start)` to prevent duplicate cycle records.
+
+### 1c. `qb_referrals` table (Premium only)
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | `uuid` (PK) | Use `gen_random_uuid()` default |
+| `user_id` | `uuid` (FK → qb_users.id) | NOT NULL |
+| `referral_code` | `text` | NOT NULL, UNIQUE |
+| `total_earnings_cents` | `integer` | DEFAULT 0 |
+| `created_at` | `timestamp` | DEFAULT now() |
+
+### 1d. `qb_referral_events` table
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | `uuid` (PK) | Use `gen_random_uuid()` default |
+| `referral_id` | `uuid` (FK → qb_referrals.id) | NOT NULL |
+| `referred_order_id` | `integer` (FK → qb_orders.id) | |
+| `credit_amount_cents` | `integer` | DEFAULT 2500 |
+| `applied_to_cycle` | `date` | |
+| `created_at` | `timestamp` | DEFAULT now() |
+
+### 1e. Extend `qb_support_tickets` table
+
+Add these columns to the existing `qb_support_tickets` table:
+
+| Column | Type | Notes |
+|---|---|---|
+| `subscription_id` | `uuid` (FK → qb_subscriptions.id) | NULLABLE — non-subscriber tickets have no subscription |
+| `tier_at_submission` | `text` | NULLABLE — snapshot of tier when ticket was submitted |
+| `is_critical` | `boolean` | DEFAULT false |
+| `is_after_hours` | `boolean` | DEFAULT false |
+| `sla_deadline` | `timestamp with time zone` | NULLABLE — computed on submission |
+| `first_response_at` | `timestamp with time zone` | NULLABLE — set when operator first replies |
+| `operator_reply` | `text` | NULLABLE |
+| `internal_note` | `text` | NULLABLE |
+| `attachment_path` | `text` | NULLABLE — Supabase Storage path |
+
+Also add `stripe_customer_id` column to `qb_users` table (nullable text) — needed to link Stripe customers to portal users.
+
+### 1f. Create Drizzle migration
+
+After defining the schema, generate and run the migration:
+```bash
+pnpm drizzle-kit generate
+pnpm drizzle-kit push
+```
+
+If those commands don't exist in this project, use `pnpm drizzle-kit push:pg` or check `package.json` for the correct migration command.
+
+**Verify:** Run `pnpm typecheck` — zero errors. All new tables and columns should be recognized by the TypeScript types.
+
+---
+
+## Step 2: Stripe Products and Prices Setup Script
+
+Create a one-time setup script at `artifacts/api-server/src/scripts/setup-stripe-subscriptions.ts` that creates the Stripe products and prices. This script is run ONCE manually, not on every server start.
+
+### Products and Prices (all in CAD):
+
+| Tier | Standard Price (monthly) | Launch Promo Price (monthly) |
+|---|---|---|
+| Essentials | $49.00 | $25.00 |
+| Professional | $99.00 | $50.00 |
+| Premium | $149.00 | $75.00 |
+
+For each tier, create:
+1. A Stripe Product with metadata: `{ tier: "essentials" | "professional" | "premium", portal: "qb-portal" }`
+2. Two Stripe Prices per product:
+   - Standard recurring price (CAD, monthly)
+   - Launch promo recurring price (CAD, monthly) with metadata `{ promo: "launch" }`
+
+The script should:
+- Check if products already exist (by metadata lookup) before creating duplicates
+- Print out the created Price IDs for each tier
+- Store the Price IDs as env vars: `STRIPE_PRICE_ESSENTIALS`, `STRIPE_PRICE_ESSENTIALS_PROMO`, `STRIPE_PRICE_PROFESSIONAL`, `STRIPE_PRICE_PROFESSIONAL_PROMO`, `STRIPE_PRICE_PREMIUM`, `STRIPE_PRICE_PREMIUM_PROMO`
+
+Also create two Stripe coupons for subscriber service discounts:
+- `NEXFORTIS_PRO_10` — 10% off forever (for Professional subscribers' service orders)
+- `NEXFORTIS_PREMIUM_20` — 20% off forever (for Premium subscribers' service orders)
+
+> **⚠️ COMMON MISTAKE — DO NOT:**
+> - Run this script automatically on server start
+> - Hardcode Price IDs in the source code — read from env vars
+
+**Verify:** Script runs without errors. Six Price IDs printed to console.
+
+---
+
+## Step 3: Subscription API Routes
+
+Create subscription-related routes. These go in a new file `artifacts/api-server/src/routes/qb-subscriptions.ts` to keep qb-portal.ts from getting too large. Register the new router in the main router/app.
+
+All subscription routes are prefixed with `/api/qb/subscriptions/`.
+
+### 3a. Create Subscription Checkout Session
+
+`POST /api/qb/subscriptions/checkout` — requires `requireAuth`
+
+Request body: `{ tier: "essentials" | "professional" | "premium" }`
+
+Logic:
+1. Validate tier is one of the three allowed values. Return 400 for invalid.
+2. Check if user already has an active subscription. Return 409 with `{ error: "You already have an active subscription", currentTier: "..." }`.
+3. Look up or create a Stripe customer for this user (by email). Store `stripe_customer_id` on `qb_users` if not already set.
+4. Determine which price to use: if promo is active (check a config flag or env var `PROMO_ACTIVE=true`), use the promo price. Otherwise, use standard price.
+5. Create a Stripe Checkout Session in `subscription` mode:
+   - `customer`: the Stripe customer ID
+   - `line_items`: the selected price
+   - `mode`: `"subscription"`
+   - `metadata`: `{ user_id: req.userId, tier }`
+   - `success_url`: `{origin}/qb-portal/subscription?success=true`
+   - `cancel_url`: `{origin}/qb-portal/subscription?canceled=true`
+   - `subscription_data.metadata`: `{ user_id: req.userId, tier }`
+   - `allow_promotion_codes`: false (we manage promos ourselves)
+   - Tax: if Stripe Tax is configured, enable `automatic_tax: { enabled: true }`. Otherwise, skip for now — tax integration is a later concern.
+6. Return `{ checkoutUrl: session.url }`
+
+### 3b. Get Current Subscription
+
+`GET /api/qb/subscriptions/me` — requires `requireAuth`
+
+Returns the user's active subscription (if any) with:
+- `subscription` object (tier, status, currentPeriodStart, currentPeriodEnd, cancelAtPeriodEnd)
+- `ticketUsage` for the current billing cycle (ticketsUsed, ticketLimit, healthCheckUsed, videoCallUsed)
+- `referral` info if Premium (referralCode, totalEarnings)
+
+If no subscription exists, return `{ subscription: null }`.
+
+**Ticket limits by tier:**
+- Essentials: 3
+- Professional: 8
+- Premium: Infinity (return `null` for limit)
+
+### 3c. Upgrade Subscription
+
+`POST /api/qb/subscriptions/upgrade` — requires `requireAuth`
+
+Request body: `{ newTier: "professional" | "premium" }`
+
+Logic:
+1. Get user's current subscription. Return 404 if none.
+2. Validate newTier is higher than current tier (essentials < professional < premium). Return 400 if not an upgrade.
+3. Use Stripe API to update the subscription's price:
+   - `stripe.subscriptions.update(stripeSubscriptionId, { items: [{ id: existingItemId, price: newPriceId }], proration_behavior: 'create_prorations' })`
+4. Update the local DB record (tier, stripePriceId, updatedAt).
+5. Return the updated subscription.
+
+### 3d. Downgrade Subscription
+
+`POST /api/qb/subscriptions/downgrade` — requires `requireAuth`
+
+Request body: `{ newTier: "essentials" | "professional" }`
+
+Logic:
+1. Get user's current subscription. Return 404 if none.
+2. Validate newTier is lower than current tier. Return 400 if not a downgrade.
+3. Schedule the downgrade for period end using Stripe's subscription schedule or `cancel_at_period_end` + re-create pattern. Simplest approach:
+   - Use `stripe.subscriptions.update(stripeSubscriptionId, { items: [{ id: existingItemId, price: newPriceId }], proration_behavior: 'none', billing_cycle_anchor: 'unchanged' })` — this changes the price at next renewal.
+   - OR schedule via Stripe Subscription Schedules API.
+4. Update local DB: set a `pendingTier` or note the scheduled change. The webhook for `customer.subscription.updated` will sync the actual tier when Stripe processes it.
+5. Return confirmation with effective date (current period end).
+
+### 3e. Cancel Subscription
+
+`POST /api/qb/subscriptions/cancel` — requires `requireAuth`
+
+Logic:
+1. Get user's current subscription. Return 404 if none.
+2. Call `stripe.subscriptions.update(stripeSubscriptionId, { cancel_at_period_end: true })`.
+3. Update local DB: set `cancelAtPeriodEnd = true`, `status = 'cancel_at_period_end'`.
+4. Return `{ message: "Subscription will remain active until {periodEnd}. No further charges will be made." }`.
+
+### 3f. Reactivate Subscription (undo cancel)
+
+`POST /api/qb/subscriptions/reactivate` — requires `requireAuth`
+
+Logic:
+1. Get user's subscription where `cancelAtPeriodEnd = true`. Return 404 if not in cancel state.
+2. Call `stripe.subscriptions.update(stripeSubscriptionId, { cancel_at_period_end: false })`.
+3. Update local DB: set `cancelAtPeriodEnd = false`, `status = 'active'`.
+4. Return updated subscription.
+
+**Verify Step 3:** `pnpm typecheck` — zero errors.
+
+---
+
+## Step 4: Expand Stripe Webhook Handler
+
+Update the existing webhook handler in `qb-portal.ts` (or create a shared webhook file) to handle subscription events. The webhook must handle these events IN ADDITION to the existing `checkout.session.completed` for one-time orders:
+
+### 4a. `checkout.session.completed` (subscription mode)
+
+When `session.mode === "subscription"`:
+1. Extract `userId` and `tier` from `session.metadata`.
+2. Get the Stripe subscription ID from `session.subscription`.
+3. Retrieve the full subscription from Stripe: `stripe.subscriptions.retrieve(subscriptionId)`.
+4. Create a `qb_subscriptions` record with all fields.
+5. Create the first `qb_ticket_usage` record for the current billing cycle.
+6. If tier is "premium", generate a referral code (8 chars, alphanumeric, cryptographically random) and create a `qb_referrals` record.
+7. Update `qb_users.stripe_customer_id` if not already set.
+
+**Idempotency:** Check if a subscription record with this `stripe_subscription_id` already exists before inserting.
+
+### 4b. `invoice.paid`
+
+1. Find the subscription by `invoice.subscription`.
+2. Update `current_period_start` and `current_period_end` from the invoice's period.
+3. Set status to `'active'` (clears any `past_due`).
+4. Create a new `qb_ticket_usage` record for the new billing cycle (reset ticket count to 0, health_check_used to false, video_call_used to false). Only create if one doesn't exist for this cycle_start already.
+
+### 4c. `invoice.payment_failed`
+
+1. Find the subscription by `invoice.subscription`.
+2. Set status to `'past_due'`.
+
+### 4d. `customer.subscription.updated`
+
+1. Find the subscription by the Stripe subscription ID.
+2. Sync: `tier` (derived from the current price ID → tier mapping), `status`, `cancelAtPeriodEnd`, `currentPeriodStart`, `currentPeriodEnd`, `stripePriceId`.
+3. For tier mapping: maintain a map of Stripe Price IDs to tier names. Read from env vars or a config object.
+
+### 4e. `customer.subscription.deleted`
+
+1. Find the subscription by the Stripe subscription ID.
+2. Set `status = 'canceled'`.
+
+> **⚠️ COMMON MISTAKE — DO NOT:**
+> - Process the same webhook event twice — check by event ID or subscription state
+> - Assume `checkout.session.completed` is always for one-time orders — check `session.mode`
+> - Crash on unknown event types — log and return 200 for any unhandled event type
+
+**Verify Step 4:** `pnpm typecheck` — zero errors.
+
+---
+
+## Step 5: Ticket Submission with Subscription Awareness
+
+Update the existing ticket submission route (or create a new one if it doesn't exist) to be subscription-aware.
+
+### 5a. Ticket Submission Route
+
+`POST /api/qb/tickets` — requires `requireAuth`
+
+Request body: `{ subject, message, isCritical?: boolean, attachmentFile?: multipart }`
+
+Logic:
+1. Check if user has an active subscription.
+2. If subscriber:
+   a. Look up the current `qb_ticket_usage` record.
+   b. Check ticket limit: Essentials=3, Professional=8, Premium=unlimited.
+   c. If at limit, return 403 with `{ error: "ticket_limit_reached", ticketsUsed: N, ticketLimit: N, resetDate: "...", upgradeTier: "..." }`.
+   d. Increment `tickets_used` on the usage record.
+   e. Set `tier_at_submission` and `subscription_id` on the ticket.
+3. If NOT a subscriber: still allow ticket submission (non-subscribers can submit general tickets, but without SLA guarantees). Set `tier_at_submission = null`.
+4. Determine if `is_critical`: either `isCritical` is true from the request, OR the message body contains keywords: "error -6000", "won't open", "data loss", "corrupt", "can't open company file".
+5. Determine if `is_after_hours`: check if current time (America/Toronto timezone) is outside Mon–Fri 9am–5pm ET.
+6. Calculate `sla_deadline` using the business-hours logic from Step 6.
+7. If attachment file is provided, upload to Supabase Storage under `tickets/{userId}/{ticketId}/` and store the path.
+8. Insert the ticket record.
+9. Return the created ticket with `{ ticketsRemaining }`.
+
+### 5b. Get User's Tickets
+
+`GET /api/qb/tickets` — requires `requireAuth`
+
+Returns the authenticated user's tickets, ordered by created_at desc. Include: id, subject, status, isCritical, createdAt, firstResponseAt, tierAtSubmission.
+
+### 5c. Get Ticket Detail
+
+`GET /api/qb/tickets/:id` — requires `requireAuth`
+
+Returns full ticket including message body, operator reply, internal note (only if user is operator), attachment URL (Supabase signed URL if attachment exists).
+
+Verify the ticket belongs to the requesting user (or user is operator).
+
+**Verify Step 5:** `pnpm typecheck` — zero errors.
+
+---
+
+## Step 6: SLA Timer and Business Hours Logic
+
+Create a utility module at `artifacts/api-server/src/lib/business-hours.ts`.
+
+### 6a. Business Hours Definition
+
+- Business hours: Monday–Friday, 9:00 AM – 5:00 PM Eastern Time (America/Toronto)
+- Holidays: not tracked in v1 (all weekdays are business days)
+
+### 6b. Functions to Implement
+
+**`isBusinessHours(date: Date): boolean`**
+Returns true if the given date falls within business hours.
+
+**`calculateSlaDeadline(submissionTime: Date, slaMinutes: number, isCritical: boolean): Date`**
+- If `isCritical`: deadline = submissionTime + slaMinutes (calendar minutes, NOT business hours). Critical tickets always have a 60-minute window regardless of time of day.
+- If NOT critical: deadline = submissionTime + slaMinutes, counting only business-hour minutes. If submitted at 4:30 PM ET with a 60-minute SLA, the deadline is 9:30 AM ET the next business day (30 minutes remaining carry to next day).
+
+**`getSlaMinutesForTier(tier: string | null): number`**
+- `essentials`: 60
+- `professional`: 60
+- `premium`: 30
+- `null` (non-subscriber): no SLA (return 0 or null)
+
+**`getTimeRemainingMinutes(slaDeadline: Date): number`**
+Returns minutes remaining, counting only business-hour minutes. Used by the admin dashboard to display the countdown timer.
+
+**`getSlaStatus(slaDeadline: Date): 'green' | 'yellow' | 'red' | 'breached'`**
+- `green`: > 30 minutes remaining
+- `yellow`: 10–30 minutes remaining
+- `red`: < 10 minutes remaining
+- `breached`: deadline has passed
+
+### 6c. Edge Cases
+
+- Ticket submitted Friday at 4:50 PM ET with 60-min SLA: 10 minutes count Friday, 50 minutes carry to Monday 9:00–9:50 AM ET. Deadline: Monday 9:50 AM ET.
+- Ticket submitted Saturday: SLA starts Monday 9:00 AM ET.
+- Ticket submitted at 3:00 AM ET on Wednesday: SLA starts Wednesday 9:00 AM ET.
+- Critical ticket submitted Saturday at midnight: deadline is Saturday 1:00 AM (60 calendar minutes, no business-hours adjustment).
+
+**Verify Step 6:** Write a few inline test cases or log outputs to confirm the business-hours calculations are correct. Test at least: mid-business-hours, end-of-day carryover, weekend submission, critical ticket.
+
+---
+
+## Step 7: Subscription-Aware Service Discount at Checkout
+
+Update the existing order checkout route (`POST /api/qb/checkout/create-session`) to apply subscriber discounts:
+
+1. After creating the Stripe Checkout Session line items, check if the user has an active Professional or Premium subscription.
+2. If Professional: apply the `NEXFORTIS_PRO_10` coupon to the checkout session via `discounts: [{ coupon: 'NEXFORTIS_PRO_10' }]`.
+3. If Premium: apply `NEXFORTIS_PREMIUM_20`.
+4. If no active subscription or Essentials tier: no discount.
+5. If `cancelAtPeriodEnd` is true but the period hasn't ended yet, the discount still applies (subscription is still technically active).
+
+> **⚠️ COMMON MISTAKE — DO NOT:**
+> - Apply discounts to subscription checkout sessions — only to service/product order checkouts
+> - Stack the subscriber discount with promo codes (Prompt 09 handles this conflict resolution)
+
+**Verify Step 7:** `pnpm typecheck` — zero errors.
+
+---
+
+## Step 8: Price ID → Tier Mapping Config
+
+Create a config module at `artifacts/api-server/src/lib/subscription-config.ts`:
+
+```
+TIER_CONFIG:
+  essentials: { ticketLimit: 3, slaMinutes: 60, discount: 0 }
+  professional: { ticketLimit: 8, slaMinutes: 60, discount: 10 }
+  premium: { ticketLimit: null (unlimited), slaMinutes: 30, discount: 20 }
+
+PRICE_TO_TIER mapping: reads env vars STRIPE_PRICE_* and maps each Price ID to its tier.
+TIER_ORDER: essentials < professional < premium (for upgrade/downgrade validation)
+```
+
+This config is imported wherever tier logic is needed. Single source of truth — no hardcoded tier values scattered across files.
+
+**Verify Step 8:** `pnpm typecheck` — zero errors.
+
+---
+
+## Step 9: Admin Subscription Endpoints
+
+Add these to the admin routes (protected by `requireAuth` + `requireOperator`):
+
+### 9a. `GET /api/qb/admin/subscriptions`
+
+List all subscriptions with pagination. Include: user name/email, tier, status, currentPeriodEnd, ticketsUsed this cycle. Query params: `status` filter, `tier` filter, `search` (user email).
+
+### 9b. `GET /api/qb/admin/subscriptions/:id`
+
+Full subscription detail including all ticket_usage records, referral info if Premium.
+
+### 9c. `PATCH /api/qb/admin/tickets/:id`
+
+Update the existing ticket PATCH route to:
+1. Set `first_response_at` to NOW if this is the first operator reply and `first_response_at` is null.
+2. Save `operator_reply` and/or `internal_note`.
+3. Update ticket status if provided.
+4. Log `[AUDIT] Ticket {id} updated by operator {userId}`.
+
+**Verify Step 9:** `pnpm typecheck` — zero errors.
+
+---
+
+## Step 10: Final Verification
+
+1. Run `pnpm typecheck` from monorepo root — zero errors.
+2. Run `pnpm drizzle-kit push` (or equivalent) — all new tables created in Supabase.
+3. Verify Replit Secrets are still present.
+
+**Security grep:**
+```bash
+grep -rn "requireAuth" artifacts/api-server/src/routes/qb-subscriptions.ts
+# Every route must have requireAuth
+grep -rn "requireOperator" artifacts/api-server/src/routes/qb-subscriptions.ts
+# Only admin routes should have requireOperator
+```
+
+**Test the webhook handler:**
+- Confirm the webhook still handles `checkout.session.completed` for one-time orders (existing flow must not break)
+- Confirm unknown event types return `{ received: true }` without crashing
+
+**Test subscription checkout flow:**
+- `POST /api/qb/subscriptions/checkout` with `{ tier: "essentials" }` returns a `checkoutUrl`
+- `POST /api/qb/subscriptions/checkout` with `{ tier: "invalid" }` returns 400
+
+**Test ticket submission:**
+- Subscriber with tickets remaining → success, ticketsRemaining decremented
+- Subscriber at limit → 403 with upgrade prompt
+- Non-subscriber → success (no limit enforcement)
+
+---
+
+## Constraints
+
+- Do NOT modify any files in `docs/`.
+- Do NOT modify `artifacts/qb-portal/public/products.json`.
+- Do NOT build any frontend UI — that is Prompt 07.
+- Do NOT send any emails — that is Prompt 14.
+- Do NOT implement promo code redemption — that is Prompt 09.
+- Do NOT implement the SLA timer frontend display — that is Prompt 08.
+- All new routes under `/api/qb/subscriptions/` for customer-facing, `/api/qb/admin/` for operator-facing.
+- All subscription data flows through Stripe webhooks — never trust client-submitted subscription state.
+- Ticket limits are enforced server-side. The frontend will also show limits (Prompt 07), but the API must be the enforcement boundary.
