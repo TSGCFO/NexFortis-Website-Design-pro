@@ -6,7 +6,7 @@ import {
   qbUsers,
   qbTicketUsage,
 } from "@workspace/db/schema";
-import { eq, and, desc, sql, asc } from "drizzle-orm";
+import { eq, and, desc, sql, asc, ilike, or } from "drizzle-orm";
 import sanitizeHtml from "sanitize-html";
 import { getSlaStatus, getTimeRemainingMinutes } from "../lib/business-hours";
 
@@ -103,7 +103,7 @@ router.get("/subscriptions/:id", async (req: Request, res: Response) => {
 
 router.get("/tickets", async (req: Request, res: Response) => {
   try {
-    const { status: filterStatus } = req.query;
+    const { status: filterStatus, search } = req.query;
 
     let query = db
       .select({
@@ -125,8 +125,20 @@ router.get("/tickets", async (req: Request, res: Response) => {
       )
       .$dynamic();
 
+    const conditions = [];
     if (filterStatus && typeof filterStatus === "string") {
-      query = query.where(eq(qbSupportTickets.status, filterStatus));
+      conditions.push(eq(qbSupportTickets.status, filterStatus));
+    }
+    if (search && typeof search === "string") {
+      conditions.push(
+        or(
+          ilike(qbSupportTickets.subject, `%${search}%`),
+          ilike(qbUsers.email, `%${search}%`),
+        )
+      );
+    }
+    if (conditions.length > 0) {
+      query = query.where(and(...conditions));
     }
 
     const results = await query;
@@ -143,6 +155,43 @@ router.get("/tickets", async (req: Request, res: Response) => {
   } catch (err) {
     console.error("Admin list tickets error:", err);
     res.status(500).json({ error: "Failed to fetch tickets" });
+  }
+});
+
+router.get("/tickets/:id", async (req: Request, res: Response) => {
+  try {
+    const ticketId = parseInt(req.params.id as string);
+    if (isNaN(ticketId)) {
+      res.status(400).json({ error: "Invalid ticket ID" });
+      return;
+    }
+
+    const [result] = await db
+      .select({
+        ticket: qbSupportTickets,
+        userName: qbUsers.name,
+        userEmail: qbUsers.email,
+      })
+      .from(qbSupportTickets)
+      .leftJoin(qbUsers, eq(qbSupportTickets.userId, qbUsers.id))
+      .where(eq(qbSupportTickets.id, ticketId))
+      .limit(1);
+
+    if (!result) {
+      res.status(404).json({ error: "Ticket not found" });
+      return;
+    }
+
+    res.json({
+      ticket: {
+        ...result.ticket,
+        userName: result.userName,
+        userEmail: result.userEmail,
+      },
+    });
+  } catch (err) {
+    console.error("Admin get ticket error:", err);
+    res.status(500).json({ error: "Failed to fetch ticket" });
   }
 });
 

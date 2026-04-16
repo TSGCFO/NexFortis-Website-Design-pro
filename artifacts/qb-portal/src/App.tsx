@@ -24,13 +24,18 @@ import ServiceDetail from "@/pages/service-detail";
 import Category from "@/pages/category";
 import OrderDetail from "@/pages/order-detail";
 import NotFound from "@/pages/not-found";
-import AdminPage from "@/pages/admin/index";
 import MFAEnroll from "@/pages/admin/mfa-enroll";
 import MFAChallenge from "@/pages/admin/mfa-challenge";
+import AdminDashboard from "@/pages/admin/dashboard";
+import AdminOrders from "@/pages/admin/orders";
+import AdminOrderDetail from "@/pages/admin/order-detail";
+import AdminCustomers from "@/pages/admin/customers";
+import AdminTickets from "@/pages/admin/tickets";
+import AdminTicketDetail from "@/pages/admin/ticket-detail";
 
 const queryClient = new QueryClient();
 
-function Router() {
+function CustomerRoutes() {
   return (
     <Layout>
       <Switch>
@@ -51,12 +56,25 @@ function Router() {
         <Route path="/auth/callback" component={AuthCallback} />
         <Route path="/portal" component={Portal} />
         <Route path="/order/:id" component={OrderDetail} />
-        <Route path="/admin/mfa-enroll" component={MFAEnroll} />
-        <Route path="/admin/mfa-challenge" component={MFAChallenge} />
-        <Route path="/admin" component={AdminPage} />
         <Route component={NotFound} />
       </Switch>
     </Layout>
+  );
+}
+
+function Router() {
+  return (
+    <Switch>
+      <Route path="/admin/mfa-enroll" component={MFAEnroll} />
+      <Route path="/admin/mfa-challenge" component={MFAChallenge} />
+      <Route path="/admin/orders/:id" component={AdminOrderDetail} />
+      <Route path="/admin/orders" component={AdminOrders} />
+      <Route path="/admin/customers" component={AdminCustomers} />
+      <Route path="/admin/tickets/:id" component={AdminTicketDetail} />
+      <Route path="/admin/tickets" component={AdminTickets} />
+      <Route path="/admin" component={AdminDashboard} />
+      <Route><CustomerRoutes /></Route>
+    </Switch>
   );
 }
 

@@ -171,41 +171,39 @@ const requireAuth: RequestHandler = async (req: Request, res: Response, next: Ne
 };
 
 const requireOperator: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
-  await (requireAuth as (req: Request, res: Response, next: NextFunction) => Promise<void>)(req, res, () => {
-    if (req.userRole !== "operator") {
-      res.status(403).json({ error: "forbidden" });
-      return;
-    }
+  if (req.userRole !== "operator") {
+    res.status(403).json({ error: "forbidden" });
+    return;
+  }
 
-    const authHeader = req.headers.authorization;
-    if (!authHeader?.startsWith("Bearer ")) {
+  const authHeader = req.headers.authorization;
+  if (!authHeader?.startsWith("Bearer ")) {
+    res.status(403).json({ error: "MFA verification required. Please complete your two-factor authentication." });
+    return;
+  }
+
+  try {
+    const payload = authHeader.slice(7).split(".")[1];
+    if (!payload) {
       res.status(403).json({ error: "MFA verification required. Please complete your two-factor authentication." });
       return;
     }
-
-    try {
-      const payload = authHeader.slice(7).split(".")[1];
-      if (!payload) {
-        res.status(403).json({ error: "MFA verification required. Please complete your two-factor authentication." });
-        return;
-      }
-      const decoded = JSON.parse(Buffer.from(payload, "base64url").toString());
-      if (decoded.aal !== "aal2") {
-        res.status(403).json({ error: "MFA verification required. Please complete your two-factor authentication." });
-        return;
-      }
-    } catch (err) {
-      if (err instanceof SyntaxError) {
-        res.status(403).json({ error: "MFA verification required. Please complete your two-factor authentication." });
-      } else {
-        console.error("requireOperator error:", err);
-        res.status(503).json({ error: "Auth service unavailable. Please try again." });
-      }
+    const decoded = JSON.parse(Buffer.from(payload, "base64url").toString());
+    if (decoded.aal !== "aal2") {
+      res.status(403).json({ error: "MFA verification required. Please complete your two-factor authentication." });
       return;
     }
+  } catch (err) {
+    if (err instanceof SyntaxError) {
+      res.status(403).json({ error: "MFA verification required. Please complete your two-factor authentication." });
+    } else {
+      console.error("requireOperator error:", err);
+      res.status(503).json({ error: "Auth service unavailable. Please try again." });
+    }
+    return;
+  }
 
-    next();
-  });
+  next();
 };
 
 function getUserId(req: Request): string {
@@ -881,7 +879,7 @@ router.get("/orders/:id/files/:fileId/download", requireAuth, async (req: Reques
   }
 });
 
-router.put("/orders/:id/status", requireOperator, async (req: Request, res: Response) => {
+router.put("/orders/:id/status", requireAuth, requireOperator, async (req: Request, res: Response) => {
   try {
     const orderId = parseInt(req.params.id as string);
     const { status } = req.body;

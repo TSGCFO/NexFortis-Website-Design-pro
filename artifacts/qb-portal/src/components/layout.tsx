@@ -74,7 +74,7 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [location] = useLocation();
-  const { user, signOut } = useAuth();
+  const { user, signOut, isOperator } = useAuth();
   const { resolvedTheme } = useTheme();
 
   useEffect(() => {
@@ -138,6 +138,13 @@ export function Navbar() {
           <ThemeToggle />
           {user ? (
             <div className="flex items-center gap-2">
+              {isOperator && (
+                <Link href="/admin">
+                  <Button variant="ghost" size="sm" className="gap-1 font-display text-muted-foreground">
+                    Admin
+                  </Button>
+                </Link>
+              )}
               <Link href="/portal">
                 <Button variant="ghost" size="sm" className="gap-2 font-display">
                   <User className="w-4 h-4" />
@@ -195,6 +202,11 @@ export function Navbar() {
           <div className="pt-3 border-t border-border space-y-2">
             {user ? (
               <>
+                {isOperator && (
+                  <Link href="/admin" onClick={() => setOpen(false)}>
+                    <Button variant="ghost" className="w-full font-display text-muted-foreground" size="sm">Admin Panel</Button>
+                  </Link>
+                )}
                 <Link href="/portal" onClick={() => setOpen(false)}>
                   <Button variant="outline" className="w-full font-display" size="sm">Dashboard</Button>
                 </Link>

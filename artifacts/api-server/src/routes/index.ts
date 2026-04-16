@@ -7,6 +7,7 @@ import qbPortalRouter, { requireAuth, requireOperator } from "./qb-portal";
 import qbSubscriptionsRouter from "./qb-subscriptions";
 import qbTicketsRouter from "./qb-tickets";
 import qbAdminSubscriptionsRouter from "./qb-admin-subscriptions";
+import qbAdminRouter from "./qb-admin";
 
 const router: IRouter = Router();
 
@@ -34,6 +35,7 @@ router.post("/qb/checkout/create-session", checkoutLimiter);
 router.use("/qb", qbPortalRouter);
 router.use("/qb/subscriptions", requireAuth, qbSubscriptionsRouter);
 router.use("/qb/tickets", requireAuth, qbTicketsRouter);
-router.use("/qb/admin", requireOperator, qbAdminSubscriptionsRouter);
+router.use("/qb/admin", requireAuth, requireOperator, qbAdminSubscriptionsRouter);
+router.use("/qb/admin", requireAuth, requireOperator, qbAdminRouter);
 
 export default router;
