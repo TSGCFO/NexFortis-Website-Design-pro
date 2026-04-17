@@ -301,7 +301,7 @@ export default function Home() {
         </div>
       </section>
 
-      <Section bg="brand-light">
+      <Section bg="brand-light" className="!pb-4">
         <SectionHeader
           title="Comprehensive IT Solutions for Canadian Businesses"
           subtitle="Five specialized service areas, delivered by one expert team. No vendor juggling, no knowledge gaps — just results."
