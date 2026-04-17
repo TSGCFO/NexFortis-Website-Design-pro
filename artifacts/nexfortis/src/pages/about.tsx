@@ -133,7 +133,6 @@ export default function About() {
               transition={{ duration: 0.3 }}
               className="flex flex-col items-center text-center gap-4"
             >
-              {/* ASSET: replace src with official Microsoft AI Cloud Partner Program badge file */}
               <img
                 src={`${import.meta.env.BASE_URL}images/badge-microsoft-partner.png`}
                 alt="Microsoft AI Cloud Partner Program badge"
@@ -154,7 +153,6 @@ export default function About() {
               transition={{ duration: 0.3, delay: 0.08 }}
               className="flex flex-col items-center text-center gap-4"
             >
-              {/* ASSET: replace src with official Google Partner badge file */}
               <img
                 src={`${import.meta.env.BASE_URL}images/badge-google-partner.png`}
                 alt="Google Partner badge"
@@ -175,7 +173,6 @@ export default function About() {
               transition={{ duration: 0.3, delay: 0.16 }}
               className="flex flex-col items-center text-center gap-4"
             >
-              {/* ASSET: replace src with official QuickBooks ProAdvisor badge file */}
               <img
                 src={`${import.meta.env.BASE_URL}images/badge-quickbooks-proadvisor.png`}
                 alt="QuickBooks ProAdvisor badge"

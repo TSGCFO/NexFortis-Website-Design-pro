@@ -345,26 +345,26 @@ export default function Subscription() {
           <h2 className="text-2xl font-bold font-display text-primary text-center mb-8">Frequently Asked Questions</h2>
           <div className="space-y-3">
             {faqs.map((faq, i) => (
-              <Card key={i} className="overflow-hidden">
+              <div key={i} className="bg-white dark:bg-slate-900 rounded-xl border border-border overflow-hidden shadow-sm">
                 <button
                   className="w-full p-4 flex items-center justify-between text-left"
                   onClick={() => setExpandedFaq(expandedFaq === i ? null : i)}
                   aria-expanded={expandedFaq === i}
                   aria-controls={`faq-answer-${i}`}
                 >
-                  <span className="font-semibold text-sm text-primary pr-4">{faq.q}</span>
+                  <span className="font-semibold text-sm text-slate-900 dark:text-white pr-4">{faq.q}</span>
                   {expandedFaq === i ? (
-                    <ChevronUp className="w-4 h-4 text-muted-foreground flex-shrink-0" />
+                    <ChevronUp className="w-4 h-4 text-slate-500 flex-shrink-0" />
                   ) : (
-                    <ChevronDown className="w-4 h-4 text-muted-foreground flex-shrink-0" />
+                    <ChevronDown className="w-4 h-4 text-slate-500 flex-shrink-0" />
                   )}
                 </button>
                 {expandedFaq === i && (
                   <div id={`faq-answer-${i}`} className="px-4 pb-4">
-                    <p className="text-sm text-muted-foreground">{faq.a}</p>
+                    <p className="text-sm text-slate-600 dark:text-slate-300">{faq.a}</p>
                   </div>
                 )}
-              </Card>
+              </div>
             ))}
           </div>
         </div>

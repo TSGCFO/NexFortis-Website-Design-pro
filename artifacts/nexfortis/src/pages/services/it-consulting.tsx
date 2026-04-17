@@ -67,7 +67,7 @@ export default function ITConsulting() {
 
   return (
     <div>
-      <SEO title="IT Consulting & Managed IT Services" description="Virtual CIO services, strategic IT consulting, technology audits, and project management for Canadian businesses. Reduce costs, close security gaps, and modernize your infrastructure." path="/services/it-consulting" />
+      <SEO title="IT Consulting & Project Management" description="Virtual CIO services, strategic IT consulting, technology audits, and project management for Canadian businesses. Reduce costs, close security gaps, and modernize your infrastructure." path="/services/it-consulting" />
       <ServiceSchema name="IT Consulting & Project Management" description="Strategic IT consulting, project management, technology audits, and virtual CIO services for Canadian businesses." url="/services/it-consulting" />
       <BreadcrumbSchema items={[
         { name: "Home", url: "/" },
@@ -204,7 +204,7 @@ export default function ITConsulting() {
             Book a free 30-minute consultation to discuss your technology challenges and goals.
           </p>
           <Link href="/contact" className="inline-flex px-8 py-4 min-h-[48px] rounded-xl bg-rose-gold text-rose-gold-foreground font-bold text-lg hover:bg-rose-gold-hover transition-all items-center justify-center gap-2 hover:-translate-y-0.5">
-            Book a Consultation <ArrowRight className="w-5 h-5" />
+            Book a Consultation <ArrowRight className="w-5 h-5" aria-hidden="true" />
           </Link>
         </div>
       </Section>

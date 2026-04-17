@@ -284,6 +284,7 @@ export function Footer() {
                 <li><Link href="/subscription" className="hover:text-accent transition-colors">Support Plans</Link></li>
                 <li><Link href="/faq" className="hover:text-accent transition-colors">FAQ</Link></li>
                 <li><a href="mailto:support@nexfortis.com" className="hover:text-accent transition-colors">Contact Us</a></li>
+                <li><Link href="/waitlist" className="hover:text-accent transition-colors">Join Waitlist</Link></li>
               </ul>
             </div>
 

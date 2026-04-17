@@ -63,7 +63,7 @@ const services = [
 const stats = [
   { icon: Users, value: "500+", label: "Businesses Served" },
   { icon: Award, value: "10+", label: "Years of Experience" },
-  { icon: Clock, value: "24h", label: "Response Time SLA" },
+  { icon: Clock, value: "< 24h", label: "Response SLA" },
   { icon: Globe, value: "CA", label: "Canadian-Based Team" },
 ];
 
@@ -187,21 +187,50 @@ export default function Home() {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-              className="hidden lg:flex flex-shrink-0 items-center justify-center"
+              className="hidden lg:flex flex-shrink-0 items-center justify-center max-w-[40%]"
               aria-hidden="true"
             >
               <div className="relative w-80 h-80 xl:w-96 xl:h-96">
-                <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-sm border border-white/15 shadow-2xl" />
+                <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-md border border-white/15 shadow-2xl" />
                 <div className="absolute inset-0 rounded-3xl bg-gradient-to-tr from-accent/20 via-transparent to-white/10" />
-                <img
-                  src={`${import.meta.env.BASE_URL}images/logo-white.svg`}
-                  alt=""
-                  className="absolute inset-8 w-auto h-auto object-contain drop-shadow-[0_0_50px_rgba(15,146,227,0.4)]"
-                  style={{
-                    filter: "brightness(1.15) drop-shadow(0 8px 30px rgba(0,0,0,0.3))",
-                    mixBlendMode: "screen",
-                  }}
-                />
+                <div className="relative z-10 flex flex-col justify-center h-full px-8 py-10 gap-5">
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-xl bg-accent/20 flex items-center justify-center">
+                      <LayoutDashboard className="w-6 h-6 text-accent" />
+                    </div>
+                    <div>
+                      <div className="text-2xl font-display font-extrabold text-white">20</div>
+                      <div className="text-sm text-white/60">Services Offered</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-xl bg-rose-gold/20 flex items-center justify-center">
+                      <Clock className="w-6 h-6 text-rose-gold" />
+                    </div>
+                    <div>
+                      <div className="text-2xl font-display font-extrabold text-white">&lt; 1 Hour</div>
+                      <div className="text-sm text-white/60">Turnaround Time</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-xl bg-emerald-500/20 flex items-center justify-center">
+                      <CheckCircle2 className="w-6 h-6 text-emerald-400" />
+                    </div>
+                    <div>
+                      <div className="text-2xl font-display font-extrabold text-white">100%</div>
+                      <div className="text-sm text-white/60">Accuracy Guaranteed</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center">
+                      <Globe className="w-6 h-6 text-white/80" />
+                    </div>
+                    <div>
+                      <div className="text-2xl font-display font-extrabold text-white">CA</div>
+                      <div className="text-sm text-white/60">Canadian-First</div>
+                    </div>
+                  </div>
+                </div>
                 <div className="absolute -inset-6 rounded-[2rem] bg-gradient-to-br from-accent/15 via-transparent to-rose-gold/10 blur-2xl -z-10" />
               </div>
             </motion.div>
@@ -332,7 +361,7 @@ export default function Home() {
         </div>
       </Section>
 
-      <Section bg="brand-navy">
+      <Section bg="brand-navy" className="!pt-8">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div>
             <SectionHeader

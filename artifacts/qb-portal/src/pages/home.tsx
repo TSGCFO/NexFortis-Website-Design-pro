@@ -177,8 +177,10 @@ export default function Home() {
           >
             {!catalog ? (
               <span className="inline-flex items-center gap-2">Starting at <span className="inline-block h-6 w-36 animate-pulse bg-muted rounded" /></span>
-            ) : promo ? (
-              <>Starting at <span className="text-azure font-bold">{lowestPriceFormatted}</span> with our launch special <span className="text-white/50 text-base line-through">(reg. {regPriceFormatted})</span></>
+            ) : promo && flagshipProduct ? (
+              <>Starting at <span className="text-azure font-bold">{formatPriceCAD(getActivePrice(flagshipProduct))}</span> with our launch special <span className="text-white/50 text-base line-through">(reg. {regPriceFormatted})</span></>
+            ) : flagshipProduct ? (
+              <>Starting at <span className="text-azure font-bold">{formatPriceCAD(getActivePrice(flagshipProduct))}</span></>
             ) : (
               <>Starting at <span className="text-azure font-bold">{lowestPriceFormatted}</span></>
             )}
@@ -271,10 +273,10 @@ export default function Home() {
             <p className="text-muted-foreground">See how we compare to the competition</p>
           </motion.div>
           <motion.div {...fadeInUp} className="overflow-x-auto">
-            <table className="w-full bg-card rounded-xl shadow-sm border border-border overflow-hidden">
+            <table className="w-full bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-border overflow-hidden">
               <thead>
                 <tr className="section-brand-navy">
-                  <th className="px-4 py-3 text-left text-sm font-display font-semibold">Feature</th>
+                  <th className="px-4 py-3 text-left text-sm font-display font-semibold text-white">Feature</th>
                   <th className="px-4 py-3 text-center text-sm font-display font-semibold bg-accent text-white">NexFortis</th>
                   <th className="px-4 py-3 text-center text-sm font-display font-semibold text-white">Big Red Consulting</th>
                   <th className="px-4 py-3 text-center text-sm font-display font-semibold text-white">E-Tech</th>
@@ -282,11 +284,11 @@ export default function Home() {
               </thead>
               <tbody>
                 {comparisonData.map((row, i) => (
-                  <tr key={row.feature} className={i % 2 === 0 ? "bg-card" : "bg-muted/50"}>
-                    <td className="px-4 py-3 text-sm font-medium text-primary">{row.feature}</td>
-                    <td className="px-4 py-3 text-sm text-center font-semibold text-success bg-success/5">{row.nexfortis}</td>
-                    <td className="px-4 py-3 text-sm text-center text-muted-foreground">{row.bigred}</td>
-                    <td className="px-4 py-3 text-sm text-center text-muted-foreground">{row.etech}</td>
+                  <tr key={row.feature} className={i % 2 === 0 ? "bg-white dark:bg-slate-900" : "bg-slate-50 dark:bg-slate-800/50"}>
+                    <td className="px-4 py-3 text-sm font-medium text-slate-900 dark:text-white">{row.feature}</td>
+                    <td className="px-4 py-3 text-sm text-center font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20">{row.nexfortis}</td>
+                    <td className="px-4 py-3 text-sm text-center text-slate-500 dark:text-slate-400">{row.bigred}</td>
+                    <td className="px-4 py-3 text-sm text-center text-slate-500 dark:text-slate-400">{row.etech}</td>
                   </tr>
                 ))}
               </tbody>

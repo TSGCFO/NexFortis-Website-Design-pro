@@ -171,7 +171,7 @@ export default function Blog() {
                     <span className="flex items-center gap-1.5">
                       <Calendar className="w-3.5 h-3.5" aria-hidden="true" />
                       <time dateTime={featured.createdAt}>
-                        {new Date(featured.createdAt).toLocaleDateString("en-CA", { year: "numeric", month: "long", day: "numeric" })}
+                        {new Date(featured.createdAt).toLocaleDateString("en-CA", { year: "numeric", month: "short", day: "numeric" })}
                       </time>
                     </span>
                     <span className="flex items-center gap-1.5">

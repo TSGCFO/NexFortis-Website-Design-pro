@@ -42,13 +42,13 @@ export default function QuickBooks() {
       icon: ShieldAlert,
       title: "Data Recovery",
       desc: "Error code repair, file corruption fixes, and password recovery with a money-back guarantee.",
-      items: ["TLG Recovery", "Mac Data Recovery"],
+      items: ["TLG Recovery", "Mac Data Recovery", "Contact for Pricing"],
     },
     {
       icon: Wrench,
       title: "Data Services",
       desc: "Optimize your company files for performance or audit preparation.",
-      items: ["Enterprise to Pro/Premier Conversion (from $249)", "Super Condensing & List Reduction"],
+      items: ["Enterprise to Pro/Premier Conversion (from $249)", "Super Condensing & List Reduction — Contact for Pricing"],
     },
   ];
 
