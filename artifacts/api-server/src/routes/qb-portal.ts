@@ -43,6 +43,15 @@ const ticketLimiter = rateLimit({
   message: { error: "Too many requests. Please try again later." },
 });
 
+const waitlistLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 3,
+  standardHeaders: true,
+  legacyHeaders: false,
+  keyGenerator: (req) => ipKeyGenerator(req as never),
+  message: { error: "Too many waitlist requests. Please try again later." },
+});
+
 interface CatalogProduct {
   id: number;
   slug: string;
@@ -234,17 +243,19 @@ function getUserId(req: Request): string {
   return req.userId!;
 }
 
-router.post("/waitlist", async (req: Request, res: Response) => {
+router.post("/waitlist", waitlistLimiter, async (req: Request, res: Response) => {
   try {
     const { email, product_id, product_name } = req.body;
+    const normalizedEmail = email ? sanitizeInput(String(email)).toLowerCase() : "";
     const parsedProductId = parseInt(product_id, 10);
-    if (!email || isNaN(parsedProductId)) {
-      res.status(400).json({ error: "Email and a valid numeric product_id are required" });
+    const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail);
+    if (!isValidEmail || isNaN(parsedProductId)) {
+      res.status(400).json({ error: "A valid email and numeric product_id are required" });
       return;
     }
 
     const existing = await db.select().from(qbWaitlistSignups)
-      .where(and(eq(qbWaitlistSignups.email, email), eq(qbWaitlistSignups.productId, parsedProductId)))
+      .where(and(eq(qbWaitlistSignups.email, normalizedEmail), eq(qbWaitlistSignups.productId, parsedProductId)))
       .limit(1);
 
     if (existing.length > 0) {
@@ -254,14 +265,14 @@ router.post("/waitlist", async (req: Request, res: Response) => {
 
     const resolvedProductName = product_name ? sanitizeInput(String(product_name)) : `Product #${parsedProductId}`;
     await db.insert(qbWaitlistSignups).values({
-      email,
+      email: normalizedEmail,
       productId: parsedProductId,
       productName: resolvedProductName,
     });
 
     try {
       const tpl = waitlistConfirmationEmail(resolvedProductName);
-      sendEmail({ to: email, subject: tpl.subject, html: tpl.html }).catch((err) =>
+      sendEmail({ to: normalizedEmail, subject: tpl.subject, html: tpl.html }).catch((err) =>
         console.error("[Waitlist] Email send failed:", err),
       );
     } catch (err) {
