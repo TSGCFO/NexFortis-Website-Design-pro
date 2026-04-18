@@ -5,7 +5,7 @@ import { Link } from "wouter";
 
 export default function NotFound() {
   return (
-    <section className="relative min-h-[70vh] w-full flex items-center justify-center section-brand-navy overflow-hidden pt-24 pb-16 px-4">
+    <section className="relative min-h-screen w-full flex items-center justify-center section-brand-navy overflow-hidden pt-24 pb-16 px-4">
       <SEO title="Page Not Found" description="The page you are looking for does not exist." noIndex />
       <div className="absolute top-0 left-1/2 -translate-x-1/2 -mt-32 w-[600px] h-[600px] bg-accent/10 rounded-full blur-[150px] pointer-events-none" aria-hidden="true" />
       <div className="relative z-10 w-full max-w-2xl mx-auto text-center">

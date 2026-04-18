@@ -81,12 +81,12 @@ export default function AutomationSoftware() {
 
   return (
     <div>
-      <SEO title="Workflow Automation & Custom Software Development" description="Eliminate manual data entry with Power Automate, Zapier, and custom API integrations. NexFortis builds bespoke web applications and automated workflows for Canadian businesses." path="/services/automation-software" />
-      <ServiceSchema name="Workflow Automation & Custom Software" description="Custom workflow automation, API integrations, and full-stack web application development for Canadian businesses." url="/services/automation-software" />
+      <SEO title="Workflow Automation & Custom Software Development" description="Eliminate manual data entry with Power Automate, Zapier, and custom API integrations. NexFortis builds bespoke web applications and automated workflows for Canadian businesses." path="/services/workflow-automation" />
+      <ServiceSchema name="Workflow Automation & Custom Software" description="Custom workflow automation, API integrations, and full-stack web application development for Canadian businesses." url="/services/workflow-automation" />
       <BreadcrumbSchema items={[
         { name: "Home", url: "/" },
         { name: "Services", url: "/services" },
-        { name: "Workflow Automation", url: "/services/automation-software" },
+        { name: "Workflow Automation", url: "/services/workflow-automation" },
       ]} />
       <FAQSchema faqs={autoFaqs} />
       <PageHero 
