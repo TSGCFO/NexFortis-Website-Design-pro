@@ -14,12 +14,19 @@ const router = Router();
 const SESSION_TTL_SECONDS = 60 * 60 * 24;
 const COOKIE_NAME = "operator_session";
 
+function getClientIp(req: Request): string {
+  // app.set("trust proxy", "loopback, linklocal, uniquelocal") in app.ts
+  // makes req.ip the real client IP from the trusted edge proxy chain.
+  // Never read X-Forwarded-For directly — it is client-controlled.
+  return req.ip || req.socket?.remoteAddress || "unknown";
+}
+
 const loginLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   limit: 5,
   standardHeaders: true,
   legacyHeaders: false,
-  keyGenerator: (req) => ipKeyGenerator(req as never),
+  keyGenerator: (req) => ipKeyGenerator(getClientIp(req)),
   message: { error: "Too many login attempts. Please try again later." },
 });
 

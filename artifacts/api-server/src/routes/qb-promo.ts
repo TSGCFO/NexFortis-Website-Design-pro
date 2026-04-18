@@ -16,6 +16,10 @@ import { referralCreditEarnedEmail } from "../lib/email-templates";
 import { supabaseAdmin } from "../lib/supabase";
 import path from "path";
 import fs from "fs";
+import { fileURLToPath } from "node:url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 interface PromoCatalogProduct {
   id: number;
@@ -47,12 +51,19 @@ function categoryOfProduct(productId: string): string | null {
 
 const router = Router();
 
+function getClientIp(req: any): string {
+  // app.set("trust proxy", 1) makes req.ip the real client IP from the
+  // first untrusted hop. Use req.ip rather than the raw X-Forwarded-For
+  // header to avoid client-controlled spoofing of the rate-limit key.
+  return req.ip || req.socket?.remoteAddress || "unknown";
+}
+
 const validateLimiter = rateLimit({
   windowMs: 60 * 1000,
   limit: 10,
   standardHeaders: true,
   legacyHeaders: false,
-  keyGenerator: (req: any) => ipKeyGenerator(req),
+  keyGenerator: (req: any) => ipKeyGenerator(getClientIp(req)),
   message: { valid: false, errorCode: "RATE_LIMITED", errorMessage: "Too many attempts. Please try again in a minute." },
 });
 

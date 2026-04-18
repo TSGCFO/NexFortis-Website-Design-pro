@@ -13,15 +13,8 @@ const SITE_NAME = "NexFortis IT Solutions";
 const SITE_URL = "https://nexfortis.com";
 const DEFAULT_IMAGE = "/opengraph.png";
 
-function getSiteUrl(): string {
-  if (typeof window !== "undefined" && window.location.hostname !== "localhost") {
-    return window.location.origin;
-  }
-  return SITE_URL;
-}
-
 export function SEO({ title, description, path = "/", type = "website", image, noIndex }: SEOProps) {
-  const siteUrl = getSiteUrl();
+  const siteUrl = SITE_URL;
   const fullTitle = path === "/" ? `${SITE_NAME} — Complexity Decoded. Advantage.` : `${title} | ${SITE_NAME}`;
   const fullUrl = `${siteUrl}${path}`;
   const ogImage = image || `${siteUrl}${DEFAULT_IMAGE}`;
@@ -56,7 +49,7 @@ export function SEO({ title, description, path = "/", type = "website", image, n
 }
 
 export function OrganizationSchema() {
-  const siteUrl = getSiteUrl();
+  const siteUrl = SITE_URL;
   const schema = {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -92,7 +85,7 @@ export function OrganizationSchema() {
 }
 
 export function LocalBusinessSchema() {
-  const siteUrl = getSiteUrl();
+  const siteUrl = SITE_URL;
   const schema = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
@@ -139,17 +132,12 @@ export function LocalBusinessSchema() {
 }
 
 export function WebSiteSchema() {
-  const siteUrl = getSiteUrl();
+  const siteUrl = SITE_URL;
   const schema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: "NexFortis IT Solutions",
     url: siteUrl,
-    potentialAction: {
-      "@type": "SearchAction",
-      target: `${siteUrl}/blog?q={search_term_string}`,
-      "query-input": "required name=search_term_string",
-    },
   };
 
   return (
@@ -160,7 +148,7 @@ export function WebSiteSchema() {
 }
 
 export function ServiceSchema({ name, description, url }: { name: string; description: string; url?: string }) {
-  const siteUrl = getSiteUrl();
+  const siteUrl = SITE_URL;
   const resolvedUrl = url ? (url.startsWith("http") ? url : `${siteUrl}${url}`) : `${siteUrl}/services`;
   const schema = {
     "@context": "https://schema.org",
@@ -188,7 +176,7 @@ export function ServiceSchema({ name, description, url }: { name: string; descri
 }
 
 export function BreadcrumbSchema({ items }: { items: { name: string; url: string }[] }) {
-  const siteUrl = getSiteUrl();
+  const siteUrl = SITE_URL;
   const schema = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -235,7 +223,7 @@ export function ArticleSchema({ title, description, datePublished, dateModified,
   dateModified?: string;
   url: string;
 }) {
-  const siteUrl = getSiteUrl();
+  const siteUrl = SITE_URL;
   const schema = {
     "@context": "https://schema.org",
     "@type": "Article",

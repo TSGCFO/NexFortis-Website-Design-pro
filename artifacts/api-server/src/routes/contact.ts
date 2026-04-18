@@ -30,12 +30,19 @@ function validateContact(body: ContactBody): string | null {
 
 const contactRouter = Router();
 
+function getClientIp(req: any): string {
+  // app.set("trust proxy", 1) makes req.ip the real client IP from the
+  // first untrusted hop. Use req.ip rather than the raw X-Forwarded-For
+  // header to avoid client-controlled spoofing of the rate-limit key.
+  return req.ip || req.socket?.remoteAddress || "unknown";
+}
+
 const contactSubmitLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   limit: 3,
   standardHeaders: true,
   legacyHeaders: false,
-  keyGenerator: (req) => ipKeyGenerator(req as never),
+  keyGenerator: (req) => ipKeyGenerator(getClientIp(req)),
   message: { error: "Too many submissions. Please try again later." },
 });
 

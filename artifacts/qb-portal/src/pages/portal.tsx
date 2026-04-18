@@ -165,7 +165,7 @@ export default function Portal() {
                         <div><p className="font-semibold text-sm text-primary">ORD-{String(order.id).padStart(3, "0")}</p><p className="text-xs text-muted-foreground">{order.serviceName}</p></div>
                         <div className="flex items-center gap-4">
                           <span className={`px-2 py-1 rounded-full text-xs font-medium ${statusColors[order.status] || "bg-gray-100 text-gray-700"}`}>{order.status}</span>
-                          <span className="text-sm font-semibold">${order.totalCad} CAD</span>
+                          <span className="text-sm font-semibold">${(order.totalCad / 100).toFixed(2)} CAD</span>
                           <span className="text-xs text-muted-foreground">{new Date(order.createdAt).toLocaleDateString()}</span>
                         </div>
                       </CardContent>
@@ -193,7 +193,7 @@ export default function Portal() {
                             <div><h3 className="font-bold font-display text-primary">ORD-{String(order.id).padStart(3, "0")}</h3><p className="text-sm text-muted-foreground">{order.serviceName}</p>{order.addons && <p className="text-xs text-muted-foreground mt-1">Add-ons: {order.addons}</p>}</div>
                             <span className={`px-3 py-1 rounded-full text-xs font-medium ${statusColors[order.status] || "bg-gray-100 text-gray-700"}`}>{order.status}</span>
                           </div>
-                          <div className="flex items-center justify-between text-sm"><span className="text-muted-foreground">Placed: {new Date(order.createdAt).toLocaleDateString()}</span><span className="font-bold">${order.totalCad} CAD</span></div>
+                          <div className="flex items-center justify-between text-sm"><span className="text-muted-foreground">Placed: {new Date(order.createdAt).toLocaleDateString()}</span><span className="font-bold">${(order.totalCad / 100).toFixed(2)} CAD</span></div>
                           <div className="mt-4 h-2 rounded-full bg-muted overflow-hidden"><div className={`h-full rounded-full ${progressColor} ${progress}`} /></div>
                           <div className="flex justify-between text-xs text-muted-foreground mt-1"><span>Submitted</span><span>Processing</span><span>Completed</span><span>Delivered</span></div>
                         </CardContent>

@@ -2,6 +2,7 @@ import { ReactNode, useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "wouter";
 import { Menu, X, ChevronDown, Monitor, Database, Cloud, Cog, LayoutDashboard, ArrowRight, Sun, Moon, MonitorSmartphone, ChevronUp, ExternalLink } from "lucide-react";
 import { useTheme } from "@/hooks/use-theme";
+import { trackEvent } from "@/lib/analytics";
 
 const services = [
   { name: "Digital Marketing", href: "/services/digital-marketing", icon: Monitor },
@@ -231,6 +232,7 @@ export function Layout({ children }: { children: ReactNode }) {
               href="https://qbportal.nexfortis.com"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackEvent("cta_click", { cta: "qb_portal", location: "navbar_desktop", destination: "https://qbportal.nexfortis.com" })}
               className="text-sm font-display font-semibold text-foreground/80 hover:text-accent transition-colors py-2 inline-flex items-center gap-1"
             >
               QB Portal <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
@@ -280,7 +282,7 @@ export function Layout({ children }: { children: ReactNode }) {
             <Link href="/about" className={`text-lg font-display font-semibold min-h-[44px] flex items-center ${location === "/about" ? "text-accent" : ""}`}>About</Link>
             <Link href="/blog" className={`text-lg font-display font-semibold min-h-[44px] flex items-center ${location === "/blog" ? "text-accent" : ""}`}>Blog</Link>
             <Link href="/contact" className={`text-lg font-display font-semibold min-h-[44px] flex items-center ${location === "/contact" ? "text-accent" : ""}`}>Contact</Link>
-            <a href="https://qbportal.nexfortis.com" target="_blank" rel="noopener noreferrer" className="text-lg font-display font-semibold min-h-[44px] flex items-center gap-1.5">
+            <a href="https://qbportal.nexfortis.com" target="_blank" rel="noopener noreferrer" onClick={() => trackEvent("cta_click", { cta: "qb_portal", location: "navbar_mobile", destination: "https://qbportal.nexfortis.com" })} className="text-lg font-display font-semibold min-h-[44px] flex items-center gap-1.5">
               QB Portal <ExternalLink className="w-4 h-4" aria-hidden="true" />
             </a>
             <Link href="/contact" className="mt-4 px-6 py-3 text-center rounded-xl bg-rose-gold text-rose-gold-foreground font-display font-semibold min-h-[44px] flex items-center justify-center">

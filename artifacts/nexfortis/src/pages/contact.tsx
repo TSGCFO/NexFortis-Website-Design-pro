@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useToast } from "@/hooks/use-toast";
+import { trackEvent } from "@/lib/analytics";
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters."),
@@ -38,6 +39,10 @@ export default function Contact() {
       if (!res.ok) {
         throw new Error(result.error || "Failed to send message");
       }
+      trackEvent("contact_form_submit", {
+        service: data.service,
+        has_company: Boolean(data.company),
+      });
       toast({
         title: "Message Sent Successfully!",
         description: "We'll get back to you within 1–2 business hours.",

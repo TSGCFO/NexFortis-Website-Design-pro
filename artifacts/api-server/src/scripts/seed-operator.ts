@@ -2,12 +2,19 @@ import bcrypt from "bcryptjs";
 import { db, operatorUsers } from "@workspace/db";
 
 async function main() {
-  let email = process.env.OPERATOR_EMAIL;
-  let password = process.env.OPERATOR_PASSWORD;
+  const email = process.env.OPERATOR_EMAIL?.toLowerCase().trim();
+  const password = process.env.OPERATOR_PASSWORD;
   const name = process.env.OPERATOR_NAME || "Operator";
 
   if (!email || !password) {
-    console.error("[seed-operator] OPERATOR_EMAIL and OPERATOR_PASSWORD must both be set as environment variables.");
+    console.error(
+      "[seed-operator] OPERATOR_EMAIL and OPERATOR_PASSWORD must both be set as environment variables.",
+    );
+    process.exit(1);
+  }
+
+  if (password.length < 8) {
+    console.error("[seed-operator] OPERATOR_PASSWORD must be at least 8 characters.");
     process.exit(1);
   }
 

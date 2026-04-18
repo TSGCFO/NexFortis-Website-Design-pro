@@ -1,0 +1,143 @@
+services:
+  - type: web
+    name: nexfortis-api
+    runtime: node
+    plan: starter
+    region: oregon
+    rootDir: .
+    branch: main
+    autoDeploy: true
+    buildCommand: |
+      corepack enable
+      NODE_ENV=development pnpm install --frozen-lockfile --prod=false
+      pnpm run typecheck:libs
+      pnpm --filter @workspace/api-server... build
+    startCommand: NODE_ENV=production node artifacts/api-server/dist/index.cjs
+    healthCheckPath: /api/healthz
+    envVars:
+      # NODE_ENV intentionally omitted from service env (set on the start command instead).
+      # Setting NODE_ENV=production here causes pnpm install to skip devDependencies
+      # (tsx, esbuild, typescript) and breaks the build.
+      - key: NODE_VERSION
+        value: "24"
+      - key: LOG_LEVEL
+        value: info
+      - key: PORT
+        value: "10000"
+      - key: PUBLIC_APP_URL
+        value: https://nexfortis.com
+      - key: PORTAL_URL
+        value: https://qb.nexfortis.com
+      - key: API_BASE_URL
+        value: https://nexfortis-api.onrender.com/api
+      - key: EMAIL_FROM
+        value: NexFortis Support <noreply@nexfortis.com>
+      - key: LAUNCH_PROMO_ACTIVE
+        value: "true"
+      # Secrets — set via Render dashboard, do NOT commit values
+      - key: DATABASE_URL
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_ANON_KEY
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      - key: STRIPE_WEBHOOK_SECRET
+        sync: false
+      - key: STRIPE_PUBLISHABLE_KEY
+        sync: false
+      - key: SESSION_SECRET
+        sync: false
+      - key: BLOG_ADMIN_SECRET
+        sync: false
+      - key: RESEND_API_KEY
+        sync: false
+      - key: OPERATOR_EMAIL
+        sync: false
+      - key: OPERATOR_PASSWORD
+        sync: false
+
+  - type: web
+    name: nexfortis-marketing
+    runtime: static
+    plan: starter
+    rootDir: .
+    branch: main
+    autoDeploy: true
+    buildCommand: |
+      corepack enable
+      NODE_ENV=development pnpm install --frozen-lockfile --prod=false
+      pnpm run typecheck:libs
+      PORT=3000 BASE_PATH=/ pnpm --filter @workspace/nexfortis... build
+    staticPublishPath: artifacts/nexfortis/dist/public
+    pullRequestPreviewsEnabled: false
+    envVars:
+      # Frontend build-time vars (must be present at `vite build` for inlining).
+      - key: VITE_GA_MEASUREMENT_ID
+        sync: false
+    headers:
+      - path: /assets/*
+        name: Cache-Control
+        value: public, max-age=31536000, immutable
+      - path: /*
+        name: X-Frame-Options
+        value: DENY
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+      - path: /*
+        name: Referrer-Policy
+        value: strict-origin-when-cross-origin
+    routes:
+      - type: rewrite
+        source: /api/*
+        destination: https://nexfortis-api.onrender.com/api/:splat
+      - type: rewrite
+        source: /*
+        destination: /index.html
+
+  - type: web
+    name: nexfortis-qb-portal
+    runtime: static
+    plan: starter
+    rootDir: .
+    branch: main
+    autoDeploy: true
+    buildCommand: |
+      corepack enable
+      NODE_ENV=development pnpm install --frozen-lockfile --prod=false
+      pnpm run typecheck:libs
+      PORT=3000 BASE_PATH=/ pnpm --filter @workspace/qb-portal... build
+    staticPublishPath: artifacts/qb-portal/dist/public
+    pullRequestPreviewsEnabled: false
+    envVars:
+      # Frontend build-time vars — Vite inlines these into the bundle at build time,
+      # so they MUST be set on the static site (not on the API service) and the site
+      # must be re-deployed if they change. Without these, AuthProvider throws on load.
+      - key: VITE_SUPABASE_URL
+        sync: false
+      - key: VITE_SUPABASE_ANON_KEY
+        sync: false
+    headers:
+      - path: /assets/*
+        name: Cache-Control
+        value: public, max-age=31536000, immutable
+      - path: /*
+        name: X-Frame-Options
+        value: DENY
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+      - path: /*
+        name: Referrer-Policy
+        value: strict-origin-when-cross-origin
+    routes:
+      - type: rewrite
+        source: /api/*
+        destination: https://nexfortis-api.onrender.com/api/:splat
+      - type: rewrite
+        source: /*
+        destination: /index.html

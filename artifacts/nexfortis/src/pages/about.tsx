@@ -104,13 +104,20 @@ export default function About() {
             transition={{ duration: 0.4 }}
             className="flex flex-col sm:flex-row items-center gap-8 bg-card rounded-3xl p-8 border border-border shadow-sm"
           >
-            <img
-              src={`${import.meta.env.BASE_URL}images/about-team.png`}
-              alt="NexFortis team"
-              className="w-32 h-32 rounded-2xl object-cover shrink-0 bg-secondary"
-              width={128}
-              height={128}
-            />
+            <picture>
+              <source
+                srcSet={`${import.meta.env.BASE_URL}images/hassan-headshot.webp`}
+                type="image/webp"
+              />
+              <img
+                src={`${import.meta.env.BASE_URL}images/hassan-headshot.png`}
+                alt="Hassan Sadiq, Founder & CEO of NexFortis"
+                className="w-32 h-32 rounded-2xl object-cover shrink-0 bg-secondary"
+                width={128}
+                height={128}
+                loading="lazy"
+              />
+            </picture>
             <div>
               <h3 className="text-2xl font-bold text-primary mb-1">Hassan Sadiq</h3>
               <p className="text-accent font-semibold mb-3">Founder & Principal IT Consultant</p>

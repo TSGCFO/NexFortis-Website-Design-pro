@@ -4,6 +4,15 @@ import { ArrowRight, Database, Wrench, ShieldAlert, CheckCircle2, DollarSign, Cl
 import { Link } from "wouter";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { trackEvent } from "@/lib/analytics";
+
+function trackQbPortalClick(location: string) {
+  trackEvent("cta_click", {
+    cta: "qb_portal",
+    location,
+    destination: "https://qbportal.nexfortis.com/catalog",
+  });
+}
 
 const qbFaqs = [
   {
@@ -192,7 +201,7 @@ export default function QuickBooks() {
           <Info className="w-5 h-5 text-accent shrink-0 mt-0.5" aria-hidden="true" />
           <p className="text-sm text-foreground leading-relaxed">
             <strong>Orders are processed through our QB Services Portal.</strong> Browse the full catalog, place orders, manage subscriptions, and submit support tickets at{" "}
-            <a href="https://qbportal.nexfortis.com/catalog" target="_blank" rel="noopener noreferrer" className="text-accent font-semibold hover:underline">qbportal.nexfortis.com</a>.
+            <a href="https://qbportal.nexfortis.com/catalog" target="_blank" rel="noopener noreferrer" onClick={() => trackQbPortalClick("quickbooks_catalog_inline")} className="text-accent font-semibold hover:underline">qbportal.nexfortis.com</a>.
           </p>
         </div>
 
@@ -220,6 +229,7 @@ export default function QuickBooks() {
                       href="https://qbportal.nexfortis.com/catalog"
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={() => trackQbPortalClick(`quickbooks_product_${item.name}`)}
                       className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-primary/10 dark:bg-primary/20 text-primary hover:bg-accent hover:text-white transition-colors text-sm font-bold"
                     >
                       Browse QB Services Portal <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
@@ -244,6 +254,7 @@ export default function QuickBooks() {
             href="https://qbportal.nexfortis.com/catalog"
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => trackQbPortalClick("quickbooks_bottom_cta")}
             className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-accent text-white font-bold text-lg hover:bg-accent/90 transition-all hover:-translate-y-0.5 shadow-lg"
           >
             Browse QB Services Portal <ExternalLink className="w-5 h-5" aria-hidden="true" />

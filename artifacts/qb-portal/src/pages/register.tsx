@@ -55,7 +55,7 @@ export default function Register() {
         navigate("/portal");
       }
     } else {
-      setError(result.error || "Registration failed");
+      setError(result.error || "Registration failed. Please try again.");
     }
   };
 
@@ -134,7 +134,29 @@ export default function Register() {
                 <input id="password" type="password" required minLength={8} value={password} onChange={(e) => setPassword(e.target.value)} className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-accent/50" />
                 <p className="text-xs text-muted-foreground mt-1">Minimum 8 characters</p>
               </div>
-              {error && <p className="text-sm text-red-500">{error}</p>}
+              {error && (
+                <div
+                  role="alert"
+                  aria-live="assertive"
+                  className="flex items-start gap-2 rounded-lg border border-red-300 bg-red-50 p-3 text-sm text-red-800 dark:border-red-900 dark:bg-red-950/40 dark:text-red-200"
+                  data-testid="register-error"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    className="mt-0.5 h-4 w-4 flex-shrink-0"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 10-2 0v4a1 1 0 102 0V6zm-1 8a1 1 0 100-2 1 1 0 000 2z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                  <span>{error}</span>
+                </div>
+              )}
               <Button type="submit" disabled={loading} className="w-full bg-navy text-white hover:bg-navy/90 font-display">
                 {loading ? "Creating account..." : "Create Account"}
               </Button>

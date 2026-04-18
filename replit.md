@@ -8,13 +8,13 @@ I prefer concise and clear explanations. When making changes, please prioritize 
 
 **Project-specific rules (MUST follow):**
 - Do NOT add `requireAuth` to the file upload route `POST /api/qb/orders/:id/files` — it intentionally supports upload-token auth via `x-upload-token` header as an alternative to Bearer auth.
-- Rate limiter `keyGenerator` for authenticated routes must be `(req) => req.userId || ipKeyGenerator(req)` — uses `ipKeyGenerator` from `express-rate-limit` for IPv6 safety, falls back to IP when no userId (upload-token path).
+- Rate limiter `keyGenerator` must pass a **string IP** to `ipKeyGenerator` (express-rate-limit v8 changed the helper signature from `(req)` to `(ip: string)`). Pattern: `(req) => req.userId || ipKeyGenerator(getClientIp(req))` where `getClientIp(req)` returns `req.ip || req.socket.remoteAddress || "unknown"`. **Never** read `X-Forwarded-For` directly — it is client-controlled and would let attackers rotate the limiter key. `req.ip` is safe because `app.set("trust proxy", "loopback, linklocal, uniquelocal")` in `app.ts` constrains the trusted proxy chain to the local Replit/Render edge. Calling `ipKeyGenerator(req)` (without extracting the string) silently disables the limiter.
 - Rate limiters for authenticated routes must be applied AFTER `requireAuth` in the middleware chain.
 - Do NOT use `supabase.auth.admin.listUsers()` to find a single user — use `getUserByEmail(email)` for direct lookup.
 - Do NOT use `throw new Error()` for missing env vars at module load time — use `console.warn()` and set the export to null. Add 503 checks in route handlers.
 - Do NOT use `callback(new Error(...))` in the CORS origin function — use `callback(null, false)`.
 - Helmet config must set `hsts: false` (hosting layer handles HSTS) and `xssFilter: false` plus a separate middleware for `X-XSS-Protection: 0`.
-- Stripe webhook route must be registered BEFORE `express.json()` middleware.
+- Stripe webhook route must be registered BEFORE `express.json()` middleware. `STRIPE_WEBHOOK_SECRET` is **required in production**; in dev the handler logs a warning and skips signature verification.
 - For missing optional service credentials (Supabase, Stripe): warn in dev, reject in production (`NODE_ENV === 'production'`).
 - All prices are in CAD cents (14900 = $149.00). Base prices 15-20% below competitors, 50% launch promo.
 - After completing any task, verify Replit Secrets are still present and run `pnpm typecheck` with zero errors.
@@ -44,7 +44,7 @@ Includes tables for `qb_users` (with `stripe_customer_id`), `qb_orders`, `qb_ord
 **Applications:**
 
 **Operator Authentication (Blog Admin):**
-Blog admin write routes (`POST/PUT/DELETE /api/blog/posts`, `GET /api/blog/posts/all`) are guarded by `requireBlogAdmin` middleware (HMAC-SHA256 session token, 24h TTL, signed with `SESSION_SECRET` and falling back to `BLOG_ADMIN_SECRET`). Operators authenticate at `/admin/login` (Nexfortis site) → `POST /api/operator/auth/login`, which sets an httpOnly `operator_session` cookie. Login is rate-limited (5/15min per IP). Seed/upsert an operator with `OPERATOR_EMAIL=... OPERATOR_PASSWORD=... pnpm --filter @workspace/scripts run seed-operator` (hashes via bcryptjs into `operator_users`; uses `ON CONFLICT (email) DO UPDATE`).
+Blog admin write routes (`POST/PUT/DELETE /api/blog/posts`, `GET /api/blog/posts/all`) are guarded by `requireBlogAdmin` middleware (HMAC-SHA256 session token, 24h TTL, signed with `SESSION_SECRET` and falling back to `BLOG_ADMIN_SECRET`). Operators authenticate at `/admin/login` (Nexfortis site) → `POST /api/operator/auth/login`, which sets an httpOnly `operator_session` cookie. Login is rate-limited (5/15min per IP). Seed/upsert an operator with `OPERATOR_EMAIL=... OPERATOR_PASSWORD=... [OPERATOR_NAME=...] pnpm --filter @workspace/api-server run db:seed-operator` (script at `artifacts/api-server/src/scripts/seed-operator.ts`; hashes via bcryptjs into `operator_users`; uses `ON CONFLICT (email) DO UPDATE`). Re-run the same command in production (with secrets set in the Render service env) to rotate Hassan's password — re-running with the same email simply updates the existing row's `password_hash` and `name`.
 
 ### NexFortis IT Solutions Website (`artifacts/nexfortis`)
 - **Framework**: React 19 + Vite + Tailwind CSS v4

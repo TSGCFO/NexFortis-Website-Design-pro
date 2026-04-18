@@ -85,7 +85,28 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           data: { name, phone },
         },
       });
-      if (error) return { ok: false, error: error.message };
+      if (error) {
+        const code = (error as { code?: string }).code;
+        const status = (error as { status?: number }).status;
+        const msg = error.message || "";
+        if (
+          code === "over_email_send_rate_limit" ||
+          status === 429 ||
+          /rate limit/i.test(msg)
+        ) {
+          return {
+            ok: false,
+            error: "We're sending too many signup emails right now. Please try again in about an hour.",
+          };
+        }
+        return { ok: false, error: error.message };
+      }
+      if (!data.user && !data.session) {
+        return {
+          ok: false,
+          error: "We're sending too many signup emails right now. Please try again in about an hour.",
+        };
+      }
       if (data.session) {
         return { ok: true };
       }

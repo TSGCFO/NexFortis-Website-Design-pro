@@ -58,12 +58,20 @@ export default function OrderDetail() {
         const token = await getAccessToken();
         let res: Response;
 
-        if (token) {
+        // Prefer uploadToken when present (e.g. post-checkout success URL for
+        // guest orders) so that even an authenticated user with no claim on
+        // the order can still see their own guest purchase confirmation.
+        if (uploadTokenParam) {
+          res = await fetch(`/api/qb/orders/lookup?orderId=${id}&uploadToken=${encodeURIComponent(uploadTokenParam)}`);
+          if (!res.ok && token) {
+            res = await fetch(`/api/qb/orders/${id}`, {
+              headers: { Authorization: `Bearer ${token}` },
+            });
+          }
+        } else if (token) {
           res = await fetch(`/api/qb/orders/${id}`, {
             headers: { Authorization: `Bearer ${token}` },
           });
-        } else if (uploadTokenParam) {
-          res = await fetch(`/api/qb/orders/lookup?orderId=${id}&uploadToken=${encodeURIComponent(uploadTokenParam)}`);
         } else {
           setError("Please sign in to view order details.");
           setLoading(false);
@@ -202,7 +210,7 @@ export default function OrderDetail() {
                   )}
                   <div className="border-t pt-2 flex justify-between">
                     <span className="font-bold">Total</span>
-                    <span className="font-bold text-accent">${order.totalCad} CAD</span>
+                    <span className="font-bold text-accent">${(order.totalCad / 100).toFixed(2)} CAD</span>
                   </div>
                 </div>
               </CardContent>

@@ -9,6 +9,12 @@ import { logger } from "./lib/logger";
 
 const app: Express = express();
 
+// Trust the local Replit/Render edge proxy (loopback + private network) so
+// req.ip reflects the real client IP from X-Forwarded-For. We do NOT trust
+// arbitrary upstream proxies — that would let a remote client spoof the
+// rate-limiter key by sending their own X-Forwarded-For header.
+app.set("trust proxy", "loopback, linklocal, uniquelocal");
+
 app.use(
   helmet({
     contentSecurityPolicy: {
@@ -52,11 +58,24 @@ const allowedOrigins = [
   ...(process.env.NODE_ENV !== "production" ? ["http://localhost:5173", "http://localhost:5174"] : []),
 ];
 
+const isDevReplitOrigin = (origin: string): boolean => {
+  if (process.env.NODE_ENV === "production") return false;
+  try {
+    const u = new URL(origin);
+    return (
+      u.protocol === "https:" &&
+      (u.hostname.endsWith(".replit.dev") || u.hostname.endsWith(".replit.app") || u.hostname.endsWith(".kirk.replit.dev"))
+    );
+  } catch {
+    return false;
+  }
+};
+
 app.use(
   cors({
     credentials: true,
     origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) {
+      if (!origin || allowedOrigins.includes(origin) || isDevReplitOrigin(origin)) {
         callback(null, true);
       } else {
         console.warn("CORS rejected origin:", origin);

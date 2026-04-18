@@ -57,12 +57,19 @@ const upload = multer({
   fileFilter: ticketFileFilter,
 });
 
+function getClientIp(req: any): string {
+  // app.set("trust proxy", 1) makes req.ip the real client IP from the
+  // first untrusted hop. Use req.ip rather than the raw X-Forwarded-For
+  // header to avoid client-controlled spoofing of the rate-limit key.
+  return req.ip || req.socket?.remoteAddress || "unknown";
+}
+
 const ticketSubmitLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   limit: 10,
   standardHeaders: true,
   legacyHeaders: false,
-  keyGenerator: (req: any) => req.userId || ipKeyGenerator(req),
+  keyGenerator: (req: any) => req.userId || ipKeyGenerator(getClientIp(req)),
   message: { error: "Too many requests. Please try again later." },
 });
 

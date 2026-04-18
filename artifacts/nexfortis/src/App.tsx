@@ -2,6 +2,7 @@ import { Switch, Route, Router as WouterRouter } from "wouter";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Layout, FloatingCTA, BackToTop } from "@/components/layout";
+import { CookieConsent } from "@/components/cookie-consent";
 import { ThemeProvider } from "@/hooks/use-theme";
 import { lazy, Suspense } from "react";
 
@@ -59,6 +60,7 @@ function Router() {
       </Suspense>
       <FloatingCTA />
       <BackToTop />
+      <CookieConsent />
     </Layout>
   );
 }

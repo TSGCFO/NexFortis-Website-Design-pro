@@ -1,5 +1,59 @@
+# Default rules for all crawlers
 User-agent: *
 Allow: /
+Disallow: /admin/login
+Disallow: /blog/admin
+
+# AI training crawlers — disallow scraping for model training
+User-agent: GPTBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: Claude-Web
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: Omgilibot
+Disallow: /
+
+User-agent: FacebookBot
+Disallow: /
+
+User-agent: cohere-ai
+Disallow: /
+
+# AI search/grounding crawlers — allow so the site can be cited in answers
+User-agent: PerplexityBot
+Allow: /
+Disallow: /admin/login
+Disallow: /blog/admin
+
+User-agent: Applebot
+Allow: /
+Disallow: /admin/login
+Disallow: /blog/admin
+
+User-agent: Applebot-Extended
+Allow: /
+Disallow: /admin/login
+Disallow: /blog/admin
+
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /admin/login
 Disallow: /blog/admin
 
 Sitemap: https://nexfortis.com/sitemap.xml

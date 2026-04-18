@@ -11,6 +11,7 @@ import crypto from "crypto";
 import multer from "multer";
 import path from "path";
 import fs from "fs";
+import { fileURLToPath } from "node:url";
 import Stripe from "stripe";
 import { supabaseAdmin, isStorageAvailable } from "../lib/supabase";
 import { getStripeClient, isTestMode } from "../lib/stripe-client";
@@ -23,14 +24,24 @@ import {
 import sanitizeHtml from "sanitize-html";
 import { getValidOrigin } from "../lib/config";
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const router = Router();
+
+function getClientIp(req: any): string {
+  // app.set("trust proxy", 1) makes req.ip the real client IP from the
+  // first untrusted hop. Use req.ip rather than the raw X-Forwarded-For
+  // header to avoid client-controlled spoofing of the rate-limit key.
+  return req.ip || req.socket?.remoteAddress || "unknown";
+}
 
 const orderLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   limit: 10,
   standardHeaders: true,
   legacyHeaders: false,
-  keyGenerator: (req: any) => req.userId || ipKeyGenerator(req),
+  keyGenerator: (req: any) => req.userId || ipKeyGenerator(getClientIp(req)),
   message: { error: "Too many requests. Please try again later." },
 });
 
@@ -39,7 +50,7 @@ const ticketLimiter = rateLimit({
   limit: 5,
   standardHeaders: true,
   legacyHeaders: false,
-  keyGenerator: (req: any) => req.userId || ipKeyGenerator(req),
+  keyGenerator: (req: any) => req.userId || ipKeyGenerator(getClientIp(req)),
   message: { error: "Too many requests. Please try again later." },
 });
 
