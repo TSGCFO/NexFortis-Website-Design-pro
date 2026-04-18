@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useSearch } from "wouter";
+import { useSearch, useLocation } from "wouter";
 import { loadProducts, getProductBySlug, type Product, type ProductCatalog, formatPrice, getActivePrice } from "@/lib/products";
 import { SEO } from "@/components/seo";
 import { Button } from "@/components/ui/button";
@@ -9,6 +9,7 @@ import { getAccessToken } from "@/lib/auth";
 
 export default function Waitlist() {
   const searchString = useSearch();
+  const [, setLocation] = useLocation();
   const params = new URLSearchParams(searchString);
   const productSlug = params.get("product") || "";
 
@@ -24,10 +25,16 @@ export default function Waitlist() {
       setCatalog(c);
       if (productSlug) {
         const p = getProductBySlug(c, productSlug);
-        if (p) setProduct(p);
+        if (p) {
+          setProduct(p);
+        } else {
+          setLocation("/catalog");
+        }
+      } else {
+        setLocation("/catalog");
       }
     });
-  }, [productSlug]);
+  }, [productSlug, setLocation]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
