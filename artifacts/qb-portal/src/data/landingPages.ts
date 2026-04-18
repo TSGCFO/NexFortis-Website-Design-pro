@@ -26,6 +26,7 @@ export interface LandingPageData {
   ctaLabel: string;
   ctaHref: string;
   heroImageAlt: string;
+  heroIcon?: import("@/lib/hero-icons").HeroIconName;
   hero: { intro: string };
   overview: string[];
   benefits?: LandingBenefit[];
@@ -52,6 +53,7 @@ export const landingPages: LandingPageData[] = [
     ctaHref: "/service/enterprise-to-premier-standard",
     heroImageAlt:
       "Diagram showing a QuickBooks Enterprise company file being converted into a Premier file",
+    heroIcon: "ArrowRightLeft",
     hero: {
       intro:
         "Move from QuickBooks Enterprise to Premier or Pro without losing a single transaction. NexFortis performs a direct, database-level conversion that keeps every customer, vendor, template, and preference intact — including on Canadian QuickBooks editions.",
@@ -155,6 +157,7 @@ export const landingPages: LandingPageData[] = [
     ctaHref: "/service/audit-trail-removal",
     heroImageAlt:
       "Illustration of a QuickBooks company file shrinking after audit trail removal",
+    heroIcon: "Eraser",
     hero: {
       intro:
         "The QuickBooks audit trail records every change ever made to your file — and it never stops growing. NexFortis safely removes the audit trail so your file opens faster, backs up quicker, and no longer exposes years of historical edits.",
@@ -252,6 +255,7 @@ export const landingPages: LandingPageData[] = [
     ctaHref: "/service/super-condense",
     heroImageAlt:
       "Before-and-after illustration of a large QuickBooks file being condensed to a smaller file",
+    heroIcon: "Minimize2",
     hero: {
       intro:
         "When a QuickBooks file has accumulated years of detail, Super Condense reduces its size dramatically while keeping every balance accurate. Best of all, it works on Canadian editions — something Intuit's own Condense Data utility cannot do.",
@@ -349,6 +353,7 @@ export const landingPages: LandingPageData[] = [
     ctaHref: "/service/file-health-check",
     heroImageAlt:
       "Illustration of a damaged QuickBooks file being repaired and restored",
+    heroIcon: "Wrench",
     hero: {
       intro:
         "When a QuickBooks company file refuses to open, runs Verify errors, or throws 6000-series messages, NexFortis performs database-level repair to recover as much of your data as possible — with an honest up-front assessment of what can and cannot be saved.",
@@ -441,6 +446,7 @@ export const landingPages: LandingPageData[] = [
     ctaHref: "/service/accountedge-to-quickbooks",
     heroImageAlt:
       "Illustration of AccountEdge data transferring to QuickBooks Desktop",
+    heroIcon: "ArrowRightLeft",
     hero: {
       intro:
         "NexFortis migrates AccountEdge (formerly MYOB) company files to QuickBooks Desktop with your chart of accounts, customers, vendors, items, and transaction history intact — with special attention to Canadian GST/HST treatment.",
@@ -533,6 +539,7 @@ export const landingPages: LandingPageData[] = [
     ctaHref: "/service/sage50-to-quickbooks",
     heroImageAlt:
       "Illustration of Sage 50 Simply Accounting data migrating to QuickBooks Desktop",
+    heroIcon: "ArrowRightLeft",
     hero: {
       intro:
         "Move from Sage 50 — formerly Simply Accounting — to QuickBooks Desktop with historical transactions, customer and vendor records, and CRA tax data intact. NexFortis specializes in the Canadian Edition migration.",
@@ -625,6 +632,7 @@ export const landingPages: LandingPageData[] = [
     ctaHref: "/service/multi-currency-removal",
     heroImageAlt:
       "Illustration of currency symbols being removed from a QuickBooks file",
+    heroIcon: "Coins",
     hero: {
       intro:
         "Multi-currency in QuickBooks is a one-way toggle: once enabled, Intuit provides no supported way to turn it off. NexFortis removes multi-currency at the database level, with full preservation of your transactions and balances.",
@@ -717,6 +725,7 @@ export const landingPages: LandingPageData[] = [
     ctaHref: "/service/list-reduction",
     heroImageAlt:
       "Illustration of a cluttered list being trimmed down in QuickBooks",
+    heroIcon: "ListMinus",
     hero: {
       intro:
         "Every QuickBooks Desktop list — customers, vendors, items, accounts — has a hard limit. NexFortis List Reduction merges duplicates, removes obsolete entries, and brings your file back below the limits without losing history.",
@@ -809,6 +818,7 @@ export const landingPages: LandingPageData[] = [
     ctaHref: "/service/qbo-readiness-report",
     heroImageAlt:
       "Illustration of a QuickBooks Desktop file being analyzed for QBO compatibility",
+    heroIcon: "Cloud",
     hero: {
       intro:
         "Moving from QuickBooks Desktop to QuickBooks Online is a one-way trip with real limitations. The NexFortis Readiness Report tells you exactly what will and will not transfer before you commit to the migration.",
@@ -901,6 +911,7 @@ export const landingPages: LandingPageData[] = [
     ctaHref: "/catalog",
     heroImageAlt:
       "Illustration of an oversized QuickBooks file being measured on a scale",
+    heroIcon: "FileWarning",
     hero: {
       intro:
         "If QuickBooks takes minutes to open, your backups fail, or data entry feels sluggish, file size is almost certainly part of the problem. This page walks you through what is causing it and which NexFortis service will fix it.",
@@ -997,6 +1008,7 @@ export const landingPages: LandingPageData[] = [
     ctaHref: "/catalog",
     heroImageAlt:
       "Illustration of a slow QuickBooks window being sped up after file optimization",
+    heroIcon: "Zap",
     hero: {
       intro:
         "QuickBooks slowness is usually one of three things: a bloated file, a network problem, or an underpowered machine. This page helps you figure out which is yours and, if it is the file, tells you exactly which service fixes it.",
@@ -1088,6 +1100,7 @@ export const landingPages: LandingPageData[] = [
     ctaHref: "/landing/file-repair",
     heroImageAlt:
       "Illustration of a QuickBooks error dialog being resolved by file repair",
+    heroIcon: "AlertTriangle",
     hero: {
       intro:
         "QuickBooks company file errors come in a handful of families — H-series, 6000-series, and update errors. This page explains what each one means, which you can fix yourself, and when professional file repair is the right next step.",
@@ -1179,6 +1192,7 @@ export const landingPages: LandingPageData[] = [
     ctaHref: "/landing/multi-currency-removal",
     heroImageAlt:
       "Illustration of currency exchange fields cluttering a QuickBooks form",
+    heroIcon: "Coins",
     hero: {
       intro:
         "Multi-currency in QuickBooks is a one-way toggle: once on, you cannot turn it off from within the product. This page explains the problems it causes, why it cannot be disabled, and how NexFortis removes it at the file level.",
@@ -1272,6 +1286,7 @@ export const landingPages: LandingPageData[] = [
     ctaHref: "/service/enterprise-to-premier-standard",
     heroImageAlt:
       "Side-by-side comparison illustration of two QuickBooks conversion service offerings",
+    heroIcon: "Scale",
     hero: {
       intro:
         "If you have been searching for an alternative to E-Tech for QuickBooks Enterprise to Premier conversions, NexFortis offers a Canadian-first, modern, and transparently priced option. Below is a factual comparison so you can decide what fits your file.",
@@ -1370,6 +1385,7 @@ export const landingPages: LandingPageData[] = [
     ctaHref: "/service/enterprise-to-premier-standard",
     heroImageAlt:
       "Illustration of a Canadian flag overlaid on a QuickBooks company file conversion diagram",
+    heroIcon: "MapPin",
     hero: {
       intro:
         "Canadian QuickBooks files have unique structures that generic US-built conversion tools either skip or refuse outright. NexFortis is built around Canadian editions from the ground up — Canadian Payroll, GST/HST, bilingual records, and CRA reporting periods are core, not edge cases.",
@@ -1462,6 +1478,7 @@ export const landingPages: LandingPageData[] = [
     ctaHref: "/service/enterprise-to-premier-standard",
     heroImageAlt:
       "Illustration showing Enterprise license cost being reduced after conversion to Premier",
+    heroIcon: "BadgeDollarSign",
     hero: {
       intro:
         "QuickBooks Enterprise's per-seat annual subscription has become a meaningful cost for many businesses. NexFortis converts Enterprise files to Premier or Pro for a one-time fee starting at {launchPrice}, with the same data preservation as the conversion service itself.",
@@ -1556,6 +1573,7 @@ export const landingPages: LandingPageData[] = [
     ctaHref: "/service/enterprise-to-premier-standard",
     heroImageAlt:
       "Step-by-step diagram of a QuickBooks file moving through conversion stages",
+    heroIcon: "BookOpen",
     hero: {
       intro:
         "If you have not converted a QuickBooks file before, the process can feel like a black box. This page walks through exactly what happens at each step — from the .QBM you upload to the converted file you restore — so you know what to expect.",
@@ -1653,6 +1671,7 @@ export const landingPages: LandingPageData[] = [
     ctaHref: "/catalog",
     heroImageAlt:
       "Illustration of a QuickBooks file under a security shield during conversion",
+    heroIcon: "ShieldCheck",
     hero: {
       intro:
         "Sending a company file to a third party for conversion or repair feels risky. This page explains the specific safeguards NexFortis uses, why your original file is never at risk, and what you should ask any conversion provider before sending them your data.",
@@ -1750,6 +1769,7 @@ export const landingPages: LandingPageData[] = [
     ctaHref: "/catalog",
     heroImageAlt:
       "Illustration of a QuickBooks Desktop calendar marking discontinuation and a planning roadmap",
+    heroIcon: "CalendarClock",
     hero: {
       intro:
         "Intuit's discontinuation of older QuickBooks Desktop versions has been a recurring source of confusion for users. This page explains what \"end of life\" actually means, what continues to work after discontinuation, and how to plan a sensible next move.",
@@ -1847,6 +1867,7 @@ export const landingPages: LandingPageData[] = [
     ctaHref: "/catalog",
     heroImageAlt:
       "Illustration of a support ticket being responded to by a NexFortis QuickBooks expert",
+    heroIcon: "Headphones",
     hero: {
       intro:
         "If QuickBooks problems hit your business at unpredictable times — and they always do — a monthly support subscription gives you a known cost, a known response time, and a single point of contact instead of scrambling for help every time something breaks.",

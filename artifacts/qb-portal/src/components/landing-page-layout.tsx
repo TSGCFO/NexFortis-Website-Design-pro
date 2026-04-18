@@ -5,6 +5,7 @@ import { Breadcrumbs } from "@/components/breadcrumbs";
 import { FAQAccordion } from "@/components/faq-accordion";
 import { TrustSignals } from "@/components/trust-signals";
 import { RelatedServices } from "@/components/related-services";
+import { HeroIllustration } from "@/components/hero-illustration";
 import { Button } from "@/components/ui/button";
 import type { LandingPageData } from "@/data/landingPages";
 import type { Product, ProductCatalog } from "@/lib/products";
@@ -99,13 +100,7 @@ export function LandingPageLayout({
               </div>
             </div>
             <div className="lg:col-span-2 hidden lg:block">
-              <div
-                className="aspect-[4/3] rounded-2xl border border-white/10 bg-gradient-to-br from-azure/30 to-rose-gold/20 flex items-center justify-center text-white/40 text-sm"
-                role="img"
-                aria-label={page.heroImageAlt}
-              >
-                NexFortis
-              </div>
+              <HeroIllustration page={page} />
             </div>
           </div>
         </div>
