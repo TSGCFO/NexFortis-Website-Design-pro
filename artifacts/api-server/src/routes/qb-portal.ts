@@ -10,10 +10,9 @@ import { eq, and, desc } from "drizzle-orm";
 import crypto from "crypto";
 import multer from "multer";
 import path from "path";
-import fs from "fs";
-import { fileURLToPath } from "node:url";
 import Stripe from "stripe";
 import { supabaseAdmin, isStorageAvailable } from "../lib/supabase";
+import { loadProductCatalog, type CatalogProduct, type ProductCatalog } from "../lib/product-catalog";
 import { getStripeClient, isTestMode } from "../lib/stripe-client";
 import { validateQbmMagicBytes } from "../lib/file-validation";
 import { tierFromPriceId, getTierConfig, isValidTier, isUnlimitedTickets, type SubscriptionTier } from "../lib/subscription-config";
@@ -23,9 +22,6 @@ import {
 } from "../lib/subscription-emails";
 import sanitizeHtml from "sanitize-html";
 import { getValidOrigin } from "../lib/config";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 const router = Router();
 
@@ -54,50 +50,8 @@ const ticketLimiter = rateLimit({
   message: { error: "Too many requests. Please try again later." },
 });
 
-interface CatalogProduct {
-  id: number;
-  slug: string;
-  name: string;
-  base_price_cad: number;
-  launch_price_cad: number;
-  is_addon: boolean;
-  badge: string;
-  requires_service: number | null;
-  accepted_file_types: string[];
-  category_slug: string;
-  pack_size?: number;
-  billing_type?: string;
-}
-
-interface ProductCatalog {
-  promo_active: boolean;
-  promo_label: string;
-  services: CatalogProduct[];
-}
-
-let catalog: ProductCatalog | null = null;
 function loadCatalog(): ProductCatalog {
-  if (!catalog) {
-    const candidates = [
-      path.resolve(__dirname, "products.json"),
-      path.resolve(__dirname, "../../../../artifacts/qb-portal/public/products.json"),
-    ];
-    for (const candidate of candidates) {
-      try {
-        if (fs.existsSync(candidate)) {
-          catalog = JSON.parse(fs.readFileSync(candidate, "utf-8"));
-          break;
-        }
-      } catch (err) {
-        console.error("[Catalog] Failed to read product catalog at", candidate, err);
-      }
-    }
-    if (!catalog) {
-      console.error("[Catalog] No product catalog found. Tried:", candidates);
-      catalog = { promo_active: false, promo_label: "", services: [] };
-    }
-  }
-  return catalog!;
+  return loadProductCatalog();
 }
 
 function getActivePrice(product: CatalogProduct): number {

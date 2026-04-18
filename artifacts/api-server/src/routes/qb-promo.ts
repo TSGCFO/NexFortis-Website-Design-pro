@@ -14,38 +14,12 @@ import { requireAuth } from "./qb-portal";
 import { sendEmail } from "../lib/email-service";
 import { referralCreditEarnedEmail } from "../lib/email-templates";
 import { supabaseAdmin } from "../lib/supabase";
-import path from "path";
-import fs from "fs";
-import { fileURLToPath } from "node:url";
+import { loadProductCatalog } from "../lib/product-catalog";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-interface PromoCatalogProduct {
-  id: number;
-  category_slug?: string;
-}
-let promoCatalogCache: PromoCatalogProduct[] | null = null;
-let promoCatalogCacheTime = 0;
-const PROMO_CATALOG_CACHE_TTL_MS = 5 * 60 * 1000;
-function getCatalogProducts(): PromoCatalogProduct[] {
-  if (promoCatalogCache && Date.now() - promoCatalogCacheTime < PROMO_CATALOG_CACHE_TTL_MS) {
-    return promoCatalogCache;
-  }
-  try {
-    const catalogPath = path.resolve(__dirname, "../../../../artifacts/qb-portal/public/products.json");
-    const raw = JSON.parse(fs.readFileSync(catalogPath, "utf-8")) as { services?: PromoCatalogProduct[] };
-    promoCatalogCache = Array.isArray(raw.services) ? raw.services : [];
-  } catch {
-    promoCatalogCache = [];
-  }
-  promoCatalogCacheTime = Date.now();
-  return promoCatalogCache!;
-}
 function categoryOfProduct(productId: string): string | null {
   const idNum = Number(productId);
   if (!Number.isFinite(idNum)) return null;
-  const p = getCatalogProducts().find((x) => x.id === idNum);
+  const p = loadProductCatalog().services.find((x) => x.id === idNum);
   return p?.category_slug || null;
 }
 
