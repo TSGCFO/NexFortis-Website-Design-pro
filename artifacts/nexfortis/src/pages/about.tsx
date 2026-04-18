@@ -94,7 +94,7 @@ export default function About() {
         </div>
       </Section>
 
-      <Section bg="brand-light">
+      <Section bg="brand-light" className="!py-14 md:!py-20">
         <SectionHeader title="Our Leadership" centered />
         <div className="max-w-2xl mx-auto">
           <motion.div
