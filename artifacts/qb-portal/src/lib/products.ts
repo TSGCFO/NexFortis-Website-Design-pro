@@ -5,6 +5,7 @@ export interface Product {
   category: string;
   category_slug: string;
   description: string;
+  deliverable: string;
   base_price_cad: number;
   launch_price_cad: number;
   turnaround: string;

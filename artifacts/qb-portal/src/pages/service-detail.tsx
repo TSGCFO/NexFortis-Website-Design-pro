@@ -133,7 +133,7 @@ export default function ServiceDetail() {
                       <>
                         <li className="flex items-start gap-3">
                           <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
-                          <span className="text-sm">{product.description}</span>
+                          <span className="text-sm">{product.deliverable}</span>
                         </li>
                         <li className="flex items-start gap-3">
                           <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
@@ -148,7 +148,7 @@ export default function ServiceDetail() {
                       <>
                         <li className="flex items-start gap-3">
                           <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
-                          <span className="text-sm">{product.description}</span>
+                          <span className="text-sm">{product.deliverable}</span>
                         </li>
                         <li className="flex items-start gap-3">
                           <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
@@ -169,7 +169,7 @@ export default function ServiceDetail() {
                       <>
                         <li className="flex items-start gap-3">
                           <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
-                          <span className="text-sm">{product.description}</span>
+                          <span className="text-sm">{product.deliverable}</span>
                         </li>
                         <li className="flex items-start gap-3">
                           <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
