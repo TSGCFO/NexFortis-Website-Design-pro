@@ -111,7 +111,7 @@ export default function DigitalMarketing() {
                 </div>
                 <div>
                   <h3 className="font-bold text-primary text-sm">{item.title}</h3>
-                  <p className="text-xs text-muted-foreground mt-1">{item.desc.split('.')[0]}.</p>
+                  <p className="text-xs text-muted-foreground mt-1">{item.desc.split('. ')[0]}.</p>
                 </div>
               </motion.div>
             ))}
