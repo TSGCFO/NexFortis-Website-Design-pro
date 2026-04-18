@@ -90,7 +90,7 @@ const tiers: TierDef[] = [
       { text: "Data integrity analysis", included: true },
       { text: "Priority health checks", included: true },
       { text: "1-on-1 video call sessions", included: true },
-      { text: "Referral rewards program ($10/referral)", included: true },
+      { text: "Referral rewards program ($25/referral)", included: true },
     ],
   },
 ];
