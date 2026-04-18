@@ -119,14 +119,20 @@ export default function OrderForm(props: OrderFormProps) {
         </CardContent>
       </Card>
 
-      {isAvailableService && !isVolumePack && !isSubscription && addons.length > 0 && (
-        <Card>
+      {(!isAvailableService || (!isVolumePack && !isSubscription)) && addons.length > 0 && (
+        <Card className={!isAvailableService ? "opacity-60 pointer-events-none select-none" : undefined} aria-disabled={!isAvailableService || undefined}>
           <CardContent className="p-6">
             <h2 className="text-lg font-bold font-display text-primary mb-4">{step()}. Add-Ons</h2>
+            {!isAvailableService && (
+              <div className="mb-4 flex items-center gap-2 p-2 rounded-md bg-muted text-xs text-muted-foreground">
+                <Lock className="w-3 h-3" />
+                <span>Select a service above to continue.</span>
+              </div>
+            )}
             <div className="space-y-3">
               {addons.map((addon) => (
                 <label key={addon.id} className={`flex items-center gap-3 p-4 rounded-lg border transition-colors ${selectedAddons.includes(addon.id) ? "border-accent bg-accent/5 cursor-pointer" : "border-border hover:border-accent/30 cursor-pointer"}`}>
-                  <input type="checkbox" checked={selectedAddons.includes(addon.id)} onChange={() => toggleAddon(addon.id)} className="accent-accent" />
+                  <input type="checkbox" disabled={!isAvailableService} checked={selectedAddons.includes(addon.id)} onChange={() => toggleAddon(addon.id)} className="accent-accent" />
                   <div className="flex-1"><span className="font-medium text-sm">{addon.name}</span></div>
                   <span className="font-bold text-accent">+{formatPrice(addon.price)}</span>
                 </label>
@@ -174,18 +180,24 @@ export default function OrderForm(props: OrderFormProps) {
         </Card>
       )}
 
-      {isAvailableService && showFileUpload && (
-        <Card>
+      {(!isAvailableService || showFileUpload) && (
+        <Card className={!isAvailableService ? "opacity-60 pointer-events-none select-none" : undefined} aria-disabled={!isAvailableService || undefined}>
           <CardContent className="p-6">
             <h2 className="text-lg font-bold font-display text-primary mb-4">
               {step()}. Upload Your File
             </h2>
+            {!isAvailableService && (
+              <div className="mb-4 flex items-center gap-2 p-2 rounded-md bg-muted text-xs text-muted-foreground">
+                <Lock className="w-3 h-3" />
+                <span>Select a service above to continue.</span>
+              </div>
+            )}
             <div className="border-2 border-dashed border-border rounded-lg p-8 text-center">
               <Upload className="w-8 h-8 text-muted-foreground mx-auto mb-3" />
               <div className="mb-3">
                 <label htmlFor="order-file" className="cursor-pointer">
                   <span className="text-accent font-medium hover:underline">Choose a file</span>
-                  <input id="order-file" type="file" accept={acceptAttr} onChange={handleFileChange} className="hidden" />
+                  <input id="order-file" type="file" disabled={!isAvailableService} accept={acceptAttr} onChange={handleFileChange} className="hidden" />
                 </label>
                 <span className="text-sm text-muted-foreground ml-1">or drag and drop</span>
               </div>
@@ -209,11 +221,17 @@ export default function OrderForm(props: OrderFormProps) {
         </Card>
       )}
 
-      {isAvailableService && showFileUpload && selectedProduct?.category_slug !== "platform-migrations" && (
-        <Card>
+      {(!isAvailableService || (showFileUpload && selectedProduct?.category_slug !== "platform-migrations")) && (
+        <Card className={!isAvailableService ? "opacity-60 pointer-events-none select-none" : undefined} aria-disabled={!isAvailableService || undefined}>
           <CardContent className="p-6">
             <h2 className="text-lg font-bold font-display text-primary mb-4">{step()}. QuickBooks Version</h2>
-            <select value={qbVersion} onChange={(e) => setQbVersion(e.target.value)} className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-accent/50">
+            {!isAvailableService && (
+              <div className="mb-4 flex items-center gap-2 p-2 rounded-md bg-muted text-xs text-muted-foreground">
+                <Lock className="w-3 h-3" />
+                <span>Select a service above to continue.</span>
+              </div>
+            )}
+            <select value={qbVersion} onChange={(e) => setQbVersion(e.target.value)} disabled={!isAvailableService} className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-accent/50">
               <option value="">Select your QuickBooks version year</option>
               {qbVersions.map((v) => <option key={v} value={v}>{v}</option>)}
             </select>
