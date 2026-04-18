@@ -239,11 +239,11 @@ export default function Order() {
 
   return (
     <div>
-      <SEO title="Place Your Order" description="Select your QuickBooks service, upload your file, and pay securely." path="/order" noIndex />
+      <SEO title="Place Your Order" description="Select your QuickBooks service and pay securely." path="/order" noIndex />
       <section className="section-brand-navy py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl font-bold font-display text-white mb-4">Place Your Order</h1>
-          <p className="text-white/70 text-lg">Select your service, upload your file, and pay securely</p>
+          <p className="text-white/70 text-lg">Select your service and pay securely</p>
           <div className="flex justify-center gap-6 mt-4 text-sm text-white/50">
             <span className="flex items-center gap-1"><Lock className="w-4 h-4 text-accent" /> 256-bit Encrypted</span>
             <span className="flex items-center gap-1"><Shield className="w-4 h-4 text-accent" /> PIPEDA Compliant</span>
