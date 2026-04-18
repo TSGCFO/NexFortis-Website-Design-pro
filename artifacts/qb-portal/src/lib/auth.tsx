@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from "react";
 import { supabase } from "./supabase";
+import { mapAuthError, AUTH_ERROR_RATE_LIMIT } from "./auth-errors";
 import type { Session } from "@supabase/supabase-js";
 
 interface User {
@@ -86,26 +87,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         },
       });
       if (error) {
-        const code = (error as { code?: string }).code;
-        const status = (error as { status?: number }).status;
-        const msg = error.message || "";
-        if (
-          code === "over_email_send_rate_limit" ||
-          status === 429 ||
-          /rate limit/i.test(msg)
-        ) {
-          return {
-            ok: false,
-            error: "We're sending too many signup emails right now. Please try again in about an hour.",
-          };
-        }
-        return { ok: false, error: error.message };
+        return { ok: false, error: mapAuthError(error, "signUp") };
       }
       if (!data.user && !data.session) {
-        return {
-          ok: false,
-          error: "We're sending too many signup emails right now. Please try again in about an hour.",
-        };
+        return { ok: false, error: AUTH_ERROR_RATE_LIMIT };
       }
       if (data.session) {
         return { ok: true };
@@ -119,7 +104,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const signIn = useCallback(async (email: string, password: string) => {
     try {
       const { error } = await supabase.auth.signInWithPassword({ email, password });
-      if (error) return { ok: false, error: error.message };
+      if (error) return { ok: false, error: mapAuthError(error, "signIn") };
       return { ok: true };
     } catch {
       return { ok: false, error: "Network error. Please try again." };
@@ -155,7 +140,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
         redirectTo: window.location.origin + "/qb-portal/reset-password",
       });
-      if (error) return { ok: false, error: error.message };
+      if (error) return { ok: false, error: mapAuthError(error, "resetPassword") };
       return { ok: true };
     } catch {
       return { ok: false, error: "Network error. Please try again." };
