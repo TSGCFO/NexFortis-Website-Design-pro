@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Link, useLocation } from "wouter";
+import zxcvbn from "zxcvbn";
 import { useAuth } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -27,6 +28,33 @@ function MicrosoftIcon() {
   );
 }
 
+const STRENGTH_LABELS = ["Weak", "Weak", "Fair", "Strong", "Very Strong"] as const;
+const STRENGTH_COLORS = [
+  "bg-red-500",
+  "bg-red-500",
+  "bg-amber-500",
+  "bg-emerald-500",
+  "bg-emerald-600",
+] as const;
+
+function validatePassword(password: string, userInputs: string[]): { ok: true } | { ok: false; error: string } {
+  if (password.length < 12) {
+    return { ok: false, error: "Password must be at least 12 characters." };
+  }
+  if (!/[A-Za-z]/.test(password)) {
+    return { ok: false, error: "Password must contain at least one letter." };
+  }
+  if (!/\d/.test(password)) {
+    return { ok: false, error: "Password must contain at least one number." };
+  }
+  const result = zxcvbn(password, userInputs);
+  if (result.score < 2) {
+    const suggestion = result.feedback.warning || "This password is too common or easy to guess. Please choose a stronger one.";
+    return { ok: false, error: suggestion };
+  }
+  return { ok: true };
+}
+
 export default function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -38,11 +66,24 @@ export default function Register() {
   const { signUp, signInWithGoogle, signInWithMicrosoft } = useAuth();
   const [, navigate] = useLocation();
 
+  const strength = useMemo(() => {
+    if (!password) return null;
+    const userInputs = [name, email, phone].filter(Boolean);
+    const result = zxcvbn(password, userInputs);
+    return {
+      score: result.score,
+      label: STRENGTH_LABELS[result.score],
+      color: STRENGTH_COLORS[result.score],
+    };
+  }, [password, name, email, phone]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-    if (password.length < 8) {
-      setError("Password must be at least 8 characters");
+    const userInputs = [name, email, phone].filter(Boolean);
+    const validation = validatePassword(password, userInputs);
+    if (!validation.ok) {
+      setError(validation.error);
       return;
     }
     setLoading(true);
@@ -131,8 +172,25 @@ export default function Register() {
               </div>
               <div>
                 <label htmlFor="password" className="block text-sm font-medium mb-1">Password *</label>
-                <input id="password" type="password" required minLength={8} value={password} onChange={(e) => setPassword(e.target.value)} className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-accent/50" />
-                <p className="text-xs text-muted-foreground mt-1">Minimum 8 characters</p>
+                <input id="password" type="password" required minLength={12} value={password} onChange={(e) => setPassword(e.target.value)} className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-accent/50" />
+                {strength && (
+                  <div className="mt-2" data-testid="password-strength">
+                    <div className="flex gap-1" aria-hidden="true">
+                      {[0, 1, 2, 3].map((i) => (
+                        <div
+                          key={i}
+                          className={`h-1.5 flex-1 rounded-full transition-colors ${
+                            i < Math.max(1, strength.score) ? strength.color : "bg-muted"
+                          }`}
+                        />
+                      ))}
+                    </div>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Strength: <span className="font-medium text-foreground" data-testid="password-strength-label">{strength.label}</span>
+                    </p>
+                  </div>
+                )}
+                <p className="text-xs text-muted-foreground mt-1">12+ characters, must include letters and numbers</p>
               </div>
               {error && (
                 <div
