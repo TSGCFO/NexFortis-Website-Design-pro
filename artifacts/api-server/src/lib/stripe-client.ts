@@ -37,29 +37,39 @@ async function getCredentials(): Promise<{ publishableKey: string; secretKey: st
   url.searchParams.set("connector_names", connectorName);
   url.searchParams.set("environment", targetEnvironment);
 
-  const response = await fetch(url.toString(), {
-    headers: {
-      Accept: "application/json",
-      "X-Replit-Token": xReplitToken,
-    },
-  });
+  try {
+    const response = await fetch(url.toString(), {
+      headers: {
+        Accept: "application/json",
+        "X-Replit-Token": xReplitToken,
+      },
+    });
 
-  if (!response.ok) {
-    console.error(`[stripe-client] Connector API returned ${response.status}: ${response.statusText}`);
-    throw new Error(`Stripe connector request failed with status ${response.status}`);
+    if (!response.ok) {
+      console.error(`[stripe-client] Connector API returned ${response.status}: ${response.statusText}`);
+      throw new Error(`Stripe connector request failed with status ${response.status}`);
+    }
+
+    const data = (await response.json()) as ConnectorResponse;
+    const connection = data.items?.[0];
+
+    if (!connection || (!connection.settings.publishable && !connection.settings.secret)) {
+      throw new Error(`Stripe ${targetEnvironment} connection not found`);
+    }
+
+    return {
+      publishableKey: connection.settings.publishable,
+      secretKey: connection.settings.secret,
+    };
+  } catch (connectorErr) {
+    // Connector failed — fall back to STRIPE_SECRET_KEY env var
+    console.warn(`[stripe-client] Connector failed, checking STRIPE_SECRET_KEY fallback:`, connectorErr);
+    const fallbackKey = process.env["STRIPE_SECRET_KEY"];
+    if (fallbackKey) {
+      return { publishableKey: "", secretKey: fallbackKey };
+    }
+    throw connectorErr;
   }
-
-  const data = (await response.json()) as ConnectorResponse;
-  const connection = data.items?.[0];
-
-  if (!connection || (!connection.settings.publishable && !connection.settings.secret)) {
-    throw new Error(`Stripe ${targetEnvironment} connection not found`);
-  }
-
-  return {
-    publishableKey: connection.settings.publishable,
-    secretKey: connection.settings.secret,
-  };
 }
 
 export async function getStripeClient(): Promise<Stripe> {
