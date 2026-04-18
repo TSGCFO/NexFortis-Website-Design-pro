@@ -131,7 +131,7 @@ export default function Blog() {
             <p className="text-muted-foreground">Our latest insights are on the way. Please refresh in a moment.</p>
           </div>
         ) : (
-          <div className="space-y-16">
+          <div className="space-y-12">
             {featured && (
               <motion.article
                 initial={{ opacity: 0, y: 20 }}
@@ -196,7 +196,7 @@ export default function Blog() {
             )}
 
             {rest.length > 0 && (
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div className="flex flex-wrap justify-center gap-8">
                 {rest.map((post, i) => (
                   <motion.article
                     key={post.id}
@@ -204,7 +204,7 @@ export default function Blog() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.3, delay: i * 0.07 }}
-                    className="bg-card rounded-2xl border border-border overflow-hidden hover:shadow-xl hover:border-accent/40 transition-all duration-200 flex flex-col group"
+                    className="bg-card rounded-2xl border border-border overflow-hidden hover:shadow-xl hover:border-accent/40 transition-all duration-200 flex flex-col group w-full md:w-[calc((100%-2rem)/2)] lg:w-[calc((100%-4rem)/3)]"
                   >
                     <div className="h-44 overflow-hidden relative bg-gradient-to-br from-accent/10 to-primary/10 flex items-center justify-center">
                       {post.coverImage ? (
