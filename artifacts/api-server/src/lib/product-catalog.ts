@@ -65,13 +65,14 @@ export function loadProductCatalog(): ProductCatalog {
     try {
       if (fs.existsSync(candidate)) {
         cachedCatalog = JSON.parse(fs.readFileSync(candidate, "utf-8")) as ProductCatalog;
+        console.log("[Catalog] Loaded product catalog from", candidate, "services=", cachedCatalog.services?.length ?? 0);
         return cachedCatalog;
       }
     } catch (err) {
       console.error("[Catalog] Failed to read product catalog at", candidate, err);
     }
   }
-  console.error("[Catalog] No product catalog found. Tried:", candidates);
+  console.error("[Catalog] No product catalog found. Candidates tried:", candidates);
   cachedCatalog = EMPTY_CATALOG;
   return cachedCatalog;
 }

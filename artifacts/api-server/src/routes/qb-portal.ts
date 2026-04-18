@@ -59,18 +59,35 @@ function getActivePrice(product: CatalogProduct): number {
   return cat.promo_active ? product.launch_price_cad : product.base_price_cad;
 }
 
-function computeOrderTotal(serviceId: number, addonIds: number[]): { total: number; serviceName: string; addonNames: string[]; isSubscription: boolean } | null {
+function computeOrderTotal(serviceIdRaw: number | string, addonIdsRaw: Array<number | string>): { total: number; serviceName: string; addonNames: string[]; isSubscription: boolean } | null {
+  const serviceId = Number(serviceIdRaw);
+  const addonIds = (addonIdsRaw || []).map((id) => Number(id));
   const cat = loadCatalog();
+
+  if (!cat.services || cat.services.length === 0) {
+    console.error("[computeOrderTotal] Empty catalog — cannot validate selection", { serviceId, addonIds });
+    return null;
+  }
+
   const service = cat.services.find(s => s.id === serviceId && !s.is_addon && s.badge === "available");
-  if (!service) return null;
+  if (!service) {
+    console.warn("[computeOrderTotal] Service not found or not available", { serviceId, availableServiceIds: cat.services.filter(s => !s.is_addon && s.badge === "available").map(s => s.id) });
+    return null;
+  }
 
   let total = getActivePrice(service);
   const addonNames: string[] = [];
 
   for (const addonId of addonIds) {
     const addon = cat.services.find(s => s.id === addonId && s.is_addon && s.badge === "available");
-    if (!addon) return null;
-    if (addon.requires_service !== null && addon.requires_service !== serviceId) return null;
+    if (!addon) {
+      console.warn("[computeOrderTotal] Add-on not found or not available", { addonId, serviceId });
+      return null;
+    }
+    if (addon.requires_service !== null && addon.requires_service !== serviceId) {
+      console.warn("[computeOrderTotal] Add-on requires_service mismatch", { addonId, requires: addon.requires_service, serviceId });
+      return null;
+    }
     total += getActivePrice(addon);
     addonNames.push(addon.name);
   }
@@ -260,6 +277,13 @@ router.post("/checkout/create-session", async (req: Request, res: Response) => {
     }
     const customerName = sanitizeInput(String(rawCustomerName));
     const customerPhone = rawCustomerPhone ? sanitizeInput(String(rawCustomerPhone)) : rawCustomerPhone;
+
+    const catalogCheck = loadCatalog();
+    if (!catalogCheck.services || catalogCheck.services.length === 0) {
+      console.error("[checkout/create-session] Catalog unavailable — cannot process checkout");
+      res.status(500).json({ error: "Service catalog unavailable" });
+      return;
+    }
 
     const pricing = computeOrderTotal(serviceId, addonIds || []);
     if (!pricing) {

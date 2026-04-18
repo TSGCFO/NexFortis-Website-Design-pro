@@ -59,8 +59,8 @@ export default function Order() {
   const { services, addons } = useMemo(() => {
     if (!catalog) return { services: [] as SvcOption[], addons: [] as SvcOption[] };
     return {
-      services: catalog.services.filter((p) => !p.is_addon).map((p) => ({ id: p.id, name: p.name, price: getActivePrice(p) })),
-      addons: catalog.services.filter((p) => p.is_addon).map((p) => ({ id: p.id, name: p.name, price: getActivePrice(p) })),
+      services: catalog.services.filter((p) => !p.is_addon && p.badge === "available").map((p) => ({ id: p.id, name: p.name, price: getActivePrice(p) })),
+      addons: catalog.services.filter((p) => p.is_addon && p.badge === "available").map((p) => ({ id: p.id, name: p.name, price: getActivePrice(p) })),
     };
   }, [catalog]);
 
