@@ -27,11 +27,44 @@ export interface ProductCatalog {
 
 let catalogCache: ProductCatalog | null = null;
 
+function apiBase(): string {
+  const base = import.meta.env.BASE_URL || "/";
+  const prefix = base.endsWith("/") ? base.slice(0, -1) : base;
+  return prefix.replace(/\/qb-portal$/, "");
+}
+
+async function fetchPromoStatusOverride(): Promise<{ promo_active: boolean; promo_label: string } | null> {
+  try {
+    const res = await fetch(`${apiBase()}/api/qb/site-settings/promo-status`, {
+      headers: { Accept: "application/json" },
+    });
+    if (!res.ok) return null;
+    const json = await res.json();
+    if (typeof json?.promo_active !== "boolean") return null;
+    return { promo_active: json.promo_active, promo_label: typeof json.promo_label === "string" ? json.promo_label : "" };
+  } catch {
+    return null;
+  }
+}
+
 export async function loadProducts(): Promise<ProductCatalog> {
   if (catalogCache) return catalogCache;
   const res = await fetch(`${import.meta.env.BASE_URL}products.json`);
-  catalogCache = await res.json();
-  return catalogCache!;
+  const catalog = (await res.json()) as ProductCatalog;
+  // Override the static promo_active value with the live, admin-controlled
+  // setting from the server. If the server is unreachable, fall back to
+  // whatever products.json says.
+  const override = await fetchPromoStatusOverride();
+  if (override) {
+    catalog.promo_active = override.promo_active;
+    catalog.promo_label = override.promo_label || catalog.promo_label;
+  }
+  catalogCache = catalog;
+  return catalogCache;
+}
+
+export function clearProductsCache(): void {
+  catalogCache = null;
 }
 
 export function getServiceCategories(services: Product[]): string[] {

@@ -29,6 +29,13 @@
       "when": 1776346790210,
       "tag": "0003_lying_mercury",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1776545683587,
+      "tag": "0004_add_qb_site_settings",
+      "breakpoints": true
     }
   ]
 }

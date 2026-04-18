@@ -59,8 +59,6 @@ function NewPromoCodeContent() {
 
   const [minOrderDollars, setMinOrderDollars] = useState("");
   const [firstTimeCustomerOnly, setFirstTimeCustomerOnly] = useState(false);
-  const [stackable, setStackable] = useState(true);
-  const [appliesToBasePrice, setAppliesToBasePrice] = useState(false);
   const [restrictedToEmail, setRestrictedToEmail] = useState("");
   const [description, setDescription] = useState("");
 
@@ -146,8 +144,6 @@ function NewPromoCodeContent() {
         categoryIds: selectedCategories.length > 0 ? selectedCategories : null,
         minOrderAmountCents: minOrderDollars ? Math.round(Number(minOrderDollars) * 100) : null,
         firstTimeCustomerOnly,
-        stackableWithLaunchPromo: stackable,
-        appliesToBasePrice,
         restrictedToEmail: restrictedToEmail.trim() || null,
         description: description.trim() || null,
       };
@@ -363,14 +359,6 @@ function NewPromoCodeContent() {
             <label className="flex items-center gap-2 text-sm">
               <input type="checkbox" checked={firstTimeCustomerOnly} onChange={(e) => setFirstTimeCustomerOnly(e.target.checked)} />
               First-time customer only
-            </label>
-            <label className="flex items-center gap-2 text-sm">
-              <input type="checkbox" checked={stackable} onChange={(e) => setStackable(e.target.checked)} />
-              Stackable with launch promo
-            </label>
-            <label className="flex items-center gap-2 text-sm">
-              <input type="checkbox" checked={appliesToBasePrice} onChange={(e) => setAppliesToBasePrice(e.target.checked)} />
-              Applies to base price (before launch promo)
             </label>
           </div>
         </Section>

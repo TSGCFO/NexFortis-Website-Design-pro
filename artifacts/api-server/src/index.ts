@@ -1,6 +1,7 @@
 import app from "./app";
 import { logger } from "./lib/logger";
 import { seedBlogPosts } from "./seed-blog";
+import { primeLaunchPromoCache } from "./lib/site-settings";
 
 const rawPort = process.env["PORT"];
 
@@ -18,5 +19,6 @@ if (Number.isNaN(port) || port <= 0) {
 
 app.listen(port, async () => {
   logger.info({ port }, "Server listening");
+  await primeLaunchPromoCache();
   await seedBlogPosts();
 });

@@ -229,6 +229,15 @@ export const insertQbPromoCodeRedemptionSchema = createInsertSchema(qbPromoCodeR
 export const insertQbReferralCreditSchema = createInsertSchema(qbReferralCredits);
 export const insertQbPromoCodeAdminEventSchema = createInsertSchema(qbPromoCodeAdminEvents);
 
+export const qbSiteSettings = pgTable("qb_site_settings", {
+  key: text("key").primaryKey(),
+  value: text("value").notNull(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+  updatedBy: uuid("updated_by").references(() => qbUsers.id),
+});
+
+export const insertQbSiteSettingSchema = createInsertSchema(qbSiteSettings);
+
 export const operatorUsers = pgTable("operator_users", {
   id: serial("id").primaryKey(),
   email: text("email").notNull().unique(),

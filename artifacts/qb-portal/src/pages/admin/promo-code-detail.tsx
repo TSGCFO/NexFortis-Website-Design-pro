@@ -39,9 +39,7 @@ interface PromoCode {
   categoryIds: string[] | null;
   minOrderAmountCents: number | null;
   firstTimeCustomerOnly: boolean;
-  stackableWithLaunchPromo: boolean;
   restrictedToEmail: string | null;
-  appliesToBasePrice: boolean;
   description: string | null;
   stripeCouponId: string | null;
   stripePromotionCodeId: string | null;
@@ -82,8 +80,6 @@ const DIFF_LABELS: Record<string, string> = {
   maxUsesPerCustomer: "Max uses per customer",
   minOrderAmountCents: "Minimum order",
   firstTimeCustomerOnly: "First-time only",
-  stackableWithLaunchPromo: "Stackable",
-  appliesToBasePrice: "Applies to base price",
   restrictedToEmail: "Restricted email",
   stripePromotionCodeId: "Stripe promotion ID",
 };
@@ -142,8 +138,6 @@ function PromoCodeDetailContent() {
     maxUsesPerCustomer: "",
     minOrderDollars: "",
     firstTimeCustomerOnly: false,
-    stackableWithLaunchPromo: true,
-    appliesToBasePrice: false,
     restrictedToEmail: "",
   });
   const [saving, setSaving] = useState(false);
@@ -175,8 +169,6 @@ function PromoCodeDetailContent() {
         maxUsesPerCustomer: d.promoCode.maxUsesPerCustomer == null ? "" : String(d.promoCode.maxUsesPerCustomer),
         minOrderDollars: d.promoCode.minOrderAmountCents == null ? "" : String((d.promoCode.minOrderAmountCents / 100).toFixed(2)),
         firstTimeCustomerOnly: d.promoCode.firstTimeCustomerOnly,
-        stackableWithLaunchPromo: d.promoCode.stackableWithLaunchPromo,
-        appliesToBasePrice: d.promoCode.appliesToBasePrice,
         restrictedToEmail: d.promoCode.restrictedToEmail ?? "",
       });
     } catch {
@@ -199,8 +191,6 @@ function PromoCodeDetailContent() {
         maxUsesPerCustomer: editFields.unlimitedPerCustomer ? null : Math.floor(Number(editFields.maxUsesPerCustomer)),
         minOrderAmountCents: editFields.minOrderDollars ? Math.round(Number(editFields.minOrderDollars) * 100) : null,
         firstTimeCustomerOnly: editFields.firstTimeCustomerOnly,
-        stackableWithLaunchPromo: editFields.stackableWithLaunchPromo,
-        appliesToBasePrice: editFields.appliesToBasePrice,
         restrictedToEmail: editFields.restrictedToEmail.trim() || null,
       };
       const res = await adminFetch(`/promo-codes/${data.id}`, {
@@ -382,8 +372,6 @@ function PromoCodeDetailContent() {
             </div>
             <div className="space-y-1">
               <label className="flex items-center gap-2"><input type="checkbox" checked={editFields.firstTimeCustomerOnly} onChange={(e) => setEditFields((f) => ({ ...f, firstTimeCustomerOnly: e.target.checked }))} /> First-time customer only</label>
-              <label className="flex items-center gap-2"><input type="checkbox" checked={editFields.stackableWithLaunchPromo} onChange={(e) => setEditFields((f) => ({ ...f, stackableWithLaunchPromo: e.target.checked }))} /> Stackable with launch promo</label>
-              <label className="flex items-center gap-2"><input type="checkbox" checked={editFields.appliesToBasePrice} onChange={(e) => setEditFields((f) => ({ ...f, appliesToBasePrice: e.target.checked }))} /> Applies to base price</label>
             </div>
             <div className="pt-2 flex justify-end">
               <button

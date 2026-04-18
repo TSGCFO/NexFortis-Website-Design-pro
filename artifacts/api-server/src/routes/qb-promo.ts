@@ -58,11 +58,6 @@ export interface ValidateInput {
 export interface OrderItemInputExported extends OrderItemInput {}
 
 const REFERRAL_CREDIT_CENTS = 2500;
-const LAUNCH_PROMO_PERCENT = 50;
-
-function launchPromoActive(): boolean {
-  return (process.env.LAUNCH_PROMO_ACTIVE || "").toLowerCase() === "true";
-}
 
 function formatCad(cents: number): string {
   return `$${(cents / 100).toFixed(2)}`;
@@ -167,6 +162,13 @@ export type ValidationResult =
   | { ok: true; row: typeof qbPromoCodes.$inferSelect; baseSubtotal: number; launchPromoCents: number; codeDiscountCents: number; finalTotal: number; previewLineItems: any[]; stackingNotice?: string }
   | { ok: false; errorCode: string; errorMessage: string };
 
+// NOTE: `launchPromoCents` and `stackingNotice` are kept on the result type for
+// backward compatibility with existing callers, but they are always 0 / undefined
+// now that the server-side launch promo stacking layer has been removed. The
+// launch promo is applied to base prices in `getActivePrice()` (qb-portal.ts)
+// before promo code validation runs, so promo codes apply only to the resulting
+// subtotal — no double discount.
+
 export async function runValidation(input: ValidateInput): Promise<ValidationResult> {
   const row = await findCode(input.code);
   if (!row || !row.isActive) {
@@ -221,45 +223,18 @@ export async function runValidation(input: ValidateInput): Promise<ValidationRes
     }
   }
 
-  // Discount computation with launch promo stacking
-  const launchActive = launchPromoActive();
-  let launchPromoCents = 0;
-  let codeDiscountCents = 0;
-  let stackingNotice: string | undefined;
+  // The launch promo (if active) is already baked into `unitPriceCents` by the
+  // caller via `getActivePrice()`. The promo code's discount is therefore
+  // applied directly to the (already launch-adjusted) subtotal — no stacking.
+  const codeDiscountCents = computeDiscount(row, baseSubtotal);
   const previewLineItems: any[] = [];
-
-  if (launchActive && input.orderType === "one_time") {
-    launchPromoCents = Math.floor((baseSubtotal * LAUNCH_PROMO_PERCENT) / 100);
-  }
-
-  if (launchPromoCents > 0 && !row.stackableWithLaunchPromo) {
-    // Apply whichever is greater
-    const codeOnBase = computeDiscount(row, baseSubtotal);
-    if (codeOnBase > launchPromoCents) {
-      codeDiscountCents = codeOnBase;
-      launchPromoCents = 0;
-      stackingNotice = "This code cannot stack with the launch promo. The code discount was applied because it was greater.";
-    } else {
-      codeDiscountCents = 0;
-      stackingNotice = "This code cannot stack with the launch promo. The launch promo was kept because it was greater.";
-    }
-  } else if (launchPromoCents > 0 && row.stackableWithLaunchPromo) {
-    const basis = row.appliesToBasePrice ? baseSubtotal : (baseSubtotal - launchPromoCents);
-    codeDiscountCents = Math.min(basis, computeDiscount(row, basis));
-  } else {
-    codeDiscountCents = computeDiscount(row, baseSubtotal);
-  }
-
-  if (launchPromoCents > 0) {
-    previewLineItems.push({ label: "Launch Promo (50% off)", amountCents: -launchPromoCents });
-  }
   if (codeDiscountCents > 0) {
     previewLineItems.push({ label: `Promo: ${row.code} — ${codeLabel(row)}`, amountCents: -codeDiscountCents });
   }
 
-  const finalTotal = Math.max(0, baseSubtotal - launchPromoCents - codeDiscountCents);
+  const finalTotal = Math.max(0, baseSubtotal - codeDiscountCents);
 
-  return { ok: true, row, baseSubtotal, launchPromoCents, codeDiscountCents, finalTotal, previewLineItems, stackingNotice };
+  return { ok: true, row, baseSubtotal, launchPromoCents: 0, codeDiscountCents, finalTotal, previewLineItems };
 }
 
 function sanitizeItems(raw: any): OrderItemInput[] | null {
@@ -443,28 +418,12 @@ export async function runRedemption(input: RedemptionInput): Promise<
         }
       }
 
-      // Compute discounts (pure functions)
-      const launchActive = launchPromoActive();
-      let launchPromoCents = 0;
-      let codeDiscountCents = 0;
-      if (launchActive && orderType === "one_time") {
-        launchPromoCents = Math.floor((baseSubtotal * LAUNCH_PROMO_PERCENT) / 100);
-      }
-      if (launchPromoCents > 0 && !row.stackableWithLaunchPromo) {
-        const codeOnBase = computeDiscount(row, baseSubtotal);
-        if (codeOnBase > launchPromoCents) {
-          codeDiscountCents = codeOnBase;
-          launchPromoCents = 0;
-        } else {
-          codeDiscountCents = 0;
-        }
-      } else if (launchPromoCents > 0 && row.stackableWithLaunchPromo) {
-        const basis = row.appliesToBasePrice ? baseSubtotal : (baseSubtotal - launchPromoCents);
-        codeDiscountCents = Math.min(basis, computeDiscount(row, basis));
-      } else {
-        codeDiscountCents = computeDiscount(row, baseSubtotal);
-      }
-      const finalTotal = Math.max(0, baseSubtotal - launchPromoCents - codeDiscountCents);
+      // Promo code discount only — the launch promo is already applied to
+      // `unitPriceCents` upstream (see qb-portal.ts/getActivePrice). No
+      // server-side stacking layer.
+      const codeDiscountCents = computeDiscount(row, baseSubtotal);
+      const launchPromoCents = 0;
+      const finalTotal = Math.max(0, baseSubtotal - codeDiscountCents);
 
       // Increment redemption count
       await tx.execute(
@@ -491,7 +450,7 @@ export async function runRedemption(input: RedemptionInput): Promise<
         .update(qbOrders)
         .set({
           promoCodeId: row.id,
-          discountAmountAppliedCents: codeDiscountCents + launchPromoCents,
+          discountAmountAppliedCents: codeDiscountCents,
           subtotalBeforeDiscountCents: baseSubtotal,
           paymentStatus: finalTotal === 0 ? "free_promo" : null,
           totalCad: finalTotal,
