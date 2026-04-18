@@ -29,7 +29,7 @@ export default function QBMGuide() {
               <div>
                 <h3 className="font-bold font-display text-primary mb-1">What is a .QBM file?</h3>
                 <p className="text-sm text-muted-foreground">
-                  A .QBM (Portable Company File) is a compact version of your QuickBooks company file. It contains all your financial data in a smaller, transportable format — typically 5-30 MB. This is the only file type accepted by our conversion service.
+                  A .QBM (Portable Company File) is a compact version of your QuickBooks company file. It contains all your financial data in a smaller, transportable format — typically 5-30 MB. This is the file type accepted by our QuickBooks Enterprise conversion service.
                 </p>
               </div>
             </CardContent>
