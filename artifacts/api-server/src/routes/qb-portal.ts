@@ -78,11 +78,22 @@ interface ProductCatalog {
 let catalog: ProductCatalog | null = null;
 function loadCatalog(): ProductCatalog {
   if (!catalog) {
-    try {
-      const catalogPath = path.resolve(__dirname, "../../../../artifacts/qb-portal/public/products.json");
-      catalog = JSON.parse(fs.readFileSync(catalogPath, "utf-8"));
-    } catch (err) {
-      console.warn("[Catalog] Failed to load product catalog:", err);
+    const candidates = [
+      path.resolve(__dirname, "products.json"),
+      path.resolve(__dirname, "../../../../artifacts/qb-portal/public/products.json"),
+    ];
+    for (const candidate of candidates) {
+      try {
+        if (fs.existsSync(candidate)) {
+          catalog = JSON.parse(fs.readFileSync(candidate, "utf-8"));
+          break;
+        }
+      } catch (err) {
+        console.error("[Catalog] Failed to read product catalog at", candidate, err);
+      }
+    }
+    if (!catalog) {
+      console.error("[Catalog] No product catalog found. Tried:", candidates);
       catalog = { promo_active: false, promo_label: "", services: [] };
     }
   }
