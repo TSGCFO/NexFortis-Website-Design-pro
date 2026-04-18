@@ -13,6 +13,7 @@ import path from "path";
 import Stripe from "stripe";
 import { supabaseAdmin, isStorageAvailable } from "../lib/supabase";
 import { loadProductCatalog, type CatalogProduct, type ProductCatalog } from "../lib/product-catalog";
+import { getLaunchPromoActive } from "../lib/site-settings";
 import { getStripeClient, isTestMode } from "../lib/stripe-client";
 import { validateQbmMagicBytes } from "../lib/file-validation";
 import { tierFromPriceId, getTierConfig, isValidTier, isUnlimitedTickets, type SubscriptionTier } from "../lib/subscription-config";
@@ -54,12 +55,11 @@ function loadCatalog(): ProductCatalog {
   return loadProductCatalog();
 }
 
-function getActivePrice(product: CatalogProduct): number {
-  const cat = loadCatalog();
-  return cat.promo_active ? product.launch_price_cad : product.base_price_cad;
+function getActivePriceWith(product: CatalogProduct, promoActive: boolean): number {
+  return promoActive ? product.launch_price_cad : product.base_price_cad;
 }
 
-function computeOrderTotal(serviceIdRaw: number | string, addonIdsRaw: Array<number | string>): { total: number; serviceName: string; addonNames: string[]; isSubscription: boolean } | null {
+async function computeOrderTotal(serviceIdRaw: number | string, addonIdsRaw: Array<number | string>): Promise<{ total: number; serviceName: string; addonNames: string[]; isSubscription: boolean } | null> {
   const serviceId = Number(serviceIdRaw);
   const addonIds = (addonIdsRaw || []).map((id) => Number(id));
   const cat = loadCatalog();
@@ -75,7 +75,11 @@ function computeOrderTotal(serviceIdRaw: number | string, addonIdsRaw: Array<num
     return null;
   }
 
-  let total = getActivePrice(service);
+  // Launch-promo adjusted price comes from the DB-backed setting (with
+  // products.json `promo_active` as the ultimate fallback inside the helper).
+  const promoActive = await getLaunchPromoActive();
+
+  let total = getActivePriceWith(service, promoActive);
   const addonNames: string[] = [];
 
   for (const addonId of addonIds) {
@@ -88,7 +92,7 @@ function computeOrderTotal(serviceIdRaw: number | string, addonIdsRaw: Array<num
       console.warn("[computeOrderTotal] Add-on requires_service mismatch", { addonId, requires: addon.requires_service, serviceId });
       return null;
     }
-    total += getActivePrice(addon);
+    total += getActivePriceWith(addon, promoActive);
     addonNames.push(addon.name);
   }
 
@@ -305,7 +309,7 @@ router.post("/checkout/create-session", async (req: Request, res: Response) => {
       return;
     }
 
-    const pricing = computeOrderTotal(serviceId, addonIds || []);
+    const pricing = await computeOrderTotal(serviceId, addonIds || []);
     if (!pricing) {
       res.status(400).json({ error: "Invalid service or add-on selection" });
       return;
@@ -352,7 +356,7 @@ router.post("/checkout/create-session", async (req: Request, res: Response) => {
       });
       if (vres.ok) {
         promoRow = vres.row;
-        serverDiscountCents = vres.codeDiscountCents + vres.launchPromoCents;
+        serverDiscountCents = vres.codeDiscountCents;
         serverComputedFinalTotal = Math.max(0, pricing.total - subscriberDiscountCents - serverDiscountCents);
       } else if (freeOrder) {
         res.status(400).json({ error: "Promo code is not valid", message: vres.errorMessage });

@@ -3,7 +3,8 @@ import { Link } from "wouter";
 import { AdminLayout } from "@/components/admin-layout";
 import { adminFetch, formatCurrency, formatDate, STATUS_LABELS, STATUS_COLORS } from "@/lib/admin-api";
 import { StatCardSkeleton, TableSkeleton, ErrorBanner } from "@/components/admin-skeletons";
-import { ShoppingCart, Users, AlertCircle, CheckCircle } from "lucide-react";
+import { ShoppingCart, Users, AlertCircle, CheckCircle, Tag } from "lucide-react";
+import { clearProductsCache } from "@/lib/products";
 
 interface DashboardData {
   totalOrders: number;
@@ -33,10 +34,20 @@ const RECENT_ORDERS_COLUMNS = [
   { width: "w-10" },
 ];
 
+interface LaunchPromoStatus {
+  promo_active: boolean;
+  updated_at: string | null;
+  updated_by_name: string | null;
+}
+
 function DashboardContent() {
   const [data, setData] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [promo, setPromo] = useState<LaunchPromoStatus | null>(null);
+  const [promoLoading, setPromoLoading] = useState(true);
+  const [promoBusy, setPromoBusy] = useState(false);
+  const [promoError, setPromoError] = useState("");
 
   const fetchDashboard = useCallback(async () => {
     setLoading(true);
@@ -52,7 +63,45 @@ function DashboardContent() {
     }
   }, []);
 
-  useEffect(() => { fetchDashboard(); }, [fetchDashboard]);
+  const fetchPromo = useCallback(async () => {
+    setPromoLoading(true);
+    try {
+      const res = await adminFetch("/site-settings/launch-promo");
+      if (!res.ok) throw new Error();
+      const json = (await res.json()) as LaunchPromoStatus;
+      setPromo(json);
+    } catch {
+      // Soft-fail: leave promo null and show neutral state
+    } finally {
+      setPromoLoading(false);
+    }
+  }, []);
+
+  useEffect(() => { fetchDashboard(); fetchPromo(); }, [fetchDashboard, fetchPromo]);
+
+  async function togglePromo() {
+    if (promoBusy || !promo) return;
+    const next = !promo.promo_active;
+    setPromoBusy(true);
+    setPromoError("");
+    const previous = promo;
+    setPromo({ ...promo, promo_active: next });
+    try {
+      const res = await adminFetch("/site-settings/launch-promo", {
+        method: "PUT",
+        body: JSON.stringify({ active: next }),
+      });
+      if (!res.ok) throw new Error();
+      // Re-fetch to pick up updated_at / updated_by_name from the server.
+      clearProductsCache();
+      await fetchPromo();
+    } catch {
+      setPromo(previous);
+      setPromoError("Failed to update launch promo. Please try again.");
+    } finally {
+      setPromoBusy(false);
+    }
+  }
 
   if (error && !data) {
     return (
@@ -134,6 +183,14 @@ function DashboardContent() {
         )}
       </div>
 
+      <LaunchPromoCard
+        promo={promo}
+        loading={promoLoading}
+        busy={promoBusy}
+        error={promoError}
+        onToggle={togglePromo}
+      />
+
       <div className="bg-white rounded-xl shadow-sm border border-gray-100">
         <div className="p-4 md:p-5 border-b border-gray-100">
           <h2 className="text-lg font-semibold text-[#0A1628]">Recent Orders</h2>
@@ -180,6 +237,70 @@ function DashboardContent() {
             </table>
           </div>
         )}
+      </div>
+    </div>
+  );
+}
+
+function LaunchPromoCard({
+  promo,
+  loading,
+  busy,
+  error,
+  onToggle,
+}: {
+  promo: LaunchPromoStatus | null;
+  loading: boolean;
+  busy: boolean;
+  error: string;
+  onToggle: () => void;
+}) {
+  const isActive = promo?.promo_active ?? false;
+  const hasMeta = !!(promo && promo.updated_at);
+
+  return (
+    <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 md:p-5 mb-8">
+      <div className="flex items-start gap-4">
+        <div className="flex items-start gap-3 flex-1 min-w-0">
+          <div className={`p-1.5 rounded-lg shrink-0 ${isActive ? "bg-green-50 text-green-700" : "bg-gray-100 text-gray-500"}`}>
+            <Tag className="w-4 h-4" />
+          </div>
+          <div className="min-w-0">
+            <h2 className="text-lg font-semibold text-[#0A1628]">Launch Promo</h2>
+            <p className="text-sm text-gray-500">50% off all services site-wide</p>
+            {hasMeta && promo!.updated_at && (
+              <p className="text-xs text-gray-400 mt-1">
+                Last updated {formatDate(promo!.updated_at)}
+                {promo!.updated_by_name ? ` by ${promo!.updated_by_name}` : ""}
+              </p>
+            )}
+            {error && <p className="text-xs text-red-600 mt-1">{error}</p>}
+          </div>
+        </div>
+        <div className="flex items-center gap-3 shrink-0">
+          <span
+            className={`text-sm font-medium ${isActive ? "text-green-600" : "text-gray-500"}`}
+          >
+            {isActive ? "Active" : "Inactive"}
+          </span>
+          <button
+            type="button"
+            role="switch"
+            aria-checked={isActive}
+            aria-label="Toggle launch promo"
+            disabled={loading || busy || !promo}
+            onClick={onToggle}
+            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+              isActive ? "bg-green-500" : "bg-gray-300"
+            } ${loading || busy || !promo ? "opacity-60 cursor-not-allowed" : "cursor-pointer"}`}
+          >
+            <span
+              className={`inline-block h-5 w-5 transform rounded-full bg-white shadow transition-transform ${
+                isActive ? "translate-x-5" : "translate-x-0.5"
+              }`}
+            />
+          </button>
+        </div>
       </div>
     </div>
   );

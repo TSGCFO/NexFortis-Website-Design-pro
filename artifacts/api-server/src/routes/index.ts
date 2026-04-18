@@ -9,8 +9,10 @@ import qbTicketsRouter from "./qb-tickets";
 import qbAdminSubscriptionsRouter from "./qb-admin-subscriptions";
 import qbAdminRouter from "./qb-admin";
 import qbAdminPromoRouter from "./qb-admin-promo";
+import qbAdminSiteSettingsRouter from "./qb-admin-site-settings";
 import qbNotificationsRouter from "./qb-notifications";
 import qbPromoRouter from "./qb-promo";
+import qbSiteSettingsRouter from "./qb-site-settings";
 import operatorAuthRouter from "./operator-auth";
 
 const router: IRouter = Router();
@@ -33,6 +35,7 @@ router.use("/qb/tickets", requireAuth, qbTicketsRouter);
 const adminRouter = Router();
 adminRouter.use(qbAdminSubscriptionsRouter);
 adminRouter.use(qbAdminPromoRouter);
+adminRouter.use(qbAdminSiteSettingsRouter);
 adminRouter.use(qbAdminRouter);
 router.use("/qb/admin", requireAuth, requireOperator, adminRouter);
 const notificationPrefLimiter = rateLimit({
@@ -44,6 +47,7 @@ const notificationPrefLimiter = rateLimit({
 });
 router.use("/qb/notifications", notificationPrefLimiter, qbNotificationsRouter);
 router.use("/qb/promo", qbPromoRouter);
+router.use("/qb/site-settings", qbSiteSettingsRouter);
 router.use("/operator/auth", operatorAuthRouter);
 
 export default router;
