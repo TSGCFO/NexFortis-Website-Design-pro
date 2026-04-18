@@ -172,10 +172,30 @@ const requireAuth: RequestHandler = async (req: Request, res: Response, next: Ne
       return;
     }
 
-    const [profile] = await db.select().from(qbUsers).where(eq(qbUsers.id, user.id)).limit(1);
+    let [profile] = await db.select().from(qbUsers).where(eq(qbUsers.id, user.id)).limit(1);
     if (!profile) {
-      res.status(401).json({ error: "User profile not found" });
-      return;
+      // Auto-provision profile for OAuth users (Google, Microsoft) who exist
+      // in Supabase auth but don't yet have a qb_users row.
+      const meta = user.user_metadata || {};
+      try {
+        [profile] = await db.insert(qbUsers).values({
+          id: user.id,
+          email: user.email!,
+          name: meta.name || meta.full_name || user.email!.split("@")[0],
+          phone: meta.phone || null,
+          role: "customer",
+        }).onConflictDoNothing().returning();
+      } catch (provisionErr) {
+        console.error("Auto-provision user error:", provisionErr);
+      }
+      // Re-fetch in case onConflictDoNothing hit a race condition
+      if (!profile) {
+        [profile] = await db.select().from(qbUsers).where(eq(qbUsers.id, user.id)).limit(1);
+      }
+      if (!profile) {
+        res.status(401).json({ error: "User profile not found" });
+        return;
+      }
     }
 
     req.userId = user.id;

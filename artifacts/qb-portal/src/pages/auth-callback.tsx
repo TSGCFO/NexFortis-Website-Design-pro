@@ -29,6 +29,7 @@ export default function AuthCallback() {
     }
   }, []);
 
+  // Navigate to dashboard once user is loaded
   useEffect(() => {
     if (!loading && user && !error) {
       const returnTo = sanitizeReturnTo(sessionStorage.getItem("authReturnTo"));
@@ -36,6 +37,16 @@ export default function AuthCallback() {
       navigate(returnTo);
     }
   }, [user, loading, error, navigate]);
+
+  // Timeout: if loading finishes but user is still null after 10s, show error
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (!user && !error) {
+        setError("Sign-in timed out. Please try again.");
+      }
+    }, 10000);
+    return () => clearTimeout(timer);
+  }, [user, error]);
 
   if (error) {
     return (
