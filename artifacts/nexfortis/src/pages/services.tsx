@@ -17,7 +17,7 @@ const services = [
   {
     icon: Cloud,
     title: "Microsoft 365 Solutions",
-    description: "Empower your team to work from anywhere with enterprise-grade productivity. As a Microsoft Authorized Partner, we handle the complete M365 lifecycle: migration, deployment, Intune MDM, and zero-trust security.",
+    description: "Empower your team to work from anywhere with enterprise-grade productivity. As a Microsoft AI Cloud Partner, we handle the complete M365 lifecycle: migration, deployment, Intune MDM, and zero-trust security.",
     benefits: ["Zero-downtime email migration", "Microsoft Teams & SharePoint setup", "Intune mobile device management", "MFA & conditional access security"],
     href: "/services/microsoft-365",
     badge: "Cloud & Productivity",

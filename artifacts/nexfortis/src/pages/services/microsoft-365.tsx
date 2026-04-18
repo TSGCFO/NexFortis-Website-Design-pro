@@ -59,7 +59,7 @@ export default function Microsoft365() {
 
   return (
     <div>
-      <SEO title="Microsoft 365 Deployment & Security" description="Microsoft Authorized Partner for M365 deployment: zero-downtime email migration, Teams & SharePoint setup, Intune MDM, and zero-trust security for Canadian businesses." path="/services/microsoft-365" />
+      <SEO title="Microsoft 365 Deployment & Security" description="Microsoft AI Cloud Partner for M365 deployment: zero-downtime email migration, Teams & SharePoint setup, Intune MDM, and zero-trust security for Canadian businesses." path="/services/microsoft-365" />
       <ServiceSchema name="Microsoft 365 Solutions" description="Microsoft 365 deployment, email migration, Teams, Intune MDM, and enterprise security for Canadian businesses." url="/services/microsoft-365" />
       <BreadcrumbSchema items={[
         { name: "Home", url: "/" },
@@ -87,7 +87,7 @@ export default function Microsoft365() {
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary text-primary font-display font-bold text-sm mb-6 border border-border">
               <ShieldCheck className="w-4 h-4 text-accent" aria-hidden="true" />
-              Microsoft Authorized Partner
+              Microsoft AI Cloud Partner
             </div>
             <h2 className="text-3xl md:text-4xl font-display font-bold text-primary mb-6">
               Work Anywhere. Securely.

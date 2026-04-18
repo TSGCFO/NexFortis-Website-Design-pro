@@ -26,7 +26,7 @@ const services = [
     icon: Cloud,
     title: "Microsoft 365 Solutions",
     description: "Enterprise-grade email, Teams, SharePoint, and zero-trust security deployment — with zero-downtime migration and 30-day post-launch support.",
-    benefits: ["Microsoft Authorized Partner", "Zero-downtime migration", "Intune device management"],
+    benefits: ["Microsoft AI Cloud Partner", "Zero-downtime migration", "Intune device management"],
     href: "/services/microsoft-365",
     badge: "Cloud & Productivity",
     cta: "Get a Free Quote",
@@ -69,7 +69,7 @@ const stats = [
 
 const whyUs = [
   { title: "End-to-End IT Under One Roof", desc: "From marketing websites to cloud infrastructure — no juggling multiple vendors. NexFortis is your single point of contact for every technology need." },
-  { title: "Microsoft Authorized Partner", desc: "Certified expertise in the Microsoft ecosystem including Microsoft 365, Azure, and Intune MDM for businesses of every size." },
+  { title: "Microsoft AI Cloud Partner", desc: "Certified expertise in the Microsoft ecosystem including Microsoft 365, Azure, and Intune MDM for businesses of every size." },
   { title: "Scalable Solutions for Every Budget", desc: "Whether you're a five-person shop or a 200-seat enterprise, our solutions grow with you. We tailor recommendations to your stage and budget." },
   { title: "Canadian-Based, Privacy-First Support", desc: "Our team is local, our data handling complies with Canadian privacy standards (PIPEDA), and our response times reflect a business you can depend on." },
 ];
