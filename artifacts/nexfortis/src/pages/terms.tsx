@@ -17,7 +17,7 @@ export default function Terms() {
       />
       <PageHero title="Terms of Service" subtitle="Last Updated: March 2026" />
       <Section bg="white">
-        <div className="max-w-3xl mx-auto prose prose-blue lg:prose-lg text-muted-foreground">
+        <div className="max-w-3xl mx-auto prose prose-blue lg:prose-lg text-muted-foreground prose-headings:text-foreground">
           <h2>1. Agreement to Terms</h2>
           <p>
             These Terms of Service ("Terms") constitute a legally binding agreement between you ("Client," "you," or "your") and NexFortis IT Solutions, operating as 17756968 Canada Inc. ("NexFortis," "we," "us," or "our"), with its principal office at 204 Hill Farm Rd, Nobleton, ON L7B 0A1, Canada. By accessing our website, engaging our services, or purchasing our products, you agree to be bound by these Terms.

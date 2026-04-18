@@ -17,7 +17,7 @@ export default function Privacy() {
       />
       <PageHero title="Privacy Policy" subtitle="Last Updated: March 2026" />
       <Section bg="white">
-        <div className="max-w-3xl mx-auto prose prose-blue lg:prose-lg text-muted-foreground">
+        <div className="max-w-3xl mx-auto prose prose-blue lg:prose-lg text-muted-foreground prose-headings:text-foreground">
           <h2>1. Introduction</h2>
           <p>
             NexFortis IT Solutions, operating as 17756968 Canada Inc. ("NexFortis," "we," "us," or "our"), is committed to protecting the privacy and security of your personal information. This Privacy Policy describes how we collect, use, disclose, and safeguard information when you visit our website (nexfortis.com), use our services, or communicate with us.
