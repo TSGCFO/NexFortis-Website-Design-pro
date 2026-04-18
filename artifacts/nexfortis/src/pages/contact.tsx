@@ -5,7 +5,7 @@ import { MapPin, Mail, Clock, Loader2, Linkedin } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 import { trackEvent } from "@/lib/analytics";
 
 const formSchema = z.object({
@@ -20,7 +20,6 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>;
 
 export default function Contact() {
-  const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>({
@@ -35,24 +34,24 @@ export default function Contact() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
-      const result = await res.json();
+      const result = await res.json().catch(() => ({}));
       if (!res.ok) {
-        throw new Error(result.error || "Failed to send message");
+        if (res.status >= 500) {
+          throw new Error("Something went wrong — please try again or email us directly.");
+        }
+        throw new Error(result.error || "Something went wrong — please try again or email us directly.");
       }
       trackEvent("contact_form_submit", {
         service: data.service,
         has_company: Boolean(data.company),
       });
-      toast({
-        title: "Message Sent Successfully!",
+      toast.success("Message Sent!", {
         description: "We'll get back to you within 1–2 business hours.",
       });
       reset();
     } catch (err: unknown) {
-      toast({
-        title: "Something went wrong",
-        description: err instanceof Error ? err.message : "Please try again later or email us directly.",
-        variant: "destructive",
+      toast.error("Something went wrong", {
+        description: err instanceof Error ? err.message : "Something went wrong — please try again or email us directly.",
       });
     } finally {
       setIsSubmitting(false);
