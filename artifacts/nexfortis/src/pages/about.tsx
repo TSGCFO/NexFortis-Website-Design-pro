@@ -33,7 +33,7 @@ export default function About() {
       ]} />
 
       <Section bg="brand-light">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <div className="grid lg:grid-cols-2 gap-16 items-start">
           <div>
             <h2 className="text-3xl md:text-4xl font-display font-bold text-primary mb-6">Our Story</h2>
             <div className="space-y-4 text-muted-foreground text-lg leading-relaxed">
@@ -54,15 +54,26 @@ export default function About() {
               </p>
             </div>
           </div>
-          <div className="bg-secondary rounded-3xl p-10 border border-border">
-            <h3 className="text-2xl font-bold text-primary mb-4">Our Mission</h3>
-            <p className="text-lg text-muted-foreground mb-8">
-              To seamlessly integrate robust technology solutions that enhance operational efficiency, ensure data security, and catalyze limitless growth for our clients.
-            </p>
-            <h3 className="text-2xl font-bold text-primary mb-4">Our Vision</h3>
-            <p className="text-lg text-muted-foreground">
-              To be Canada's premier IT partner, recognized for transforming complex technical challenges into competitive business advantages.
-            </p>
+          <div className="space-y-8">
+            <div className="bg-secondary rounded-3xl p-10 border border-border">
+              <h3 className="text-2xl font-bold text-primary mb-4">Our Mission</h3>
+              <p className="text-lg text-muted-foreground mb-8">
+                To seamlessly integrate robust technology solutions that enhance operational efficiency, ensure data security, and catalyze limitless growth for our clients.
+              </p>
+              <h3 className="text-2xl font-bold text-primary mb-4">Our Vision</h3>
+              <p className="text-lg text-muted-foreground">
+                To be Canada's premier IT partner, recognized for transforming complex technical challenges into competitive business advantages.
+              </p>
+            </div>
+            <div className="bg-secondary rounded-3xl p-10 border border-border">
+              <h3 className="text-2xl font-bold text-primary mb-4">Our Approach</h3>
+              <p className="text-lg text-muted-foreground mb-6">
+                We don't hand you off to a junior tech or disappear after kickoff. Every NexFortis engagement is led hands-on by senior consultants who scope the work, build the solution, and stay with you through rollout and beyond.
+              </p>
+              <p className="text-lg text-muted-foreground">
+                From the first discovery call to ongoing support, you work with the same small team that knows your environment end-to-end — your cloud stack, your accounting workflows, your compliance posture, and the people who depend on it all running smoothly.
+              </p>
+            </div>
           </div>
         </div>
       </Section>
