@@ -13,7 +13,7 @@ export default function NotFound() {
             <AlertCircle className="h-8 w-8 text-red-500" />
             <h1 className="text-2xl font-bold text-gray-900">404 Page Not Found</h1>
           </div>
-          <p className="mt-4 text-sm text-gray-600">
+          <p className="mt-4 text-sm text-gray-800">
             The page you're looking for doesn't exist or has been moved.
           </p>
           <Link href="/" className="inline-block mt-4 text-accent font-medium hover:underline">
