@@ -10,7 +10,7 @@ function trackQbPortalClick(location: string) {
   trackEvent("cta_click", {
     cta: "qb_portal",
     location,
-    destination: "https://qbportal.nexfortis.com/catalog",
+    destination: "https://nex-fortis-website-design-pro.replit.app/qb-portal/catalog",
   });
 }
 
@@ -33,7 +33,7 @@ const qbFaqs = [
   },
   {
     question: "What are your QuickBooks add-on tools and how do they work?",
-    answer: "Our add-on tools extend QuickBooks functionality in areas where the native software falls short. Examples include our A/R Statements Pro for customized accounts receivable statements, Donor Statements for nonprofit organizations, Direct Debit and Direct Deposit file creators for Canadian payment processing, and IIF Transaction Creator for bulk data imports. Each tool is a one-time purchase, works alongside your existing QuickBooks installation, and includes free updates and email support.",
+    answer: "Our QB Services Portal offers five categories of professional services for QuickBooks Desktop users in Canada: Conversion Services (Enterprise → Premier/Pro, with optional 30-minute guaranteed turnaround), Data Services (Audit Trail Removal, Super Condense, List Reduction, Multi-Currency Removal, CRA Period Copy), Platform Migrations (Sage 50/Simply Accounting and AccountEdge/MYOB into QuickBooks), QB Expert Support monthly subscriptions (Essentials, Professional, and Premium tiers), and Volume Packs (5- and 10-pack conversions for accounting firms). Every service is performed by certified ProAdvisors and backed by our 100% accuracy guarantee.",
   },
 ];
 
@@ -44,8 +44,8 @@ export default function QuickBooks() {
     {
       icon: Database,
       title: "Data Migration",
-      desc: "Migrate from NetSuite, Sage 50, SAP, Xero, and more. 100% accuracy guaranteed.",
-      items: ["Standard (1 day): $299", "Expedited (Same day): $450"],
+      desc: "Migrate from Sage 50, AccountEdge/MYOB, and convert between QuickBooks editions. 100% accuracy guaranteed.",
+      items: ["Standard (under 60 min): from $149 CAD ($75 CAD launch)", "Guaranteed 30-Minute: from $249 CAD ($125 CAD launch)"],
     },
     {
       icon: ShieldAlert,
@@ -57,15 +57,49 @@ export default function QuickBooks() {
       icon: Wrench,
       title: "Data Services",
       desc: "Optimize your company files for performance or audit preparation.",
-      items: ["Enterprise to Pro/Premier Conversion (from $249)", "Super Condensing & List Reduction — Contact for Pricing"],
+      items: ["Enterprise → Premier/Pro Standard: from $149 CAD ($75 CAD launch)", "Audit Trail Removal / Super Condense: from $99 CAD ($50 CAD launch)"],
     },
   ];
 
   const products = [
-    { cat: "Financial Statements", items: [{ name: "A/R Statements Pro", price: "$79" }, { name: "List Reporter", price: "$59" }] },
-    { cat: "Nonprofit/Donor", items: [{ name: "Donor Statements (Desktop)", price: "$99" }, { name: "Donor Statements (Online)", price: "$99" }, { name: "Desktop+Email Bundle", price: "$158" }] },
-    { cat: "Payment Processing", items: [{ name: "Direct Debit File Creator", price: "$119" }, { name: "Direct Deposit File Creator", price: "$119" }, { name: "PayPal Link", price: "$99" }, { name: "PositivePay", price: "$119" }] },
-    { cat: "Data Import", items: [{ name: "IIF Transaction Creator", price: "$139" }, { name: "Transaction Copier", price: "$119" }, { name: "Excel to QIF", price: "$69" }, { name: "OFX Cleaner", price: "$79" }] },
+    {
+      cat: "QuickBooks Conversion Services",
+      items: [
+        { name: "Enterprise → Premier/Pro Standard", price: "$75 CAD launch / $149 CAD regular" },
+        { name: "Guaranteed 30-Minute Conversion", price: "$125 CAD launch / $249 CAD regular" },
+        { name: "File Health Check", price: "$25 CAD launch / $49 CAD regular" },
+      ],
+    },
+    {
+      cat: "QuickBooks Data Services",
+      items: [
+        { name: "Audit Trail Removal", price: "$50 CAD launch / $99 CAD regular" },
+        { name: "Super Condense", price: "$50 CAD launch / $99 CAD regular" },
+        { name: "Multi-Currency Removal", price: "$75 CAD launch / $149 CAD regular" },
+      ],
+    },
+    {
+      cat: "Platform Migration Services",
+      items: [
+        { name: "Sage 50 / Simply Accounting → QuickBooks", price: "$125 CAD launch / $249 CAD regular" },
+        { name: "AccountEdge / MYOB → QuickBooks", price: "$125 CAD launch / $249 CAD regular" },
+      ],
+    },
+    {
+      cat: "QB Expert Support (Monthly Subscriptions)",
+      items: [
+        { name: "Essentials — 3 tickets/month", price: "$25 CAD launch / $49 CAD per month" },
+        { name: "Professional — 8 tickets/month", price: "$50 CAD launch / $99 CAD per month" },
+        { name: "Premium — Unlimited tickets", price: "$75 CAD launch / $149 CAD per month" },
+      ],
+    },
+    {
+      cat: "Volume Packs",
+      items: [
+        { name: "5-Pack Conversions", price: "$325 CAD launch / $649 CAD regular" },
+        { name: "10-Pack Conversions", price: "$600 CAD launch / $1,199 CAD regular" },
+      ],
+    },
   ];
 
   const processSteps = [
@@ -192,8 +226,8 @@ export default function QuickBooks() {
 
       <Section bg="white">
         <SectionHeader 
-          title="QuickBooks Add-On Catalog" 
-          subtitle="Powerful tools to extend the functionality of your QuickBooks software — one-time purchase, no subscriptions."
+          title="QB Services Portal Catalog" 
+          subtitle="Professional QuickBooks conversion, data, and migration services — plus monthly Expert Support subscriptions and volume packs for accounting firms."
           centered 
         />
 
@@ -201,7 +235,7 @@ export default function QuickBooks() {
           <Info className="w-5 h-5 text-accent shrink-0 mt-0.5" aria-hidden="true" />
           <p className="text-sm text-foreground leading-relaxed">
             <strong>Orders are processed through our QB Services Portal.</strong> Browse the full catalog, place orders, manage subscriptions, and submit support tickets at{" "}
-            <a href="https://qbportal.nexfortis.com/catalog" target="_blank" rel="noopener noreferrer" onClick={() => trackQbPortalClick("quickbooks_catalog_inline")} className="text-accent font-semibold hover:underline">qbportal.nexfortis.com</a>.
+            <a href="https://nex-fortis-website-design-pro.replit.app/qb-portal/catalog" target="_blank" rel="noopener noreferrer" onClick={() => trackQbPortalClick("quickbooks_catalog_inline")} className="text-accent font-semibold hover:underline">our QB Services Portal</a>.
           </p>
         </div>
 
@@ -226,7 +260,7 @@ export default function QuickBooks() {
                       <p className="text-accent font-semibold">{item.price}</p>
                     </div>
                     <a
-                      href="https://qbportal.nexfortis.com/catalog"
+                      href="https://nex-fortis-website-design-pro.replit.app/qb-portal/catalog"
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={() => trackQbPortalClick(`quickbooks_product_${item.name}`)}
@@ -251,7 +285,7 @@ export default function QuickBooks() {
             Our web-based QuickBooks add-on tools are available directly in your browser — no installation required. Generate statements, process payments, and import data with just a few clicks.
           </p>
           <a
-            href="https://qbportal.nexfortis.com/catalog"
+            href="https://nex-fortis-website-design-pro.replit.app/qb-portal/catalog"
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => trackQbPortalClick("quickbooks_bottom_cta")}
