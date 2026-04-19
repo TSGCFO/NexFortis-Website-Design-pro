@@ -2,6 +2,7 @@ import { useState, useCallback, useEffect } from "react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
 import { TierBadge } from "@/components/tier-badge";
 import {
   CheckCircle,
@@ -14,6 +15,7 @@ import {
   Clock,
   MessageCircle,
   AlertOctagon,
+  Sparkles,
 } from "lucide-react";
 
 function isCurrentlyAfterHours(): boolean {
@@ -61,6 +63,26 @@ interface SubscriptionInfo {
   ticketsUsed: number;
   ticketLimit: number;
   ticketsRemaining: number;
+}
+
+interface OrderEntitlement {
+  id: number;
+  orderId: number;
+  serviceName: string;
+  ticketsAllowed: number;
+  ticketsUsed: number;
+  ticketsRemaining: number;
+  slaMinutes: number;
+  startsAt: string;
+  expiresAt: string;
+  isUpgraded: boolean;
+  isExpired: boolean;
+  isActive: boolean;
+}
+
+interface EntitlementsResponse {
+  subscription: SubscriptionInfo | null;
+  orderEntitlements: OrderEntitlement[];
 }
 
 interface SettingsProps {
@@ -119,6 +141,19 @@ function ticketApiUrl(path: string) {
   return prefix.replace(/\/qb-portal$/, "") + "/api/qb/tickets" + path;
 }
 
+function entitlementApiUrl(path: string) {
+  const base = import.meta.env.BASE_URL || "/";
+  const prefix = base.endsWith("/") ? base.slice(0, -1) : base;
+  return prefix.replace(/\/qb-portal$/, "") + "/api/qb/tickets/entitlements" + path;
+}
+
+function daysUntil(dateIso: string): number {
+  const target = new Date(dateIso).getTime();
+  const now = Date.now();
+  const diffMs = target - now;
+  return Math.max(0, Math.ceil(diffMs / (1000 * 60 * 60 * 24)));
+}
+
 interface EnhancedSupportProps {
   subscriptionInfo: SubscriptionInfo | null;
   getAccessToken: () => Promise<string | null>;
@@ -126,6 +161,7 @@ interface EnhancedSupportProps {
 
 export function EnhancedSupportTab({ subscriptionInfo, getAccessToken }: EnhancedSupportProps) {
   const [tickets, setTickets] = useState<EnhancedTicket[]>([]);
+  const [orderEntitlements, setOrderEntitlements] = useState<OrderEntitlement[]>([]);
   const [ticketSubject, setTicketSubject] = useState("");
   const [ticketMessage, setTicketMessage] = useState("");
   const [isCritical, setIsCritical] = useState(false);
@@ -148,14 +184,39 @@ export function EnhancedSupportTab({ subscriptionInfo, getAccessToken }: Enhance
     } catch { /* ignore */ }
   }, [getAccessToken]);
 
+  const fetchEntitlements = useCallback(async () => {
+    try {
+      const token = await getAccessToken();
+      const res = await fetch(entitlementApiUrl(""), {
+        headers: { ...(token ? { Authorization: `Bearer ${token}` } : {}) },
+      });
+      if (res.ok) {
+        const data: EntitlementsResponse = await res.json();
+        setOrderEntitlements(data.orderEntitlements || []);
+      }
+    } catch { /* ignore */ }
+  }, [getAccessToken]);
+
   useEffect(() => {
     fetchTickets();
-  }, [fetchTickets]);
+    fetchEntitlements();
+  }, [fetchTickets, fetchEntitlements]);
 
   const hasSub = subscriptionInfo !== null;
   const isUnlimited = hasSub && subscriptionInfo.ticketsRemaining === -1;
   const atLimit = hasSub && !isUnlimited && subscriptionInfo.ticketsRemaining <= 0;
   const lastTicket = hasSub && !isUnlimited && subscriptionInfo.ticketsRemaining === 1;
+
+  const activeEntitlements = orderEntitlements
+    .filter((e) => e.isActive && !e.isExpired && e.ticketsRemaining > 0)
+    .sort((a, b) => new Date(a.expiresAt).getTime() - new Date(b.expiresAt).getTime());
+  const expiredEntitlements = orderEntitlements.filter((e) => e.isExpired || e.ticketsRemaining <= 0);
+  const primaryEntitlement = activeEntitlements[0] || null;
+  const otherActiveCount = Math.max(0, activeEntitlements.length - 1);
+  const hasActiveEntitlement = !hasSub && primaryEntitlement !== null;
+  const hasOnlyExpiredEntitlements = !hasSub && !hasActiveEntitlement && expiredEntitlements.length > 0;
+  const showSubscriptionRequired = !hasSub && !hasActiveEntitlement && !hasOnlyExpiredEntitlements;
+  const canSubmitTicket = (hasSub && !atLimit) || hasActiveEntitlement;
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFileError(null);
@@ -180,7 +241,7 @@ export function EnhancedSupportTab({ subscriptionInfo, getAccessToken }: Enhance
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!hasSub || atLimit) return;
+    if (!canSubmitTicket) return;
 
     setSubmitting(true);
     setSubmitError(null);
@@ -208,6 +269,7 @@ export function EnhancedSupportTab({ subscriptionInfo, getAccessToken }: Enhance
         setIsCritical(false);
         setAttachment(null);
         fetchTickets();
+        fetchEntitlements();
       } else {
         const data = await res.json();
         setSubmitError(data.error || "Failed to submit ticket");
@@ -241,7 +303,7 @@ export function EnhancedSupportTab({ subscriptionInfo, getAccessToken }: Enhance
         </Card>
       )}
 
-      {!hasSub && (
+      {showSubscriptionRequired && (
         <Card className="mb-6 border-amber-200 dark:border-amber-800 bg-amber-50/50 dark:bg-amber-900/10">
           <CardContent className="p-4 flex items-start gap-3">
             <AlertTriangle className="w-5 h-5 text-amber-600 dark:text-amber-400 mt-0.5 flex-shrink-0" />
@@ -249,6 +311,25 @@ export function EnhancedSupportTab({ subscriptionInfo, getAccessToken }: Enhance
               <p className="text-sm font-medium text-amber-700 dark:text-amber-300 mb-1">Subscription Required</p>
               <p className="text-sm text-muted-foreground mb-3">
                 An active support plan is required to submit tickets. Get priority support starting at $25 CAD/month.
+              </p>
+              <Link href="/subscription">
+                <Button size="sm" className="bg-rose-gold text-rose-gold-foreground hover:bg-rose-gold-hover font-display gap-1">
+                  View Support Plans
+                </Button>
+              </Link>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {hasOnlyExpiredEntitlements && (
+        <Card className="mb-6 border-amber-200 dark:border-amber-800 bg-amber-50/50 dark:bg-amber-900/10">
+          <CardContent className="p-4 flex items-start gap-3">
+            <Clock className="w-5 h-5 text-amber-600 dark:text-amber-400 mt-0.5 flex-shrink-0" />
+            <div>
+              <p className="text-sm font-medium text-amber-700 dark:text-amber-300 mb-1">Your 30-day support window has ended</p>
+              <p className="text-sm text-muted-foreground mb-3">
+                The included support window from your past order has expired. Subscribe to a support plan to keep getting expert help — starting at $25 CAD/month.
               </p>
               <Link href="/subscription">
                 <Button size="sm" className="bg-rose-gold text-rose-gold-foreground hover:bg-rose-gold-hover font-display gap-1">
@@ -273,23 +354,82 @@ export function EnhancedSupportTab({ subscriptionInfo, getAccessToken }: Enhance
           )}
         </div>
       )}
+
+      {hasActiveEntitlement && primaryEntitlement && (
+        <Card className="mb-6 border-green-200 dark:border-green-800 bg-green-50/40 dark:bg-green-900/10">
+          <CardContent className="p-6">
+            <div className="flex flex-wrap items-start justify-between gap-3 mb-4">
+              <div className="min-w-0">
+                <span
+                  className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wide mb-2 ${
+                    primaryEntitlement.isUpgraded
+                      ? "bg-green-600 text-white"
+                      : "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300"
+                  }`}
+                >
+                  <Sparkles className="w-3 h-3" />
+                  {primaryEntitlement.isUpgraded ? "Extended Support" : "Order Support"}
+                </span>
+                <h3 className="text-base font-bold font-display text-primary">
+                  {primaryEntitlement.serviceName} — Order #{primaryEntitlement.orderId}
+                </h3>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Included support for this order. Response within {primaryEntitlement.slaMinutes} minutes during business hours.
+                </p>
+              </div>
+            </div>
+
+            <Progress
+              value={
+                primaryEntitlement.ticketsAllowed > 0
+                  ? Math.min(100, (primaryEntitlement.ticketsUsed / primaryEntitlement.ticketsAllowed) * 100)
+                  : 0
+              }
+              className={`h-3 mb-2 ${
+                primaryEntitlement.ticketsRemaining <= 0
+                  ? "[&>div]:bg-red-500"
+                  : primaryEntitlement.ticketsRemaining === 1
+                  ? "[&>div]:bg-amber-500"
+                  : "[&>div]:bg-green-500"
+              }`}
+              aria-label={`${primaryEntitlement.ticketsUsed} of ${primaryEntitlement.ticketsAllowed} tickets used`}
+            />
+            <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-muted-foreground">
+              <span>
+                {primaryEntitlement.ticketsRemaining} of {primaryEntitlement.ticketsAllowed} tickets remaining
+              </span>
+              <span className="inline-flex items-center gap-1">
+                <Clock className="w-3 h-3" /> Expires in {daysUntil(primaryEntitlement.expiresAt)} day{daysUntil(primaryEntitlement.expiresAt) !== 1 ? "s" : ""}
+              </span>
+            </div>
+
+            {otherActiveCount > 0 && (
+              <p className="text-xs text-muted-foreground mt-2">
+                You have {otherActiveCount} other active support entitlement{otherActiveCount !== 1 ? "s" : ""}.
+              </p>
+            )}
+          </CardContent>
+        </Card>
+      )}
       {ticketSubmitted ? (
         <Card>
           <CardContent className="p-8 text-center">
             <CheckCircle className="w-12 h-12 text-green-500 mx-auto mb-4" />
             <h3 className="text-lg font-bold font-display text-primary mb-2">Ticket Submitted</h3>
             <p className="text-sm text-muted-foreground mb-4">
-              We'll respond within{" "}
-              {subscriptionInfo?.tier === "premium" ? "30 minutes" : "1 hour"}{" "}
-              during business hours.
+              {hasSub
+                ? `We'll respond within ${subscriptionInfo?.tier === "premium" ? "30 minutes" : "1 hour"} during business hours.`
+                : primaryEntitlement
+                ? `We'll respond within ${primaryEntitlement.slaMinutes} minutes during business hours.`
+                : "We'll respond during business hours."}
             </p>
             <Button onClick={() => setTicketSubmitted(false)} variant="outline">Submit Another Ticket</Button>
           </CardContent>
         </Card>
-      ) : hasSub ? (
+      ) : (hasSub || hasActiveEntitlement) ? (
         <Card>
           <CardContent className="p-6">
-            {atLimit && (
+            {hasSub && atLimit && (
               <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg flex items-center gap-3">
                 <XCircle className="w-4 h-4 text-red-600 dark:text-red-400 flex-shrink-0" />
                 <p className="text-sm text-red-700 dark:text-red-300">
@@ -298,7 +438,7 @@ export function EnhancedSupportTab({ subscriptionInfo, getAccessToken }: Enhance
               </div>
             )}
 
-            {lastTicket && (
+            {hasSub && lastTicket && (
               <div className="mb-4 p-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg flex items-center gap-3">
                 <AlertTriangle className="w-4 h-4 text-amber-600 dark:text-amber-400 flex-shrink-0" />
                 <p className="text-sm text-amber-700 dark:text-amber-300">
@@ -406,6 +546,20 @@ export function EnhancedSupportTab({ subscriptionInfo, getAccessToken }: Enhance
                 {submitting ? "Submitting..." : "Submit Ticket"}
               </Button>
             </form>
+
+            {hasActiveEntitlement && !hasSub && (
+              <div className="mt-6 p-4 rounded-lg border border-border bg-muted/40 flex flex-wrap items-center justify-between gap-3">
+                <div>
+                  <p className="text-sm font-medium text-primary">Need ongoing support?</p>
+                  <p className="text-xs text-muted-foreground">Subscribe starting at $25 CAD/month for continuous coverage.</p>
+                </div>
+                <Link href="/subscription">
+                  <Button size="sm" variant="outline" className="font-display">
+                    View Plans
+                  </Button>
+                </Link>
+              </div>
+            )}
           </CardContent>
         </Card>
       ) : null}
