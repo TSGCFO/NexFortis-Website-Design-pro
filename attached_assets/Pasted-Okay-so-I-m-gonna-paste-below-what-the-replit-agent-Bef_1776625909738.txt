@@ -1,0 +1,152 @@
+Okay so I'm gonna paste below what the replit agent 
+
+```
+Before I dive into the steps, one important thing to flag based on what's in your project:
+You said you want to deploy two apps, but your QuickBooks portal calls a backend at /api/qb/... (orders, checkout, tickets, Stripe webhooks, Supabase auth, etc.). That backend is artifacts/api-server — an Express server. So in reality you need three services on Render, not two:
+nexfortis — the marketing website (static site)
+qb-portal — the customer portal (static site)
+api-server — the Express backend (web service running Node)
+The good news is that Render lets you set rewrite rules on a static site so that /api/* requests are proxied to your backend service. That means the user still only sees nexfortis.com and qb.nexfortis.com in the browser — no separate api.nexfortis.com needed, no CORS dance, and no frontend code changes. That's the path I'll walk you through.
+Here is the full plan.
+Step 0 — Prerequisites (do these once, before touching Render)
+Push the repo to GitHub (or GitLab/Bitbucket). Render deploys from a git provider. If you haven't already, create a private repo and push the project to it. Render needs read access — you'll grant that in the next step.
+Have your domain registrar login ready (wherever you bought nexfortis.com). You'll add DNS records at the end.
+Gather your production secrets in one place (you'll paste these into Render). At minimum you'll need:
+DATABASE_URL (PostgreSQL — production database)
+SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY
+STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET (production keys, not test)
+RESEND_API_KEY
+SESSION_SECRET, BLOG_ADMIN_SECRET, OPERATOR_EMAIL, OPERATOR_PASSWORD
+Anything else currently in your Replit Secrets panel
+Step 1 — Create the Render account and connect GitHub
+Go to [https://render.com](https://render.com/) → sign up / log in.
+In the Render dashboard, click your avatar → Account Settings → GitHub → Connect, then grant access to the repo.
+Step 2 — Deploy the API server (do this FIRST, the static sites depend on its URL)
+In the Render dashboard:
+Click New + → Web Service.
+Pick your repo.
+Fill in the form:
+Name: nexfortis-api
+Region: pick one close to your customers (e.g. Oregon or Ohio)
+Branch: main
+Runtime: Node
+Root Directory: (leave blank — it's a monorepo, builds happen at the repo root)
+Build Command:
+corepack enable && pnpm install --frozen-lockfile && pnpm run build
+Start Command:
+node artifacts/api-server/dist/index.cjs
+Instance Type: start with Starter ($7/mo). Free tier sleeps after 15 min of inactivity, which will break Stripe webhooks and slow first loads.
+Scroll to Environment Variables and add every secret from Step 0, plus:
+NODE_ENV = production
+PORT = 10000 (Render sets this automatically — your Express app already reads process.env.PORT, so this is just to be explicit)
+Click Create Web Service. It will start building. The first build takes ~5–10 minutes.
+When it's done, copy the URL Render assigns it — something like [https://nexfortis-api.onrender.com](https://nexfortis-api.onrender.com). Save this; you'll use it in the next step.
+If the build fails, the most common cause is a missing env var or a mismatched Node version. To pin Node, add a file .node-version at the repo root containing 24.
+Step 3 — Deploy the main marketing site (nexfortis.com)
+New + → Static Site.
+Pick the same repo.
+Fill in the form:
+Name: nexfortis-website
+Branch: main
+Root Directory: (leave blank)
+Build Command:
+corepack enable && pnpm install --frozen-lockfile && BASE_PATH=/ PORT=3000 pnpm --filter @workspace/nexfortis... run build
+(The PORT=3000 is just to satisfy the Vite config check — it's not used at runtime since this is a static site. BASE_PATH=/ makes the built assets live at the domain root instead of /nexfortis/.)
+Publish Directory:
+artifacts/nexfortis/dist/public
+Click Create Static Site and wait for the first build.
+Once deployed, go to the service's Redirects/Rewrites tab and add two rules in this order:
+SourceDestinationAction
+/api/*
+[https://nexfortis-api.onrender.com/api/:splat](https://nexfortis-api.onrender.com/api/:splat)
+Rewrite
+/*
+/index.html
+Rewrite
+The first rule proxies API calls to your backend (no CORS, same-origin). The second is the SPA fallback so client-side routes like /blog/some-post work on refresh.
+Step 4 — Deploy the QuickBooks portal (qb.nexfortis.com)
+Repeat Step 3 but for the portal:
+New + → Static Site.
+Same repo.
+Form:
+Name: nexfortis-qb-portal
+Branch: main
+Build Command:
+corepack enable && pnpm install --frozen-lockfile && BASE_PATH=/ PORT=3000 pnpm --filter @workspace/qb-portal... run build
+Publish Directory:
+artifacts/qb-portal/dist/public
+Add the same two rewrite rules in Redirects/Rewrites:
+SourceDestinationAction
+/api/*
+[https://nexfortis-api.onrender.com/api/:splat](https://nexfortis-api.onrender.com/api/:splat)
+Rewrite
+/*
+/index.html
+Rewrite
+Step 5 — Attach your custom domains
+For each static site, go to Settings → Custom Domains → Add Custom Domain:
+On nexfortis-website add two: nexfortis.com and [www.nexfortis.com](https://www.nexfortis.com)
+On nexfortis-qb-portal add: qb.nexfortis.com
+Render will show you the DNS records you need. They'll look like this:
+Host (at your registrar)TypeValue
+@ (apex / nexfortis.com)
+ALIAS or ANAME (or A record to Render's IP if your registrar doesn't support ALIAS)
+provided by Render
+www
+CNAME
+nexfortis-website.onrender.com
+qb
+CNAME
+nexfortis-qb-portal.onrender.com
+Go to your domain registrar's DNS panel and add those records exactly as Render shows them. DNS usually propagates in 5–30 minutes. Render will automatically issue Let's Encrypt SSL certs once it sees the records resolve. Each domain in the Render UI will turn green ("Certificate issued").
+If your registrar doesn't support ALIAS/ANAME for the apex, the cleanest fix is to redirect the apex to www. Render gives you A records for that case in the UI.
+Step 6 — Update Stripe webhook to the new URL
+In your Stripe dashboard:
+Developers → Webhooks → edit your existing endpoint (or create one)
+Set the URL to: [https://nexfortis-api.onrender.com/api/qb/webhook/stripe](https://nexfortis-api.onrender.com/api/qb/webhook/stripe) (or [https://qb.nexfortis.com/api/qb/webhook/stripe](https://qb.nexfortis.com/api/qb/webhook/stripe) — both work, since the static site proxies /api/* to the backend)
+Copy the new Signing Secret and update STRIPE_WEBHOOK_SECRET in the nexfortis-api service's env vars on Render. Save → Render will auto-redeploy.
+Step 7 — Update Supabase OAuth redirect URLs
+In Supabase Dashboard → Authentication → URL Configuration, add:
+[https://qb.nexfortis.com/auth/callback](https://qb.nexfortis.com/auth/callback)
+[https://nexfortis.com/auth/callback](https://nexfortis.com/auth/callback) (if you do social login on the main site)
+Also add [https://qb.nexfortis.com](https://qb.nexfortis.com) and [https://nexfortis.com](https://nexfortis.com) to the Site URL / additional redirect allowlist.
+Step 8 — Smoke test
+Visit [https://nexfortis.com](https://nexfortis.com) — marketing site loads, blog works, contact form submits successfully.
+Visit [https://qb.nexfortis.com](https://qb.nexfortis.com) — portal loads, you can sign up / sign in, see the product catalog, start an order, and reach Stripe checkout in test mode.
+Submit a test purchase and verify the Stripe webhook is delivered (check Stripe Dashboard → Webhooks → recent deliveries should be 200 OK).
+In the API service's Logs tab on Render, watch for CORS rejected origin: warnings — there shouldn't be any since requests go through the rewrite (same-origin).
+A few things worth knowing
+Cold starts: Render's Starter plan keeps the API warm. If you ever drop to free, your API will sleep and the first request after idle takes ~30s.
+Deploys: Every push to main automatically rebuilds and deploys all three services. You can disable auto-deploy per service if you'd rather promote manually.
+Database: I assumed you already have a managed Postgres (Supabase, Neon, or Render Postgres). If you want me to walk through provisioning a Render Postgres instance and migrating, say the word.
+Scripts directory: Operator seed and Stripe setup scripts (pnpm --filter @workspace/scripts run seed-operator, etc.) won't run automatically. You can run them as one-off Jobs on Render, or run them locally pointed at the production DATABASE_URL once.
+```
+
+```
+             Okay and now just one last confirmation: I just need you to 100% confirm with evidence                                                       whether the following is true or false 
+`But Render static sites don't support proxying, so you'd need all three as web services or use a separate reverse proxy.`
+---
+
+
+That statement is FALSE. Here's the proof straight from Render's official documentation.
+The evidence
+Render's docs page "Static Site Redirects and Rewrites" ([https://render.com/docs/redirects-rewrites](https://render.com/docs/redirects-rewrites)) explicitly states:
+"Destination can be either a path or a full, publicly accessible URL."
+And it gives this exact example in their official table of basic examples:
+SourceDestination
+/web-host
+[https://render.com](https://render.com)
+That's a rewrite rule on a static site whose destination is an external full URL — exactly the pattern I described for proxying /api/* to your backend.
+It also explains the difference between Redirect and Rewrite, confirming that Rewrite "does not redirect the browser. Instead, your site serves the content from the rule's destination at the original path. The browser can't detect that content was served from a different path or URL." That is the textbook definition of a reverse proxy, and it's a built-in feature of Render static sites.
+So in your specific case
+A rewrite rule on the qb-portal static site like:
+SourceDestinationAction
+/api/*
+https://nexfortis-api.onrender.com/api/*
+Rewrite
+is fully supported, officially documented, and works exactly as I described. The visitor's browser sees the response come from qb.nexfortis.com/api/... — same origin — while Render quietly fetches it from your backend service behind the scenes. No CORS issue, no separate reverse proxy needed, no need to make the frontends web services.
+One small caveat worth noting
+The docs do say: "You can't apply redirect/rewrite rules to your domain root." That just means Source must include at least one path component (like /api/* or /*). It does not restrict the destination from being an external URL. Your /api/* rule satisfies that requirement just fine.
+So you can confidently proceed with the three-service architecture I laid out: one paid web service for the API, two free static sites for the frontends, with /api/* rewrites pointing the frontends at the API. That setup is exactly what Render's product was designed to support.
+---
+```
