@@ -22,6 +22,17 @@
     <link rel="preload" href="/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/alegreya-sans-sc-700-latin.woff2" as="font" type="font/woff2" crossorigin />
 
+    <!--
+      Fallback-only SEO tags for the unrendered SPA shell.
+      Each pre-rendered page overwrites these via react-helmet-async at render
+      time (see src/components/seo.tsx + vite-plugin-prerender post-process
+      dedupe in vite.config.ts). The `noindex` ensures Google does not index
+      the raw shell if it is ever fetched directly (e.g. an unknown route
+      served by the SPA catch-all).
+    -->
+    <title>NexFortis IT Solutions</title>
+    <meta name="robots" content="noindex, nofollow" />
+
     <!-- Google Analytics 4 (GA4) is loaded at runtime by src/lib/analytics.ts
          after the visitor accepts the cookie consent banner. The measurement
          ID is provided via the VITE_GA_MEASUREMENT_ID environment variable. -->

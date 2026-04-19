@@ -13,6 +13,17 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preload" href="/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="/fonts/inter-600.woff2" as="font" type="font/woff2" crossorigin>
+
+    <!--
+      Fallback-only SEO tags for the unrendered SPA shell.
+      Each pre-rendered page overwrites these via react-helmet-async at render
+      time (see src/components/seo.tsx + vite-plugin-prerender post-process
+      dedupe in vite.config.ts). The `noindex` ensures Google does not index
+      the raw shell if it is ever fetched directly (e.g. an unknown route
+      served by the SPA catch-all).
+    -->
+    <title>NexFortis QuickBooks Portal</title>
+    <meta name="robots" content="noindex, nofollow" />
   </head>
   <body>
     <div id="root"></div>
