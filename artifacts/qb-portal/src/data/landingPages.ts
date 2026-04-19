@@ -64,7 +64,7 @@ export const landingPages: LandingPageData[] = [
       "Your file is uploaded over a 256-bit encrypted connection, processed in our Canadian data region, and returned to you as a downloadable .QBM file that restores into Premier or Pro exactly as it behaved in Enterprise. Standard turnaround is the next business day; a 30-minute guaranteed rush option is available if you are on a deadline. Files are deleted from our processing environment within 30 days, and you can request earlier deletion at any time by contacting support with your order number.",
       "All Enterprise features that exist in Premier — advanced inventory summaries, class tracking, multi-currency, job costing, custom fields — are preserved. Enterprise-only features that Premier cannot display (such as Advanced Pricing rules, Combine Reports across companies, and Enhanced User Permissions on individual transactions) are converted to static values or removed where they have no Premier equivalent, and the conversion report tells you exactly which features were affected so there are no surprises after restoration.",
       "Why do businesses convert down from Enterprise in the first place? The most common reason is cost: Enterprise's per-seat annual subscription is several times the Premier or Pro license. A close second is consolidation: a company that bought Enterprise for capacity reasons years ago has since reduced staff, written off legacy data, or no longer needs the higher list limits. We also see Enterprise-to-Premier conversions tied to acquisitions, where the acquiring entity standardizes everyone onto Premier, and tied to accountants who prefer to receive client files in a tier their own practice already supports.",
-      "What you receive at the end of the engagement is a clean, ready-to-restore .QBM, a side-by-side comparison of trial balance totals before and after conversion, a feature-conversion report listing what was preserved, what was downgraded to a Premier equivalent, and what was removed because Premier cannot represent it, and a 30-day post-conversion support window during which any unexpected behavior is investigated at no additional cost. Most customers go from upload to fully restored Premier file in less than 24 hours.",
+      "What you receive at the end of the engagement is a clean, ready-to-restore .QBM, a side-by-side comparison of trial balance totals before and after conversion, a feature-conversion report listing what was preserved, what was downgraded to a Premier equivalent, and what was removed because Premier cannot represent it, and a 30-day post-conversion support window — every order includes 2 support tickets with a 2-hour response SLA at no additional cost, with the option to upgrade to Extended Support for 5 tickets with 1-hour priority SLA. Most customers go from upload to fully restored Premier file in less than 24 hours.",
       "A common follow-on engagement is to bundle Audit Trail Removal or Super Condense with the conversion in the same upload. The reason is practical: businesses converting down from Enterprise are often doing so as part of a broader cost-and-complexity reduction, and shrinking the file at the same time as the tier downgrade saves a second round-trip and reduces total cost. We will quote the bundled engagement at a discount versus the two services run separately if you tell us up front that both are needed, and the bundle keeps your file restoration to a single download instead of two.",
     ],
     benefits: [
@@ -100,7 +100,7 @@ export const landingPages: LandingPageData[] = [
       },
       {
         title: "Download your converted file",
-        body: "We email you a signed download link. Open the .QBM in Premier or Pro, restore, and confirm the new file is ready for use. The 30-day post-conversion support window starts at this point.",
+        body: "We email you a signed download link. Open the .QBM in Premier or Pro, restore, and confirm the new file is ready for use. The 30-day post-conversion support window starts at this point — you can submit up to 2 support tickets at no additional cost.",
       },
     ],
     faqs: [
@@ -509,7 +509,7 @@ export const landingPages: LandingPageData[] = [
       {
         question: "Will my GST/HST settings transfer to QuickBooks?",
         answer:
-          "Yes. Canadian tax codes in AccountEdge are mapped to QuickBooks tax items, tax-agency payable balances are preserved, and CRA reporting periods are aligned. You should run a test return on the first post-migration period to confirm the mapping matches your filing practice — and we will help with that test return at no additional cost during the 30-day post-migration support window.",
+          "Yes. Canadian tax codes in AccountEdge are mapped to QuickBooks tax items, tax-agency payable balances are preserved, and CRA reporting periods are aligned. You should run a test return on the first post-migration period to confirm the mapping matches your filing practice — and we will help with that test return at no additional cost during the 30-day post-migration support window (2 tickets included with every order).",
       },
       {
         question: "How long does the AccountEdge migration take?",
@@ -585,7 +585,7 @@ export const landingPages: LandingPageData[] = [
       },
       {
         title: "Validate and go live",
-        body: "Compare trial balance on the migration date between Sage 50 and QuickBooks, then switch over. We support the cutover with a 30-day post-migration support window.",
+        body: "Compare trial balance on the migration date between Sage 50 and QuickBooks, then switch over. We support the cutover with a 30-day post-migration support window — 2 tickets included with every order.",
       },
     ],
     faqs: [
@@ -1333,7 +1333,7 @@ export const landingPages: LandingPageData[] = [
       },
       {
         title: "Restore in Premier or Pro",
-        body: "Download the converted .QBM, restore in Premier or Pro, and confirm the file behaves as expected. The 30-day post-conversion support window starts at this point.",
+        body: "Download the converted .QBM, restore in Premier or Pro, and confirm the file behaves as expected. The 30-day post-conversion support window starts at this point — 2 support tickets included at no additional cost.",
       },
     ],
     faqs: [
