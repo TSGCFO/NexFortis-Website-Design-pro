@@ -1,5 +1,5 @@
 import { PageHero, Section, SectionHeader, PageBreadcrumbs } from "@/components/ui-elements";
-import { SEO, BreadcrumbSchema } from "@/components/seo";
+import { SEO, BreadcrumbSchema, PersonSchema } from "@/components/seo";
 import { Target, Lightbulb, Users, Minimize2, ArrowRight } from "lucide-react";
 import { Link } from "wouter";
 import { motion } from "framer-motion";
@@ -20,6 +20,13 @@ export default function About() {
           { name: "Home", url: "/" },
           { name: "About Us", url: "/about" },
         ]}
+      />
+      <PersonSchema
+        name="Hassan Sadiq"
+        jobTitle="Founder & CEO"
+        url="https://nexfortis.com/about"
+        image="https://nexfortis.com/images/hassan-headshot.webp"
+        sameAs={[]}
       />
       <PageHero 
         title="About NexFortis" 

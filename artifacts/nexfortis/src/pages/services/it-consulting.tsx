@@ -105,6 +105,12 @@ export default function ITConsulting() {
           ))}
         </div>
 
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <h2 className="text-3xl md:text-4xl font-display font-bold text-primary">
+            Our IT Consulting Services
+          </h2>
+        </div>
+
         <div className="space-y-20">
           {services.map((svc, i) => {
             const isEven = i % 2 === 0;
