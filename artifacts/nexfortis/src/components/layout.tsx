@@ -9,7 +9,7 @@ const services = [
   { name: "Microsoft 365 Solutions", href: "/services/microsoft-365", icon: Cloud },
   { name: "QuickBooks Migration", href: "/services/quickbooks", icon: Database },
   { name: "IT Consulting", href: "/services/it-consulting", icon: Cog },
-  { name: "Workflow Automation", href: "/services/automation-software", icon: LayoutDashboard },
+  { name: "Workflow Automation", href: "/services/workflow-automation", icon: LayoutDashboard },
 ];
 
 function NavLink({ href, children, location }: { href: string; children: React.ReactNode; location: string }) {

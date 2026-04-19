@@ -46,7 +46,7 @@ const services = [
     title: "Workflow Automation & Custom Software",
     description: "Stop paying people to copy and paste data. We build custom integrations, Power Automate flows, Zapier workflows, and bespoke web applications that eliminate manual work and connect your entire tech stack.",
     benefits: ["Up to 90% reduction in manual data entry", "Custom API integrations & middleware", "Full-stack web application development", "Real-time multi-system data sync"],
-    href: "/services/automation-software",
+    href: "/services/workflow-automation",
     badge: "Automation & Dev",
     cta: "Get a Free Quote",
   },

@@ -46,7 +46,6 @@ function Router() {
           <Route path="/services/quickbooks" component={QuickBooks} />
           <Route path="/services/it-consulting" component={ITConsulting} />
           <Route path="/services/workflow-automation" component={AutomationSoftware} />
-          <Route path="/services/automation-software" component={AutomationSoftware} />
           <Route path="/contact" component={Contact} />
           <Route path="/blog" component={Blog} />
           <Route path="/admin/login" component={AdminLogin} />

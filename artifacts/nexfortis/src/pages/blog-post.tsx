@@ -52,7 +52,13 @@ export default function BlogPostPage({ slug }: { slug: string }) {
   return (
     <div>
       <SEO title={post.title} description={post.excerpt} path={`/blog/${post.slug}`} type="article" />
-      <ArticleSchema title={post.title} description={post.excerpt} datePublished={post.createdAt} url={`/blog/${post.slug}`} />
+      <ArticleSchema
+        title={post.title}
+        description={post.excerpt}
+        datePublished={post.createdAt}
+        url={`/blog/${post.slug}`}
+        image={post.coverImage ?? undefined}
+      />
       <BreadcrumbSchema
         items={[
           { name: "Home", url: "/" },
