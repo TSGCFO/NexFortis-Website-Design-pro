@@ -1,7 +1,7 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { CheckCircle } from "lucide-react";
+import { CheckCircle, Shield, Info } from "lucide-react";
 import { formatPrice } from "@/lib/products";
 import { SEO } from "@/components/seo";
 
@@ -15,6 +15,10 @@ interface OrderCompleteProps {
 }
 
 export default function OrderComplete({ orderId, serviceName, addonNames, total, fileName, email }: OrderCompleteProps) {
+  const hasExtendedSupport = addonNames.some(
+    (name) => name === "Extended Support" || name === "Post-Conversion Care",
+  );
+
   return (
     <div>
       <SEO title="Order Submitted" description="Your QuickBooks order has been received and is being processed." path="/order" noIndex />
@@ -40,6 +44,35 @@ export default function OrderComplete({ orderId, serviceName, addonNames, total,
                 <p><strong>Total:</strong> {formatPrice(total)}</p>
                 <p><strong>File:</strong> {fileName}</p>
               </div>
+              {hasExtendedSupport ? (
+                <Card className="mt-4 border-accent/40 bg-accent/5">
+                  <CardContent className="p-4 text-left">
+                    <div className="flex items-start gap-3">
+                      <Shield className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
+                      <div>
+                        <p className="text-sm font-semibold text-primary mb-1">Extended Support Included</p>
+                        <p className="text-xs text-muted-foreground">
+                          Your order includes 5 support tickets within 30 days of file delivery, with a 1-hour priority response time. Submit tickets from your dashboard once your file is delivered.
+                        </p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ) : (
+                <Card className="mt-4 border-blue-200 dark:border-blue-900/40 bg-blue-50 dark:bg-blue-900/10">
+                  <CardContent className="p-4 text-left">
+                    <div className="flex items-start gap-3">
+                      <Info className="w-5 h-5 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
+                      <div>
+                        <p className="text-sm font-semibold text-primary mb-1">Support Included</p>
+                        <p className="text-xs text-muted-foreground">
+                          Your order includes 2 support tickets within 30 days of file delivery, with a 2-hour response time during business hours. Submit tickets from your dashboard once your file is delivered.
+                        </p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
               <p className="text-xs text-muted-foreground mt-4">A confirmation email will be sent to {email}</p>
               <div className="mt-6">
                 <Link href="/portal">

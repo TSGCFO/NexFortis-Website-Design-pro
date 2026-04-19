@@ -265,6 +265,10 @@ export default function Subscription() {
             </div>
           )}
 
+          <p className="text-sm text-muted-foreground text-center mb-6 max-w-3xl mx-auto">
+            Already placed an order? You have basic support included with your purchase. These subscription plans give you ongoing, expanded access beyond the 30-day window.
+          </p>
+
           <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
             {tiers.map((t, i) => (
               <motion.div
