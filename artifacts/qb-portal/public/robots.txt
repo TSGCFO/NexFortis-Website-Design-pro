@@ -1,15 +1,19 @@
 User-agent: *
 Allow: /
 Disallow: /portal
+Disallow: /portal-settings
 Disallow: /login
 Disallow: /register
 Disallow: /forgot-password
 Disallow: /reset-password
 Disallow: /order
+Disallow: /ticket/
 Disallow: /auth/callback
 Disallow: /admin
 Disallow: /admin/mfa-enroll
 Disallow: /admin/mfa-challenge
+# Possibly legacy entries from a previous /qb-portal/ base-path deployment;
+# safe to keep but candidates for removal once the deployment is confirmed.
 Disallow: /qb-portal/admin
 Disallow: /qb-portal/admin/mfa-enroll
 Disallow: /qb-portal/admin/mfa-challenge

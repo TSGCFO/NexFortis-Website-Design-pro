@@ -58,7 +58,7 @@ export default function FAQ() {
   return (
     <div>
       <SEO
-        title="Frequently Asked Questions"
+        title="QuickBooks FAQs — Conversion, Pricing & Data"
         description="Answers to common questions about QuickBooks Enterprise to Premier conversion, .QBM files, pricing, turnaround time, and data security."
         path="/faq"
         jsonLd={faqSchema}

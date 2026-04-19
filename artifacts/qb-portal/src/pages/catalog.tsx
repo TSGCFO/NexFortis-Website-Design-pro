@@ -35,7 +35,7 @@ export default function Catalog() {
   return (
     <div>
       <SEO
-        title="Service Catalog"
+        title="QuickBooks Services & Pricing"
         description="Browse 20 QuickBooks services across 5 categories. Conversion, data services, platform migrations, expert support, and volume packs."
         path="/catalog"
       />
@@ -72,6 +72,7 @@ export default function Catalog() {
               <Filter className="w-4 h-4 text-muted-foreground" />
               <button
                 onClick={() => setFilter("all")}
+                aria-pressed={filter === "all"}
                 className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${filter === "all" ? "bg-navy text-white" : "bg-muted text-muted-foreground hover:bg-muted/80"}`}
               >
                 All ({allProducts.length})
@@ -80,6 +81,7 @@ export default function Catalog() {
                 <button
                   key={cat}
                   onClick={() => setFilter(cat)}
+                  aria-pressed={filter === cat}
                   className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${filter === cat ? "bg-navy text-white" : "bg-muted text-muted-foreground hover:bg-muted/80"}`}
                 >
                   {cat} ({allProducts.filter((p) => p.category === cat).length})

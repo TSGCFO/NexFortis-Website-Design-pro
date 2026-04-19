@@ -4,9 +4,15 @@ import { loadProducts, getProductBySlug, type Product, type ProductCatalog, form
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { CheckCircle, Clock, Shield, Lock, ArrowRight, Star, FileCheck, BookOpen } from "lucide-react";
-import { SEO } from "@/components/seo";
+import { SEO, BASE_URL } from "@/components/seo";
 import { generateServiceSchema, generateBreadcrumbSchema } from "@/lib/seo-schemas";
+import { landingPages } from "@/data/landingPages";
 import { getServiceLandingLinks } from "@/data/serviceLandingLinks";
+
+// Slugs of landing pages that have a corresponding /og/{slug}.jpg image.
+// When a product slug matches a landing-page slug, use the dedicated OG image
+// instead of the generic site-wide fallback.
+const OG_IMAGE_SLUGS = new Set(landingPages.map((p) => p.slug));
 
 export default function ServiceDetail() {
   const { slug } = useParams<{ slug: string }>();
@@ -74,6 +80,11 @@ export default function ServiceDetail() {
         title={product.name}
         description={product.description}
         path={`/service/${product.slug}`}
+        ogImage={
+          OG_IMAGE_SLUGS.has(product.slug)
+            ? `${BASE_URL}/og/${product.slug}.jpg`
+            : undefined
+        }
         jsonLd={jsonLd}
       />
       <section className="section-brand-navy py-16">
