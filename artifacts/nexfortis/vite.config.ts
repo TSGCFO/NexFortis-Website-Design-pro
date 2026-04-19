@@ -4,6 +4,22 @@ import tailwindcss from "@tailwindcss/vite";
 import path from "path";
 import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
 import { stableHmr } from "../../lib/vite-plugin-stable-hmr";
+import vitePrerender from "vite-plugin-prerender";
+
+const PRERENDER_ROUTES = [
+  "/",
+  "/about",
+  "/services",
+  "/services/digital-marketing",
+  "/services/microsoft-365",
+  "/services/quickbooks",
+  "/services/it-consulting",
+  "/services/workflow-automation",
+  "/contact",
+  "/blog",
+  "/privacy",
+  "/terms",
+];
 
 const rawPort = process.env.PORT;
 
@@ -47,6 +63,32 @@ export default defineConfig({
           ),
         ]
       : []),
+    ...(process.env.NODE_ENV === "production"
+      ? [
+          vitePrerender({
+            staticDir: path.resolve(import.meta.dirname, "dist/public"),
+            outputDir: path.resolve(import.meta.dirname, "dist/public"),
+            indexPath: path.resolve(
+              import.meta.dirname,
+              "dist/public/index.html",
+            ),
+            routes: PRERENDER_ROUTES,
+            renderer: new vitePrerender.PuppeteerRenderer({
+              renderAfterTime: 2000,
+              headless: true,
+              maxConcurrentRoutes: 4,
+              args: ["--no-sandbox", "--disable-setuid-sandbox"],
+            }),
+            minify: {
+              collapseBooleanAttributes: true,
+              collapseWhitespace: true,
+              decodeEntities: true,
+              removeAttributeQuotes: false,
+              minifyCSS: true,
+            },
+          }),
+        ]
+      : []),
   ],
   resolve: {
     alias: {
@@ -59,7 +101,6 @@ export default defineConfig({
   build: {
     outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
-    modulePreload: false,
     rollupOptions: {
       output: {
         manualChunks(id) {
