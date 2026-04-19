@@ -196,7 +196,7 @@ export default function Blog() {
             )}
 
             {rest.length > 0 && (
-              <div className="flex flex-wrap justify-center gap-8">
+              <div className="flex flex-wrap justify-start gap-8">
                 {rest.map((post, i) => (
                   <motion.article
                     key={post.id}
