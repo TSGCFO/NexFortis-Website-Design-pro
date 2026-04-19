@@ -50,7 +50,7 @@ interface TicketStats {
 }
 
 const STATUS_FILTERS = ["all", "open", "in_progress", "resolved", "closed"];
-const TIER_FILTERS = ["all", "none", "order-basic", "order-extended", "essentials", "professional", "premium"];
+const TIER_FILTERS = ["all", "premium", "professional", "essentials", "order-extended", "order-basic", "none"];
 const SORT_OPTIONS = [
   { value: "priority", label: "Priority" },
   { value: "newest", label: "Newest" },

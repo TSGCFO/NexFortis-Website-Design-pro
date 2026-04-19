@@ -55,6 +55,8 @@ export function getTierColor(tier: TierType): string {
     case "essentials": return "text-blue-600 dark:text-blue-400";
     case "professional": return "text-purple-600 dark:text-purple-400";
     case "premium": return "text-amber-600 dark:text-amber-400";
+    case "order-basic": return "text-green-600 dark:text-green-400";
+    case "order-extended": return "text-teal-600 dark:text-teal-400";
     default: return "text-gray-500";
   }
 }
