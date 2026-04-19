@@ -97,22 +97,37 @@ export default function FAQ() {
       <section className="py-12 section-brand-light">
         <div className="max-w-3xl mx-auto px-4">
           <div className="space-y-3">
-            {filteredFaq.map((faq, i) => (
-              <div key={i} className="bg-card rounded-lg border border-border overflow-hidden">
-                <button
-                  onClick={() => setOpenIndex(openIndex === i ? null : i)}
-                  className="w-full flex items-center justify-between p-4 text-left hover:bg-muted/30 transition-colors"
-                >
-                  <span className="font-medium text-primary text-sm pr-4">{faq.q}</span>
-                  <ChevronDown className={`w-4 h-4 text-muted-foreground shrink-0 transition-transform ${openIndex === i ? "rotate-180" : ""}`} />
-                </button>
-                {openIndex === i && (
-                  <div className="px-4 pb-4 text-sm text-muted-foreground leading-relaxed border-t border-border pt-3">
-                    {faq.a}
-                  </div>
-                )}
-              </div>
-            ))}
+            {filteredFaq.map((faq, i) => {
+              const isOpen = openIndex === i;
+              const slug = faq.q.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 40);
+              const btnId = `faq-page-btn-${i}-${slug}`;
+              const panelId = `faq-page-panel-${i}-${slug}`;
+              return (
+                <div key={i} className="bg-card rounded-lg border border-border overflow-hidden">
+                  <button
+                    id={btnId}
+                    type="button"
+                    aria-expanded={isOpen}
+                    aria-controls={panelId}
+                    onClick={() => setOpenIndex(isOpen ? null : i)}
+                    className="w-full flex items-center justify-between p-4 text-left hover:bg-muted/30 transition-colors"
+                  >
+                    <span className="font-medium text-primary text-sm pr-4">{faq.q}</span>
+                    <ChevronDown className={`w-4 h-4 text-muted-foreground shrink-0 transition-transform ${isOpen ? "rotate-180" : ""}`} />
+                  </button>
+                  {isOpen && (
+                    <div
+                      id={panelId}
+                      role="region"
+                      aria-labelledby={btnId}
+                      className="px-4 pb-4 text-sm text-muted-foreground leading-relaxed border-t border-border pt-3"
+                    >
+                      {faq.a}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
