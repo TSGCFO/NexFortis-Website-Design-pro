@@ -14,7 +14,7 @@ export default function About() {
 
   return (
     <div>
-      <SEO title="About Us — Canada's Trusted IT Partner" description="Learn about NexFortis IT Solutions — our mission, vision, and values. Empowering Canadian businesses with innovative IT solutions since day one." path="/about" />
+      <SEO title="About NexFortis — Canada's Trusted IT Partner" description="Learn about NexFortis IT Solutions — our mission, vision, and values, plus the certified team delivering end-to-end IT across Canada from Nobleton, Ontario." path="/about" />
       <BreadcrumbSchema
         items={[
           { name: "Home", url: "/" },

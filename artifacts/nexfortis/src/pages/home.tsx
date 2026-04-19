@@ -124,7 +124,7 @@ export default function Home() {
     <div className="w-full">
       <SEO
         title="NexFortis IT Solutions"
-        description="NexFortis delivers end-to-end IT solutions for Canadian businesses — managed IT, Microsoft 365, QuickBooks migration, digital marketing, and workflow automation. Get a free consultation today."
+        description="End-to-end IT for Canadian businesses from NexFortis: managed IT, Microsoft 365, QuickBooks migration, digital marketing, and workflow automation. Free quote."
         path="/"
       />
       <OrganizationSchema />

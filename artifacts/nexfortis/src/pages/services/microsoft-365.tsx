@@ -59,7 +59,7 @@ export default function Microsoft365() {
 
   return (
     <div>
-      <SEO title="Microsoft 365 Deployment & Security" description="Microsoft AI Cloud Partner for M365 deployment: zero-downtime email migration, Teams & SharePoint setup, Intune MDM, and zero-trust security for Canadian businesses." path="/services/microsoft-365" />
+      <SEO title="Microsoft 365 Deployment & Security" description="Microsoft AI Cloud Partner for M365: zero-downtime email migration, Teams and SharePoint setup, Intune MDM, and zero-trust security for Canadian businesses." path="/services/microsoft-365" />
       <ServiceSchema name="Microsoft 365 Solutions" description="Microsoft 365 deployment, email migration, Teams, Intune MDM, and enterprise security for Canadian businesses." url="/services/microsoft-365" />
       <BreadcrumbSchema items={[
         { name: "Home", url: "/" },
