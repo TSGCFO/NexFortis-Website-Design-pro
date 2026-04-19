@@ -1,7 +1,7 @@
 import { Router, type Request, type Response, type NextFunction, type RequestHandler } from "express";
 import rateLimit, { ipKeyGenerator } from "express-rate-limit";
 import { db } from "@workspace/db";
-import { qbUsers, qbOrders, qbOrderFiles, qbWaitlistSignups, qbSupportTickets, qbSubscriptions, qbTicketUsage, qbReferrals, qbPromoCodes, qbPromoCodeRedemptions } from "@workspace/db/schema";
+import { qbUsers, qbOrders, qbOrderFiles, qbWaitlistSignups, qbSupportTickets, qbSubscriptions, qbTicketUsage, qbReferrals, qbPromoCodes, qbPromoCodeRedemptions, qbOrderSupportEntitlements } from "@workspace/db/schema";
 import { sendEmail } from "../lib/email-service";
 import { freeOrderCustomerEmail, freeOrderOperatorEmail, paidOrderConfirmationEmail, paidOrderOperatorEmail, welcomeRegistrationEmail, waitlistConfirmationEmail } from "../lib/email-templates";
 import { generateUniqueReferralCode } from "../lib/referral-code";
@@ -109,6 +109,66 @@ const VALID_STATUS_TRANSITIONS: Record<string, string[]> = {
 
 function isValidStatusTransition(from: string, to: string): boolean {
   return VALID_STATUS_TRANSITIONS[from]?.includes(to) ?? false;
+}
+
+const EXTENDED_SUPPORT_ADDON_NAMES = new Set(["Extended Support", "Post-Conversion Care"]);
+
+export async function ensureOrderSupportEntitlement(order: typeof qbOrders.$inferSelect): Promise<void> {
+  if (!order.userId) {
+    return;
+  }
+
+  const [existing] = await db
+    .select()
+    .from(qbOrderSupportEntitlements)
+    .where(eq(qbOrderSupportEntitlements.orderId, order.id))
+    .limit(1);
+
+  if (existing) {
+    return;
+  }
+
+  let addonNames: string[] = [];
+  if (order.addons) {
+    try {
+      const parsed = JSON.parse(order.addons);
+      if (Array.isArray(parsed)) {
+        addonNames = parsed.map((x) => String(x));
+      }
+    } catch {
+      // ignore malformed addons JSON
+    }
+  }
+
+  const hasExtended = addonNames.some((name) => EXTENDED_SUPPORT_ADDON_NAMES.has(name));
+  const ticketsAllowed = hasExtended ? 5 : 2;
+  const slaMinutes = hasExtended ? 60 : 120;
+  const isUpgraded = hasExtended;
+
+  const startsAt = new Date();
+  const expiresAt = new Date(startsAt.getTime() + 30 * 24 * 60 * 60 * 1000);
+
+  try {
+    await db.insert(qbOrderSupportEntitlements).values({
+      orderId: order.id,
+      userId: order.userId,
+      ticketsAllowed,
+      ticketsUsed: 0,
+      slaMinutes,
+      startsAt,
+      expiresAt,
+      isUpgraded,
+    });
+    console.log("[Orders] Created support entitlement for order", order.id, {
+      ticketsAllowed,
+      slaMinutes,
+      isUpgraded,
+    });
+  } catch (err) {
+    // The orderId column has a unique constraint, so a concurrent insert is the
+    // only realistic source of failure here — treat it as idempotent.
+    console.warn("[Orders] Failed to create support entitlement for order", order.id, err);
+  }
 }
 
 let stripeClient: Stripe | null = null;
@@ -1192,6 +1252,10 @@ router.put("/orders/:id/status", requireAuth, requireOperator, async (req: Reque
       .set({ status, updatedAt: new Date() })
       .where(eq(qbOrders.id, orderId))
       .returning();
+
+    if (status === "delivered" && updated) {
+      await ensureOrderSupportEntitlement(updated);
+    }
 
     res.json({ order: updated });
   } catch (err) {

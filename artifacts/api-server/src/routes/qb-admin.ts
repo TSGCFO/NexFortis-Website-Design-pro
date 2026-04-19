@@ -8,6 +8,7 @@ import { supabaseAdmin, isStorageAvailable } from "../lib/supabase";
 import { sendEmail } from "../lib/email-service";
 import { fileDeliveryEmail } from "../lib/email-templates";
 import { getValidOrigin } from "../lib/config";
+import { ensureOrderSupportEntitlement } from "./qb-portal";
 
 const router = Router();
 
@@ -27,7 +28,7 @@ const adminUpload = multer({
   },
 });
 
-const VALID_ORDER_STATUSES = ["pending_payment", "submitted", "paid", "processing", "completed", "failed", "cancelled"];
+const VALID_ORDER_STATUSES = ["pending_payment", "submitted", "paid", "processing", "completed", "delivered", "failed", "cancelled"];
 
 router.get("/dashboard", async (_req: Request, res: Response) => {
   try {
@@ -260,6 +261,10 @@ router.patch("/orders/:id/status", async (req: Request, res: Response) => {
       .returning();
 
     console.log(`[AUDIT] Order ${orderId} status changed from ${oldStatus} to ${status} by operator ${req.userId} at ${new Date().toISOString()}`);
+
+    if (status === "delivered" && updated) {
+      await ensureOrderSupportEntitlement(updated);
+    }
 
     res.json({ order: updated });
   } catch (err) {
