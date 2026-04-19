@@ -24,6 +24,7 @@ export default function About() {
           name: "Hassan Sadiq",
           jobTitle: "Founder & CEO",
           worksFor: { "@id": "https://nexfortis.com/#organization" },
+          description: "Hassan Sadiq is the founder and CEO of NexFortis IT Solutions in Nobleton, Ontario, with 15+ years helping Canadian small and mid-sized businesses adopt practical IT, Microsoft 365, and QuickBooks solutions that actually move the needle.",
           url: "https://nexfortis.com/about",
           image: "https://nexfortis.com/images/hassan-headshot.png",
           sameAs: ["https://www.linkedin.com/in/hassan-sadiq-nexfortis"],
