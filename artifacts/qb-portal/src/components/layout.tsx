@@ -298,30 +298,39 @@ export function Footer() {
           </div>
 
           <div className="border-t border-white/10 pt-6 pb-4 flex justify-center items-center gap-8">
-            <img
-              src={`${import.meta.env.BASE_URL}images/badge-microsoft-partner.png`}
-              alt="Microsoft AI Cloud Partner Program badge"
-              className="h-9 w-auto object-contain opacity-60 hover:opacity-90 transition-opacity"
-              width={120}
-              height={40}
-              loading="lazy"
-            />
-            <img
-              src={`${import.meta.env.BASE_URL}images/badge-google-partner.png`}
-              alt="Google Partner badge"
-              className="h-9 w-auto object-contain opacity-60 hover:opacity-90 transition-opacity"
-              width={120}
-              height={40}
-              loading="lazy"
-            />
-            <img
-              src={`${import.meta.env.BASE_URL}images/badge-quickbooks-proadvisor.png`}
-              alt="QuickBooks ProAdvisor badge"
-              className="h-9 w-auto object-contain opacity-60 hover:opacity-90 transition-opacity"
-              width={120}
-              height={40}
-              loading="lazy"
-            />
+            <picture>
+              <source srcSet={`${import.meta.env.BASE_URL}images/badge-microsoft-partner.webp`} type="image/webp" />
+              <img
+                src={`${import.meta.env.BASE_URL}images/badge-microsoft-partner.png`}
+                alt="Microsoft AI Cloud Partner Program badge"
+                className="h-9 w-auto object-contain opacity-60 hover:opacity-90 transition-opacity"
+                width={120}
+                height={40}
+                loading="lazy"
+              />
+            </picture>
+            <picture>
+              <source srcSet={`${import.meta.env.BASE_URL}images/badge-google-partner.webp`} type="image/webp" />
+              <img
+                src={`${import.meta.env.BASE_URL}images/badge-google-partner.png`}
+                alt="Google Partner badge"
+                className="h-9 w-auto object-contain opacity-60 hover:opacity-90 transition-opacity"
+                width={120}
+                height={40}
+                loading="lazy"
+              />
+            </picture>
+            <picture>
+              <source srcSet={`${import.meta.env.BASE_URL}images/badge-quickbooks-proadvisor.webp`} type="image/webp" />
+              <img
+                src={`${import.meta.env.BASE_URL}images/badge-quickbooks-proadvisor.png`}
+                alt="QuickBooks ProAdvisor badge"
+                className="h-9 w-auto object-contain opacity-60 hover:opacity-90 transition-opacity"
+                width={120}
+                height={40}
+                loading="lazy"
+              />
+            </picture>
           </div>
 
           <div className="border-t border-white/10 pt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-white/40">
