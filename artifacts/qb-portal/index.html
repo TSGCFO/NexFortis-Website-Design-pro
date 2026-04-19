@@ -3,7 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NexFortis QuickBooks Portal</title>
+    <!--
+      Per-page SEO tags (title, description, canonical, OG/Twitter, JSON-LD)
+      are injected by react-helmet-async at runtime from `src/components/seo.tsx`,
+      and baked into static HTML by the Vite build's pre-render step
+      (vite-plugin-prerender, see `vite.config.ts`). The shell intentionally omits
+      these tags so each pre-rendered page ships exactly one canonical/title/etc.
+    -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preload" href="/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="/fonts/inter-600.woff2" as="font" type="font/woff2" crossorigin>

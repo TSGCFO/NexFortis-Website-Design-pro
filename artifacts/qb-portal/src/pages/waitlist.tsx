@@ -28,11 +28,12 @@ export default function Waitlist() {
         if (p) {
           setProduct(p);
         } else {
+          // Unknown product slug — bounce to catalog.
           setLocation("/catalog");
         }
-      } else {
-        setLocation("/catalog");
       }
+      // No `?product=` provided: render the generic waitlist landing
+      // (used by the public sitemap entry and pre-rendered HTML).
     });
   }, [productSlug, setLocation]);
 

@@ -120,6 +120,7 @@ export function Layout({ children }: { children: ReactNode }) {
         document.documentElement.style.scrollPaddingBottom = "";
       };
     }
+    return undefined;
   }, [isServiceSubPage]);
 
   const navbarLogo = resolvedTheme === "dark"

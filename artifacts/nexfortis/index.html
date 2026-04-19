@@ -3,27 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
-    <title>NexFortis IT Solutions — Complexity Decoded. Advantage.</title>
-    <meta name="description" content="NexFortis delivers end-to-end IT solutions for Canadian businesses — managed IT, Microsoft 365, QuickBooks migration, digital marketing, and workflow automation." />
-    <link rel="canonical" href="https://nexfortis.com/" />
-    <link rel="alternate" hreflang="en-CA" href="https://nexfortis.com/" />
-    <link rel="alternate" hreflang="x-default" href="https://nexfortis.com/" />
-    <meta name="robots" content="index, follow" />
-    <meta name="geo.region" content="CA-ON" />
-    <meta name="geo.placename" content="Nobleton" />
 
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="NexFortis IT Solutions — Complexity Decoded. Advantage." />
-    <meta property="og:description" content="NexFortis delivers end-to-end IT solutions for Canadian businesses — managed IT, Microsoft 365, QuickBooks migration, digital marketing, and workflow automation." />
-    <meta property="og:url" content="https://nexfortis.com/" />
-    <meta property="og:image" content="https://nexfortis.com/opengraph.png" />
-    <meta property="og:site_name" content="NexFortis IT Solutions" />
-    <meta property="og:locale" content="en_CA" />
-
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="NexFortis IT Solutions — Complexity Decoded. Advantage." />
-    <meta name="twitter:description" content="NexFortis delivers end-to-end IT solutions for Canadian businesses — managed IT, Microsoft 365, QuickBooks migration, digital marketing, and workflow automation." />
-    <meta name="twitter:image" content="https://nexfortis.com/opengraph.png" />
+    <!--
+      Per-page SEO tags (title, description, canonical, hreflang, robots, OG/Twitter,
+      JSON-LD) are injected by react-helmet-async at runtime from `src/components/seo.tsx`,
+      and baked into static HTML by the Vite build's pre-render step
+      (vite-plugin-prerender, see `vite.config.ts`). The shell intentionally omits
+      these tags so each pre-rendered page ships exactly one canonical/title/etc.
+      Crawlers fetching the SPA shell directly (the unrendered `dist/public/index.html`
+      that serves all unknown routes) will see only the noscript fallback below.
+    -->
 
     <meta name="theme-color" content="#003566" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
@@ -33,9 +22,6 @@
     <link rel="preload" href="/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/alegreya-sans-sc-700-latin.woff2" as="font" type="font/woff2" crossorigin />
 
-    <!-- JSON-LD structured data (Organization, LocalBusiness, WebSite) is
-         injected at runtime via react-helmet-async from src/components/seo.tsx
-         to avoid duplicate schema blocks. -->
     <!-- Google Analytics 4 (GA4) is loaded at runtime by src/lib/analytics.ts
          after the visitor accepts the cookie consent banner. The measurement
          ID is provided via the VITE_GA_MEASUREMENT_ID environment variable. -->
