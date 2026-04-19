@@ -15,7 +15,7 @@ export default function About() {
 
   return (
     <div>
-      <SEO title="About NexFortis — Trusted Canadian IT" description="Learn about NexFortis IT Solutions — our mission, vision, and values. Empowering Canadian businesses with innovative IT solutions since day one." path="/about" />
+      <SEO title="About NexFortis — Trusted Canadian IT" description="Learn about NexFortis IT Solutions — our mission, vision, values, and Canadian-based team helping businesses thrive with practical, expert-led IT services." path="/about" />
       <Helmet>
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",

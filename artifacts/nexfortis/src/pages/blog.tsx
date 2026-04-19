@@ -109,7 +109,7 @@ export default function Blog() {
     <div>
       <SEO
         title="IT Insights & Resources"
-        description="Expert IT advice, managed services guides, QuickBooks tips, Microsoft 365 how-tos, and digital marketing insights from the NexFortis team in Canada."
+        description="Expert IT advice, managed services guides, QuickBooks tips, Microsoft 365 how-tos, and digital marketing insights from the NexFortis team based in Ontario, Canada."
         path="/blog"
         type="website"
       />
