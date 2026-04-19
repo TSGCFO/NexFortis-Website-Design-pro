@@ -46,11 +46,19 @@ export function SEO({
       <title>{fullTitle}</title>
       <meta name="description" content={description} />
       {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+      {canonicalUrl && (
+        <link rel="alternate" hrefLang="en-CA" href={canonicalUrl} />
+      )}
+      {canonicalUrl && (
+        <link rel="alternate" hrefLang="x-default" href={canonicalUrl} />
+      )}
 
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={description} />
       {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
       <meta property="og:image" content={image} />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
       <meta property="og:type" content={ogType} />
       <meta property="og:site_name" content={SITE_NAME} />
       <meta property="og:locale" content="en_CA" />
@@ -70,7 +78,14 @@ export function SEO({
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={image} />
 
-      {noIndex && <meta name="robots" content="noindex, nofollow" />}
+      <meta name="geo.region" content="CA-ON" />
+      <meta name="geo.placename" content="Nobleton" />
+
+      {noIndex ? (
+        <meta name="robots" content="noindex, nofollow" />
+      ) : (
+        <meta name="robots" content="index, follow" />
+      )}
 
       {schemas.map((schema, idx) => (
         <script key={idx} type="application/ld+json">
