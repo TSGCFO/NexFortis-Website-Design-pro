@@ -364,7 +364,7 @@ export function EnhancedSupportTab({ subscriptionInfo, getAccessToken }: Enhance
                 <span
                   className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wide mb-2 ${
                     primaryEntitlement.isUpgraded
-                      ? "bg-green-600 text-white"
+                      ? "bg-green-600 text-white dark:bg-green-700 dark:text-white"
                       : "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300"
                   }`}
                 >
@@ -412,6 +412,7 @@ export function EnhancedSupportTab({ subscriptionInfo, getAccessToken }: Enhance
           </CardContent>
         </Card>
       )}
+
       {ticketSubmitted ? (
         <Card>
           <CardContent className="p-8 text-center">
