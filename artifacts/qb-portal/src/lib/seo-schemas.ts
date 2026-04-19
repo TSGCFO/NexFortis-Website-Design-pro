@@ -115,7 +115,8 @@ export function generateHowToSchema(pageData: {
 
 export function generateServiceSchema(
   pageData: { h1: string; metaDescription: string; slug: string; primaryKeyword: string },
-  product: Product | undefined
+  product: Product | undefined,
+  urlOverride?: string,
 ) {
   return {
     "@context": "https://schema.org",
@@ -123,7 +124,12 @@ export function generateServiceSchema(
     name: pageData.h1,
     description: pageData.metaDescription,
     serviceType: pageData.primaryKeyword,
-    url: `${BASE_URL}/landing/${pageData.slug}`,
+    // Default to the landing-page URL for backwards compatibility with
+    // landing-page-layout callers. Service-detail pages pass an override
+    // pointing at /service/<slug> so the schema's top-level `url` matches
+    // the inner `offers.url` and the page's canonical (otherwise Google
+    // would see two conflicting URLs in one Service block).
+    url: urlOverride ?? `${BASE_URL}/landing/${pageData.slug}`,
     provider: {
       "@type": "Organization",
       name: ORG_NAME,

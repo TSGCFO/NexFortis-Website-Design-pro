@@ -65,7 +65,8 @@ export default function ServiceDetail() {
         slug: product.slug,
         primaryKeyword: product.name,
       },
-      product
+      product,
+      `${BASE_URL}/service/${product.slug}`,
     ),
     generateBreadcrumbSchema([
       { name: "Services", path: "/catalog" },
