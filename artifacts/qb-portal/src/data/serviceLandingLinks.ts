@@ -26,7 +26,7 @@ export const serviceLandingLinks: Record<string, LandingLink[]> = {
     { slug: "how-conversion-works", anchor: "where rush orders sit in our process" },
     { slug: "is-it-safe", anchor: "is it safe to hand us your company file" },
   ],
-  "post-conversion-care": [
+  "extended-support": [
     { slug: "is-it-safe", anchor: "how we protect your data after conversion" },
     { slug: "how-conversion-works", anchor: "a full walkthrough of the conversion process" },
   ],

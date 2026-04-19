@@ -377,6 +377,7 @@ export default function Home() {
           <motion.div {...fadeInUp} className="text-center mb-10">
             <h2 className="text-3xl font-bold font-display tracking-tight text-primary mb-4">Need Expert QuickBooks Support?</h2>
             <p className="text-muted-foreground max-w-xl mx-auto">Priority support from Canadian QuickBooks experts with guaranteed response times.</p>
+            <p className="text-sm text-muted-foreground mt-4 mb-2">Every paid order includes basic support — 2 tickets within 30 days of delivery.</p>
           </motion.div>
           <motion.div {...fadeInUp} className="grid md:grid-cols-3 gap-6 mb-8">
             <Card className="text-center">
