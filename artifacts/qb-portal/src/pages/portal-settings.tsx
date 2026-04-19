@@ -217,6 +217,7 @@ export function EnhancedSupportTab({ subscriptionInfo, getAccessToken }: Enhance
   const hasOnlyExpiredEntitlements = !hasSub && !hasActiveEntitlement && expiredEntitlements.length > 0;
   const showSubscriptionRequired = !hasSub && !hasActiveEntitlement && !hasOnlyExpiredEntitlements;
   const canSubmitTicket = (hasSub && !atLimit) || hasActiveEntitlement;
+  const primaryDaysRemaining = primaryEntitlement ? daysUntil(primaryEntitlement.expiresAt) : 0;
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFileError(null);
@@ -327,9 +328,9 @@ export function EnhancedSupportTab({ subscriptionInfo, getAccessToken }: Enhance
           <CardContent className="p-4 flex items-start gap-3">
             <Clock className="w-5 h-5 text-amber-600 dark:text-amber-400 mt-0.5 flex-shrink-0" />
             <div>
-              <p className="text-sm font-medium text-amber-700 dark:text-amber-300 mb-1">Your 30-day support window has ended</p>
+              <p className="text-sm font-medium text-amber-700 dark:text-amber-300 mb-1">Your included support is no longer available</p>
               <p className="text-sm text-muted-foreground mb-3">
-                The included support window from your past order has expired. Subscribe to a support plan to keep getting expert help — starting at $25 CAD/month.
+                Your included support tickets have been used or have expired. Subscribe to a support plan to keep getting expert help — starting at $25 CAD/month.
               </p>
               <Link href="/subscription">
                 <Button size="sm" className="bg-rose-gold text-rose-gold-foreground hover:bg-rose-gold-hover font-display gap-1">
@@ -399,7 +400,7 @@ export function EnhancedSupportTab({ subscriptionInfo, getAccessToken }: Enhance
                 {primaryEntitlement.ticketsRemaining} of {primaryEntitlement.ticketsAllowed} tickets remaining
               </span>
               <span className="inline-flex items-center gap-1">
-                <Clock className="w-3 h-3" /> Expires in {daysUntil(primaryEntitlement.expiresAt)} day{daysUntil(primaryEntitlement.expiresAt) !== 1 ? "s" : ""}
+                <Clock className="w-3 h-3" /> Expires in {primaryDaysRemaining} day{primaryDaysRemaining !== 1 ? "s" : ""}
               </span>
             </div>
 
@@ -461,7 +462,7 @@ export function EnhancedSupportTab({ subscriptionInfo, getAccessToken }: Enhance
                   id="ticket-subject"
                   type="text"
                   required
-                  disabled={atLimit}
+                  disabled={!canSubmitTicket}
                   value={ticketSubject}
                   onChange={(e) => setTicketSubject(e.target.value)}
                   className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm disabled:opacity-50"
@@ -473,7 +474,7 @@ export function EnhancedSupportTab({ subscriptionInfo, getAccessToken }: Enhance
                 <textarea
                   id="ticket-message"
                   required
-                  disabled={atLimit}
+                  disabled={!canSubmitTicket}
                   value={ticketMessage}
                   onChange={(e) => setTicketMessage(e.target.value)}
                   rows={5}
@@ -487,7 +488,7 @@ export function EnhancedSupportTab({ subscriptionInfo, getAccessToken }: Enhance
                   id="ticket-critical"
                   type="checkbox"
                   checked={isCritical}
-                  disabled={atLimit}
+                  disabled={!canSubmitTicket}
                   onChange={(e) => setIsCritical(e.target.checked)}
                   className="w-4 h-4 rounded border-border"
                 />
@@ -504,7 +505,7 @@ export function EnhancedSupportTab({ subscriptionInfo, getAccessToken }: Enhance
                 <div className="flex items-center gap-3">
                   <label
                     htmlFor="ticket-attachment"
-                    className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-border text-sm cursor-pointer hover:bg-muted transition-colors ${atLimit ? "opacity-50 pointer-events-none" : ""}`}
+                    className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-border text-sm cursor-pointer hover:bg-muted transition-colors ${!canSubmitTicket ? "opacity-50 pointer-events-none" : ""}`}
                   >
                     <Paperclip className="w-4 h-4 text-muted-foreground" />
                     {attachment ? attachment.name : "Choose file"}
@@ -512,7 +513,7 @@ export function EnhancedSupportTab({ subscriptionInfo, getAccessToken }: Enhance
                   <input
                     id="ticket-attachment"
                     type="file"
-                    disabled={atLimit}
+                    disabled={!canSubmitTicket}
                     accept={ALLOWED_FILE_TYPES.join(",")}
                     onChange={handleFileChange}
                     className="hidden"
@@ -538,7 +539,7 @@ export function EnhancedSupportTab({ subscriptionInfo, getAccessToken }: Enhance
 
               <Button
                 type="submit"
-                disabled={atLimit || submitting}
+                disabled={!canSubmitTicket || submitting}
                 className="bg-navy text-white hover:bg-navy/90 font-display gap-1"
                 aria-label="Submit support ticket"
               >
@@ -547,7 +548,7 @@ export function EnhancedSupportTab({ subscriptionInfo, getAccessToken }: Enhance
               </Button>
             </form>
 
-            {hasActiveEntitlement && !hasSub && (
+            {hasActiveEntitlement && (
               <div className="mt-6 p-4 rounded-lg border border-border bg-muted/40 flex flex-wrap items-center justify-between gap-3">
                 <div>
                   <p className="text-sm font-medium text-primary">Need ongoing support?</p>
@@ -576,7 +577,7 @@ export function EnhancedSupportTab({ subscriptionInfo, getAccessToken }: Enhance
                       <div className="flex items-center gap-2 flex-wrap mb-1">
                         <p className="font-semibold text-sm">{ticket.subject}</p>
                         {ticket.tierAtSubmission && (
-                          <TierBadge tier={ticket.tierAtSubmission as "essentials" | "professional" | "premium"} size="sm" />
+                          <TierBadge tier={ticket.tierAtSubmission as "essentials" | "professional" | "premium" | "order-basic" | "order-extended"} size="sm" />
                         )}
                         {ticket.isCritical && (
                           <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400 text-[10px] font-bold">
