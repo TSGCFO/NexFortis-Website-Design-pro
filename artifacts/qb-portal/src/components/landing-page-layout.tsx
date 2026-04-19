@@ -21,10 +21,19 @@ function resolveTokens(
   text: string,
   product: Product | undefined
 ): string {
-  if (!product) return text;
-  return text
-    .replace(/\{launchPrice\}/g, formatPriceCAD(product.launch_price_cad))
-    .replace(/\{basePrice\}/g, formatPriceCAD(product.base_price_cad));
+  const resolved = product
+    ? text
+        .replace(/\{launchPrice\}/g, formatPriceCAD(product.launch_price_cad))
+        .replace(/\{basePrice\}/g, formatPriceCAD(product.base_price_cad))
+    : text;
+  // Safeguard: if a product fetch failed during pre-render or a new token
+  // was added without a corresponding replacement, strip leftover
+  // `{anything}` placeholders so they do not leak into the meta description
+  // or visible CTA label. Collapse any double spaces produced by removal.
+  return resolved
+    .replace(/\{[a-zA-Z]+\}/g, "")
+    .replace(/\s{2,}/g, " ")
+    .trim();
 }
 
 export function LandingPageLayout({
