@@ -291,8 +291,8 @@ export function Footer() {
             <div>
               <h4 className="font-display font-semibold text-lg mb-4 text-white">Legal</h4>
               <ul className="space-y-3 text-sm text-white/60">
-                <li><a href="https://nexfortis.com/terms" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors">Terms of Service</a></li>
-                <li><a href="https://nexfortis.com/privacy" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors">Privacy Policy</a></li>
+                <li><Link href="/terms" className="hover:text-accent transition-colors">Terms of Service</Link></li>
+                <li><Link href="/privacy" className="hover:text-accent transition-colors">Privacy Policy</Link></li>
               </ul>
             </div>
           </div>
