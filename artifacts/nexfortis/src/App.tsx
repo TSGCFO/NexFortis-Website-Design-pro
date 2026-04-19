@@ -1,4 +1,4 @@
-import { Switch, Route, Router as WouterRouter } from "wouter";
+import { Switch, Route, Router as WouterRouter, Redirect } from "wouter";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Layout, FloatingCTA, BackToTop } from "@/components/layout";
@@ -46,7 +46,9 @@ function Router() {
           <Route path="/services/quickbooks" component={QuickBooks} />
           <Route path="/services/it-consulting" component={ITConsulting} />
           <Route path="/services/workflow-automation" component={AutomationSoftware} />
-          <Route path="/services/automation-software" component={AutomationSoftware} />
+          <Route path="/services/automation-software">
+            <Redirect to="/services/workflow-automation" replace />
+          </Route>
           <Route path="/contact" component={Contact} />
           <Route path="/blog" component={Blog} />
           <Route path="/admin/login" component={AdminLogin} />

@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 import { useState, lazy, Suspense } from "react";
 import { Section, SectionHeader, FAQItem } from "@/components/ui-elements";
-import { SEO, OrganizationSchema, LocalBusinessSchema, WebSiteSchema, FAQSchema } from "@/components/seo";
+import { SEO, FAQSchema } from "@/components/seo";
 
 const HeroCanvas = lazy(() => import("@/components/hero-canvas"));
 
@@ -54,7 +54,7 @@ const services = [
     title: "Workflow Automation & Custom Software",
     description: "Eliminate manual data entry with Power Automate, Zapier, custom APIs, and bespoke web applications built for your exact process.",
     benefits: ["Reduce manual work by up to 90%", "Real-time multi-system sync", "Custom dashboards & reporting"],
-    href: "/services/automation-software",
+    href: "/services/workflow-automation",
     badge: "Automation & Dev",
     cta: "Get a Free Quote",
   },
@@ -127,9 +127,7 @@ export default function Home() {
         description="NexFortis delivers end-to-end IT solutions for Canadian businesses — managed IT, Microsoft 365, QuickBooks migration, digital marketing, and workflow automation. Get a free consultation today."
         path="/"
       />
-      <OrganizationSchema />
-      <LocalBusinessSchema />
-      <WebSiteSchema />
+      {/* Global schemas (Organization, LocalBusiness, WebSite) are rendered by Layout. */}
       <FAQSchema faqs={homeFaqs} />
 
       <section className="relative min-h-[70vh] flex items-center justify-center section-brand-navy overflow-hidden pt-24 pb-8">

@@ -89,7 +89,7 @@ export function LocalBusinessSchema() {
   const schema = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    "@id": `${siteUrl}/#organization`,
+    "@id": `${siteUrl}/#localbusiness`,
     name: "NexFortis IT Solutions",
     legalName: "17756968 Canada Inc.",
     url: siteUrl,
@@ -216,14 +216,18 @@ export function FAQSchema({ faqs }: { faqs: { question: string; answer: string }
   );
 }
 
-export function ArticleSchema({ title, description, datePublished, dateModified, url }: {
+export function ArticleSchema({ title, description, datePublished, dateModified, url, image }: {
   title: string;
   description: string;
   datePublished: string;
   dateModified?: string;
   url: string;
+  image?: string;
 }) {
   const siteUrl = SITE_URL;
+  const articleImage = image
+    ? (image.startsWith("http") ? image : `${siteUrl}${image}`)
+    : `${siteUrl}/opengraph.png`;
   const schema = {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -231,6 +235,7 @@ export function ArticleSchema({ title, description, datePublished, dateModified,
     description,
     datePublished,
     dateModified: dateModified || datePublished,
+    image: articleImage,
     url: url.startsWith("http") ? url : `${siteUrl}${url}`,
     publisher: {
       "@type": "Organization",

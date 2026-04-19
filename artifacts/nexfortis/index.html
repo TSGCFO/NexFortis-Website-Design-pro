@@ -32,7 +32,6 @@
     <link rel="manifest" href="/manifest.json" />
     <link rel="preload" href="/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/alegreya-sans-sc-700-latin.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/images/hero-bg.webp" as="image" type="image/webp" />
 
     <!-- JSON-LD structured data (Organization, LocalBusiness, WebSite) is
          injected at runtime via react-helmet-async from src/components/seo.tsx
@@ -43,6 +42,21 @@
   </head>
   <body>
     <div id="root"></div>
+    <noscript>
+      <div style="max-width:760px;margin:48px auto;padding:24px;font-family:system-ui,-apple-system,sans-serif;line-height:1.6;color:#0a1628;">
+        <h1 style="font-size:28px;margin:0 0 12px;">NexFortis IT Solutions</h1>
+        <p style="font-size:18px;color:#345;margin:0 0 16px;">Complexity Decoded. Advantage.</p>
+        <p>NexFortis delivers end-to-end IT solutions for Canadian businesses — managed IT, Microsoft 365, QuickBooks migration, digital marketing, and workflow automation.</p>
+        <p>This site requires JavaScript for the full experience. You can still reach us:</p>
+        <ul>
+          <li>Email: <a href="mailto:contact@nexfortis.com">contact@nexfortis.com</a></li>
+          <li><a href="/about">About NexFortis</a></li>
+          <li><a href="/services">Our services</a></li>
+          <li><a href="/blog">Blog</a></li>
+          <li><a href="/contact">Contact us</a></li>
+        </ul>
+      </div>
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

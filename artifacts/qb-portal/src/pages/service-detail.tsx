@@ -4,8 +4,36 @@ import { loadProducts, getProductBySlug, type Product, type ProductCatalog, form
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { CheckCircle, Clock, Shield, Lock, ArrowRight, Star, FileCheck, BookOpen } from "lucide-react";
+import { Helmet } from "react-helmet-async";
 import { SEO } from "@/components/seo";
+import { generateBreadcrumbSchema } from "@/lib/seo-schemas";
 import { getServiceLandingLinks } from "@/data/serviceLandingLinks";
+
+const SITE_URL = "https://qb.nexfortis.com";
+
+function buildServiceDetailSchema(product: Product) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: product.name,
+    description: product.description,
+    serviceType: product.category,
+    url: `${SITE_URL}/service/${product.slug}`,
+    provider: {
+      "@type": "Organization",
+      name: "NexFortis QuickBooks Portal",
+      url: SITE_URL,
+    },
+    areaServed: { "@type": "Country", name: "Canada" },
+    offers: {
+      "@type": "Offer",
+      priceCurrency: "CAD",
+      price: (getActivePrice(product) / 100).toFixed(2),
+      availability: "https://schema.org/InStock",
+      url: `${SITE_URL}/service/${product.slug}`,
+    },
+  };
+}
 
 export default function ServiceDetail() {
   const { slug } = useParams<{ slug: string }>();
@@ -57,6 +85,21 @@ export default function ServiceDetail() {
         description={product.description}
         path={`/service/${product.slug}`}
       />
+      <Helmet>
+        <script type="application/ld+json">
+          {JSON.stringify(buildServiceDetailSchema(product))}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify(
+            generateBreadcrumbSchema([
+              { name: "Home", path: "/" },
+              { name: "Services", path: "/catalog" },
+              { name: product.category, path: `/category/${product.category_slug}` },
+              { name: product.name, path: `/service/${product.slug}` },
+            ]),
+          )}
+        </script>
+      </Helmet>
       <section className="section-brand-navy py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-2 text-sm text-white/50 mb-4">
