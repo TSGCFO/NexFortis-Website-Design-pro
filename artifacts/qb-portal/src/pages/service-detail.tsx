@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { CheckCircle, Clock, Shield, Lock, ArrowRight, Star, FileCheck, BookOpen } from "lucide-react";
 import { SEO } from "@/components/seo";
+import { generateServiceSchema, generateBreadcrumbSchema } from "@/lib/seo-schemas";
 import { getServiceLandingLinks } from "@/data/serviceLandingLinks";
 
 export default function ServiceDetail() {
@@ -50,12 +51,30 @@ export default function ServiceDetail() {
   const isSubscription = product.billing_type === "subscription";
   const priceSuffix = isSubscription ? "/mo" : "";
 
+  const jsonLd = [
+    generateServiceSchema(
+      {
+        h1: product.name,
+        metaDescription: product.description,
+        slug: product.slug,
+        primaryKeyword: product.name,
+      },
+      product
+    ),
+    generateBreadcrumbSchema([
+      { name: "Services", path: "/catalog" },
+      { name: product.category, path: `/category/${product.category_slug}` },
+      { name: product.name, path: `/service/${product.slug}` },
+    ]),
+  ];
+
   return (
     <div>
       <SEO
         title={product.name}
         description={product.description}
         path={`/service/${product.slug}`}
+        jsonLd={jsonLd}
       />
       <section className="section-brand-navy py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

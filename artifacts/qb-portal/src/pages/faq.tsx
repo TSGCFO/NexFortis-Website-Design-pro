@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { SEO } from "@/components/seo";
+import { generateFAQSchema } from "@/lib/seo-schemas";
 
 const faqData = [
   { cat: "Conversion", q: "What is a .QBM file?", a: "A .QBM (QuickBooks Portable Company File) is a compact version of your company file that contains all your financial data but in a smaller, transportable format. It's created through File > Create Copy > Portable company file in QuickBooks Enterprise." },
@@ -50,12 +51,17 @@ export default function FAQ() {
 
   const filteredFaq = activeCat === "all" ? faqData : faqData.filter((f) => f.cat === activeCat);
 
+  const faqSchema = generateFAQSchema(
+    faqData.map((f) => ({ question: f.q, answer: f.a }))
+  );
+
   return (
     <div>
       <SEO
         title="Frequently Asked Questions"
         description="Answers to common questions about QuickBooks Enterprise to Premier conversion, .QBM files, pricing, turnaround time, and data security."
         path="/faq"
+        jsonLd={faqSchema}
       />
       <section className="section-brand-navy py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
