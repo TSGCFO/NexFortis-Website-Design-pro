@@ -155,6 +155,8 @@ export default function About() {
                 src={`${import.meta.env.BASE_URL}images/badge-microsoft-partner.png`}
                 alt="Microsoft AI Cloud Partner Program badge"
                 className="h-9 w-auto object-contain"
+                width={120}
+                height={40}
               />
               <div>
                 <h4 className="text-lg font-bold text-white mb-2">Microsoft AI Cloud Partner Program</h4>
@@ -175,6 +177,8 @@ export default function About() {
                 src={`${import.meta.env.BASE_URL}images/badge-google-partner.png`}
                 alt="Google Partner badge"
                 className="h-9 w-auto object-contain"
+                width={120}
+                height={40}
               />
               <div>
                 <h4 className="text-lg font-bold text-white mb-2">Google Partner</h4>
@@ -195,6 +199,8 @@ export default function About() {
                 src={`${import.meta.env.BASE_URL}images/badge-quickbooks-proadvisor.png`}
                 alt="QuickBooks ProAdvisor badge"
                 className="h-9 w-auto object-contain"
+                width={120}
+                height={40}
               />
               <div>
                 <h4 className="text-lg font-bold text-white mb-2">QuickBooks ProAdvisor</h4>
