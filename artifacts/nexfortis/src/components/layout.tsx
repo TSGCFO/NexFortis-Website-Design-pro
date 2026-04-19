@@ -111,6 +111,16 @@ export function Layout({ children }: { children: ReactNode }) {
   }, [location]);
 
   const isServicesActive = location === "/services" || location.startsWith("/services/");
+  const isServiceSubPage = location.startsWith("/services/");
+
+  useEffect(() => {
+    if (isServiceSubPage) {
+      document.documentElement.style.scrollPaddingBottom = "7rem";
+      return () => {
+        document.documentElement.style.scrollPaddingBottom = "";
+      };
+    }
+  }, [isServiceSubPage]);
 
   const navbarLogo = resolvedTheme === "dark"
     ? `${import.meta.env.BASE_URL}images/logo-white.svg`
@@ -292,7 +302,11 @@ export function Layout({ children }: { children: ReactNode }) {
         </div>
       </header>
 
-      <main id="main-content" className="flex-grow pt-20" role="main">
+      <main
+        id="main-content"
+        className={`flex-grow pt-20 ${isServiceSubPage ? "pb-28" : ""}`}
+        role="main"
+      >
         {children}
       </main>
 
