@@ -173,11 +173,18 @@ export default function About() {
               transition={{ duration: 0.3 }}
               className="flex flex-col items-center text-center gap-4"
             >
-              <img
-                src={`${import.meta.env.BASE_URL}images/badge-microsoft-partner.png`}
-                alt="Microsoft AI Cloud Partner Program badge"
-                className="h-9 w-auto object-contain"
-              />
+              <picture>
+                <source srcSet={`${import.meta.env.BASE_URL}images/badge-microsoft-partner.webp`} type="image/webp" />
+                <img
+                  src={`${import.meta.env.BASE_URL}images/badge-microsoft-partner.png`}
+                  alt="Microsoft AI Cloud Partner Program badge"
+                  className="h-9 w-auto object-contain"
+                  width={120}
+                  height={36}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </picture>
               <div>
                 <h4 className="text-lg font-bold text-white mb-2">Microsoft AI Cloud Partner Program</h4>
                 <p className="text-white/70 leading-relaxed text-sm">
@@ -193,11 +200,18 @@ export default function About() {
               transition={{ duration: 0.3, delay: 0.08 }}
               className="flex flex-col items-center text-center gap-4"
             >
-              <img
-                src={`${import.meta.env.BASE_URL}images/badge-google-partner.png`}
-                alt="Google Partner badge"
-                className="h-9 w-auto object-contain"
-              />
+              <picture>
+                <source srcSet={`${import.meta.env.BASE_URL}images/badge-google-partner.webp`} type="image/webp" />
+                <img
+                  src={`${import.meta.env.BASE_URL}images/badge-google-partner.png`}
+                  alt="Google Partner badge"
+                  className="h-9 w-auto object-contain"
+                  width={120}
+                  height={36}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </picture>
               <div>
                 <h4 className="text-lg font-bold text-white mb-2">Google Partner</h4>
                 <p className="text-white/70 leading-relaxed text-sm">
@@ -213,11 +227,18 @@ export default function About() {
               transition={{ duration: 0.3, delay: 0.16 }}
               className="flex flex-col items-center text-center gap-4"
             >
-              <img
-                src={`${import.meta.env.BASE_URL}images/badge-quickbooks-proadvisor.png`}
-                alt="QuickBooks ProAdvisor badge"
-                className="h-9 w-auto object-contain"
-              />
+              <picture>
+                <source srcSet={`${import.meta.env.BASE_URL}images/badge-quickbooks-proadvisor.webp`} type="image/webp" />
+                <img
+                  src={`${import.meta.env.BASE_URL}images/badge-quickbooks-proadvisor.png`}
+                  alt="QuickBooks ProAdvisor badge"
+                  className="h-9 w-auto object-contain"
+                  width={120}
+                  height={36}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </picture>
               <div>
                 <h4 className="text-lg font-bold text-white mb-2">QuickBooks ProAdvisor</h4>
                 <p className="text-white/70 leading-relaxed text-sm">

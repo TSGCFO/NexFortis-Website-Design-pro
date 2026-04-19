@@ -275,25 +275,46 @@ export default function Home() {
           </p>
           <div className="flex flex-wrap justify-center items-center gap-12 md:gap-16">
             <div className="p-6">
-              <img
-                src={`${import.meta.env.BASE_URL}images/badge-microsoft-partner.png`}
-                alt="Microsoft AI Cloud Partner Program badge"
-                className="h-10 w-auto object-contain"
-              />
+              <picture>
+                <source srcSet={`${import.meta.env.BASE_URL}images/badge-microsoft-partner.webp`} type="image/webp" />
+                <img
+                  src={`${import.meta.env.BASE_URL}images/badge-microsoft-partner.png`}
+                  alt="Microsoft AI Cloud Partner Program badge"
+                  className="h-10 w-auto object-contain"
+                  width={133}
+                  height={40}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </picture>
             </div>
             <div className="p-6">
-              <img
-                src={`${import.meta.env.BASE_URL}images/badge-google-partner.png`}
-                alt="Google Partner badge"
-                className="h-10 w-auto object-contain"
-              />
+              <picture>
+                <source srcSet={`${import.meta.env.BASE_URL}images/badge-google-partner.webp`} type="image/webp" />
+                <img
+                  src={`${import.meta.env.BASE_URL}images/badge-google-partner.png`}
+                  alt="Google Partner badge"
+                  className="h-10 w-auto object-contain"
+                  width={133}
+                  height={40}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </picture>
             </div>
             <div className="p-6">
-              <img
-                src={`${import.meta.env.BASE_URL}images/badge-quickbooks-proadvisor.png`}
-                alt="QuickBooks ProAdvisor badge"
-                className="h-10 w-auto object-contain"
-              />
+              <picture>
+                <source srcSet={`${import.meta.env.BASE_URL}images/badge-quickbooks-proadvisor.webp`} type="image/webp" />
+                <img
+                  src={`${import.meta.env.BASE_URL}images/badge-quickbooks-proadvisor.png`}
+                  alt="QuickBooks ProAdvisor badge"
+                  className="h-10 w-auto object-contain"
+                  width={133}
+                  height={40}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </picture>
             </div>
           </div>
         </div>
