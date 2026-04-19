@@ -1,8 +1,18 @@
 // Pre-rendered HTML contains BOTH the static SEO tags from index.html (the
 // SPA shell fallback) AND the per-page tags injected at runtime by
-// react-helmet-async. Crawlers must see exactly one canonical/title/desc/OG
-// per page, so we dedupe inside <head>, keeping the LAST occurrence of each
-// SEO tag (helmet's per-page version is rendered after the static fallback).
+// react-helmet-async (and React 19's built-in metadata hoisting). Crawlers
+// must see exactly one canonical/title/desc/OG per page, so we dedupe
+// inside <head>:
+//
+//   - For `<title>`: keep the FIRST occurrence. React 19 hoists `<title>`
+//     elements rendered inside the React tree to the top of <head>, before
+//     the shell's pre-existing `<title>` tag. Helmet's per-page title is
+//     therefore the first one in DOM order; the shell fallback is second.
+//
+//   - For all other SEO tags (`<meta name=...>`, `<meta property=...>`,
+//     `<link rel=canonical>`, `<link rel=alternate hreflang=...>`):
+//     keep the LAST occurrence. These are appended by helmet AFTER the
+//     shell's static tags, so the per-page version naturally wins.
 //
 // Shared between artifacts/nexfortis/vite.config.ts and
 // artifacts/qb-portal/vite.config.ts so changes only need to be made once.
@@ -46,15 +56,17 @@ export function dedupeSeoTags(html: string): string {
   const head = html.slice(headOpenEnd, headEnd);
   const after = html.slice(headEnd);
 
-  const tagRe = /<title>[\s\S]*?<\/title>|<(?:link|meta)\b[^>]*\/?>/gi;
-  type Match = { key: string; start: number; end: number };
+  const tagRe = /<title\b[^>]*>[\s\S]*?<\/title>|<(?:link|meta)\b[^>]*\/?>/gi;
+  type Match = { key: string; start: number; end: number; isTitle: boolean };
   const matches: Match[] = [];
   let m: RegExpExecArray | null;
   while ((m = tagRe.exec(head)) !== null) {
     const tag = m[0];
     let key: string | null = null;
-    if (/^<title>/i.test(tag)) {
+    let isTitle = false;
+    if (/^<title\b/i.test(tag)) {
       key = "__title__";
+      isTitle = true;
     } else if (/^<link\b/i.test(tag)) {
       const relMatch = tag.match(/\brel\s*=\s*"([^"]+)"/i);
       if (relMatch) {
@@ -76,13 +88,22 @@ export function dedupeSeoTags(html: string): string {
         if (SEO_DEDUPE_KEYS.has(attrVal)) key = attrVal;
       }
     }
-    if (key) matches.push({ key, start: m.index, end: m.index + tag.length });
+    if (key)
+      matches.push({ key, start: m.index, end: m.index + tag.length, isTitle });
   }
 
-  const lastIdxByKey = new Map<string, number>();
-  matches.forEach((mt, i) => lastIdxByKey.set(mt.key, i));
+  // For `<title>`: keep the FIRST occurrence (React 19/helmet hoist first).
+  // For everything else: keep the LAST occurrence (helmet appends after).
+  const keepIdxByKey = new Map<string, number>();
+  matches.forEach((mt, i) => {
+    if (mt.isTitle) {
+      if (!keepIdxByKey.has(mt.key)) keepIdxByKey.set(mt.key, i);
+    } else {
+      keepIdxByKey.set(mt.key, i);
+    }
+  });
   const toRemove = matches
-    .filter((mt, i) => lastIdxByKey.get(mt.key) !== i)
+    .filter((mt, i) => keepIdxByKey.get(mt.key) !== i)
     .sort((a, b) => b.start - a.start);
 
   let newHead = head;
