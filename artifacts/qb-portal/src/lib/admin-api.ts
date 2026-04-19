@@ -98,12 +98,16 @@ export const TIER_LABELS: Record<string, string> = {
   essentials: "Essentials",
   professional: "Professional",
   premium: "Premium",
+  "order-basic": "Order Support",
+  "order-extended": "Extended Support",
 };
 
 export const TIER_COLORS: Record<string, string> = {
   essentials: "bg-blue-100 text-blue-700",
   professional: "bg-purple-100 text-purple-700",
   premium: "bg-amber-100 text-amber-700",
+  "order-basic": "bg-green-100 text-green-700",
+  "order-extended": "bg-teal-100 text-teal-700",
 };
 
 export const SLA_COLORS: Record<string, string> = {
