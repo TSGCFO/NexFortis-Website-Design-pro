@@ -5,6 +5,9 @@ import path from "path";
 import { createRequire } from "module";
 import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
 import { stableHmr } from "../../lib/vite-plugin-stable-hmr";
+// SEO tag dedupe + key list lives in ../../lib/seo-dedupe so both artifacts
+// (nexfortis + qb-portal) share identical behavior; see that file for details.
+import { dedupeSeoTags } from "../../lib/seo-dedupe";
 
 // vite-plugin-prerender ships a .mjs that uses require() which conflicts
 // with the top-level `await` in this ESM Vite config. Load the CJS build
@@ -13,71 +16,6 @@ const require = createRequire(import.meta.url);
 const vitePrerender = require("vite-plugin-prerender") as typeof import("vite-plugin-prerender").default & {
   PuppeteerRenderer: new (opts: Record<string, unknown>) => unknown;
 };
-
-// Pre-rendered HTML contains both the static SEO tags from index.html (the
-// SPA shell, with homepage values) AND the per-page tags injected at runtime
-// by react-helmet-async. Crawlers must see exactly one canonical/title/desc/OG
-// per page, so we dedupe inside <head>, keeping the LAST occurrence of each
-// SEO tag (helmet's per-page version is rendered after the static fallback).
-const SEO_DEDUPE_KEYS = new Set([
-  "description",
-  "robots",
-  "canonical",
-  "og:title",
-  "og:description",
-  "og:url",
-  "og:image",
-  "og:type",
-  "og:site_name",
-  "og:locale",
-  "twitter:card",
-  "twitter:title",
-  "twitter:description",
-  "twitter:image",
-]);
-
-function dedupeSeoTags(html: string): string {
-  const headStart = html.indexOf("<head");
-  if (headStart === -1) return html;
-  const headOpenEnd = html.indexOf(">", headStart) + 1;
-  const headEnd = html.indexOf("</head>", headOpenEnd);
-  if (headOpenEnd <= 0 || headEnd === -1) return html;
-
-  const before = html.slice(0, headOpenEnd);
-  const head = html.slice(headOpenEnd, headEnd);
-  const after = html.slice(headEnd);
-
-  const tagRe = /<title>[\s\S]*?<\/title>|<(?:link|meta)\b[^>]*\/?>/gi;
-  type Match = { key: string; start: number; end: number };
-  const matches: Match[] = [];
-  let m: RegExpExecArray | null;
-  while ((m = tagRe.exec(head)) !== null) {
-    const tag = m[0];
-    let key: string | null = null;
-    if (/^<title>/i.test(tag)) {
-      key = "__title__";
-    } else {
-      const attrMatch = tag.match(/\b(name|property|rel)\s*=\s*"([^"]+)"/i);
-      if (attrMatch) {
-        const attrVal = attrMatch[2].toLowerCase();
-        if (SEO_DEDUPE_KEYS.has(attrVal)) key = attrVal;
-      }
-    }
-    if (key) matches.push({ key, start: m.index, end: m.index + tag.length });
-  }
-
-  const lastIdxByKey = new Map<string, number>();
-  matches.forEach((mt, i) => lastIdxByKey.set(mt.key, i));
-  const toRemove = matches
-    .filter((mt, i) => lastIdxByKey.get(mt.key) !== i)
-    .sort((a, b) => b.start - a.start);
-
-  let newHead = head;
-  for (const mt of toRemove) {
-    newHead = newHead.slice(0, mt.start) + newHead.slice(mt.end);
-  }
-  return before + newHead + after;
-}
 
 const PRERENDER_ROUTES = [
   "/",
