@@ -293,6 +293,88 @@ router.post("/", ticketSubmitLimiter, (req: Request, res: Response) => {
   });
 });
 
+router.get("/entitlements", async (req: Request, res: Response) => {
+  try {
+    const userId = req.userId!;
+
+    const sub = await getActiveSubscription(userId);
+    let subscriptionPayload: {
+      tier: string;
+      ticketsUsed: number;
+      ticketLimit: number;
+      ticketsRemaining: number;
+      slaMinutes: number;
+    } | null = null;
+
+    if (sub) {
+      const tier = sub.tier as SubscriptionTier;
+      const tierConfig = getTierConfig(tier);
+      let ticketsUsed = 0;
+
+      if (sub.currentPeriodStart && sub.currentPeriodEnd) {
+        const usage = await getOrCreateTicketUsage(
+          sub.id,
+          sub.currentPeriodStart,
+          sub.currentPeriodEnd,
+          tierConfig.ticketLimit,
+        );
+        ticketsUsed = usage?.ticketsUsed ?? 0;
+      }
+
+      const unlimited = isUnlimitedTickets(tier);
+      subscriptionPayload = {
+        tier,
+        ticketsUsed,
+        ticketLimit: tierConfig.ticketLimit,
+        ticketsRemaining: unlimited
+          ? -1
+          : Math.max(0, tierConfig.ticketLimit - ticketsUsed),
+        slaMinutes: tierConfig.slaMinutes,
+      };
+    }
+
+    const entitlementRows = await db
+      .select({
+        entitlement: qbOrderSupportEntitlements,
+        serviceName: qbOrders.serviceName,
+      })
+      .from(qbOrderSupportEntitlements)
+      .leftJoin(qbOrders, eq(qbOrderSupportEntitlements.orderId, qbOrders.id))
+      .where(eq(qbOrderSupportEntitlements.userId, userId))
+      .orderBy(desc(qbOrderSupportEntitlements.expiresAt));
+
+    const now = new Date();
+    const orderEntitlements = entitlementRows.map(({ entitlement, serviceName }) => {
+      const isExpired = entitlement.expiresAt.getTime() < now.getTime();
+      const ticketsRemaining = entitlement.ticketsAllowed - entitlement.ticketsUsed;
+      const isActive = !isExpired && entitlement.ticketsUsed < entitlement.ticketsAllowed;
+
+      return {
+        id: entitlement.id,
+        orderId: entitlement.orderId,
+        serviceName: serviceName ?? null,
+        ticketsAllowed: entitlement.ticketsAllowed,
+        ticketsUsed: entitlement.ticketsUsed,
+        ticketsRemaining,
+        slaMinutes: entitlement.slaMinutes,
+        startsAt: entitlement.startsAt,
+        expiresAt: entitlement.expiresAt,
+        isUpgraded: entitlement.isUpgraded,
+        isExpired,
+        isActive,
+      };
+    });
+
+    res.json({
+      subscription: subscriptionPayload,
+      orderEntitlements,
+    });
+  } catch (err) {
+    console.error("Get entitlements error:", err);
+    res.status(500).json({ error: "Failed to fetch entitlements" });
+  }
+});
+
 router.get("/", async (req: Request, res: Response) => {
   try {
     const userId = req.userId!;
