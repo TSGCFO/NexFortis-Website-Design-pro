@@ -6,7 +6,7 @@ export default function Terms() {
     <div>
       <SEO
         title="Terms of Service"
-        description="Terms of Service for NexFortis IT Solutions (17756968 Canada Inc.). Read the terms governing our IT services, software products, subscriptions, and use of this website."
+        description="Terms of Service for NexFortis IT Solutions (17756968 Canada Inc.). Read the terms governing our IT services, software products, and use of this website."
         path="/terms"
       />
       <BreadcrumbSchema

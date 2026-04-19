@@ -62,7 +62,7 @@ export default function Contact() {
 
   return (
     <div>
-      <SEO title="Contact NexFortis — Free IT Consultation" description="Get in touch with NexFortis IT Solutions in Nobleton, Ontario. Request a quote, schedule a free consultation, or ask about our managed IT and cloud services today." path="/contact" />
+      <SEO title="Contact NexFortis — Free IT Consultation" description="Get in touch with NexFortis IT Solutions in Nobleton, Ontario. Request a quote, schedule a free consultation, or ask about our managed IT services today." path="/contact" />
       <BreadcrumbSchema
         items={[
           { name: "Home", url: "/" },
