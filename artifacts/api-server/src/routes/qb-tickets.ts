@@ -153,7 +153,21 @@ router.post("/", ticketSubmitLimiter, (req: Request, res: Response) => {
       const entitlement = sub ? null : await getActiveOrderEntitlement(userId);
 
       if (!sub && !entitlement) {
-        res.status(403).json({ error: "An active subscription is required to submit tickets" });
+        const [anyEntitlement] = await db
+          .select({ id: qbOrderSupportEntitlements.id })
+          .from(qbOrderSupportEntitlements)
+          .where(eq(qbOrderSupportEntitlements.userId, userId))
+          .limit(1);
+
+        if (anyEntitlement) {
+          res.status(403).json({
+            error: "Your included support tickets have been used or have expired. Subscribe to a support plan for continued access.",
+          });
+        } else {
+          res.status(403).json({
+            error: "A support subscription or order with included support is required to submit tickets.",
+          });
+        }
         return;
       }
 
@@ -229,6 +243,20 @@ router.post("/", ticketSubmitLimiter, (req: Request, res: Response) => {
           return created;
         }
 
+        const [locked] = await tx
+          .select()
+          .from(qbOrderSupportEntitlements)
+          .where(eq(qbOrderSupportEntitlements.id, entitlement!.id))
+          .for("update")
+          .limit(1);
+
+        if (!locked || locked.ticketsUsed >= locked.ticketsAllowed) {
+          throw Object.assign(
+            new Error("All support tickets for this order have been used"),
+            { limitReached: true },
+          );
+        }
+
         const [created] = await tx
           .insert(qbSupportTickets)
           .values({
@@ -279,12 +307,13 @@ router.post("/", ticketSubmitLimiter, (req: Request, res: Response) => {
       });
     } catch (ticketErr: any) {
       if (ticketErr?.limitReached) {
-        res.status(403).json({
-          error: ticketErr.message,
-          ticketsUsed: ticketErr.ticketsUsed,
-          ticketLimit: ticketErr.ticketLimit,
-          resetDate: ticketErr.resetDate,
-        });
+        const payload: Record<string, unknown> = {
+          error: ticketErr.message || "Ticket limit reached",
+        };
+        if (typeof ticketErr.ticketsUsed === "number") payload.ticketsUsed = ticketErr.ticketsUsed;
+        if (typeof ticketErr.ticketLimit === "number") payload.ticketLimit = ticketErr.ticketLimit;
+        if (ticketErr.resetDate) payload.resetDate = ticketErr.resetDate;
+        res.status(403).json(payload);
         return;
       }
       console.error("Ticket submission error:", ticketErr);
@@ -312,13 +341,17 @@ router.get("/entitlements", async (req: Request, res: Response) => {
       let ticketsUsed = 0;
 
       if (sub.currentPeriodStart && sub.currentPeriodEnd) {
-        const usage = await getOrCreateTicketUsage(
-          sub.id,
-          sub.currentPeriodStart,
-          sub.currentPeriodEnd,
-          tierConfig.ticketLimit,
-        );
-        ticketsUsed = usage?.ticketsUsed ?? 0;
+        const [existingUsage] = await db
+          .select()
+          .from(qbTicketUsage)
+          .where(
+            and(
+              eq(qbTicketUsage.subscriptionId, sub.id),
+              eq(qbTicketUsage.periodStart, sub.currentPeriodStart),
+            ),
+          )
+          .limit(1);
+        ticketsUsed = existingUsage?.ticketsUsed ?? 0;
       }
 
       const unlimited = isUnlimitedTickets(tier);
@@ -346,7 +379,7 @@ router.get("/entitlements", async (req: Request, res: Response) => {
     const now = new Date();
     const orderEntitlements = entitlementRows.map(({ entitlement, serviceName }) => {
       const isExpired = entitlement.expiresAt.getTime() < now.getTime();
-      const ticketsRemaining = entitlement.ticketsAllowed - entitlement.ticketsUsed;
+      const ticketsRemaining = Math.max(0, entitlement.ticketsAllowed - entitlement.ticketsUsed);
       const isActive = !isExpired && entitlement.ticketsUsed < entitlement.ticketsAllowed;
 
       return {

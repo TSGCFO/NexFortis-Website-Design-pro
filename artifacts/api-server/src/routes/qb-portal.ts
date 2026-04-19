@@ -105,6 +105,7 @@ const VALID_STATUS_TRANSITIONS: Record<string, string[]> = {
   submitted: ["paid"],
   paid: ["processing"],
   processing: ["completed"],
+  completed: ["delivered"],
 };
 
 function isValidStatusTransition(from: string, to: string): boolean {
@@ -164,10 +165,12 @@ export async function ensureOrderSupportEntitlement(order: typeof qbOrders.$infe
       slaMinutes,
       isUpgraded,
     });
-  } catch (err) {
-    // The orderId column has a unique constraint, so a concurrent insert is the
-    // only realistic source of failure here — treat it as idempotent.
-    console.warn("[Orders] Failed to create support entitlement for order", order.id, err);
+  } catch (err: any) {
+    if (err?.code === "23505") {
+      console.log("[Orders] Entitlement already exists for order", order.id, "(concurrent insert)");
+      return;
+    }
+    throw err;
   }
 }
 
