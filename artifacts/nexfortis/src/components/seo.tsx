@@ -15,7 +15,12 @@ const DEFAULT_IMAGE = "/opengraph.png";
 
 export function SEO({ title, description, path = "/", type = "website", image, noIndex }: SEOProps) {
   const siteUrl = SITE_URL;
-  const fullTitle = path === "/" ? `${SITE_NAME} — Complexity Decoded. Advantage.` : `${title} | ${SITE_NAME}`;
+  const fullTitle =
+    path === "/"
+      ? `${SITE_NAME} — Complexity Decoded. Advantage.`
+      : title.includes("NexFortis")
+        ? title
+        : `${title} | ${SITE_NAME}`;
   const fullUrl = `${siteUrl}${path}`;
   const ogImage = image || `${siteUrl}${DEFAULT_IMAGE}`;
 
@@ -38,6 +43,8 @@ export function SEO({ title, description, path = "/", type = "website", image, n
       <meta property="og:description" content={description} />
       <meta property="og:url" content={fullUrl} />
       <meta property="og:image" content={ogImage} />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
       <meta property="og:site_name" content={SITE_NAME} />
       <meta property="og:locale" content="en_CA" />
 
@@ -142,6 +149,14 @@ export function WebSiteSchema() {
     "@type": "WebSite",
     name: "NexFortis IT Solutions",
     url: siteUrl,
+    potentialAction: {
+      "@type": "SearchAction",
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: `${siteUrl}/blog?q={search_term_string}`,
+      },
+      "query-input": "required name=search_term_string",
+    },
   };
 
   return (
@@ -258,6 +273,38 @@ export function ArticleSchema({ title, description, datePublished, dateModified,
       name: "Hassan Sadiq",
       url: `${siteUrl}/about`,
     },
+  };
+
+  return (
+    <Helmet>
+      <script type="application/ld+json">{JSON.stringify(schema)}</script>
+    </Helmet>
+  );
+}
+
+export function PersonSchema({
+  name,
+  jobTitle,
+  url,
+  image,
+  sameAs = [],
+}: {
+  name: string;
+  jobTitle: string;
+  url: string;
+  image: string;
+  sameAs?: string[];
+}) {
+  const siteUrl = SITE_URL;
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name,
+    jobTitle,
+    url: url.startsWith("http") ? url : `${siteUrl}${url}`,
+    image: image.startsWith("http") ? image : `${siteUrl}${image}`,
+    worksFor: { "@id": `${siteUrl}/#organization` },
+    sameAs,
   };
 
   return (
