@@ -84,6 +84,7 @@ export default function ServiceDetail() {
         title={product.name}
         description={product.description}
         path={`/service/${product.slug}`}
+        ogType="product"
       />
       <Helmet>
         <script type="application/ld+json">

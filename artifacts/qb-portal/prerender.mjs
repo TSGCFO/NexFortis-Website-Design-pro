@@ -11,15 +11,44 @@ const base = (process.env.BASE_PATH || "/").replace(/\/?$/, "/");
 const port = Number(process.env.PRERENDER_PORT || 4174);
 
 // Public, SEO-relevant routes only. Auth/admin/dynamic-id pages excluded.
-const ROUTES = [
+// Dynamic routes (/category/*, /service/*, /landing/*) are added at runtime
+// from public/products.json + src/data/landingPages.ts.
+const STATIC_ROUTES = [
   "/",
   "/catalog",
   "/faq",
   "/qbm-guide",
   "/terms",
   "/privacy",
-  "/waitlist",
 ];
+
+async function loadDynamicRoutes() {
+  const routes = [];
+  try {
+    const products = JSON.parse(
+      await fs.readFile(path.join(__dirname, "public", "products.json"), "utf-8"),
+    );
+    const cats = new Set();
+    for (const s of products.services || []) {
+      if (s.slug) routes.push(`/service/${s.slug}`);
+      if (s.category_slug) cats.add(s.category_slug);
+    }
+    for (const slug of cats) routes.push(`/category/${slug}`);
+  } catch (e) {
+    console.warn(`[prerender] could not load products.json: ${e.message}`);
+  }
+  try {
+    const landingTs = await fs.readFile(
+      path.join(__dirname, "src", "data", "landingPages.ts"),
+      "utf-8",
+    );
+    const slugs = [...landingTs.matchAll(/^\s*slug:\s*"([^"]+)"/gm)].map((m) => m[1]);
+    for (const slug of slugs) routes.push(`/landing/${slug}`);
+  } catch (e) {
+    console.warn(`[prerender] could not load landingPages.ts: ${e.message}`);
+  }
+  return routes;
+}
 
 const MIME = {
   ".html": "text/html; charset=utf-8",
@@ -141,6 +170,10 @@ async function prerender() {
   });
   const baseUrl = `http://127.0.0.1:${port}${base.slice(0, -1)}`;
   console.log(`[prerender] serving ${distDir} at ${baseUrl}/`);
+
+  const dynamicRoutes = await loadDynamicRoutes();
+  const ROUTES = [...STATIC_ROUTES, ...dynamicRoutes];
+  console.log(`[prerender] ${ROUTES.length} routes (${STATIC_ROUTES.length} static + ${dynamicRoutes.length} dynamic)`);
 
   let ok = 0;
   let fail = 0;

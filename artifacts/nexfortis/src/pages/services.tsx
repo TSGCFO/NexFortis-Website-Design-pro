@@ -57,7 +57,7 @@ export default function ServicesOverview() {
     <div>
       <SEO
         title="IT Services for Canadian Businesses"
-        description="Comprehensive managed IT services for Canadian businesses: digital marketing, Microsoft 365, QuickBooks migration, IT consulting, and workflow automation — all under one roof."
+        description="Managed IT services for Canadian SMBs: digital marketing, Microsoft 365, QuickBooks migration, IT consulting, and workflow automation — all under one roof."
         path="/services"
       />
       <BreadcrumbSchema

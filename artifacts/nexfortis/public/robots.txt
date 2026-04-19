@@ -29,9 +29,6 @@ Disallow: /
 User-agent: Omgilibot
 Disallow: /
 
-User-agent: FacebookBot
-Disallow: /
-
 User-agent: cohere-ai
 Disallow: /
 
@@ -52,6 +49,12 @@ Disallow: /admin/login
 Disallow: /blog/admin
 
 User-agent: OAI-SearchBot
+Allow: /
+Disallow: /admin/login
+Disallow: /blog/admin
+
+# Social media link previews — allow so cards render correctly
+User-agent: FacebookBot
 Allow: /
 Disallow: /admin/login
 Disallow: /blog/admin

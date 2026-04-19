@@ -24,7 +24,7 @@ export function organizationSchema() {
     logo: `${BASE_URL}/images/logo-original.svg`,
     email: SUPPORT_EMAIL,
     address: COMPANY_ADDRESS,
-    sameAs: [],
+    sameAs: ["https://www.linkedin.com/company/nexfortis"],
   };
 }
 

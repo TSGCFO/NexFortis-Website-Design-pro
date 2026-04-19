@@ -27,7 +27,7 @@ export function SEO({ title, description, path = "/", type = "website", image, n
       <link rel="canonical" href={fullUrl} />
       <link rel="alternate" hrefLang="en-CA" href={fullUrl} />
       <link rel="alternate" hrefLang="x-default" href={fullUrl} />
-      {noIndex && <meta name="robots" content="noindex,nofollow" />}
+      <meta name="robots" content={noIndex ? "noindex,nofollow" : "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1"} />
 
       <meta property="og:type" content={type} />
       <meta property="og:title" content={fullTitle} />
@@ -93,7 +93,7 @@ export function LocalBusinessSchema() {
     name: "NexFortis IT Solutions",
     legalName: "17756968 Canada Inc.",
     url: siteUrl,
-    logo: `${siteUrl}/images/logo-original.svg`,
+    logo: `${siteUrl}/images/logo-original.png`,
     image: `${siteUrl}/opengraph.png`,
     description: "NexFortis delivers end-to-end IT solutions for Canadian businesses including managed IT, Microsoft 365, QuickBooks migration, digital marketing, and workflow automation.",
     email: "contact@nexfortis.com",
@@ -136,8 +136,19 @@ export function WebSiteSchema() {
   const schema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
+    "@id": `${siteUrl}/#website`,
     name: "NexFortis IT Solutions",
     url: siteUrl,
+    inLanguage: "en-CA",
+    publisher: { "@id": `${siteUrl}/#organization` },
+    potentialAction: {
+      "@type": "SearchAction",
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: `${siteUrl}/blog?q={search_term_string}`,
+      },
+      "query-input": "required name=search_term_string",
+    },
   };
 
   return (

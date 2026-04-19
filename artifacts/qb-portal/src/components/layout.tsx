@@ -249,6 +249,8 @@ export function Footer() {
                   className="h-14 w-auto"
                   width={200}
                   height={56}
+                  loading="lazy"
+                  decoding="async"
                   style={{ mixBlendMode: "screen" }}
                 />
               </Link>
@@ -302,16 +304,28 @@ export function Footer() {
               src={`${import.meta.env.BASE_URL}images/badge-microsoft-partner.png`}
               alt="Microsoft AI Cloud Partner Program badge"
               className="h-9 w-auto object-contain opacity-60 hover:opacity-90 transition-opacity"
+              width={120}
+              height={36}
+              loading="lazy"
+              decoding="async"
             />
             <img
               src={`${import.meta.env.BASE_URL}images/badge-google-partner.png`}
               alt="Google Partner badge"
               className="h-9 w-auto object-contain opacity-60 hover:opacity-90 transition-opacity"
+              width={120}
+              height={36}
+              loading="lazy"
+              decoding="async"
             />
             <img
               src={`${import.meta.env.BASE_URL}images/badge-quickbooks-proadvisor.png`}
               alt="QuickBooks ProAdvisor badge"
               className="h-9 w-auto object-contain opacity-60 hover:opacity-90 transition-opacity"
+              width={120}
+              height={36}
+              loading="lazy"
+              decoding="async"
             />
           </div>
 
