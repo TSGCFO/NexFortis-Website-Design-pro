@@ -175,8 +175,11 @@ router.post("/", ticketSubmitLimiter, (req: Request, res: Response) => {
       const critical = isCritical === "true" || isCritical === true;
       const afterHours = isAfterHours(now);
 
-      let tierForTicket: string;
-      let slaDeadline: Date;
+      // These defaults are never actually used — the if/else below covers all reachable
+      // paths since we returned early when both `sub` and `entitlement` are absent. The
+      // initializers exist to satisfy strict TypeScript configs and keep the code defensive.
+      let tierForTicket: string = "order-basic";
+      let slaDeadline: Date = new Date();
 
       if (sub) {
         const tier = sub.tier as SubscriptionTier;
@@ -193,11 +196,15 @@ router.post("/", ticketSubmitLimiter, (req: Request, res: Response) => {
           const tier = sub.tier as SubscriptionTier;
           const tierConfig = getTierConfig(tier);
 
-          if (!isUnlimitedTickets(tier) && sub.currentPeriodStart && sub.currentPeriodEnd) {
-            const usage = await getOrCreateTicketUsage(
+          const tracksUsage =
+            !isUnlimitedTickets(tier) && !!sub.currentPeriodStart && !!sub.currentPeriodEnd;
+
+          let usage: Awaited<ReturnType<typeof getOrCreateTicketUsage>> | null = null;
+          if (tracksUsage) {
+            usage = await getOrCreateTicketUsage(
               sub.id,
-              sub.currentPeriodStart,
-              sub.currentPeriodEnd,
+              sub.currentPeriodStart!,
+              sub.currentPeriodEnd!,
               tierConfig.ticketLimit,
               tx,
             );
@@ -228,16 +235,11 @@ router.post("/", ticketSubmitLimiter, (req: Request, res: Response) => {
             })
             .returning();
 
-          if (!isUnlimitedTickets(tier) && sub.currentPeriodStart && sub.currentPeriodEnd) {
+          if (usage) {
             await tx
               .update(qbTicketUsage)
               .set({ ticketsUsed: sql`${qbTicketUsage.ticketsUsed} + 1` })
-              .where(
-                and(
-                  eq(qbTicketUsage.subscriptionId, sub.id),
-                  eq(qbTicketUsage.periodStart, sub.currentPeriodStart),
-                ),
-              );
+              .where(eq(qbTicketUsage.id, usage.id));
           }
 
           return created;
@@ -341,6 +343,9 @@ router.get("/entitlements", async (req: Request, res: Response) => {
       let ticketsUsed = 0;
 
       if (sub.currentPeriodStart && sub.currentPeriodEnd) {
+        // Timestamp equality is safe here: both values originate from the same
+        // Stripe period.start Unix timestamp (period.start * 1000), stored
+        // through the same conversion path.
         const [existingUsage] = await db
           .select()
           .from(qbTicketUsage)

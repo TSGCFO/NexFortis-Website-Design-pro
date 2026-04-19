@@ -42,15 +42,6 @@ const orderLimiter = rateLimit({
   message: { error: "Too many requests. Please try again later." },
 });
 
-const ticketLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  limit: 5,
-  standardHeaders: true,
-  legacyHeaders: false,
-  keyGenerator: (req: any) => req.userId || ipKeyGenerator(getClientIp(req)),
-  message: { error: "Too many requests. Please try again later." },
-});
-
 function loadCatalog(): ProductCatalog {
   return loadProductCatalog();
 }
@@ -119,6 +110,11 @@ export async function ensureOrderSupportEntitlement(order: typeof qbOrders.$infe
     return;
   }
 
+  // Idempotency strategy: check-then-insert with unique constraint fallback.
+  // Two concurrent calls may both pass the SELECT check; one INSERT succeeds,
+  // the other catches the 23505 unique_violation and returns silently.
+  // This is intentional — no transaction needed because the constraint guarantees
+  // exactly one entitlement row per order.
   const [existing] = await db
     .select()
     .from(qbOrderSupportEntitlements)
@@ -1256,6 +1252,10 @@ router.put("/orders/:id/status", requireAuth, requireOperator, async (req: Reque
       .where(eq(qbOrders.id, orderId))
       .returning();
 
+    // Entitlement creation runs after the status update commits (not in the same transaction).
+    // If it fails, the operator sees a 500 and can retry — ensureOrderSupportEntitlement
+    // is idempotent, so retries are safe. Accepted trade-off: simpler code vs. the rare
+    // case where an operator must manually retry a failed delivery.
     if (status === "delivered" && updated) {
       await ensureOrderSupportEntitlement(updated);
     }

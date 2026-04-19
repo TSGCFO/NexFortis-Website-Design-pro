@@ -4,11 +4,12 @@ import { qbOrders, qbOrderFiles, qbUsers, qbSupportTickets } from "@workspace/db
 import { eq, and, desc, asc, sql, ilike, or, inArray } from "drizzle-orm";
 import multer from "multer";
 import path from "path";
+import crypto from "crypto";
 import { supabaseAdmin, isStorageAvailable } from "../lib/supabase";
 import { sendEmail } from "../lib/email-service";
 import { fileDeliveryEmail } from "../lib/email-templates";
 import { getValidOrigin } from "../lib/config";
-import { ensureOrderSupportEntitlement } from "./qb-portal";
+import { ensureOrderSupportEntitlement, requireAuth, requireOperator } from "./qb-portal";
 
 const router = Router();
 
@@ -231,8 +232,9 @@ router.get("/orders/:id", async (req: Request, res: Response) => {
   }
 });
 
-router.patch("/orders/:id/status", async (req: Request, res: Response) => {
+router.patch("/orders/:id/status", requireAuth, requireOperator, async (req: Request, res: Response) => {
   try {
+    const operatorId = req.userId ?? "unknown";
     const orderId = parseInt(req.params.id as string);
     if (isNaN(orderId)) {
       res.status(400).json({ error: "Invalid order ID" });
@@ -260,8 +262,12 @@ router.patch("/orders/:id/status", async (req: Request, res: Response) => {
       .where(eq(qbOrders.id, orderId))
       .returning();
 
-    console.log(`[AUDIT] Order ${orderId} status changed from ${oldStatus} to ${status} by operator ${req.userId} at ${new Date().toISOString()}`);
+    console.log(`[AUDIT] Order ${orderId} status changed from ${oldStatus} to ${status} by operator ${operatorId} at ${new Date().toISOString()}`);
 
+    // Entitlement creation runs after the status update commits (not in the same transaction).
+    // If it fails, the operator sees a 500 and can retry — ensureOrderSupportEntitlement
+    // is idempotent, so retries are safe. Accepted trade-off: simpler code vs. the rare
+    // case where an operator must manually retry a failed delivery.
     if (status === "delivered" && updated) {
       await ensureOrderSupportEntitlement(updated);
     }
@@ -381,6 +387,8 @@ router.get("/orders/:orderId/files/:fileId/download", async (req: Request, res: 
 });
 
 router.post("/orders/:orderId/files/upload",
+  requireAuth,
+  requireOperator,
   async (req: Request, res: Response, next: NextFunction) => {
     const orderId = parseInt(req.params.orderId as string);
     if (isNaN(orderId)) {
