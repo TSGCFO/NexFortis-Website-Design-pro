@@ -83,7 +83,7 @@ export default function OrderForm(props: OrderFormProps) {
   const step = () => nextStep++;
 
   return (
-    <form onSubmit={onSubmit} className="space-y-6">
+    <form onSubmit={onSubmit} className="space-y-6" autoComplete="off">
       <Card>
         <CardContent className="p-6">
           <h2 className="text-lg font-bold font-display text-primary mb-4">{step()}. Your Information</h2>

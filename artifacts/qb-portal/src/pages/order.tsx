@@ -123,6 +123,7 @@ export default function Order() {
 
   const handleServiceChange = (id: number) => {
     setSelectedService(id);
+    setSelectedAddons([]);
     setFile(null);
     setFileError("");
     setFileWarning("");
