@@ -35,7 +35,7 @@ export default function Catalog() {
   return (
     <div>
       <SEO
-        title="Service Catalog"
+        title="QuickBooks Service Catalog — Conversions, Repair & Support"
         description="Browse 20 QuickBooks services across 5 categories. Conversion, data services, platform migrations, expert support, and volume packs."
         path="/catalog"
       />

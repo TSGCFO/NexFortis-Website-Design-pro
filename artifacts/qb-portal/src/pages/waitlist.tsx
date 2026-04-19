@@ -27,14 +27,11 @@ export default function Waitlist() {
         const p = getProductBySlug(c, productSlug);
         if (p) {
           setProduct(p);
-        } else {
-          setLocation("/catalog");
         }
-      } else {
-        setLocation("/catalog");
+        // Unknown slug: stay on the page and show the generic waitlist form.
       }
     });
-  }, [productSlug, setLocation]);
+  }, [productSlug]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

@@ -62,6 +62,7 @@ export function LandingPageLayout({
         description={metaDescription}
         path={`/landing/${page.slug}`}
         ogImage={`${BASE_URL}/og/${page.slug}.jpg`}
+        ogType="product"
         jsonLd={jsonLd}
       />
 

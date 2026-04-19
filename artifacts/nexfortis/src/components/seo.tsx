@@ -34,6 +34,9 @@ export function SEO({ title, description, path = "/", type = "website", image, n
       <meta property="og:description" content={description} />
       <meta property="og:url" content={fullUrl} />
       <meta property="og:image" content={ogImage} />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
+      <meta property="og:image:type" content="image/png" />
       <meta property="og:site_name" content={SITE_NAME} />
       <meta property="og:locale" content="en_CA" />
 
@@ -57,7 +60,7 @@ export function OrganizationSchema() {
     name: "NexFortis IT Solutions",
     legalName: "17756968 Canada Inc.",
     url: siteUrl,
-    logo: `${siteUrl}/images/logo-original.svg`,
+    logo: `${siteUrl}/images/logo-original.png`,
     description: "NexFortis delivers end-to-end IT solutions for Canadian businesses including managed IT, Microsoft 365, QuickBooks migration, digital marketing, and workflow automation.",
     contactPoint: {
       "@type": "ContactPoint",
@@ -251,7 +254,7 @@ export function ArticleSchema({ title, description, datePublished, dateModified,
     publisher: {
       "@type": "Organization",
       name: "NexFortis IT Solutions",
-      logo: { "@type": "ImageObject", url: `${siteUrl}/images/logo-original.svg` },
+      logo: { "@type": "ImageObject", url: `${siteUrl}/images/logo-original.png` },
     },
     author: {
       "@type": "Organization",

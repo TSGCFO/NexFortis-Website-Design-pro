@@ -179,7 +179,7 @@ export default function Subscription() {
   return (
     <div>
       <SEO
-        title="Support Plans"
+        title="QuickBooks Support Plans — Monthly Expert Help"
         description="Choose a QuickBooks Expert Support plan. Get priority support, service discounts, and exclusive perks starting at $25 CAD/month."
         path="/subscription"
       />

@@ -18,6 +18,8 @@ const STATIC_ROUTES = [
   "/catalog",
   "/faq",
   "/qbm-guide",
+  "/subscription",
+  "/waitlist",
   "/terms",
   "/privacy",
 ];

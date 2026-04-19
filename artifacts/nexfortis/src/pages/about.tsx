@@ -1,5 +1,6 @@
 import { PageHero, Section, SectionHeader, PageBreadcrumbs } from "@/components/ui-elements";
 import { SEO, BreadcrumbSchema } from "@/components/seo";
+import { Helmet } from "react-helmet-async";
 import { Target, Lightbulb, Users, Minimize2, ArrowRight } from "lucide-react";
 import { Link } from "wouter";
 import { motion } from "framer-motion";
@@ -15,6 +16,27 @@ export default function About() {
   return (
     <div>
       <SEO title="About NexFortis — Trusted Canadian IT" description="Learn about NexFortis IT Solutions — our mission, vision, and values. Empowering Canadian businesses with innovative IT solutions since day one." path="/about" />
+      <Helmet>
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Person",
+          "@id": "https://nexfortis.com/about#hassan-sadiq",
+          name: "Hassan Sadiq",
+          jobTitle: "Founder & CEO",
+          worksFor: { "@id": "https://nexfortis.com/#organization" },
+          url: "https://nexfortis.com/about",
+          image: "https://nexfortis.com/images/hassan-headshot.png",
+          sameAs: ["https://www.linkedin.com/in/hassan-sadiq-nexfortis"],
+          knowsAbout: [
+            "Microsoft 365",
+            "Azure cloud infrastructure",
+            "QuickBooks Online",
+            "QuickBooks Desktop",
+            "IT consulting",
+            "Workflow automation",
+          ],
+        })}</script>
+      </Helmet>
       <BreadcrumbSchema
         items={[
           { name: "Home", url: "/" },

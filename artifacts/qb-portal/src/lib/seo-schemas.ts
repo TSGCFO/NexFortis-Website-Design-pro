@@ -21,7 +21,7 @@ export function organizationSchema() {
     "@type": "Organization",
     name: ORG_NAME,
     url: BASE_URL,
-    logo: `${BASE_URL}/images/logo-original.svg`,
+    logo: `${BASE_URL}/images/logo-original.png`,
     email: SUPPORT_EMAIL,
     address: COMPANY_ADDRESS,
     sameAs: ["https://www.linkedin.com/company/nexfortis"],
