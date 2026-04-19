@@ -16,14 +16,17 @@
 
 | Prompt | Target | Can Parallel With | Description |
 |--------|--------|-------------------|-------------|
-| 1 | Cursor | — | DB schema + migration + products.json rename |
-| 2 | Cursor | Prompt 3, 4, 5 | Backend: ticket gate + entitlements endpoint + order delivery hook |
-| 3 | Cursor | Prompt 2, 4, 5 | Frontend: portal Support tab entitlement UI |
-| 4 | Cursor | Prompt 2, 3, 5 | Content: landing pages, FAQ, home, subscription, order-complete |
-| 5 | Cursor | Prompt 2, 3, 4 | Admin: tier badge, admin-api labels, admin tickets filter |
+| 1 | **Cursor** | — | DB schema + migration + products.json rename |
+| 2 | **Cursor** | Prompt 3, 4a, 4b, 5 | Backend: ticket gate + entitlements endpoint + order delivery hook |
+| 3 | **Replit Agent** | Prompt 2, 4a, 4b, 5 | Frontend: portal Support tab entitlement UI |
+| 4a | **Replit Agent** | Prompt 2, 3, 4b, 5 | Content: landing pages, FAQ, home, subscription, order-complete, serviceLandingLinks |
+| 4b | **Cursor** | Prompt 2, 3, 4a, 5 | Slug sweep: verify no stale post-conversion-care references |
+| 5 | **Replit Agent** | Prompt 2, 3, 4a, 4b | Admin: tier badge, admin-api labels, admin tickets filter |
 
-**Prompt 1 must complete first** (creates the DB table that Prompts 2 and 3 depend on).
-**Prompts 2–5 can all run in parallel** after Prompt 1 is done.
+**Prompt 1 must complete first** (creates the DB table that Prompts 2+ depend on).
+**Prompts 2, 3, 4a, 4b, 5 can all run in parallel** after Prompt 1 is done.
+
+**Routing rationale:** Cursor gets backend/schema work (precise on first pass). Replit Agent gets all frontend (built the UI, knows the monorepo/artifacts structure, keeps styling consistent).
 
 ---
 
