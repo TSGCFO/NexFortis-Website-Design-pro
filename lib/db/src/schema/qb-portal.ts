@@ -74,6 +74,7 @@ export const qbSupportTickets = pgTable("qb_support_tickets", {
   operatorReply: text("operator_reply"),
   internalNote: text("internal_note"),
   attachmentPath: text("attachment_path"),
+  entitlementId: integer("entitlement_id").references(() => qbOrderSupportEntitlements.id),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 }, (table) => [
@@ -108,6 +109,20 @@ export const qbTicketUsage = pgTable("qb_ticket_usage", {
 }, (table) => [
   unique("ticket_usage_sub_period_unique").on(table.subscriptionId, table.periodStart),
 ]);
+
+export const qbOrderSupportEntitlements = pgTable("qb_order_support_entitlements", {
+  id: serial("id").primaryKey(),
+  orderId: integer("order_id").references(() => qbOrders.id).notNull().unique(),
+  userId: uuid("user_id").references(() => qbUsers.id).notNull(),
+  ticketsAllowed: integer("tickets_allowed").notNull().default(2),
+  ticketsUsed: integer("tickets_used").notNull().default(0),
+  slaMinutes: integer("sla_minutes").notNull().default(120),
+  startsAt: timestamp("starts_at", { withTimezone: true }).notNull(),
+  expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+  isUpgraded: boolean("is_upgraded").notNull().default(false),
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+});
 
 export const qbReferrals = pgTable("qb_referrals", {
   id: serial("id").primaryKey(),
@@ -259,3 +274,4 @@ export const insertQbReferralEventSchema = createInsertSchema(qbReferralEvents);
 export const insertQbTicketReplySchema = createInsertSchema(qbTicketReplies);
 export const insertQbNotificationEventSchema = createInsertSchema(qbNotificationEvents);
 export const insertQbNotificationPreferenceSchema = createInsertSchema(qbNotificationPreferences);
+export const insertQbOrderSupportEntitlementSchema = createInsertSchema(qbOrderSupportEntitlements);
