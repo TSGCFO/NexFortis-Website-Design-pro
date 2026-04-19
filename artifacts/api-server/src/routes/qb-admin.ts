@@ -299,8 +299,8 @@ router.get("/customers", async (req: Request, res: Response) => {
       email: qbUsers.email,
       phone: qbUsers.phone,
       createdAt: qbUsers.createdAt,
-      orderCount: sql<number>`(select count(*)::int from qb_orders where qb_orders.user_id = ${qbUsers.id})`,
-      openTicketCount: sql<number>`(select count(*)::int from qb_support_tickets where qb_support_tickets.user_id = ${qbUsers.id} and qb_support_tickets.status = 'open')`,
+      orderCount: sql<number>`(select count(*)::int from qb_orders where qb_orders.user_id = "qb_users"."id")`,
+      openTicketCount: sql<number>`(select count(*)::int from qb_support_tickets where qb_support_tickets.user_id = "qb_users"."id" and qb_support_tickets.status = 'open')`,
     })
       .from(qbUsers)
       .where(whereClause)
