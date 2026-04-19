@@ -1,7 +1,7 @@
 import { Router, type Request, type Response, type NextFunction, type RequestHandler } from "express";
 import rateLimit, { ipKeyGenerator } from "express-rate-limit";
 import { db } from "@workspace/db";
-import { qbUsers, qbOrders, qbOrderFiles, qbWaitlistSignups, qbSupportTickets, qbSubscriptions, qbTicketUsage, qbReferrals, qbPromoCodes, qbPromoCodeRedemptions } from "@workspace/db/schema";
+import { qbUsers, qbOrders, qbOrderFiles, qbWaitlistSignups, qbSupportTickets, qbSubscriptions, qbTicketUsage, qbReferrals, qbPromoCodes, qbPromoCodeRedemptions, qbOrderSupportEntitlements } from "@workspace/db/schema";
 import { sendEmail } from "../lib/email-service";
 import { freeOrderCustomerEmail, freeOrderOperatorEmail, paidOrderConfirmationEmail, paidOrderOperatorEmail, welcomeRegistrationEmail, waitlistConfirmationEmail } from "../lib/email-templates";
 import { generateUniqueReferralCode } from "../lib/referral-code";
@@ -36,15 +36,6 @@ function getClientIp(req: any): string {
 const orderLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   limit: 10,
-  standardHeaders: true,
-  legacyHeaders: false,
-  keyGenerator: (req: any) => req.userId || ipKeyGenerator(getClientIp(req)),
-  message: { error: "Too many requests. Please try again later." },
-});
-
-const ticketLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  limit: 5,
   standardHeaders: true,
   legacyHeaders: false,
   keyGenerator: (req: any) => req.userId || ipKeyGenerator(getClientIp(req)),
@@ -105,10 +96,78 @@ const VALID_STATUS_TRANSITIONS: Record<string, string[]> = {
   submitted: ["paid"],
   paid: ["processing"],
   processing: ["completed"],
+  completed: ["delivered"],
 };
 
 function isValidStatusTransition(from: string, to: string): boolean {
   return VALID_STATUS_TRANSITIONS[from]?.includes(to) ?? false;
+}
+
+const EXTENDED_SUPPORT_ADDON_NAMES = new Set(["Extended Support", "Post-Conversion Care"]);
+
+export async function ensureOrderSupportEntitlement(order: typeof qbOrders.$inferSelect): Promise<void> {
+  if (!order.userId) {
+    return;
+  }
+
+  // Idempotency strategy: check-then-insert with unique constraint fallback.
+  // Two concurrent calls may both pass the SELECT check; one INSERT succeeds,
+  // the other catches the 23505 unique_violation and returns silently.
+  // This is intentional — no transaction needed because the constraint guarantees
+  // exactly one entitlement row per order.
+  const [existing] = await db
+    .select()
+    .from(qbOrderSupportEntitlements)
+    .where(eq(qbOrderSupportEntitlements.orderId, order.id))
+    .limit(1);
+
+  if (existing) {
+    return;
+  }
+
+  let addonNames: string[] = [];
+  if (order.addons) {
+    try {
+      const parsed = JSON.parse(order.addons);
+      if (Array.isArray(parsed)) {
+        addonNames = parsed.map((x) => String(x));
+      }
+    } catch {
+      // ignore malformed addons JSON
+    }
+  }
+
+  const hasExtended = addonNames.some((name) => EXTENDED_SUPPORT_ADDON_NAMES.has(name));
+  const ticketsAllowed = hasExtended ? 5 : 2;
+  const slaMinutes = hasExtended ? 60 : 120;
+  const isUpgraded = hasExtended;
+
+  const startsAt = new Date();
+  const expiresAt = new Date(startsAt.getTime() + 30 * 24 * 60 * 60 * 1000);
+
+  try {
+    await db.insert(qbOrderSupportEntitlements).values({
+      orderId: order.id,
+      userId: order.userId,
+      ticketsAllowed,
+      ticketsUsed: 0,
+      slaMinutes,
+      startsAt,
+      expiresAt,
+      isUpgraded,
+    });
+    console.log("[Orders] Created support entitlement for order", order.id, {
+      ticketsAllowed,
+      slaMinutes,
+      isUpgraded,
+    });
+  } catch (err: any) {
+    if (err?.code === "23505") {
+      console.log("[Orders] Entitlement already exists for order", order.id, "(concurrent insert)");
+      return;
+    }
+    throw err;
+  }
 }
 
 let stripeClient: Stripe | null = null;
@@ -1192,6 +1251,14 @@ router.put("/orders/:id/status", requireAuth, requireOperator, async (req: Reque
       .set({ status, updatedAt: new Date() })
       .where(eq(qbOrders.id, orderId))
       .returning();
+
+    // Entitlement creation runs after the status update commits (not in the same transaction).
+    // If it fails, the operator sees a 500 and can retry — ensureOrderSupportEntitlement
+    // is idempotent, so retries are safe. Accepted trade-off: simpler code vs. the rare
+    // case where an operator must manually retry a failed delivery.
+    if (status === "delivered" && updated) {
+      await ensureOrderSupportEntitlement(updated);
+    }
 
     res.json({ order: updated });
   } catch (err) {

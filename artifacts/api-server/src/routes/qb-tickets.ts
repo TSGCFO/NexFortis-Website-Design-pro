@@ -8,8 +8,10 @@ import {
   qbSupportTickets,
   qbTicketReplies,
   qbUsers,
+  qbOrderSupportEntitlements,
+  qbOrders,
 } from "@workspace/db/schema";
-import { eq, and, desc, asc, sql } from "drizzle-orm";
+import { eq, and, desc, asc, gt, sql } from "drizzle-orm";
 import sanitizeHtml from "sanitize-html";
 import { supabaseAdmin } from "../lib/supabase";
 import {
@@ -86,6 +88,22 @@ async function getActiveSubscription(userId: string) {
   return sub || null;
 }
 
+async function getActiveOrderEntitlement(userId: string) {
+  const [entitlement] = await db
+    .select()
+    .from(qbOrderSupportEntitlements)
+    .where(
+      and(
+        eq(qbOrderSupportEntitlements.userId, userId),
+        gt(qbOrderSupportEntitlements.expiresAt, sql`now()`),
+        sql`${qbOrderSupportEntitlements.ticketsUsed} < ${qbOrderSupportEntitlements.ticketsAllowed}`,
+      ),
+    )
+    .orderBy(asc(qbOrderSupportEntitlements.expiresAt))
+    .limit(1);
+  return entitlement || null;
+}
+
 async function uploadTicketAttachment(
   ticketId: number,
   file: Express.Multer.File,
@@ -132,46 +150,122 @@ router.post("/", ticketSubmitLimiter, (req: Request, res: Response) => {
       }
 
       const sub = await getActiveSubscription(userId);
-      if (!sub) {
-        res.status(403).json({ error: "An active subscription is required to submit tickets" });
+      const entitlement = sub ? null : await getActiveOrderEntitlement(userId);
+
+      if (!sub && !entitlement) {
+        const [anyEntitlement] = await db
+          .select({ id: qbOrderSupportEntitlements.id })
+          .from(qbOrderSupportEntitlements)
+          .where(eq(qbOrderSupportEntitlements.userId, userId))
+          .limit(1);
+
+        if (anyEntitlement) {
+          res.status(403).json({
+            error: "Your included support tickets have been used or have expired. Subscribe to a support plan for continued access.",
+          });
+        } else {
+          res.status(403).json({
+            error: "A support subscription or order with included support is required to submit tickets.",
+          });
+        }
         return;
       }
-
-      const tier = sub.tier as SubscriptionTier;
-      const tierConfig = getTierConfig(tier);
 
       const now = new Date();
       const critical = isCritical === "true" || isCritical === true;
       const afterHours = isAfterHours(now);
-      const slaMinutes = getSlaMinutesForTier(tier);
-      const slaDeadline = calculateSlaDeadline(now, slaMinutes, critical);
+
+      // These defaults are never actually used — the if/else below covers all reachable
+      // paths since we returned early when both `sub` and `entitlement` are absent. The
+      // initializers exist to satisfy strict TypeScript configs and keep the code defensive.
+      let tierForTicket: string = "order-basic";
+      let slaDeadline: Date = new Date();
+
+      if (sub) {
+        const tier = sub.tier as SubscriptionTier;
+        tierForTicket = tier;
+        const slaMinutes = getSlaMinutesForTier(tier);
+        slaDeadline = calculateSlaDeadline(now, slaMinutes, critical);
+      } else {
+        tierForTicket = entitlement!.isUpgraded ? "order-extended" : "order-basic";
+        slaDeadline = calculateSlaDeadline(now, entitlement!.slaMinutes, critical);
+      }
 
       const ticket = await db.transaction(async (tx) => {
-        if (!isUnlimitedTickets(tier) && sub.currentPeriodStart && sub.currentPeriodEnd) {
-          const usage = await getOrCreateTicketUsage(
-            sub.id,
-            sub.currentPeriodStart,
-            sub.currentPeriodEnd,
-            tierConfig.ticketLimit,
-            tx,
-          );
+        if (sub) {
+          const tier = sub.tier as SubscriptionTier;
+          const tierConfig = getTierConfig(tier);
 
-          if (usage.ticketsUsed >= tierConfig.ticketLimit) {
-            throw Object.assign(new Error("Ticket limit reached for this billing cycle"), {
-              limitReached: true,
-              ticketsUsed: usage.ticketsUsed,
-              ticketLimit: tierConfig.ticketLimit,
-              resetDate: sub.currentPeriodEnd!.toISOString(),
-            });
+          const tracksUsage =
+            !isUnlimitedTickets(tier) && !!sub.currentPeriodStart && !!sub.currentPeriodEnd;
+
+          let usage: Awaited<ReturnType<typeof getOrCreateTicketUsage>> | null = null;
+          if (tracksUsage) {
+            usage = await getOrCreateTicketUsage(
+              sub.id,
+              sub.currentPeriodStart!,
+              sub.currentPeriodEnd!,
+              tierConfig.ticketLimit,
+              tx,
+            );
+
+            if (usage.ticketsUsed >= tierConfig.ticketLimit) {
+              throw Object.assign(new Error("Ticket limit reached for this billing cycle"), {
+                limitReached: true,
+                ticketsUsed: usage.ticketsUsed,
+                ticketLimit: tierConfig.ticketLimit,
+                resetDate: sub.currentPeriodEnd!.toISOString(),
+              });
+            }
           }
+
+          const [created] = await tx
+            .insert(qbSupportTickets)
+            .values({
+              userId,
+              subscriptionId: sub.id,
+              entitlementId: null,
+              tierAtSubmission: tierForTicket,
+              subject: sanitizeInput(subject),
+              message: sanitizeInput(message),
+              status: "open",
+              isCritical: critical,
+              isAfterHours: afterHours,
+              slaDeadline,
+            })
+            .returning();
+
+          if (usage) {
+            await tx
+              .update(qbTicketUsage)
+              .set({ ticketsUsed: sql`${qbTicketUsage.ticketsUsed} + 1` })
+              .where(eq(qbTicketUsage.id, usage.id));
+          }
+
+          return created;
+        }
+
+        const [locked] = await tx
+          .select()
+          .from(qbOrderSupportEntitlements)
+          .where(eq(qbOrderSupportEntitlements.id, entitlement!.id))
+          .for("update")
+          .limit(1);
+
+        if (!locked || locked.ticketsUsed >= locked.ticketsAllowed) {
+          throw Object.assign(
+            new Error("All support tickets for this order have been used"),
+            { limitReached: true },
+          );
         }
 
         const [created] = await tx
           .insert(qbSupportTickets)
           .values({
             userId,
-            subscriptionId: sub.id,
-            tierAtSubmission: tier,
+            subscriptionId: null,
+            entitlementId: entitlement!.id,
+            tierAtSubmission: tierForTicket,
             subject: sanitizeInput(subject),
             message: sanitizeInput(message),
             status: "open",
@@ -181,17 +275,13 @@ router.post("/", ticketSubmitLimiter, (req: Request, res: Response) => {
           })
           .returning();
 
-        if (!isUnlimitedTickets(tier) && sub.currentPeriodStart && sub.currentPeriodEnd) {
-          await tx
-            .update(qbTicketUsage)
-            .set({ ticketsUsed: sql`${qbTicketUsage.ticketsUsed} + 1` })
-            .where(
-              and(
-                eq(qbTicketUsage.subscriptionId, sub.id),
-                eq(qbTicketUsage.periodStart, sub.currentPeriodStart),
-              ),
-            );
-        }
+        await tx
+          .update(qbOrderSupportEntitlements)
+          .set({
+            ticketsUsed: sql`${qbOrderSupportEntitlements.ticketsUsed} + 1`,
+            updatedAt: new Date(),
+          })
+          .where(eq(qbOrderSupportEntitlements.id, entitlement!.id));
 
         return created;
       });
@@ -209,7 +299,7 @@ router.post("/", ticketSubmitLimiter, (req: Request, res: Response) => {
 
       emitTicketNotification("ticket_created", ticket.id, userId, {
         subject: ticket.subject,
-        tier,
+        tier: tierForTicket,
         isCritical: critical,
         slaDeadline: slaDeadline.toISOString(),
       }).catch((err) => console.error("[Notification] Failed:", err));
@@ -219,18 +309,108 @@ router.post("/", ticketSubmitLimiter, (req: Request, res: Response) => {
       });
     } catch (ticketErr: any) {
       if (ticketErr?.limitReached) {
-        res.status(403).json({
-          error: ticketErr.message,
-          ticketsUsed: ticketErr.ticketsUsed,
-          ticketLimit: ticketErr.ticketLimit,
-          resetDate: ticketErr.resetDate,
-        });
+        const payload: Record<string, unknown> = {
+          error: ticketErr.message || "Ticket limit reached",
+        };
+        if (typeof ticketErr.ticketsUsed === "number") payload.ticketsUsed = ticketErr.ticketsUsed;
+        if (typeof ticketErr.ticketLimit === "number") payload.ticketLimit = ticketErr.ticketLimit;
+        if (ticketErr.resetDate) payload.resetDate = ticketErr.resetDate;
+        res.status(403).json(payload);
         return;
       }
       console.error("Ticket submission error:", ticketErr);
       res.status(500).json({ error: "Failed to create ticket" });
     }
   });
+});
+
+router.get("/entitlements", async (req: Request, res: Response) => {
+  try {
+    const userId = req.userId!;
+
+    const sub = await getActiveSubscription(userId);
+    let subscriptionPayload: {
+      tier: string;
+      ticketsUsed: number;
+      ticketLimit: number;
+      ticketsRemaining: number;
+      slaMinutes: number;
+    } | null = null;
+
+    if (sub) {
+      const tier = sub.tier as SubscriptionTier;
+      const tierConfig = getTierConfig(tier);
+      let ticketsUsed = 0;
+
+      if (sub.currentPeriodStart && sub.currentPeriodEnd) {
+        // Timestamp equality is safe here: both values originate from the same
+        // Stripe period.start Unix timestamp (period.start * 1000), stored
+        // through the same conversion path.
+        const [existingUsage] = await db
+          .select()
+          .from(qbTicketUsage)
+          .where(
+            and(
+              eq(qbTicketUsage.subscriptionId, sub.id),
+              eq(qbTicketUsage.periodStart, sub.currentPeriodStart),
+            ),
+          )
+          .limit(1);
+        ticketsUsed = existingUsage?.ticketsUsed ?? 0;
+      }
+
+      const unlimited = isUnlimitedTickets(tier);
+      subscriptionPayload = {
+        tier,
+        ticketsUsed,
+        ticketLimit: tierConfig.ticketLimit,
+        ticketsRemaining: unlimited
+          ? -1
+          : Math.max(0, tierConfig.ticketLimit - ticketsUsed),
+        slaMinutes: tierConfig.slaMinutes,
+      };
+    }
+
+    const entitlementRows = await db
+      .select({
+        entitlement: qbOrderSupportEntitlements,
+        serviceName: qbOrders.serviceName,
+      })
+      .from(qbOrderSupportEntitlements)
+      .leftJoin(qbOrders, eq(qbOrderSupportEntitlements.orderId, qbOrders.id))
+      .where(eq(qbOrderSupportEntitlements.userId, userId))
+      .orderBy(desc(qbOrderSupportEntitlements.expiresAt));
+
+    const now = new Date();
+    const orderEntitlements = entitlementRows.map(({ entitlement, serviceName }) => {
+      const isExpired = entitlement.expiresAt.getTime() < now.getTime();
+      const ticketsRemaining = Math.max(0, entitlement.ticketsAllowed - entitlement.ticketsUsed);
+      const isActive = !isExpired && entitlement.ticketsUsed < entitlement.ticketsAllowed;
+
+      return {
+        id: entitlement.id,
+        orderId: entitlement.orderId,
+        serviceName: serviceName ?? null,
+        ticketsAllowed: entitlement.ticketsAllowed,
+        ticketsUsed: entitlement.ticketsUsed,
+        ticketsRemaining,
+        slaMinutes: entitlement.slaMinutes,
+        startsAt: entitlement.startsAt,
+        expiresAt: entitlement.expiresAt,
+        isUpgraded: entitlement.isUpgraded,
+        isExpired,
+        isActive,
+      };
+    });
+
+    res.json({
+      subscription: subscriptionPayload,
+      orderEntitlements,
+    });
+  } catch (err) {
+    console.error("Get entitlements error:", err);
+    res.status(500).json({ error: "Failed to fetch entitlements" });
+  }
 });
 
 router.get("/", async (req: Request, res: Response) => {
