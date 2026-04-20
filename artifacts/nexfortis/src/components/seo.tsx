@@ -149,14 +149,6 @@ export function WebSiteSchema() {
     url: siteUrl,
     inLanguage: "en-CA",
     publisher: { "@id": `${siteUrl}/#organization` },
-    potentialAction: {
-      "@type": "SearchAction",
-      target: {
-        "@type": "EntryPoint",
-        urlTemplate: `${siteUrl}/blog?q={search_term_string}`,
-      },
-      "query-input": "required name=search_term_string",
-    },
   };
 
   return (

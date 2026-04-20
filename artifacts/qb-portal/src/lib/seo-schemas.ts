@@ -34,14 +34,6 @@ export function websiteSchema() {
     "@type": "WebSite",
     name: SITE_NAME,
     url: BASE_URL,
-    potentialAction: {
-      "@type": "SearchAction",
-      target: {
-        "@type": "EntryPoint",
-        urlTemplate: `${BASE_URL}/catalog?q={search_term_string}`,
-      },
-      "query-input": "required name=search_term_string",
-    },
   };
 }
 
