@@ -188,8 +188,8 @@ async function prerender() {
       }
     }
   } finally {
-    await browser.close();
-    server.close();
+    try { await browser.close(); } catch (e) { console.warn("[prerender] browser.close failed:", e.message); }
+    try { server.close(); } catch (e) { console.warn("[prerender] server.close failed:", e.message); }
   }
   const fallbackPath = path.join(distDir, "200.html");
   await fs.writeFile(fallbackPath, shellHtml, "utf-8");

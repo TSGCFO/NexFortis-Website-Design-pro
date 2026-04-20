@@ -95,6 +95,9 @@ services:
       - type: rewrite
         source: /api/*
         destination: https://nexfortis-api.onrender.com/api/:splat
+      - type: redirect
+        source: /services/automation-software
+        destination: /services/workflow-automation
       - type: rewrite
         source: /*
         destination: /index.html
