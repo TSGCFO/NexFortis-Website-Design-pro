@@ -82,9 +82,9 @@ export function SEO({
       <meta name="geo.placename" content="Nobleton" />
 
       {noIndex ? (
-        <meta name="robots" content="noindex, nofollow" />
+        <meta name="robots" content="noindex,nofollow" />
       ) : (
-        <meta name="robots" content="index, follow" />
+        <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
       )}
 
       {schemas.map((schema, idx) => (

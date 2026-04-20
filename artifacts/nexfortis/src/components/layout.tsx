@@ -3,6 +3,7 @@ import { Link, useLocation } from "wouter";
 import { Menu, X, ChevronDown, Monitor, Database, Cloud, Cog, LayoutDashboard, ArrowRight, Sun, Moon, MonitorSmartphone, ChevronUp, ExternalLink } from "lucide-react";
 import { useTheme } from "@/hooks/use-theme";
 import { trackEvent } from "@/lib/analytics";
+import { OrganizationSchema, LocalBusinessSchema, WebSiteSchema } from "@/components/seo";
 
 const services = [
   { name: "Digital Marketing", href: "/services/digital-marketing", icon: Monitor },
@@ -129,6 +130,10 @@ export function Layout({ children }: { children: ReactNode }) {
 
   return (
     <div className="min-h-dvh flex flex-col font-sans">
+      {/* Global JSON-LD schemas — rendered on every page so search engines see them site-wide */}
+      <OrganizationSchema />
+      <LocalBusinessSchema />
+      <WebSiteSchema />
       <a
         href="#main-content"
         className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-accent focus:text-white focus:rounded-lg focus:font-semibold focus:outline-none focus:ring-2 focus:ring-accent/50"

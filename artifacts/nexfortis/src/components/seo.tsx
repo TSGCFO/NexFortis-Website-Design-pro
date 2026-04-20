@@ -35,7 +35,7 @@ export function SEO({ title, description, path = "/", type = "website", image, n
       {noIndex ? (
         <meta name="robots" content="noindex,nofollow" />
       ) : (
-        <meta name="robots" content="index, follow" />
+        <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
       )}
 
       <meta property="og:type" content={type} />
@@ -45,6 +45,7 @@ export function SEO({ title, description, path = "/", type = "website", image, n
       <meta property="og:image" content={ogImage} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
+      <meta property="og:image:type" content="image/png" />
       <meta property="og:site_name" content={SITE_NAME} />
       <meta property="og:locale" content="en_CA" />
 
@@ -147,8 +148,11 @@ export function WebSiteSchema() {
   const schema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
+    "@id": `${siteUrl}/#website`,
     name: "NexFortis IT Solutions",
     url: siteUrl,
+    inLanguage: "en-CA",
+    publisher: { "@id": `${siteUrl}/#organization` },
     potentialAction: {
       "@type": "SearchAction",
       target: {

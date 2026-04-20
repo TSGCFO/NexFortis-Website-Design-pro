@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 import { useState, lazy, Suspense } from "react";
 import { Section, SectionHeader, FAQItem } from "@/components/ui-elements";
-import { SEO, OrganizationSchema, LocalBusinessSchema, WebSiteSchema, FAQSchema } from "@/components/seo";
+import { SEO, FAQSchema } from "@/components/seo";
 
 const HeroCanvas = lazy(() => import("@/components/hero-canvas"));
 
@@ -127,9 +127,6 @@ export default function Home() {
         description="End-to-end IT for Canadian businesses from NexFortis: managed IT, Microsoft 365, QuickBooks migration, digital marketing, and workflow automation. Free quote."
         path="/"
       />
-      <OrganizationSchema />
-      <LocalBusinessSchema />
-      <WebSiteSchema />
       <FAQSchema faqs={homeFaqs} />
 
       <section className="relative min-h-[70vh] flex items-center justify-center section-brand-navy overflow-hidden pt-24 pb-8">

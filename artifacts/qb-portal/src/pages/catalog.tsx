@@ -71,6 +71,7 @@ export default function Catalog() {
             <div className="flex items-center gap-2 flex-wrap">
               <Filter className="w-4 h-4 text-muted-foreground" />
               <button
+                type="button"
                 onClick={() => setFilter("all")}
                 aria-pressed={filter === "all"}
                 className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${filter === "all" ? "bg-navy text-white" : "bg-muted text-muted-foreground hover:bg-muted/80"}`}
@@ -79,6 +80,7 @@ export default function Catalog() {
               </button>
               {allCategories.map((cat) => (
                 <button
+                  type="button"
                   key={cat}
                   onClick={() => setFilter(cat)}
                   aria-pressed={filter === cat}
