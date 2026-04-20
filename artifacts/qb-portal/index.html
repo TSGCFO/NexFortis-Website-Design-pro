@@ -7,7 +7,7 @@
       Per-page SEO tags (title, description, canonical, OG/Twitter, JSON-LD)
       are injected by react-helmet-async at runtime from `src/components/seo.tsx`,
       and baked into static HTML by the Vite build's pre-render step
-      (vite-plugin-prerender, see `vite.config.ts`). The shell intentionally omits
+      (prerender.mjs, run after `vite build`). The shell intentionally omits
       these tags so each pre-rendered page ships exactly one canonical/title/etc.
     -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -17,8 +17,7 @@
     <!--
       Fallback-only SEO tags for the unrendered SPA shell.
       Each pre-rendered page overwrites these via react-helmet-async at render
-      time (see src/components/seo.tsx + vite-plugin-prerender post-process
-      dedupe in vite.config.ts). The `noindex` ensures Google does not index
+      time (see src/components/seo.tsx + dedupeHead in prerender.mjs). The `noindex` ensures Google does not index
       the raw shell if it is ever fetched directly (e.g. an unknown route
       served by the SPA catch-all).
     -->

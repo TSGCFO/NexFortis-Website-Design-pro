@@ -38,17 +38,12 @@ minimumReleaseAgeExclude:
 onlyBuiltDependencies:
   - '@swc/core'
   - esbuild
+  - puppeteer
   - msw
   - unrs-resolver
 
 overrides:
   path-to-regexp: ^8.4.2
-  # @prerenderer/prerenderer (used by vite-plugin-prerender) ships Express 4
-  # which requires path-to-regexp ~0.1.12. The global ^8.4.2 override above
-  # breaks Express 4's router. Pin the nested copy under express@4 so the
-  # prerender pipeline works while keeping the modern path-to-regexp on
-  # api-server (Express 5).
-  'express@~4>path-to-regexp': ~0.1.12
   '@esbuild-kit/esm-loader': npm:tsx@^4.21.0
   '@expo/ngrok-bin>@expo/ngrok-bin-darwin-arm64': '-'
   '@expo/ngrok-bin>@expo/ngrok-bin-darwin-x64': '-'

@@ -14,11 +14,11 @@
 //     keep the LAST occurrence. These are appended by helmet AFTER the
 //     shell's static tags, so the per-page version naturally wins.
 //
-// Shared between artifacts/nexfortis/vite.config.ts and
-// artifacts/qb-portal/vite.config.ts so changes only need to be made once.
-// Imported via relative path (`../../lib/seo-dedupe`) — same pattern as
-// `lib/vite-plugin-stable-hmr.ts`. Vite executes its config through Node +
-// esbuild, so no build/package step is required for this plain TS file.
+// NOTE: The standalone prerender.mjs scripts (artifacts/nexfortis/prerender.mjs
+// and artifacts/qb-portal/prerender.mjs) each have their own inline
+// `dedupeHead()` function with broader coverage (itemprop, charset,
+// http-equiv). This shared module is retained for reference and potential
+// reuse in other contexts (e.g. tests, dev tooling).
 
 export const SEO_DEDUPE_KEYS = new Set<string>([
   "description",
