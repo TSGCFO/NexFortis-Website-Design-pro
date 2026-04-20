@@ -23,20 +23,81 @@ const distDir = path.join(__dirname, "dist", "public");
 const base = (process.env.BASE_PATH || "/").replace(/\/?$/, "/");
 const port = Number(process.env.PRERENDER_PORT || 4173);
 
-const ROUTES = [
-  "/",
-  "/about",
-  "/services",
-  "/services/digital-marketing",
-  "/services/microsoft-365",
-  "/services/quickbooks",
-  "/services/it-consulting",
-  "/services/workflow-automation",
-  "/contact",
-  "/blog",
-  "/privacy",
-  "/terms",
+const EXCLUDED_ROUTES = [
+  "/admin/login",
+  "/blog/admin",
+  "/blog/:slug",
+  "/services/automation-software",
 ];
+
+const EXCLUDED_PATTERNS = [
+  /^\/admin/,
+  /\/:/,
+];
+
+function isExcluded(route) {
+  if (EXCLUDED_ROUTES.includes(route)) return true;
+  return EXCLUDED_PATTERNS.some((p) => p.test(route));
+}
+
+async function discoverStaticRoutes() {
+  const appTsx = await fs.readFile(path.join(__dirname, "src", "App.tsx"), "utf-8");
+  const matches = [...appTsx.matchAll(/<Route\s+path="([^"]+)"/g)];
+  const routes = [];
+  for (const m of matches) {
+    const route = m[1];
+    if (isExcluded(route)) continue;
+    routes.push(route);
+  }
+  if (!routes.includes("/")) routes.unshift("/");
+  return [...new Set(routes)];
+}
+
+async function discoverBlogRoutes() {
+  const apiUrl = process.env.BLOG_API || process.env.SITEMAP_BLOG_API || "https://api.nexfortis.com";
+  const fallbackPath = path.join(__dirname, "scripts", "blog-fallback.json");
+  let posts = null;
+  try {
+    const res = await fetch(`${apiUrl}/blog/posts`, { signal: AbortSignal.timeout(5000) });
+    if (res.ok) {
+      const live = await res.json();
+      if (Array.isArray(live) && live.length > 0) {
+        posts = live.filter((p) => p.published !== false);
+        console.log(`[prerender] fetched ${posts.length} live blog posts from ${apiUrl}`);
+      }
+    }
+  } catch (e) {
+    console.warn(`[prerender] blog API fetch failed (${e.message}); using checked-in fallback`);
+  }
+  if (!posts) {
+    try {
+      posts = JSON.parse(await fs.readFile(fallbackPath, "utf-8"));
+      console.log(`[prerender] using ${posts.length} blog posts from fallback file`);
+    } catch (e) {
+      console.error(`[prerender] FATAL: could not load blog-fallback.json: ${e.message}`);
+      process.exit(1);
+    }
+  }
+  const SAFE_SLUG = /^[a-z0-9][a-z0-9-]*[a-z0-9]$/;
+  const routes = [];
+  for (const p of posts) {
+    if (!p.slug || typeof p.slug !== "string") {
+      console.warn(`[prerender] skipping blog post with missing slug`);
+      continue;
+    }
+    if (!SAFE_SLUG.test(p.slug)) {
+      console.error(`[prerender] FATAL: blog slug "${p.slug}" contains unsafe characters`);
+      process.exit(1);
+    }
+    routes.push(`/blog/${p.slug}`);
+  }
+  const unique = [...new Set(routes)];
+  if (unique.length !== routes.length) {
+    console.warn(`[prerender] removed ${routes.length - unique.length} duplicate blog slug(s)`);
+  }
+  console.log(`[prerender] ${unique.length} valid blog routes`);
+  return unique;
+}
 
 const MIME = {
   ".html": "text/html; charset=utf-8",
@@ -73,7 +134,6 @@ function startServer() {
           return;
         }
       } catch {}
-      // SPA fallback
       const indexPath = path.join(distDir, "index.html");
       res.writeHead(200, { "content-type": "text/html; charset=utf-8" });
       createReadStream(indexPath).pipe(res);
@@ -82,11 +142,32 @@ function startServer() {
   });
 }
 
+function verifyPrerendered(routes) {
+  const missing = [];
+  for (const route of routes) {
+    const dir = path.join(distDir, route === "/" ? "" : route);
+    const file = path.join(dir, "index.html");
+    if (!existsSync(file)) {
+      missing.push(route);
+    }
+  }
+  return missing;
+}
+
 async function prerender() {
   if (!existsSync(distDir)) {
     console.error(`[prerender] dist not found: ${distDir}`);
     process.exit(1);
   }
+
+  const staticRoutes = await discoverStaticRoutes();
+  const blogRoutes = await discoverBlogRoutes();
+  const ROUTES = [...staticRoutes, ...blogRoutes];
+
+  console.log(`[prerender] discovered ${ROUTES.length} routes (${staticRoutes.length} static + ${blogRoutes.length} blog)`);
+  console.log(`[prerender] static routes: ${staticRoutes.join(", ")}`);
+  console.log(`[prerender] blog routes: ${blogRoutes.join(", ")}`);
+
   const server = await startServer();
   const chromePath = findChromium();
   if (chromePath) console.log(`[prerender] using Chrome at ${chromePath}`);
@@ -110,10 +191,8 @@ async function prerender() {
       await page.setUserAgent("ReactSnap/Prerender Mozilla/5.0");
       try {
         await page.goto(url, { waitUntil: "networkidle0", timeout: 30000 });
-        // Wait an extra tick for helmet to flush
         await new Promise((r) => setTimeout(r, 250));
         const html = await page.content();
-        // Strip server-injected dev banner / cartographer if present, then de-dupe SEO head tags
         const cleaned = dedupeSeoTags(
           html
             .replace(/<script[^>]*replit-dev-banner[^>]*>[\s\S]*?<\/script>/gi, "")
@@ -140,8 +219,20 @@ async function prerender() {
   await fs.writeFile(fallbackPath, shellHtml, "utf-8");
   console.log(`[prerender] wrote noindex SPA fallback -> 200.html`);
 
+  if (fail > 0) {
+    console.error(`[prerender] FAILED: ${fail} route(s) could not be prerendered.`);
+    process.exit(1);
+  }
+
+  const missing = verifyPrerendered(ROUTES);
+  if (missing.length > 0) {
+    console.error(`[prerender] VERIFICATION FAILED — the following ${missing.length} route(s) have no index.html on disk:`);
+    for (const r of missing) console.error(`  - ${r}`);
+    process.exit(1);
+  }
+
+  console.log(`[prerender] VERIFIED: all ${ok} routes have index.html on disk.`);
   console.log(`[prerender] done. ${ok} ok, ${fail} failed.`);
-  if (fail > 0) process.exit(1);
 }
 
 prerender().catch((e) => {

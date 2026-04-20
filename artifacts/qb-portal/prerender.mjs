@@ -23,16 +23,43 @@ const distDir = path.join(__dirname, "dist", "public");
 const base = (process.env.BASE_PATH ?? "/qb-portal/").replace(/\/?$/, "/");
 const port = Number(process.env.PRERENDER_PORT || 4174);
 
-const STATIC_ROUTES = [
-  "/",
-  "/catalog",
-  "/faq",
-  "/qbm-guide",
-  "/subscription",
-  "/waitlist",
-  "/terms",
-  "/privacy",
+const EXCLUDED_ROUTES = [
+  "/order",
+  "/login",
+  "/register",
+  "/forgot-password",
+  "/reset-password",
+  "/auth/callback",
+  "/portal",
+  "/ticket/:id",
+  "/order/:id",
+  "/service/:slug",
+  "/category/:slug",
+  "/landing/:slug",
 ];
+
+const EXCLUDED_PATTERNS = [
+  /^\/admin/,
+  /\/:/,
+];
+
+function isExcluded(route) {
+  if (EXCLUDED_ROUTES.includes(route)) return true;
+  return EXCLUDED_PATTERNS.some((p) => p.test(route));
+}
+
+async function discoverStaticRoutes() {
+  const appTsx = await fs.readFile(path.join(__dirname, "src", "App.tsx"), "utf-8");
+  const matches = [...appTsx.matchAll(/<Route\s+path="([^"]+)"/g)];
+  const routes = [];
+  for (const m of matches) {
+    const route = m[1];
+    if (isExcluded(route)) continue;
+    routes.push(route);
+  }
+  if (!routes.includes("/")) routes.unshift("/");
+  return [...new Set(routes)];
+}
 
 async function loadDynamicRoutes() {
   const routes = [];
@@ -105,11 +132,31 @@ function startServer() {
   });
 }
 
+function verifyPrerendered(routes) {
+  const missing = [];
+  for (const route of routes) {
+    const dir = path.join(distDir, route === "/" ? "" : route);
+    const file = path.join(dir, "index.html");
+    if (!existsSync(file)) {
+      missing.push(route);
+    }
+  }
+  return missing;
+}
+
 async function prerender() {
   if (!existsSync(distDir)) {
     console.error(`[prerender] dist not found: ${distDir}`);
     process.exit(1);
   }
+
+  const staticRoutes = await discoverStaticRoutes();
+  const dynamicRoutes = await loadDynamicRoutes();
+  const ROUTES = [...staticRoutes, ...dynamicRoutes];
+
+  console.log(`[prerender] discovered ${ROUTES.length} routes (${staticRoutes.length} static + ${dynamicRoutes.length} dynamic)`);
+  console.log(`[prerender] static routes: ${staticRoutes.join(", ")}`);
+
   const server = await startServer();
   const chromePath = findChromium();
   if (chromePath) console.log(`[prerender] using Chrome at ${chromePath}`);
@@ -123,10 +170,6 @@ async function prerender() {
 
   const shellPath = path.join(distDir, "index.html");
   const shellHtml = await fs.readFile(shellPath, "utf-8");
-
-  const dynamicRoutes = await loadDynamicRoutes();
-  const ROUTES = [...STATIC_ROUTES, ...dynamicRoutes];
-  console.log(`[prerender] ${ROUTES.length} routes (${STATIC_ROUTES.length} static + ${dynamicRoutes.length} dynamic)`);
 
   let ok = 0;
   let fail = 0;
@@ -165,8 +208,20 @@ async function prerender() {
   await fs.writeFile(fallbackPath, shellHtml, "utf-8");
   console.log(`[prerender] wrote noindex SPA fallback -> 200.html`);
 
+  if (fail > 0) {
+    console.error(`[prerender] FAILED: ${fail} route(s) could not be prerendered.`);
+    process.exit(1);
+  }
+
+  const missing = verifyPrerendered(ROUTES);
+  if (missing.length > 0) {
+    console.error(`[prerender] VERIFICATION FAILED — the following ${missing.length} route(s) have no index.html on disk:`);
+    for (const r of missing) console.error(`  - ${r}`);
+    process.exit(1);
+  }
+
+  console.log(`[prerender] VERIFIED: all ${ok} routes have index.html on disk.`);
   console.log(`[prerender] done. ${ok} ok, ${fail} failed.`);
-  if (fail > 0) process.exit(1);
 }
 
 prerender().catch((e) => {

@@ -1,6 +1,4 @@
 #!/usr/bin/env node
-// Builds public/sitemap.xml + dist/public/sitemap.xml from prerender output
-// and live blog posts. Run AFTER prerender.
 import fs from "node:fs/promises";
 import { existsSync, statSync } from "node:fs";
 import path from "node:path";
@@ -17,6 +15,7 @@ function priorityFor(loc) {
   if (loc === "/services") return { priority: "0.9", changefreq: "monthly" };
   if (loc === "/about" || loc.startsWith("/services/")) return { priority: "0.8", changefreq: "monthly" };
   if (loc === "/contact" || loc === "/blog") return { priority: "0.7", changefreq: "weekly" };
+  if (loc.startsWith("/blog/")) return { priority: "0.6", changefreq: "monthly" };
   if (loc === "/terms" || loc === "/privacy") return { priority: "0.3", changefreq: "yearly" };
   return { priority: "0.5", changefreq: "monthly" };
 }
@@ -38,33 +37,41 @@ async function walkPrerendered() {
   return urls;
 }
 
-const apiUrl = process.env.SITEMAP_BLOG_API || "https://api.nexfortis.com";
-let posts = null;
-try {
-  const res = await fetch(`${apiUrl}/blog/posts`, { signal: AbortSignal.timeout(5000) });
-  if (res.ok) {
-    const live = await res.json();
-    if (Array.isArray(live) && live.length > 0) {
-      posts = live.filter((p) => p.published !== false);
-      console.log(`[sitemap] using ${posts.length} live posts from ${apiUrl}`);
+async function loadBlogDates() {
+  const apiUrl = process.env.SITEMAP_BLOG_API || "https://api.nexfortis.com";
+  const fallbackPath = path.join(__dirname, "blog-fallback.json");
+  let posts = null;
+  try {
+    const res = await fetch(`${apiUrl}/blog/posts`, { signal: AbortSignal.timeout(5000) });
+    if (res.ok) {
+      const live = await res.json();
+      if (Array.isArray(live) && live.length > 0) {
+        posts = live.filter((p) => p.published !== false);
+        console.log(`[sitemap] using ${posts.length} live post dates from ${apiUrl}`);
+      }
+    }
+  } catch (e) {
+    console.warn(`[sitemap] live-post fetch failed (${e.message}); using checked-in fallback for dates`);
+  }
+  if (!posts) {
+    posts = JSON.parse(await fs.readFile(fallbackPath, "utf-8"));
+  }
+  const dateMap = new Map();
+  for (const p of posts) {
+    if (p.slug) {
+      dateMap.set(`/blog/${p.slug}`, (p.updatedAt || p.createdAt || new Date().toISOString()).slice(0, 10));
     }
   }
-} catch (e) {
-  console.warn(`[sitemap] live-post fetch failed (${e.message}); using checked-in fallback`);
-}
-if (!posts) {
-  posts = JSON.parse(await fs.readFile(path.join(__dirname, "blog-fallback.json"), "utf-8"));
+  return dateMap;
 }
 
-const urls = (await walkPrerendered()).map((u) => ({ loc: SITE + u.loc, lastmod: u.lastmod, ...priorityFor(u.loc) }));
-for (const p of posts) {
-  urls.push({
-    loc: `${SITE}/blog/${p.slug}`,
-    lastmod: (p.updatedAt || p.createdAt || new Date().toISOString()).slice(0, 10),
-    changefreq: "monthly",
-    priority: "0.6",
-  });
-}
+const prerendered = await walkPrerendered();
+const blogDates = await loadBlogDates();
+
+const urls = prerendered.map((u) => {
+  const lastmod = blogDates.get(u.loc) || u.lastmod;
+  return { loc: SITE + u.loc, lastmod, ...priorityFor(u.loc) };
+});
 
 urls.sort((a, b) => (a.loc === SITE + "/" ? -1 : b.loc === SITE + "/" ? 1 : a.loc.localeCompare(b.loc)));
 
