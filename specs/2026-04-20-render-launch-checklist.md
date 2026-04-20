@@ -66,7 +66,7 @@ These are all marked `sync: false` in `render.yaml`, meaning Render won't auto-c
 - [ ] `OPERATOR_PASSWORD` (strong; will be hashed by `db:seed-operator` script)
 
 **`nexfortis-marketing` secrets (1 total):**
-- [ ] `VITE_GA_MEASUREMENT_ID` (Google Analytics 4 measurement ID — `G-XXXXXXXXXX`)
+- [ ] `VITE_GA_MEASUREMENT_ID` (Google Analytics 4 measurement ID — `G-XXXXXXXXXX`) — **prerequisite:** create the GA4 property first (see Analytics & Search section below — the "create property" steps need to be done in Phase 0 to get this ID; the rest of the GA4/GSC wiring happens in Phase 4)
 
 **`nexfortis-qb-portal` secrets (2 total):**
 - [ ] `VITE_SUPABASE_URL` (same as API's `SUPABASE_URL`)
@@ -193,15 +193,80 @@ This is when `nexfortis.com` stops pointing at GoDaddy and starts pointing at Re
 - [ ] Trigger a ticket → operator replies → customer email arrives
 - [ ] Cancel the test subscription → confirm flow → email arrives
 
-### SEO verification
+### SEO verification (technical baseline only — full analytics/search setup in next section)
 - [ ] `curl -s https://nexfortis.com/ | grep -c application/ld+json` returns `1+`
 - [ ] `curl -s https://nexfortis.com/sitemap.xml` returns the sitemap
 - [ ] `curl -s https://nexfortis.com/robots.txt` returns production robots (NOT the noindex shell)
-- [ ] Submit `https://nexfortis.com/sitemap.xml` to Google Search Console
-- [ ] Submit same to Bing Webmaster Tools
 - [ ] Run Lighthouse on `https://nexfortis.com/` — target 90+ on Performance, 100 on SEO
 - [ ] Run Lighthouse on `https://qb.nexfortis.com/` (note: lower SEO score expected on the app portal — fine)
 - [ ] Re-run the auditor's curl tests; confirm they now correctly find schemas
+
+### Analytics, Search Console & discoverability infrastructure
+
+This is the foundation for measuring everything that happens next (organic traffic growth, the local-SEO sprint, any future ad campaigns). Skip nothing here — most items are 5-minute jobs but each one closes a measurement gap.
+
+**Google Analytics 4 (GA4):**
+- [ ] **Phase 0 prereq:** Create GA4 property at `analytics.google.com` → Admin → Create Property; data stream type: Web; URL: `https://nexfortis.com`. Copy the `G-XXXXXXXXXX` measurement ID into the `VITE_GA_MEASUREMENT_ID` secret on `nexfortis-marketing`
+- [ ] **Phase 0 prereq:** Decide whether to create a SECOND GA4 property for the QB portal (recommended — keeps marketing-funnel data clean from app-usage data) or use cross-domain tracking on a single property
+- [ ] In GA4 → Admin → Data Streams → enable enhanced measurement (page views, scrolls, outbound clicks, file downloads, form interactions are all auto-tracked)
+- [ ] In GA4 → Admin → Data Settings → Data Retention → set to **14 months** (default is 2 — costs nothing to extend)
+- [ ] In GA4 → Admin → Property Settings → set time zone to `America/Toronto` and currency to `CAD`
+- [ ] Configure key events (formerly "conversions"): contact form submission, QB portal signup, subscription checkout completed, ticket created
+- [ ] After site is live: open `https://nexfortis.com/` in an incognito window, then check GA4 Realtime — confirm your visit appears within 30 seconds
+- [ ] Filter your own internal traffic: Admin → Data Filters → Internal Traffic → define your IP ranges as "internal", then enable the filter (otherwise your own page-loads pollute analytics)
+
+**Google Search Console (GSC):**
+- [ ] Add property at `search.google.com/search-console` — use **Domain property** (covers `nexfortis.com`, `www.nexfortis.com`, `qb.nexfortis.com`, http+https — single property for everything)
+- [ ] Verify via DNS TXT record at your registrar (GoDaddy or wherever DNS lives post-cutover) — Domain property requires DNS verification
+- [ ] After verification: submit `https://nexfortis.com/sitemap.xml` under Sitemaps
+- [ ] Submit `https://qb.nexfortis.com/sitemap.xml` if the portal has one (worth checking; less critical because the portal is mostly authenticated)
+- [ ] Use the URL Inspection tool on `https://nexfortis.com/` → "Request Indexing" (kicks Googlebot to crawl immediately instead of waiting days)
+- [ ] Same for `/about/`, `/services/quickbooks/`, `/blog/`, and each blog post URL — speeds initial indexation
+- [ ] Link GA4 to GSC: GA4 → Admin → Search Console Links → Link → select your GSC property and the Web data stream (this surfaces query/landing-page reports inside GA4)
+- [ ] Set up email alerts in GSC (Settings → Notifications) for crawl errors and manual actions
+
+**Bing Webmaster Tools:**
+- [ ] Add `https://nexfortis.com` at `bing.com/webmasters`
+- [ ] Use the "Import from Google Search Console" option — Bing pulls verification + sitemap from GSC in one click (saves 10 minutes)
+- [ ] Confirm sitemap submission shows the same URL count as GSC
+
+**IndexNow (Bing + Yandex instant indexing):**
+- [ ] Enable IndexNow via Bing Webmaster Tools (Settings → IndexNow → generate API key)
+- [ ] Host the key file at `https://nexfortis.com/<key>.txt` (place in `artifacts/nexfortis/public/` so it ships with the static build)
+- [ ] Optional: wire the blog admin "publish" action to ping the IndexNow API on new post creation (one HTTP POST; ~10 lines of code in the API server). Defer if not urgent — Bing will still discover via sitemap.
+
+**Schema markup validation:**
+- [ ] Run `https://nexfortis.com/` through Google's [Rich Results Test](https://search.google.com/test/rich-results) — confirm Organization, LocalBusiness, WebSite, FAQPage all detected and error-free
+- [ ] Run each services page (`/services/quickbooks`, `/services/microsoft-365`, etc.) through Rich Results Test — confirm Service + BreadcrumbList detected
+- [ ] Run a representative blog post through Rich Results Test — confirm Article + BreadcrumbList detected
+- [ ] Run `https://validator.schema.org/?url=https%3A%2F%2Fnexfortis.com%2F` — same idea, stricter validator; confirm zero errors (warnings are fine)
+- [ ] Spot-check `/about/`, `/contact/` — at minimum they should have BreadcrumbList without errors
+
+**Google Business Profile (when verification clears — likely after launch):**
+- [ ] Confirm GBP listing for NexFortis is verified (you submitted ~2026-04-20)
+- [ ] Set primary website URL to `https://nexfortis.com`
+- [ ] Confirm NAP on GBP exactly matches the canonical NAP we'll lock in for the local-SEO sprint (see `specs/2026-04-20-local-seo-and-topical-authority.md` Q1)
+- [ ] Add primary category (e.g., "Computer Support and Services" or "IT Service") + secondary categories (Microsoft Cloud Solutions Provider, Bookkeeping Service, etc.)
+- [ ] Upload logo, cover photo, 3–5 photos showing brand professionalism
+- [ ] Write the GBP "About" description (750 chars) — should mirror the home-page meta description for consistency
+- [ ] Enable messaging if you want leads through GBP chat
+- [ ] Publish first GBP "Update" post (Google rewards active profiles with slightly higher local visibility)
+
+**Conversion tracking infrastructure (foundation for any future ads):**
+- [ ] Document a **UTM convention** in `specs/` (e.g., `utm_source=google` `utm_medium=cpc` `utm_campaign=launch-msp-vaughan`) so all future paid traffic is attributable. Even if you don't run ads day-one, having the convention written down prevents inconsistent tagging later
+- [ ] Mark all GA4 key events (above) as conversions so they flow into ad-platform optimization later
+- [ ] Register the website URL as a "verified domain" in any ad accounts you'll use (Google Ads → Tools → Settings → My preferences → Linked accounts; Meta Business Suite → Brand Safety → Domains)
+
+**Ad platform readiness (only fill in if you'll run ads at or near launch — otherwise defer):**
+- [ ] Google Ads account created, payment method on file
+- [ ] Google Ads conversion tracking installed via GA4 import (preferred over a second pixel — single source of truth)
+- [ ] Meta Pixel installed if running Meta ads (`fbq` snippet — would need to be added to `index.html` shell)
+- [ ] LinkedIn Insight Tag if running LinkedIn ads
+- [ ] If any of the above are added, re-run Lighthouse to confirm no Performance regression from third-party scripts
+
+**Optional but recommended:**
+- [ ] **Microsoft Clarity** (free heatmaps + session recordings) — `clarity.ms`, add the snippet to the marketing site shell. Useful for the upcoming local-SEO sprint to see how visitors interact with new pages
+- [ ] **Cloudflare** in front of Render (optional, free tier) — gives you better caching control, WAF, bot management, and analytics. Defer unless you have a specific reason
 
 ### Security & headers verification
 - [ ] `curl -I https://nexfortis.com/` shows: `x-frame-options: DENY`, `x-content-type-options: nosniff`, `referrer-policy: strict-origin-when-cross-origin`, `strict-transport-security: max-age=...` (Render adds HSTS)
