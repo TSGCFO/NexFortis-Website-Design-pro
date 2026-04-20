@@ -73,6 +73,10 @@ overrides:
 importers:
 
   .:
+    dependencies:
+      sharp:
+        specifier: ^0.34.5
+        version: 0.34.5
     devDependencies:
       prettier:
         specifier: ^3.8.1

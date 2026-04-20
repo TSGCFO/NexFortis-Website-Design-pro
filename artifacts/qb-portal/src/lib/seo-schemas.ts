@@ -115,7 +115,8 @@ export function generateHowToSchema(pageData: {
 
 export function generateServiceSchema(
   pageData: { h1: string; metaDescription: string; slug: string; primaryKeyword: string },
-  product: Product | undefined
+  product: Product | undefined,
+  urlOverride?: string,
 ) {
   return {
     "@context": "https://schema.org",
@@ -123,7 +124,7 @@ export function generateServiceSchema(
     name: pageData.h1,
     description: pageData.metaDescription,
     serviceType: pageData.primaryKeyword,
-    url: `${BASE_URL}/landing/${pageData.slug}`,
+    url: urlOverride || `${BASE_URL}/landing/${pageData.slug}`,
     provider: {
       "@type": "Organization",
       name: ORG_NAME,

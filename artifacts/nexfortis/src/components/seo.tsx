@@ -15,7 +15,12 @@ const DEFAULT_IMAGE = "/opengraph.png";
 
 export function SEO({ title, description, path = "/", type = "website", image, noIndex }: SEOProps) {
   const siteUrl = SITE_URL;
-  const fullTitle = path === "/" ? `${SITE_NAME} — Complexity Decoded. Advantage.` : `${title} | ${SITE_NAME}`;
+  const fullTitle =
+    path === "/"
+      ? `${SITE_NAME} — Complexity Decoded. Advantage.`
+      : title.includes("NexFortis")
+        ? title
+        : `${title} | ${SITE_NAME}`;
   const fullUrl = `${siteUrl}${path}`;
   const ogImage = image || `${siteUrl}${DEFAULT_IMAGE}`;
 
@@ -239,9 +244,12 @@ export function ArticleSchema({ title, description, datePublished, dateModified,
   image?: string;
 }) {
   const siteUrl = SITE_URL;
-  const articleImage = image
-    ? (image.startsWith("http") ? image : `${siteUrl}${image}`)
-    : `${siteUrl}/opengraph.png`;
+  const fullUrl = url.startsWith("http") ? url : `${siteUrl}${url}`;
+  const resolvedImage = image
+    ? image.startsWith("http")
+      ? image
+      : `${siteUrl}${image.startsWith("/") ? image : `/${image}`}`
+    : `${siteUrl}${DEFAULT_IMAGE}`;
   const schema = {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -249,16 +257,21 @@ export function ArticleSchema({ title, description, datePublished, dateModified,
     description,
     datePublished,
     dateModified: dateModified || datePublished,
-    image: articleImage,
-    url: url.startsWith("http") ? url : `${siteUrl}${url}`,
+    url: fullUrl,
+    image: resolvedImage,
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": fullUrl,
+    },
     publisher: {
       "@type": "Organization",
       name: "NexFortis IT Solutions",
       logo: { "@type": "ImageObject", url: `${siteUrl}/images/logo-512.png` },
     },
     author: {
-      "@type": "Organization",
-      name: "NexFortis IT Solutions",
+      "@type": "Person",
+      name: "Hassan Sadiq",
+      url: `${siteUrl}/about`,
     },
   };
 

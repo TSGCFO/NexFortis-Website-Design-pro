@@ -2,6 +2,13 @@ import { Link } from "wouter";
 import { ArrowRight } from "lucide-react";
 import { getLandingPageBySlug } from "@/data/landingPages";
 
+function stripTokens(text: string): string {
+  return text
+    .replace(/\{[a-zA-Z]+\}/g, "")
+    .replace(/\s{2,}/g, " ")
+    .trim();
+}
+
 export function RelatedServices({ slugs }: { slugs: string[] }) {
   const pages = slugs
     .map((s) => getLandingPageBySlug(s))
@@ -29,7 +36,7 @@ export function RelatedServices({ slugs }: { slugs: string[] }) {
               <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-accent transition-colors flex-shrink-0 mt-1" />
             </div>
             <p className="text-sm text-foreground/70 mt-2 line-clamp-2">
-              {p.metaDescription}
+              {stripTokens(p.metaDescription)}
             </p>
           </Link>
         ))}

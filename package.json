@@ -11,13 +11,18 @@
   },
   "private": true,
   "devDependencies": {
-    "typescript": "~5.9.2",
-    "prettier": "^3.8.1"
+    "prettier": "^3.8.1",
+    "typescript": "~5.9.2"
   },
   "pnpm": {
-    "onlyBuiltDependencies": ["bcrypt"],
+    "onlyBuiltDependencies": [
+      "bcrypt"
+    ],
     "overrides": {
       "zod": "3.25.76"
     }
+  },
+  "dependencies": {
+    "sharp": "^0.34.5"
   }
 }

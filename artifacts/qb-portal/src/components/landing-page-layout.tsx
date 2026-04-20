@@ -21,10 +21,16 @@ function resolveTokens(
   text: string,
   product: Product | undefined
 ): string {
-  if (!product) return text;
-  return text
-    .replace(/\{launchPrice\}/g, formatPriceCAD(product.launch_price_cad))
-    .replace(/\{basePrice\}/g, formatPriceCAD(product.base_price_cad));
+  let resolved = text;
+  if (product) {
+    resolved = resolved
+      .replace(/\{launchPrice\}/g, formatPriceCAD(product.launch_price_cad))
+      .replace(/\{basePrice\}/g, formatPriceCAD(product.base_price_cad));
+  }
+  return resolved
+    .replace(/\{[a-zA-Z]+\}/g, "")
+    .replace(/\s{2,}/g, " ")
+    .trim();
 }
 
 export function LandingPageLayout({
