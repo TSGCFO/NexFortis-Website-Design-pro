@@ -1,5 +1,6 @@
 import { PageHero, Section, SectionHeader, PageBreadcrumbs } from "@/components/ui-elements";
 import { SEO, BreadcrumbSchema } from "@/components/seo";
+import { Helmet } from "react-helmet-async";
 import { Target, Lightbulb, Users, Minimize2, ArrowRight } from "lucide-react";
 import { Link } from "wouter";
 import { motion } from "framer-motion";
@@ -14,7 +15,29 @@ export default function About() {
 
   return (
     <div>
-      <SEO title="About Us — Canada's Trusted IT Partner" description="Learn about NexFortis IT Solutions — our mission, vision, and values. Empowering Canadian businesses with innovative IT solutions since day one." path="/about" />
+      <SEO title="About NexFortis — Trusted Canadian IT" description="Learn about NexFortis IT Solutions — our mission, vision, values, and Canadian-based team helping businesses thrive with practical, expert-led IT services." path="/about" />
+      <Helmet>
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Person",
+          "@id": "https://nexfortis.com/about#hassan-sadiq",
+          name: "Hassan Sadiq",
+          jobTitle: "Founder & CEO",
+          worksFor: { "@id": "https://nexfortis.com/#organization" },
+          description: "Hassan Sadiq is the founder and CEO of NexFortis IT Solutions in Nobleton, Ontario, with 15+ years helping Canadian small and mid-sized businesses adopt practical IT, Microsoft 365, and QuickBooks solutions that actually move the needle.",
+          url: "https://nexfortis.com/about",
+          image: "https://nexfortis.com/images/hassan-headshot.png",
+          sameAs: ["https://www.linkedin.com/in/hassan-sadiq-nexfortis"],
+          knowsAbout: [
+            "Microsoft 365",
+            "Azure cloud infrastructure",
+            "QuickBooks Online",
+            "QuickBooks Desktop",
+            "IT consulting",
+            "Workflow automation",
+          ],
+        })}</script>
+      </Helmet>
       <BreadcrumbSchema
         items={[
           { name: "Home", url: "/" },
@@ -123,9 +146,9 @@ export default function About() {
               <img
                 src={`${import.meta.env.BASE_URL}images/hassan-headshot.png`}
                 alt="Hassan Sadiq, Founder & CEO of NexFortis"
-                className="w-32 h-32 rounded-2xl object-cover shrink-0 bg-secondary"
-                width={128}
-                height={128}
+                className="w-40 h-40 sm:w-48 sm:h-48 lg:w-56 lg:h-56 rounded-2xl object-cover shrink-0 bg-secondary"
+                width={224}
+                height={224}
                 loading="lazy"
               />
             </picture>
@@ -151,11 +174,18 @@ export default function About() {
               transition={{ duration: 0.3 }}
               className="flex flex-col items-center text-center gap-4"
             >
-              <img
-                src={`${import.meta.env.BASE_URL}images/badge-microsoft-partner.png`}
-                alt="Microsoft AI Cloud Partner Program badge"
-                className="h-9 w-auto object-contain"
-              />
+              <picture>
+                <source srcSet={`${import.meta.env.BASE_URL}images/badge-microsoft-partner.webp`} type="image/webp" />
+                <img
+                  src={`${import.meta.env.BASE_URL}images/badge-microsoft-partner.png`}
+                  alt="Microsoft AI Cloud Partner Program badge"
+                  className="h-9 w-auto object-contain"
+                  width={120}
+                  height={36}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </picture>
               <div>
                 <h4 className="text-lg font-bold text-white mb-2">Microsoft AI Cloud Partner Program</h4>
                 <p className="text-white/70 leading-relaxed text-sm">
@@ -171,11 +201,18 @@ export default function About() {
               transition={{ duration: 0.3, delay: 0.08 }}
               className="flex flex-col items-center text-center gap-4"
             >
-              <img
-                src={`${import.meta.env.BASE_URL}images/badge-google-partner.png`}
-                alt="Google Partner badge"
-                className="h-9 w-auto object-contain"
-              />
+              <picture>
+                <source srcSet={`${import.meta.env.BASE_URL}images/badge-google-partner.webp`} type="image/webp" />
+                <img
+                  src={`${import.meta.env.BASE_URL}images/badge-google-partner.png`}
+                  alt="Google Partner badge"
+                  className="h-9 w-auto object-contain"
+                  width={120}
+                  height={36}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </picture>
               <div>
                 <h4 className="text-lg font-bold text-white mb-2">Google Partner</h4>
                 <p className="text-white/70 leading-relaxed text-sm">
@@ -191,11 +228,18 @@ export default function About() {
               transition={{ duration: 0.3, delay: 0.16 }}
               className="flex flex-col items-center text-center gap-4"
             >
-              <img
-                src={`${import.meta.env.BASE_URL}images/badge-quickbooks-proadvisor.png`}
-                alt="QuickBooks ProAdvisor badge"
-                className="h-9 w-auto object-contain"
-              />
+              <picture>
+                <source srcSet={`${import.meta.env.BASE_URL}images/badge-quickbooks-proadvisor.webp`} type="image/webp" />
+                <img
+                  src={`${import.meta.env.BASE_URL}images/badge-quickbooks-proadvisor.png`}
+                  alt="QuickBooks ProAdvisor badge"
+                  className="h-9 w-auto object-contain"
+                  width={120}
+                  height={36}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </picture>
               <div>
                 <h4 className="text-lg font-bold text-white mb-2">QuickBooks ProAdvisor</h4>
                 <p className="text-white/70 leading-relaxed text-sm">

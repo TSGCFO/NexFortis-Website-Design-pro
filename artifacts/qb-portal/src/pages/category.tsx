@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowRight, Clock, BookOpen } from "lucide-react";
 import { SEO } from "@/components/seo";
+import { generateBreadcrumbSchema } from "@/lib/seo-schemas";
 import { getCategoryLandingLinks } from "@/data/serviceLandingLinks";
 
 export default function Category() {
@@ -48,6 +49,7 @@ export default function Category() {
         title={categoryName}
         description={`Browse ${products.length} QuickBooks ${categoryName.toLowerCase()} services. Professional solutions for Canadian businesses.`}
         path={`/category/${slug}`}
+        jsonLd={generateBreadcrumbSchema([{ name: "Services", path: "/catalog" }, { name: categoryName, path: `/category/${slug}` }])}
       />
       <section className="section-brand-navy py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

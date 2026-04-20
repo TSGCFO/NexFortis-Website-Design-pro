@@ -7,14 +7,21 @@
     "build": "pnpm run typecheck && pnpm -r --if-present run build",
     "typecheck:libs": "tsc --build",
     "typecheck": "pnpm run typecheck:libs && pnpm -r --filter \"./artifacts/**\" --filter \"./scripts\" --if-present run typecheck",
-    "start": "node artifacts/api-server/dist/index.cjs"
+    "start": "node artifacts/api-server/dist/index.cjs",
+    "test": "node --test 'tests/*.test.mjs'"
   },
   "private": true,
   "devDependencies": {
-    "typescript": "~5.9.2",
-    "prettier": "^3.8.1"
+    "prettier": "^3.8.1",
+    "sharp": "^0.34.5",
+    "typescript": "~5.9.2"
   },
   "pnpm": {
-    "onlyBuiltDependencies": ["bcrypt"]
+    "onlyBuiltDependencies": [
+      "bcrypt"
+    ],
+    "overrides": {
+      "zod": "3.25.76"
+    }
   }
 }

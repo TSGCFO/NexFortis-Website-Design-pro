@@ -3,13 +3,14 @@ import { Link, useLocation } from "wouter";
 import { Menu, X, ChevronDown, Monitor, Database, Cloud, Cog, LayoutDashboard, ArrowRight, Sun, Moon, MonitorSmartphone, ChevronUp, ExternalLink } from "lucide-react";
 import { useTheme } from "@/hooks/use-theme";
 import { trackEvent } from "@/lib/analytics";
+import { OrganizationSchema, LocalBusinessSchema, WebSiteSchema } from "@/components/seo";
 
 const services = [
   { name: "Digital Marketing", href: "/services/digital-marketing", icon: Monitor },
   { name: "Microsoft 365 Solutions", href: "/services/microsoft-365", icon: Cloud },
   { name: "QuickBooks Migration", href: "/services/quickbooks", icon: Database },
   { name: "IT Consulting", href: "/services/it-consulting", icon: Cog },
-  { name: "Workflow Automation", href: "/services/automation-software", icon: LayoutDashboard },
+  { name: "Workflow Automation", href: "/services/workflow-automation", icon: LayoutDashboard },
 ];
 
 function NavLink({ href, children, location }: { href: string; children: React.ReactNode; location: string }) {
@@ -120,6 +121,7 @@ export function Layout({ children }: { children: ReactNode }) {
         document.documentElement.style.scrollPaddingBottom = "";
       };
     }
+    return undefined;
   }, [isServiceSubPage]);
 
   const navbarLogo = resolvedTheme === "dark"
@@ -128,6 +130,10 @@ export function Layout({ children }: { children: ReactNode }) {
 
   return (
     <div className="min-h-dvh flex flex-col font-sans">
+      {/* Global JSON-LD schemas — Organization, LocalBusiness, WebSite. Rendered on every page so search engines see them site-wide. Page-specific schemas (Service, FAQ, Article, Breadcrumb) are added by individual pages. */}
+      <OrganizationSchema />
+      <LocalBusinessSchema />
+      <WebSiteSchema />
       <a
         href="#main-content"
         className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-accent focus:text-white focus:rounded-lg focus:font-semibold focus:outline-none focus:ring-2 focus:ring-accent/50"
@@ -374,21 +380,42 @@ export function Layout({ children }: { children: ReactNode }) {
           </div>
 
           <div className="border-t border-white/10 pt-6 pb-4 flex justify-center items-center gap-8">
-            <img
-              src={`${import.meta.env.BASE_URL}images/badge-microsoft-partner.png`}
-              alt="Microsoft AI Cloud Partner Program badge"
-              className="h-9 w-auto object-contain opacity-60 hover:opacity-90 transition-opacity"
-            />
-            <img
-              src={`${import.meta.env.BASE_URL}images/badge-google-partner.png`}
-              alt="Google Partner badge"
-              className="h-9 w-auto object-contain opacity-60 hover:opacity-90 transition-opacity"
-            />
-            <img
-              src={`${import.meta.env.BASE_URL}images/badge-quickbooks-proadvisor.png`}
-              alt="QuickBooks ProAdvisor badge"
-              className="h-9 w-auto object-contain opacity-60 hover:opacity-90 transition-opacity"
-            />
+            <picture>
+              <source srcSet={`${import.meta.env.BASE_URL}images/badge-microsoft-partner.webp`} type="image/webp" />
+              <img
+                src={`${import.meta.env.BASE_URL}images/badge-microsoft-partner.png`}
+                alt="Microsoft AI Cloud Partner Program badge"
+                className="h-9 w-auto object-contain opacity-60 hover:opacity-90 transition-opacity"
+                width={120}
+                height={36}
+                loading="lazy"
+                decoding="async"
+              />
+            </picture>
+            <picture>
+              <source srcSet={`${import.meta.env.BASE_URL}images/badge-google-partner.webp`} type="image/webp" />
+              <img
+                src={`${import.meta.env.BASE_URL}images/badge-google-partner.png`}
+                alt="Google Partner badge"
+                className="h-9 w-auto object-contain opacity-60 hover:opacity-90 transition-opacity"
+                width={120}
+                height={36}
+                loading="lazy"
+                decoding="async"
+              />
+            </picture>
+            <picture>
+              <source srcSet={`${import.meta.env.BASE_URL}images/badge-quickbooks-proadvisor.webp`} type="image/webp" />
+              <img
+                src={`${import.meta.env.BASE_URL}images/badge-quickbooks-proadvisor.png`}
+                alt="QuickBooks ProAdvisor badge"
+                className="h-9 w-auto object-contain opacity-60 hover:opacity-90 transition-opacity"
+                width={120}
+                height={36}
+                loading="lazy"
+                decoding="async"
+              />
+            </picture>
           </div>
 
           <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-white/40">

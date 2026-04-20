@@ -49,7 +49,7 @@ Blog admin write routes (`POST/PUT/DELETE /api/blog/posts`, `GET /api/blog/posts
 ### NexFortis IT Solutions Website (`artifacts/nexfortis`)
 - **Framework**: React 19 + Vite + Tailwind CSS v4
 - **UI/UX**: Framer Motion for animations, React Hook Form + Zod for forms, Wouter for routing.
-- **SEO**: `react-helmet-async`, `robots.txt`, `sitemap.xml`.
+- **SEO**: `react-helmet-async`, `robots.txt`, `sitemap.xml`. Prerender script (`prerender.mjs`) auto-discovers routes from `App.tsx` and fetches blog post slugs from the API (with `scripts/blog-fallback.json` as safety net). Build fails if any expected route is missing from disk after prerendering.
 - **Performance**: Code splitting, dynamic imports, WebP images, self-hosted fonts, PWA manifest.
 - **Accessibility**: Comprehensive UI/UX audit, ARIA labeling, reduced-motion support.
 
@@ -57,7 +57,7 @@ Blog admin write routes (`POST/PUT/DELETE /api/blog/posts`, `GET /api/blog/posts
 - **Framework**: React 19 + Vite + Tailwind CSS v4
 - **Routing**: Wouter
 - **Design Language**: NexFortis brand-consistent design with specific color palette (navy, azure, rose-gold), Inter and Alegreya Sans SC fonts, dark mode support, glassmorphism, sticky scroll-aware navbar, and branded footer.
-- **Features**: Product catalog (`public/products.json` with 20 products across 5 categories), dynamic order flow with per-product file type validation, volume pack and subscription flows (no file upload), bundle handling, waitlist, FAQ, QBM guide, client portal, Stripe integration (test mode). Subscription frontend with public landing page (`/subscription`), portal Subscription tab with management actions (upgrade/downgrade/cancel/reactivate), enhanced ticket form (subscription-aware with file attachments, critical flag), TierBadge component.
+- **Features**: Product catalog (`public/products.json` with 20 products across 5 categories), dynamic order flow with per-product file type validation, volume pack and subscription flows (no file upload), bundle handling, waitlist, FAQ, QBM guide, client portal, Stripe integration (test mode). Subscription frontend with public landing page (`/subscription`), portal Subscription tab with management actions (upgrade/downgrade/cancel/reactivate), enhanced ticket form (subscription-aware with file attachments, critical flag), TierBadge component. Prerender script (`prerender.mjs`) auto-discovers static routes from `App.tsx` and dynamic routes from `products.json` + `landingPages.ts`. Build fails if any expected route is missing from disk after prerendering.
 - **File Storage**: Supabase Storage (`order-files` bucket) with memoryStorage multer, magic byte validation for QBM files (OLE2 header), signed download URLs (1hr customer, 15min operator), 7-day auto-deletion cron via pg_cron. Graceful degradation via `isStorageAvailable()` flag.
 - **Auth**: Supabase Auth (email/password, Google/Microsoft OAuth) with JWT Bearer tokens. Social login redirects to `/auth/callback`. MFA (TOTP) required for operator access (AAL2 enforcement).
 - **API**: Dedicated routes at `/api/qb/` for orders, files, checkout, webhooks, support tickets, waitlist, and user management. Status transitions enforced: `pending_payment → paid → processing → completed`.

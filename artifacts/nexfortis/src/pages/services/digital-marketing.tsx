@@ -49,7 +49,7 @@ export default function DigitalMarketing() {
 
   return (
     <div>
-      <SEO title="Digital Marketing & Web Design" description="Full-service digital marketing for Canadian businesses: custom web design, SEO optimization, Google Ads management, and content creation. Drive traffic and convert visitors." path="/services/digital-marketing" />
+      <SEO title="Digital Marketing & Web Design" description="Digital marketing for Canadian businesses: custom web design, SEO, Google Ads management, and content creation. Drive traffic and convert more visitors." path="/services/digital-marketing" />
       <ServiceSchema name="Digital Marketing & Web Presence" description="Full-service digital marketing including web design, hosting, SEO, Google Ads, and content creation for Canadian businesses." url="/services/digital-marketing" />
       <BreadcrumbSchema items={[
         { name: "Home", url: "/" },

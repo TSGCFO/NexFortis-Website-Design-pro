@@ -1,0 +1,85 @@
+Full SEO Audit Report — Both Sites
+I audited every page of both the marketing site and the QB Portal, line by line, against the latest Google 2026 ranking factors including the March 2026 Core Web Vitals update (which tightened LCP to 2.0s and now evaluates performance at the site level, not just per page). Couldn't run Lighthouse because the Replit app is currently sleeping — we'll need to re-run that once it's awake.
+Here's everything, organized by priority.
+CRITICAL — Must Fix Before Launch
+1. Both Sites Are Pure Client-Side Rendered (No Pre-Rendering)
+This is the single biggest SEO risk. Both sites are Vite+React SPAs that ship an empty <div id="root"></div>. Every bot that doesn't execute JavaScript — Bing, LinkedIn, Slack, Discord, Facebook — sees absolutely nothing. Google does render JavaScript, but it goes into a delayed second crawl wave (hours to weeks behind).
+After the March 2026 update, Google now evaluates performance at the domain level. If your JS-rendered pages are slow to paint (which they inherently are compared to pre-rendered HTML), it drags down the entire domain's ranking signal.
+Fix: Add vite-plugin-prerender to both sites' vite.config.ts. This renders all public routes at build time using headless Chrome — the output is static HTML files that Google can crawl instantly. Lowest effort, highest impact. Pre-render these routes at minimum:
+Marketing: /, /about, /services, all 5 service detail pages, /blog, /contact, /privacy, /terms
+Portal: /, /catalog, /faq, /qbm-guide, /subscription, all 20 /landing/:slug pages, all /service/:slug pages, all /category/:slug pages
+2. QB Portal Has No <noscript> Fallback
+The index.html body is literally just <div id="root"></div> and a script tag. When social crawlers visit any page, they get zero content. At minimum, add a <noscript> block with basic text and a link. This is a band-aid until pre-rendering is set up — but it takes 30 seconds to add and helps immediately.
+3. Marketing Site: Dual URL for Automation Page
+App.tsx registers two routes for the same component: /services/workflow-automation AND /services/automation-software. The nav links to one, the canonical points to the other, and the sitemap lists the third. Google gets three contradictory signals. This is textbook duplicate content confusion.
+Fix: Pick one URL (recommend /services/workflow-automation — more descriptive). Remove the other route, update the nav link, update the sitemap entry. One canonical URL everywhere.
+4. Marketing Site: Organization and LocalBusiness Schema @id Collision
+Both schemas use the same @id (https://nexfortis.com/#organization). In JSON-LD, same @id means same entity — Google's parser will try to merge them and produce unpredictable results. Give LocalBusinessSchema its own @id like https://nexfortis.com/#localbusiness.
+HIGH — Fix Before or Shortly After Launch
+5. QB Portal: FAQ Page Missing FAQPage Schema
+The /faq page has 20+ Q&A pairs but doesn't use the FAQPage schema that already exists in your codebase (generateFAQSchema in seo-schemas.ts). This is literally a one-line fix — pass jsonLd={generateFAQSchema(faqData)} to the SEO component. FAQ rich results in Google can double your click-through rate on that page.
+6. QB Portal: Service Detail Pages Missing Product/Offer Schema
+Every /service/:slug page shows pricing but has zero structured data. The generateServiceSchema function exists and is already used on landing pages — just call it on service detail pages too. This enables pricing to appear directly in Google search results.
+7. Both Sites: Dual Font Loading
+The QB Portal loads Inter from both Google Fonts CDN AND local WOFF2 files simultaneously. The browser fetches both, wasting bandwidth and adding a third-party DNS lookup. Remove the Google Fonts <link> from index.html entirely — the self-hosted WOFF2 files are better in every way (faster, no GDPR concern, no third-party dependency).
+8. QB Portal: No Font Preload Hints
+Neither Inter-400 nor Inter-600 WOFF2 files are preloaded. Fonts discovered late cause Flash of Unstyled Text (FOUT). Add <link rel="preload"> for the two most-used weights. The marketing site already does this correctly.
+9. QB Portal: No Code Splitting
+All 20+ page components and all admin pages are bundled together in a single JavaScript file. A public visitor browsing the catalog downloads the entire admin dashboard code. Use React.lazy + Suspense for route-level splitting, especially for admin routes. Could cut initial bundle 20-30%. The marketing site already does this correctly with React.lazy().
+10. Marketing Site: Article Schema Missing image Property
+Blog posts can't qualify for Google's Article rich results without an image field in the schema. The ArticleSchema function in seo.tsx needs to accept and emit the blog post's cover image URL.
+11. Marketing Site: No <lastmod> in Sitemap
+All 12 entries in the marketing site's sitemap.xml lack <lastmod> dates. Google uses this to prioritize crawl budget. The QB Portal sitemap does have <lastmod> but all dates are identical (2026-04-16), which makes the signal useless.
+MEDIUM — Fix Within First Month
+12. Four Marketing Site Titles Exceed 60 Characters
+Google truncates titles longer than ~60 characters with "..." in search results:
+/about — 63 chars → trim to "About NexFortis — Canada's Trusted IT Partner"
+/services/quickbooks — 70 chars → trim to "QuickBooks Migration & Recovery | NexFortis"
+/services/workflow-automation — 74 chars → trim to "Workflow Automation & Custom Software | NexFortis"
+/contact — 65 chars → trim to "Contact Us — NexFortis IT Solutions"
+13. Most Meta Descriptions Outside 150-160 Char Sweet Spot
+10 of 13 marketing pages are too long (most 165-190 chars, will be truncated in search results). The QB Portal pages are generally fine at ~130 chars.
+14. No Images Use loading="lazy" on QB Portal
+Zero <img> tags across the entire QB Portal use loading="lazy". Below-fold images (footer badges, any images after the hero) should all have it. The marketing site does this correctly.
+15. No WebP Images on QB Portal
+All images are JPG or PNG. WebP saves 25-35% file size. Marketing site correctly uses WebP with <picture> fallback. Portal should do the same.
+16. Partner Badge Images Missing width/height (Both Sites)
+Badge images on both sites lack explicit dimensions, causing Cumulative Layout Shift (CLS). When images load without reserved space, content jumps around — Google penalizes this. Add width and height attributes.
+17. QB Portal: Missing Routes in robots.txt
+/ticket/:id and /order/:id (order detail) are authenticated routes not blocked in robots.txt. Add Disallow: /ticket/ and verify /order/ coverage.
+18. QB Portal: /waitlist Missing from Sitemap
+Public, indexable page not listed in sitemap.xml.
+19. Marketing Site: SEO Component Doesn't Emit robots: index, follow
+The component only emits a robots meta tag when noIndex={true}. Indexable pages rely on the static index.html fallback, which is fragile for an SPA. Add explicit index, follow to the component.
+20. Marketing Site: Blog Posts Not in Sitemap
+Individual blog post URLs aren't listed because posts are loaded from an API. Need a build-time sitemap generation step or a server-side sitemap endpoint.
+21. Marketing Site: modulePreload: false in Vite Config
+This disables Vite's speculative chunk preloading, meaning navigation between pages is slower. Re-enable it unless there's a specific reason it was turned off.
+22. Marketing Site: Possible Wasted hero-bg.webp Preload
+index.html preloads hero-bg.webp, but I couldn't find any <img> or CSS background-image reference to it — the hero uses an animated canvas. If the image isn't displayed, the preload wastes bandwidth on every page load.
+23. Marketing Site: FacebookBot Blocked in robots.txt
+This also blocks Facebook's link preview crawler, which means when someone shares your site on Facebook, Instagram, or WhatsApp, the preview may be degraded. Check whether this is intentional.
+LOW — Polish Items
+QB Portal: /catalog and /subscription titles are generic — add "QuickBooks" keyword
+QB Portal: sameAs array in Organization schema is empty — add LinkedIn and social profiles
+QB Portal: Organization logo in schema is SVG — Google recommends PNG (at least 112x112px)
+QB Portal: Service pages use og:type="website" instead of "product"
+QB Portal: Catalog filter buttons missing aria-pressed for screen readers
+Marketing: Add SearchAction to WebSiteSchema for Sitelinks Searchbox eligibility
+Marketing: Add twitter:site handle once you have a Twitter/X account
+Marketing: Add og:image:width and og:image:height meta tags
+Marketing: Add Person schema for Hassan Sadiq on the About page (E-E-A-T signal)
+Marketing: Minor heading hierarchy issues on IT Consulting and About pages
+What's Already Done Well
+A lot is already solid — this isn't starting from zero:
+Every page on both sites has unique <title>, <meta description>, <link rel="canonical">, and full Open Graph tags
+hreflang tags set for en-CA on the marketing site
+Geo meta tags (CA-ON, Nobleton) on the marketing site
+All 20 QB Portal landing pages have full structured data (Service/HowTo + FAQ + Breadcrumb), unique OG images, and keyword-optimized titles
+Proper semantic HTML with correct heading hierarchy, landmark elements, skip navigation
+Descriptive alt text on all images
+font-display: swap on all font faces
+Clean URL structure, history mode routing (no hash URLs)
+Admin/private pages correctly set noIndex
+AI training crawlers blocked, AI search crawlers allowed
+Marketing site has code splitting via React.lazy()

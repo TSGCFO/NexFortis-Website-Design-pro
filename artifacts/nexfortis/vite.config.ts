@@ -5,23 +5,24 @@ import path from "path";
 import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
 import { stableHmr } from "../../lib/vite-plugin-stable-hmr";
 
+const isBuild = process.argv.includes("build");
 const rawPort = process.env.PORT;
 
-if (!rawPort) {
+if (!rawPort && !isBuild) {
   throw new Error(
     "PORT environment variable is required but was not provided.",
   );
 }
 
-const port = Number(rawPort);
+const port = rawPort ? Number(rawPort) : 5000;
 
 if (Number.isNaN(port) || port <= 0) {
   throw new Error(`Invalid PORT value: "${rawPort}"`);
 }
 
-const basePath = process.env.BASE_PATH;
+const basePath = process.env.BASE_PATH ?? "/";
 
-if (!basePath) {
+if (!process.env.BASE_PATH && !isBuild) {
   throw new Error(
     "BASE_PATH environment variable is required but was not provided.",
   );
@@ -59,7 +60,6 @@ export default defineConfig({
   build: {
     outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
-    modulePreload: false,
     rollupOptions: {
       output: {
         manualChunks(id) {

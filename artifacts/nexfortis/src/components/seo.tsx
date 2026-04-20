@@ -15,7 +15,12 @@ const DEFAULT_IMAGE = "/opengraph.png";
 
 export function SEO({ title, description, path = "/", type = "website", image, noIndex }: SEOProps) {
   const siteUrl = SITE_URL;
-  const fullTitle = path === "/" ? `${SITE_NAME} — Complexity Decoded. Advantage.` : `${title} | ${SITE_NAME}`;
+  const fullTitle =
+    path === "/"
+      ? `${SITE_NAME} — Complexity Decoded. Advantage.`
+      : title.includes("NexFortis")
+        ? title
+        : `${title} | ${SITE_NAME}`;
   const fullUrl = `${siteUrl}${path}`;
   const ogImage = image || `${siteUrl}${DEFAULT_IMAGE}`;
 
@@ -27,13 +32,16 @@ export function SEO({ title, description, path = "/", type = "website", image, n
       <link rel="canonical" href={fullUrl} />
       <link rel="alternate" hrefLang="en-CA" href={fullUrl} />
       <link rel="alternate" hrefLang="x-default" href={fullUrl} />
-      {noIndex && <meta name="robots" content="noindex,nofollow" />}
+      <meta name="robots" content={noIndex ? "noindex,nofollow" : "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1"} />
 
       <meta property="og:type" content={type} />
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={description} />
       <meta property="og:url" content={fullUrl} />
       <meta property="og:image" content={ogImage} />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
+      <meta property="og:image:type" content="image/png" />
       <meta property="og:site_name" content={SITE_NAME} />
       <meta property="og:locale" content="en_CA" />
 
@@ -57,7 +65,7 @@ export function OrganizationSchema() {
     name: "NexFortis IT Solutions",
     legalName: "17756968 Canada Inc.",
     url: siteUrl,
-    logo: `${siteUrl}/images/logo-original.svg`,
+    logo: `${siteUrl}/images/logo-512.png`,
     description: "NexFortis delivers end-to-end IT solutions for Canadian businesses including managed IT, Microsoft 365, QuickBooks migration, digital marketing, and workflow automation.",
     contactPoint: {
       "@type": "ContactPoint",
@@ -89,11 +97,11 @@ export function LocalBusinessSchema() {
   const schema = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    "@id": `${siteUrl}/#organization`,
+    "@id": `${siteUrl}/#localbusiness`,
     name: "NexFortis IT Solutions",
     legalName: "17756968 Canada Inc.",
     url: siteUrl,
-    logo: `${siteUrl}/images/logo-original.svg`,
+    logo: `${siteUrl}/images/logo-512.png`,
     image: `${siteUrl}/opengraph.png`,
     description: "NexFortis delivers end-to-end IT solutions for Canadian businesses including managed IT, Microsoft 365, QuickBooks migration, digital marketing, and workflow automation.",
     email: "contact@nexfortis.com",
@@ -136,8 +144,11 @@ export function WebSiteSchema() {
   const schema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
+    "@id": `${siteUrl}/#website`,
     name: "NexFortis IT Solutions",
     url: siteUrl,
+    inLanguage: "en-CA",
+    publisher: { "@id": `${siteUrl}/#organization` },
   };
 
   return (
@@ -216,14 +227,21 @@ export function FAQSchema({ faqs }: { faqs: { question: string; answer: string }
   );
 }
 
-export function ArticleSchema({ title, description, datePublished, dateModified, url }: {
+export function ArticleSchema({ title, description, datePublished, dateModified, url, image }: {
   title: string;
   description: string;
   datePublished: string;
   dateModified?: string;
   url: string;
+  image?: string;
 }) {
   const siteUrl = SITE_URL;
+  const fullUrl = url.startsWith("http") ? url : `${siteUrl}${url}`;
+  const resolvedImage = image
+    ? image.startsWith("http")
+      ? image
+      : `${siteUrl}${image.startsWith("/") ? image : `/${image}`}`
+    : `${siteUrl}${DEFAULT_IMAGE}`;
   const schema = {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -231,15 +249,21 @@ export function ArticleSchema({ title, description, datePublished, dateModified,
     description,
     datePublished,
     dateModified: dateModified || datePublished,
-    url: url.startsWith("http") ? url : `${siteUrl}${url}`,
+    url: fullUrl,
+    image: resolvedImage,
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": fullUrl,
+    },
     publisher: {
       "@type": "Organization",
       name: "NexFortis IT Solutions",
-      logo: { "@type": "ImageObject", url: `${siteUrl}/images/logo-original.svg` },
+      logo: { "@type": "ImageObject", url: `${siteUrl}/images/logo-512.png` },
     },
     author: {
-      "@type": "Organization",
-      name: "NexFortis IT Solutions",
+      "@type": "Person",
+      name: "Hassan Sadiq",
+      url: `${siteUrl}/about`,
     },
   };
 

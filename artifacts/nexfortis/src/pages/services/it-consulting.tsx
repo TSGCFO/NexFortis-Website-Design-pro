@@ -67,7 +67,7 @@ export default function ITConsulting() {
 
   return (
     <div>
-      <SEO title="IT Consulting & Project Management" description="Virtual CIO services, strategic IT consulting, technology audits, and project management for Canadian businesses. Reduce costs, close security gaps, and modernize your infrastructure." path="/services/it-consulting" />
+      <SEO title="IT Consulting & Project Management" description="Virtual CIO services, strategic IT consulting, technology audits, and project management for Canadian businesses. Reduce costs and modernize infrastructure." path="/services/it-consulting" />
       <ServiceSchema name="IT Consulting & Project Management" description="Strategic IT consulting, project management, technology audits, and virtual CIO services for Canadian businesses." url="/services/it-consulting" />
       <BreadcrumbSchema items={[
         { name: "Home", url: "/" },

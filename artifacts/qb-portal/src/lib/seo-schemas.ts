@@ -21,10 +21,10 @@ export function organizationSchema() {
     "@type": "Organization",
     name: ORG_NAME,
     url: BASE_URL,
-    logo: `${BASE_URL}/images/logo-original.svg`,
+    logo: `${BASE_URL}/images/logo-512.png`,
     email: SUPPORT_EMAIL,
     address: COMPANY_ADDRESS,
-    sameAs: [],
+    sameAs: ["https://www.linkedin.com/company/nexfortis"],
   };
 }
 
@@ -34,14 +34,6 @@ export function websiteSchema() {
     "@type": "WebSite",
     name: SITE_NAME,
     url: BASE_URL,
-    potentialAction: {
-      "@type": "SearchAction",
-      target: {
-        "@type": "EntryPoint",
-        urlTemplate: `${BASE_URL}/catalog?q={search_term_string}`,
-      },
-      "query-input": "required name=search_term_string",
-    },
   };
 }
 
@@ -115,7 +107,8 @@ export function generateHowToSchema(pageData: {
 
 export function generateServiceSchema(
   pageData: { h1: string; metaDescription: string; slug: string; primaryKeyword: string },
-  product: Product | undefined
+  product: Product | undefined,
+  urlOverride?: string,
 ) {
   return {
     "@context": "https://schema.org",
@@ -123,7 +116,7 @@ export function generateServiceSchema(
     name: pageData.h1,
     description: pageData.metaDescription,
     serviceType: pageData.primaryKeyword,
-    url: `${BASE_URL}/landing/${pageData.slug}`,
+    url: urlOverride || `${BASE_URL}/landing/${pageData.slug}`,
     provider: {
       "@type": "Organization",
       name: ORG_NAME,

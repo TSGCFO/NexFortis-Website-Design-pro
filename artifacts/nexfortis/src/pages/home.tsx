@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 import { useState, lazy, Suspense } from "react";
 import { Section, SectionHeader, FAQItem } from "@/components/ui-elements";
-import { SEO, OrganizationSchema, LocalBusinessSchema, WebSiteSchema, FAQSchema } from "@/components/seo";
+import { SEO, FAQSchema } from "@/components/seo";
 
 const HeroCanvas = lazy(() => import("@/components/hero-canvas"));
 
@@ -54,7 +54,7 @@ const services = [
     title: "Workflow Automation & Custom Software",
     description: "Eliminate manual data entry with Power Automate, Zapier, custom APIs, and bespoke web applications built for your exact process.",
     benefits: ["Reduce manual work by up to 90%", "Real-time multi-system sync", "Custom dashboards & reporting"],
-    href: "/services/automation-software",
+    href: "/services/workflow-automation",
     badge: "Automation & Dev",
     cta: "Get a Free Quote",
   },
@@ -124,12 +124,10 @@ export default function Home() {
     <div className="w-full">
       <SEO
         title="NexFortis IT Solutions"
-        description="NexFortis delivers end-to-end IT solutions for Canadian businesses — managed IT, Microsoft 365, QuickBooks migration, digital marketing, and workflow automation. Get a free consultation today."
+        description="NexFortis delivers end-to-end IT for Canadian businesses — managed IT, Microsoft 365, QuickBooks migration, marketing & automation. Free consultation today."
         path="/"
       />
-      <OrganizationSchema />
-      <LocalBusinessSchema />
-      <WebSiteSchema />
+      {/* Global schemas (Organization, LocalBusiness, WebSite) are rendered by Layout. */}
       <FAQSchema faqs={homeFaqs} />
 
       <section className="relative min-h-[70vh] flex items-center justify-center section-brand-navy overflow-hidden pt-24 pb-8">
@@ -277,25 +275,46 @@ export default function Home() {
           </p>
           <div className="flex flex-wrap justify-center items-center gap-12 md:gap-16">
             <div className="p-6">
-              <img
-                src={`${import.meta.env.BASE_URL}images/badge-microsoft-partner.png`}
-                alt="Microsoft AI Cloud Partner Program badge"
-                className="h-10 w-auto object-contain"
-              />
+              <picture>
+                <source srcSet={`${import.meta.env.BASE_URL}images/badge-microsoft-partner.webp`} type="image/webp" />
+                <img
+                  src={`${import.meta.env.BASE_URL}images/badge-microsoft-partner.png`}
+                  alt="Microsoft AI Cloud Partner Program badge"
+                  className="h-10 w-auto object-contain"
+                  width={133}
+                  height={40}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </picture>
             </div>
             <div className="p-6">
-              <img
-                src={`${import.meta.env.BASE_URL}images/badge-google-partner.png`}
-                alt="Google Partner badge"
-                className="h-10 w-auto object-contain"
-              />
+              <picture>
+                <source srcSet={`${import.meta.env.BASE_URL}images/badge-google-partner.webp`} type="image/webp" />
+                <img
+                  src={`${import.meta.env.BASE_URL}images/badge-google-partner.png`}
+                  alt="Google Partner badge"
+                  className="h-10 w-auto object-contain"
+                  width={133}
+                  height={40}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </picture>
             </div>
             <div className="p-6">
-              <img
-                src={`${import.meta.env.BASE_URL}images/badge-quickbooks-proadvisor.png`}
-                alt="QuickBooks ProAdvisor badge"
-                className="h-10 w-auto object-contain"
-              />
+              <picture>
+                <source srcSet={`${import.meta.env.BASE_URL}images/badge-quickbooks-proadvisor.webp`} type="image/webp" />
+                <img
+                  src={`${import.meta.env.BASE_URL}images/badge-quickbooks-proadvisor.png`}
+                  alt="QuickBooks ProAdvisor badge"
+                  className="h-10 w-auto object-contain"
+                  width={133}
+                  height={40}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </picture>
             </div>
           </div>
         </div>

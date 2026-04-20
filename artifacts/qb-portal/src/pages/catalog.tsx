@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Search, Filter } from "lucide-react";
 import { SEO } from "@/components/seo";
+import { generateBreadcrumbSchema } from "@/lib/seo-schemas";
 
 export default function Catalog() {
   const [catalog, setCatalog] = useState<ProductCatalog | null>(null);
@@ -35,9 +36,10 @@ export default function Catalog() {
   return (
     <div>
       <SEO
-        title="Service Catalog"
+        title="QuickBooks Service Catalog — Conversions, Repair & Support"
         description="Browse 20 QuickBooks services across 5 categories. Conversion, data services, platform migrations, expert support, and volume packs."
         path="/catalog"
+        jsonLd={generateBreadcrumbSchema([{ name: "Services", path: "/catalog" }])}
       />
       <section className="section-brand-navy py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -71,7 +73,9 @@ export default function Catalog() {
             <div className="flex items-center gap-2 flex-wrap">
               <Filter className="w-4 h-4 text-muted-foreground" />
               <button
+                type="button"
                 onClick={() => setFilter("all")}
+                aria-pressed={filter === "all"}
                 className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${filter === "all" ? "bg-navy text-white" : "bg-muted text-muted-foreground hover:bg-muted/80"}`}
               >
                 All ({allProducts.length})
@@ -79,7 +83,9 @@ export default function Catalog() {
               {allCategories.map((cat) => (
                 <button
                   key={cat}
+                  type="button"
                   onClick={() => setFilter(cat)}
+                  aria-pressed={filter === cat}
                   className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${filter === cat ? "bg-navy text-white" : "bg-muted text-muted-foreground hover:bg-muted/80"}`}
                 >
                   {cat} ({allProducts.filter((p) => p.category === cat).length})
