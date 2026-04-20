@@ -146,9 +146,9 @@ export default function About() {
               <img
                 src={`${import.meta.env.BASE_URL}images/hassan-headshot.png`}
                 alt="Hassan Sadiq, Founder & CEO of NexFortis"
-                className="w-32 h-32 rounded-2xl object-cover shrink-0 bg-secondary"
-                width={128}
-                height={128}
+                className="w-40 h-40 sm:w-48 sm:h-48 lg:w-56 lg:h-56 rounded-2xl object-cover shrink-0 bg-secondary"
+                width={224}
+                height={224}
                 loading="lazy"
               />
             </picture>
