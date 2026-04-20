@@ -5,6 +5,18 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import puppeteer from "puppeteer";
 import { dedupeSeoTags } from "../../lib/seo-dedupe.mjs";
+import { execSync } from "node:child_process";
+
+function findChromium() {
+  if (process.env.PUPPETEER_EXECUTABLE_PATH) return process.env.PUPPETEER_EXECUTABLE_PATH;
+  for (const bin of ["chromium", "chromium-browser", "google-chrome", "google-chrome-stable"]) {
+    try {
+      const p = execSync(`which ${bin}`, { encoding: "utf-8" }).trim();
+      if (p) return p;
+    } catch {}
+  }
+  return undefined;
+}
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const distDir = path.join(__dirname, "dist", "public");
@@ -76,9 +88,11 @@ async function prerender() {
     process.exit(1);
   }
   const server = await startServer();
+  const chromePath = findChromium();
+  if (chromePath) console.log(`[prerender] using Chrome at ${chromePath}`);
   const browser = await puppeteer.launch({
     headless: true,
-    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
+    executablePath: chromePath,
     args: ["--no-sandbox", "--disable-setuid-sandbox", "--disable-dev-shm-usage"],
   });
   const baseUrl = `http://127.0.0.1:${port}${base.slice(0, -1)}`;
