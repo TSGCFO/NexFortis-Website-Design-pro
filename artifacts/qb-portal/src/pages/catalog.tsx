@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Search, Filter } from "lucide-react";
 import { SEO } from "@/components/seo";
+import { generateBreadcrumbSchema } from "@/lib/seo-schemas";
 
 export default function Catalog() {
   const [catalog, setCatalog] = useState<ProductCatalog | null>(null);
@@ -38,6 +39,7 @@ export default function Catalog() {
         title="QuickBooks Service Catalog — Conversions, Repair & Support"
         description="Browse 20 QuickBooks services across 5 categories. Conversion, data services, platform migrations, expert support, and volume packs."
         path="/catalog"
+        jsonLd={generateBreadcrumbSchema([{ name: "Services", path: "/catalog" }])}
       />
       <section className="section-brand-navy py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
