@@ -98,6 +98,9 @@ async function prerender() {
   const baseUrl = `http://127.0.0.1:${port}${base.slice(0, -1)}`;
   console.log(`[prerender] serving ${distDir} at ${baseUrl}/`);
 
+  const shellPath = path.join(distDir, "index.html");
+  const shellHtml = await fs.readFile(shellPath, "utf-8");
+
   let ok = 0;
   let fail = 0;
   try {
@@ -133,6 +136,10 @@ async function prerender() {
     await browser.close();
     server.close();
   }
+  const fallbackPath = path.join(distDir, "200.html");
+  await fs.writeFile(fallbackPath, shellHtml, "utf-8");
+  console.log(`[prerender] wrote noindex SPA fallback -> 200.html`);
+
   console.log(`[prerender] done. ${ok} ok, ${fail} failed.`);
   if (fail > 0) process.exit(1);
 }

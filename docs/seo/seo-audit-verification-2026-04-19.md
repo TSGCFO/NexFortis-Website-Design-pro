@@ -97,10 +97,14 @@ Inline `dedupeHead()` functions in both `prerender.mjs` files replaced with a sh
 
 Five unit tests confirm: title keep-first, meta keep-last, hreflang per-variant dedup, canonical keep-last, robots noindex override.
 
+### SPA fallback for unknown routes
+Both prerender scripts save the original noindex shell as `200.html` (Render's SPA fallback convention) before prerendering overwrites `index.html` with the rendered home page. Unknown routes served by the catch-all will use `200.html` which contains `noindex, nofollow`, preventing Google from indexing the raw SPA shell.
+
 ### Verification
 - `pnpm typecheck` clean on both artifacts
-- Dev servers restart and render correctly
-- Shell curl check: no canonical, no OG, no hreflang, no meta description; only fallback title + noindex robots
+- Both sites build successfully: nexfortis 12/12 routes + 17-URL sitemap, qb-portal 53/53 routes + 53-URL sitemap
+- Prerendered pages have per-page titles, `index,follow` robots, correct canonicals
+- `200.html` fallback has brand-only title + `noindex, nofollow` robots
 
 ## Pass 6 verification (2026-04-19, post-bio rebuild)
 
