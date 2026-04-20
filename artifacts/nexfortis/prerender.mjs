@@ -1,10 +1,10 @@
-import http from "node:http";
 import fs from "node:fs/promises";
-import { existsSync, statSync, createReadStream } from "node:fs";
+import { existsSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import puppeteer from "puppeteer";
 import { dedupeSeoTags } from "../../lib/seo-dedupe.mjs";
+import { createStaticServer, validatePrerenderedHtml } from "../../lib/prerender-utils.mjs";
 import { execSync } from "node:child_process";
 
 function findChromium() {
@@ -105,53 +105,9 @@ async function discoverBlogRoutes() {
   return unique;
 }
 
-const MIME = {
-  ".html": "text/html; charset=utf-8",
-  ".js": "text/javascript; charset=utf-8",
-  ".mjs": "text/javascript; charset=utf-8",
-  ".css": "text/css; charset=utf-8",
-  ".json": "application/json; charset=utf-8",
-  ".svg": "image/svg+xml",
-  ".png": "image/png",
-  ".jpg": "image/jpeg",
-  ".jpeg": "image/jpeg",
-  ".webp": "image/webp",
-  ".ico": "image/x-icon",
-  ".woff": "font/woff",
-  ".woff2": "font/woff2",
-  ".txt": "text/plain; charset=utf-8",
-  ".xml": "application/xml; charset=utf-8",
-};
-
 function startServer() {
   return new Promise((resolve, reject) => {
-    const server = http.createServer((req, res) => {
-      let url = decodeURIComponent(req.url.split("?")[0]);
-      if (base !== "/" && url.startsWith(base.slice(0, -1))) {
-        url = url.slice(base.length - 1);
-      }
-      if (!url.startsWith("/")) url = "/" + url;
-      const requested = path.resolve(distDir, "." + url);
-      const distRoot = path.resolve(distDir);
-      const insideDist =
-        requested === distRoot || requested.startsWith(distRoot + path.sep);
-      if (!insideDist) {
-        res.writeHead(403, { "content-type": "text/plain; charset=utf-8" });
-        res.end("Forbidden");
-        return;
-      }
-      try {
-        if (existsSync(requested) && statSync(requested).isFile()) {
-          const ext = path.extname(requested).toLowerCase();
-          res.writeHead(200, { "content-type": MIME[ext] || "application/octet-stream" });
-          createReadStream(requested).pipe(res);
-          return;
-        }
-      } catch {}
-      const indexPath = path.join(distDir, "index.html");
-      res.writeHead(200, { "content-type": "text/html; charset=utf-8" });
-      createReadStream(indexPath).pipe(res);
-    });
+    const server = createStaticServer({ distDir, base });
     server.on("error", (err) => reject(err));
     server.listen(port, "127.0.0.1", () => resolve(server));
   });
@@ -213,20 +169,11 @@ async function prerender() {
             .replace(/<script[^>]*replit-dev-banner[^>]*>[\s\S]*?<\/script>/gi, "")
             .replace(/<script[^>]*cartographer[^>]*>[\s\S]*?<\/script>/gi, ""),
         );
-        if (!NOINDEX_ALLOWLIST.has(route)) {
-          const robotsTags = [
-            ...cleaned.matchAll(/<meta\b[^>]*\bname\s*=\s*["']robots["'][^>]*>/gi),
-          ];
-          for (const t of robotsTags) {
-            const c = t[0].match(/\bcontent\s*=\s*["']([^"']+)["']/i);
-            const v = (c?.[1] ?? "").toLowerCase();
-            if (v.includes("noindex")) {
-              throw new Error(
-                `prerendered HTML still has noindex robots meta — SEO component did not render or override the shell's noindex tag (robots="${c?.[1]}"). Add this route to NOINDEX_ALLOWLIST only if you intentionally want it de-indexed.`,
-              );
-            }
-          }
-        }
+        validatePrerenderedHtml({
+          route,
+          html: cleaned,
+          noindexAllowlist: NOINDEX_ALLOWLIST,
+        });
         const outDir = path.join(distDir, route === "/" ? "" : route);
         await fs.mkdir(outDir, { recursive: true });
         const outFile = path.join(outDir, "index.html");
