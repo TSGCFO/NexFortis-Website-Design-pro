@@ -4,6 +4,7 @@ import { existsSync, statSync, createReadStream } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import puppeteer from "puppeteer";
+import { dedupeSeoTags } from "../../lib/seo-dedupe.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const distDir = path.join(__dirname, "dist", "public");
@@ -42,76 +43,6 @@ const MIME = {
   ".txt": "text/plain; charset=utf-8",
   ".xml": "application/xml; charset=utf-8",
 };
-
-function dedupeHead(html) {
-  const headMatch = html.match(/<head[^>]*>([\s\S]*?)<\/head>/i);
-  if (!headMatch) return html;
-  let head = headMatch[1];
-
-  // Find each tag with a key; keep only the LAST occurrence per key (helmet wins over template).
-  const collectRe =
-    /(<title>[\s\S]*?<\/title>|<meta\b[^>]*\/?>|<link\b[^>]*\/?>)/gi;
-  const matches = [];
-  let m;
-  while ((m = collectRe.exec(head)) !== null) {
-    matches.push({ raw: m[0], start: m.index, end: m.index + m[0].length });
-  }
-  function keyFor(raw) {
-    if (/^<title>/i.test(raw)) return "title";
-    const tagName = raw.match(/^<(\w+)/i)[1].toLowerCase();
-    if (tagName === "meta") {
-      const n = raw.match(/\bname=["']([^"']+)["']/i);
-      if (n) return `meta:name:${n[1].toLowerCase()}`;
-      const p = raw.match(/\bproperty=["']([^"']+)["']/i);
-      if (p) return `meta:property:${p[1].toLowerCase()}`;
-      const ip = raw.match(/\bitemprop=["']([^"']+)["']/i);
-      if (ip) return `meta:itemprop:${ip[1].toLowerCase()}`;
-      if (/\bcharset=/i.test(raw)) return "meta:charset";
-      const he = raw.match(/http-equiv=["']([^"']+)["']/i);
-      if (he) return `meta:http-equiv:${he[1].toLowerCase()}`;
-      return null;
-    }
-    if (tagName === "link") {
-      const rel = raw.match(/\brel=["']([^"']+)["']/i);
-      if (!rel) return null;
-      const r = rel[1].toLowerCase();
-      if (r === "canonical") return "link:canonical";
-      if (r === "alternate") {
-        const hl = raw.match(/\bhreflang=["']([^"']+)["']/i);
-        return `link:alternate:${hl ? hl[1].toLowerCase() : "default"}`;
-      }
-      return null;
-    }
-    return null;
-  }
-  // For <title>, helmet places its tag BEFORE the template's, so keep FIRST.
-  // For meta/link, helmet appends AFTER the template's, so keep LAST.
-  const firstIndexByKey = new Map();
-  const lastIndexByKey = new Map();
-  matches.forEach((mm, i) => {
-    const k = keyFor(mm.raw);
-    if (!k) return;
-    if (!firstIndexByKey.has(k)) firstIndexByKey.set(k, i);
-    lastIndexByKey.set(k, i);
-  });
-  const removeIdx = new Set();
-  matches.forEach((mm, i) => {
-    const k = keyFor(mm.raw);
-    if (!k) return;
-    const keeper = k === "title" ? firstIndexByKey.get(k) : lastIndexByKey.get(k);
-    if (keeper !== i) removeIdx.add(i);
-  });
-  // Rebuild head from end to start so indices remain valid.
-  for (let i = matches.length - 1; i >= 0; i--) {
-    if (!removeIdx.has(i)) continue;
-    const mm = matches[i];
-    // Also consume trailing whitespace newline
-    let endTrim = mm.end;
-    while (endTrim < head.length && /\s/.test(head[endTrim])) endTrim++;
-    head = head.slice(0, mm.start) + head.slice(endTrim);
-  }
-  return html.replace(headMatch[0], `<head>${head}</head>`);
-}
 
 function startServer() {
   return new Promise((resolve) => {
@@ -166,7 +97,7 @@ async function prerender() {
         await new Promise((r) => setTimeout(r, 250));
         const html = await page.content();
         // Strip server-injected dev banner / cartographer if present, then de-dupe SEO head tags
-        const cleaned = dedupeHead(
+        const cleaned = dedupeSeoTags(
           html
             .replace(/<script[^>]*replit-dev-banner[^>]*>[\s\S]*?<\/script>/gi, "")
             .replace(/<script[^>]*cartographer[^>]*>[\s\S]*?<\/script>/gi, ""),

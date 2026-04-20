@@ -4,15 +4,13 @@ import { existsSync, statSync, createReadStream } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import puppeteer from "puppeteer";
+import { dedupeSeoTags } from "../../lib/seo-dedupe.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const distDir = path.join(__dirname, "dist", "public");
 const base = (process.env.BASE_PATH || "/").replace(/\/?$/, "/");
 const port = Number(process.env.PRERENDER_PORT || 4174);
 
-// Public, SEO-relevant routes only. Auth/admin/dynamic-id pages excluded.
-// Dynamic routes (/category/*, /service/*, /landing/*) are added at runtime
-// from public/products.json + src/data/landingPages.ts.
 const STATIC_ROUTES = [
   "/",
   "/catalog",
@@ -70,70 +68,6 @@ const MIME = {
   ".xml": "application/xml; charset=utf-8",
 };
 
-function dedupeHead(html) {
-  const headMatch = html.match(/<head[^>]*>([\s\S]*?)<\/head>/i);
-  if (!headMatch) return html;
-  let head = headMatch[1];
-  const collectRe =
-    /(<title>[\s\S]*?<\/title>|<meta\b[^>]*\/?>|<link\b[^>]*\/?>)/gi;
-  const matches = [];
-  let m;
-  while ((m = collectRe.exec(head)) !== null) {
-    matches.push({ raw: m[0], start: m.index, end: m.index + m[0].length });
-  }
-  function keyFor(raw) {
-    if (/^<title>/i.test(raw)) return "title";
-    const tagName = raw.match(/^<(\w+)/i)[1].toLowerCase();
-    if (tagName === "meta") {
-      const n = raw.match(/\bname=["']([^"']+)["']/i);
-      if (n) return `meta:name:${n[1].toLowerCase()}`;
-      const p = raw.match(/\bproperty=["']([^"']+)["']/i);
-      if (p) return `meta:property:${p[1].toLowerCase()}`;
-      const ip = raw.match(/\bitemprop=["']([^"']+)["']/i);
-      if (ip) return `meta:itemprop:${ip[1].toLowerCase()}`;
-      if (/\bcharset=/i.test(raw)) return "meta:charset";
-      const he = raw.match(/http-equiv=["']([^"']+)["']/i);
-      if (he) return `meta:http-equiv:${he[1].toLowerCase()}`;
-      return null;
-    }
-    if (tagName === "link") {
-      const rel = raw.match(/\brel=["']([^"']+)["']/i);
-      if (!rel) return null;
-      const r = rel[1].toLowerCase();
-      if (r === "canonical") return "link:canonical";
-      if (r === "alternate") {
-        const hl = raw.match(/\bhreflang=["']([^"']+)["']/i);
-        return `link:alternate:${hl ? hl[1].toLowerCase() : "default"}`;
-      }
-      return null;
-    }
-    return null;
-  }
-  const firstIndexByKey = new Map();
-  const lastIndexByKey = new Map();
-  matches.forEach((mm, i) => {
-    const k = keyFor(mm.raw);
-    if (!k) return;
-    if (!firstIndexByKey.has(k)) firstIndexByKey.set(k, i);
-    lastIndexByKey.set(k, i);
-  });
-  const removeIdx = new Set();
-  matches.forEach((mm, i) => {
-    const k = keyFor(mm.raw);
-    if (!k) return;
-    const keeper = k === "title" ? firstIndexByKey.get(k) : lastIndexByKey.get(k);
-    if (keeper !== i) removeIdx.add(i);
-  });
-  for (let i = matches.length - 1; i >= 0; i--) {
-    if (!removeIdx.has(i)) continue;
-    const mm = matches[i];
-    let endTrim = mm.end;
-    while (endTrim < head.length && /\s/.test(head[endTrim])) endTrim++;
-    head = head.slice(0, mm.start) + head.slice(endTrim);
-  }
-  return html.replace(headMatch[0], `<head>${head}</head>`);
-}
-
 function startServer() {
   return new Promise((resolve) => {
     const server = http.createServer((req, res) => {
@@ -188,7 +122,7 @@ async function prerender() {
         await page.goto(url, { waitUntil: "networkidle0", timeout: 30000 });
         await new Promise((r) => setTimeout(r, 250));
         const html = await page.content();
-        const cleaned = dedupeHead(
+        const cleaned = dedupeSeoTags(
           html
             .replace(/<script[^>]*replit-dev-banner[^>]*>[\s\S]*?<\/script>/gi, "")
             .replace(/<script[^>]*cartographer[^>]*>[\s\S]*?<\/script>/gi, ""),

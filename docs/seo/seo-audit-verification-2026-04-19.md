@@ -77,6 +77,31 @@ Both apps built cleanly on 2026-04-19. All sitemap `<lastmod>` values now derive
 
 All 32 audit items have a verified status above. Ready for Render launch.
 
+## Pass 7 — prerender alignment (2026-04-20)
+
+### SPA shell slimming
+Both `index.html` shells (`artifacts/nexfortis/index.html`, `artifacts/qb-portal/index.html`) now ship with only:
+- charset, viewport, theme-color, icon/manifest links, font preloads
+- A brand-only fallback `<title>` (e.g. "NexFortis IT Solutions")
+- `<meta name="robots" content="noindex, nofollow">`
+- The existing `<noscript>` fallback block
+
+Removed from shells: `<meta name="description">`, `<link rel="canonical">`, all OG/Twitter tags, `<link rel="alternate" hreflang>`, geo meta, and `<meta name="robots" content="index, follow">`. Per-page versions of all these tags are injected at runtime by react-helmet-async (`src/components/seo.tsx`) and baked in by the prerender step. The noindex fallback ensures Google never indexes the raw SPA shell if it is served for an unknown route.
+
+### Shared dedupe utility
+Inline `dedupeHead()` functions in both `prerender.mjs` files replaced with a shared `lib/seo-dedupe.mjs` exporting `dedupeSeoTags(html)`. The shared implementation:
+- Keeps the **first** `<title>` (React 19 hoists per-page title before the shell fallback)
+- Keeps the **last** of every other SEO tag (helmet appends after shell tags)
+- Keys each `<link rel="alternate" hreflang="...">` independently per hreflang value
+- Covers all OG, Twitter, robots, canonical, and description tags via `SEO_DEDUPE_KEYS`
+
+Five unit tests confirm: title keep-first, meta keep-last, hreflang per-variant dedup, canonical keep-last, robots noindex override.
+
+### Verification
+- `pnpm typecheck` clean on both artifacts
+- Dev servers restart and render correctly
+- Shell curl check: no canonical, no OG, no hreflang, no meta description; only fallback title + noindex robots
+
 ## Pass 6 verification (2026-04-19, post-bio rebuild)
 
 - Person `description` (bio) now lands in the prerendered `/about/index.html`. Grep evidence:
