@@ -30,6 +30,12 @@ const EXCLUDED_ROUTES = [
   "/services/automation-software",
 ];
 
+// Routes that are intentionally allowed to keep a noindex robots meta in their
+// prerendered output. Empty by default — the build fails if any rendered page
+// still has noindex. Add a route here only if you intentionally want it
+// de-indexed.
+const NOINDEX_ALLOWLIST = new Set([]);
+
 const EXCLUDED_PATTERNS = [
   /^\/admin/,
   /\/:/,
@@ -207,14 +213,19 @@ async function prerender() {
             .replace(/<script[^>]*replit-dev-banner[^>]*>[\s\S]*?<\/script>/gi, "")
             .replace(/<script[^>]*cartographer[^>]*>[\s\S]*?<\/script>/gi, ""),
         );
-        const robotsMatch = cleaned.match(
-          /<meta[^>]+name\s*=\s*"robots"[^>]+content\s*=\s*"([^"]+)"/i,
-        );
-        const robotsContent = (robotsMatch?.[1] ?? "").toLowerCase();
-        if (robotsContent.includes("noindex")) {
-          throw new Error(
-            `prerendered HTML still has noindex robots meta — SEO component did not render or override the shell's noindex tag (robots="${robotsMatch?.[1]}")`,
-          );
+        if (!NOINDEX_ALLOWLIST.has(route)) {
+          const robotsTags = [
+            ...cleaned.matchAll(/<meta\b[^>]*\bname\s*=\s*["']robots["'][^>]*>/gi),
+          ];
+          for (const t of robotsTags) {
+            const c = t[0].match(/\bcontent\s*=\s*["']([^"']+)["']/i);
+            const v = (c?.[1] ?? "").toLowerCase();
+            if (v.includes("noindex")) {
+              throw new Error(
+                `prerendered HTML still has noindex robots meta — SEO component did not render or override the shell's noindex tag (robots="${c?.[1]}"). Add this route to NOINDEX_ALLOWLIST only if you intentionally want it de-indexed.`,
+              );
+            }
+          }
         }
         const outDir = path.join(distDir, route === "/" ? "" : route);
         await fs.mkdir(outDir, { recursive: true });
