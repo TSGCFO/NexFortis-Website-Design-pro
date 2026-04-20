@@ -152,7 +152,7 @@ async function prerender() {
 
   const staticRoutes = await discoverStaticRoutes();
   const dynamicRoutes = await loadDynamicRoutes();
-  const ROUTES = [...staticRoutes, ...dynamicRoutes];
+  const ROUTES = [...new Set([...staticRoutes, ...dynamicRoutes])];
 
   console.log(`[prerender] discovered ${ROUTES.length} routes (${staticRoutes.length} static + ${dynamicRoutes.length} dynamic)`);
   console.log(`[prerender] static routes: ${staticRoutes.join(", ")}`);
