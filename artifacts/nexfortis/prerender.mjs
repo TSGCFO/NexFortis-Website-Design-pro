@@ -18,6 +18,28 @@ function findChromium() {
   return undefined;
 }
 
+// Replace the text inside the (first) <title>...</title> of an HTML document
+// with `title`. Preserves any attributes on the title tag. If no <title> tag
+// exists inside <head>, we inject a new one right after <head>.
+function rewriteDocumentTitle(html, title) {
+  if (!title || typeof title !== "string") return html;
+  // Escape the replacement text to avoid breaking HTML (&, <, >).
+  const safe = title
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+  const titleRe = /(<title\b[^>]*>)[\s\S]*?(<\/title>)/i;
+  if (titleRe.test(html)) {
+    return html.replace(titleRe, (_m, open, close) => `${open}${safe}${close}`);
+  }
+  const headOpen = html.match(/<head\b[^>]*>/i);
+  if (headOpen) {
+    const idx = headOpen.index + headOpen[0].length;
+    return html.slice(0, idx) + `<title>${safe}</title>` + html.slice(idx);
+  }
+  return html;
+}
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const distDir = path.join(__dirname, "dist", "public");
 const base = (process.env.BASE_PATH || "/").replace(/\/?$/, "/");
@@ -59,33 +81,67 @@ async function discoverStaticRoutes() {
   return [...new Set(routes)];
 }
 
-async function discoverBlogRoutes() {
-  const apiUrl = process.env.BLOG_API || process.env.SITEMAP_BLOG_API || "https://api.nexfortis.com";
+// Load blog posts at build time. We need the FULL post objects (not just
+// slugs) so the in-process static server can serve `/api/blog/posts/:slug`
+// responses to the page at prerender time — without this, the page's
+// `apiFetch("/blog/posts/:slug")` call 404s and the component renders its
+// "Article Not Found" error state, making every prerendered blog post
+// identical to the SPA shell.
+async function loadBlogPosts() {
+  const apiUrl = process.env.BLOG_API || process.env.SITEMAP_BLOG_API || "https://nexfortis-api.onrender.com/api";
   const fallbackPath = path.join(__dirname, "scripts", "blog-fallback.json");
   let posts = null;
   try {
-    const res = await fetch(`${apiUrl}/blog/posts`, { signal: AbortSignal.timeout(5000) });
+    const res = await fetch(`${apiUrl}/blog/posts`, { signal: AbortSignal.timeout(10000) });
     if (res.ok) {
       const live = await res.json();
       if (Array.isArray(live) && live.length > 0) {
         posts = live.filter((p) => p.published !== false);
         console.log(`[prerender] fetched ${posts.length} live blog posts from ${apiUrl}`);
       }
+    } else {
+      console.warn(`[prerender] blog API ${apiUrl}/blog/posts returned HTTP ${res.status}`);
     }
   } catch (e) {
-    console.warn(`[prerender] blog API fetch failed (${e.message}); using checked-in fallback`);
+    console.warn(`[prerender] blog API fetch failed (${e.message})`);
   }
   if (!posts) {
-    try {
-      posts = JSON.parse(await fs.readFile(fallbackPath, "utf-8"));
-      console.log(`[prerender] using ${posts.length} blog posts from fallback file`);
-    } catch (e) {
-      console.error(`[prerender] FATAL: could not load blog-fallback.json: ${e.message}`);
+    // Fallback JSON only carries slugs — it's sufficient for sitemap entries
+    // but NOT for in-page rendering (title/excerpt/content missing). We
+    // therefore treat a missing live API as a fatal error unless the
+    // operator explicitly opts in via `ALLOW_BLOG_STUB=1` for the rare case
+    // of building when the API is intentionally unavailable.
+    if (process.env.ALLOW_BLOG_STUB === "1") {
+      try {
+        const stub = JSON.parse(await fs.readFile(fallbackPath, "utf-8"));
+        posts = stub.map((p) => ({
+          id: 0,
+          title: p.title || p.slug,
+          slug: p.slug,
+          excerpt: p.excerpt || "",
+          content: p.content || "",
+          category: p.category || "",
+          coverImage: null,
+          published: true,
+          createdAt: p.updatedAt || new Date().toISOString(),
+          updatedAt: p.updatedAt || new Date().toISOString(),
+        }));
+        console.log(`[prerender] ALLOW_BLOG_STUB=1 — using ${posts.length} stub posts from fallback file`);
+      } catch (e) {
+        console.error(`[prerender] FATAL: could not load blog-fallback.json: ${e.message}`);
+        process.exit(1);
+      }
+    } else {
+      console.error(`[prerender] FATAL: could not fetch live blog posts from ${apiUrl}/blog/posts.`);
+      console.error(`[prerender] This would produce prerendered blog pages with no content and duplicate metadata.`);
+      console.error(`[prerender] Set ALLOW_BLOG_STUB=1 only if you knowingly accept empty blog posts.`);
       process.exit(1);
     }
   }
+  // Validate every slug and deduplicate.
   const SAFE_SLUG = /^[a-z0-9][a-z0-9-]*[a-z0-9]$/;
-  const routes = [];
+  const seen = new Set();
+  const valid = [];
   for (const p of posts) {
     if (!p.slug || typeof p.slug !== "string") {
       console.warn(`[prerender] skipping blog post with missing slug`);
@@ -95,19 +151,53 @@ async function discoverBlogRoutes() {
       console.error(`[prerender] FATAL: blog slug "${p.slug}" contains unsafe characters`);
       process.exit(1);
     }
-    routes.push(`/blog/${p.slug}`);
+    if (seen.has(p.slug)) {
+      console.warn(`[prerender] removing duplicate slug "${p.slug}"`);
+      continue;
+    }
+    seen.add(p.slug);
+    valid.push(p);
   }
-  const unique = [...new Set(routes)];
-  if (unique.length !== routes.length) {
-    console.warn(`[prerender] removed ${routes.length - unique.length} duplicate blog slug(s)`);
-  }
-  console.log(`[prerender] ${unique.length} valid blog routes`);
-  return unique;
+  console.log(`[prerender] ${valid.length} valid blog posts`);
+  return valid;
 }
 
-function startServer() {
+// Build the list of in-memory API routes that Puppeteer's page will hit via
+// same-origin /api/* calls. Each entry matches a URL and writes a JSON
+// response. We only serve the GET endpoints the blog pages actually call.
+function buildApiRoutes(posts) {
+  const postBySlug = new Map(posts.map((p) => [p.slug, p]));
+  const listJson = JSON.stringify(posts);
+  const writeJson = (res, status, body) => {
+    res.writeHead(status, { "content-type": "application/json; charset=utf-8" });
+    res.end(body);
+  };
+  return [
+    // GET /api/blog/posts — list (published only)
+    [/^\/api\/blog\/posts\/?(?:\?.*)?$/, (_req, res) => writeJson(res, 200, listJson)],
+    // GET /api/blog/posts/:slug — single post
+    [/^\/api\/blog\/posts\/([a-z0-9][a-z0-9-]*[a-z0-9])\/?(?:\?.*)?$/, (_req, res, m) => {
+      const slug = m[1];
+      const post = postBySlug.get(slug);
+      if (!post) {
+        writeJson(res, 404, JSON.stringify({ error: "Not found" }));
+        return;
+      }
+      writeJson(res, 200, JSON.stringify(post));
+    }],
+    // Any other /api/* call during prerender is a bug — fail loudly with a
+    // structured JSON error so the page surfaces it and the prerender
+    // validator can catch it.
+    [/^\/api\//, (req, res) => {
+      console.warn(`[prerender] unexpected /api call during prerender: ${req.url}`);
+      writeJson(res, 501, JSON.stringify({ error: `prerender stub: ${req.url}` }));
+    }],
+  ];
+}
+
+function startServer(apiRoutes) {
   return new Promise((resolve, reject) => {
-    const server = createStaticServer({ distDir, base });
+    const server = createStaticServer({ distDir, base, apiRoutes });
     server.on("error", (err) => reject(err));
     server.listen(port, "127.0.0.1", () => resolve(server));
   });
@@ -132,14 +222,16 @@ async function prerender() {
   }
 
   const staticRoutes = await discoverStaticRoutes();
-  const blogRoutes = await discoverBlogRoutes();
+  const blogPosts = await loadBlogPosts();
+  const blogRoutes = blogPosts.map((p) => `/blog/${p.slug}`);
   const ROUTES = [...new Set([...staticRoutes, ...blogRoutes])];
 
   console.log(`[prerender] discovered ${ROUTES.length} routes (${staticRoutes.length} static + ${blogRoutes.length} blog)`);
   console.log(`[prerender] static routes: ${staticRoutes.join(", ")}`);
   console.log(`[prerender] blog routes: ${blogRoutes.join(", ")}`);
 
-  const server = await startServer();
+  const apiRoutes = buildApiRoutes(blogPosts);
+  const server = await startServer(apiRoutes);
   const chromePath = findChromium();
   if (chromePath) console.log(`[prerender] using Chrome at ${chromePath}`);
   const browser = await puppeteer.launch({
@@ -163,9 +255,16 @@ async function prerender() {
       try {
         await page.goto(url, { waitUntil: "networkidle0", timeout: 30000 });
         await new Promise((r) => setTimeout(r, 250));
-        const html = await page.content();
+        // Capture the document.title AFTER the React app + Helmet have run.
+        // react-helmet-async mutates document.title directly rather than
+        // emitting a new <title> tag into the head, so page.content() can
+        // serialize HTML where the text content of <title> is stale. We read
+        // it out of the live DOM here and then patch the serialized HTML.
+        const liveTitle = await page.title();
+        const rawHtml = await page.content();
+        const titlePatched = rewriteDocumentTitle(rawHtml, liveTitle);
         const cleaned = dedupeSeoTags(
-          html
+          titlePatched
             .replace(/<script[^>]*replit-dev-banner[^>]*>[\s\S]*?<\/script>/gi, "")
             .replace(/<script[^>]*cartographer[^>]*>[\s\S]*?<\/script>/gi, ""),
         );
@@ -215,7 +314,60 @@ async function prerender() {
     process.exit(1);
   }
 
-  console.log(`[prerender] VERIFIED: all ${ok} routes have index.html on disk.`);
+  // Final validation: every prerendered route must differ from the SPA
+  // shell (200.html) AND have a non-default <title>. This catches the
+  // silent-failure mode where Puppeteer serializes the loading/error state
+  // and all blog posts end up byte-identical to the shell with the default
+  // homepage title.
+  const crypto = await import("node:crypto");
+  const shellHash = crypto.createHash("sha256").update(Buffer.from(shellHtml, "utf-8")).digest("hex");
+
+  // The default <title> from the ORIGINAL shell (captured before any route
+  // was prerendered) — anything equal to this after prerender means the SEO
+  // component never got a chance to set it. We read from `shellHtml` (already
+  // in memory), not from dist/public/index.html, because the "/" route
+  // overwrites that file with the prerendered homepage.
+  const shellTitleMatch = shellHtml.match(/<title\b[^>]*>([\s\S]*?)<\/title>/i);
+  const defaultTitle = shellTitleMatch ? shellTitleMatch[1].trim() : "";
+
+  const titlesSeen = new Map();
+  const integrityErrors = [];
+  for (const route of ROUTES) {
+    const outFile = path.join(distDir, route === "/" ? "" : route, "index.html");
+    const bytes = await fs.readFile(outFile);
+    const hash = crypto.createHash("sha256").update(bytes).digest("hex");
+    const html = bytes.toString("utf-8");
+    const tm = html.match(/<title\b[^>]*>([\s\S]*?)<\/title>/i);
+    const title = tm ? tm[1].trim() : "";
+
+    if (hash === shellHash) {
+      integrityErrors.push(`${route}: identical to 200.html shell (prerender silently failed)`);
+    }
+    if (route !== "/" && title && title === defaultTitle) {
+      integrityErrors.push(`${route}: still has default shell <title> "${defaultTitle}" (SEO component did not override it)`);
+    }
+    if (!title) {
+      integrityErrors.push(`${route}: missing <title> tag`);
+    }
+    if (title) {
+      if (!titlesSeen.has(title)) titlesSeen.set(title, []);
+      titlesSeen.get(title).push(route);
+    }
+  }
+  // Flag pages that SHARE an identical title with another page — this is
+  // almost always a bug (e.g. all blog posts showing the same fallback).
+  for (const [title, routes] of titlesSeen) {
+    if (routes.length > 1) {
+      integrityErrors.push(`duplicate <title> "${title}" across ${routes.length} routes: ${routes.join(", ")}`);
+    }
+  }
+  if (integrityErrors.length > 0) {
+    console.error(`[prerender] INTEGRITY FAILED — ${integrityErrors.length} issue(s):`);
+    for (const e of integrityErrors) console.error(`  - ${e}`);
+    process.exit(1);
+  }
+
+  console.log(`[prerender] VERIFIED: all ${ok} routes have unique, non-shell prerendered content.`);
   console.log(`[prerender] done. ${ok} ok, ${fail} failed.`);
 }
 
