@@ -7,14 +7,50 @@ import { dedupeSeoTags } from "../../lib/seo-dedupe.mjs";
 import { createStaticServer, validatePrerenderedHtml, replaceTitleTag } from "../../lib/prerender-utils.mjs";
 import { execSync } from "node:child_process";
 
+// ============================================================================
+// DIAGNOSTIC BUILD — verbose, unbuffered logging to stderr so Render doesn't
+// swallow stdout. Every step prints a timestamped line. Revert after debugging.
+// ============================================================================
+const T0 = Date.now();
+function dlog(msg) {
+  const t = ((Date.now() - T0) / 1000).toFixed(2);
+  process.stderr.write(`[diag +${t}s] ${msg}\n`);
+}
+function derr(msg) {
+  const t = ((Date.now() - T0) / 1000).toFixed(2);
+  process.stderr.write(`[diag +${t}s ERR] ${msg}\n`);
+}
+function memSnap(label) {
+  const m = process.memoryUsage();
+  dlog(`MEM[${label}] rss=${(m.rss / 1024 / 1024).toFixed(0)}MB heap=${(m.heapUsed / 1024 / 1024).toFixed(0)}/${(m.heapTotal / 1024 / 1024).toFixed(0)}MB`);
+}
+process.on("uncaughtException", (err) => {
+  derr(`UNCAUGHT EXCEPTION: ${err?.stack || err}`);
+  process.exit(1);
+});
+process.on("unhandledRejection", (reason) => {
+  derr(`UNHANDLED REJECTION: ${reason?.stack || reason}`);
+  process.exit(1);
+});
+dlog(`boot node=${process.version} platform=${process.platform} arch=${process.arch} cwd=${process.cwd()}`);
+dlog(`env NODE_ENV=${process.env.NODE_ENV || "(unset)"} PORT=${process.env.PORT || "(unset)"} BASE_PATH=${process.env.BASE_PATH || "(unset)"}`);
+memSnap("boot");
+
 function findChromium() {
-  if (process.env.PUPPETEER_EXECUTABLE_PATH) return process.env.PUPPETEER_EXECUTABLE_PATH;
+  if (process.env.PUPPETEER_EXECUTABLE_PATH) {
+    dlog(`chromium via PUPPETEER_EXECUTABLE_PATH=${process.env.PUPPETEER_EXECUTABLE_PATH}`);
+    return process.env.PUPPETEER_EXECUTABLE_PATH;
+  }
   for (const bin of ["chromium", "chromium-browser", "google-chrome", "google-chrome-stable"]) {
     try {
       const p = execSync(`which ${bin}`, { encoding: "utf-8" }).trim();
-      if (p) return p;
+      if (p) {
+        dlog(`chromium found via which ${bin}: ${p}`);
+        return p;
+      }
     } catch {}
   }
+  dlog(`chromium NOT found via which; will use puppeteer bundled binary`);
   return undefined;
 }
 
@@ -47,6 +83,7 @@ function isExcluded(route) {
 }
 
 async function discoverStaticRoutes() {
+  dlog(`discoverStaticRoutes: reading App.tsx`);
   const appTsx = await fs.readFile(path.join(__dirname, "src", "App.tsx"), "utf-8");
   const matches = [...appTsx.matchAll(/<Route\s+path="([^"]+)"/g)];
   const routes = [];
@@ -56,33 +93,41 @@ async function discoverStaticRoutes() {
     routes.push(route);
   }
   if (!routes.includes("/")) routes.unshift("/");
-  return [...new Set(routes)];
+  const out = [...new Set(routes)];
+  dlog(`discoverStaticRoutes: ${out.length} routes`);
+  return out;
 }
 
 async function discoverBlogRoutes() {
   const apiUrl = process.env.BLOG_API || process.env.SITEMAP_BLOG_API || "https://nexfortis-api.onrender.com/api";
   const fallbackPath = path.join(__dirname, "scripts", "blog-fallback.json");
+  dlog(`discoverBlogRoutes: apiUrl=${apiUrl}`);
   let posts = null;
   try {
+    const t0 = Date.now();
     const res = await fetch(`${apiUrl}/blog/posts`, { signal: AbortSignal.timeout(15000) });
+    dlog(`discoverBlogRoutes: fetch returned status=${res.status} in ${Date.now() - t0}ms`);
     if (res.ok) {
       const live = await res.json();
       if (Array.isArray(live) && live.length > 0) {
         posts = live.filter((p) => p.published !== false);
-        console.log(`[prerender] fetched ${posts.length} live blog posts from ${apiUrl}`);
+        dlog(`discoverBlogRoutes: ${posts.length} live posts (${live.length} total, ${live.length - posts.length} unpublished filtered)`);
+      } else {
+        dlog(`discoverBlogRoutes: live response not a non-empty array: type=${typeof live} len=${Array.isArray(live) ? live.length : "n/a"}`);
       }
     } else {
-      console.warn(`[prerender] blog API returned HTTP ${res.status}; falling back`);
+      dlog(`discoverBlogRoutes: HTTP ${res.status}; falling back`);
     }
   } catch (e) {
-    console.warn(`[prerender] blog API fetch failed (${e.message}); using checked-in fallback`);
+    dlog(`discoverBlogRoutes: fetch threw "${e.message}"; using fallback`);
   }
   if (!posts) {
     try {
-      posts = JSON.parse(await fs.readFile(fallbackPath, "utf-8"));
-      console.log(`[prerender] using ${posts.length} blog posts from fallback file`);
+      const raw = await fs.readFile(fallbackPath, "utf-8");
+      posts = JSON.parse(raw);
+      dlog(`discoverBlogRoutes: loaded ${posts.length} posts from fallback (${raw.length} bytes)`);
     } catch (e) {
-      console.error(`[prerender] FATAL: could not load blog-fallback.json: ${e.message}`);
+      derr(`discoverBlogRoutes: FATAL fallback load failed: ${e.message}`);
       process.exit(1);
     }
   }
@@ -91,38 +136,41 @@ async function discoverBlogRoutes() {
   const postsBySlug = new Map();
   for (const p of posts) {
     if (!p.slug || typeof p.slug !== "string") {
-      console.warn(`[prerender] skipping blog post with missing slug`);
+      dlog(`discoverBlogRoutes: skipping post with missing slug`);
       continue;
     }
     if (!SAFE_SLUG.test(p.slug)) {
-      console.error(`[prerender] FATAL: blog slug "${p.slug}" contains unsafe characters`);
+      derr(`discoverBlogRoutes: FATAL unsafe slug "${p.slug}"`);
       process.exit(1);
     }
     routes.push(`/blog/${p.slug}`);
-    // Only keep full post objects (those with content) — fallback file is
-    // slug-only and won't drive request interception.
     if (p.content && p.title) postsBySlug.set(p.slug, p);
   }
   const unique = [...new Set(routes)];
   if (unique.length !== routes.length) {
-    console.warn(`[prerender] removed ${routes.length - unique.length} duplicate blog slug(s)`);
+    dlog(`discoverBlogRoutes: removed ${routes.length - unique.length} duplicate slug(s)`);
   }
-  console.log(`[prerender] ${unique.length} valid blog routes (${postsBySlug.size} with full content for interception)`);
+  dlog(`discoverBlogRoutes: ${unique.length} routes, ${postsBySlug.size} with full content`);
   if (postsBySlug.size === 0) {
-    console.error(`[prerender] FATAL: no blog posts have full content. Without the live API,`);
-    console.error(`[prerender] blog post pages cannot be prerendered correctly. Check that`);
-    console.error(`[prerender] ${apiUrl}/blog/posts is reachable from the build environment,`);
-    console.error(`[prerender] or set BLOG_API env var to a reachable URL.`);
+    derr(`discoverBlogRoutes: FATAL no posts have full content`);
+    derr(`  apiUrl=${apiUrl}/blog/posts reachable? set BLOG_API env if needed`);
     process.exit(1);
   }
   return { routes: unique, postsBySlug };
 }
 
 function startServer() {
+  dlog(`startServer: binding 127.0.0.1:${port} serving ${distDir}`);
   return new Promise((resolve, reject) => {
     const server = createStaticServer({ distDir, base });
-    server.on("error", (err) => reject(err));
-    server.listen(port, "127.0.0.1", () => resolve(server));
+    server.on("error", (err) => {
+      derr(`startServer: server error: ${err?.stack || err}`);
+      reject(err);
+    });
+    server.listen(port, "127.0.0.1", () => {
+      dlog(`startServer: LISTENING on 127.0.0.1:${port}`);
+      resolve(server);
+    });
   });
 }
 
@@ -131,53 +179,94 @@ function verifyPrerendered(routes) {
   for (const route of routes) {
     const dir = path.join(distDir, route === "/" ? "" : route);
     const file = path.join(dir, "index.html");
-    if (!existsSync(file)) {
-      missing.push(route);
-    }
+    if (!existsSync(file)) missing.push(route);
   }
   return missing;
 }
 
 async function prerender() {
+  dlog(`prerender: start; distDir=${distDir}`);
   if (!existsSync(distDir)) {
-    console.error(`[prerender] dist not found: ${distDir}`);
+    derr(`prerender: dist not found: ${distDir}`);
     process.exit(1);
   }
 
   const staticRoutes = await discoverStaticRoutes();
   const { routes: blogRoutes, postsBySlug } = await discoverBlogRoutes();
   const ROUTES = [...new Set([...staticRoutes, ...blogRoutes])];
-
-  console.log(`[prerender] discovered ${ROUTES.length} routes (${staticRoutes.length} static + ${blogRoutes.length} blog)`);
-  console.log(`[prerender] static routes: ${staticRoutes.join(", ")}`);
-  console.log(`[prerender] blog routes: ${blogRoutes.join(", ")}`);
+  dlog(`routes total=${ROUTES.length} static=${staticRoutes.length} blog=${blogRoutes.length}`);
+  dlog(`static: ${staticRoutes.join(", ")}`);
+  dlog(`blog:   ${blogRoutes.join(", ")}`);
 
   const server = await startServer();
+  memSnap("after-server");
+
   const chromePath = findChromium();
-  if (chromePath) console.log(`[prerender] using Chrome at ${chromePath}`);
-  const browser = await puppeteer.launch({
-    headless: true,
-    executablePath: chromePath,
-    args: ["--no-sandbox", "--disable-setuid-sandbox", "--disable-dev-shm-usage"],
-  });
+  dlog(`puppeteer.launch: starting (chromePath=${chromePath || "(bundled)"})`);
+  const launchStart = Date.now();
+  let browser;
+  try {
+    browser = await puppeteer.launch({
+      headless: true,
+      executablePath: chromePath,
+      args: ["--no-sandbox", "--disable-setuid-sandbox", "--disable-dev-shm-usage"],
+      dumpio: false,
+    });
+    dlog(`puppeteer.launch: OK in ${Date.now() - launchStart}ms`);
+  } catch (e) {
+    derr(`puppeteer.launch: FAILED after ${Date.now() - launchStart}ms`);
+    derr(`  error: ${e?.stack || e}`);
+    derr(`  chromePath=${chromePath}`);
+    try {
+      const ver = execSync(`${chromePath || "chromium"} --version 2>&1`, { encoding: "utf-8" }).trim();
+      derr(`  chromium --version: ${ver}`);
+    } catch (v) {
+      derr(`  chromium --version failed: ${v.message}`);
+    }
+    process.exit(1);
+  }
+  memSnap("after-puppeteer-launch");
+  try {
+    const v = await browser.version();
+    dlog(`browser.version: ${v}`);
+  } catch (e) {
+    dlog(`browser.version failed: ${e.message}`);
+  }
+
   const baseUrl = `http://127.0.0.1:${port}${base.slice(0, -1)}`;
-  console.log(`[prerender] serving ${distDir} at ${baseUrl}/`);
+  dlog(`baseUrl=${baseUrl}`);
 
   const shellPath = path.join(distDir, "index.html");
   const shellHtml = await fs.readFile(shellPath, "utf-8");
+  dlog(`shell index.html loaded (${shellHtml.length} bytes)`);
 
   let ok = 0;
   let fail = 0;
   try {
-    for (const route of ROUTES) {
+    for (let i = 0; i < ROUTES.length; i++) {
+      const route = ROUTES[i];
       const url = baseUrl + route;
-      const page = await browser.newPage();
+      const routeStart = Date.now();
+      dlog(`page[${i + 1}/${ROUTES.length}] START ${route}`);
+
+      let page;
+      try {
+        page = await browser.newPage();
+      } catch (e) {
+        derr(`page[${i + 1}/${ROUTES.length}] newPage FAILED: ${e?.stack || e}`);
+        fail++;
+        continue;
+      }
+
       await page.setUserAgent("ReactSnap/Prerender Mozilla/5.0");
 
-      // For blog post routes, intercept the client-side /api/blog/posts/<slug>
-      // fetch and serve the prefetched post body. Without this, the React app
-      // calls the local static server, gets 404, and renders the "Article Not
-      // Found" branch — producing identical empty pages for every post.
+      // Surface page-level console, errors, request failures
+      page.on("pageerror", (err) => derr(`  [${route}] pageerror: ${err.message}`));
+      page.on("requestfailed", (req) => {
+        const f = req.failure();
+        dlog(`  [${route}] requestfailed ${req.method()} ${req.url()} — ${f?.errorText || "unknown"}`);
+      });
+
       const blogSlugMatch = route.match(/^\/blog\/([a-z0-9][a-z0-9-]*[a-z0-9])$/);
       const isBlogPost = blogSlugMatch && postsBySlug.has(blogSlugMatch[1]);
       if (isBlogPost) {
@@ -185,7 +274,6 @@ async function prerender() {
         await page.setRequestInterception(true);
         page.on("request", (req) => {
           const reqUrl = req.url();
-          // Match the slug-specific endpoint (apiFetch builds /api/blog/posts/<slug>)
           if (reqUrl.endsWith(`/api/blog/posts/${post.slug}`)) {
             req.respond({
               status: 200,
@@ -195,7 +283,6 @@ async function prerender() {
             });
             return;
           }
-          // Match the list endpoint (used by /blog index)
           if (reqUrl.endsWith("/api/blog/posts")) {
             req.respond({
               status: 200,
@@ -210,32 +297,32 @@ async function prerender() {
       }
 
       try {
+        const gotoStart = Date.now();
         await page.goto(url, { waitUntil: "networkidle0", timeout: 30000 });
-        // For blog posts, wait for the rendered article heading to confirm
-        // the React app committed the post content (not the loading spinner
-        // and not the "Article Not Found" branch).
+        dlog(`  [${route}] goto OK in ${Date.now() - gotoStart}ms`);
+
         if (isBlogPost) {
+          const wfStart = Date.now();
           try {
             await page.waitForFunction(
               () => !!document.querySelector("article h2, article h3, article p"),
               { timeout: 10000 },
             );
-          } catch {
-            console.warn(`[prerender] ⚠ ${route}: article content not detected within 10s; snapshot may be incomplete`);
+            dlog(`  [${route}] waitForFunction OK in ${Date.now() - wfStart}ms`);
+          } catch (e) {
+            dlog(`  [${route}] waitForFunction TIMEOUT after ${Date.now() - wfStart}ms: ${e.message}`);
           }
         }
         await new Promise((r) => setTimeout(r, 250));
+
         const html = await page.content();
-        // react-helmet-async sets document.title via DOM mutation; capture
-        // the live document.title and inject it back into the serialized HTML
-        // so per-page <title> tags survive into the prerendered output.
         const liveTitle = await page.evaluate(() => document.title);
+        dlog(`  [${route}] html=${html.length}B title="${liveTitle.slice(0, 80)}"`);
         const cleaned = dedupeSeoTags(
           replaceTitleTag(html, liveTitle)
             .replace(/<script[^>]*replit-dev-banner[^>]*>[\s\S]*?<\/script>/gi, "")
             .replace(/<script[^>]*cartographer[^>]*>[\s\S]*?<\/script>/gi, ""),
         );
-        // Sanity check: blog posts must NOT contain "Article Not Found".
         if (isBlogPost && /Article Not Found/i.test(cleaned)) {
           throw new Error(`blog post rendered as "Article Not Found" — interception may have failed`);
         }
@@ -248,48 +335,47 @@ async function prerender() {
         await fs.mkdir(outDir, { recursive: true });
         const outFile = path.join(outDir, "index.html");
         await fs.writeFile(outFile, cleaned, "utf-8");
-        // Also write a flat `.html` mirror so static hosts that don't
-        // auto-serve directory indexes (e.g. Render) handle clean URLs
-        // without a trailing slash. e.g. `/about` -> `dist/about.html`.
         if (route !== "/") {
           const mirrorPath = path.join(distDir, route.replace(/^\//, "") + ".html");
           await fs.mkdir(path.dirname(mirrorPath), { recursive: true });
           await fs.writeFile(mirrorPath, cleaned, "utf-8");
         }
-        console.log(`[prerender] ✓ ${route} -> ${path.relative(distDir, outFile)}`);
+        dlog(`page[${i + 1}/${ROUTES.length}] DONE ${route} in ${Date.now() - routeStart}ms`);
         ok++;
       } catch (err) {
-        console.error(`[prerender] ✗ ${route}:`, err.message);
+        derr(`page[${i + 1}/${ROUTES.length}] FAIL ${route} after ${Date.now() - routeStart}ms: ${err?.stack || err}`);
         fail++;
       } finally {
-        await page.close();
+        try { await page.close(); } catch (e) { dlog(`  [${route}] page.close error: ${e.message}`); }
       }
+      if ((i + 1) % 5 === 0) memSnap(`after-page-${i + 1}`);
     }
   } finally {
-    try { await browser.close(); } catch (e) { console.warn("[prerender] browser.close failed:", e.message); }
-    try { server.close(); } catch (e) { console.warn("[prerender] server.close failed:", e.message); }
+    dlog(`cleanup: closing browser and server`);
+    try { await browser.close(); } catch (e) { dlog(`browser.close error: ${e.message}`); }
+    try { server.close(); } catch (e) { dlog(`server.close error: ${e.message}`); }
   }
   const fallbackPath = path.join(distDir, "200.html");
   await fs.writeFile(fallbackPath, shellHtml, "utf-8");
-  console.log(`[prerender] wrote noindex SPA fallback -> 200.html`);
+  dlog(`wrote 200.html SPA fallback`);
 
   if (fail > 0) {
-    console.error(`[prerender] FAILED: ${fail} route(s) could not be prerendered.`);
+    derr(`FAILED: ${fail} route(s) could not be prerendered`);
     process.exit(1);
   }
 
   const missing = verifyPrerendered(ROUTES);
   if (missing.length > 0) {
-    console.error(`[prerender] VERIFICATION FAILED — the following ${missing.length} route(s) have no index.html on disk:`);
-    for (const r of missing) console.error(`  - ${r}`);
+    derr(`VERIFICATION FAILED: ${missing.length} route(s) missing index.html:`);
+    for (const r of missing) derr(`  - ${r}`);
     process.exit(1);
   }
 
-  console.log(`[prerender] VERIFIED: all ${ok} routes have index.html on disk.`);
-  console.log(`[prerender] done. ${ok} ok, ${fail} failed.`);
+  dlog(`VERIFIED ${ok} routes`);
+  dlog(`done. ${ok} ok, ${fail} failed. total=${((Date.now() - T0) / 1000).toFixed(1)}s`);
 }
 
 prerender().catch((e) => {
-  console.error("[prerender] fatal:", e);
+  derr(`fatal: ${e?.stack || e}`);
   process.exit(1);
 });
