@@ -125,9 +125,29 @@ services:
       - type: rewrite
         source: /api/*
         destination: https://nexfortis-api.onrender.com/api/*
+      # SPA-only routes (NOT prerendered — no .html mirror exists). These must
+      # come BEFORE the .html catch-all below so they fall back to index.html
+      # and let the React SPA handle the route.
+      - type: rewrite
+        source: /admin
+        destination: /index.html
+      - type: rewrite
+        source: /admin/*
+        destination: /index.html
+      - type: rewrite
+        source: /blog/admin
+        destination: /index.html
+      # Pretty URLs: serve the prerendered .html mirror for clean URLs without
+      # trailing slash. Render does NOT auto-strip .html, so /about must be
+      # explicitly rewritten to /about.html (which prerender.mjs writes
+      # alongside the dist/about/index.html directory index).
+      # - Real files (sitemap.xml, robots.txt, /assets/*) are served directly,
+      #   before rewrites apply.
+      # - Trailing-slash variants like /about/ are served from
+      #   dist/about/index.html via Render's directory-index handling.
       - type: rewrite
         source: /*
-        destination: /index.html
+        destination: /*.html
 
   - type: web
     name: nexfortis-qb-portal
@@ -175,6 +195,50 @@ services:
       - type: rewrite
         source: /api/*
         destination: https://nexfortis-api.onrender.com/api/*
+      # SPA-only routes (NOT prerendered — no .html mirror exists). These must
+      # come BEFORE the .html catch-all below. Includes the auth flow, the
+      # checkout / order pages (which need a live session), the customer
+      # portal, the admin area, and dynamic per-record routes (ticket/<id>,
+      # order/<id>) that aren't enumerated at build time.
+      - type: rewrite
+        source: /login
+        destination: /index.html
+      - type: rewrite
+        source: /register
+        destination: /index.html
+      - type: rewrite
+        source: /forgot-password
+        destination: /index.html
+      - type: rewrite
+        source: /reset-password
+        destination: /index.html
+      - type: rewrite
+        source: /auth/*
+        destination: /index.html
+      - type: rewrite
+        source: /order
+        destination: /index.html
+      - type: rewrite
+        source: /order/*
+        destination: /index.html
+      - type: rewrite
+        source: /portal
+        destination: /index.html
+      - type: rewrite
+        source: /portal/*
+        destination: /index.html
+      - type: rewrite
+        source: /admin
+        destination: /index.html
+      - type: rewrite
+        source: /admin/*
+        destination: /index.html
+      - type: rewrite
+        source: /ticket/*
+        destination: /index.html
+      # Pretty URLs: serve the prerendered .html mirror for clean URLs without
+      # trailing slash. See the marketing site block above for the rationale
+      # and behavior of real files / directory indexes.
       - type: rewrite
         source: /*
-        destination: /index.html
+        destination: /*.html

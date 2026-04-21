@@ -110,7 +110,7 @@ Marketing static site:
 - [ ] `curl -s https://nexfortis-marketing.onrender.com/ | grep -c application/ld+json` returns `1+` (schemas present)
 - [ ] `curl -s https://nexfortis-marketing.onrender.com/ | grep -oE '<title[^>]*>[^<]+</title>'` shows real prerendered title (not the shell)
 - [ ] `curl -I https://nexfortis-marketing.onrender.com/about/` returns 200
-- [ ] `curl -I https://nexfortis-marketing.onrender.com/about` (no trailing slash) — **verify this returns the prerendered about page, NOT the home `index.html` SPA fallback.** Fix applied 2026-04-21: `prerender.mjs` now writes both `dist/about/index.html` AND a flat `dist/about.html` mirror so Render serves the right file for clean URLs.
+- [ ] `curl -I https://nexfortis-marketing.onrender.com/about` (no trailing slash) — **verify this returns the prerendered about page (≈77K bytes), NOT the home `index.html` SPA fallback (≈108K bytes).** Two-part fix applied 2026-04-21: (1) `prerender.mjs` writes both `dist/about/index.html` AND a flat `dist/about.html` mirror, and (2) `render.yaml` catch-all changed from `/* → /index.html` to `/* → /*.html` so Render serves the mirror for clean URLs (Render does NOT auto-strip `.html` like Netlify does). SPA-only routes (`/admin/*`, `/blog/admin`, qb-portal `/login`, `/order`, `/portal/*`, `/ticket/*`, `/auth/*`, etc.) have explicit `→ /index.html` rewrites placed BEFORE the catch-all.
 - [ ] `curl -I https://nexfortis-marketing.onrender.com/services/automation-software` returns 301 → `/services/workflow-automation`
 - [ ] `curl https://nexfortis-marketing.onrender.com/sitemap.xml` returns the sitemap (and contains all expected URLs)
 - [ ] `curl https://nexfortis-marketing.onrender.com/robots.txt` returns the production robots.txt (no `noindex`)
