@@ -4,7 +4,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import puppeteer from "puppeteer";
 import { dedupeSeoTags } from "../../lib/seo-dedupe.mjs";
-import { createStaticServer, validatePrerenderedHtml } from "../../lib/prerender-utils.mjs";
+import { createStaticServer, validatePrerenderedHtml, replaceTitleTag } from "../../lib/prerender-utils.mjs";
 import { execSync } from "node:child_process";
 
 function findChromium() {
@@ -153,8 +153,11 @@ async function prerender() {
         await page.goto(url, { waitUntil: "networkidle0", timeout: 30000 });
         await new Promise((r) => setTimeout(r, 250));
         const html = await page.content();
+        // react-helmet-async sets document.title via DOM mutation; capture
+        // the live document.title and inject it back into the serialized HTML.
+        const liveTitle = await page.evaluate(() => document.title);
         const cleaned = dedupeSeoTags(
-          html
+          replaceTitleTag(html, liveTitle)
             .replace(/<script[^>]*replit-dev-banner[^>]*>[\s\S]*?<\/script>/gi, "")
             .replace(/<script[^>]*cartographer[^>]*>[\s\S]*?<\/script>/gi, ""),
         );
