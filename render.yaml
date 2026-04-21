@@ -2,7 +2,7 @@ services:
   - type: web
     name: nexfortis-api
     runtime: node
-    plan: starter
+    plan: standard
     region: oregon
     rootDir: .
     branch: main
