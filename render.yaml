@@ -117,13 +117,14 @@ services:
         name: Referrer-Policy
         value: strict-origin-when-cross-origin
     routes:
-      # NOTE: Render static sites cannot reverse-proxy `/api/*` to a separate
-      # web service — the substitution placeholder is forwarded literally and
-      # the upstream returns 404. The frontend now uses VITE_API_BASE_URL to
-      # call the API at its own origin, so no `/api/*` rewrite is needed here.
       - type: redirect
         source: /services/automation-software
         destination: /services/workflow-automation
+      # Reverse-proxy /api/* to the API service. Render uses `*` (not Netlify's
+      # `:splat`) for the wildcard substitution in the destination URL.
+      - type: rewrite
+        source: /api/*
+        destination: https://nexfortis-api.onrender.com/api/*
       - type: rewrite
         source: /*
         destination: /index.html
@@ -170,10 +171,11 @@ services:
         name: Referrer-Policy
         value: strict-origin-when-cross-origin
     routes:
-      # NOTE: Render static sites cannot reverse-proxy `/api/*` to a separate
-      # web service — the substitution placeholder is forwarded literally and
-      # the upstream returns 404. The frontend now uses VITE_API_BASE_URL to
-      # call the API at its own origin, so no `/api/*` rewrite is needed here.
+      # Reverse-proxy /api/* to the API service. Render uses `*` (not Netlify's
+      # `:splat`) for the wildcard substitution in the destination URL.
+      - type: rewrite
+        source: /api/*
+        destination: https://nexfortis-api.onrender.com/api/*
       - type: rewrite
         source: /*
         destination: /index.html
