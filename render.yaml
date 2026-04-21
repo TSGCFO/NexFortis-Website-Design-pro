@@ -98,11 +98,11 @@ services:
       # Frontend build-time vars (must be present at `vite build` for inlining).
       - key: VITE_GA_MEASUREMENT_ID
         sync: false
-      # Absolute URL of the API origin — Vite inlines this so the marketing site
-      # calls the API directly across origins. Update to https://api.nexfortis.com
-      # once the custom domain is attached to the API service in Phase 2.
-      - key: VITE_API_BASE_URL
-        value: https://nexfortis-api.onrender.com
+      # NOTE: VITE_API_BASE_URL is intentionally NOT set. The frontend uses
+      # relative `/api/...` paths that go through the same-origin /api/* rewrite
+      # below, which avoids CORS entirely. The API server's CORS allow-list only
+      # permits the production custom domains; setting this env var would make
+      # the bundle call the API cross-origin and every request would be blocked.
     headers:
       - path: /assets/*
         name: Cache-Control
@@ -152,11 +152,10 @@ services:
         sync: false
       - key: VITE_SUPABASE_ANON_KEY
         sync: false
-      # Absolute URL of the API origin — Vite inlines this so the portal calls
-      # the API directly across origins. Update to https://api.nexfortis.com
-      # once the custom domain is attached to the API service in Phase 2.
-      - key: VITE_API_BASE_URL
-        value: https://nexfortis-api.onrender.com
+      # NOTE: VITE_API_BASE_URL is intentionally NOT set. See the marketing
+      # site block above for the rationale (same-origin /api/* rewrite avoids
+      # CORS; setting this env var would break every API call on the temporary
+      # *.onrender.com URLs because they're not in the API's CORS allow-list).
     headers:
       - path: /assets/*
         name: Cache-Control

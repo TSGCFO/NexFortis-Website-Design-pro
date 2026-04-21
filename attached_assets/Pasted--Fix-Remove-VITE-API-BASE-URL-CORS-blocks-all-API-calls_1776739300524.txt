@@ -1,0 +1,39 @@
+# Fix: Remove VITE_API_BASE_URL — CORS blocks all API calls on temporary Render URLs
+
+## Problem
+
+You set `VITE_API_BASE_URL=https://nexfortis-api.onrender.com` on both static sites. This bakes absolute cross-origin URLs into every fetch call. But the API server's CORS allow-list (`artifacts/api-server/src/app.ts` lines 52-64) only permits `nexfortis.com`, `www.nexfortis.com`, `qb.nexfortis.com`, and `qbportal.nexfortis.com`. It does NOT permit `nexfortis-marketing.onrender.com` or `nexfortis-qb-portal.onrender.com`.
+
+Live proof — preflight from the marketing site origin returns zero CORS headers (blocked), while `nexfortis.com` returns full CORS headers (allowed). Every POST (contact form, checkout, login) and every GET response from both frontends is rejected by the browser.
+
+The rewrite rules you fixed (`:splat` → `*`) already solve the routing problem — they proxy `/api/*` through Render's CDN on the same origin, so CORS never comes into play. The `VITE_API_BASE_URL` setting bypasses those rewrites and creates this CORS blocker.
+
+## Fix (two lines)
+
+In `render.yaml`, remove the `VITE_API_BASE_URL` env var block from both static sites:
+
+**Marketing site (~line 101-104):** delete the `VITE_API_BASE_URL` key + value + the 3 comment lines above it.
+
+**QB portal (~line 155-158):** delete the same `VITE_API_BASE_URL` key + value + the 3 comment lines above it.
+
+Do NOT remove:
+- The `/api/*` rewrite rules (those are correct and needed)
+- The `getApiBase()` / `apiUrl()` code in the frontends (when `VITE_API_BASE_URL` is unset, they correctly fall back to relative `/api/` paths that go through the rewrites)
+- The flat `.html` mirror logic in prerender scripts
+- Any other env vars
+
+## Verification
+
+After removing, rebuild both static sites locally and confirm:
+1. `grep -r "VITE_API_BASE_URL" render.yaml` returns nothing
+2. In the built JS bundles, API calls resolve to relative `/api/...` paths (not absolute `https://nexfortis-api.onrender.com/...`)
+3. TypeScript still compiles clean
+4. Tests still pass
+
+## Also update specs
+
+In `specs/2026-04-20-render-launch-checklist.md`, restore the rewrite-based smoke tests:
+- `curl https://nexfortis-marketing.onrender.com/api/healthz` should return 200
+- `curl https://nexfortis-qb-portal.onrender.com/api/healthz` should return 200
+
+Remove the Phase 1.5 deferral note about operator admin cookies — with same-origin rewrites, `credentials: "include"` works fine on the temporary URLs too.

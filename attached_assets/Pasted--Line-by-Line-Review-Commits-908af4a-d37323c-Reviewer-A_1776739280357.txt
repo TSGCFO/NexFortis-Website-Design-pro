@@ -1,0 +1,150 @@
+# Line-by-Line Review: Commits 908af4a + d37323c
+
+**Reviewer:** Aki (Orchestrator)
+**Commits:** 908af4a ("Phase 1 post-deploy fixes: clean URLs + cross-origin API calls") + d37323c ("Fix API proxy rewrite rules for both marketing and QB portal sites")
+**Branch:** main
+**Files changed:** 21 files, +179 / -109 lines
+
+---
+
+## Summary of Changes
+
+The commits introduce three categories of changes:
+
+1. **render.yaml rewrite fix:** `:splat` → `*` in the API proxy rewrite rules for both static sites
+2. **VITE_API_BASE_URL support:** A new build-time environment variable that makes all frontend API calls use absolute cross-origin URLs instead of relative paths through the rewrite proxy
+3. **Flat HTML mirrors in prerender scripts:** Both prerender.mjs scripts now write `about.html` alongside `about/index.html` so Render serves clean URLs without trailing slashes
+4. **Sitemap date bump:** QB portal sitemap lastmod dates changed from 2026-04-20 to 2026-04-21 (cosmetic)
+5. **Specs checklist update:** Updated smoke-test instructions to reflect the new approach
+
+---
+
+## CRITICAL ISSUE — CORS Blocks All API Calls on Temporary Render URLs
+
+### What happened
+
+The agent introduced `VITE_API_BASE_URL=https://nexfortis-api.onrender.com` and baked it into both static site bundles at build time. This means:
+
+- **Marketing site:** `apiFetch("/contact")` now calls `https://nexfortis-api.onrender.com/api/contact` directly (cross-origin)
+- **QB portal:** `getApiBase()` returns `https://nexfortis-api.onrender.com`, so every single fetch call goes cross-origin
+
+The API server's CORS configuration (in `artifacts/api-server/src/app.ts`, lines 52-64) only allows these origins:
+- `https://nexfortis.com`
+- `https://www.nexfortis.com`
+- `https://qb.nexfortis.com`
+- `https://qbportal.nexfortis.com`
+
+It does **NOT** allow:
+- `https://nexfortis-marketing.onrender.com`
+- `https://nexfortis-qb-portal.onrender.com`
+
+**Result:** Every API call from both frontends will fail with a CORS error on the current temporary Render URLs. Contact form, QB portal login, checkout, orders, tickets, waitlist — everything is broken.
+
+### Why the rewrite approach was correct
+
+Before these commits, the render.yaml had rewrite rules like:
+```yaml
+routes:
+  - type: rewrite
+    source: /api/*
+    destination: https://nexfortis-api.onrender.com/api/:splat
+```
+
+The `:splat` syntax was wrong (that's Netlify, not Render), and commit d37323c correctly fixed it to `*`. **But then the agent also added VITE_API_BASE_URL**, which makes the code bypass the rewrites entirely.
+
+The rewrite approach is the RIGHT architecture because:
+- Rewrites happen at Render's CDN level — the browser sees the request going to the same origin
+- No CORS issues at all
+- No need to add temporary origins to the CORS allow list
+- Works identically on temporary and custom domain URLs
+
+### What needs to happen
+
+**Option A (recommended):** Remove `VITE_API_BASE_URL` from render.yaml and revert the frontend code to use relative `/api/` paths. Keep the fixed rewrite rules (`*` instead of `:splat`). This is the simplest and most correct approach.
+
+**Option B:** Add the temporary Render origins to the CORS allow list. This works but is messy — you'd need to remove them again once custom domains are set up, and it means maintaining two sets of origins.
+
+---
+
+## File-by-File Review
+
+### render.yaml
+| Line | Verdict | Detail |
+|------|---------|--------|
+| Rewrite `:splat` → `*` | ✅ GOOD | Correct fix for Render's syntax |
+| Added `VITE_API_BASE_URL` env var (both sites) | ❌ PROBLEM | Causes the CORS issue described above |
+| Moved redirect rule above rewrite for marketing | ✅ GOOD | Correct — more specific routes should be first |
+| Comments explaining Render vs Netlify syntax | ✅ GOOD | Helpful documentation |
+
+### artifacts/nexfortis/src/lib/api.ts
+| Change | Verdict | Detail |
+|--------|---------|--------|
+| `API_ORIGIN` from `VITE_API_BASE_URL` | ❌ PROBLEM | When set, bypasses rewrites and triggers CORS |
+| `apiUrl()` exported helper | ✅ GOOD (code quality) | Centralizes URL building, but shouldn't be needed with rewrites |
+| `API_BASE` construction with trailing slash strip | ✅ GOOD (code quality) | Handles edge cases properly |
+| Fallback to empty string (relative `/api`) | ✅ GOOD | Preserves dev behavior |
+
+### artifacts/nexfortis/src/pages/admin-login.tsx, blog-admin.tsx, contact.tsx
+| Change | Verdict | Detail |
+|--------|---------|--------|
+| Switched from hardcoded `"/api/..."` to `apiUrl(...)` | ❌ PROBLEM | These now make cross-origin calls that are CORS-blocked. Also, `credentials: "include"` on cross-origin calls has additional `SameSite` cookie issues (the agent acknowledged this for admin pages in the specs update) |
+
+### artifacts/qb-portal/src/lib/api-base.ts (NEW FILE)
+| Change | Verdict | Detail |
+|--------|---------|--------|
+| Centralized `getApiBase()` function | ✅ GOOD (code quality) | Eliminates duplicated BASE_URL parsing across 10+ files |
+| Falls back to `BASE_URL` stripping for dev | ✅ GOOD | Preserves Replit dev behavior |
+| Uses `VITE_API_BASE_URL` when set | ❌ PROBLEM | Same CORS issue |
+
+### artifacts/qb-portal/src/lib/admin-api.ts, auth.tsx, products.ts
+| Change | Verdict | Detail |
+|--------|---------|--------|
+| Replaced inline `BASE_URL` parsing with `getApiBase()` | ✅ GOOD (refactor) | Much cleaner, DRY |
+| Cross-origin calls when `VITE_API_BASE_URL` set | ❌ PROBLEM | CORS-blocked |
+
+### artifacts/qb-portal/src/pages/ (order-detail, order, portal-settings, portal-subscription, portal, subscription, ticket-detail, waitlist)
+| Change | Verdict | Detail |
+|--------|---------|--------|
+| All inline `BASE_URL` parsing replaced with `getApiBase()` | ✅ GOOD (refactor) | Consistent, DRY, eliminates 8+ instances of duplicated URL logic |
+| Inline `fetch("/api/...")` replaced with `fetch(getApiBase() + "/api/...")` | ❌ PROBLEM | Cross-origin CORS issue |
+
+### artifacts/nexfortis/prerender.mjs + artifacts/qb-portal/prerender.mjs
+| Change | Verdict | Detail |
+|--------|---------|--------|
+| Flat `.html` mirror writes for clean URLs | ✅ GOOD | Correct approach for Render static hosting. `route !== "/"` guard prevents writing an empty-name file. Uses `path.dirname()` + `mkdir` for nested routes. |
+
+### artifacts/qb-portal/public/sitemap.xml
+| Change | Verdict | Detail |
+|--------|---------|--------|
+| `lastmod` dates bumped from 2026-04-20 to 2026-04-21 | ✅ FINE | Cosmetic, no functional impact |
+
+### specs/2026-04-20-render-launch-checklist.md
+| Change | Verdict | Detail |
+|--------|---------|--------|
+| Updated smoke test instructions | ✅ GOOD | Acknowledges the cross-origin approach |
+| Added Phase 1.5 deferral for operator admin | ⚠️ CONCERN | Correctly identifies the `credentials: include` cookie issue but presents it as acceptable. The CORS issue is broader than just cookies — it blocks ALL cross-origin calls, not just credentialed ones. |
+| Removed rewrite-based smoke tests (`curl .../api/healthz` through static site) | ❌ PROBLEM | These tests were valid and should still pass if we keep the rewrite approach |
+
+---
+
+## VERDICT: ❌ DOES NOT PASS
+
+### The one critical issue
+
+The `VITE_API_BASE_URL` approach introduces a CORS blocker that breaks every API call from both frontends on the current Render URLs. The rewrite fix (`:splat` → `*`) was the correct and complete solution by itself.
+
+### What's good and should be kept
+
+1. The `:splat` → `*` rewrite fix in render.yaml — this was the core fix we needed
+2. The `getApiBase()` / `apiUrl()` centralization pattern in the QB portal — excellent refactor that eliminates 10+ instances of duplicated `BASE_URL` parsing
+3. The flat `.html` mirror writes in both prerender scripts — correct solution for Render's clean URL handling
+4. The redirect rule ordering in render.yaml
+
+### Recommended fix path
+
+1. **Remove `VITE_API_BASE_URL` from render.yaml** for both static sites (don't set it at all)
+2. **Keep `getApiBase()` and `apiUrl()` code as-is** — when `VITE_API_BASE_URL` is not set, these correctly fall back to relative paths that go through the rewrites
+3. **Redeploy both static sites** so the bundles are built without the env var, and all fetch calls use relative `/api/` paths through the rewrites
+4. **Later (Phase 2):** Once custom domains are set up (`nexfortis.com` and `qb.nexfortis.com`), the CORS allow list already includes them, so you can optionally set `VITE_API_BASE_URL=https://api.nexfortis.com` at that point. But even then, the rewrite approach is cleaner.
+
+This way we keep all the good code quality improvements while using the correct architecture (server-side rewrites) that avoids CORS entirely.
