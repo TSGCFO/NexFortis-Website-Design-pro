@@ -137,7 +137,7 @@ export default function Subscription() {
 
   const handleSubscribe = async (tier: string) => {
     if (!user) {
-      navigate(`/login?returnTo=${encodeURIComponent("/qb-portal/subscription")}`);
+      navigate(`/login?returnTo=${encodeURIComponent("/subscription")}`);
       return;
     }
 

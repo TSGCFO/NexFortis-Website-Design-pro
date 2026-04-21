@@ -115,7 +115,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: window.location.origin + "/qb-portal/auth/callback",
+        redirectTo: window.location.origin + "/auth/callback",
       },
     });
   }, []);
@@ -124,7 +124,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     await supabase.auth.signInWithOAuth({
       provider: "azure",
       options: {
-        redirectTo: window.location.origin + "/qb-portal/auth/callback",
+        redirectTo: window.location.origin + "/auth/callback",
       },
     });
   }, []);
@@ -138,7 +138,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const resetPasswordFn = useCallback(async (email: string) => {
     try {
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: window.location.origin + "/qb-portal/reset-password",
+        redirectTo: window.location.origin + "/reset-password",
       });
       if (error) return { ok: false, error: mapAuthError(error, "resetPassword") };
       return { ok: true };

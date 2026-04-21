@@ -247,7 +247,7 @@ export function SubscriptionTab({ onRefreshPortal }: SubscriptionTabProps) {
 
   const activeReferralCode = referralStats?.code || referral?.code || null;
   const referralLink = activeReferralCode
-    ? `${window.location.origin}/qb-portal/subscription?ref=${activeReferralCode}`
+    ? `${window.location.origin}/subscription?ref=${activeReferralCode}`
     : "";
 
   const copyReferralCode = async () => {
