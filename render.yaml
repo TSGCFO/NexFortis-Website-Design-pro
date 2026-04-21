@@ -34,6 +34,25 @@ services:
         value: NexFortis Support <noreply@nexfortis.com>
       - key: LAUNCH_PROMO_ACTIVE
         value: "true"
+      # Stripe price + coupon IDs (not secrets — public-ish identifiers tied to the
+      # Stripe account; committing them avoids 8 manual dashboard steps per deploy.
+      # If you swap Stripe accounts later, update these here and redeploy.)
+      - key: STRIPE_PRICE_ESSENTIALS
+        value: price_1TNekyIlg3BstMSENIFao5KS
+      - key: STRIPE_PRICE_ESSENTIALS_PROMO
+        value: price_1TNekyIlg3BstMSEKjpAmaAm
+      - key: STRIPE_PRICE_PROFESSIONAL
+        value: price_1TNekyIlg3BstMSEfBd4Fmnp
+      - key: STRIPE_PRICE_PROFESSIONAL_PROMO
+        value: price_1TNekxIlg3BstMSErqwJUX4g
+      - key: STRIPE_PRICE_PREMIUM
+        value: price_1TNekxIlg3BstMSExpkCxSn2
+      - key: STRIPE_PRICE_PREMIUM_PROMO
+        value: price_1TNekxIlg3BstMSETNpfy5w9
+      - key: STRIPE_COUPON_PRO_10
+        value: 0qjilCpv
+      - key: STRIPE_COUPON_PREMIUM_20
+        value: K3rbghiR
       # Secrets — set via Render dashboard, do NOT commit values
       - key: DATABASE_URL
         sync: false

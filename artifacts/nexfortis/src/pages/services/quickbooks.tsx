@@ -10,7 +10,7 @@ function trackQbPortalClick(location: string) {
   trackEvent("cta_click", {
     cta: "qb_portal",
     location,
-    destination: "https://nex-fortis-website-design-pro.replit.app/qb-portal/catalog",
+    destination: "https://qb.nexfortis.com/catalog",
   });
 }
 
@@ -235,7 +235,7 @@ export default function QuickBooks() {
           <Info className="w-5 h-5 text-accent shrink-0 mt-0.5" aria-hidden="true" />
           <p className="text-sm text-foreground leading-relaxed">
             <strong>Orders are processed through our QB Services Portal.</strong> Browse the full catalog, place orders, manage subscriptions, and submit support tickets at{" "}
-            <a href="https://nex-fortis-website-design-pro.replit.app/qb-portal/catalog" target="_blank" rel="noopener noreferrer" onClick={() => trackQbPortalClick("quickbooks_catalog_inline")} className="text-accent font-semibold hover:underline">our QB Services Portal</a>.
+            <a href="https://qb.nexfortis.com/catalog" target="_blank" rel="noopener noreferrer" onClick={() => trackQbPortalClick("quickbooks_catalog_inline")} className="text-accent font-semibold hover:underline">our QB Services Portal</a>.
           </p>
         </div>
 
@@ -260,7 +260,7 @@ export default function QuickBooks() {
                       <p className="text-accent font-semibold">{item.price}</p>
                     </div>
                     <a
-                      href="https://nex-fortis-website-design-pro.replit.app/qb-portal/catalog"
+                      href="https://qb.nexfortis.com/catalog"
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={() => trackQbPortalClick(`quickbooks_product_${item.name}`)}
@@ -285,7 +285,7 @@ export default function QuickBooks() {
             Our web-based QuickBooks add-on tools are available directly in your browser — no installation required. Generate statements, process payments, and import data with just a few clicks.
           </p>
           <a
-            href="https://nex-fortis-website-design-pro.replit.app/qb-portal/catalog"
+            href="https://qb.nexfortis.com/catalog"
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => trackQbPortalClick("quickbooks_bottom_cta")}

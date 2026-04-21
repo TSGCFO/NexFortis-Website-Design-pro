@@ -23,7 +23,10 @@ async function getCredentials(): Promise<{ publishableKey: string; secretKey: st
   if (!xReplitToken || !hostname) {
     const fallbackKey = process.env["STRIPE_SECRET_KEY"];
     if (fallbackKey) {
-      return { publishableKey: "", secretKey: fallbackKey };
+      return {
+        publishableKey: process.env["STRIPE_PUBLISHABLE_KEY"] ?? "",
+        secretKey: fallbackKey,
+      };
     }
     throw new Error("No Stripe credentials available (no Replit connector and no STRIPE_SECRET_KEY)");
   }
@@ -66,7 +69,10 @@ async function getCredentials(): Promise<{ publishableKey: string; secretKey: st
     console.warn(`[stripe-client] Connector failed, checking STRIPE_SECRET_KEY fallback:`, connectorErr);
     const fallbackKey = process.env["STRIPE_SECRET_KEY"];
     if (fallbackKey) {
-      return { publishableKey: "", secretKey: fallbackKey };
+      return {
+        publishableKey: process.env["STRIPE_PUBLISHABLE_KEY"] ?? "",
+        secretKey: fallbackKey,
+      };
     }
     throw connectorErr;
   }

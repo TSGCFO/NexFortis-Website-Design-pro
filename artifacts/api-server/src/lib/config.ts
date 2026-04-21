@@ -1,11 +1,14 @@
 const BASE_ORIGINS: string[] = [
-  "https://nex-fortis-website-design-pro.replit.app",
-  "https://qbportal.nexfortis.com",
-  "https://qb.nexfortis.com",
   "https://nexfortis.com",
   "https://www.nexfortis.com",
+  "https://qb.nexfortis.com",
+  "https://qbportal.nexfortis.com",
   ...(process.env["NODE_ENV"] !== "production"
-    ? ["http://localhost:5173", "http://localhost:5174"]
+    ? [
+        "http://localhost:5173",
+        "http://localhost:5174",
+        "https://nex-fortis-website-design-pro.replit.app",
+      ]
     : []),
 ];
 
@@ -22,7 +25,7 @@ if (process.env["ALLOWED_ORIGINS"]) {
   }
 }
 
-const DEFAULT_ORIGIN = "https://nex-fortis-website-design-pro.replit.app";
+const DEFAULT_ORIGIN = "https://nexfortis.com";
 
 export function getValidOrigin(requestOrigin: string | undefined): string {
   if (requestOrigin && ALLOWED_ORIGINS.includes(requestOrigin)) {

@@ -54,8 +54,13 @@ const allowedOrigins = [
   "https://www.nexfortis.com",
   "https://qb.nexfortis.com",
   "https://qbportal.nexfortis.com",
-  "https://nex-fortis-website-design-pro.replit.app",
-  ...(process.env.NODE_ENV !== "production" ? ["http://localhost:5173", "http://localhost:5174"] : []),
+  ...(process.env.NODE_ENV !== "production"
+    ? [
+        "http://localhost:5173",
+        "http://localhost:5174",
+        "https://nex-fortis-website-design-pro.replit.app",
+      ]
+    : []),
 ];
 
 const isDevReplitOrigin = (origin: string): boolean => {
