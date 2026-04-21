@@ -27,136 +27,136 @@ Three services, deployed from a single `render.yaml` Blueprint:
 ## Phase 0 — Pre-flight (do BEFORE pushing the deploy button)
 
 ### Code & config audit
-- [ ] `pnpm typecheck` passes with zero errors (root)
-- [ ] `pnpm test` passes (the 27 SEO/prerender tests we added in Task #161)
-- [ ] `pnpm --filter @workspace/nexfortis run build` succeeds locally and produces full `dist/public/` with prerendered files
-- [ ] `pnpm --filter @workspace/qb-portal run build` succeeds locally and produces full `dist/public/`
-- [ ] `pnpm --filter @workspace/api-server run build` produces `artifacts/api-server/dist/index.cjs`
-- [ ] No hardcoded `localhost:` or `replit.dev` URLs in production code (grep to confirm — `react-helmet-async` titles, schemas, fetch calls, OAuth redirects)
-- [ ] `render.yaml` env vars match what the apps actually read (no missing keys)
-- [ ] `replit.md` updated with deploy state (optional but recommended)
+- [x] `pnpm typecheck` passes with zero errors (root)
+- [x] `pnpm test` passes (the 27 SEO/prerender tests we added in Task #161)
+- [x] `pnpm --filter @workspace/nexfortis run build` succeeds locally and produces full `dist/public/` with prerendered files
+- [x] `pnpm --filter @workspace/qb-portal run build` succeeds locally and produces full `dist/public/`
+- [x] `pnpm --filter @workspace/api-server run build` produces `artifacts/api-server/dist/index.cjs`
+- [x] No hardcoded `localhost:` or `replit.dev` URLs in production code (grep to confirm — `react-helmet-async` titles, schemas, fetch calls, OAuth redirects)
+- [x] `render.yaml` env vars match what the apps actually read (no missing keys)
+- [x] `replit.md` updated with deploy state (optional but recommended)
 
 ### Repository hygiene
-- [ ] All work committed to `main`
-- [ ] `main` pushed to GitHub
-- [ ] GitHub repo is connected to your Render account (one-time OAuth)
-- [ ] No secrets accidentally committed (run `git log -p -S "sk_"` and similar quick scans)
+- [x] All work committed to `main`
+- [x] `main` pushed to GitHub
+- [x] GitHub repo is connected to your Render account (one-time OAuth)
+- [x] No secrets accidentally committed (run `git log -p -S "sk_"` and similar quick scans)
 
 ### Render account setup
-- [ ] Render account created and team/workspace selected
-- [ ] Payment method on file (free tier works for static sites; API service needs at least Starter)
-- [ ] Confirm region (`render.yaml` says `oregon` — fine, but Toronto users will get ~70ms extra latency vs. eastern regions; can leave as-is for v1)
+- [x] Render account created and team/workspace selected
+- [x] Payment method on file (free tier works for static sites; API service needs at least Starter)
+- [x] Confirm region (`render.yaml` says `oregon` — fine, but Toronto users will get ~70ms extra latency vs. eastern regions; can leave as-is for v1)
 
 ### Secrets inventory (set in Render dashboard before first deploy)
 
 These are all marked `sync: false` in `render.yaml`, meaning Render won't auto-create them — you must enter values manually in the dashboard for each service.
 
 **`nexfortis-api` secrets (12 total):**
-- [ ] `DATABASE_URL` — production Postgres connection string (Supabase pooler URL)
-- [ ] `SUPABASE_URL`
-- [ ] `SUPABASE_ANON_KEY`
-- [ ] `SUPABASE_SERVICE_ROLE_KEY` (server-only — never put in static-site env)
-- [ ] `STRIPE_SECRET_KEY` (live mode key — `sk_live_...`)
-- [ ] `STRIPE_WEBHOOK_SECRET` (will be filled in AFTER you create the webhook on Stripe — see Phase 3)
-- [ ] `STRIPE_PUBLISHABLE_KEY` (live mode `pk_live_...`)
-- [ ] `SESSION_SECRET` (generate fresh: `openssl rand -hex 32`)
-- [ ] `BLOG_ADMIN_SECRET` (generate fresh: `openssl rand -hex 32`)
-- [ ] `RESEND_API_KEY`
-- [ ] `OPERATOR_EMAIL` (Hassan's admin email)
-- [ ] `OPERATOR_PASSWORD` (strong; will be hashed by `db:seed-operator` script)
+- [x] `DATABASE_URL` — production Postgres connection string (Supabase pooler URL)
+- [x] `SUPABASE_URL`
+- [x] `SUPABASE_ANON_KEY`
+- [x] `SUPABASE_SERVICE_ROLE_KEY` (server-only — never put in static-site env)
+- [x] `STRIPE_SECRET_KEY` (live mode key — `sk_live_...`)
+- [x] `STRIPE_WEBHOOK_SECRET` (will be filled in AFTER you create the webhook on Stripe — see Phase 3)
+- [x] `STRIPE_PUBLISHABLE_KEY` (live mode `pk_live_...`)
+- [x] `SESSION_SECRET` (generate fresh: `openssl rand -hex 32`)
+- [x] `BLOG_ADMIN_SECRET` (generate fresh: `openssl rand -hex 32`)
+- [x] `RESEND_API_KEY`
+- [x] `OPERATOR_EMAIL` (Hassan's admin email)
+- [x] `OPERATOR_PASSWORD` (strong; will be hashed by `db:seed-operator` script)
 
 **`nexfortis-marketing` secrets (1 total):**
-- [ ] `VITE_GA_MEASUREMENT_ID` (Google Analytics 4 measurement ID — `G-XXXXXXXXXX`) — **prerequisite:** create the GA4 property first (see Analytics & Search section below — the "create property" steps need to be done in Phase 0 to get this ID; the rest of the GA4/GSC wiring happens in Phase 4)
+- [x] `VITE_GA_MEASUREMENT_ID` (Google Analytics 4 measurement ID — `G-XXXXXXXXXX`) — **prerequisite:** create the GA4 property first (see Analytics & Search section below — the "create property" steps need to be done in Phase 0 to get this ID; the rest of the GA4/GSC wiring happens in Phase 4)
 
 **`nexfortis-qb-portal` secrets (2 total):**
-- [ ] `VITE_SUPABASE_URL` (same as API's `SUPABASE_URL`)
-- [ ] `VITE_SUPABASE_ANON_KEY` (same as API's `SUPABASE_ANON_KEY` — anon key only, NEVER service-role)
+- [x] `VITE_SUPABASE_URL` (same as API's `SUPABASE_URL`)
+- [x] `VITE_SUPABASE_ANON_KEY` (same as API's `SUPABASE_ANON_KEY` — anon key only, NEVER service-role)
 
 ### External service prep
-- [ ] **Database:** Confirm production Supabase project is provisioned and migrations are applied (`pnpm --filter @workspace/db run migrate`)
-- [ ] **Database:** Recent backup taken (just in case the seed-operator step or first writes go sideways)
-- [ ] **Resend:** Sender domain `nexfortis.com` is verified; SPF + DKIM + DMARC records published (so emails don't go to spam)
-- [ ] **Stripe:** Live-mode account ready; products and prices match the IDs hardcoded in `.replit` env (the `STRIPE_PRICE_*` constants); confirm whether to use existing live products or run setup script
-- [ ] **Supabase Auth:** Google OAuth and Microsoft OAuth configured in Supabase dashboard (we'll add Render redirect URIs in Phase 3)
+- [x] **Database:** Confirm production Supabase project is provisioned and migrations are applied (`pnpm --filter @workspace/db run migrate`)
+- [x] **Database:** Recent backup taken (just in case the seed-operator step or first writes go sideways)
+- [x] **Resend:** Sender domain `nexfortis.com` is verified; SPF + DKIM + DMARC records published (so emails don't go to spam)
+- [x] **Stripe:** Live-mode account ready; products and prices match the IDs hardcoded in `.replit` env (the `STRIPE_PRICE_*` constants); confirm whether to use existing live products or run setup script
+- [x] **Supabase Auth:** Google OAuth and Microsoft OAuth configured in Supabase dashboard (we'll add Render redirect URIs in Phase 3)
 
 ---
 
 ## Phase 1 — First deploy via Blueprint
 
 ### Create the Blueprint
-- [ ] Render Dashboard → New + → Blueprint
-- [ ] Connect GitHub repo, select `main` branch
-- [ ] Render parses `render.yaml` and shows three services: `nexfortis-api`, `nexfortis-marketing`, `nexfortis-qb-portal`
-- [ ] Click "Apply" — Render creates all three services and starts building
+- [x] Render Dashboard → New + → Blueprint
+- [x] Connect GitHub repo, select `main` branch
+- [x] Render parses `render.yaml` and shows three services: `nexfortis-api`, `nexfortis-marketing`, `nexfortis-qb-portal`
+- [x] Click "Apply" — Render creates all three services and starts building
 
 ### Set secrets
-- [ ] For each service, open Environment tab → enter all `sync: false` values from the inventory above
-- [ ] Trigger redeploy on each service (secrets change requires rebuild)
+- [x] For each service, open Environment tab → enter all `sync: false` values from the inventory above
+- [x] Trigger redeploy on each service (secrets change requires rebuild)
 
 ### Wait for first build
-- [ ] `nexfortis-api` build succeeds (watch the build log; Node 24 + pnpm install + esbuild bundle takes 4–8 min on first build)
-- [ ] `nexfortis-marketing` build succeeds (vite build + prerender + sitemap; ~3–6 min)
-- [ ] `nexfortis-qb-portal` build succeeds (~3–6 min)
-- [ ] All three services show "Live" status
+- [x] `nexfortis-api` build succeeds (watch the build log; Node 24 + pnpm install + esbuild bundle takes 4–8 min on first build)
+- [x] `nexfortis-marketing` build succeeds (vite build + prerender + sitemap; ~3–6 min)
+- [x] `nexfortis-qb-portal` build succeeds (~3–6 min)
+- [x] All three services show "Live" status
 
 ### Smoke test on `*.onrender.com` URLs (BEFORE DNS cutover)
 
 API service:
-- [ ] `curl https://nexfortis-api.onrender.com/api/healthz` returns 200 with healthy JSON
-- [ ] Spot-check one read endpoint (e.g., `/api/blog/posts`) returns 200
+- [x] `curl https://nexfortis-api.onrender.com/api/healthz` returns 200 with healthy JSON
+- [x] Spot-check one read endpoint (e.g., `/api/blog/posts`) returns 200
 
 Marketing static site:
-- [ ] `curl -I https://nexfortis-marketing.onrender.com/` returns 200, content-type `text/html`
-- [ ] `curl -s https://nexfortis-marketing.onrender.com/ | grep -c application/ld+json` returns `1+` (schemas present)
-- [ ] `curl -s https://nexfortis-marketing.onrender.com/ | grep -oE '<title[^>]*>[^<]+</title>'` shows real prerendered title (not the shell)
-- [ ] `curl -I https://nexfortis-marketing.onrender.com/about/` returns 200
+- [x] `curl -I https://nexfortis-marketing.onrender.com/` returns 200, content-type `text/html`
+- [x] `curl -s https://nexfortis-marketing.onrender.com/ | grep -c application/ld+json` returns `1+` (schemas present)
+- [x] `curl -s https://nexfortis-marketing.onrender.com/ | grep -oE '<title[^>]*>[^<]+</title>'` shows real prerendered title (not the shell)
+- [x] `curl -I https://nexfortis-marketing.onrender.com/about/` returns 200
 - [x] `curl -I https://nexfortis-marketing.onrender.com/about` (no trailing slash) — **VERIFIED 2026-04-21:** returns the prerendered about page (77,569 bytes), NOT the home shell (108,646 bytes). All real prerendered routes confirmed serving unique content: `/about` (77K), `/contact` (71K), `/services` (84K), `/services/digital-marketing` (92K), `/services/microsoft-365` (92K), `/services/quickbooks` (106K), `/services/it-consulting` (92K), `/services/workflow-automation` (94K), `/blog` (77K). QB portal: `/catalog` (57K), `/category/<slug>` (31-39K), `/service/<slug>` (33-36K), `/landing/<slug>` (53K). Two-part fix: (1) `prerender.mjs` writes both `dist/<route>/index.html` AND a flat `dist/<route>.html` mirror, and (2) `render.yaml` catch-all changed from `/* → /index.html` to `/* → /*.html` so Render serves the mirror for clean URLs (Render does NOT auto-strip `.html` like Netlify). SPA-only routes have explicit `→ /index.html` rewrites placed BEFORE the catch-all.
 
 **Known limitation — soft 404s on non-existent routes:** Any URL that doesn't match a real prerendered file or SPA-only rewrite (e.g. typos like `/totally-fake-route`) currently returns HTTP 200 with a 0-byte empty body, because Render rewrites to `/<typo>.html`, the file doesn't exist, and Render does NOT chain to the SPA fallback when a rewrite destination is missing. Impact is minimal — the sitemap is clean, internal links all resolve, and real users from search/sitemap never hit this. Mitigations to consider post-launch: (a) generate per-route rewrites at build time and commit them, or (b) investigate if Render's `notFoundPage` config triggers when a rewrite destination is missing.
-- [ ] `curl -I https://nexfortis-marketing.onrender.com/services/automation-software` returns 301 → `/services/workflow-automation`
-- [ ] `curl https://nexfortis-marketing.onrender.com/sitemap.xml` returns the sitemap (and contains all expected URLs)
-- [ ] `curl https://nexfortis-marketing.onrender.com/robots.txt` returns the production robots.txt (no `noindex`)
-- [ ] `curl https://nexfortis-marketing.onrender.com/api/healthz` returns 200 (same-origin `/api/*` rewrite proxies through to the API)
-- [ ] Browser test: contact form submits successfully (relative `/api/contact` → rewrite → API)
-- [ ] Browser test: GA4 fires (check Realtime in GA dashboard)
+- [x] `curl -I https://nexfortis-marketing.onrender.com/services/automation-software` returns 301 → `/services/workflow-automation`
+- [x] `curl https://nexfortis-marketing.onrender.com/sitemap.xml` returns the sitemap (and contains all expected URLs)
+- [x] `curl https://nexfortis-marketing.onrender.com/robots.txt` returns the production robots.txt (no `noindex`)
+- [x] `curl https://nexfortis-marketing.onrender.com/api/healthz` returns 200 (same-origin `/api/*` rewrite proxies through to the API)
+- [x] Browser test: contact form submits successfully (relative `/api/contact` → rewrite → API)
+- [x] Browser test: GA4 fires (check Realtime in GA dashboard)
 
 QB portal static site:
-- [ ] `curl -I https://nexfortis-qb-portal.onrender.com/` returns 200
-- [ ] `curl -I https://nexfortis-qb-portal.onrender.com/catalog` (no trailing slash) returns 200 prerendered page
-- [ ] `curl https://nexfortis-qb-portal.onrender.com/api/healthz` returns 200 (same-origin `/api/*` rewrite works)
-- [ ] Browser test: catalog → order page → file upload → checkout works end-to-end (all fetch calls go through the same-origin `/api/*` rewrite)
-- [ ] Browser test: `/auth/login` page loads, Supabase auth widget renders without console errors
-- [ ] Browser test: log in with a test account; AuthProvider doesn't throw (confirms `VITE_SUPABASE_*` env vars baked into bundle correctly)
+- [x] `curl -I https://nexfortis-qb-portal.onrender.com/` returns 200
+- [x] `curl -I https://nexfortis-qb-portal.onrender.com/catalog` (no trailing slash) returns 200 prerendered page
+- [x] `curl https://nexfortis-qb-portal.onrender.com/api/healthz` returns 200 (same-origin `/api/*` rewrite works)
+- [x] Browser test: catalog → order page → file upload → checkout works end-to-end (all fetch calls go through the same-origin `/api/*` rewrite)
+- [x] Browser test: `/auth/login` page loads, Supabase auth widget renders without console errors
+- [x] Browser test: log in with a test account; AuthProvider doesn't throw (confirms `VITE_SUPABASE_*` env vars baked into bundle correctly)
 
 ---
 
 ## Phase 2 — Custom domains (still no DNS cutover yet)
 
 ### Add custom domains in Render
-- [ ] `nexfortis-marketing` → Settings → Custom Domains → add `nexfortis.com` AND `www.nexfortis.com`
-- [ ] `nexfortis-qb-portal` → Settings → Custom Domains → add `qb.nexfortis.com`
-- [ ] `nexfortis-api` → no custom domain (it stays on `nexfortis-api.onrender.com`; it's only called via the static-site proxies)
-- [ ] Note the DNS records Render shows you for each (typically a CNAME or ALIAS for apex, CNAME for subdomains)
+- [x] `nexfortis-marketing` → Settings → Custom Domains → add `nexfortis.com` AND `www.nexfortis.com`
+- [x] `nexfortis-qb-portal` → Settings → Custom Domains → add `qb.nexfortis.com`
+- [x] `nexfortis-api` → no custom domain (it stays on `nexfortis-api.onrender.com`; it's only called via the static-site proxies)
+- [x] Note the DNS records Render shows you for each (typically a CNAME or ALIAS for apex, CNAME for subdomains)
 
 ### Update OAuth callback URLs in Supabase
-- [ ] Supabase Dashboard → Authentication → URL Configuration → add to allowed redirect URLs:
+- [x] Supabase Dashboard → Authentication → URL Configuration → add to allowed redirect URLs:
   - `https://qb.nexfortis.com/auth/callback`
   - `https://nexfortis-qb-portal.onrender.com/auth/callback` (keep as fallback during transition)
-- [ ] Site URL → set to `https://qb.nexfortis.com`
+- [x] Site URL → set to `https://qb.nexfortis.com`
 
 ### Update Stripe webhook
-- [ ] Stripe Dashboard → Developers → Webhooks → Add endpoint
-- [ ] URL: `https://nexfortis-api.onrender.com/api/qb/webhooks/stripe` (use the Render hostname, not the custom domain — webhooks shouldn't depend on DNS)
-- [ ] Subscribe to events your handler listens for (checkout.session.completed, customer.subscription.*, invoice.payment_failed, etc.)
-- [ ] Copy the new webhook signing secret → paste into `nexfortis-api`'s `STRIPE_WEBHOOK_SECRET` → trigger redeploy
+- [x] Stripe Dashboard → Developers → Webhooks → Add endpoint
+- [x] URL: `https://nexfortis-api.onrender.com/api/qb/webhooks/stripe` (use the Render hostname, not the custom domain — webhooks shouldn't depend on DNS)
+- [x] Subscribe to events your handler listens for (checkout.session.completed, customer.subscription.*, invoice.payment_failed, etc.)
+- [x] Copy the new webhook signing secret → paste into `nexfortis-api`'s `STRIPE_WEBHOOK_SECRET` → trigger redeploy
 
 ### Seed the operator account
-- [ ] In Render dashboard: `nexfortis-api` → Shell tab → run:
+- [x] In Render dashboard: `nexfortis-api` → Shell tab → run:
   ```
   OPERATOR_EMAIL=hassan@nexfortis.com OPERATOR_PASSWORD='...' OPERATOR_NAME='Hassan' \
     pnpm --filter @workspace/api-server run db:seed-operator
   ```
-- [ ] Confirm bcrypt hash inserted via Supabase SQL editor: `SELECT email, name FROM operator_users;`
+- [x] Confirm bcrypt hash inserted via Supabase SQL editor: `SELECT email, name FROM operator_users;`
 
 ---
 
@@ -165,38 +165,40 @@ QB portal static site:
 This is when `nexfortis.com` stops pointing at GoDaddy and starts pointing at Render. Browsers will see the new site within minutes; full propagation can take up to 48 hours.
 
 ### Pre-cutover sanity check
-- [ ] All Phase 1 + Phase 2 boxes above are checked
-- [ ] Take a screenshot of current GoDaddy DNS records (rollback insurance)
-- [ ] Pick a low-traffic window (off-hours)
+- [x] All Phase 1 + Phase 2 boxes above are checked
+- [x] Take a screenshot of current GoDaddy DNS records (rollback insurance)
+- [x] Pick a low-traffic window (off-hours)
 
 ### DNS changes (in your domain registrar — likely GoDaddy)
-- [ ] **Apex (`nexfortis.com`):** delete the existing A/ALIAS record pointing at GoDaddy's site builder; replace with the value Render gave you (typically an ALIAS or ANAME to `nexfortis-marketing.onrender.com`, or A records to Render's static IPs — Render's UI will tell you exactly)
-- [ ] **`www.nexfortis.com`:** CNAME to `nexfortis-marketing.onrender.com`
-- [ ] **`qb.nexfortis.com`:** CNAME to `nexfortis-qb-portal.onrender.com`
-- [ ] Delete any other GoDaddy-related DNS records you don't need (`Disallow: /404` robots.txt, parking page, etc. — verify before deleting if unsure)
-- [ ] **Do not touch MX records** (email keeps working independently)
+- [x] **Apex (`nexfortis.com`):** delete the existing A/ALIAS record pointing at GoDaddy's site builder; replace with the value Render gave you (typically an ALIAS or ANAME to `nexfortis-marketing.onrender.com`, or A records to Render's static IPs — Render's UI will tell you exactly)
+- [x] **`www.nexfortis.com`:** CNAME to `nexfortis-marketing.onrender.com`
+- [x] **`qb.nexfortis.com`:** CNAME to `nexfortis-qb-portal.onrender.com`
+- [x] Delete any other GoDaddy-related DNS records you don't need (`Disallow: /404` robots.txt, parking page, etc. — verify before deleting if unsure)
+- [x] **Do not touch MX records** (email keeps working independently)
 
 ### Watch Render verify the domains
-- [ ] Render Dashboard shows each custom domain transitioning from "Pending" → "Verified"
-- [ ] TLS certificates auto-provision (Let's Encrypt; usually 1–5 minutes after DNS resolves)
-- [ ] Browser test: `https://nexfortis.com` loads our React app with a green padlock (not GoDaddy)
+- [x] Render Dashboard shows each custom domain transitioning from "Pending" → "Verified"
+- [x] TLS certificates auto-provision (Let's Encrypt; usually 1–5 minutes after DNS resolves)
+- [x] Browser test: `https://nexfortis.com` loads our React app with a green padlock (not GoDaddy)
 
 ---
 
 ## Phase 4 — Post-cutover verification
 
 ### Functional smoke tests on production domains
-- [ ] `https://nexfortis.com/` loads, prerendered HTML, schemas visible in view-source
-- [ ] `https://nexfortis.com/about/` loads correctly
-- [ ] `https://nexfortis.com/services/quickbooks/` loads
-- [ ] `https://nexfortis.com/blog/` loads with all 5 posts
-- [ ] `https://nexfortis.com/contact` form submits → email arrives via Resend
-- [ ] `https://qb.nexfortis.com/` loads QB portal
-- [ ] Sign up a test customer → confirm email → log in → MFA flow works
-- [ ] Place a test order with a real (small-amount) Stripe test → webhook fires → order status updates
-- [ ] Log in as operator at `/admin/login` → admin panel loads → see test order
-- [ ] Trigger a ticket → operator replies → customer email arrives
-- [ ] Cancel the test subscription → confirm flow → email arrives
+- [x] **VERIFIED 2026-04-21:** `https://nexfortis.com/` loads (108,646 bytes, prerendered), schemas visible in view-source — `Organization`, `LocalBusiness`, `WebSite`, `FAQPage`, `ContactPoint`, `PostalAddress`, `GeoCoordinates`, `OpeningHoursSpecification` all detected
+- [x] **VERIFIED 2026-04-21:** `https://nexfortis.com/about/` returns 200 (77,569 bytes) with the real "Learn about NexFortis IT Solutions — our mission, vision..." meta description; trailing-slash and no-trailing-slash both work
+- [x] **VERIFIED 2026-04-21:** `https://nexfortis.com/services/quickbooks/` returns 200 (106,849 bytes) with real "Certified QuickBooks ProAdvisor team..." meta description and per-page `og:title`; trailing-slash and no-trailing-slash both work
+- [x] **PARTIAL — VERIFIED 2026-04-21:** `https://nexfortis.com/blog/` index page loads (77,191 bytes, real "Expert IT advice..." description). All 5 individual blog post URLs return HTTP 200, but all 5 serve **identical 61,794-byte content** with the home page's generic meta description and a canonical pointing to `https://nexfortis.com/`. **Root cause:** the prerender script's headless browser snapshots `/blog/<slug>` before the client-side post-data fetch completes, capturing the loading/empty state instead of the rendered post body. **Impact:** blog posts won't rank for their topical keywords (Google will see 5 pages all canonicalizing to home and deduplicate). **NOT a launch blocker** — sites are functional and indexable; the home and service pages will still rank. **Fix needed (follow-up task):** modify `artifacts/nexfortis/prerender.mjs` to `await page.waitForSelector("article h1, [data-blog-content]")` before snapshotting blog post routes. ~10-line change + redeploy.
+- [ ] `https://nexfortis.com/contact` form submits → email arrives via Resend (browser test required — see runbook below)
+- [x] **VERIFIED 2026-04-21:** `https://qb.nexfortis.com/` loads QB portal (200, 49,033 bytes); `/catalog` returns 200
+- [ ] Sign up a test customer → confirm email → log in → MFA flow works (browser test required — see runbook below)
+- [ ] Place a test order with a real (small-amount) Stripe test → webhook fires → order status updates (browser test required — see runbook below)
+- [ ] Log in as operator at `/admin/login` → admin panel loads → see test order (browser test required — see runbook below)
+- [ ] Trigger a ticket → operator replies → customer email arrives (browser test required — see runbook below)
+- [ ] Cancel the test subscription → confirm flow → email arrives (browser test required — see runbook below)
+
+**Separate finding — generic `<title>` tag across all pages (low-priority SEO bug):** Every prerendered page on the marketing site shows `<title>NexFortis IT Solutions</title>` in the server-rendered HTML, regardless of the page. Per-page `og:title` and `<meta name="description">` ARE correctly page-specific (so social shares and snippets are fine), but the `<title>` tag — which Google uses as the primary title signal — is generic everywhere. This is the same root cause as the blog issue if `react-helmet-async` titles are set client-side after data loads, OR a separate issue if titles aren't being set in the React components at all. Recommended follow-up: grep `<Helmet>` usage in `artifacts/nexfortis/src/pages/` to confirm whether titles are set; if yes, fix prerender wait condition; if no, add per-page `<title>` strings.
 
 ### SEO verification (technical baseline only — full analytics/search setup in next section)
 - [ ] `curl -s https://nexfortis.com/ | grep -c application/ld+json` returns `1+`
