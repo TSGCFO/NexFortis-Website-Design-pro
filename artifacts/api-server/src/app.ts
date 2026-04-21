@@ -121,11 +121,17 @@ app.use(
 
 const globalLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  limit: 100,
+  limit: 1000,
   standardHeaders: true,
   legacyHeaders: false,
   message: { error: "Too many requests. Please try again later." },
-  skip: () => process.env.NODE_ENV === "development",
+  // Exempt platform health checks so Render's probe loop never
+  // trips the limiter and marks the service unhealthy.
+  skip: (req) => {
+    if (process.env.NODE_ENV === "development") return true;
+    const p = req.path;
+    return p === "/api/healthz" || p === "/api/health" || p === "/healthz" || p === "/health";
+  },
 });
 
 app.use(globalLimiter);
