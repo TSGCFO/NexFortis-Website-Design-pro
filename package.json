@@ -19,7 +19,8 @@
   "pnpm": {
     "onlyBuiltDependencies": [
       "bcrypt",
-      "esbuild"
+      "esbuild",
+      "puppeteer"
     ],
     "overrides": {
       "zod": "3.25.76"
