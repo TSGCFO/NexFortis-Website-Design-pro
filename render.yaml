@@ -93,6 +93,8 @@ services:
     staticPublishPath: artifacts/nexfortis/dist/public
     pullRequestPreviewsEnabled: false
     envVars:
+      - key: NODE_VERSION
+        value: "24"
       # Frontend build-time vars (must be present at `vite build` for inlining).
       - key: VITE_GA_MEASUREMENT_ID
         sync: false
@@ -134,6 +136,8 @@ services:
     staticPublishPath: artifacts/qb-portal/dist/public
     pullRequestPreviewsEnabled: false
     envVars:
+      - key: NODE_VERSION
+        value: "24"
       # Frontend build-time vars — Vite inlines these into the bundle at build time,
       # so they MUST be set on the static site (not on the API service) and the site
       # must be re-deployed if they change. Without these, AuthProvider throws on load.
