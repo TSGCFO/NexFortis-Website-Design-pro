@@ -241,6 +241,35 @@ async function prerender() {
 
       try {
         await page.goto(url, { waitUntil: "networkidle0", timeout: 30000 });
+        // CRITICAL: react-helmet-async injects <head> tags via a useEffect
+        // that runs after React commit. On slow CI runners networkidle0 can
+        // fire BEFORE helmet has flushed, leaving only the shell's noindex
+        // robots meta in the serialized HTML — which then fails the noindex
+        // validation for every route. Wait for an unambiguous signal that
+        // helmet has flushed: a robots meta whose content contains "index"
+        // but not "noindex" (i.e. the SEO component's index,follow override
+        // has landed). The shell only has noindex, so the presence of an
+        // index,follow tag proves helmet committed.
+        // NOTE: helmet-async v3 does NOT add data-rh="true" to client-side
+        // DOM tags (only to SSR-rendered string output), so we check the
+        // robots content directly instead of looking for that attribute.
+        try {
+          await page.waitForFunction(
+            () => {
+              const tags = document.querySelectorAll('meta[name="robots"]');
+              for (const t of tags) {
+                const c = (t.getAttribute("content") || "").toLowerCase();
+                if (c.includes("index") && !c.includes("noindex")) return true;
+              }
+              return false;
+            },
+            { timeout: 15000 },
+          );
+        } catch {
+          throw new Error(
+            "SEO component never flushed an index,follow robots meta within 15s — helmet may not be wrapped around this route or React failed to commit",
+          );
+        }
         // For blog posts, wait for the rendered article heading to confirm
         // the React app committed the post content (not the loading spinner
         // and not the "Article Not Found" branch).

@@ -89,7 +89,7 @@ services:
       corepack enable
       NODE_ENV=development pnpm install --frozen-lockfile --prod=false
       pnpm run typecheck:libs
-      PORT=3000 BASE_PATH=/ pnpm --filter @workspace/nexfortis... --reporter=append-only --stream build
+      PORT=3000 BASE_PATH=/ pnpm --filter @workspace/nexfortis... --stream build
     staticPublishPath: artifacts/nexfortis/dist/public
     pullRequestPreviewsEnabled: false
     envVars:

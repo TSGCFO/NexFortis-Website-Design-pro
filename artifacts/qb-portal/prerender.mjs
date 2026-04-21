@@ -151,6 +151,27 @@ async function prerender() {
       await page.setUserAgent("ReactSnap/Prerender Mozilla/5.0");
       try {
         await page.goto(url, { waitUntil: "networkidle0", timeout: 30000 });
+        // CRITICAL: react-helmet-async injects <head> tags via a useEffect
+        // that runs after React commit. On slow CI runners networkidle0 can
+        // fire BEFORE helmet has flushed, leaving only the shell's noindex
+        // robots meta in the serialized HTML — which then fails validation
+        // for every route. Wait for an unambiguous signal that helmet has
+        // flushed: a <meta name="description"> tag in head. The shell has
+        // no description meta, so its presence proves the SEO component
+        // committed. (We can't use a robots-content check here because
+        // some qb-portal routes are intentionally noIndex.)
+        // NOTE: helmet-async v3 does NOT add data-rh="true" to client-side
+        // DOM tags (only to SSR strings), so we check tag presence directly.
+        try {
+          await page.waitForFunction(
+            () => !!document.head.querySelector('meta[name="description"]'),
+            { timeout: 15000 },
+          );
+        } catch {
+          throw new Error(
+            "SEO component never flushed a description meta within 15s — helmet may not be wrapped around this route or React failed to commit",
+          );
+        }
         await new Promise((r) => setTimeout(r, 250));
         const html = await page.content();
         // react-helmet-async sets document.title via DOM mutation; capture

@@ -1,0 +1,24 @@
+2026-04-21T14:37:39.564482897Z ==> Cloning from https://github.com/TSGCFO/NexFortis-Website-Design-pro
+2026-04-21T14:37:41.455827659Z ==> Checking out commit 9656dd3385f18af251bc3359837dbb754cab45c4 in branch main
+2026-04-21T14:37:42.688442321Z ==> Installing dependencies with pnpm...
+2026-04-21T14:37:42.804135463Z ==> Requesting Node.js version 24
+2026-04-21T14:37:43.181715324Z ==> Using Node.js version 24.15.0 via environment variable NODE_VERSION
+2026-04-21T14:37:43.207483589Z ==> Docs on specifying a Node.js version: https://render.com/docs/node-version
+2026-04-21T14:37:59.91152781Z ==> Running build command 'corepack enable
+2026-04-21T14:37:59.91154637Z NODE_ENV=development pnpm install --frozen-lockfile --prod=false
+2026-04-21T14:37:59.91155183Z pnpm run typecheck:libs
+2026-04-21T14:37:59.91155649Z PORT=3000 BASE_PATH=/ pnpm --filter @workspace/nexfortis... --reporter=append-only --stream build
+2026-04-21T14:37:59.9115607Z '...
+2026-04-21T14:38:00.266979145Z ! Corepack is about to download https://registry.npmjs.org/pnpm/-/pnpm-10.33.0.tgz
+2026-04-21T14:38:02.688766984Z 
+2026-04-21T14:38:02.688803094Z > workspace@0.0.0 typecheck:libs /opt/render/project/src
+2026-04-21T14:38:02.688809654Z > tsc --build
+2026-04-21T14:38:02.688813605Z 
+2026-04-21T14:39:29.800145291Z /opt/render/project/src/artifacts/nexfortis:
+2026-04-21T14:39:29.800174211Z  ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @workspace/nexfortis@0.0.0 build: `vite build --config vite.config.ts && node prerender.mjs && node scripts/generate-sitemap.mjs`
+2026-04-21T14:39:29.800181041Z Exit status 1
+2026-04-21T14:39:29.87196166Z ==> Build failed 😞
+2026-04-21T14:39:29.87198232Z ==> Common ways to troubleshoot your deploy: https://render.com/docs/troubleshooting-deploys
+2026-04-21T14:39:29.964861743Z ==> Requesting Node.js version 24
+2026-04-21T14:39:30.239783722Z ==> Using Node.js version 24.15.0 via environment variable NODE_VERSION
+2026-04-21T14:39:30.265248291Z ==> Docs on specifying a Node.js version: https://render.com/docs/node-version
