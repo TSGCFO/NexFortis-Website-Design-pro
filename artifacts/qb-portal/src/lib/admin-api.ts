@@ -1,9 +1,9 @@
 import { getAccessToken } from "./auth";
 
+import { getApiBase } from "./api-base";
+
 function apiUrl(path: string) {
-  const base = import.meta.env.BASE_URL || "/";
-  const prefix = base.endsWith("/") ? base.slice(0, -1) : base;
-  return prefix.replace(/\/qb-portal$/, "") + "/api/qb/admin" + path;
+  return getApiBase() + "/api/qb/admin" + path;
 }
 
 export async function adminFetch(path: string, options: RequestInit = {}): Promise<Response> {

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Section } from "@/components/ui-elements";
 import { SEO } from "@/components/seo";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { apiFetch } from "@/lib/api";
+import { apiFetch, apiUrl } from "@/lib/api";
 import { Plus, Pencil, Trash2, Eye, EyeOff, ArrowLeft, Save, X, LogOut, Loader2 } from "lucide-react";
 import { Link, useLocation } from "wouter";
 
@@ -189,7 +189,7 @@ export default function BlogAdmin() {
 
   useEffect(() => {
     let cancelled = false;
-    fetch("/api/operator/auth/me", { credentials: "include" })
+    fetch(apiUrl("/operator/auth/me"), { credentials: "include" })
       .then((res) => {
         if (cancelled) return;
         if (res.status === 401) {
@@ -215,7 +215,7 @@ export default function BlogAdmin() {
 
   async function handleLogout() {
     try {
-      await fetch("/api/operator/auth/logout", { method: "POST", credentials: "include" });
+      await fetch(apiUrl("/operator/auth/logout"), { method: "POST", credentials: "include" });
     } catch {
       // ignore
     }

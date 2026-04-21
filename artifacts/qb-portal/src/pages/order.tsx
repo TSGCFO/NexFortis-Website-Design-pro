@@ -6,6 +6,7 @@ import { loadProducts, type ProductCatalog, type Product, formatPrice, getActive
 import { SEO } from "@/components/seo";
 import OrderComplete from "@/pages/order-complete";
 import OrderForm, { type AppliedPromo } from "@/pages/order-form";
+import { getApiBase } from "@/lib/api-base";
 
 interface SvcOption { id: number; name: string; price: number; }
 
@@ -44,9 +45,7 @@ export default function Order() {
         if (!user) { setSubscriberDiscountPercent(0); return; }
         const token = await getAccessToken();
         if (!token) return;
-        const base = import.meta.env.BASE_URL || "/";
-        const prefix = base.endsWith("/") ? base.slice(0, -1) : base;
-        const url = prefix.replace(/\/qb-portal$/, "") + "/api/qb/subscriptions/me";
+        const url = getApiBase() + "/api/qb/subscriptions/me";
         const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
         if (!res.ok) return;
         const data = await res.json();
@@ -148,7 +147,7 @@ export default function Order() {
     if (code.length < 6 || !selectedSvc) return;
     setPromoError(""); setPromoApplying(true);
     try {
-      const res = await fetch("/api/qb/promo/validate", {
+      const res = await fetch(getApiBase() + "/api/qb/promo/validate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -196,7 +195,7 @@ export default function Order() {
       const headers: Record<string, string> = { "Content-Type": "application/json" };
       if (token) headers["Authorization"] = `Bearer ${token}`;
       const isFree = !!appliedPromo && appliedPromo.finalOrderTotalCents === 0;
-      const res = await fetch("/api/qb/checkout/create-session", {
+      const res = await fetch(getApiBase() + "/api/qb/checkout/create-session", {
         method: "POST", headers,
         body: JSON.stringify({
           serviceId: selectedService,
@@ -222,7 +221,7 @@ export default function Order() {
         const uploadHeaders: Record<string, string> = {};
         if (token) uploadHeaders["Authorization"] = `Bearer ${token}`;
         if (data.uploadToken) uploadHeaders["X-Upload-Token"] = data.uploadToken;
-        const uploadRes = await fetch(`/api/qb/orders/${createdOrderId}/files`, { method: "POST", headers: uploadHeaders, body: formData });
+        const uploadRes = await fetch(`${getApiBase()}/api/qb/orders/${createdOrderId}/files`, { method: "POST", headers: uploadHeaders, body: formData });
         if (!uploadRes.ok) { const ud = await uploadRes.json().catch(() => ({})); throw new Error(ud.error || "File upload failed."); }
       }
       if (!isFree && data.checkoutUrl) { window.location.href = data.checkoutUrl; return; }

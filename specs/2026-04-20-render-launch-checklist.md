@@ -110,18 +110,27 @@ Marketing static site:
 - [ ] `curl -s https://nexfortis-marketing.onrender.com/ | grep -c application/ld+json` returns `1+` (schemas present)
 - [ ] `curl -s https://nexfortis-marketing.onrender.com/ | grep -oE '<title[^>]*>[^<]+</title>'` shows real prerendered title (not the shell)
 - [ ] `curl -I https://nexfortis-marketing.onrender.com/about/` returns 200
-- [ ] `curl -I https://nexfortis-marketing.onrender.com/about` (no trailing slash) — **verify this returns the prerendered about page, NOT the home `index.html` SPA fallback.** This is the edge case we pinned. If it serves the home page, we'll need to either add explicit per-route rewrites or update `prerender.mjs` to emit `about.html` alongside `about/index.html`.
+- [ ] `curl -I https://nexfortis-marketing.onrender.com/about` (no trailing slash) — **verify this returns the prerendered about page, NOT the home `index.html` SPA fallback.** Fix applied 2026-04-21: `prerender.mjs` now writes both `dist/about/index.html` AND a flat `dist/about.html` mirror so Render serves the right file for clean URLs.
 - [ ] `curl -I https://nexfortis-marketing.onrender.com/services/automation-software` returns 301 → `/services/workflow-automation`
 - [ ] `curl https://nexfortis-marketing.onrender.com/sitemap.xml` returns the sitemap (and contains all expected URLs)
 - [ ] `curl https://nexfortis-marketing.onrender.com/robots.txt` returns the production robots.txt (no `noindex`)
-- [ ] `curl https://nexfortis-marketing.onrender.com/api/healthz` returns 200 (proxy through to API works)
+- [ ] Browser test: contact form submits successfully (POSTs to `https://nexfortis-api.onrender.com/api/contact` cross-origin, baked in via `VITE_API_BASE_URL`)
 - [ ] Browser test: GA4 fires (check Realtime in GA dashboard)
 
 QB portal static site:
 - [ ] `curl -I https://nexfortis-qb-portal.onrender.com/` returns 200
-- [ ] `curl https://nexfortis-qb-portal.onrender.com/api/healthz` returns 200 (proxy works)
+- [ ] `curl -I https://nexfortis-qb-portal.onrender.com/catalog` (no trailing slash) returns 200 prerendered page
+- [ ] Browser test: catalog → order page → file upload → checkout works end-to-end (all `fetch()` calls now go to `https://nexfortis-api.onrender.com` via `getApiBase()`)
 - [ ] Browser test: `/auth/login` page loads, Supabase auth widget renders without console errors
 - [ ] Browser test: log in with a test account; AuthProvider doesn't throw (confirms `VITE_SUPABASE_*` env vars baked into bundle correctly)
+
+---
+
+## Phase 1.5 — Known operator-auth deferral (Phase 1 → Phase 2)
+
+The marketing operator admin (`/admin/login`, `/blog/admin`) uses cookie-based sessions with `credentials: include` against `nexfortis-api.onrender.com`. Browsers may block these cross-site `sameSite=lax` cookies on the temporary `*.onrender.com` URLs. **This is OK for Phase 1** — operator admin is not needed for smoke testing. It becomes reliable once the API is on `api.nexfortis.com` (same-site as `nexfortis.com`), which happens in Phase 2.
+
+- [ ] Note: do NOT smoke-test operator login on the temp Render URLs. Wait until Phase 2 custom domains are wired up.
 
 ---
 

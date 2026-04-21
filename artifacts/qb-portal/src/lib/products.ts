@@ -27,10 +27,10 @@ export interface ProductCatalog {
 
 let catalogCache: ProductCatalog | null = null;
 
+import { getApiBase } from "./api-base";
+
 function apiBase(): string {
-  const base = import.meta.env.BASE_URL || "/";
-  const prefix = base.endsWith("/") ? base.slice(0, -1) : base;
-  return prefix.replace(/\/qb-portal$/, "");
+  return getApiBase();
 }
 
 async function fetchPromoStatusOverride(): Promise<{ promo_active: boolean; promo_label: string } | null> {

@@ -135,16 +135,14 @@ export function SettingsTab(props: SettingsProps) {
 const ALLOWED_FILE_TYPES = [".qbm", ".png", ".jpg", ".jpeg", ".pdf"];
 const MAX_FILE_SIZE = 25 * 1024 * 1024;
 
+import { getApiBase } from "../lib/api-base";
+
 function ticketApiUrl(path: string) {
-  const base = import.meta.env.BASE_URL || "/";
-  const prefix = base.endsWith("/") ? base.slice(0, -1) : base;
-  return prefix.replace(/\/qb-portal$/, "") + "/api/qb/tickets" + path;
+  return getApiBase() + "/api/qb/tickets" + path;
 }
 
 function entitlementApiUrl(path: string) {
-  const base = import.meta.env.BASE_URL || "/";
-  const prefix = base.endsWith("/") ? base.slice(0, -1) : base;
-  return prefix.replace(/\/qb-portal$/, "") + "/api/qb/tickets/entitlements" + path;
+  return getApiBase() + "/api/qb/tickets/entitlements" + path;
 }
 
 function daysUntil(dateIso: string): number {

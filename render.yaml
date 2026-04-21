@@ -98,6 +98,11 @@ services:
       # Frontend build-time vars (must be present at `vite build` for inlining).
       - key: VITE_GA_MEASUREMENT_ID
         sync: false
+      # Absolute URL of the API origin — Vite inlines this so the marketing site
+      # calls the API directly across origins. Update to https://api.nexfortis.com
+      # once the custom domain is attached to the API service in Phase 2.
+      - key: VITE_API_BASE_URL
+        value: https://nexfortis-api.onrender.com
     headers:
       - path: /assets/*
         name: Cache-Control
@@ -112,9 +117,10 @@ services:
         name: Referrer-Policy
         value: strict-origin-when-cross-origin
     routes:
-      - type: rewrite
-        source: /api/*
-        destination: https://nexfortis-api.onrender.com/api/:splat
+      # NOTE: Render static sites cannot reverse-proxy `/api/*` to a separate
+      # web service — the substitution placeholder is forwarded literally and
+      # the upstream returns 404. The frontend now uses VITE_API_BASE_URL to
+      # call the API at its own origin, so no `/api/*` rewrite is needed here.
       - type: redirect
         source: /services/automation-software
         destination: /services/workflow-automation
@@ -145,6 +151,11 @@ services:
         sync: false
       - key: VITE_SUPABASE_ANON_KEY
         sync: false
+      # Absolute URL of the API origin — Vite inlines this so the portal calls
+      # the API directly across origins. Update to https://api.nexfortis.com
+      # once the custom domain is attached to the API service in Phase 2.
+      - key: VITE_API_BASE_URL
+        value: https://nexfortis-api.onrender.com
     headers:
       - path: /assets/*
         name: Cache-Control
@@ -159,9 +170,10 @@ services:
         name: Referrer-Policy
         value: strict-origin-when-cross-origin
     routes:
-      - type: rewrite
-        source: /api/*
-        destination: https://nexfortis-api.onrender.com/api/:splat
+      # NOTE: Render static sites cannot reverse-proxy `/api/*` to a separate
+      # web service — the substitution placeholder is forwarded literally and
+      # the upstream returns 404. The frontend now uses VITE_API_BASE_URL to
+      # call the API at its own origin, so no `/api/*` rewrite is needed here.
       - type: rewrite
         source: /*
         destination: /index.html

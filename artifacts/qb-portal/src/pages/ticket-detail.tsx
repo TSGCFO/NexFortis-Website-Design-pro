@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet-async";
 import { useAuth, getAccessToken } from "@/lib/auth";
 import { useToast } from "@/hooks/use-toast";
 import { ArrowLeft, Send, Clock, CheckCircle, AlertCircle, Paperclip } from "lucide-react";
+import { getApiBase } from "@/lib/api-base";
 
 interface TicketData {
   id: number;
@@ -108,8 +109,8 @@ export default function TicketDetailPage() {
     try {
       const headers = { Authorization: `Bearer ${token}` };
       const [ticketRes, repliesRes] = await Promise.all([
-        fetch(`/api/qb/tickets/${ticketId}`, { headers }),
-        fetch(`/api/qb/tickets/${ticketId}/replies`, { headers }),
+        fetch(`${getApiBase()}/api/qb/tickets/${ticketId}`, { headers }),
+        fetch(`${getApiBase()}/api/qb/tickets/${ticketId}/replies`, { headers }),
       ]);
 
       if (ticketRes.status === 404) {
@@ -150,7 +151,7 @@ export default function TicketDetailPage() {
         formData.append("attachment", replyFile);
       }
 
-      const res = await fetch(`/api/qb/tickets/${ticket.id}/replies`, {
+      const res = await fetch(`${getApiBase()}/api/qb/tickets/${ticket.id}/replies`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,

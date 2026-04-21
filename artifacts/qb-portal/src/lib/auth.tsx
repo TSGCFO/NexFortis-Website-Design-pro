@@ -27,10 +27,10 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
+import { getApiBase } from "./api-base";
+
 function apiUrl(path: string) {
-  const base = import.meta.env.BASE_URL || "/";
-  const prefix = base.endsWith("/") ? base.slice(0, -1) : base;
-  return prefix.replace(/\/qb-portal$/, "") + "/api/qb" + path;
+  return getApiBase() + "/api/qb" + path;
 }
 
 async function fetchUserProfile(accessToken: string): Promise<User | null> {

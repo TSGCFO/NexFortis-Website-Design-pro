@@ -3,6 +3,7 @@ import { useLocation } from "wouter";
 import { SEO } from "@/components/seo";
 import { Section } from "@/components/ui-elements";
 import { Loader2, Lock } from "lucide-react";
+import { apiUrl } from "@/lib/api";
 
 export default function AdminLogin() {
   const [, setLocation] = useLocation();
@@ -16,7 +17,7 @@ export default function AdminLogin() {
     setError(null);
     setSubmitting(true);
     try {
-      const res = await fetch("/api/operator/auth/login", {
+      const res = await fetch(apiUrl("/operator/auth/login"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

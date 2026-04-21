@@ -80,10 +80,10 @@ const tierPricing: Record<SubscriptionTier, { promo: string; standard: string }>
   premium: { promo: "$75", standard: "$149" },
 };
 
+import { getApiBase } from "../lib/api-base";
+
 function apiUrl(path: string) {
-  const base = import.meta.env.BASE_URL || "/";
-  const prefix = base.endsWith("/") ? base.slice(0, -1) : base;
-  return prefix.replace(/\/qb-portal$/, "") + "/api/qb/subscriptions" + path;
+  return getApiBase() + "/api/qb/subscriptions" + path;
 }
 
 interface SubscriptionTabProps {
@@ -119,9 +119,7 @@ export function SubscriptionTab({ onRefreshPortal }: SubscriptionTabProps) {
 
     try {
       const token2 = await getAccessToken();
-      const base = import.meta.env.BASE_URL || "/";
-      const prefix = base.endsWith("/") ? base.slice(0, -1) : base;
-      const statsUrl = prefix.replace(/\/qb-portal$/, "") + "/api/qb/promo/referral-stats";
+      const statsUrl = getApiBase() + "/api/qb/promo/referral-stats";
       const statsRes = await fetch(statsUrl, {
         headers: { ...(token2 ? { Authorization: `Bearer ${token2}` } : {}) },
       });

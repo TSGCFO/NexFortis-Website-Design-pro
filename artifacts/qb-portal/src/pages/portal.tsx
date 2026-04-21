@@ -26,10 +26,10 @@ const statusColors: Record<string, string> = {
   delivered: "bg-accent/10 text-accent",
 };
 
+import { getApiBase } from "../lib/api-base";
+
 function subApiUrl(path: string) {
-  const base = import.meta.env.BASE_URL || "/";
-  const prefix = base.endsWith("/") ? base.slice(0, -1) : base;
-  return prefix.replace(/\/qb-portal$/, "") + "/api/qb/subscriptions" + path;
+  return getApiBase() + "/api/qb/subscriptions" + path;
 }
 
 export default function Portal() {
@@ -51,7 +51,7 @@ export default function Portal() {
   const fetchOrders = useCallback(async () => {
     try {
       const headers = await apiHeaders();
-      const res = await fetch("/api/qb/orders", { headers });
+      const res = await fetch(getApiBase() + "/api/qb/orders", { headers });
       if (res.ok) { const data = await res.json(); setOrders(data.orders || []); }
     } catch { /* ignore */ }
     setLoadingOrders(false);
@@ -97,7 +97,7 @@ export default function Portal() {
   const handleProfileSave = async () => {
     try {
       const headers = await apiHeaders();
-      const res = await fetch("/api/qb/me", { method: "PUT", headers, body: JSON.stringify({ name: profileName, phone: profilePhone }) });
+      const res = await fetch(getApiBase() + "/api/qb/me", { method: "PUT", headers, body: JSON.stringify({ name: profileName, phone: profilePhone }) });
       if (res.ok) setProfileSaved(true);
     } catch { /* ignore */ }
   };

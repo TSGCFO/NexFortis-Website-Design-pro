@@ -167,6 +167,14 @@ async function prerender() {
         await fs.mkdir(outDir, { recursive: true });
         const outFile = path.join(outDir, "index.html");
         await fs.writeFile(outFile, cleaned, "utf-8");
+        // Also write a flat `.html` mirror so static hosts that don't
+        // auto-serve directory indexes (e.g. Render) handle clean URLs
+        // without a trailing slash. e.g. `/catalog` -> `dist/catalog.html`.
+        if (route !== "/") {
+          const mirrorPath = path.join(distDir, route.replace(/^\//, "") + ".html");
+          await fs.mkdir(path.dirname(mirrorPath), { recursive: true });
+          await fs.writeFile(mirrorPath, cleaned, "utf-8");
+        }
         console.log(`[prerender] ✓ ${route} -> ${path.relative(distDir, outFile)}`);
         ok++;
       } catch (err) {

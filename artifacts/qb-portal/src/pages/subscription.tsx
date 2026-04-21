@@ -118,10 +118,10 @@ const faqs = [
   },
 ];
 
+import { getApiBase } from "../lib/api-base";
+
 function apiUrl(path: string) {
-  const base = import.meta.env.BASE_URL || "/";
-  const prefix = base.endsWith("/") ? base.slice(0, -1) : base;
-  return prefix.replace(/\/qb-portal$/, "") + "/api/qb/subscriptions" + path;
+  return getApiBase() + "/api/qb/subscriptions" + path;
 }
 
 export default function Subscription() {

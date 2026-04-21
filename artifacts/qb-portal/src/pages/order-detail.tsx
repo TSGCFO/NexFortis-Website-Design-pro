@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft, Package, Clock, CheckCircle, Download, FileText, Shield, AlertCircle } from "lucide-react";
 import { SEO } from "@/components/seo";
+import { getApiBase } from "@/lib/api-base";
 
 interface OrderFile {
   id: number;
@@ -62,14 +63,14 @@ export default function OrderDetail() {
         // guest orders) so that even an authenticated user with no claim on
         // the order can still see their own guest purchase confirmation.
         if (uploadTokenParam) {
-          res = await fetch(`/api/qb/orders/lookup?orderId=${id}&uploadToken=${encodeURIComponent(uploadTokenParam)}`);
+          res = await fetch(`${getApiBase()}/api/qb/orders/lookup?orderId=${id}&uploadToken=${encodeURIComponent(uploadTokenParam)}`);
           if (!res.ok && token) {
-            res = await fetch(`/api/qb/orders/${id}`, {
+            res = await fetch(`${getApiBase()}/api/qb/orders/${id}`, {
               headers: { Authorization: `Bearer ${token}` },
             });
           }
         } else if (token) {
-          res = await fetch(`/api/qb/orders/${id}`, {
+          res = await fetch(`${getApiBase()}/api/qb/orders/${id}`, {
             headers: { Authorization: `Bearer ${token}` },
           });
         } else {
@@ -100,7 +101,7 @@ export default function OrderDetail() {
     setDownloading(fileItem.id);
     try {
       const token = await getAccessToken();
-      const url = `/api/qb/orders/${order.id}/files/${fileItem.id}/download`;
+      const url = `${getApiBase()}/api/qb/orders/${order.id}/files/${fileItem.id}/download`;
       const headers: Record<string, string> = {};
       if (token) headers["Authorization"] = `Bearer ${token}`;
       if (uploadTokenParam) headers["X-Upload-Token"] = uploadTokenParam;

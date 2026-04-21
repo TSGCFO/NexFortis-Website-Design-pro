@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { CheckCircle, Bell } from "lucide-react";
 import { getAccessToken } from "@/lib/auth";
+import { getApiBase } from "@/lib/api-base";
 
 export default function Waitlist() {
   const searchString = useSearch();
@@ -57,7 +58,7 @@ export default function Waitlist() {
     setLoading(true);
     try {
       const token = await getAccessToken();
-      const res = await fetch(`/api/qb/waitlist`, {
+      const res = await fetch(`${getApiBase()}/api/qb/waitlist`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
