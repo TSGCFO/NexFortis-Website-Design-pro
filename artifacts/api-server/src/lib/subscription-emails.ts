@@ -108,7 +108,7 @@ function welcomeEmailHtml(name: string, tier: SubscriptionTier): string {
       Monthly rate: <strong>${formatPrice(config.launchPriceCad)}</strong>
     </p>
     <div style="text-align:center;margin:28px 0 8px;">
-      <a href="https://nexfortis.com/qb-portal/subscription" style="display:inline-block;background-color:${BRAND.roseGold};color:${BRAND.white};padding:12px 32px;border-radius:6px;text-decoration:none;font-weight:600;font-size:14px;">View Your Subscription</a>
+      <a href="https://qb.nexfortis.com/subscription" style="display:inline-block;background-color:${BRAND.roseGold};color:${BRAND.white};padding:12px 32px;border-radius:6px;text-decoration:none;font-weight:600;font-size:14px;">View Your Subscription</a>
     </div>
   `);
 }
@@ -130,7 +130,7 @@ function upgradeEmailHtml(name: string, oldTier: SubscriptionTier, newTier: Subs
       A prorated charge will appear on your next invoice to reflect the plan change.
     </p>
     <div style="text-align:center;margin:28px 0 8px;">
-      <a href="https://nexfortis.com/qb-portal/subscription" style="display:inline-block;background-color:${BRAND.roseGold};color:${BRAND.white};padding:12px 32px;border-radius:6px;text-decoration:none;font-weight:600;font-size:14px;">View Your Subscription</a>
+      <a href="https://qb.nexfortis.com/subscription" style="display:inline-block;background-color:${BRAND.roseGold};color:${BRAND.white};padding:12px 32px;border-radius:6px;text-decoration:none;font-weight:600;font-size:14px;">View Your Subscription</a>
     </div>
   `);
 }
@@ -153,7 +153,7 @@ function downgradeEmailHtml(name: string, oldTier: SubscriptionTier, newTier: Su
     <p style="margin:16px 0 8px;color:${BRAND.navy};font-size:15px;font-weight:600;">Your new plan (starting ${effectiveDate}):</p>
     ${tierDetailsTable(newTier)}
     <div style="text-align:center;margin:28px 0 8px;">
-      <a href="https://nexfortis.com/qb-portal/subscription" style="display:inline-block;background-color:${BRAND.roseGold};color:${BRAND.white};padding:12px 32px;border-radius:6px;text-decoration:none;font-weight:600;font-size:14px;">Manage Subscription</a>
+      <a href="https://qb.nexfortis.com/subscription" style="display:inline-block;background-color:${BRAND.roseGold};color:${BRAND.white};padding:12px 32px;border-radius:6px;text-decoration:none;font-weight:600;font-size:14px;">Manage Subscription</a>
     </div>
   `);
 }
@@ -172,7 +172,7 @@ function cancellationEmailHtml(name: string, tier: SubscriptionTier, endDate: st
       Changed your mind? You can reactivate your subscription at any time before <strong>${endDate}</strong> to keep your current plan.
     </p>
     <div style="text-align:center;margin:28px 0 8px;">
-      <a href="https://nexfortis.com/qb-portal/subscription" style="display:inline-block;background-color:${BRAND.roseGold};color:${BRAND.white};padding:12px 32px;border-radius:6px;text-decoration:none;font-weight:600;font-size:14px;">Reactivate Subscription</a>
+      <a href="https://qb.nexfortis.com/subscription" style="display:inline-block;background-color:${BRAND.roseGold};color:${BRAND.white};padding:12px 32px;border-radius:6px;text-decoration:none;font-weight:600;font-size:14px;">Reactivate Subscription</a>
     </div>
   `);
 }
@@ -197,7 +197,7 @@ function paymentFailedEmailHtml(name: string, tier: SubscriptionTier): string {
       If you need help, reach out to us at <a href="mailto:contact@nexfortis.com" style="color:${BRAND.roseGold};">contact@nexfortis.com</a>.
     </p>
     <div style="text-align:center;margin:28px 0 8px;">
-      <a href="https://nexfortis.com/qb-portal/subscription" style="display:inline-block;background-color:${BRAND.roseGold};color:${BRAND.white};padding:12px 32px;border-radius:6px;text-decoration:none;font-weight:600;font-size:14px;">Update Payment Method</a>
+      <a href="https://qb.nexfortis.com/subscription" style="display:inline-block;background-color:${BRAND.roseGold};color:${BRAND.white};padding:12px 32px;border-radius:6px;text-decoration:none;font-weight:600;font-size:14px;">Update Payment Method</a>
     </div>
   `);
 }

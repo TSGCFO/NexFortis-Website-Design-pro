@@ -16,7 +16,7 @@ export type TicketNotificationType =
   | "operator_replied"
   | "ticket_resolved";
 
-const PORTAL_URL = process.env.PORTAL_URL || "https://nexfortis.com/qb-portal";
+const PORTAL_URL = process.env.PORTAL_URL || "https://qb.nexfortis.com/portal";
 const API_BASE_URL = process.env.API_BASE_URL || "https://nexfortis.com/api";
 
 const PREF_FIELD_MAP: Record<string, "ticketCreated" | "operatorReplied" | "ticketResolved"> = {

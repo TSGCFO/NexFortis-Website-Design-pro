@@ -479,7 +479,7 @@ router.post("/orders/:orderId/files/upload",
             const [customer] = await db.select({ name: qbUsers.name, email: qbUsers.email })
               .from(qbUsers).where(eq(qbUsers.id, order.userId)).limit(1);
             if (customer) {
-              const portalUrl = `${getValidOrigin(req.headers.origin as string | undefined)}/qb-portal`;
+              const portalUrl = `${getValidOrigin(req.headers.origin as string | undefined)}/portal`;
               const tpl = fileDeliveryEmail(
                 customer.name || "Customer",
                 orderId,
