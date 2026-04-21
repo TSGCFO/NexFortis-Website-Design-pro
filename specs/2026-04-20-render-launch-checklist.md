@@ -189,7 +189,7 @@ This is when `nexfortis.com` stops pointing at GoDaddy and starts pointing at Re
 - [x] **VERIFIED 2026-04-21:** `https://nexfortis.com/` loads (108,646 bytes, prerendered), schemas visible in view-source — `Organization`, `LocalBusiness`, `WebSite`, `FAQPage`, `ContactPoint`, `PostalAddress`, `GeoCoordinates`, `OpeningHoursSpecification` all detected
 - [x] **VERIFIED 2026-04-21:** `https://nexfortis.com/about/` returns 200 (77,569 bytes) with the real "Learn about NexFortis IT Solutions — our mission, vision..." meta description; trailing-slash and no-trailing-slash both work
 - [x] **VERIFIED 2026-04-21:** `https://nexfortis.com/services/quickbooks/` returns 200 (106,849 bytes) with real "Certified QuickBooks ProAdvisor team..." meta description and per-page `og:title`; trailing-slash and no-trailing-slash both work
-- [x] **PARTIAL — VERIFIED 2026-04-21:** `https://nexfortis.com/blog/` index page loads (77,191 bytes, real "Expert IT advice..." description). All 5 individual blog post URLs return HTTP 200, but all 5 serve **identical 61,794-byte content** with the home page's generic meta description and a canonical pointing to `https://nexfortis.com/`. **Root cause:** the prerender script's headless browser snapshots `/blog/<slug>` before the client-side post-data fetch completes, capturing the loading/empty state instead of the rendered post body. **Impact:** blog posts won't rank for their topical keywords (Google will see 5 pages all canonicalizing to home and deduplicate). **NOT a launch blocker** — sites are functional and indexable; the home and service pages will still rank. **Fix needed (follow-up task):** modify `artifacts/nexfortis/prerender.mjs` to `await page.waitForSelector("article h1, [data-blog-content]")` before snapshotting blog post routes. ~10-line change + redeploy.
+- [x] **VERIFIED 2026-04-21 (recheck):** `https://nexfortis.com/blog/` index page loads (77,191 bytes, real "Expert IT advice..." description) AND all 5 blog post URLs now serve unique prerendered content with per-post titles, descriptions, and self-canonicals. Sizes 69,914 / 70,559 / 70,752 / 71,797 / 71,818 bytes. Each post has its own `Article` + `BreadcrumbList` schema. The earlier "all 5 serve identical 61,794-byte home content" finding has been fixed by subsequent prerender hardening work (see `.local/tasks/seo-finalization-and-verification.md`).
 - [ ] `https://nexfortis.com/contact` form submits → email arrives via Resend (browser test required — see runbook below)
 - [x] **VERIFIED 2026-04-21:** `https://qb.nexfortis.com/` loads QB portal (200, 49,033 bytes); `/catalog` returns 200
 - [ ] Sign up a test customer → confirm email → log in → MFA flow works (browser test required — see runbook below)
@@ -198,15 +198,15 @@ This is when `nexfortis.com` stops pointing at GoDaddy and starts pointing at Re
 - [ ] Trigger a ticket → operator replies → customer email arrives (browser test required — see runbook below)
 - [ ] Cancel the test subscription → confirm flow → email arrives (browser test required — see runbook below)
 
-**Separate finding — generic `<title>` tag across all pages (low-priority SEO bug):** Every prerendered page on the marketing site shows `<title>NexFortis IT Solutions</title>` in the server-rendered HTML, regardless of the page. Per-page `og:title` and `<meta name="description">` ARE correctly page-specific (so social shares and snippets are fine), but the `<title>` tag — which Google uses as the primary title signal — is generic everywhere. This is the same root cause as the blog issue if `react-helmet-async` titles are set client-side after data loads, OR a separate issue if titles aren't being set in the React components at all. Recommended follow-up: grep `<Helmet>` usage in `artifacts/nexfortis/src/pages/` to confirm whether titles are set; if yes, fix prerender wait condition; if no, add per-page `<title>` strings.
+**Separate finding (RESOLVED 2026-04-21):** An earlier note here flagged generic `<title>NexFortis IT Solutions</title>` on every prerendered page. That has been fixed — all 17 prerendered routes (and all 53 qb-portal routes) now have unique, per-page `<title>` values matching their `og:title` and meta description. Verified by curl-grep across all 12 marketing routes and confirmed in third-party audit. Root cause was the same prerender-wait issue as the blog post bug; both are resolved.
 
 ### SEO verification (technical baseline only — full analytics/search setup in next section)
-- [ ] `curl -s https://nexfortis.com/ | grep -c application/ld+json` returns `1+`
-- [ ] `curl -s https://nexfortis.com/sitemap.xml` returns the sitemap
-- [ ] `curl -s https://nexfortis.com/robots.txt` returns production robots (NOT the noindex shell)
-- [ ] Run Lighthouse on `https://nexfortis.com/` — target 90+ on Performance, 100 on SEO
-- [ ] Run Lighthouse on `https://qb.nexfortis.com/` (note: lower SEO score expected on the app portal — fine)
-- [ ] Re-run the auditor's curl tests; confirm they now correctly find schemas
+- [x] **VERIFIED 2026-04-21:** `curl -s https://nexfortis.com/ | grep -c application/ld+json` returns `1` (single consolidated block contains Organization + LocalBusiness + WebSite + FAQPage + ContactPoint + GeoCoordinates + OpeningHoursSpecification + PostalAddress); qb.nexfortis.com same — `1` block (Organization + ProfessionalService + WebSite + PostalAddress)
+- [x] **VERIFIED 2026-04-21:** `curl -s https://nexfortis.com/sitemap.xml` returns 17 URLs; `curl -s https://qb.nexfortis.com/sitemap.xml` returns 53 URLs — both valid XML
+- [x] **VERIFIED 2026-04-21:** `curl -s https://nexfortis.com/robots.txt` returns production robots (no `noindex` directives); `curl -s https://qb.nexfortis.com/robots.txt` returns production robots (no `noindex`, plus the 8-AI-crawler block list)
+- [ ] Run Lighthouse on `https://nexfortis.com/` — target 90+ on Performance, 100 on SEO *(browser-only — user runs in Chrome DevTools or PageSpeed Insights)*
+- [ ] Run Lighthouse on `https://qb.nexfortis.com/` (note: lower SEO score expected on the app portal — fine) *(browser-only)*
+- [x] **VERIFIED 2026-04-21:** Re-ran auditor's curl tests at `.local/audit-recheck-2026-04-21.md` — all 17 marketing + 10 sampled qb-portal routes pass: unique titles, descriptions, canonicals, schemas; 0 noindex leaks; HSTS preload on both sites
 
 ### Analytics, Search Console & discoverability infrastructure
 
@@ -276,9 +276,9 @@ This is the foundation for measuring everything that happens next (organic traff
 - [ ] **Cloudflare** in front of Render (optional, free tier) — gives you better caching control, WAF, bot management, and analytics. Defer unless you have a specific reason
 
 ### Security & headers verification
-- [ ] `curl -I https://nexfortis.com/` shows: `x-frame-options: DENY`, `x-content-type-options: nosniff`, `referrer-policy: strict-origin-when-cross-origin`, `strict-transport-security: max-age=...` (Render adds HSTS)
-- [ ] Same checks on `https://qb.nexfortis.com/`
-- [ ] Mozilla Observatory scan on each domain — target B+ minimum
+- [x] **VERIFIED 2026-04-21:** `curl -I https://nexfortis.com/` shows all four — `x-frame-options: DENY`, `x-content-type-options: nosniff`, `referrer-policy: strict-origin-when-cross-origin`, `strict-transport-security: max-age=31536000; includeSubDomains; preload`
+- [x] **VERIFIED 2026-04-21:** Same headers present on `https://qb.nexfortis.com/`
+- [ ] Mozilla Observatory scan on each domain — target B+ minimum *(external scan — visit `observatory.mozilla.org`, paste each domain)*
 
 ### Operational
 - [ ] Render's auto-deploy is enabled on all three services (every push to `main` triggers redeploy)
