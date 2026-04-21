@@ -503,9 +503,9 @@ export async function runRedemption(input: RedemptionInput): Promise<
         }
 
         if (ownerEmail) {
-          const origin = process.env.PUBLIC_APP_URL || "https://nexfortis.com";
-          const portalUrl = `${origin}/qb-portal`;
-          const unsubUrl = `${origin}/qb-portal/unsubscribe?email=${encodeURIComponent(ownerEmail)}`;
+          const origin = process.env.PUBLIC_APP_URL || "https://qb.nexfortis.com";
+          const portalUrl = `${origin}/portal`;
+          const unsubUrl = `${origin}/unsubscribe?email=${encodeURIComponent(ownerEmail)}`;
           const tpl = referralCreditEarnedEmail(
             ownerName, REFERRAL_CREDIT_CENTS, totalCents, portalUrl, unsubUrl,
           );

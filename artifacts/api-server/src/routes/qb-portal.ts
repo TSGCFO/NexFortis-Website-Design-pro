@@ -473,8 +473,8 @@ router.post("/checkout/create-session", async (req: Request, res: Response) => {
       }
 
       const origin = getValidOrigin(req.headers.origin);
-      const portalUrl = `${origin}/qb-portal/order/${order.id}?uploadToken=${uploadToken}`;
-      const unsubUrl = `${origin}/qb-portal/unsubscribe?email=${encodeURIComponent(customerEmail)}`;
+      const portalUrl = `${origin}/order/${order.id}?uploadToken=${uploadToken}`;
+      const unsubUrl = `${origin}/unsubscribe?email=${encodeURIComponent(customerEmail)}`;
       try {
         const customerEmailTpl = freeOrderCustomerEmail(
           customerName, order.id, pricing.serviceName, promoRow!.code, portalUrl, unsubUrl,
@@ -516,8 +516,8 @@ router.post("/checkout/create-session", async (req: Request, res: Response) => {
           quantity: 1,
         }],
         metadata: { order_id: String(order.id), user_id: userId || "" },
-        success_url: `${getValidOrigin(req.headers.origin)}/qb-portal/order/${order.id}?success=true&uploadToken=${uploadToken}`,
-        cancel_url: `${getValidOrigin(req.headers.origin)}/qb-portal/order?canceled=true`,
+        success_url: `${getValidOrigin(req.headers.origin)}/order/${order.id}?success=true&uploadToken=${uploadToken}`,
+        cancel_url: `${getValidOrigin(req.headers.origin)}/order?canceled=true`,
       };
 
       if (promoRow?.stripePromotionCodeId) {
@@ -570,7 +570,10 @@ router.post("/checkout/create-session", async (req: Request, res: Response) => {
   }
 });
 
-router.post("/webhook/stripe", async (req: Request, res: Response) => {
+// Stripe webhook handler. Mounted under both /webhook/stripe and
+// /webhooks/stripe (plural) below. Keep the body of this function here
+// and reference it from both routes to avoid duplication.
+async function handleStripeWebhook(req: Request, res: Response) {
   const stripe = await getStripe();
   if (!stripe) {
     res.json({ received: true, message: "Stripe not configured" });
@@ -608,7 +611,9 @@ router.post("/webhook/stripe", async (req: Request, res: Response) => {
           if (existing && (existing.status === "pending_payment" || existing.status === "submitted")) {
             await db.update(qbOrders).set({
               status: "paid",
+              paymentStatus: "paid",
               stripeSessionId: session.id,
+              updatedAt: new Date(),
             }).where(eq(qbOrders.id, orderId));
             console.log(`[Stripe] Payment confirmed for order ${orderId}`);
 
@@ -632,7 +637,7 @@ router.post("/webhook/stripe", async (req: Request, res: Response) => {
                   // ignore malformed addons JSON
                 }
               }
-              const portalUrl = `${getValidOrigin(undefined)}/qb-portal`;
+              const portalUrl = `${getValidOrigin(undefined)}/portal`;
               const custTpl = paidOrderConfirmationEmail(
                 customerName, existing.id, existing.serviceName, addonNames, existing.totalCad, portalUrl, "#",
               );
@@ -664,7 +669,13 @@ router.post("/webhook/stripe", async (req: Request, res: Response) => {
     console.error("Stripe webhook error:", err);
     res.status(400).json({ error: "Webhook verification failed" });
   }
-});
+}
+
+router.post("/webhook/stripe", handleStripeWebhook);
+// Legacy / historical route. Some existing Stripe dashboard configurations
+// point at /webhooks/stripe (plural). Accept both so dashboard changes are
+// not required when redeploying.
+router.post("/webhooks/stripe", handleStripeWebhook);
 
 function getSubPeriod(stripeSub: Stripe.Subscription): { start: number; end: number } {
   return {
@@ -1296,7 +1307,7 @@ router.get("/me", requireAuth, async (req: Request, res: Response) => {
       if (Date.now() - createdAt < 60_000) {
         welcomeEmailsSent.add(user.id);
         try {
-          const portalUrl = `${getValidOrigin(req.headers.origin as string | undefined)}/qb-portal`;
+          const portalUrl = `${getValidOrigin(req.headers.origin as string | undefined)}/portal`;
           const tpl = welcomeRegistrationEmail(user.name || "there", user.email, portalUrl);
           sendEmail({ to: user.email, subject: tpl.subject, html: tpl.html, replyTo: "support@nexfortis.com" })
             .catch((err) => console.error("[Welcome] Email send failed:", err));

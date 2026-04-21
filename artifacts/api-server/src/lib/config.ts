@@ -25,7 +25,12 @@ if (process.env["ALLOWED_ORIGINS"]) {
   }
 }
 
-const DEFAULT_ORIGIN = "https://nexfortis.com";
+// DEFAULT_ORIGIN is used to build customer-facing links (order confirmation,
+// portal, subscription) when no request origin is present (e.g. Stripe webhooks)
+// or when the request origin isn't in the allowlist. All consumers append
+// paths like `/portal`, `/order/<id>`, `/subscription`, `/unsubscribe` which
+// only exist on the QB portal host.
+const DEFAULT_ORIGIN = "https://qb.nexfortis.com";
 
 export function getValidOrigin(requestOrigin: string | undefined): string {
   if (requestOrigin && ALLOWED_ORIGINS.includes(requestOrigin)) {

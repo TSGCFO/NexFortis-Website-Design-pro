@@ -555,7 +555,7 @@ export function waitlistConfirmationEmail(
     <table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 auto;">
       <tr>
         <td style="background-color:${BRAND_COLORS.azure};border-radius:8px;">
-          <a href="https://nexfortis.com/qb-portal/catalog" style="display:inline-block;padding:12px 32px;font-size:15px;font-weight:600;color:${BRAND_COLORS.white};text-decoration:none;">
+          <a href="https://qb.nexfortis.com/catalog" style="display:inline-block;padding:12px 32px;font-size:15px;font-weight:600;color:${BRAND_COLORS.white};text-decoration:none;">
             Browse Available Services
           </a>
         </td>

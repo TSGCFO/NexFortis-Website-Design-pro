@@ -120,8 +120,8 @@ router.post("/checkout", subscriptionLimiter, async (req: Request, res: Response
       subscription_data: {
         metadata: { user_id: userId, tier },
       },
-      success_url: `${getValidOrigin(req.headers.origin)}/qb-portal/subscription?success=true`,
-      cancel_url: `${getValidOrigin(req.headers.origin)}/qb-portal/subscription?canceled=true`,
+      success_url: `${getValidOrigin(req.headers.origin)}/subscription?success=true`,
+      cancel_url: `${getValidOrigin(req.headers.origin)}/subscription?canceled=true`,
     });
 
     res.status(201).json({ checkoutUrl: session.url });

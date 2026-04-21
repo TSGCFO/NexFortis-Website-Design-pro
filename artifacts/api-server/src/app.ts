@@ -93,7 +93,14 @@ app.use(
   }),
 );
 
+// Stripe webhooks: Stripe was historically configured at /api/qb/webhooks/stripe
+// (plural) but the route handler lives at /webhook (singular). Accept both so
+// existing dashboard configs keep working without a manual update.
+// The raw body middleware must be registered BEFORE express.json() so that
+// stripe.webhooks.constructEvent() can verify the signature against the exact
+// bytes Stripe sent.
 app.use("/api/qb/webhook/stripe", express.raw({ type: "application/json" }));
+app.use("/api/qb/webhooks/stripe", express.raw({ type: "application/json" }));
 
 app.use(express.json({ limit: "1mb" }));
 app.use(express.urlencoded({ limit: "1mb", extended: true }));
