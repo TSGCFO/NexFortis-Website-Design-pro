@@ -143,6 +143,58 @@ test("HTTP server returns 403 for traversal under a base prefix", async () => {
   });
 });
 
+test("HTTP server serves apiRoutes before static files", async () => {
+  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "prerender-srv-"));
+  await fs.mkdir(dir, { recursive: true });
+  await fs.writeFile(path.join(dir, "index.html"), "<html>shell</html>");
+  const apiRoutes = [
+    [/^\/api\/blog\/posts\/?$/, (_req, res) => {
+      res.writeHead(200, { "content-type": "application/json" });
+      res.end(JSON.stringify([{ slug: "a" }, { slug: "b" }]));
+    }],
+    [/^\/api\/blog\/posts\/([a-z0-9-]+)$/, (_req, res, m) => {
+      res.writeHead(200, { "content-type": "application/json" });
+      res.end(JSON.stringify({ slug: m[1], title: "T-" + m[1] }));
+    }],
+  ];
+  const server = createStaticServer({ distDir: dir, base: "/", apiRoutes });
+  await new Promise((resolve) => server.listen(0, "127.0.0.1", resolve));
+  const { port } = server.address();
+  try {
+    const list = await get(port, "/api/blog/posts");
+    assert.equal(list.status, 200);
+    assert.deepEqual(JSON.parse(list.body), [{ slug: "a" }, { slug: "b" }]);
+    const single = await get(port, "/api/blog/posts/hello");
+    assert.equal(single.status, 200);
+    assert.deepEqual(JSON.parse(single.body), { slug: "hello", title: "T-hello" });
+    // Non-api URL still falls back to index.html (SPA)
+    const spa = await get(port, "/about");
+    assert.equal(spa.status, 200);
+    assert.ok(spa.body.includes("shell"));
+  } finally {
+    await new Promise((resolve) => server.close(resolve));
+  }
+});
+
+test("HTTP server returns 500 when apiRoute handler throws", async () => {
+  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "prerender-srv-"));
+  await fs.mkdir(dir, { recursive: true });
+  await fs.writeFile(path.join(dir, "index.html"), "<html>shell</html>");
+  const apiRoutes = [
+    [/^\/api\/boom$/, () => { throw new Error("boom!"); }],
+  ];
+  const server = createStaticServer({ distDir: dir, base: "/", apiRoutes });
+  await new Promise((resolve) => server.listen(0, "127.0.0.1", resolve));
+  const { port } = server.address();
+  try {
+    const res = await get(port, "/api/boom");
+    assert.equal(res.status, 500);
+    assert.ok(res.body.includes("boom!"));
+  } finally {
+    await new Promise((resolve) => server.close(resolve));
+  }
+});
+
 test("HTTP server falls back to index.html for SPA routes", async () => {
   const dir = await fs.mkdtemp(path.join(os.tmpdir(), "prerender-srv-"));
   await withServer(dir, "/", async (port) => {

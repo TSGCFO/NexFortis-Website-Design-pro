@@ -24,28 +24,50 @@ export default function BlogPostPage({ slug }: { slug: string }) {
     retry: 1,
   });
 
+  // Derive a stable, slug-based SEO title and description so that loading and
+  // error states still emit valid per-page meta tags during prerender. Once
+  // the post loads, we override with the real title/excerpt. We also emit the
+  // SEO component unconditionally (never early-return before it) so React
+  // Helmet always gets a chance to run.
+  const slugTitle = slug
+    .split("-")
+    .filter(Boolean)
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(" ");
+  const seoTitle = post?.title || slugTitle;
+  const seoDescription =
+    post?.excerpt ||
+    `Read the NexFortis IT Solutions article on ${slugTitle} — practical guidance for Canadian small and mid-sized businesses.`;
+  const canonicalPath = `/blog/${post?.slug || slug}`;
+
   if (isLoading) {
     return (
-      <Section bg="white">
-        <div className="max-w-3xl mx-auto text-center py-20">
-          <div className="w-8 h-8 border-3 border-accent border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-muted-foreground">Loading article...</p>
-        </div>
-      </Section>
+      <>
+        <SEO title={seoTitle} description={seoDescription} path={canonicalPath} type="article" />
+        <Section bg="white">
+          <div className="max-w-3xl mx-auto text-center py-20">
+            <div className="w-8 h-8 border-3 border-accent border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+            <p className="text-muted-foreground">Loading article...</p>
+          </div>
+        </Section>
+      </>
     );
   }
 
   if (error || !post) {
     return (
-      <Section bg="white">
-        <div className="max-w-3xl mx-auto text-center py-20">
-          <h1 className="text-3xl font-display font-bold text-primary mb-4">Article Not Found</h1>
-          <p className="text-muted-foreground mb-8">The article you're looking for doesn't exist or has been removed.</p>
-          <Link href="/blog" className="text-accent font-semibold hover:underline inline-flex items-center gap-2">
-            <ArrowLeft className="w-4 h-4" /> Back to Blog
-          </Link>
-        </div>
-      </Section>
+      <>
+        <SEO title={seoTitle} description={seoDescription} path={canonicalPath} type="article" noIndex />
+        <Section bg="white">
+          <div className="max-w-3xl mx-auto text-center py-20">
+            <h1 className="text-3xl font-display font-bold text-primary mb-4">Article Not Found</h1>
+            <p className="text-muted-foreground mb-8">The article you're looking for doesn't exist or has been removed.</p>
+            <Link href="/blog" className="text-accent font-semibold hover:underline inline-flex items-center gap-2">
+              <ArrowLeft className="w-4 h-4" /> Back to Blog
+            </Link>
+          </div>
+        </Section>
+      </>
     );
   }
 
