@@ -9,7 +9,7 @@ const MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID as
   | string
   | undefined;
 
-const CROSS_DOMAINS = ["nexfortis.com", "qbportal.nexfortis.com"];
+const CROSS_DOMAINS = ["nexfortis.com", "qb.nexfortis.com"];
 
 const CONSENT_KEY = "nf_analytics_consent";
 
