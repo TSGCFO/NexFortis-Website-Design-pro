@@ -116,6 +116,9 @@ services:
       - path: /*
         name: Referrer-Policy
         value: strict-origin-when-cross-origin
+      - path: /*
+        name: Strict-Transport-Security
+        value: max-age=31536000; includeSubDomains; preload
     routes:
       - type: redirect
         source: /services/automation-software
@@ -130,13 +133,13 @@ services:
       # and let the React SPA handle the route.
       - type: rewrite
         source: /admin
-        destination: /index.html
+        destination: /spa-shell.html
       - type: rewrite
         source: /admin/*
-        destination: /index.html
+        destination: /spa-shell.html
       - type: rewrite
         source: /blog/admin
-        destination: /index.html
+        destination: /spa-shell.html
       # Pretty URLs: serve the prerendered .html mirror for clean URLs without
       # trailing slash. Render does NOT auto-strip .html, so /about must be
       # explicitly rewritten to /about.html (which prerender.mjs writes
@@ -189,6 +192,9 @@ services:
       - path: /*
         name: Referrer-Policy
         value: strict-origin-when-cross-origin
+      - path: /*
+        name: Strict-Transport-Security
+        value: max-age=31536000; includeSubDomains; preload
     routes:
       # Reverse-proxy /api/* to the API service. Render uses `*` (not Netlify's
       # `:splat`) for the wildcard substitution in the destination URL.
@@ -202,40 +208,40 @@ services:
       # order/<id>) that aren't enumerated at build time.
       - type: rewrite
         source: /login
-        destination: /index.html
+        destination: /spa-shell.html
       - type: rewrite
         source: /register
-        destination: /index.html
+        destination: /spa-shell.html
       - type: rewrite
         source: /forgot-password
-        destination: /index.html
+        destination: /spa-shell.html
       - type: rewrite
         source: /reset-password
-        destination: /index.html
+        destination: /spa-shell.html
       - type: rewrite
         source: /auth/*
-        destination: /index.html
+        destination: /spa-shell.html
       - type: rewrite
         source: /order
-        destination: /index.html
+        destination: /spa-shell.html
       - type: rewrite
         source: /order/*
-        destination: /index.html
+        destination: /spa-shell.html
       - type: rewrite
         source: /portal
-        destination: /index.html
+        destination: /spa-shell.html
       - type: rewrite
         source: /portal/*
-        destination: /index.html
+        destination: /spa-shell.html
       - type: rewrite
         source: /admin
-        destination: /index.html
+        destination: /spa-shell.html
       - type: rewrite
         source: /admin/*
-        destination: /index.html
+        destination: /spa-shell.html
       - type: rewrite
         source: /ticket/*
-        destination: /index.html
+        destination: /spa-shell.html
       # Pretty URLs: serve the prerendered .html mirror for clean URLs without
       # trailing slash. See the marketing site block above for the rationale
       # and behavior of real files / directory indexes.

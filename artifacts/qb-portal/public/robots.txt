@@ -1,4 +1,125 @@
+# Default rules for all crawlers
 User-agent: *
+Allow: /
+Disallow: /portal
+Disallow: /portal/
+Disallow: /login
+Disallow: /register
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /order
+Disallow: /order/
+Disallow: /auth/callback
+Disallow: /admin
+Disallow: /admin/
+Disallow: /admin/mfa-enroll
+Disallow: /admin/mfa-challenge
+Disallow: /ticket
+Disallow: /ticket/
+
+# AI training crawlers — disallow scraping for model training
+User-agent: GPTBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: Claude-Web
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: Omgilibot
+Disallow: /
+
+User-agent: cohere-ai
+Disallow: /
+
+# AI search/grounding crawlers — allow so the site can be cited in answers
+User-agent: PerplexityBot
+Allow: /
+Disallow: /portal
+Disallow: /portal/
+Disallow: /login
+Disallow: /register
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /order
+Disallow: /order/
+Disallow: /auth/callback
+Disallow: /admin
+Disallow: /admin/
+Disallow: /admin/mfa-enroll
+Disallow: /admin/mfa-challenge
+Disallow: /ticket
+Disallow: /ticket/
+
+User-agent: Applebot
+Allow: /
+Disallow: /portal
+Disallow: /portal/
+Disallow: /login
+Disallow: /register
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /order
+Disallow: /order/
+Disallow: /auth/callback
+Disallow: /admin
+Disallow: /admin/
+Disallow: /admin/mfa-enroll
+Disallow: /admin/mfa-challenge
+Disallow: /ticket
+Disallow: /ticket/
+
+User-agent: Applebot-Extended
+Allow: /
+Disallow: /portal
+Disallow: /portal/
+Disallow: /login
+Disallow: /register
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /order
+Disallow: /order/
+Disallow: /auth/callback
+Disallow: /admin
+Disallow: /admin/
+Disallow: /admin/mfa-enroll
+Disallow: /admin/mfa-challenge
+Disallow: /ticket
+Disallow: /ticket/
+
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /portal
+Disallow: /portal/
+Disallow: /login
+Disallow: /register
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /order
+Disallow: /order/
+Disallow: /auth/callback
+Disallow: /admin
+Disallow: /admin/
+Disallow: /admin/mfa-enroll
+Disallow: /admin/mfa-challenge
+Disallow: /ticket
+Disallow: /ticket/
+
+# Social media link previews — allow so cards render correctly
+User-agent: FacebookBot
 Allow: /
 Disallow: /portal
 Disallow: /portal/
