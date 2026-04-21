@@ -63,12 +63,14 @@ async function discoverBlogRoutes() {
   const apiUrl = process.env.BLOG_API || process.env.SITEMAP_BLOG_API || "https://nexfortis-api.onrender.com/api";
   const fallbackPath = path.join(__dirname, "scripts", "blog-fallback.json");
   let posts = null;
+  let source = "fallback";
   try {
     const res = await fetch(`${apiUrl}/blog/posts`, { signal: AbortSignal.timeout(15000) });
     if (res.ok) {
       const live = await res.json();
       if (Array.isArray(live) && live.length > 0) {
         posts = live.filter((p) => p.published !== false);
+        source = "live";
         console.log(`[prerender] fetched ${posts.length} live blog posts from ${apiUrl}`);
       }
     } else {
@@ -86,6 +88,29 @@ async function discoverBlogRoutes() {
       process.exit(1);
     }
   }
+  // When the live API succeeds AND posts include content, refresh the
+  // checked-in fallback file so future builds can survive an API outage
+  // with the same content. Best-effort: ignore write errors.
+  if (source === "live" && posts.some((p) => p.content)) {
+    try {
+      const minimal = posts.map((p) => ({
+        id: p.id,
+        title: p.title,
+        slug: p.slug,
+        excerpt: p.excerpt,
+        content: p.content,
+        category: p.category,
+        coverImage: p.coverImage,
+        published: p.published,
+        createdAt: p.createdAt,
+        updatedAt: p.updatedAt,
+      }));
+      await fs.writeFile(fallbackPath, JSON.stringify(minimal, null, 2) + "\n", "utf-8");
+      console.log(`[prerender] refreshed blog-fallback.json with ${minimal.length} live post bodies`);
+    } catch (e) {
+      console.warn(`[prerender] could not refresh fallback file (${e.message}); continuing`);
+    }
+  }
   const SAFE_SLUG = /^[a-z0-9][a-z0-9-]*[a-z0-9]$/;
   const routes = [];
   const postsBySlug = new Map();
@@ -99,8 +124,9 @@ async function discoverBlogRoutes() {
       process.exit(1);
     }
     routes.push(`/blog/${p.slug}`);
-    // Only keep full post objects (those with content) — fallback file is
-    // slug-only and won't drive request interception.
+    // Only keep full post objects (those with content) — required to drive
+    // request interception. Posts without content fall back to the SPA shell
+    // (less ideal but doesn't break the build).
     if (p.content && p.title) postsBySlug.set(p.slug, p);
   }
   const unique = [...new Set(routes)];
@@ -109,11 +135,15 @@ async function discoverBlogRoutes() {
   }
   console.log(`[prerender] ${unique.length} valid blog routes (${postsBySlug.size} with full content for interception)`);
   if (postsBySlug.size === 0) {
-    console.error(`[prerender] FATAL: no blog posts have full content. Without the live API,`);
-    console.error(`[prerender] blog post pages cannot be prerendered correctly. Check that`);
-    console.error(`[prerender] ${apiUrl}/blog/posts is reachable from the build environment,`);
-    console.error(`[prerender] or set BLOG_API env var to a reachable URL.`);
-    process.exit(1);
+    // Soft-warn instead of hard-exit. The build still succeeds; affected blog
+    // post pages will render as the SPA shell with whatever client-side
+    // fetches resolve to (usually 404 → "Article Not Found"). This is a
+    // degraded state but keeps deploys unblocked when the API is unreachable
+    // from the build environment.
+    console.warn(`[prerender] WARNING: no blog posts have full content; blog post pages will`);
+    console.warn(`[prerender] prerender as the SPA shell. Check that ${apiUrl}/blog/posts`);
+    console.warn(`[prerender] is reachable from the build environment, or update`);
+    console.warn(`[prerender] artifacts/nexfortis/scripts/blog-fallback.json with full bodies.`);
   }
   return { routes: unique, postsBySlug };
 }

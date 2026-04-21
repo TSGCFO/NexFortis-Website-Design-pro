@@ -1,0 +1,25 @@
+2026-04-21T13:53:59.321465597Z ==> Downloading cache...
+2026-04-21T13:53:59.362936008Z ==> Cloning from https://github.com/TSGCFO/NexFortis-Website-Design-pro
+2026-04-21T13:54:01.60475595Z ==> Checking out commit e5b463e96070257cff3a6d1f4f20f75a868daeb4 in branch main
+2026-04-21T13:54:15.482264091Z ==> Downloaded 410MB in 3s. Extraction took 13s.
+2026-04-21T13:54:25.883507914Z ==> Installing dependencies with pnpm...
+2026-04-21T13:54:25.983169278Z ==> Requesting Node.js version 24
+2026-04-21T13:54:26.226544352Z ==> Using Node.js version 24.15.0 via environment variable NODE_VERSION
+2026-04-21T13:54:26.251952447Z ==> Docs on specifying a Node.js version: https://render.com/docs/node-version
+2026-04-21T13:54:28.318426702Z ==> Running build command 'corepack enable
+2026-04-21T13:54:28.318443732Z NODE_ENV=development pnpm install --frozen-lockfile --prod=false
+2026-04-21T13:54:28.318447772Z pnpm run typecheck:libs
+2026-04-21T13:54:28.318451132Z PORT=3000 BASE_PATH=/ pnpm --filter @workspace/nexfortis... build
+2026-04-21T13:54:28.318453763Z '...
+2026-04-21T13:54:30.609455885Z 
+2026-04-21T13:54:30.609485265Z > workspace@0.0.0 typecheck:libs /opt/render/project/src
+2026-04-21T13:54:30.609491596Z > tsc --build
+2026-04-21T13:54:30.609495516Z 
+2026-04-21T13:55:59.238104069Z /opt/render/project/src/artifacts/nexfortis:
+2026-04-21T13:55:59.23813951Z  ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @workspace/nexfortis@0.0.0 build: `vite build --config vite.config.ts && node prerender.mjs && node scripts/generate-sitemap.mjs`
+2026-04-21T13:55:59.23814497Z Exit status 1
+2026-04-21T13:55:59.29905864Z ==> Build failed 😞
+2026-04-21T13:55:59.29907522Z ==> Common ways to troubleshoot your deploy: https://render.com/docs/troubleshooting-deploys
+2026-04-21T13:55:59.398926287Z ==> Requesting Node.js version 24
+2026-04-21T13:55:59.656877392Z ==> Using Node.js version 24.15.0 via environment variable NODE_VERSION
+2026-04-21T13:55:59.684289403Z ==> Docs on specifying a Node.js version: https://render.com/docs/node-version
