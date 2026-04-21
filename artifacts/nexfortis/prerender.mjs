@@ -204,40 +204,71 @@ async function prerender() {
       const page = await browser.newPage();
       await page.setUserAgent("ReactSnap/Prerender Mozilla/5.0");
 
-      // For blog post routes, intercept the client-side /api/blog/posts/<slug>
-      // fetch and serve the prefetched post body. Without this, the React app
-      // calls the local static server, gets 404, and renders the "Article Not
-      // Found" branch — producing identical empty pages for every post.
+      // Intercept client-side blog API calls on EVERY page (not just blog
+      // post routes). The /blog index page calls /api/blog/posts, the nav
+      // may prefetch, and the blog-post page calls /api/blog/posts/<slug>.
+      // When VITE_API_BASE_URL points at a remote origin, apiFetch uses
+      // credentials: "include" + Content-Type: application/json which
+      // triggers a CORS OPTIONS preflight. The remote API's allowlist does
+      // not include 127.0.0.1:4173 (the local static server origin used by
+      // the prerender), so the preflight fails, the GET is blocked by
+      // Chromium, and the React app renders "Article Not Found". We answer
+      // BOTH the OPTIONS preflight and the GET locally so no request ever
+      // leaves the build container.
       const blogSlugMatch = route.match(/^\/blog\/([a-z0-9][a-z0-9-]*[a-z0-9])$/);
       const isBlogPost = blogSlugMatch && postsBySlug.has(blogSlugMatch[1]);
-      if (isBlogPost) {
-        const post = postsBySlug.get(blogSlugMatch[1]);
-        await page.setRequestInterception(true);
-        page.on("request", (req) => {
-          const reqUrl = req.url();
-          // Match the slug-specific endpoint (apiFetch builds /api/blog/posts/<slug>)
-          if (reqUrl.endsWith(`/api/blog/posts/${post.slug}`)) {
-            req.respond({
-              status: 200,
-              contentType: "application/json",
-              headers: { "access-control-allow-origin": "*" },
-              body: JSON.stringify(post),
-            });
-            return;
-          }
-          // Match the list endpoint (used by /blog index)
-          if (reqUrl.endsWith("/api/blog/posts")) {
-            req.respond({
-              status: 200,
-              contentType: "application/json",
-              headers: { "access-control-allow-origin": "*" },
-              body: JSON.stringify([...postsBySlug.values()]),
-            });
-            return;
-          }
-          req.continue();
-        });
-      }
+      // Build CORS response headers. When the request is credentialed
+      // (apiFetch sets credentials: "include"), the browser rejects
+      // Access-Control-Allow-Origin: "*" and also requires the
+      // Allow-Credentials header. Echo the request's Origin header back so
+      // credentialed requests are accepted regardless of whether the
+      // VITE_API_BASE_URL is same-origin (127.0.0.1:4173) or cross-origin
+      // (nexfortis-api.onrender.com).
+      const buildCorsHeaders = (req) => {
+        const reqHeaders = req.headers();
+        const origin = reqHeaders["origin"] || "*";
+        const acrh = reqHeaders["access-control-request-headers"] || "Content-Type, Authorization, X-Upload-Token";
+        return {
+          "access-control-allow-origin": origin,
+          "access-control-allow-methods": "GET, POST, OPTIONS",
+          "access-control-allow-headers": acrh,
+          "access-control-allow-credentials": "true",
+          "access-control-max-age": "600",
+          "vary": "Origin",
+        };
+      };
+      await page.setRequestInterception(true);
+      page.on("request", (req) => {
+        const reqUrl = req.url();
+        const method = req.method();
+        // Handle CORS preflight for any /api/blog/posts or /api/blog/posts/<slug>
+        if (method === "OPTIONS" && /\/api\/blog\/posts(?:\/[a-z0-9][a-z0-9-]*[a-z0-9])?$/.test(reqUrl)) {
+          req.respond({ status: 204, headers: buildCorsHeaders(req) });
+          return;
+        }
+        // Match the slug-specific endpoint (apiFetch builds /api/blog/posts/<slug>)
+        const slugMatch = reqUrl.match(/\/api\/blog\/posts\/([a-z0-9][a-z0-9-]*[a-z0-9])$/);
+        if (slugMatch && postsBySlug.has(slugMatch[1])) {
+          req.respond({
+            status: 200,
+            contentType: "application/json",
+            headers: buildCorsHeaders(req),
+            body: JSON.stringify(postsBySlug.get(slugMatch[1])),
+          });
+          return;
+        }
+        // Match the list endpoint (used by /blog index and any prefetch)
+        if (/\/api\/blog\/posts$/.test(reqUrl)) {
+          req.respond({
+            status: 200,
+            contentType: "application/json",
+            headers: buildCorsHeaders(req),
+            body: JSON.stringify([...postsBySlug.values()]),
+          });
+          return;
+        }
+        req.continue();
+      });
 
       try {
         await page.goto(url, { waitUntil: "networkidle0", timeout: 30000 });
