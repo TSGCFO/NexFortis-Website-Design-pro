@@ -1,0 +1,24 @@
+2026-04-21T01:50:46.603439445Z ==> Cloning from https://github.com/TSGCFO/NexFortis-Website-Design-pro
+2026-04-21T01:50:48.9586946Z ==> Checking out commit 240ba25c7453d513bb95c84277d327977e0e65a1 in branch main
+2026-04-21T01:50:50.932687102Z ==> Installing dependencies with pnpm...
+2026-04-21T01:50:51.08470672Z ==> Requesting Node.js version 24
+2026-04-21T01:50:51.478187134Z ==> Using Node.js version 24.15.0 via environment variable NODE_VERSION
+2026-04-21T01:50:51.524363863Z ==> Docs on specifying a Node.js version: https://render.com/docs/node-version
+2026-04-21T01:51:10.925484698Z ==> Running build command 'corepack enable
+2026-04-21T01:51:10.925501408Z NODE_ENV=development pnpm install --frozen-lockfile --prod=false
+2026-04-21T01:51:10.925507528Z pnpm run typecheck:libs
+2026-04-21T01:51:10.925513349Z PORT=3000 BASE_PATH=/ pnpm --filter @workspace/qb-portal... build
+2026-04-21T01:51:10.925518679Z '...
+2026-04-21T01:51:11.436076325Z ! Corepack is about to download https://registry.npmjs.org/pnpm/-/pnpm-10.33.0.tgz
+2026-04-21T01:51:15.310679942Z 
+2026-04-21T01:51:15.310728683Z > workspace@0.0.0 typecheck:libs /opt/render/project/src
+2026-04-21T01:51:15.310738013Z > tsc --build
+2026-04-21T01:51:15.310745893Z 
+2026-04-21T01:51:31.592186677Z /opt/render/project/src/artifacts/qb-portal:
+2026-04-21T01:51:31.592223768Z  ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @workspace/qb-portal@0.0.0 build: `vite build --config vite.config.ts && node prerender.mjs && node scripts/generate-sitemap.mjs`
+2026-04-21T01:51:31.592231838Z Exit status 1
+2026-04-21T01:51:31.684481017Z ==> Build failed 😞
+2026-04-21T01:51:31.684509527Z ==> Common ways to troubleshoot your deploy: https://render.com/docs/troubleshooting-deploys
+2026-04-21T01:51:31.8366978Z ==> Requesting Node.js version 24
+2026-04-21T01:51:32.10050324Z ==> Using Node.js version 24.15.0 via environment variable NODE_VERSION
+2026-04-21T01:51:32.149258312Z ==> Docs on specifying a Node.js version: https://render.com/docs/node-version
