@@ -359,9 +359,21 @@ async function prerender() {
     try { await browser.close(); } catch (e) { console.warn("[prerender] browser.close failed:", e.message); }
     try { server.close(); } catch (e) { console.warn("[prerender] server.close failed:", e.message); }
   }
+  // Write two copies of the noindex shell:
+  //   - 200.html: Render's SPA fallback for unknown URLs (keeps existing behavior)
+  //   - spa-shell.html: explicit target for intentional SPA-only rewrites
+  //     (e.g. /admin, /blog/admin). These routes are NOT prerendered, so
+  //     rewriting them to /index.html would serve the fully prerendered
+  //     homepage (with index,follow robots + homepage canonical) and Google
+  //     would see them as duplicates of /. Rewriting them to
+  //     /spa-shell.html serves the bare noindex shell instead, which
+  //     Google correctly skips.
   const fallbackPath = path.join(distDir, "200.html");
   await fs.writeFile(fallbackPath, shellHtml, "utf-8");
   console.log(`[prerender] wrote noindex SPA fallback -> 200.html`);
+  const spaShellPath = path.join(distDir, "spa-shell.html");
+  await fs.writeFile(spaShellPath, shellHtml, "utf-8");
+  console.log(`[prerender] wrote noindex SPA shell -> spa-shell.html`);
 
   if (fail > 0) {
     console.error(`[prerender] FAILED: ${fail} route(s) could not be prerendered.`);
