@@ -569,9 +569,10 @@ export function EnhancedSupportTab({ subscriptionInfo, getAccessToken }: Enhance
           <h3 className="font-semibold font-display text-primary mb-3">Previous Tickets</h3>
           <div className="space-y-3">
             {tickets.map((ticket) => (
-              <Card key={ticket.id}>
-                <CardContent className="p-4">
-                  <div className="flex items-start justify-between gap-3">
+              <Link key={ticket.id} href={`/ticket/${ticket.id}`} aria-label={`Open ticket ${ticket.subject}`}>
+                <Card className="cursor-pointer transition-colors hover:border-accent/40 hover:bg-muted/30">
+                  <CardContent className="p-4">
+                    <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-2 flex-wrap mb-1">
                         <p className="font-semibold text-sm">{ticket.subject}</p>
@@ -607,9 +608,10 @@ export function EnhancedSupportTab({ subscriptionInfo, getAccessToken }: Enhance
                     }`}>
                       {ticket.status === "in_progress" ? "In Progress" : ticket.status}
                     </span>
-                  </div>
-                </CardContent>
-              </Card>
+                    </div>
+                  </CardContent>
+                </Card>
+              </Link>
             ))}
           </div>
         </div>
