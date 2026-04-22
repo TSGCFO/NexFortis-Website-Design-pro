@@ -40,8 +40,14 @@ const adminReplyUpload = multer({
   },
 });
 
-async function uploadAdminAttachment(ticketId: number, file: Express.Multer.File): Promise<string | null> {
-  if (!supabaseAdmin) return null;
+/**
+ * Uploads an operator reply attachment. Throws on any error so the caller
+ * can abort the reply insertion instead of silently dropping the file.
+ */
+async function uploadAdminAttachment(ticketId: number, file: Express.Multer.File): Promise<string> {
+  if (!supabaseAdmin) {
+    throw new Error("Attachment storage is not configured. Please try again without an attachment or contact support.");
+  }
   const ext = file.originalname.split(".").pop() || "bin";
   const storagePath = `ticket-${ticketId}/reply-${Date.now()}.${ext}`;
   const { error } = await supabaseAdmin.storage
@@ -51,8 +57,8 @@ async function uploadAdminAttachment(ticketId: number, file: Express.Multer.File
       upsert: false,
     });
   if (error) {
-    console.warn(`[Admin Tickets] Attachment upload failed: ${error.message}`);
-    return null;
+    console.error(`[Admin Tickets] Attachment upload failed for ticket ${ticketId}: ${error.message}`);
+    throw new Error(`Attachment upload failed: ${error.message}`);
   }
   return storagePath;
 }
@@ -444,6 +450,65 @@ router.get("/tickets/:id", async (req: Request, res: Response) => {
   }
 });
 
+// Returns the full reply thread for a ticket with operator-visible details
+// (sender name/email, internal notes, attachment URLs). Unlike the customer
+// endpoint in qb-tickets.ts, operators see ALL reply rows including internal
+// notes. Used by admin/ticket-detail.tsx to render the conversation history.
+router.get("/tickets/:id/replies", async (req: Request, res: Response) => {
+  try {
+    const ticketId = parseInt(req.params.id as string);
+    if (isNaN(ticketId)) {
+      res.status(400).json({ error: "Invalid ticket ID" });
+      return;
+    }
+
+    const [ticket] = await db
+      .select({ id: qbSupportTickets.id })
+      .from(qbSupportTickets)
+      .where(eq(qbSupportTickets.id, ticketId))
+      .limit(1);
+
+    if (!ticket) {
+      res.status(404).json({ error: "Ticket not found" });
+      return;
+    }
+
+    const replies = await db
+      .select({
+        reply: qbTicketReplies,
+        senderName: qbUsers.name,
+        senderEmail: qbUsers.email,
+      })
+      .from(qbTicketReplies)
+      .leftJoin(qbUsers, eq(qbTicketReplies.senderId, qbUsers.id))
+      .where(eq(qbTicketReplies.ticketId, ticketId))
+      .orderBy(asc(qbTicketReplies.createdAt));
+
+    const repliesWithUrls = await Promise.all(
+      replies.map(async (r) => {
+        let attachmentUrl: string | null = null;
+        if (r.reply.attachmentPath && supabaseAdmin) {
+          const { data } = await supabaseAdmin.storage
+            .from(TICKET_BUCKET)
+            .createSignedUrl(r.reply.attachmentPath, 3600);
+          attachmentUrl = data?.signedUrl || null;
+        }
+        return {
+          ...r.reply,
+          senderName: r.senderName,
+          senderEmail: r.senderEmail,
+          attachmentUrl,
+        };
+      }),
+    );
+
+    res.json({ replies: repliesWithUrls });
+  } catch (err) {
+    console.error("Admin get replies error:", err);
+    res.status(500).json({ error: "Failed to fetch replies" });
+  }
+});
+
 router.post("/tickets/:id/reply", (req: Request, res: Response) => {
   const singleUpload = adminReplyUpload.single("attachment");
   singleUpload(req, res, async (uploadErr) => {
@@ -485,7 +550,15 @@ router.post("/tickets/:id/reply", (req: Request, res: Response) => {
 
       let attachmentPath: string | null = null;
       if (req.file) {
-        attachmentPath = await uploadAdminAttachment(ticketId, req.file);
+        try {
+          attachmentPath = await uploadAdminAttachment(ticketId, req.file);
+        } catch (uploadErr: any) {
+          // Upload happens before any DB writes, so no rollback needed.
+          res.status(500).json({
+            error: uploadErr?.message || "Failed to upload attachment. Please try again.",
+          });
+          return;
+        }
       }
 
       if (!ticket.userId) {
