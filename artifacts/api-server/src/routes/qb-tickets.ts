@@ -104,11 +104,19 @@ async function getActiveOrderEntitlement(userId: string) {
   return entitlement || null;
 }
 
+/**
+ * Uploads a ticket attachment to the ticket-attachments bucket and returns
+ * the storage path on success. Throws on any error (missing admin client,
+ * bucket missing, quota hit, network fault) so the caller can roll back
+ * the ticket/reply insertion. Never silently drops the file.
+ */
 async function uploadTicketAttachment(
   ticketId: number,
   file: Express.Multer.File,
-): Promise<string | null> {
-  if (!supabaseAdmin) return null;
+): Promise<string> {
+  if (!supabaseAdmin) {
+    throw new Error("Attachment storage is not configured. Please try again without an attachment or contact support.");
+  }
 
   const ext = file.originalname.split(".").pop() || "bin";
   const storagePath = `tickets/${ticketId}/${Date.now()}.${ext}`;
@@ -121,8 +129,8 @@ async function uploadTicketAttachment(
     });
 
   if (error) {
-    console.warn(`[Tickets] Attachment upload failed: ${error.message}`);
-    return null;
+    console.error(`[Tickets] Attachment upload failed for ticket ${ticketId}: ${error.message}`);
+    throw new Error(`Attachment upload failed: ${error.message}`);
   }
 
   return storagePath;
@@ -288,12 +296,53 @@ router.post("/", ticketSubmitLimiter, (req: Request, res: Response) => {
 
       let attachmentPath: string | null = null;
       if (req.file) {
-        attachmentPath = await uploadTicketAttachment(ticket.id, req.file);
-        if (attachmentPath) {
+        try {
+          attachmentPath = await uploadTicketAttachment(ticket.id, req.file);
           await db
             .update(qbSupportTickets)
             .set({ attachmentPath })
             .where(eq(qbSupportTickets.id, ticket.id));
+        } catch (uploadErr: any) {
+          // Attachment upload failed. Roll back the ticket row and refund the
+          // quota slot so the customer can retry without losing a ticket.
+          // We need a compensating transaction because the original insert
+          // transaction has already committed by this point.
+          try {
+            await db.transaction(async (tx) => {
+              await tx.delete(qbSupportTickets).where(eq(qbSupportTickets.id, ticket.id));
+
+              if (entitlement) {
+                // Order-entitlement path: decrement the entitlement's tickets_used.
+                await tx
+                  .update(qbOrderSupportEntitlements)
+                  .set({
+                    ticketsUsed: sql`GREATEST(${qbOrderSupportEntitlements.ticketsUsed} - 1, 0)`,
+                    updatedAt: new Date(),
+                  })
+                  .where(eq(qbOrderSupportEntitlements.id, entitlement.id));
+              } else if (sub) {
+                // Subscription path: decrement the current-period qb_ticket_usage row
+                // if one exists (unlimited tiers don't create one, so this is a no-op
+                // for those — which is correct).
+                await tx
+                  .update(qbTicketUsage)
+                  .set({ ticketsUsed: sql`GREATEST(${qbTicketUsage.ticketsUsed} - 1, 0)` })
+                  .where(
+                    and(
+                      eq(qbTicketUsage.subscriptionId, sub.id),
+                      eq(qbTicketUsage.periodStart, sub.currentPeriodStart!),
+                      eq(qbTicketUsage.periodEnd, sub.currentPeriodEnd!),
+                    ),
+                  );
+              }
+            });
+          } catch (rollbackErr) {
+            console.error(`[Tickets] Rollback failed for ticket ${ticket.id}:`, rollbackErr);
+          }
+          res.status(500).json({
+            error: uploadErr?.message || "Failed to upload attachment. Please try again.",
+          });
+          return;
         }
       }
 
@@ -544,7 +593,16 @@ router.post("/:id/replies", (req: Request, res: Response) => {
 
       let attachmentPath: string | null = null;
       if (req.file) {
-        attachmentPath = await uploadTicketAttachment(ticketId, req.file);
+        try {
+          attachmentPath = await uploadTicketAttachment(ticketId, req.file);
+        } catch (uploadErr: any) {
+          // Upload failure happens before any DB writes in the reply path,
+          // so we can simply surface the error. No rollback needed.
+          res.status(500).json({
+            error: uploadErr?.message || "Failed to upload attachment. Please try again.",
+          });
+          return;
+        }
       }
 
       const [reply] = await db
