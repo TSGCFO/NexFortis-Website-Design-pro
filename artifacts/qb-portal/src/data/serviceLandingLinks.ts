@@ -71,19 +71,6 @@ export const serviceLandingLinks: Record<string, LandingLink[]> = {
     { slug: "how-conversion-works", anchor: "how our migration process works" },
   ],
 
-  "expert-support-essentials": [
-    { slug: "quickbooks-support-subscription", anchor: "what a QuickBooks support subscription covers" },
-    { slug: "quickbooks-desktop-end-of-life", anchor: "staying on Desktop as end of life approaches" },
-  ],
-  "expert-support-professional": [
-    { slug: "quickbooks-support-subscription", anchor: "compare QuickBooks support subscription tiers" },
-    { slug: "quickbooks-company-file-error", anchor: "fixing QuickBooks company file errors" },
-  ],
-  "expert-support-premium": [
-    { slug: "quickbooks-support-subscription", anchor: "what Premium support includes" },
-    { slug: "quickbooks-desktop-end-of-life", anchor: "navigating QuickBooks Desktop end of life" },
-    { slug: "quickbooks-company-file-error", anchor: "company file error diagnosis and recovery" },
-  ],
 
   "5-pack-conversions": [
     { slug: "affordable-enterprise-conversion", anchor: "how volume packs lower per-conversion cost" },
@@ -119,11 +106,6 @@ export const categoryLandingLinks: Record<string, LandingLink[]> = {
     { slug: "sage-50-to-quickbooks", anchor: "Sage 50 to QuickBooks migration guide" },
     { slug: "quickbooks-desktop-end-of-life", anchor: "Planning around QuickBooks Desktop end of life" },
     { slug: "how-conversion-works", anchor: "How our migration process works" },
-  ],
-  "expert-support": [
-    { slug: "quickbooks-support-subscription", anchor: "What a QuickBooks support subscription covers" },
-    { slug: "quickbooks-company-file-error", anchor: "Fixing QuickBooks company file errors" },
-    { slug: "quickbooks-desktop-end-of-life", anchor: "Navigating QuickBooks Desktop end of life" },
   ],
   "volume-packs": [
     { slug: "affordable-enterprise-conversion", anchor: "Affordable Enterprise to Premier conversions" },

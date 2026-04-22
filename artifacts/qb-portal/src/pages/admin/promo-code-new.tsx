@@ -16,7 +16,6 @@ const CATEGORIES = [
   { id: "quickbooks-conversion", label: "QuickBooks Conversion" },
   { id: "quickbooks-data-services", label: "Data Services" },
   { id: "platform-migrations", label: "Platform Migrations" },
-  { id: "expert-support", label: "Expert Support" },
   { id: "volume-packs", label: "Volume Packs" },
 ];
 

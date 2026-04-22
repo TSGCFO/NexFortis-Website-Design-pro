@@ -196,6 +196,23 @@ services:
         name: Strict-Transport-Security
         value: max-age=31536000; includeSubDomains; preload
     routes:
+      # 301 redirects: retired duplicate expert-support product pages.
+      # These were one-time-order mirrors of the monthly subscription plans,
+      # which caused customers to pay once for a service that only makes
+      # sense as a recurring subscription. The canonical home is /subscription.
+      # Redirects MUST come before rewrites so they match first.
+      - type: redirect
+        source: /service/expert-support-essentials
+        destination: /subscription
+      - type: redirect
+        source: /service/expert-support-professional
+        destination: /subscription
+      - type: redirect
+        source: /service/expert-support-premium
+        destination: /subscription
+      - type: redirect
+        source: /category/expert-support
+        destination: /subscription
       # Reverse-proxy /api/* to the API service. Render uses `*` (not Netlify's
       # `:splat`) for the wildcard substitution in the destination URL.
       - type: rewrite

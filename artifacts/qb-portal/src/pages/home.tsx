@@ -84,13 +84,6 @@ const featuredServiceDefs = [
     href: "/service/guaranteed-30-minute",
   },
   {
-    slug: "expert-support-professional",
-    title: "QB Expert Support — Professional",
-    desc: "8 tickets/month, 1-hour response time, data integrity analysis, 10% discount on all services.",
-    badge: "Recommended",
-    href: "/service/expert-support-professional",
-  },
-  {
     slug: "sage50-to-quickbooks",
     title: "Sage 50 → QuickBooks Migration",
     desc: "Migrate your Sage 50 or Simply Accounting data to QuickBooks Desktop. Full data transfer.",
