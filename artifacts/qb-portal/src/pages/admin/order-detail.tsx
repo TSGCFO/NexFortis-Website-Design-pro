@@ -40,7 +40,11 @@ interface FileData {
   uploadedAt: string;
 }
 
-const ALL_STATUSES = ["pending_payment", "submitted", "paid", "processing", "completed", "failed", "cancelled"];
+// 'delivered' MUST be included so operators can trigger the status transition
+// that calls ensureOrderSupportEntitlement on the backend. Without this option
+// in the dropdown, customers who paid never receive the support entitlement
+// tied to their order and cannot open tickets for it.
+const ALL_STATUSES = ["pending_payment", "submitted", "paid", "processing", "completed", "delivered", "failed", "cancelled"];
 
 function OrderDetailContent() {
   const [, params] = useRoute("/admin/orders/:id");
