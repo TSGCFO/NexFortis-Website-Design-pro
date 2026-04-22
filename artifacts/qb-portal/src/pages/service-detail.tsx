@@ -51,11 +51,32 @@ export default function ServiceDetail() {
   const isSubscription = product.billing_type === "subscription";
   const priceSuffix = isSubscription ? "/mo" : "";
 
+  // SEO description preference order:
+  //   1. `meta_description` from products.json — authored specifically for
+  //      search snippets (<=155 chars, complete sentence).
+  //   2. `description` if already <=155 chars — same copy as the visible
+  //      intro paragraph, usable as-is.
+  //   3. `description` truncated on a word boundary with an ellipsis — last
+  //      resort for pre-PR-#51 entries without an explicit meta_description.
+  // 155 chars is chosen because Google truncates descriptions at ~160 chars
+  // on desktop; leaving 5 chars of slack avoids mid-word cuts.
+  const seoDescription = (() => {
+    if (product.meta_description && product.meta_description.trim().length > 0) {
+      return product.meta_description.trim();
+    }
+    const raw = product.description.trim();
+    if (raw.length <= 155) return raw;
+    const sliced = raw.slice(0, 155);
+    const lastSpace = sliced.lastIndexOf(" ");
+    const base = lastSpace > 120 ? sliced.slice(0, lastSpace) : sliced;
+    return base.replace(/[\s,.;:!\-—]+$/, "") + "…";
+  })();
+
   const jsonLd = [
     generateServiceSchema(
       {
         h1: product.name,
-        metaDescription: product.description,
+        metaDescription: seoDescription,
         slug: product.slug,
         primaryKeyword: product.name,
       },
@@ -73,7 +94,7 @@ export default function ServiceDetail() {
     <div>
       <SEO
         title={product.name}
-        description={product.description}
+        description={seoDescription}
         path={`/service/${product.slug}`}
         ogType="product"
         jsonLd={jsonLd}

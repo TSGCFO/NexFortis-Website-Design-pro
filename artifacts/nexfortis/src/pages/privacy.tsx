@@ -96,7 +96,7 @@ export default function Privacy() {
             We may update this Privacy Policy from time to time to reflect changes in our practices, technology, legal requirements, or other factors. We will post the updated policy on this page with a revised "Last Updated" date. We encourage you to review this page periodically.
           </p>
 
-          <h2>10. Contact Us</h2>
+          <h2>10. Contact us</h2>
           <p>
             If you have any questions about this Privacy Policy, wish to exercise your privacy rights, or have concerns about how we handle your personal information, please contact us:
           </p>

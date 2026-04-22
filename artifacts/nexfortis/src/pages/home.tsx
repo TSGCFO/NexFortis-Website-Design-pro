@@ -499,7 +499,7 @@ export default function Home() {
               href="/contact"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-primary-foreground font-bold hover:bg-primary/90 transition-all hover:-translate-y-0.5 shadow-lg"
             >
-              Contact Us <ArrowRight className="w-5 h-5" aria-hidden="true" />
+              Contact us <ArrowRight className="w-5 h-5" aria-hidden="true" />
             </Link>
           </div>
         </div>

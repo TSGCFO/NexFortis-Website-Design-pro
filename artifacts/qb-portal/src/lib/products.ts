@@ -5,6 +5,11 @@ export interface Product {
   category: string;
   category_slug: string;
   description: string;
+  // Optional SEO-specific description used as the <meta name="description">
+  // and og:description on the service detail page. Should be <=155 chars so
+  // Google doesn't truncate it. If absent, the page falls back to
+  // `description` with a length check — see service-detail.tsx.
+  meta_description?: string;
   deliverable: string;
   base_price_cad: number;
   launch_price_cad: number;

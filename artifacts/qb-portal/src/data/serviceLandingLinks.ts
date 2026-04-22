@@ -64,11 +64,16 @@ export const serviceLandingLinks: Record<string, LandingLink[]> = {
 
   "accountedge-to-quickbooks": [
     { slug: "accountedge-to-quickbooks", anchor: "a full walkthrough of AccountEdge to QuickBooks migration" },
-    { slug: "how-conversion-works", anchor: "how our migration process works" },
+    // Title-case "How" matches the existing anchor on line 112 of this file
+    // (platform-migrations section). Anchors render as standalone bullet list
+    // items in service-detail.tsx, so the sentence starts here — capitalize
+    // the first word. Before PR #51 these two entries used lowercase "how"
+    // which made identical bullets render with inconsistent casing.
+    { slug: "how-conversion-works", anchor: "How our migration process works" },
   ],
   "sage50-to-quickbooks": [
     { slug: "sage-50-to-quickbooks", anchor: "a full walkthrough of Sage 50 to QuickBooks migration" },
-    { slug: "how-conversion-works", anchor: "how our migration process works" },
+    { slug: "how-conversion-works", anchor: "How our migration process works" },
   ],
 
 

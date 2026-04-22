@@ -45,9 +45,21 @@ export default function Category() {
 
   return (
     <div>
+      {/* Build a natural description by stripping redundant "QuickBooks " prefix
+          and trailing "services" from the category name before interpolating,
+          otherwise we get bugs like "Browse 6 QuickBooks quickbooks conversion
+          services services". Example category names from products.json:
+          "QuickBooks Conversion Services", "Platform Migration Services",
+          "Volume Packs". */}
       <SEO
         title={categoryName}
-        description={`Browse ${products.length} QuickBooks ${categoryName.toLowerCase()} services. Professional solutions for Canadian businesses.`}
+        description={(() => {
+          const trimmed = categoryName
+            .replace(/^QuickBooks\s+/i, "")
+            .replace(/\s+services$/i, "")
+            .toLowerCase();
+          return `Browse ${products.length} QuickBooks ${trimmed} ${products.length === 1 ? "service" : "services"} for Canadian businesses. Fixed-price, professional solutions.`;
+        })()}
         path={`/category/${slug}`}
         jsonLd={generateBreadcrumbSchema([{ name: "Services", path: "/catalog" }, { name: categoryName, path: `/category/${slug}` }])}
       />

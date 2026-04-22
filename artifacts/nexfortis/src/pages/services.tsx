@@ -1,5 +1,5 @@
 import { Section, SectionHeader, PageHero } from "@/components/ui-elements";
-import { SEO, BreadcrumbSchema } from "@/components/seo";
+import { SEO, BreadcrumbSchema, ServiceSchema } from "@/components/seo";
 import { Monitor, Cloud, Database, Cog, LayoutDashboard, ArrowRight, CheckCircle2 } from "lucide-react";
 import { Link } from "wouter";
 import { motion } from "framer-motion";
@@ -65,6 +65,17 @@ export default function ServicesOverview() {
           { name: "Home", url: "/" },
           { name: "Services", url: "/services" },
         ]}
+      />
+      {/* Emit an aggregate Service schema for the /services overview page.
+          Individual service detail pages each emit their own ServiceSchema;
+          this one covers the overview so Google has structured data to
+          associate with the hub URL. Added in PR #51 to close the JSON-LD
+          gap flagged in the audit (services.tsx shipped BreadcrumbSchema
+          only). */}
+      <ServiceSchema
+        name="NexFortis IT Services"
+        description="Managed IT services for Canadian SMBs: digital marketing, Microsoft 365, QuickBooks migration, IT consulting, and workflow automation — all under one roof."
+        url="/services"
       />
       <PageHero
         title="IT Services for Canadian Businesses"

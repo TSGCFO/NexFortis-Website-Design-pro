@@ -30,7 +30,7 @@ export default function NotFound() {
             href="/contact"
             className="w-full sm:w-auto px-10 py-4 min-h-[52px] rounded-xl bg-white/10 text-white font-bold text-lg hover:bg-white/20 border border-white/20 backdrop-blur-sm transition-all flex items-center justify-center"
           >
-            Contact Us
+            Contact us
           </Link>
         </div>
       </div>

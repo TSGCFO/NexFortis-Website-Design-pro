@@ -67,16 +67,16 @@ export default function Contact() {
       <BreadcrumbSchema
         items={[
           { name: "Home", url: "/" },
-          { name: "Contact Us", url: "/contact" },
+          { name: "Contact us", url: "/contact" },
         ]}
       />
       <PageHero
-        title="Contact Us"
+        title="Contact us"
         subtitle="Ready to discuss your next IT project? Get in touch with our experts today."
       />
       <PageBreadcrumbs items={[
         { label: "Home", href: "/" },
-        { label: "Contact Us" },
+        { label: "Contact us" },
       ]} />
 
       <Section bg="brand-light" className="relative">

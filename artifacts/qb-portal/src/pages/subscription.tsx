@@ -179,8 +179,8 @@ export default function Subscription() {
   return (
     <div>
       <SEO
-        title="QuickBooks Support Plans — Monthly Expert Help"
-        description="Choose a QuickBooks Expert Support plan. Get priority support, service discounts, and exclusive perks starting at $25 CAD/month."
+        title="QuickBooks Support Plans"
+        description="Monthly QuickBooks Expert Support plans with priority help, service discounts, and exclusive perks. Starting at $25 CAD/month for Canadian businesses."
         path="/subscription"
       />
 
@@ -401,6 +401,20 @@ export default function Subscription() {
               </Button>
             </Link>
           </div>
+          {/* Inbound link to the detailed landing page fixes the orphan-page
+              finding from the link-integrity audit — prior to PR #51 the
+              /landing/quickbooks-support-subscription page had no inbound
+              links from any indexed page, so PageRank couldn't flow to it. */}
+          <p className="text-white/60 text-sm mt-6">
+            Want the full breakdown of what's included and how the plans compare?{" "}
+            <Link
+              href="/landing/quickbooks-support-subscription"
+              className="text-rose-gold hover:text-white underline underline-offset-2"
+            >
+              See the complete QuickBooks Support Subscription overview
+            </Link>
+            .
+          </p>
         </motion.div>
       </section>
     </div>

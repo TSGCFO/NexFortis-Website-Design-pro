@@ -46,6 +46,11 @@ const NOINDEX_ALLOWLIST = new Set([]);
 
 const EXCLUDED_PATTERNS = [
   /^\/admin/,
+  // Belt-and-braces: any future /portal/* subroute (e.g. /portal/settings)
+  // would otherwise escape into the prerender queue since only /portal is
+  // in EXCLUDED_ROUTES above. Authenticated portal pages must never be
+  // prerendered or indexed.
+  /^\/portal/,
   /\/:/,
 ];
 
