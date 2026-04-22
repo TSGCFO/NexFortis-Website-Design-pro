@@ -60,11 +60,28 @@ function isExcluded(route) {
 }
 
 async function discoverStaticRoutes() {
-  const appTsx = await fs.readFile(path.join(__dirname, "src", "App.tsx"), "utf-8");
+  const appTsxRaw = await fs.readFile(path.join(__dirname, "src", "App.tsx"), "utf-8");
+  // Strip JSX block comments ({/* ... */}) and line comments (// ...) before
+  // scanning for <Route path="..."> literals. Otherwise a cautionary comment
+  // that mentions `path="*"` as a counter-example gets matched as a real
+  // route, which then fails puppeteer navigation and kills the whole build.
+  // (We only strip for route extraction; the actual TSX file on disk is
+  // unchanged. The substitution preserves line counts to keep any future
+  // regex-based diagnostics readable.)
+  const appTsx = appTsxRaw
+    .replace(/\{\/\*[\s\S]*?\*\/\}/g, (m) => m.replace(/[^\n]/g, " "))
+    .replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, " "))
+    .replace(/\/\/[^\n]*/g, (m) => " ".repeat(m.length));
   const matches = [...appTsx.matchAll(/<Route\s+path="([^"]+)"/g)];
   const routes = [];
   for (const m of matches) {
     const route = m[1];
+    if (!route.startsWith("/")) {
+      // Defense-in-depth: a literal that doesn't start with "/" is not a
+      // valid wouter static route. Skip silently rather than feed an
+      // invalid URL to puppeteer (which crashes the whole browser session).
+      continue;
+    }
     if (isExcluded(route)) continue;
     routes.push(route);
   }
