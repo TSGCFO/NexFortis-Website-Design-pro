@@ -1,0 +1,1031 @@
+{
+  "home": {
+    "mobile": {
+      "scores": {
+        "performance": 64,
+        "accessibility": 91,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "failed_seo": [],
+      "failed_a11y": [
+        {
+          "id": "color-contrast",
+          "title": "Background and foreground colors do not have a sufficient contrast ratio.",
+          "description": "Low-contrast text is difficult or impossible for many users to read. [Learn how to provide sufficient color contrast](https://dequeuniversity.com/rules/axe/4.10/color-contrast).",
+          "score": 0,
+          "displayValue": ""
+        },
+        {
+          "id": "heading-order",
+          "title": "Heading elements are not in a sequentially-descending order",
+          "description": "Properly ordered headings that do not skip levels convey the semantic structure of the page, making it easier to navigate and understand when using assistive technologies. [Learn more about heading order](https://dequeuniversity.com/rules/axe/4.10/heading-order).",
+          "score": 0,
+          "displayValue": ""
+        },
+        {
+          "id": "meta-viewport",
+          "title": "`[user-scalable=\"no\"]` is used in the `<meta name=\"viewport\">` element or the `[maximum-scale]` attribute is less than 5.",
+          "description": "Disabling zooming is problematic for users with low vision who rely on screen magnification to properly see the contents of a web page. [Learn more about the viewport meta tag](https://dequeuniversity.com/rules/axe/4.10/meta-viewport).",
+          "score": 0,
+          "displayValue": ""
+        }
+      ],
+      "perf_metrics": {
+        "largest-contentful-paint": {
+          "score": 0.12,
+          "displayValue": "6.1\u00a0s",
+          "numericValue": 6056.806500000001
+        },
+        "cumulative-layout-shift": {
+          "score": 1,
+          "displayValue": "0",
+          "numericValue": 0
+        },
+        "total-blocking-time": {
+          "score": 0.75,
+          "displayValue": "330\u00a0ms",
+          "numericValue": 330
+        },
+        "first-contentful-paint": {
+          "score": 0.61,
+          "displayValue": "2.7\u00a0s",
+          "numericValue": 2681.8065
+        },
+        "speed-index": {
+          "score": 0.71,
+          "displayValue": "4.6\u00a0s",
+          "numericValue": 4556.2655034721165
+        },
+        "interactive": {
+          "score": 0.64,
+          "displayValue": "6.1\u00a0s",
+          "numericValue": 6064.306500000001
+        },
+        "first-meaningful-paint": {
+          "score": null,
+          "displayValue": "",
+          "numericValue": null
+        }
+      },
+      "perf_opps": [
+        {
+          "id": "unused-javascript",
+          "title": "Reduce unused JavaScript",
+          "description": "Reduce unused JavaScript and defer loading scripts until they are required to decrease bytes consumed by network activity. [Learn how to reduce unused JavaScript](https://developer.chrome.com/docs/lighthouse/performance/unused-javascript/).",
+          "score": 0,
+          "displayValue": "Est savings of 61\u00a0KiB",
+          "savingsMs": 300
+        }
+      ]
+    },
+    "desktop": {
+      "scores": {
+        "performance": 34,
+        "accessibility": 90,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "failed_seo": [],
+      "failed_a11y": [
+        {
+          "id": "aria-allowed-role",
+          "title": "Uses ARIA roles on incompatible elements",
+          "description": "Many HTML elements can only be assigned certain ARIA roles. Using ARIA roles where they are not allowed can interfere with the accessibility of the web page. [Learn more about ARIA roles](https://dequeuniversity.com/rules/axe/4.10/aria-allowed-role).",
+          "score": 0,
+          "displayValue": ""
+        },
+        {
+          "id": "color-contrast",
+          "title": "Background and foreground colors do not have a sufficient contrast ratio.",
+          "description": "Low-contrast text is difficult or impossible for many users to read. [Learn how to provide sufficient color contrast](https://dequeuniversity.com/rules/axe/4.10/color-contrast).",
+          "score": 0,
+          "displayValue": ""
+        },
+        {
+          "id": "heading-order",
+          "title": "Heading elements are not in a sequentially-descending order",
+          "description": "Properly ordered headings that do not skip levels convey the semantic structure of the page, making it easier to navigate and understand when using assistive technologies. [Learn more about heading order](https://dequeuniversity.com/rules/axe/4.10/heading-order).",
+          "score": 0,
+          "displayValue": ""
+        },
+        {
+          "id": "meta-viewport",
+          "title": "`[user-scalable=\"no\"]` is used in the `<meta name=\"viewport\">` element or the `[maximum-scale]` attribute is less than 5.",
+          "description": "Disabling zooming is problematic for users with low vision who rely on screen magnification to properly see the contents of a web page. [Learn more about the viewport meta tag](https://dequeuniversity.com/rules/axe/4.10/meta-viewport).",
+          "score": 0,
+          "displayValue": ""
+        }
+      ],
+      "perf_metrics": {
+        "largest-contentful-paint": {
+          "score": 0.29,
+          "displayValue": "3.2\u00a0s",
+          "numericValue": 3233.7304999999997
+        },
+        "cumulative-layout-shift": {
+          "score": 1,
+          "displayValue": "0",
+          "numericValue": 0
+        },
+        "total-blocking-time": {
+          "score": 0,
+          "displayValue": "4,420\u00a0ms",
+          "numericValue": 4416.5
+        },
+        "first-contentful-paint": {
+          "score": 0.2,
+          "displayValue": "2.2\u00a0s",
+          "numericValue": 2247.2305
+        },
+        "speed-index": {
+          "score": 0,
+          "displayValue": "12.6\u00a0s",
+          "numericValue": 12610.757522687696
+        },
+        "interactive": {
+          "score": 0.15,
+          "displayValue": "7.3\u00a0s",
+          "numericValue": 7264.3805
+        },
+        "first-meaningful-paint": {
+          "score": null,
+          "displayValue": "",
+          "numericValue": null
+        }
+      },
+      "perf_opps": [
+        {
+          "id": "offscreen-images",
+          "title": "Defer offscreen images",
+          "description": "Consider lazy-loading offscreen and hidden images after all critical resources have finished loading to lower time to interactive. [Learn how to defer offscreen images](https://developer.chrome.com/docs/lighthouse/performance/offscreen-images/).",
+          "score": 0.5,
+          "displayValue": "Est savings of 14\u00a0KiB",
+          "savingsMs": 0
+        },
+        {
+          "id": "unused-javascript",
+          "title": "Reduce unused JavaScript",
+          "description": "Reduce unused JavaScript and defer loading scripts until they are required to decrease bytes consumed by network activity. [Learn how to reduce unused JavaScript](https://developer.chrome.com/docs/lighthouse/performance/unused-javascript/).",
+          "score": 0.5,
+          "displayValue": "Est savings of 61\u00a0KiB",
+          "savingsMs": 0
+        }
+      ]
+    }
+  },
+  "services-m365": {
+    "mobile": {
+      "scores": {
+        "performance": 19,
+        "accessibility": 92,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "failed_seo": [],
+      "failed_a11y": [
+        {
+          "id": "color-contrast",
+          "title": "Background and foreground colors do not have a sufficient contrast ratio.",
+          "description": "Low-contrast text is difficult or impossible for many users to read. [Learn how to provide sufficient color contrast](https://dequeuniversity.com/rules/axe/4.10/color-contrast).",
+          "score": 0,
+          "displayValue": ""
+        },
+        {
+          "id": "heading-order",
+          "title": "Heading elements are not in a sequentially-descending order",
+          "description": "Properly ordered headings that do not skip levels convey the semantic structure of the page, making it easier to navigate and understand when using assistive technologies. [Learn more about heading order](https://dequeuniversity.com/rules/axe/4.10/heading-order).",
+          "score": 0,
+          "displayValue": ""
+        },
+        {
+          "id": "meta-viewport",
+          "title": "`[user-scalable=\"no\"]` is used in the `<meta name=\"viewport\">` element or the `[maximum-scale]` attribute is less than 5.",
+          "description": "Disabling zooming is problematic for users with low vision who rely on screen magnification to properly see the contents of a web page. [Learn more about the viewport meta tag](https://dequeuniversity.com/rules/axe/4.10/meta-viewport).",
+          "score": 0,
+          "displayValue": ""
+        }
+      ],
+      "perf_metrics": {
+        "largest-contentful-paint": {
+          "score": 0,
+          "displayValue": "10.9\u00a0s",
+          "numericValue": 10908.457
+        },
+        "cumulative-layout-shift": {
+          "score": 0.71,
+          "displayValue": "0.166",
+          "numericValue": 0.166464
+        },
+        "total-blocking-time": {
+          "score": 0,
+          "displayValue": "20,790\u00a0ms",
+          "numericValue": 20794
+        },
+        "first-contentful-paint": {
+          "score": 0.11,
+          "displayValue": "4.8\u00a0s",
+          "numericValue": 4825.957
+        },
+        "speed-index": {
+          "score": 0,
+          "displayValue": "23.9\u00a0s",
+          "numericValue": 23900.065627699696
+        },
+        "interactive": {
+          "score": 0,
+          "displayValue": "26.8\u00a0s",
+          "numericValue": 26786.357000000004
+        },
+        "first-meaningful-paint": {
+          "score": null,
+          "displayValue": "",
+          "numericValue": null
+        }
+      },
+      "perf_opps": [
+        {
+          "id": "unused-javascript",
+          "title": "Reduce unused JavaScript",
+          "description": "Reduce unused JavaScript and defer loading scripts until they are required to decrease bytes consumed by network activity. [Learn how to reduce unused JavaScript](https://developer.chrome.com/docs/lighthouse/performance/unused-javascript/).",
+          "score": 0,
+          "displayValue": "Est savings of 60\u00a0KiB",
+          "savingsMs": 300
+        },
+        {
+          "id": "offscreen-images",
+          "title": "Defer offscreen images",
+          "description": "Consider lazy-loading offscreen and hidden images after all critical resources have finished loading to lower time to interactive. [Learn how to defer offscreen images](https://developer.chrome.com/docs/lighthouse/performance/offscreen-images/).",
+          "score": 0.5,
+          "displayValue": "Est savings of 14\u00a0KiB",
+          "savingsMs": 0
+        },
+        {
+          "id": "render-blocking-resources",
+          "title": "Eliminate render-blocking resources",
+          "description": "Resources are blocking the first paint of your page. Consider delivering critical JS/CSS inline and deferring all non-critical JS/styles. [Learn how to eliminate render-blocking resources](https://developer.chrome.com/docs/lighthouse/performance/render-blocking-resources/).",
+          "score": 0.5,
+          "displayValue": "Est savings of 0\u00a0ms",
+          "savingsMs": 0
+        }
+      ]
+    },
+    "desktop": {
+      "scores": {
+        "performance": 34,
+        "accessibility": 91,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "failed_seo": [],
+      "failed_a11y": [
+        {
+          "id": "aria-allowed-role",
+          "title": "Uses ARIA roles on incompatible elements",
+          "description": "Many HTML elements can only be assigned certain ARIA roles. Using ARIA roles where they are not allowed can interfere with the accessibility of the web page. [Learn more about ARIA roles](https://dequeuniversity.com/rules/axe/4.10/aria-allowed-role).",
+          "score": 0,
+          "displayValue": ""
+        },
+        {
+          "id": "color-contrast",
+          "title": "Background and foreground colors do not have a sufficient contrast ratio.",
+          "description": "Low-contrast text is difficult or impossible for many users to read. [Learn how to provide sufficient color contrast](https://dequeuniversity.com/rules/axe/4.10/color-contrast).",
+          "score": 0,
+          "displayValue": ""
+        },
+        {
+          "id": "heading-order",
+          "title": "Heading elements are not in a sequentially-descending order",
+          "description": "Properly ordered headings that do not skip levels convey the semantic structure of the page, making it easier to navigate and understand when using assistive technologies. [Learn more about heading order](https://dequeuniversity.com/rules/axe/4.10/heading-order).",
+          "score": 0,
+          "displayValue": ""
+        },
+        {
+          "id": "meta-viewport",
+          "title": "`[user-scalable=\"no\"]` is used in the `<meta name=\"viewport\">` element or the `[maximum-scale]` attribute is less than 5.",
+          "description": "Disabling zooming is problematic for users with low vision who rely on screen magnification to properly see the contents of a web page. [Learn more about the viewport meta tag](https://dequeuniversity.com/rules/axe/4.10/meta-viewport).",
+          "score": 0,
+          "displayValue": ""
+        }
+      ],
+      "perf_metrics": {
+        "largest-contentful-paint": {
+          "score": 0.2,
+          "displayValue": "3.7\u00a0s",
+          "numericValue": 3730.8140000000003
+        },
+        "cumulative-layout-shift": {
+          "score": 1,
+          "displayValue": "0.007",
+          "numericValue": 0.006797
+        },
+        "total-blocking-time": {
+          "score": 0,
+          "displayValue": "6,610\u00a0ms",
+          "numericValue": 6613.5
+        },
+        "first-contentful-paint": {
+          "score": 0.36,
+          "displayValue": "1.9\u00a0s",
+          "numericValue": 1852.3139999999999
+        },
+        "speed-index": {
+          "score": 0,
+          "displayValue": "7.7\u00a0s",
+          "numericValue": 7716.895111641341
+        },
+        "interactive": {
+          "score": 0.06,
+          "displayValue": "9.2\u00a0s",
+          "numericValue": 9171.864000000001
+        },
+        "first-meaningful-paint": {
+          "score": null,
+          "displayValue": "",
+          "numericValue": null
+        }
+      },
+      "perf_opps": [
+        {
+          "id": "offscreen-images",
+          "title": "Defer offscreen images",
+          "description": "Consider lazy-loading offscreen and hidden images after all critical resources have finished loading to lower time to interactive. [Learn how to defer offscreen images](https://developer.chrome.com/docs/lighthouse/performance/offscreen-images/).",
+          "score": 0.5,
+          "displayValue": "Est savings of 14\u00a0KiB",
+          "savingsMs": 0
+        },
+        {
+          "id": "unused-javascript",
+          "title": "Reduce unused JavaScript",
+          "description": "Reduce unused JavaScript and defer loading scripts until they are required to decrease bytes consumed by network activity. [Learn how to reduce unused JavaScript](https://developer.chrome.com/docs/lighthouse/performance/unused-javascript/).",
+          "score": 0.5,
+          "displayValue": "Est savings of 60\u00a0KiB",
+          "savingsMs": 0
+        }
+      ]
+    }
+  },
+  "blog-pipeda": {
+    "mobile": {
+      "scores": {
+        "performance": 49,
+        "accessibility": 91,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "failed_seo": [],
+      "failed_a11y": [
+        {
+          "id": "color-contrast",
+          "title": "Background and foreground colors do not have a sufficient contrast ratio.",
+          "description": "Low-contrast text is difficult or impossible for many users to read. [Learn how to provide sufficient color contrast](https://dequeuniversity.com/rules/axe/4.10/color-contrast).",
+          "score": 0,
+          "displayValue": ""
+        },
+        {
+          "id": "heading-order",
+          "title": "Heading elements are not in a sequentially-descending order",
+          "description": "Properly ordered headings that do not skip levels convey the semantic structure of the page, making it easier to navigate and understand when using assistive technologies. [Learn more about heading order](https://dequeuniversity.com/rules/axe/4.10/heading-order).",
+          "score": 0,
+          "displayValue": ""
+        },
+        {
+          "id": "meta-viewport",
+          "title": "`[user-scalable=\"no\"]` is used in the `<meta name=\"viewport\">` element or the `[maximum-scale]` attribute is less than 5.",
+          "description": "Disabling zooming is problematic for users with low vision who rely on screen magnification to properly see the contents of a web page. [Learn more about the viewport meta tag](https://dequeuniversity.com/rules/axe/4.10/meta-viewport).",
+          "score": 0,
+          "displayValue": ""
+        }
+      ],
+      "perf_metrics": {
+        "largest-contentful-paint": {
+          "score": 0.09,
+          "displayValue": "6.4\u00a0s",
+          "numericValue": 6422.108
+        },
+        "cumulative-layout-shift": {
+          "score": 0.22,
+          "displayValue": "0.426",
+          "numericValue": 0.426488
+        },
+        "total-blocking-time": {
+          "score": 0.82,
+          "displayValue": "270\u00a0ms",
+          "numericValue": 271
+        },
+        "first-contentful-paint": {
+          "score": 0.69,
+          "displayValue": "2.4\u00a0s",
+          "numericValue": 2447.108
+        },
+        "speed-index": {
+          "score": 0.93,
+          "displayValue": "3.1\u00a0s",
+          "numericValue": 3119.705806241936
+        },
+        "interactive": {
+          "score": 0.59,
+          "displayValue": "6.4\u00a0s",
+          "numericValue": 6429.608
+        },
+        "first-meaningful-paint": {
+          "score": null,
+          "displayValue": "",
+          "numericValue": null
+        }
+      },
+      "perf_opps": [
+        {
+          "id": "uses-rel-preconnect",
+          "title": "Preconnect to required origins",
+          "description": "Consider adding `preconnect` or `dns-prefetch` resource hints to establish early connections to important third-party origins. [Learn how to preconnect to required origins](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/).",
+          "score": 0,
+          "displayValue": "Est savings of 330\u00a0ms",
+          "savingsMs": 329.636
+        },
+        {
+          "id": "unused-javascript",
+          "title": "Reduce unused JavaScript",
+          "description": "Reduce unused JavaScript and defer loading scripts until they are required to decrease bytes consumed by network activity. [Learn how to reduce unused JavaScript](https://developer.chrome.com/docs/lighthouse/performance/unused-javascript/).",
+          "score": 0,
+          "displayValue": "Est savings of 73\u00a0KiB",
+          "savingsMs": 300
+        },
+        {
+          "id": "render-blocking-resources",
+          "title": "Eliminate render-blocking resources",
+          "description": "Resources are blocking the first paint of your page. Consider delivering critical JS/CSS inline and deferring all non-critical JS/styles. [Learn how to eliminate render-blocking resources](https://developer.chrome.com/docs/lighthouse/performance/render-blocking-resources/).",
+          "score": 0.5,
+          "displayValue": "Est savings of 0\u00a0ms",
+          "savingsMs": 0
+        }
+      ]
+    },
+    "desktop": {
+      "scores": {
+        "performance": 77,
+        "accessibility": 90,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "failed_seo": [],
+      "failed_a11y": [
+        {
+          "id": "aria-allowed-role",
+          "title": "Uses ARIA roles on incompatible elements",
+          "description": "Many HTML elements can only be assigned certain ARIA roles. Using ARIA roles where they are not allowed can interfere with the accessibility of the web page. [Learn more about ARIA roles](https://dequeuniversity.com/rules/axe/4.10/aria-allowed-role).",
+          "score": 0,
+          "displayValue": ""
+        },
+        {
+          "id": "color-contrast",
+          "title": "Background and foreground colors do not have a sufficient contrast ratio.",
+          "description": "Low-contrast text is difficult or impossible for many users to read. [Learn how to provide sufficient color contrast](https://dequeuniversity.com/rules/axe/4.10/color-contrast).",
+          "score": 0,
+          "displayValue": ""
+        },
+        {
+          "id": "heading-order",
+          "title": "Heading elements are not in a sequentially-descending order",
+          "description": "Properly ordered headings that do not skip levels convey the semantic structure of the page, making it easier to navigate and understand when using assistive technologies. [Learn more about heading order](https://dequeuniversity.com/rules/axe/4.10/heading-order).",
+          "score": 0,
+          "displayValue": ""
+        },
+        {
+          "id": "meta-viewport",
+          "title": "`[user-scalable=\"no\"]` is used in the `<meta name=\"viewport\">` element or the `[maximum-scale]` attribute is less than 5.",
+          "description": "Disabling zooming is problematic for users with low vision who rely on screen magnification to properly see the contents of a web page. [Learn more about the viewport meta tag](https://dequeuniversity.com/rules/axe/4.10/meta-viewport).",
+          "score": 0,
+          "displayValue": ""
+        }
+      ],
+      "perf_metrics": {
+        "largest-contentful-paint": {
+          "score": 0.87,
+          "displayValue": "1.3\u00a0s",
+          "numericValue": 1302.818
+        },
+        "cumulative-layout-shift": {
+          "score": 0.25,
+          "displayValue": "0.398",
+          "numericValue": 0.397662
+        },
+        "total-blocking-time": {
+          "score": 1,
+          "displayValue": "0\u00a0ms",
+          "numericValue": 0
+        },
+        "first-contentful-paint": {
+          "score": 0.99,
+          "displayValue": "0.6\u00a0s",
+          "numericValue": 562.818
+        },
+        "speed-index": {
+          "score": 0.94,
+          "displayValue": "1.2\u00a0s",
+          "numericValue": 1150.2555499118448
+        },
+        "interactive": {
+          "score": 1,
+          "displayValue": "1.3\u00a0s",
+          "numericValue": 1304.8180000000002
+        },
+        "first-meaningful-paint": {
+          "score": null,
+          "displayValue": "",
+          "numericValue": null
+        }
+      },
+      "perf_opps": [
+        {
+          "id": "uses-rel-preconnect",
+          "title": "Preconnect to required origins",
+          "description": "Consider adding `preconnect` or `dns-prefetch` resource hints to establish early connections to important third-party origins. [Learn how to preconnect to required origins](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/).",
+          "score": 0,
+          "displayValue": "Est savings of 110\u00a0ms",
+          "savingsMs": 113.15
+        },
+        {
+          "id": "unused-javascript",
+          "title": "Reduce unused JavaScript",
+          "description": "Reduce unused JavaScript and defer loading scripts until they are required to decrease bytes consumed by network activity. [Learn how to reduce unused JavaScript](https://developer.chrome.com/docs/lighthouse/performance/unused-javascript/).",
+          "score": 0,
+          "displayValue": "Est savings of 73\u00a0KiB",
+          "savingsMs": 40
+        }
+      ]
+    }
+  },
+  "portal-home": {
+    "mobile": {
+      "scores": {
+        "performance": 48,
+        "accessibility": 95,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "failed_seo": [],
+      "failed_a11y": [
+        {
+          "id": "color-contrast",
+          "title": "Background and foreground colors do not have a sufficient contrast ratio.",
+          "description": "Low-contrast text is difficult or impossible for many users to read. [Learn how to provide sufficient color contrast](https://dequeuniversity.com/rules/axe/4.10/color-contrast).",
+          "score": 0,
+          "displayValue": ""
+        },
+        {
+          "id": "heading-order",
+          "title": "Heading elements are not in a sequentially-descending order",
+          "description": "Properly ordered headings that do not skip levels convey the semantic structure of the page, making it easier to navigate and understand when using assistive technologies. [Learn more about heading order](https://dequeuniversity.com/rules/axe/4.10/heading-order).",
+          "score": 0,
+          "displayValue": ""
+        }
+      ],
+      "perf_metrics": {
+        "largest-contentful-paint": {
+          "score": 0.07,
+          "displayValue": "6.9\u00a0s",
+          "numericValue": 6870.0505
+        },
+        "cumulative-layout-shift": {
+          "score": 1,
+          "displayValue": "0",
+          "numericValue": 0
+        },
+        "total-blocking-time": {
+          "score": 0.33,
+          "displayValue": "870\u00a0ms",
+          "numericValue": 870
+        },
+        "first-contentful-paint": {
+          "score": 0.46,
+          "displayValue": "3.1\u00a0s",
+          "numericValue": 3120.0505000000003
+        },
+        "speed-index": {
+          "score": 0.64,
+          "displayValue": "5.0\u00a0s",
+          "numericValue": 4961.9338606567635
+        },
+        "interactive": {
+          "score": 0.54,
+          "displayValue": "6.9\u00a0s",
+          "numericValue": 6870.050500000001
+        },
+        "first-meaningful-paint": {
+          "score": null,
+          "displayValue": "",
+          "numericValue": null
+        }
+      },
+      "perf_opps": [
+        {
+          "id": "unused-javascript",
+          "title": "Reduce unused JavaScript",
+          "description": "Reduce unused JavaScript and defer loading scripts until they are required to decrease bytes consumed by network activity. [Learn how to reduce unused JavaScript](https://developer.chrome.com/docs/lighthouse/performance/unused-javascript/).",
+          "score": 0,
+          "displayValue": "Est savings of 132\u00a0KiB",
+          "savingsMs": 750
+        },
+        {
+          "id": "uses-rel-preconnect",
+          "title": "Preconnect to required origins",
+          "description": "Consider adding `preconnect` or `dns-prefetch` resource hints to establish early connections to important third-party origins. [Learn how to preconnect to required origins](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/).",
+          "score": 0,
+          "displayValue": "Est savings of 300\u00a0ms",
+          "savingsMs": 301.326
+        },
+        {
+          "id": "render-blocking-resources",
+          "title": "Eliminate render-blocking resources",
+          "description": "Resources are blocking the first paint of your page. Consider delivering critical JS/CSS inline and deferring all non-critical JS/styles. [Learn how to eliminate render-blocking resources](https://developer.chrome.com/docs/lighthouse/performance/render-blocking-resources/).",
+          "score": 0.5,
+          "displayValue": "Est savings of 0\u00a0ms",
+          "savingsMs": 0
+        }
+      ]
+    },
+    "desktop": {
+      "scores": {
+        "performance": 97,
+        "accessibility": 95,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "failed_seo": [],
+      "failed_a11y": [
+        {
+          "id": "color-contrast",
+          "title": "Background and foreground colors do not have a sufficient contrast ratio.",
+          "description": "Low-contrast text is difficult or impossible for many users to read. [Learn how to provide sufficient color contrast](https://dequeuniversity.com/rules/axe/4.10/color-contrast).",
+          "score": 0,
+          "displayValue": ""
+        },
+        {
+          "id": "heading-order",
+          "title": "Heading elements are not in a sequentially-descending order",
+          "description": "Properly ordered headings that do not skip levels convey the semantic structure of the page, making it easier to navigate and understand when using assistive technologies. [Learn more about heading order](https://dequeuniversity.com/rules/axe/4.10/heading-order).",
+          "score": 0,
+          "displayValue": ""
+        }
+      ],
+      "perf_metrics": {
+        "largest-contentful-paint": {
+          "score": 0.92,
+          "displayValue": "1.1\u00a0s",
+          "numericValue": 1122.545
+        },
+        "cumulative-layout-shift": {
+          "score": 1,
+          "displayValue": "0.014",
+          "numericValue": 0.014272
+        },
+        "total-blocking-time": {
+          "score": 0.97,
+          "displayValue": "100\u00a0ms",
+          "numericValue": 99
+        },
+        "first-contentful-paint": {
+          "score": 0.99,
+          "displayValue": "0.6\u00a0s",
+          "numericValue": 602.5450000000001
+        },
+        "speed-index": {
+          "score": 1,
+          "displayValue": "0.7\u00a0s",
+          "numericValue": 698.2242771189137
+        },
+        "interactive": {
+          "score": 1,
+          "displayValue": "1.1\u00a0s",
+          "numericValue": 1122.545
+        },
+        "first-meaningful-paint": {
+          "score": null,
+          "displayValue": "",
+          "numericValue": null
+        }
+      },
+      "perf_opps": [
+        {
+          "id": "unused-javascript",
+          "title": "Reduce unused JavaScript",
+          "description": "Reduce unused JavaScript and defer loading scripts until they are required to decrease bytes consumed by network activity. [Learn how to reduce unused JavaScript](https://developer.chrome.com/docs/lighthouse/performance/unused-javascript/).",
+          "score": 0,
+          "displayValue": "Est savings of 132\u00a0KiB",
+          "savingsMs": 120
+        }
+      ]
+    }
+  },
+  "portal-catalog": {
+    "mobile": {
+      "scores": {
+        "performance": 66,
+        "accessibility": 97,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "failed_seo": [],
+      "failed_a11y": [
+        {
+          "id": "color-contrast",
+          "title": "Background and foreground colors do not have a sufficient contrast ratio.",
+          "description": "Low-contrast text is difficult or impossible for many users to read. [Learn how to provide sufficient color contrast](https://dequeuniversity.com/rules/axe/4.10/color-contrast).",
+          "score": 0,
+          "displayValue": ""
+        }
+      ],
+      "perf_metrics": {
+        "largest-contentful-paint": {
+          "score": 0.07,
+          "displayValue": "6.8\u00a0s",
+          "numericValue": 6791.065500000001
+        },
+        "cumulative-layout-shift": {
+          "score": 1,
+          "displayValue": "0",
+          "numericValue": 0
+        },
+        "total-blocking-time": {
+          "score": 0.83,
+          "displayValue": "260\u00a0ms",
+          "numericValue": 256
+        },
+        "first-contentful-paint": {
+          "score": 0.48,
+          "displayValue": "3.0\u00a0s",
+          "numericValue": 3041.0655
+        },
+        "speed-index": {
+          "score": 0.92,
+          "displayValue": "3.2\u00a0s",
+          "numericValue": 3150.66410001744
+        },
+        "interactive": {
+          "score": 0.55,
+          "displayValue": "6.8\u00a0s",
+          "numericValue": 6791.065500000001
+        },
+        "first-meaningful-paint": {
+          "score": null,
+          "displayValue": "",
+          "numericValue": null
+        }
+      },
+      "perf_opps": [
+        {
+          "id": "unused-javascript",
+          "title": "Reduce unused JavaScript",
+          "description": "Reduce unused JavaScript and defer loading scripts until they are required to decrease bytes consumed by network activity. [Learn how to reduce unused JavaScript](https://developer.chrome.com/docs/lighthouse/performance/unused-javascript/).",
+          "score": 0,
+          "displayValue": "Est savings of 146\u00a0KiB",
+          "savingsMs": 750
+        },
+        {
+          "id": "uses-rel-preconnect",
+          "title": "Preconnect to required origins",
+          "description": "Consider adding `preconnect` or `dns-prefetch` resource hints to establish early connections to important third-party origins. [Learn how to preconnect to required origins](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/).",
+          "score": 0,
+          "displayValue": "Est savings of 300\u00a0ms",
+          "savingsMs": 300.488
+        },
+        {
+          "id": "render-blocking-resources",
+          "title": "Eliminate render-blocking resources",
+          "description": "Resources are blocking the first paint of your page. Consider delivering critical JS/CSS inline and deferring all non-critical JS/styles. [Learn how to eliminate render-blocking resources](https://developer.chrome.com/docs/lighthouse/performance/render-blocking-resources/).",
+          "score": 0.5,
+          "displayValue": "Est savings of 0\u00a0ms",
+          "savingsMs": 0
+        }
+      ]
+    },
+    "desktop": {
+      "scores": {
+        "performance": 98,
+        "accessibility": 97,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "failed_seo": [],
+      "failed_a11y": [
+        {
+          "id": "color-contrast",
+          "title": "Background and foreground colors do not have a sufficient contrast ratio.",
+          "description": "Low-contrast text is difficult or impossible for many users to read. [Learn how to provide sufficient color contrast](https://dequeuniversity.com/rules/axe/4.10/color-contrast).",
+          "score": 0,
+          "displayValue": ""
+        }
+      ],
+      "perf_metrics": {
+        "largest-contentful-paint": {
+          "score": 0.91,
+          "displayValue": "1.1\u00a0s",
+          "numericValue": 1138.2640000000001
+        },
+        "cumulative-layout-shift": {
+          "score": 1,
+          "displayValue": "0.005",
+          "numericValue": 0.005232
+        },
+        "total-blocking-time": {
+          "score": 1,
+          "displayValue": "60\u00a0ms",
+          "numericValue": 61
+        },
+        "first-contentful-paint": {
+          "score": 0.98,
+          "displayValue": "0.6\u00a0s",
+          "numericValue": 638.264
+        },
+        "speed-index": {
+          "score": 1,
+          "displayValue": "0.6\u00a0s",
+          "numericValue": 638.264
+        },
+        "interactive": {
+          "score": 1,
+          "displayValue": "1.1\u00a0s",
+          "numericValue": 1140.2640000000001
+        },
+        "first-meaningful-paint": {
+          "score": null,
+          "displayValue": "",
+          "numericValue": null
+        }
+      },
+      "perf_opps": [
+        {
+          "id": "unused-javascript",
+          "title": "Reduce unused JavaScript",
+          "description": "Reduce unused JavaScript and defer loading scripts until they are required to decrease bytes consumed by network activity. [Learn how to reduce unused JavaScript](https://developer.chrome.com/docs/lighthouse/performance/unused-javascript/).",
+          "score": 0,
+          "displayValue": "Est savings of 146\u00a0KiB",
+          "savingsMs": 120
+        }
+      ]
+    }
+  },
+  "portal-landing": {
+    "mobile": {
+      "scores": {
+        "performance": 66,
+        "accessibility": 95,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "failed_seo": [],
+      "failed_a11y": [
+        {
+          "id": "color-contrast",
+          "title": "Background and foreground colors do not have a sufficient contrast ratio.",
+          "description": "Low-contrast text is difficult or impossible for many users to read. [Learn how to provide sufficient color contrast](https://dequeuniversity.com/rules/axe/4.10/color-contrast).",
+          "score": 0,
+          "displayValue": ""
+        },
+        {
+          "id": "heading-order",
+          "title": "Heading elements are not in a sequentially-descending order",
+          "description": "Properly ordered headings that do not skip levels convey the semantic structure of the page, making it easier to navigate and understand when using assistive technologies. [Learn more about heading order](https://dequeuniversity.com/rules/axe/4.10/heading-order).",
+          "score": 0,
+          "displayValue": ""
+        }
+      ],
+      "perf_metrics": {
+        "largest-contentful-paint": {
+          "score": 0.08,
+          "displayValue": "6.6\u00a0s",
+          "numericValue": 6586.572
+        },
+        "cumulative-layout-shift": {
+          "score": 1,
+          "displayValue": "0",
+          "numericValue": 0
+        },
+        "total-blocking-time": {
+          "score": 0.78,
+          "displayValue": "300\u00a0ms",
+          "numericValue": 302
+        },
+        "first-contentful-paint": {
+          "score": 0.58,
+          "displayValue": "2.8\u00a0s",
+          "numericValue": 2761.572
+        },
+        "speed-index": {
+          "score": 0.93,
+          "displayValue": "3.1\u00a0s",
+          "numericValue": 3121.7816452760153
+        },
+        "interactive": {
+          "score": 0.57,
+          "displayValue": "6.6\u00a0s",
+          "numericValue": 6594.072
+        },
+        "first-meaningful-paint": {
+          "score": null,
+          "displayValue": "",
+          "numericValue": null
+        }
+      },
+      "perf_opps": [
+        {
+          "id": "unused-javascript",
+          "title": "Reduce unused JavaScript",
+          "description": "Reduce unused JavaScript and defer loading scripts until they are required to decrease bytes consumed by network activity. [Learn how to reduce unused JavaScript](https://developer.chrome.com/docs/lighthouse/performance/unused-javascript/).",
+          "score": 0,
+          "displayValue": "Est savings of 145\u00a0KiB",
+          "savingsMs": 750
+        },
+        {
+          "id": "uses-rel-preconnect",
+          "title": "Preconnect to required origins",
+          "description": "Consider adding `preconnect` or `dns-prefetch` resource hints to establish early connections to important third-party origins. [Learn how to preconnect to required origins](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/).",
+          "score": 0,
+          "displayValue": "Est savings of 300\u00a0ms",
+          "savingsMs": 302.288
+        },
+        {
+          "id": "render-blocking-resources",
+          "title": "Eliminate render-blocking resources",
+          "description": "Resources are blocking the first paint of your page. Consider delivering critical JS/CSS inline and deferring all non-critical JS/styles. [Learn how to eliminate render-blocking resources](https://developer.chrome.com/docs/lighthouse/performance/render-blocking-resources/).",
+          "score": 0.5,
+          "displayValue": "Est savings of 0\u00a0ms",
+          "savingsMs": 0
+        }
+      ]
+    },
+    "desktop": {
+      "scores": {
+        "performance": 98,
+        "accessibility": 95,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "failed_seo": [],
+      "failed_a11y": [
+        {
+          "id": "color-contrast",
+          "title": "Background and foreground colors do not have a sufficient contrast ratio.",
+          "description": "Low-contrast text is difficult or impossible for many users to read. [Learn how to provide sufficient color contrast](https://dequeuniversity.com/rules/axe/4.10/color-contrast).",
+          "score": 0,
+          "displayValue": ""
+        },
+        {
+          "id": "heading-order",
+          "title": "Heading elements are not in a sequentially-descending order",
+          "description": "Properly ordered headings that do not skip levels convey the semantic structure of the page, making it easier to navigate and understand when using assistive technologies. [Learn more about heading order](https://dequeuniversity.com/rules/axe/4.10/heading-order).",
+          "score": 0,
+          "displayValue": ""
+        }
+      ],
+      "perf_metrics": {
+        "largest-contentful-paint": {
+          "score": 0.92,
+          "displayValue": "1.1\u00a0s",
+          "numericValue": 1118.415
+        },
+        "cumulative-layout-shift": {
+          "score": 1,
+          "displayValue": "0.016",
+          "numericValue": 0.016420999999999998
+        },
+        "total-blocking-time": {
+          "score": 1,
+          "displayValue": "0\u00a0ms",
+          "numericValue": 0
+        },
+        "first-contentful-paint": {
+          "score": 0.99,
+          "displayValue": "0.6\u00a0s",
+          "numericValue": 598.415
+        },
+        "speed-index": {
+          "score": 1,
+          "displayValue": "0.6\u00a0s",
+          "numericValue": 598.415
+        },
+        "interactive": {
+          "score": 1,
+          "displayValue": "1.1\u00a0s",
+          "numericValue": 1118.415
+        },
+        "first-meaningful-paint": {
+          "score": null,
+          "displayValue": "",
+          "numericValue": null
+        }
+      },
+      "perf_opps": [
+        {
+          "id": "unused-javascript",
+          "title": "Reduce unused JavaScript",
+          "description": "Reduce unused JavaScript and defer loading scripts until they are required to decrease bytes consumed by network activity. [Learn how to reduce unused JavaScript](https://developer.chrome.com/docs/lighthouse/performance/unused-javascript/).",
+          "score": 0,
+          "displayValue": "Est savings of 145\u00a0KiB",
+          "savingsMs": 120
+        }
+      ]
+    }
+  }
+}

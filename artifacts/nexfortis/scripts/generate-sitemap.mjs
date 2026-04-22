@@ -38,7 +38,10 @@ async function walkPrerendered() {
 }
 
 async function loadBlogDates() {
-  const apiUrl = process.env.SITEMAP_BLOG_API || "https://api.nexfortis.com";
+  // Unified blog API URL — same default and same env var the prerender script
+  // uses, so both produce consistent output. Override via BLOG_API for custom
+  // domains (e.g. future api.nexfortis.com CNAME).
+  const apiUrl = process.env.BLOG_API || process.env.SITEMAP_BLOG_API || "https://nexfortis-api.onrender.com/api";
   const fallbackPath = path.join(__dirname, "blog-fallback.json");
   let posts = null;
   try {
@@ -53,8 +56,17 @@ async function loadBlogDates() {
   } catch (e) {
     console.warn(`[sitemap] live-post fetch failed (${e.message}); using checked-in fallback for dates`);
   }
+  // Fall back to checked-in JSON. If that file is also missing, fail the build
+  // rather than silently producing a sitemap with no blog-post dates.
   if (!posts) {
-    posts = JSON.parse(await fs.readFile(fallbackPath, "utf-8"));
+    try {
+      posts = JSON.parse(await fs.readFile(fallbackPath, "utf-8"));
+    } catch (e) {
+      throw new Error(
+        `[sitemap] blog fallback file ${fallbackPath} missing or invalid (${e.message}). ` +
+          `Live API fetch also failed — aborting sitemap build rather than emit stale dates.`,
+      );
+    }
   }
   const dateMap = new Map();
   for (const p of posts) {

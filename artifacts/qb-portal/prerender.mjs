@@ -69,29 +69,65 @@ async function discoverStaticRoutes() {
 
 async function loadDynamicRoutes() {
   const routes = [];
+
+  // products.json drives /service/* and /category/* routes. A missing or
+  // unparseable file would silently publish a site with zero service and
+  // category pages prerendered — fail the build instead so the issue is
+  // visible in the Render build log and the previous deploy stays live.
+  const productsPath = path.join(__dirname, "public", "products.json");
+  let products;
   try {
-    const products = JSON.parse(
-      await fs.readFile(path.join(__dirname, "public", "products.json"), "utf-8"),
+    products = JSON.parse(await fs.readFile(productsPath, "utf-8"));
+  } catch (e) {
+    throw new Error(
+      `[prerender] required file ${productsPath} missing or invalid (${e.message}). ` +
+        `This file drives /service/* and /category/* routes — aborting build.`,
     );
-    const cats = new Set();
-    for (const s of products.services || []) {
-      if (s.slug) routes.push(`/service/${s.slug}`);
-      if (s.category_slug) cats.add(s.category_slug);
+  }
+  const serviceList = products.services || [];
+  if (!Array.isArray(serviceList) || serviceList.length === 0) {
+    throw new Error(
+      `[prerender] ${productsPath} contains no services — at least one service is required, aborting build.`,
+    );
+  }
+  const cats = new Set();
+  let serviceRoutesAdded = 0;
+  for (const s of serviceList) {
+    if (s.slug) {
+      routes.push(`/service/${s.slug}`);
+      serviceRoutesAdded++;
     }
-    for (const slug of cats) routes.push(`/category/${slug}`);
-  } catch (e) {
-    console.warn(`[prerender] could not load products.json: ${e.message}`);
+    if (s.category_slug) cats.add(s.category_slug);
   }
-  try {
-    const landingTs = await fs.readFile(
-      path.join(__dirname, "src", "data", "landingPages.ts"),
-      "utf-8",
+  if (serviceRoutesAdded === 0) {
+    throw new Error(
+      `[prerender] no services with a .slug field in ${productsPath} — aborting build.`,
     );
-    const slugs = [...landingTs.matchAll(/^\s*slug:\s*"([^"]+)"/gm)].map((m) => m[1]);
-    for (const slug of slugs) routes.push(`/landing/${slug}`);
-  } catch (e) {
-    console.warn(`[prerender] could not load landingPages.ts: ${e.message}`);
   }
+  for (const slug of cats) routes.push(`/category/${slug}`);
+
+  // landingPages.ts drives /landing/* routes. A missing file or a TypeScript
+  // refactor that changes the slug literal syntax would silently yield zero
+  // landing pages — fail the build on that condition too.
+  const landingPath = path.join(__dirname, "src", "data", "landingPages.ts");
+  let landingTs;
+  try {
+    landingTs = await fs.readFile(landingPath, "utf-8");
+  } catch (e) {
+    throw new Error(
+      `[prerender] required file ${landingPath} missing (${e.message}). ` +
+        `This file drives /landing/* routes — aborting build.`,
+    );
+  }
+  const slugs = [...landingTs.matchAll(/^\s*slug:\s*"([^"]+)"/gm)].map((m) => m[1]);
+  if (slugs.length === 0) {
+    throw new Error(
+      `[prerender] matched zero landing-page slugs in ${landingPath} — ` +
+        `either the file is empty or the slug literal syntax changed. Aborting build.`,
+    );
+  }
+  for (const slug of slugs) routes.push(`/landing/${slug}`);
+
   return routes;
 }
 
