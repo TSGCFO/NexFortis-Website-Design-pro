@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
-import { useSearch } from "wouter";
-import { Shield, Lock } from "lucide-react";
+import { useSearch, Link } from "wouter";
+import { Shield, Lock, AlertTriangle } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { useAuth } from "@/lib/auth";
 import { loadProducts, type ProductCatalog, type Product, formatPrice, getActivePrice, getProductById } from "@/lib/products";
 import { SEO } from "@/components/seo";
@@ -232,6 +233,32 @@ export default function Order() {
   };
 
   if (!catalog) return <div className="min-h-screen flex items-center justify-center"><div className="animate-pulse text-muted-foreground">Loading...</div></div>;
+
+  // Guardrail: reject subscription products at the one-time /order flow.
+  // Subscription plans MUST be purchased via /subscription (Stripe Checkout
+  // subscription mode) so the recurring billing and entitlement records are
+  // created correctly. Paying once for a monthly plan would grant nothing
+  // and silently fail on both customer and operator sides.
+  if (selectedProduct && selectedProduct.billing_type === "subscription") {
+    return (
+      <div className="min-h-screen flex items-center justify-center px-4">
+        <div className="max-w-lg w-full bg-white border border-border rounded-lg shadow-sm p-8 text-center">
+          <AlertTriangle className="w-12 h-12 text-rose-gold mx-auto mb-4" />
+          <h1 className="text-2xl font-bold font-display text-primary mb-3">This plan is a monthly subscription</h1>
+          <p className="text-muted-foreground mb-6">
+            {selectedProduct.name} is billed monthly, not as a one-time purchase.
+            To subscribe, please visit our subscription page where you can pick a tier
+            and manage your recurring plan.
+          </p>
+          <Link href="/subscription">
+            <Button className="bg-rose-gold text-rose-gold-foreground hover:bg-rose-gold-hover font-display font-bold" size="lg">
+              View Subscription Plans
+            </Button>
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   if (orderComplete) {
     return <OrderComplete orderId={orderId} serviceName={selectedSvc?.name} addonNames={selectedAddons.map((id) => addons.find((a) => a.id === id)?.name || "")} total={total} fileName={file?.name} email={email} />;

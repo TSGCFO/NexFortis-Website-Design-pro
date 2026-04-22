@@ -374,6 +374,21 @@ router.post("/checkout/create-session", async (req: Request, res: Response) => {
       return;
     }
 
+    // Guardrail: refuse to create a one-time order for a subscription product.
+    // Subscription plans must go through POST /subscriptions/checkout (Stripe
+    // Checkout subscription mode) so a qb_subscriptions row + entitlement is
+    // created. A one-time charge here would take the customer's money and
+    // grant no recurring access — silent failure on both sides.
+    if (pricing.isSubscription) {
+      console.warn("[checkout/create-session] Rejected: subscription product sent to one-time flow", { serviceId, customerEmail });
+      res.status(400).json({
+        error: "This plan is a monthly subscription and cannot be purchased as a one-time order. Please use the subscription checkout.",
+        code: "SUBSCRIPTION_NOT_ALLOWED_IN_ONE_TIME_FLOW",
+        redirectTo: "/subscription",
+      });
+      return;
+    }
+
     const authHeader = req.headers.authorization;
     let userId: string | null = null;
     if (supabaseAdmin && authHeader?.startsWith("Bearer ")) {
