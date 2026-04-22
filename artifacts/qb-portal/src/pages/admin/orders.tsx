@@ -16,7 +16,7 @@ interface OrderRow {
   hasUploadedFile: boolean;
 }
 
-const STATUS_FILTERS = ["all", "pending_payment", "submitted", "paid", "processing", "completed", "failed", "cancelled"];
+const STATUS_FILTERS = ["all", "pending_payment", "submitted", "paid", "processing", "completed", "delivered", "failed", "cancelled"];
 
 const TABLE_COLUMNS = [
   { width: "w-10" },
