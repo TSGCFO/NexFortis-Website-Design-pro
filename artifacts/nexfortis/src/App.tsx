@@ -58,13 +58,13 @@ function Router() {
           </Route>
           <Route path="/privacy" component={Privacy} />
           <Route path="/terms" component={Terms} />
-          {/* 404 catch-all. DO NOT change this to <Route path="*" component={NotFound} />.
-              The prerender script discovers static routes by matching <Route path="...">
-              literals in this file; a `path="*"` would be picked up as a route to
-              prerender and either (a) fail with a cryptic puppeteer error, or (b)
-              emit a NotFound index.html at /* on disk. A catch-all <Route> without
-              a path prop is the correct wouter idiom for a 404 and is invisible to
-              the prerender discovery regex. */}
+          {/* 404 catch-all. DO NOT add a path prop to this Route.
+              The prerender script discovers static routes by matching Route path
+              string literals in this file; a wildcard path prop here would be
+              picked up as a route to prerender and either fail with a cryptic
+              puppeteer error or emit a NotFound index.html at an invalid path
+              on disk. A catch-all Route without a path prop is the correct
+              wouter idiom for a 404 and is invisible to the discovery regex. */}
           <Route component={NotFound} />
         </Switch>
       </Suspense>
