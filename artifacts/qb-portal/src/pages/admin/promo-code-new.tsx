@@ -330,7 +330,7 @@ function NewPromoCodeContent() {
             <div className="border border-gray-200 rounded-lg max-h-64 overflow-y-auto p-3 space-y-3">
               {Object.entries(productsByCategory).map(([cat, items]) => (
                 <div key={cat}>
-                  <p className="text-xs uppercase text-gray-400 mb-1">{cat}</p>
+                  <p className="text-xs uppercase text-gray-600 mb-1">{cat}</p>
                   {items.map((p) => (
                     <label key={p.id} className="flex items-center gap-2 text-sm py-1">
                       <input
@@ -343,7 +343,7 @@ function NewPromoCodeContent() {
                   ))}
                 </div>
               ))}
-              {products.length === 0 && <p className="text-sm text-gray-400">Loading products…</p>}
+              {products.length === 0 && <p className="text-sm text-gray-600">Loading products…</p>}
             </div>
           </div>
         </Section>

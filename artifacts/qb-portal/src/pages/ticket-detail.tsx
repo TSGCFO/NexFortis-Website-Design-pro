@@ -261,11 +261,11 @@ export default function TicketDetailPage() {
                   </div>
                   <div className="flex-1 bg-blue-50 rounded-lg p-3">
                     <div className="flex items-center gap-2 mb-1">
-                      <span className="text-sm font-medium">You</span>
-                      <span className="text-xs text-gray-400">{formatRelativeTime(ticket.createdAt)}</span>
+                      <span className="text-sm font-medium text-gray-900">You</span>
+                      <span className="text-xs text-gray-600">{formatRelativeTime(ticket.createdAt)}</span>
                     </div>
-                    <h3 className="text-sm font-semibold mb-1">{ticket.subject}</h3>
-                    <p className="text-sm text-gray-700 whitespace-pre-wrap">{ticket.message}</p>
+                    <h3 className="text-sm font-semibold mb-1 text-gray-900" style={{ fontFamily: "'Inter', sans-serif" }}>{ticket.subject}</h3>
+                    <p className="text-sm text-gray-800 whitespace-pre-wrap">{ticket.message}</p>
                   </div>
                 </div>
 
@@ -282,12 +282,12 @@ export default function TicketDetailPage() {
                       reply.senderRole === "operator" ? "bg-gray-50 border border-gray-200" : "bg-blue-50"
                     }`}>
                       <div className="flex items-center gap-2 mb-1">
-                        <span className="text-sm font-medium">
+                        <span className="text-sm font-medium text-gray-900">
                           {reply.senderRole === "operator" ? (reply.senderName || "NexFortis Support") : "You"}
                         </span>
-                        <span className="text-xs text-gray-400">{formatRelativeTime(reply.createdAt)}</span>
+                        <span className="text-xs text-gray-600">{formatRelativeTime(reply.createdAt)}</span>
                       </div>
-                      <p className="text-sm text-gray-700 whitespace-pre-wrap">{reply.message}</p>
+                      <p className="text-sm text-gray-800 whitespace-pre-wrap">{reply.message}</p>
                       {reply.attachmentUrl && (
                         <a
                           href={reply.attachmentUrl}
@@ -312,10 +312,10 @@ export default function TicketDetailPage() {
                   onChange={e => setReplyText(e.target.value)}
                   placeholder="Type your reply..."
                   rows={4}
-                  className="w-full border border-gray-200 rounded-lg p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#B76E79]/30 focus:border-[#B76E79] mb-3"
+                  className="w-full border border-gray-200 rounded-lg p-3 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#B76E79]/30 focus:border-[#B76E79] mb-3"
                 />
                 <div className="flex items-center gap-3 mb-3">
-                  <label className="inline-flex items-center gap-1 text-xs text-gray-500 cursor-pointer hover:text-[#B76E79]">
+                  <label className="inline-flex items-center gap-1 text-xs text-gray-700 cursor-pointer hover:text-[#B76E79]">
                     <Paperclip className="w-3.5 h-3.5" />
                     <span>{replyFile ? replyFile.name : "Attach file"}</span>
                     <input

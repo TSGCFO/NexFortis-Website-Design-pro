@@ -70,31 +70,31 @@ function StatsHeader({ stats }: { stats: TicketStats | null }) {
   return (
     <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4">
-        <div className="text-xs text-gray-500 uppercase font-medium">Open</div>
+        <div className="text-xs text-gray-600 uppercase font-medium">Open</div>
         <div className="text-2xl font-bold text-[#0A1628]">{stats.openTickets + stats.inProgressTickets}</div>
-        <div className="text-xs text-gray-400">{stats.openTickets} new / {stats.inProgressTickets} in progress</div>
+        <div className="text-xs text-gray-600">{stats.openTickets} new / {stats.inProgressTickets} in progress</div>
       </div>
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4">
-        <div className="text-xs text-gray-500 uppercase font-medium">Critical</div>
+        <div className="text-xs text-gray-600 uppercase font-medium">Critical</div>
         <div className={`text-2xl font-bold ${stats.criticalOpen > 0 ? "text-red-600" : "text-[#0A1628]"}`}>
           {stats.criticalOpen}
         </div>
         {stats.criticalOpen > 0 && <div className="text-xs text-red-500">Needs attention</div>}
       </div>
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4">
-        <div className="text-xs text-gray-500 uppercase font-medium">SLA Breached</div>
+        <div className="text-xs text-gray-600 uppercase font-medium">SLA Breached</div>
         <div className={`text-2xl font-bold ${stats.slaBreached > 0 ? "text-red-600" : "text-[#0A1628]"}`}>
           {stats.slaBreached}
         </div>
         {stats.slaBreached > 0 && <div className="text-xs text-red-500">Past deadline</div>}
       </div>
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4">
-        <div className="text-xs text-gray-500 uppercase font-medium">Avg Response</div>
+        <div className="text-xs text-gray-600 uppercase font-medium">Avg Response</div>
         <div className="text-2xl font-bold text-[#0A1628]">{stats.avgResponseMinutes} min</div>
-        <div className="text-xs text-gray-400">Last 30 days</div>
+        <div className="text-xs text-gray-600">Last 30 days</div>
       </div>
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4">
-        <div className="text-xs text-gray-500 uppercase font-medium">SLA Compliance</div>
+        <div className="text-xs text-gray-600 uppercase font-medium">SLA Compliance</div>
         <div className={`text-2xl font-bold ${complianceColor}`}>{stats.slaCompliancePercent}%</div>
       </div>
     </div>
@@ -235,7 +235,7 @@ function TicketsContent() {
               aria-label="Search tickets by subject or email"
               value={search}
               onChange={e => setSearch(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#B76E79]/30 focus:border-[#B76E79]"
+              className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg text-sm text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#B76E79]/30 focus:border-[#B76E79]"
             />
           </div>
 
@@ -303,7 +303,7 @@ function TicketsContent() {
           <>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
-                <thead className="text-gray-500 text-xs uppercase bg-gray-50">
+                <thead className="text-gray-700 text-xs uppercase bg-gray-50">
                   <tr>
                     <th className="px-4 py-3 text-left">ID</th>
                     <th className="px-4 py-3 text-left">Subject</th>
@@ -317,10 +317,10 @@ function TicketsContent() {
                 <tbody className="divide-y divide-gray-100">
                   {tickets.map(ticket => (
                     <tr key={ticket.id} className="hover:bg-gray-50">
-                      <td className="px-4 py-3 font-medium">#{ticket.id}</td>
+                      <td className="px-4 py-3 font-medium text-gray-900">#{ticket.id}</td>
                       <td className="px-4 py-3">
                         <div className="flex flex-wrap items-center gap-1.5">
-                          <span className="truncate max-w-[200px]">{ticket.subject}</span>
+                          <span className="truncate max-w-[200px] text-gray-900 font-medium">{ticket.subject}</span>
                           {ticket.isCritical && (
                             <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-red-100 text-red-700">CRITICAL</span>
                           )}
@@ -333,13 +333,13 @@ function TicketsContent() {
                             <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-orange-100 text-orange-700">AFTER-HRS</span>
                           )}
                         </div>
-                        <p className="text-xs text-gray-400 mt-0.5 truncate max-w-[300px]">
+                        <p className="text-xs text-gray-600 mt-0.5 truncate max-w-[300px]">
                           {ticket.message?.substring(0, 100)}
                         </p>
                       </td>
                       <td className="px-4 py-3">
-                        <div className="text-sm">{ticket.userName || "—"}</div>
-                        <div className="text-xs text-gray-400">{ticket.userEmail || ""}</div>
+                        <div className="text-sm text-gray-900 font-medium">{ticket.userName || "—"}</div>
+                        <div className="text-xs text-gray-600">{ticket.userEmail || ""}</div>
                       </td>
                       <td className="px-4 py-3">
                         <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-medium ${TICKET_STATUS_COLORS[ticket.status] || "bg-gray-100 text-gray-700"}`}>
@@ -349,7 +349,7 @@ function TicketsContent() {
                       <td className="px-4 py-3">
                         <SlaTimer ticket={ticket} />
                       </td>
-                      <td className="px-4 py-3 text-gray-500 text-xs">
+                      <td className="px-4 py-3 text-gray-700 text-xs">
                         {formatRelativeTime(ticket.createdAt)}
                       </td>
                       <td className="px-4 py-3">

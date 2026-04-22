@@ -107,7 +107,7 @@ function OrdersContent() {
               aria-label="Search orders by customer name or email"
               value={search}
               onChange={e => { setSearch(e.target.value); setPage(1); }}
-              className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#B76E79]/30 focus:border-[#B76E79]"
+              className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg text-sm text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#B76E79]/30 focus:border-[#B76E79]"
             />
           </div>
 
@@ -135,7 +135,7 @@ function OrdersContent() {
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
-              <thead className="text-gray-500 text-xs uppercase bg-gray-50">
+              <thead className="text-gray-700 text-xs uppercase bg-gray-50">
                 <tr>
                   <th className="px-4 py-3 text-left">ID</th>
                   <th className="px-4 py-3 text-left">Customer</th>
@@ -161,19 +161,19 @@ function OrdersContent() {
               <tbody className="divide-y divide-gray-100">
                 {orders.map(order => (
                   <tr key={order.id} className="hover:bg-gray-50">
-                    <td className="px-4 py-3 font-medium">#{order.id}</td>
+                    <td className="px-4 py-3 font-medium text-gray-900">#{order.id}</td>
                     <td className="px-4 py-3">
-                      <div>{order.customerName}</div>
-                      <div className="text-xs text-gray-400">{order.customerEmail}</div>
+                      <div className="text-gray-900 font-medium">{order.customerName}</div>
+                      <div className="text-xs text-gray-600">{order.customerEmail}</div>
                     </td>
-                    <td className="px-4 py-3 truncate max-w-[200px]">{order.serviceName}</td>
-                    <td className="px-4 py-3">{formatCurrency(order.totalCad)}</td>
+                    <td className="px-4 py-3 truncate max-w-[200px] text-gray-900">{order.serviceName}</td>
+                    <td className="px-4 py-3 text-gray-900 font-medium">{formatCurrency(order.totalCad)}</td>
                     <td className="px-4 py-3">
                       <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-medium ${STATUS_COLORS[order.status] || "bg-gray-100 text-gray-700"}`}>
                         {STATUS_LABELS[order.status] || order.status}
                       </span>
                     </td>
-                    <td className="px-4 py-3 text-gray-500">{formatDate(order.createdAt)}</td>
+                    <td className="px-4 py-3 text-gray-700">{formatDate(order.createdAt)}</td>
                     <td className="px-4 py-3">
                       <Link href={`/admin/orders/${order.id}`} className="text-[#B76E79] hover:underline text-sm">
                         View
@@ -187,7 +187,7 @@ function OrdersContent() {
         )}
 
         {total > 0 && (
-          <div className="p-4 border-t border-gray-100 flex items-center justify-between text-sm text-gray-500">
+          <div className="p-4 border-t border-gray-100 flex items-center justify-between text-sm text-gray-700">
             <span>
               Showing {Math.min((page - 1) * limit + 1, total)}–{Math.min(page * limit, total)} of {total}
             </span>

@@ -86,7 +86,7 @@ function CustomersContent() {
               aria-label="Search customers by name or email"
               value={search}
               onChange={e => { setSearch(e.target.value); setPage(1); }}
-              className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#B76E79]/30 focus:border-[#B76E79]"
+              className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg text-sm text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#B76E79]/30 focus:border-[#B76E79]"
             />
           </div>
         </div>
@@ -98,7 +98,7 @@ function CustomersContent() {
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
-              <thead className="text-gray-500 text-xs uppercase bg-gray-50">
+              <thead className="text-gray-700 text-xs uppercase bg-gray-50">
                 <tr>
                   <th className="px-4 py-3 text-left">Name</th>
                   <th className="px-4 py-3 text-left">Email</th>
@@ -111,12 +111,12 @@ function CustomersContent() {
               <tbody className="divide-y divide-gray-100">
                 {customers.map(c => (
                   <tr key={c.id} className="hover:bg-gray-50">
-                    <td className="px-4 py-3 font-medium">{c.name || "—"}</td>
-                    <td className="px-4 py-3">{c.email}</td>
-                    <td className="px-4 py-3 text-gray-500">{c.phone || "—"}</td>
-                    <td className="px-4 py-3 text-gray-500">{formatDate(c.createdAt)}</td>
-                    <td className="px-4 py-3 text-center">{c.orderCount}</td>
-                    <td className="px-4 py-3 text-center">{c.openTicketCount}</td>
+                    <td className="px-4 py-3 font-medium text-gray-900">{c.name || "—"}</td>
+                    <td className="px-4 py-3 text-gray-900">{c.email}</td>
+                    <td className="px-4 py-3 text-gray-700">{c.phone || "—"}</td>
+                    <td className="px-4 py-3 text-gray-700">{formatDate(c.createdAt)}</td>
+                    <td className="px-4 py-3 text-center text-gray-900">{c.orderCount}</td>
+                    <td className="px-4 py-3 text-center text-gray-900">{c.openTicketCount}</td>
                   </tr>
                 ))}
               </tbody>
@@ -125,7 +125,7 @@ function CustomersContent() {
         )}
 
         {total > 0 && (
-          <div className="p-4 border-t border-gray-100 flex items-center justify-between text-sm text-gray-500">
+          <div className="p-4 border-t border-gray-100 flex items-center justify-between text-sm text-gray-700">
             <span>
               Showing {Math.min((page - 1) * limit + 1, total)}–{Math.min(page * limit, total)} of {total}
             </span>

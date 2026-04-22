@@ -163,7 +163,7 @@ function PromoCodesContent() {
               aria-label="Search promo codes"
               value={search}
               onChange={(e) => { setSearch(e.target.value); setPage(1); }}
-              className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#B76E79]/30 focus:border-[#B76E79]"
+              className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg text-sm text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#B76E79]/30 focus:border-[#B76E79]"
             />
           </div>
           <div className="flex flex-wrap gap-3">
@@ -179,7 +179,7 @@ function PromoCodesContent() {
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
-              <thead className="text-gray-500 text-xs uppercase bg-gray-50">
+              <thead className="text-gray-700 text-xs uppercase bg-gray-50">
                 <tr>
                   <th className="px-4 py-3 text-left">Code</th>
                   <th className="px-4 py-3 text-left">Type</th>
@@ -193,11 +193,11 @@ function PromoCodesContent() {
               <tbody className="divide-y divide-gray-100">
                 {codes.map((c) => (
                   <tr key={c.id} className="hover:bg-gray-50 cursor-pointer" onClick={() => navigate(`/admin/promo-codes/${c.id}`)}>
-                    <td className="px-4 py-3 font-mono font-medium">{c.code}</td>
-                    <td className="px-4 py-3">{PROMO_TYPE_LABELS[c.type] || c.type}</td>
-                    <td className="px-4 py-3">{describePromoValue(c)}</td>
-                    <td className="px-4 py-3">{c.redemptionCount}{c.maxUses != null ? ` / ${c.maxUses}` : ""}</td>
-                    <td className="px-4 py-3 text-gray-500">{c.expiresAt ? formatDate(c.expiresAt) : "Never"}</td>
+                    <td className="px-4 py-3 font-mono font-medium text-gray-900">{c.code}</td>
+                    <td className="px-4 py-3 text-gray-900">{PROMO_TYPE_LABELS[c.type] || c.type}</td>
+                    <td className="px-4 py-3 text-gray-900">{describePromoValue(c)}</td>
+                    <td className="px-4 py-3 text-gray-900">{c.redemptionCount}{c.maxUses != null ? ` / ${c.maxUses}` : ""}</td>
+                    <td className="px-4 py-3 text-gray-700">{c.expiresAt ? formatDate(c.expiresAt) : "Never"}</td>
                     <td className="px-4 py-3">
                       <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-medium ${PROMO_STATUS_COLORS[c.status]}`}>
                         {PROMO_STATUS_LABELS[c.status]}
@@ -216,7 +216,7 @@ function PromoCodesContent() {
         )}
 
         {total > 0 && (
-          <div className="p-4 border-t border-gray-100 flex items-center justify-between text-sm text-gray-500">
+          <div className="p-4 border-t border-gray-100 flex items-center justify-between text-sm text-gray-700">
             <span>
               Showing {Math.min((page - 1) * limit + 1, total)}–{Math.min(page * limit, total)} of {total}
             </span>
@@ -259,7 +259,7 @@ function StatCard({ label, value, icon: Icon, color, small }: {
         <div className={`p-1.5 rounded-lg ${color}`}>
           <Icon className="w-4 h-4" />
         </div>
-        <span className="text-sm text-gray-500">{label}</span>
+        <span className="text-sm text-gray-700">{label}</span>
       </div>
       <p className={`font-bold text-[#0A1628] ${small ? "text-lg md:text-xl truncate" : "text-2xl md:text-3xl"}`}>{value}</p>
     </div>
@@ -275,7 +275,7 @@ function FilterGroup({ label, options, value, onChange, labels }: {
 }) {
   return (
     <div className="flex items-center gap-2 flex-wrap">
-      <span className="text-xs uppercase text-gray-400 font-medium">{label}</span>
+      <span className="text-xs uppercase text-gray-600 font-medium">{label}</span>
       {options.map((o) => (
         <button
           key={o}
