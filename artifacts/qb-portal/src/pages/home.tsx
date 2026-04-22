@@ -139,7 +139,7 @@ export default function Home() {
     <div>
       <SEO
         title="QuickBooks Conversion & Data Services"
-        description="Canadian QuickBooks experts. Enterprise to Premier conversion, data services, and expert support. Starting at $75 CAD with our launch special."
+        description="Canadian QuickBooks experts. Enterprise to Premier conversion, data services, and platform migrations. Starting at $75 CAD with our launch special."
         path="/"
       />
       <section className="section-brand-navy py-20 lg:py-28">

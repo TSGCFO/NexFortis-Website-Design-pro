@@ -55,7 +55,17 @@ export function LandingPageLayout({
     jsonLd.unshift(
       generateServiceSchema({ ...page, metaDescription }, product)
     );
-  } else if (page.category === "educational" && page.process.length > 0) {
+  } else if (
+    // Emit HowTo schema for any non-service landing category that ships an
+    // ordered process — educational pages have always done this, but PR #51
+    // extends the same treatment to "problem" (e.g. quickbooks-running-slow)
+    // and "comparison" (e.g. etech-alternative) pages so Google can surface
+    // their step-by-step guidance as a rich result.
+    (page.category === "educational" ||
+      page.category === "problem" ||
+      page.category === "comparison") &&
+    page.process.length > 0
+  ) {
     jsonLd.unshift(
       generateHowToSchema({ ...page, metaDescription })
     );

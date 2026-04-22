@@ -21,6 +21,11 @@ export interface CatalogProduct {
   id: number;
   slug: string;
   name: string;
+  // Added in PR #51. Optional per-service SEO description <=155 chars. Kept
+  // as optional so older products.json files (and test fixtures) still
+  // parse. Not used by the API server today, but included here to keep the
+  // interface in lockstep with the qb-portal copy.
+  meta_description?: string;
   base_price_cad: number;
   launch_price_cad: number;
   is_addon: boolean;

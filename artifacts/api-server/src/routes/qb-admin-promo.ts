@@ -21,11 +21,14 @@ const router = Router();
 const VALID_TYPES = ["percentage", "fixed_amount", "free_service", "subscription"] as const;
 type PromoType = typeof VALID_TYPES[number];
 
+// Must stay in sync with the category_slug values that actually exist in
+// qb-portal/public/products.json. The retired "expert-support" category was
+// removed in PR #48 — its services were consolidated into subscription tiers —
+// so admins can no longer scope promo codes to it.
 const ALLOWED_CATEGORIES = [
   "quickbooks-conversion",
   "quickbooks-data-services",
   "platform-migrations",
-  "expert-support",
   "volume-packs",
 ];
 

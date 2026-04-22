@@ -258,7 +258,7 @@ export default function About() {
             Ready to transform your business with technology? We'd love to hear from you.
           </p>
           <Link href="/contact" className="inline-flex px-8 py-4 min-h-[48px] rounded-xl bg-rose-gold text-rose-gold-foreground font-bold text-lg hover:bg-rose-gold-hover transition-all items-center justify-center gap-2 hover:-translate-y-0.5">
-            Contact Us <ArrowRight className="w-5 h-5" />
+            Contact us <ArrowRight className="w-5 h-5" />
           </Link>
         </div>
       </Section>

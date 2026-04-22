@@ -9,6 +9,7 @@
       "category": "QuickBooks Conversion Services",
       "category_slug": "quickbooks-conversion",
       "description": "Convert your QuickBooks Enterprise file to Premier or Pro. Standard complexity files with clean data, processed in under 60 minutes. Includes list verification and data integrity check.",
+      "meta_description": "Convert clean QuickBooks Enterprise files to Premier/Pro in under 60 minutes. Includes list verification and data integrity check. Canadian.",
       "deliverable": "Enterprise → Premier/Pro conversion of your .qbm file",
       "base_price_cad": 14900,
       "launch_price_cad": 7500,
@@ -16,7 +17,9 @@
       "badge": "available",
       "is_addon": false,
       "requires_service": null,
-      "accepted_file_types": [".qbm"],
+      "accepted_file_types": [
+        ".qbm"
+      ],
       "sort_order": 1
     },
     {
@@ -26,6 +29,7 @@
       "category": "QuickBooks Conversion Services",
       "category_slug": "quickbooks-conversion",
       "description": "Convert complex QuickBooks Enterprise files with advanced inventory, multi-currency, large list counts, or custom fields. Includes full data audit and integrity verification.",
+      "meta_description": "Complex Enterprise-to-Premier/Pro conversion: advanced inventory, multi-currency, large lists, custom fields. Full data audit included.",
       "deliverable": "Enterprise → Premier/Pro conversion with full data audit on complex files",
       "base_price_cad": 19900,
       "launch_price_cad": 10000,
@@ -33,7 +37,9 @@
       "badge": "available",
       "is_addon": false,
       "requires_service": null,
-      "accepted_file_types": [".qbm"],
+      "accepted_file_types": [
+        ".qbm"
+      ],
       "sort_order": 2
     },
     {
@@ -50,7 +56,9 @@
       "badge": "available",
       "is_addon": false,
       "requires_service": null,
-      "accepted_file_types": [".qbm"],
+      "accepted_file_types": [
+        ".qbm"
+      ],
       "sort_order": 3
     },
     {
@@ -67,7 +75,9 @@
       "badge": "available",
       "is_addon": true,
       "requires_service": null,
-      "accepted_file_types": [".qbm"],
+      "accepted_file_types": [
+        ".qbm"
+      ],
       "sort_order": 4
     },
     {
@@ -94,6 +104,7 @@
       "category": "QuickBooks Conversion Services",
       "category_slug": "quickbooks-conversion",
       "description": "Upgrade your included 2-ticket post-order support to 5 tickets with 1-hour priority SLA and broader scope. Covers questions beyond your specific order for 30 days after delivery.",
+      "meta_description": "Upgrade post-order support: 5 tickets with 1-hour priority SLA and broader scope, for 30 days after delivery of your conversion.",
       "deliverable": "5 support tickets with 1-hour SLA for 30 days after delivery",
       "base_price_cad": 4900,
       "launch_price_cad": 2500,
@@ -118,7 +129,9 @@
       "badge": "available",
       "is_addon": false,
       "requires_service": null,
-      "accepted_file_types": [".qbm"],
+      "accepted_file_types": [
+        ".qbm"
+      ],
       "sort_order": 7
     },
     {
@@ -135,7 +148,9 @@
       "badge": "available",
       "is_addon": false,
       "requires_service": null,
-      "accepted_file_types": [".qbm"],
+      "accepted_file_types": [
+        ".qbm"
+      ],
       "sort_order": 8
     },
     {
@@ -152,7 +167,9 @@
       "badge": "available",
       "is_addon": false,
       "requires_service": null,
-      "accepted_file_types": [".qbm"],
+      "accepted_file_types": [
+        ".qbm"
+      ],
       "sort_order": 9
     },
     {
@@ -169,7 +186,9 @@
       "badge": "available",
       "is_addon": false,
       "requires_service": null,
-      "accepted_file_types": [".qbm"],
+      "accepted_file_types": [
+        ".qbm"
+      ],
       "sort_order": 10
     },
     {
@@ -179,6 +198,7 @@
       "category": "QuickBooks Data Services",
       "category_slug": "quickbooks-data-services",
       "description": "Comprehensive report analyzing your QuickBooks Desktop file's readiness for migration to QuickBooks Online. Identifies compatibility issues, data gaps, and recommended pre-migration steps.",
+      "meta_description": "Analyze your QuickBooks Desktop file before moving to QuickBooks Online. Identifies compatibility issues, data gaps, and pre-migration steps.",
       "deliverable": "Written QBO migration readiness report with prioritized fixes",
       "base_price_cad": 4900,
       "launch_price_cad": 2500,
@@ -186,7 +206,9 @@
       "badge": "available",
       "is_addon": false,
       "requires_service": null,
-      "accepted_file_types": [".qbm"],
+      "accepted_file_types": [
+        ".qbm"
+      ],
       "sort_order": 11
     },
     {
@@ -203,7 +225,9 @@
       "badge": "available",
       "is_addon": false,
       "requires_service": null,
-      "accepted_file_types": [".qbm"],
+      "accepted_file_types": [
+        ".qbm"
+      ],
       "sort_order": 12
     },
     {
@@ -220,7 +244,9 @@
       "badge": "available",
       "is_addon": false,
       "requires_service": null,
-      "accepted_file_types": [".qbm"],
+      "accepted_file_types": [
+        ".qbm"
+      ],
       "sort_order": 13
     },
     {
@@ -237,7 +263,11 @@
       "badge": "available",
       "is_addon": false,
       "requires_service": null,
-      "accepted_file_types": [".zip", ".myo", ".myox"],
+      "accepted_file_types": [
+        ".zip",
+        ".myo",
+        ".myox"
+      ],
       "sort_order": 14
     },
     {
@@ -254,7 +284,11 @@
       "badge": "available",
       "is_addon": false,
       "requires_service": null,
-      "accepted_file_types": [".cab", ".zip", ".sai"],
+      "accepted_file_types": [
+        ".cab",
+        ".zip",
+        ".sai"
+      ],
       "sort_order": 15
     },
     {
@@ -264,6 +298,7 @@
       "category": "Volume Packs",
       "category_slug": "volume-packs",
       "description": "Bundle of 5 standard Enterprise → Premier/Pro conversions at a discounted rate. Perfect for accountants and bookkeepers managing multiple client files. Credits are valid for 12 months.",
+      "meta_description": "Five standard Enterprise-to-Premier/Pro conversions at a discount. Perfect for accountants and bookkeepers. Credits valid 12 months.",
       "deliverable": "5 prepaid Enterprise → Premier/Pro conversion credits",
       "base_price_cad": 64900,
       "launch_price_cad": 32500,
@@ -282,6 +317,7 @@
       "category": "Volume Packs",
       "category_slug": "volume-packs",
       "description": "Bundle of 10 standard Enterprise → Premier/Pro conversions at the best value. Ideal for accounting firms with a steady volume of client conversions. Credits are valid for 12 months.",
+      "meta_description": "Ten standard Enterprise-to-Premier/Pro conversions at the best value for accounting firms. Credits valid 12 months.",
       "deliverable": "10 prepaid Enterprise → Premier/Pro conversion credits",
       "base_price_cad": 119900,
       "launch_price_cad": 60000,

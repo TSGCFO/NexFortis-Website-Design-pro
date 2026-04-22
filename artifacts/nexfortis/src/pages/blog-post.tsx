@@ -13,8 +13,47 @@ interface BlogPost {
   content: string;
   category: string;
   coverImage: string | null;
+  // seoTitle and metaDescription were added to the blog schema in PR #51.
+  // They're both nullable so old posts can still be fetched and rendered
+  // — the component falls back to title/excerpt when either is missing.
+  seoTitle: string | null;
+  metaDescription: string | null;
   published: boolean;
   createdAt: string;
+}
+
+// ArticleSchema in nexfortis/src/components/seo.tsx appends ` | NexFortis IT
+// Solutions` (25 chars) to whatever title is passed. A ~45-char slug gives
+// Google room to show the suffix without truncating. If the author supplied
+// a shorter seoTitle we use it verbatim; otherwise we truncate the full
+// title on a word boundary.
+const SEO_TITLE_MAX = 45;
+// Google truncates descriptions around 160 chars on desktop; we leave 5 chars
+// of slack for safety.
+const SEO_DESCRIPTION_MAX = 155;
+
+function deriveSeoTitle(post: BlogPost): string {
+  if (post.seoTitle && post.seoTitle.trim().length > 0) {
+    return post.seoTitle.trim();
+  }
+  const raw = post.title.trim();
+  if (raw.length <= SEO_TITLE_MAX) return raw;
+  const sliced = raw.slice(0, SEO_TITLE_MAX);
+  const lastSpace = sliced.lastIndexOf(" ");
+  const base = lastSpace > 20 ? sliced.slice(0, lastSpace) : sliced;
+  return base.replace(/[\s,.;:!\-—]+$/, "") + "…";
+}
+
+function deriveSeoDescription(post: BlogPost): string {
+  if (post.metaDescription && post.metaDescription.trim().length > 0) {
+    return post.metaDescription.trim();
+  }
+  const raw = post.excerpt.trim();
+  if (raw.length <= SEO_DESCRIPTION_MAX) return raw;
+  const sliced = raw.slice(0, SEO_DESCRIPTION_MAX);
+  const lastSpace = sliced.lastIndexOf(" ");
+  const base = lastSpace > 120 ? sliced.slice(0, lastSpace) : sliced;
+  return base.replace(/[\s,.;:!\-—]+$/, "") + "…";
 }
 
 export default function BlogPostPage({ slug }: { slug: string }) {
@@ -49,10 +88,13 @@ export default function BlogPostPage({ slug }: { slug: string }) {
     );
   }
 
+  const seoTitle = deriveSeoTitle(post);
+  const seoDescription = deriveSeoDescription(post);
+
   return (
     <div>
-      <SEO title={post.title} description={post.excerpt} path={`/blog/${post.slug}`} type="article" />
-      <ArticleSchema title={post.title} description={post.excerpt} datePublished={post.createdAt} url={`/blog/${post.slug}`} />
+      <SEO title={seoTitle} description={seoDescription} path={`/blog/${post.slug}`} type="article" />
+      <ArticleSchema title={seoTitle} description={seoDescription} datePublished={post.createdAt} url={`/blog/${post.slug}`} />
       <BreadcrumbSchema
         items={[
           { name: "Home", url: "/" },
@@ -108,7 +150,7 @@ export default function BlogPostPage({ slug }: { slug: string }) {
               More Articles
             </Link>
             <Link href="/contact" className="px-6 py-3 rounded-xl bg-accent text-white font-semibold hover:bg-accent/90 transition-colors">
-              Contact Us
+              Contact us
             </Link>
           </div>
         </div>

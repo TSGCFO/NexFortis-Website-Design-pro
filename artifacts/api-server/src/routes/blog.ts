@@ -4,7 +4,21 @@ import { blogPostsTable, insertBlogPostSchema } from "@workspace/db/schema";
 import { eq, desc, and } from "drizzle-orm";
 import { requireBlogAdmin } from "../middleware/require-blog-admin";
 
-const ALLOWED_UPDATE_FIELDS = ["title", "slug", "excerpt", "content", "category", "coverImage", "published"] as const;
+// seoTitle and metaDescription were added in PR #51 to separate the SERP
+// title/description from the visible headline/excerpt. Admins can update
+// them through the blog admin UI; omitting them keeps the fallback behavior
+// (truncate title/excerpt). Any field NOT in this list is silently dropped.
+const ALLOWED_UPDATE_FIELDS = [
+  "title",
+  "slug",
+  "excerpt",
+  "content",
+  "category",
+  "coverImage",
+  "seoTitle",
+  "metaDescription",
+  "published",
+] as const;
 type AllowedField = typeof ALLOWED_UPDATE_FIELDS[number];
 
 function sanitizeUpdateBody(body: Record<string, unknown>): Partial<Record<AllowedField, unknown>> {

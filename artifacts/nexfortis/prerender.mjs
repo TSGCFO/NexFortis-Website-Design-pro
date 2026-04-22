@@ -27,6 +27,13 @@ const EXCLUDED_ROUTES = [
   "/admin/login",
   "/blog/admin",
   "/blog/:slug",
+  // /services/automation-software is excluded here because render.yaml (at
+  // repo root, under the nexfortis service's routes:) rewrites it 301 →
+  // /services/workflow-automation. Prerendering would create a real HTML
+  // file at /services/automation-software that would serve BEFORE the
+  // redirect fires, breaking the canonicalization. If this page is ever
+  // revived as a distinct service, remove the render.yaml redirect first,
+  // then remove this line — the two MUST stay paired.
   "/services/automation-software",
 ];
 
@@ -98,6 +105,11 @@ async function discoverBlogRoutes() {
         title: p.title,
         slug: p.slug,
         excerpt: p.excerpt,
+        // seoTitle + metaDescription are optional overrides consumed by
+        // blog-post.tsx; preserve them here so refreshing the fallback from a
+        // live API response does not silently drop SEO overrides set in the DB.
+        seoTitle: p.seoTitle ?? null,
+        metaDescription: p.metaDescription ?? null,
         content: p.content,
         category: p.category,
         coverImage: p.coverImage,

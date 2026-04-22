@@ -7,6 +7,8 @@ const blogPosts = [
   {
     title: "5 Signs Your Business Needs an IT Audit",
     slug: "5-signs-your-business-needs-an-it-audit",
+    seoTitle: "5 Signs Your Business Needs an IT Audit",
+    metaDescription: "Climbing IT costs, slow systems, or fuzzy security posture? Five clear signs your Canadian business is due for a professional IT audit.",
     excerpt: "If your technology costs are climbing, your team is frustrated with slow systems, or you're unsure about your security posture — it might be time for a professional IT audit. Here are five clear indicators.",
     category: "IT Consulting",
     coverImage: "/images/blog-1.png",
@@ -46,6 +48,8 @@ Book a free 30-minute consultation with our team to discuss whether an IT audit 
   {
     title: "Microsoft 365 Migration Checklist for Canadian SMBs",
     slug: "microsoft-365-migration-checklist-canadian-smbs",
+    seoTitle: "Microsoft 365 Migration Checklist",
+    metaDescription: "A practical, Canadian-SMB-focused Microsoft 365 migration checklist: pre-migration assessment through post-launch support, step by step.",
     excerpt: "Planning a move to Microsoft 365? This comprehensive checklist covers everything from pre-migration assessment to post-launch support — designed specifically for Canadian small and mid-sized businesses.",
     category: "Microsoft 365",
     coverImage: "/images/blog-2.png",
@@ -134,6 +138,8 @@ While it's possible to handle a Microsoft 365 migration internally, working with
   {
     title: "QuickBooks Desktop vs. Online: Which Is Right for Your Business?",
     slug: "quickbooks-desktop-vs-online",
+    seoTitle: "QuickBooks Desktop vs. Online",
+    metaDescription: "Honest comparison of QuickBooks Desktop and Online for Canadian businesses, including when it makes sense to switch and what to watch for.",
     excerpt: "Choosing between QuickBooks Desktop and QuickBooks Online is one of the most common decisions Canadian businesses face. Here's an honest comparison to help you decide — or determine if it's time to switch.",
     category: "QuickBooks",
     coverImage: "/images/blog-3.png",
@@ -203,6 +209,8 @@ If you decide to migrate from Desktop to Online (or vice versa), the process req
   {
     title: "What Is PIPEDA and Why It Matters for Your Business",
     slug: "what-is-pipeda-why-it-matters",
+    seoTitle: "PIPEDA Explained for Businesses",
+    metaDescription: "Plain-language guide to PIPEDA: what Canada's federal privacy law requires, how it affects your IT systems, and the cost of non-compliance.",
     excerpt: "Canada's federal privacy law affects every business that collects personal information. Here's a plain-language guide to PIPEDA — what it requires, how it affects your IT systems, and what happens if you don't comply.",
     category: "IT Consulting",
     coverImage: "/images/blog-1.png",
@@ -282,6 +290,8 @@ NexFortis helps Canadian businesses build IT infrastructure that meets PIPEDA re
   {
     title: "Top 5 Workflow Automation Wins for Small Businesses",
     slug: "top-5-workflow-automation-wins-small-businesses",
+    seoTitle: "5 Workflow Automation Wins for SMBs",
+    metaDescription: "Five practical workflow automations Canadian small businesses can implement today to save hours every week — no coding required.",
     excerpt: "Workflow automation isn't just for enterprises. Here are five practical automations that Canadian small businesses can implement today to save hours every week — no coding required.",
     category: "Automation",
     coverImage: "/images/blog-2.png",

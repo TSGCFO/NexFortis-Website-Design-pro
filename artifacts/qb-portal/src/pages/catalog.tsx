@@ -20,6 +20,12 @@ export default function Catalog() {
 
   const allProducts = [...catalog.services].sort((a, b) => a.sort_order - b.sort_order);
   const allCategories = [...new Set(allProducts.map((p) => p.category))];
+  // Derive counts from the catalog so the SEO description and hero copy stay
+  // accurate automatically when services are added/retired. Prior to PR #51
+  // these were hard-coded "20 services across 5 categories" which went stale
+  // after the expert-support category was retired in PR #48.
+  const serviceCount = allProducts.length;
+  const categoryCount = allCategories.length;
 
   const filtered = allProducts.filter((p) => {
     const matchesCategory = filter === "all" || p.category === filter;
@@ -36,8 +42,8 @@ export default function Catalog() {
   return (
     <div>
       <SEO
-        title="QuickBooks Service Catalog — Conversions, Repair & Support"
-        description="Browse 20 QuickBooks services across 5 categories. Conversion, data services, platform migrations, expert support, and volume packs."
+        title="QuickBooks Services Catalog"
+        description={`Browse ${serviceCount} fixed-price QuickBooks services across ${categoryCount} categories: conversion, data services, platform migrations, and volume packs. For Canadian businesses.`}
         path="/catalog"
         jsonLd={generateBreadcrumbSchema([{ name: "Services", path: "/catalog" }])}
       />
@@ -45,7 +51,7 @@ export default function Catalog() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl font-bold font-display text-white mb-4">Service Catalog</h1>
           <p className="text-white/70 text-lg max-w-2xl mx-auto">
-            20 QuickBooks services across 5 categories for Canadian businesses. Browse our complete catalog below.
+            {serviceCount} QuickBooks services across {categoryCount} categories for Canadian businesses. Browse our complete catalog below.
           </p>
           {catalog.promo_active && catalog.promo_label && (
             <div className="mt-4 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-gold/20 text-rose-gold text-sm font-semibold">
