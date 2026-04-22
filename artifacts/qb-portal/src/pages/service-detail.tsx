@@ -254,9 +254,13 @@ export default function ServiceDetail() {
                     </p>
                   )}
                   {product.turnaround && <p className="text-sm text-muted-foreground mb-4"><Clock className="w-4 h-4 inline mr-1" />Turnaround: {product.turnaround}</p>}
-                  <Link href={`/order?service=${product.id}`}>
+                  {/* Guardrail: subscription products must go through /subscription
+                      (Stripe Checkout subscription mode), NOT the one-time /order flow.
+                      Without this, a customer can pay once for a monthly plan and get
+                      no recurring entitlement — silent failure on both sides. */}
+                  <Link href={isSubscription ? "/subscription" : `/order?service=${product.id}`}>
                     <Button className="w-full bg-rose-gold text-rose-gold-foreground hover:bg-rose-gold-hover font-display font-bold gap-2" size="lg">
-                      Order Now <ArrowRight className="w-4 h-4" />
+                      {isSubscription ? "View Subscription Plans" : "Order Now"} <ArrowRight className="w-4 h-4" />
                     </Button>
                   </Link>
                 </CardContent>
