@@ -267,9 +267,9 @@ function LaunchPromoCard({
           </div>
           <div className="min-w-0">
             <h2 className="text-lg font-semibold text-[#0A1628]">Launch Promo</h2>
-            <p className="text-sm text-gray-500">50% off all services site-wide</p>
+            <p className="text-sm text-gray-700">50% off all services site-wide</p>
             {hasMeta && promo!.updated_at && (
-              <p className="text-xs text-gray-400 mt-1">
+              <p className="text-xs text-gray-600 mt-1">
                 Last updated {formatDate(promo!.updated_at)}
                 {promo!.updated_by_name ? ` by ${promo!.updated_by_name}` : ""}
               </p>

@@ -409,20 +409,20 @@ function PromoCodeDetailContent() {
                   <tr key={r.id} className="hover:bg-gray-50">
                     <td className="px-4 py-2">
                       <div className="font-medium text-[#0A1628]">{r.customerName || r.customerEmail || "Guest"}</div>
-                      {r.customerName && r.customerEmail && <div className="text-xs text-gray-400">{r.customerEmail}</div>}
+                      {r.customerName && r.customerEmail && <div className="text-xs text-gray-600">{r.customerEmail}</div>}
                     </td>
                     <td className="px-4 py-2">
                       {r.orderId ? (
                         <Link href={`/admin/orders/${r.orderId}`} className="text-[#B76E79] hover:underline">#{r.orderId}</Link>
                       ) : "—"}
-                      {r.orderStatus && <span className="text-xs text-gray-400 ml-1">({r.orderStatus})</span>}
+                      {r.orderStatus && <span className="text-xs text-gray-600 ml-1">({r.orderStatus})</span>}
                     </td>
                     <td className="px-4 py-2">{formatCurrency(r.discountAmountCents)}</td>
                     <td className="px-4 py-2">
-                      <span className="text-gray-400 line-through">{formatCurrency(r.orderTotalBeforeCents)}</span>{" "}
+                      <span className="text-gray-500 line-through">{formatCurrency(r.orderTotalBeforeCents)}</span>{" "}
                       <span>{formatCurrency(r.orderTotalAfterCents)}</span>
                     </td>
-                    <td className="px-4 py-2 text-gray-500">{formatDateTime(r.redeemedAt)}</td>
+                    <td className="px-4 py-2 text-gray-700">{formatDateTime(r.redeemedAt)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -454,9 +454,9 @@ function PromoCodeDetailContent() {
                 <li key={e.id} className="p-4 text-sm">
                   <div className="flex items-center justify-between">
                     <span className="font-medium capitalize text-[#0A1628]">{e.action}</span>
-                    <span className="text-xs text-gray-400">{formatDateTime(e.createdAt)}</span>
+                    <span className="text-xs text-gray-600">{formatDateTime(e.createdAt)}</span>
                   </div>
-                  <div className="text-xs text-gray-500 mt-0.5">
+                  <div className="text-xs text-gray-700 mt-0.5">
                     By {e.adminName || e.adminEmail || "operator"}
                   </div>
                   {e.action === "create" && (
@@ -468,14 +468,14 @@ function PromoCodeDetailContent() {
                         <li key={d.key} className="flex gap-2">
                           <span className="text-gray-500 min-w-[120px]">{DIFF_LABELS[d.key]}:</span>
                           <span className="text-red-600 line-through break-all">{formatDiffValue(d.key, d.before)}</span>
-                          <span className="text-gray-400">→</span>
+                          <span className="text-gray-500">→</span>
                           <span className="text-green-700 break-all">{formatDiffValue(d.key, d.after)}</span>
                         </li>
                       ))}
                     </ul>
                   )}
                   {diffs.length === 0 && e.action !== "create" && (
-                    <div className="text-xs text-gray-400 mt-1 italic">No field changes recorded.</div>
+                    <div className="text-xs text-gray-600 mt-1 italic">No field changes recorded.</div>
                   )}
                 </li>
               );

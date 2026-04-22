@@ -242,20 +242,20 @@ function TicketDetailContent() {
             <h2 className="text-sm font-semibold text-gray-500 uppercase mb-3">Details</h2>
             <dl className="space-y-2 text-sm">
               <div className="flex justify-between">
-                <dt className="text-gray-500">Customer</dt>
-                <dd className="font-medium text-right">{ticket.userName || "—"}</dd>
+                <dt className="text-gray-600">Customer</dt>
+                <dd className="font-medium text-right text-gray-900">{ticket.userName || "—"}</dd>
               </div>
               <div className="flex justify-between">
-                <dt className="text-gray-500">Email</dt>
-                <dd className="font-medium text-right text-xs">{ticket.userEmail || "—"}</dd>
+                <dt className="text-gray-600">Email</dt>
+                <dd className="font-medium text-right text-xs text-gray-900">{ticket.userEmail || "—"}</dd>
               </div>
               <div className="flex justify-between">
-                <dt className="text-gray-500">Created</dt>
-                <dd className="font-medium">{formatRelativeTime(ticket.createdAt)}</dd>
+                <dt className="text-gray-600">Created</dt>
+                <dd className="font-medium text-gray-900">{formatRelativeTime(ticket.createdAt)}</dd>
               </div>
               <div className="flex justify-between">
-                <dt className="text-gray-500">Updated</dt>
-                <dd className="font-medium">{formatRelativeTime(ticket.updatedAt)}</dd>
+                <dt className="text-gray-600">Updated</dt>
+                <dd className="font-medium text-gray-900">{formatRelativeTime(ticket.updatedAt)}</dd>
               </div>
             </dl>
           </div>
@@ -274,11 +274,11 @@ function TicketDetailContent() {
                     <Clock className="w-4 h-4" />
                     {ticket.slaRemainingMinutes !== null ? formatSlaRemaining(ticket.slaRemainingMinutes) : "—"}
                   </div>
-                  <p className="text-xs text-gray-400">Deadline: {formatDateTime(ticket.slaDeadline)}</p>
+                  <p className="text-xs text-gray-600">Deadline: {formatDateTime(ticket.slaDeadline)}</p>
                 </div>
               )
             ) : (
-              <span className="text-sm text-gray-400">No SLA (non-subscriber)</span>
+              <span className="text-sm text-gray-600">No SLA (non-subscriber)</span>
             )}
           </div>
 
@@ -310,12 +310,12 @@ function TicketDetailContent() {
                 </div>
                 <div className="flex-1 bg-blue-50 rounded-lg p-3">
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="text-sm font-medium">{ticket.userName || "Customer"}</span>
+                    <span className="text-sm font-medium text-gray-900">{ticket.userName || "Customer"}</span>
                     <span className="px-1.5 py-0.5 rounded text-[10px] font-medium bg-blue-100 text-blue-700">Customer</span>
-                    <span className="text-xs text-gray-400">{formatRelativeTime(ticket.createdAt)}</span>
+                    <span className="text-xs text-gray-600">{formatRelativeTime(ticket.createdAt)}</span>
                   </div>
-                  <h3 className="text-sm font-semibold mb-1">{ticket.subject}</h3>
-                  <p className="text-sm text-gray-700 whitespace-pre-wrap">{ticket.message}</p>
+                  <h3 className="text-sm font-semibold mb-1 text-gray-900" style={{ fontFamily: "'Inter', sans-serif" }}>{ticket.subject}</h3>
+                  <p className="text-sm text-gray-800 whitespace-pre-wrap">{ticket.message}</p>
                 </div>
               </div>
 
@@ -330,15 +330,15 @@ function TicketDetailContent() {
                     reply.senderRole === "operator" ? "bg-[#0A1628]/5" : "bg-blue-50"
                   }`}>
                     <div className="flex items-center gap-2 mb-1">
-                      <span className="text-sm font-medium">{reply.senderName || (reply.senderRole === "operator" ? "Operator" : "Customer")}</span>
+                      <span className="text-sm font-medium text-gray-900">{reply.senderName || (reply.senderRole === "operator" ? "Operator" : "Customer")}</span>
                       <span className={`px-1.5 py-0.5 rounded text-[10px] font-medium ${
                         reply.senderRole === "operator" ? "bg-[#B76E79]/20 text-[#B76E79]" : "bg-blue-100 text-blue-700"
                       }`}>
                         {reply.senderRole === "operator" ? "Operator" : "Customer"}
                       </span>
-                      <span className="text-xs text-gray-400">{formatRelativeTime(reply.createdAt)}</span>
+                      <span className="text-xs text-gray-600">{formatRelativeTime(reply.createdAt)}</span>
                     </div>
-                    <p className="text-sm text-gray-700 whitespace-pre-wrap">{reply.message}</p>
+                    <p className="text-sm text-gray-800 whitespace-pre-wrap">{reply.message}</p>
                     {reply.attachmentUrl && (
                       <a
                         href={reply.attachmentUrl}
@@ -362,10 +362,10 @@ function TicketDetailContent() {
               onChange={e => setReplyText(e.target.value)}
               placeholder="Type your reply to the customer..."
               rows={4}
-              className="w-full border border-gray-200 rounded-lg p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#B76E79]/30 focus:border-[#B76E79] mb-3"
+              className="w-full border border-gray-200 rounded-lg p-3 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#B76E79]/30 focus:border-[#B76E79] mb-3"
             />
             <div className="flex items-center gap-3 mb-3">
-              <label className="inline-flex items-center gap-1 text-xs text-gray-500 cursor-pointer hover:text-[#B76E79]">
+              <label className="inline-flex items-center gap-1 text-xs text-gray-700 cursor-pointer hover:text-[#B76E79]">
                 <Paperclip className="w-3.5 h-3.5" />
                 <span>{replyFile ? replyFile.name : "Attach file"}</span>
                 <input
@@ -405,7 +405,7 @@ function TicketDetailContent() {
               onChange={e => setInternalNote(e.target.value)}
               placeholder="Add private notes about this ticket..."
               rows={3}
-              className="w-full border border-yellow-300 bg-white rounded-lg p-3 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400/30 focus:border-yellow-400 mb-3"
+              className="w-full border border-yellow-300 bg-white rounded-lg p-3 text-sm text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-400/30 focus:border-yellow-400 mb-3"
             />
             <button
               onClick={handleSaveNote}
