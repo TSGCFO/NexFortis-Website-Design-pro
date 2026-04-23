@@ -66,6 +66,7 @@ export function OrganizationSchema() {
     legalName: "17756968 Canada Inc.",
     url: siteUrl,
     logo: `${siteUrl}/images/logo-512.png`,
+    image: `${siteUrl}/opengraph.png`,
     description: "NexFortis delivers end-to-end IT solutions for Canadian businesses including managed IT, Microsoft 365, QuickBooks migration, digital marketing, and workflow automation.",
     contactPoint: {
       "@type": "ContactPoint",
