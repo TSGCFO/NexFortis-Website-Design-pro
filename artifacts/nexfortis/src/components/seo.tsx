@@ -71,6 +71,7 @@ export function OrganizationSchema() {
       "@type": "ContactPoint",
       contactType: "customer service",
       email: "contact@nexfortis.com",
+      telephone: "+1-416-317-0051",
       areaServed: "CA",
       availableLanguage: ["English"],
     },
@@ -105,6 +106,7 @@ export function LocalBusinessSchema() {
     image: `${siteUrl}/opengraph.png`,
     description: "NexFortis delivers end-to-end IT solutions for Canadian businesses including managed IT, Microsoft 365, QuickBooks migration, digital marketing, and workflow automation.",
     email: "contact@nexfortis.com",
+    telephone: "+1-416-317-0051",
     address: {
       "@type": "PostalAddress",
       streetAddress: "204 Hill Farm Rd",

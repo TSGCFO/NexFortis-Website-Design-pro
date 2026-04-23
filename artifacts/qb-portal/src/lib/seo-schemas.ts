@@ -17,6 +17,11 @@ export const ORG_NAME = "NexFortis IT Solutions";
 export const SUPPORT_EMAIL = "support@nexfortis.com";
 export const SITE_NAME = "NexFortis QuickBooks Portal";
 export const AREA_SERVED = ["CA", "US", "GB", "AU"];
+// E.164 format is what Google recommends for the `telephone` property on
+// Organization and LocalBusiness schema. Google accepts hyphenated forms too,
+// but the leading +1 country code is required for the Knowledge Graph to
+// reliably associate the number with the business entity.
+export const SUPPORT_PHONE = "+1-416-317-0051";
 
 // Stable @id URIs for the core entity graph. These are NOT navigable URLs —
 // they're fragment identifiers that let Service/BreadcrumbList nodes point
@@ -35,6 +40,7 @@ export function organizationSchema() {
     url: BASE_URL,
     logo: `${BASE_URL}/images/logo-512.png`,
     email: SUPPORT_EMAIL,
+    telephone: SUPPORT_PHONE,
     address: COMPANY_ADDRESS,
     sameAs: ["https://www.linkedin.com/company/nexfortis"],
   };
@@ -59,6 +65,7 @@ export function localBusinessSchema() {
     name: ORG_NAME,
     url: BASE_URL,
     email: SUPPORT_EMAIL,
+    telephone: SUPPORT_PHONE,
     address: COMPANY_ADDRESS,
     priceRange: "$$",
     areaServed: AREA_SERVED,
