@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { PageHero, Section, PageBreadcrumbs } from "@/components/ui-elements";
 import { SEO, BreadcrumbSchema } from "@/components/seo";
-import { MapPin, Mail, Clock, Loader2, Linkedin } from "lucide-react";
+import { MapPin, Mail, Phone, Clock, Loader2, Linkedin } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -98,6 +98,16 @@ export default function Contact() {
                 <div>
                   <h3 className="font-bold text-primary">Headquarters</h3>
                   <address className="text-muted-foreground not-italic">204 Hill Farm Rd<br />Nobleton, ON L7B 0A1</address>
+                </div>
+              </div>
+
+              <div className="flex gap-4 items-start">
+                <div className="w-12 h-12 bg-card rounded-xl shadow-sm flex items-center justify-center text-accent shrink-0 border border-border" aria-hidden="true">
+                  <Phone className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-primary">Phone</h3>
+                  <a href="tel:+14163170051" className="text-muted-foreground hover:text-accent transition-colors">(416) 317-0051</a>
                 </div>
               </div>
 
