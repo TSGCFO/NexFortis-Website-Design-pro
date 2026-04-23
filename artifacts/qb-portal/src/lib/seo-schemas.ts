@@ -10,15 +10,27 @@ export const COMPANY_ADDRESS = {
   addressCountry: "CA",
 };
 
-export const ORG_NAME = "NexFortis";
+// Brand name is kept consistent with the marketing site (nexfortis.com) so AI
+// engines and Google's entity dedupe logic treat both hosts as the same
+// organization. The marketing site emits "NexFortis IT Solutions" — we match.
+export const ORG_NAME = "NexFortis IT Solutions";
 export const SUPPORT_EMAIL = "support@nexfortis.com";
 export const SITE_NAME = "NexFortis QuickBooks Portal";
 export const AREA_SERVED = ["CA", "US", "GB", "AU"];
+
+// Stable @id URIs for the core entity graph. These are NOT navigable URLs —
+// they're fragment identifiers that let Service/BreadcrumbList nodes point
+// back at the canonical Organization/WebSite/LocalBusiness node instead of
+// inlining a duplicate copy. Matches the pattern used on nexfortis.com.
+export const ORG_ID = `${BASE_URL}/#organization`;
+export const WEBSITE_ID = `${BASE_URL}/#website`;
+export const LOCAL_BUSINESS_ID = `${BASE_URL}/#localbusiness`;
 
 export function organizationSchema() {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
+    "@id": ORG_ID,
     name: ORG_NAME,
     url: BASE_URL,
     logo: `${BASE_URL}/images/logo-512.png`,
@@ -32,8 +44,10 @@ export function websiteSchema() {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
+    "@id": WEBSITE_ID,
     name: SITE_NAME,
     url: BASE_URL,
+    publisher: { "@id": ORG_ID },
   };
 }
 
@@ -41,6 +55,7 @@ export function localBusinessSchema() {
   return {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
+    "@id": LOCAL_BUSINESS_ID,
     name: ORG_NAME,
     url: BASE_URL,
     email: SUPPORT_EMAIL,
@@ -117,13 +132,10 @@ export function generateServiceSchema(
     description: pageData.metaDescription,
     serviceType: pageData.primaryKeyword,
     url: urlOverride || `${BASE_URL}/landing/${pageData.slug}`,
-    provider: {
-      "@type": "Organization",
-      name: ORG_NAME,
-      url: BASE_URL,
-      email: SUPPORT_EMAIL,
-      address: COMPANY_ADDRESS,
-    },
+    // Reference the canonical Organization node by @id rather than inlining
+    // a duplicate. This lets Google / AI engines treat the provider as the
+    // same entity across every Service emission on the site.
+    provider: { "@id": ORG_ID },
     areaServed: AREA_SERVED,
     ...(product && {
       offers: {
