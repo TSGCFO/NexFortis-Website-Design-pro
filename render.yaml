@@ -175,6 +175,11 @@ services:
         sync: false
       - key: VITE_SUPABASE_ANON_KEY
         sync: false
+      # Shared GA4 Measurement ID — same value as the marketing site so both
+      # hosts report into one property with cross-domain tracking. Analytics
+      # only fire after the visitor accepts the cookie consent banner.
+      - key: VITE_GA_MEASUREMENT_ID
+        sync: false
       # NOTE: VITE_API_BASE_URL is intentionally NOT set. See the marketing
       # site block above for the rationale (same-origin /api/* rewrite avoids
       # CORS; setting this env var would break every API call on the temporary

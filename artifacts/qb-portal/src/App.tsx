@@ -7,6 +7,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { AuthProvider } from "@/lib/auth";
 import { ThemeProvider } from "@/hooks/use-theme";
 import { Layout } from "@/components/layout";
+import { CookieConsent } from "@/components/cookie-consent";
 import Home from "@/pages/home";
 import Catalog from "@/pages/catalog";
 import FAQ from "@/pages/faq";
@@ -144,6 +145,11 @@ function App() {
               <GlobalSchemas />
               <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
                 <Router />
+                {/* CookieConsent must be INSIDE WouterRouter because the
+                    banner renders a wouter <Link> to /privacy. Placed as a
+                    sibling of the Router so it overlays every route at
+                    z-[60] without being remounted on navigation. */}
+                <CookieConsent />
               </WouterRouter>
               <Toaster />
             </AuthProvider>
