@@ -55,8 +55,23 @@ export function initAnalytics(): void {
   loaded = true;
 
   window.dataLayer = window.dataLayer || [];
-  function gtag(...args: unknown[]) {
-    window.dataLayer!.push(args);
+  // CRITICAL: this stub MUST push the native `arguments` object, not a
+  // rest-parameter array. gtag.js's consent state machine sniffs for the
+  // Arguments object shape (own `length`, no Array prototype methods) when
+  // detecting consent declarations queued before the library loads. Pushing
+  // a plain Array (e.g. `args` from `function gtag(...args)`) is silently
+  // ignored, leaving ICS in `usedImplicit:true / active:false` and
+  // suppressing every /g/collect hit, regardless of region.
+  //
+  // The rest-parameter signature is kept ONLY for TypeScript call-site
+  // typing; the body still references the bound `arguments` object, which
+  // is the actual Arguments instance JavaScript creates for any
+  // non-arrow function. This MUST stay a `function` declaration
+  // (not an arrow) so that `arguments` is bound.
+  // eslint-disable-next-line prefer-rest-params
+  function gtag(..._args: unknown[]) {
+    // eslint-disable-next-line prefer-rest-params
+    window.dataLayer!.push(arguments);
   }
   window.gtag = gtag as typeof window.gtag;
 
