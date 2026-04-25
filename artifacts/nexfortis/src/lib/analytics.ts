@@ -47,6 +47,23 @@ export function initAnalytics(): void {
   }
   window.gtag = gtag as typeof window.gtag;
 
+  // gtag.js consent state machine: without an explicit consent declaration,
+  // gtag.js leaves ICS (internal consent state) in `implicit: true / active:
+  // false` and refuses to send any /g/collect hits, regardless of region.
+  // We only reach this function after the user clicked Accept on the cookie
+  // banner (see line above this block: getConsent() === "granted"), so it is
+  // safe and accurate to declare default-denied and then update analytics
+  // storage to granted. This is what unblocks the first /g/collect hit.
+  gtag("consent", "default", {
+    ad_storage: "denied",
+    analytics_storage: "denied",
+    ad_user_data: "denied",
+    ad_personalization: "denied",
+  });
+  gtag("consent", "update", {
+    analytics_storage: "granted",
+  });
+
   gtag("js", new Date());
   gtag("config", MEASUREMENT_ID, {
     anonymize_ip: true,
@@ -64,6 +81,14 @@ export function initAnalytics(): void {
 function disableAnalytics(): void {
   if (typeof window === "undefined") return;
   if (!MEASUREMENT_ID) return;
+  // Consent withdrawal: signal the gtag.js consent state machine first so
+  // any future hits are gated, then keep the legacy ga-disable-<ID> flag as
+  // belt-and-suspenders for older gtag.js builds.
+  if (typeof window.gtag === "function") {
+    window.gtag("consent", "update", {
+      analytics_storage: "denied",
+    });
+  }
   (window as unknown as Record<string, boolean>)[
     `ga-disable-${MEASUREMENT_ID}`
   ] = true;
