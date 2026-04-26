@@ -1,0 +1,19 @@
+# Cursor rules — pointer file
+
+Modern Cursor reads structured rules from `.cursor/rules/*.mdc`. This file is
+kept only for older Cursor clients that do not yet read that directory.
+
+Read these in order:
+1. `AGENTS.md` — agent-facing guide for the whole repo
+2. `.cursor/rules/repo-conventions.mdc` — always-on conventions
+3. `.cursor/rules/seo-tests.mdc` — applies when editing SEO-relevant files
+
+## Quick conventions
+
+- pnpm workspace monorepo. pnpm 10, Node 24 (CI and Render both pin Node 24 — match locally). Squash merges into `main`.
+- `docs/` is read-only EXCEPT `docs/superpowers/specs/` and `docs/superpowers/plans/`.
+- Never use the words "scrape" or "crawl" — use "collect", "extract", "browse", "read".
+- Always run `pnpm test:seo` before opening a PR that touches anything under `artifacts/nexfortis/` or `artifacts/qb-portal/` (including non-`src/` assets like `public/sitemap.xml`).
+- Mirror CI build (root `pnpm build` fails on qb-portal prerender — issue C2):
+  `pnpm --filter @workspace/nexfortis run build && pnpm --filter @workspace/qb-portal exec vite build --config vite.config.ts`
+- Phase 2 audit fixes follow the prompt template at `tests/seo/seo-fix-prompt-template.md`.
