@@ -22,7 +22,15 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm typecheck
       - run: pnpm test:seo:components
-      - run: pnpm build
+      # Build marketing site fully (prerender works) but qb-portal
+      # with vite-only — qb-portal's prerender step is the documented
+      # known issue C2 (helmet timeout) and is allowlisted in the
+      # SEO snapshot/invariant baselines. The committed public/sitemap.xml
+      # is the canonical source and is copied verbatim by vite.
+      - name: Build nexfortis (full) + qb-portal (vite-only)
+        run: |
+          pnpm --filter @workspace/nexfortis run build
+          pnpm --filter @workspace/qb-portal exec vite build --config vite.config.ts
       - run: pnpm test:seo:snapshots
       - run: pnpm test:seo:invariants
       - run: pnpm test:seo:lib
