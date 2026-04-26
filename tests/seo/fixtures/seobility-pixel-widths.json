@@ -1,0 +1,39 @@
+{
+  "_doc": "Calibration data extracted from 2026-04-25 Seobility audit. Each entry is { text, kind: 'title'|'description', expected_px, tolerance_px }. Pixel-width function must return a value within tolerance for every row.",
+  "_source": "/2026-04-25_venture-full-export.pdf",
+  "_font": "Verdana 11px (matches Seobility convention)",
+  "rows": [
+    {
+      "kind": "title",
+      "text": "QuickBooks Conversion & Data Services | NexFortis QuickBooks Portal",
+      "expected_px": 641,
+      "tolerance_px": 12,
+      "_url": "https://qb.nexfortis.com/",
+      "_audit_note": "Reported 641/580 Pixels (Too long) in 2026-04-25 Seobility audit"
+    },
+    {
+      "kind": "title",
+      "text": "5 Signs Your Business Needs an IT Audit | NexFortis IT Solutions",
+      "expected_px": 582,
+      "tolerance_px": 12,
+      "_url": "https://nexfortis.com/blog/5-signs-yourbusiness-needs-an-it-audit",
+      "_audit_note": "Reported 582/580 Pixels (Too long) in 2026-04-25 Seobility audit"
+    },
+    {
+      "kind": "title",
+      "text": "Guaranteed 30-Minute Conversion | NexFortis QuickBooks Portal",
+      "expected_px": 583,
+      "tolerance_px": 12,
+      "_url": "https://qb.nexfortis.com/service/guaranteed30-minute",
+      "_audit_note": "Reported 583/580 Pixels (Too long) in 2026-04-25 Seobility audit"
+    },
+    {
+      "kind": "description",
+      "text": "Monthly QuickBooks Desktop support subscription with predictable response times and a fixed monthly cost. Compare Essentials, Professional, and Premium plans.",
+      "expected_px": 1011,
+      "tolerance_px": 20,
+      "_url": "https://qb.nexfortis.com/landing/quickbooks-support-subscription",
+      "_audit_note": "Reported 1011/1000 Pixels (Too long) in 2026-04-25 Seobility audit"
+    }
+  ]
+}
