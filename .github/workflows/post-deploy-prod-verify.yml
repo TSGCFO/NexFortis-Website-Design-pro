@@ -1,0 +1,124 @@
+name: Post-Deploy Production Verify
+
+# Runs the existing live-site SEO verifiers (scripts/seo-verification/*) against
+# production after every Render deploy, and on a daily safety-net cron.
+#
+# DO NOT modify scripts/seo-verification/*. This workflow only invokes them
+# with production sitemap URLs.
+#
+# Triggers:
+#   1. repository_dispatch (event_type=render-deploy-succeeded) — fired by
+#      a Render Outgoing Webhook when a production deploy succeeds.
+#   2. workflow_dispatch — manual run from the Actions UI.
+#   3. schedule (07:00 UTC daily) — safety net in case a webhook is missed.
+#   4. push to main + 5-minute wait — best-effort post-merge verification
+#      for cases where the webhook isn't configured yet.
+
+on:
+  repository_dispatch:
+    types: [render-deploy-succeeded]
+  workflow_dispatch:
+    inputs:
+      sitemap_urls:
+        description: "Comma-separated sitemap URLs (defaults to prod)"
+        required: false
+        default: "https://nexfortis.com/sitemap.xml,https://qb.nexfortis.com/sitemap.xml"
+  schedule:
+    # Daily at 07:00 UTC (= 03:00 EDT / 02:00 EST) — outside business hours.
+    - cron: "0 7 * * *"
+  push:
+    branches: [main]
+
+concurrency:
+  group: post-deploy-prod-verify
+  cancel-in-progress: false
+
+jobs:
+  verify-prod:
+    name: Verify production prerender + head tags
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      # If triggered by main branch push, give Render a few minutes to deploy.
+      # repository_dispatch already implies the deploy finished, so skip.
+      - name: Wait for Render deploy (push trigger only)
+        if: github.event_name == 'push'
+        run: |
+          echo "Waiting 5 minutes for Render to roll out the deploy..."
+          sleep 300
+
+      - name: Resolve sitemap URLs
+        id: urls
+        run: |
+          if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
+            # Render webhook may include the deploy's service URL; we still
+            # verify both prod sitemaps regardless of which service deployed.
+            echo "SITEMAP_URLS=https://nexfortis.com/sitemap.xml,https://qb.nexfortis.com/sitemap.xml" >> $GITHUB_ENV
+          elif [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "SITEMAP_URLS=${{ inputs.sitemap_urls }}" >> $GITHUB_ENV
+          else
+            # schedule + push
+            echo "SITEMAP_URLS=https://nexfortis.com/sitemap.xml,https://qb.nexfortis.com/sitemap.xml" >> $GITHUB_ENV
+          fi
+          echo "Will verify: $SITEMAP_URLS"
+
+      - name: Verify rendered content (prerender check)
+        run: node scripts/seo-verification/verify-rendered-content.mjs
+
+      - name: Verify head tags
+        run: node scripts/seo-verification/verify-head-tags.mjs
+
+      - name: Notify on failure
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const event = context.eventName;
+            const trigger = event === 'repository_dispatch'
+              ? `Render webhook (${context.payload.action || 'deploy'})`
+              : event;
+            const title = `Production verify failed (${trigger}) — ${new Date().toISOString().slice(0,10)}`;
+            const body = [
+              `Post-deploy production verification failed.`,
+              ``,
+              `**Trigger:** ${trigger}`,
+              `**Run:** ${context.payload.repository.html_url}/actions/runs/${context.runId}`,
+              ``,
+              `Either \`verify-rendered-content.mjs\` or \`verify-head-tags.mjs\``,
+              `failed against production sitemaps. Open the run logs above for`,
+              `the per-URL failure list.`,
+              ``,
+              `If this is the result of a recent deploy, consider rolling back`,
+              `until the issue is identified.`,
+            ].join('\n');
+            // Find an existing open issue with the same title-prefix and reuse it.
+            const existing = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo:  context.repo.repo,
+              state: 'open',
+              labels: 'prod-verify-failure',
+              per_page: 100,
+            });
+            const open = existing.data[0];
+            if (open) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: open.number,
+                body,
+              });
+            } else {
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo:  context.repo.repo,
+                title,
+                body,
+                labels: ['prod-verify-failure', 'seo'],
+              });
+            }
