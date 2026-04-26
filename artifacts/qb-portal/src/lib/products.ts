@@ -5,6 +5,12 @@ export interface Product {
   category: string;
   category_slug: string;
   description: string;
+  // Short hero subtitle used on the service detail page above the fold and as
+  // a unique sentence on cross-listings (catalog/category cards). Required for
+  // every service since PR fixing audit issue C1 — having it eliminates the
+  // duplicate-paragraph pattern Seobility flagged across ~40 portal URLs.
+  // 10–15 words, must NOT repeat any sentence in `description`.
+  tagline?: string;
   // Optional SEO-specific description used as the <meta name="description">
   // and og:description on the service detail page. Should be <=155 chars so
   // Google doesn't truncate it. If absent, the page falls back to

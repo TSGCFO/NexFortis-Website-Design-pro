@@ -7,6 +7,7 @@ import { ArrowRight, Clock, BookOpen } from "lucide-react";
 import { SEO } from "@/components/seo";
 import { generateBreadcrumbSchema } from "@/lib/seo-schemas";
 import { getCategoryLandingLinks } from "@/data/serviceLandingLinks";
+import { teaser } from "@/lib/teaser";
 
 export default function Category() {
   const { slug } = useParams<{ slug: string }>();
@@ -158,7 +159,10 @@ function ProductCard({ product, promo }: { product: Product; promo: boolean }) {
             )}
           </div>
         </div>
-        <p className="text-sm text-muted-foreground mb-4 flex-1">{product.description}</p>
+        {/* Truncated teaser (≤100 chars) — see catalog.tsx and lib/teaser.ts
+            for the C1 dedupe rationale. The full description renders only on
+            /service/<slug>. */}
+        <p className="text-sm text-muted-foreground mb-4 flex-1">{teaser(product.description, 100)}</p>
         {product.is_addon && <p className="text-xs text-muted-foreground mb-3 italic">Add-on</p>}
         <div className="flex items-center justify-between mt-auto">
           <div>

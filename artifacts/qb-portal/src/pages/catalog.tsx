@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Search, Filter } from "lucide-react";
 import { SEO } from "@/components/seo";
 import { generateBreadcrumbSchema } from "@/lib/seo-schemas";
+import { teaser } from "@/lib/teaser";
 
 export default function Catalog() {
   const [catalog, setCatalog] = useState<ProductCatalog | null>(null);
@@ -153,7 +154,11 @@ function ProductCard({ product, promo }: { product: Product; promo: boolean }) {
             )}
           </div>
         </div>
-        <p className="text-xs text-muted-foreground mb-3 line-clamp-2">{product.description}</p>
+        {/* Truncated teaser (≤100 chars) so the catalog grid does not echo
+            the full `description` paragraph that lives canonically on the
+            service-detail page. Fixes C1 duplicate-content across catalog,
+            category, and service-detail pages. */}
+        <p className="text-xs text-muted-foreground mb-3 line-clamp-2">{teaser(product.description, 100)}</p>
         {product.is_addon && (
           <div className="text-xs text-muted-foreground mb-2 italic">Add-on</div>
         )}
