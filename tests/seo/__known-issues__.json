@@ -1,0 +1,145 @@
+{
+  "_doc": "Allowlist of pre-existing audit findings. Each Phase 2 fix removes its entry. When all rule arrays are empty, all invariants are enforced strictly.",
+  "_seeded_from": "2026-04-25 Seobility audit + nexfortis-codebase-analysis.md",
+  "INV-001": [
+    { "site": "nexfortis", "route": "/about", "current": "2 <h1>", "expected": "1 <h1>", "issue": "M1", "note": "Second H1 is in <noscript> fallback block — pre-existing pattern on all nexfortis pages" },
+    { "site": "nexfortis", "route": "/blog/5-signs-your-business-needs-an-it-audit", "current": "2 <h1>", "expected": "1 <h1>", "issue": "M1", "note": "Second H1 is in <noscript> fallback block" },
+    { "site": "nexfortis", "route": "/blog", "current": "2 <h1>", "expected": "1 <h1>", "issue": "M1", "note": "Second H1 is in <noscript> fallback block" },
+    { "site": "nexfortis", "route": "/blog/microsoft-365-migration-checklist-canadian-smbs", "current": "2 <h1>", "expected": "1 <h1>", "issue": "M1", "note": "Second H1 is in <noscript> fallback block" },
+    { "site": "nexfortis", "route": "/blog/quickbooks-desktop-vs-online", "current": "2 <h1>", "expected": "1 <h1>", "issue": "M1", "note": "Second H1 is in <noscript> fallback block" },
+    { "site": "nexfortis", "route": "/blog/top-5-workflow-automation-wins-small-businesses", "current": "2 <h1>", "expected": "1 <h1>", "issue": "M1", "note": "Second H1 is in <noscript> fallback block" },
+    { "site": "nexfortis", "route": "/blog/what-is-pipeda-why-it-matters", "current": "2 <h1>", "expected": "1 <h1>", "issue": "M1", "note": "Second H1 is in <noscript> fallback block" },
+    { "site": "nexfortis", "route": "/contact", "current": "2 <h1>", "expected": "1 <h1>", "issue": "M1", "note": "Second H1 is in <noscript> fallback block" },
+    { "site": "nexfortis", "route": "/", "current": "2 <h1>", "expected": "1 <h1>", "issue": "M1", "note": "Second H1 is in <noscript> fallback block" },
+    { "site": "nexfortis", "route": "/privacy", "current": "2 <h1>", "expected": "1 <h1>", "issue": "M1", "note": "Second H1 is in <noscript> fallback block" },
+    { "site": "nexfortis", "route": "/services/digital-marketing", "current": "2 <h1>", "expected": "1 <h1>", "issue": "M1", "note": "Second H1 is in <noscript> fallback block" },
+    { "site": "nexfortis", "route": "/services", "current": "2 <h1>", "expected": "1 <h1>", "issue": "M1", "note": "Second H1 is in <noscript> fallback block" },
+    { "site": "nexfortis", "route": "/services/it-consulting", "current": "2 <h1>", "expected": "1 <h1>", "issue": "M1", "note": "Second H1 is in <noscript> fallback block" },
+    { "site": "nexfortis", "route": "/services/microsoft-365", "current": "2 <h1>", "expected": "1 <h1>", "issue": "M1", "note": "Second H1 is in <noscript> fallback block" },
+    { "site": "nexfortis", "route": "/services/quickbooks", "current": "2 <h1>", "expected": "1 <h1>", "issue": "M1", "note": "Second H1 is in <noscript> fallback block" },
+    { "site": "nexfortis", "route": "/services/workflow-automation", "current": "2 <h1>", "expected": "1 <h1>", "issue": "M1", "note": "Second H1 is in <noscript> fallback block" },
+    { "site": "nexfortis", "route": "/terms", "current": "2 <h1>", "expected": "1 <h1>", "issue": "M1", "note": "Second H1 is in <noscript> fallback block" }
+  ],
+  "INV-002": [
+    { "site": "nexfortis", "route": "/blog/5-signs-your-business-needs-an-it-audit", "current": "586px", "expected": "200-580px", "issue": "I5", "note": "Title 2px over limit — confirmed in audit" },
+    { "site": "nexfortis", "route": "/services/it-consulting", "current": "595px", "expected": "200-580px", "issue": "I5", "note": "Title too wide — pre-existing audit finding" },
+    { "site": "nexfortis", "route": "/services/microsoft-365", "current": "600px", "expected": "200-580px", "issue": "I5", "note": "Title too wide — pre-existing audit finding" },
+    { "site": "nexfortis", "route": "/services/workflow-automation", "current": "606px", "expected": "200-580px", "issue": "I5", "note": "Title too wide — pre-existing audit finding" }
+  ],
+  "INV-003": [
+    { "site": "nexfortis", "route": "/", "current": "1032px", "expected": "400-1000px", "issue": "I4", "note": "Home page meta description too wide — pre-existing audit finding" },
+    { "site": "nexfortis", "route": "/services/microsoft-365", "current": "1027px", "expected": "400-1000px", "issue": "I4", "note": "Microsoft 365 page meta description too wide — pre-existing audit finding" },
+    { "site": "nexfortis", "route": "/services/workflow-automation", "current": "1001px", "expected": "400-1000px", "issue": "I4", "note": "Workflow automation meta description too wide — pre-existing audit finding" },
+    { "site": "qb-portal", "route": "/", "current": "missing description", "expected": "400-1000px", "issue": "C2", "note": "qb-portal index.html is a minimal SPA shell — prerender produced only index.html without full SEO tags; all qb-portal issues stem from this prerender failure" }
+  ],
+  "INV-004": [
+    { "site": "nexfortis", "route": "/about", "current": "15 chars", "expected": "25-70 chars", "issue": "I1", "note": "H1 'About NexFortis' too short — Seobility flagged" },
+    { "site": "nexfortis", "route": "/contact", "current": "10 chars", "expected": "25-70 chars", "issue": "I1", "note": "H1 'Contact us' too short — Seobility flagged" },
+    { "site": "nexfortis", "route": "/privacy", "current": "14 chars", "expected": "25-70 chars", "issue": "I1", "note": "H1 'Privacy Policy' too short — Seobility flagged" },
+    { "site": "nexfortis", "route": "/services/microsoft-365", "current": "23 chars", "expected": "25-70 chars", "issue": "I1", "note": "H1 'Microsoft 365 Solutions' too short — Seobility flagged" },
+    { "site": "nexfortis", "route": "/terms", "current": "16 chars", "expected": "25-70 chars", "issue": "I1", "note": "H1 'Terms of Service' too short — Seobility flagged" }
+  ],
+  "INV-005": [
+    { "site": "qb-portal", "route": "/", "current": "missing canonical", "expected": "canonical present", "issue": "C2", "note": "qb-portal index.html is a minimal SPA shell — prerender failure; no SEO tags in dist" }
+  ],
+  "INV-006": [
+    { "site": "qb-portal", "route": "/", "current": "noindex,nofollow", "expected": "no noindex", "issue": "C2", "note": "qb-portal index.html intentionally uses noindex as a shell fallback — prerender failure means only this page built" }
+  ],
+  "INV-007": [
+    { "site": "qb-portal", "route": "/", "current": "missing all OG/Twitter tags", "expected": "og:title,og:description,og:url,og:image,og:type,twitter:card present", "issue": "C2", "note": "qb-portal index.html is a minimal SPA shell — prerender failure; no OG/Twitter meta in dist" }
+  ],
+  "INV-008": [
+    { "site": "nexfortis", "route": "/about", "current": "jumped H2→H4", "expected": "no level skipped", "issue": "I6", "note": "Heading hierarchy flaw in nexfortis pages — second H1 from noscript block also affects hierarchy tracking" },
+    { "site": "nexfortis", "route": "/blog/5-signs-your-business-needs-an-it-audit", "current": "jumped H2→H4", "expected": "no level skipped", "issue": "I6", "note": "Heading hierarchy flaw — pre-existing" },
+    { "site": "nexfortis", "route": "/blog", "current": "jumped H2→H4", "expected": "no level skipped", "issue": "I6", "note": "Heading hierarchy flaw — pre-existing" },
+    { "site": "nexfortis", "route": "/blog/microsoft-365-migration-checklist-canadian-smbs", "current": "jumped H2→H4", "expected": "no level skipped", "issue": "I6", "note": "Heading hierarchy flaw — pre-existing" },
+    { "site": "nexfortis", "route": "/blog/quickbooks-desktop-vs-online", "current": "jumped H2→H4", "expected": "no level skipped", "issue": "I6", "note": "Heading hierarchy flaw — pre-existing" },
+    { "site": "nexfortis", "route": "/blog/top-5-workflow-automation-wins-small-businesses", "current": "jumped H2→H4", "expected": "no level skipped", "issue": "I6", "note": "Heading hierarchy flaw — pre-existing" },
+    { "site": "nexfortis", "route": "/blog/what-is-pipeda-why-it-matters", "current": "jumped H2→H4", "expected": "no level skipped", "issue": "I6", "note": "Heading hierarchy flaw — pre-existing" },
+    { "site": "nexfortis", "route": "/", "current": "jumped H2→H4", "expected": "no level skipped", "issue": "I6", "note": "Heading hierarchy flaw — pre-existing" },
+    { "site": "nexfortis", "route": "/privacy", "current": "jumped H2→H4", "expected": "no level skipped", "issue": "I6", "note": "Heading hierarchy flaw — Seobility flagged privacy/terms pages" },
+    { "site": "nexfortis", "route": "/services/digital-marketing", "current": "jumped H2→H4", "expected": "no level skipped", "issue": "I6", "note": "Heading hierarchy flaw — pre-existing" },
+    { "site": "nexfortis", "route": "/services", "current": "jumped H2→H4", "expected": "no level skipped", "issue": "I6", "note": "Heading hierarchy flaw — pre-existing" },
+    { "site": "nexfortis", "route": "/services/it-consulting", "current": "jumped H1→H3", "expected": "no level skipped", "issue": "I6", "note": "Heading hierarchy flaw — pre-existing" },
+    { "site": "nexfortis", "route": "/services/microsoft-365", "current": "jumped H2→H4", "expected": "no level skipped", "issue": "I6", "note": "Heading hierarchy flaw — pre-existing" },
+    { "site": "nexfortis", "route": "/services/quickbooks", "current": "jumped H2→H4", "expected": "no level skipped", "issue": "I6", "note": "Heading hierarchy flaw — pre-existing" },
+    { "site": "nexfortis", "route": "/services/workflow-automation", "current": "jumped H2→H4", "expected": "no level skipped", "issue": "I6", "note": "Heading hierarchy flaw — pre-existing" },
+    { "site": "nexfortis", "route": "/terms", "current": "jumped H2→H4", "expected": "no level skipped", "issue": "I6", "note": "Heading hierarchy flaw — Seobility flagged privacy/terms pages" }
+  ],
+  "INV-009": [
+    { "site": "qb-portal", "route": "/", "current": "no JSON-LD", "expected": "at least one JSON-LD block", "issue": "C2", "note": "qb-portal index.html is a minimal SPA shell — prerender failure; no JSON-LD in dist" }
+  ],
+  "INV-010": [],
+  "INV-011": [
+    { "site": "nexfortis", "route": "/", "current": "missing BreadcrumbList", "expected": "BreadcrumbList JSON-LD present", "issue": "I6", "note": "Home page intentionally omits BreadcrumbList (no breadcrumb trail on root); pre-existing" },
+    { "site": "qb-portal", "route": "/", "current": "missing BreadcrumbList", "expected": "BreadcrumbList JSON-LD present", "issue": "C2", "note": "qb-portal index.html is a minimal SPA shell — prerender failure" }
+  ],
+  "INV-012": [],
+  "INV-013": [],
+  "INV-014": [
+    { "site": "qb-portal", "route": "/", "current": "empty SPA shell", "expected": "non-empty <div id=\"root\">", "issue": "C2", "note": "qb-portal prerender failed — only index.html produced with empty root div; all qb-portal routes timed out during prerender" }
+  ],
+  "INV-015": [
+    { "site": "nexfortis", "text": "get a free quote", "current": "points to /contact, /services/digital-marketing, /services/microsoft-365, /services/quickbooks, /services/workflow-automation", "expected": "unique anchor text per destination", "issue": "I2", "note": "Seobility flagged repeated CTA anchor — I2: five identical anchor-text patterns" },
+    { "site": "nexfortis", "text": "read article", "current": "points to multiple /blog/* URLs", "expected": "unique anchor text per destination", "issue": "I2", "note": "Seobility flagged 'read article' generic anchor on blog listing — I2 + I17" },
+    { "site": "nexfortis", "text": "book a consultation", "current": "points to /services/it-consulting and /contact", "expected": "unique anchor text per destination", "issue": "I2", "note": "Seobility flagged repeated CTA anchor — I2: five identical anchor-text patterns" }
+  ],
+  "INV-016": [],
+  "INV-017": [
+    { "site": "nexfortis", "route": "/blog", "current": "generic 'Read Article' anchor (4 occurrences)", "expected": "no generic anchor text", "issue": "I2", "note": "Blog listing page uses 'Read Article' as CTA for every post — Seobility flagged; same anchor points to multiple different articles (also INV-015)" }
+  ],
+  "INV-018": [
+    { "site": "qb-portal", "route": "/catalog", "current": "no built page", "expected": "built page exists", "issue": "C2", "note": "qb-portal prerender failure — only / produced during prerender; all other 48 routes timed out" },
+    { "site": "qb-portal", "route": "/category/platform-migrations", "current": "no built page", "expected": "built page exists", "issue": "C2", "note": "qb-portal prerender failure" },
+    { "site": "qb-portal", "route": "/category/quickbooks-conversion", "current": "no built page", "expected": "built page exists", "issue": "C2", "note": "qb-portal prerender failure" },
+    { "site": "qb-portal", "route": "/category/quickbooks-data-services", "current": "no built page", "expected": "built page exists", "issue": "C2", "note": "qb-portal prerender failure" },
+    { "site": "qb-portal", "route": "/category/volume-packs", "current": "no built page", "expected": "built page exists", "issue": "C2", "note": "qb-portal prerender failure" },
+    { "site": "qb-portal", "route": "/faq", "current": "no built page", "expected": "built page exists", "issue": "C2", "note": "qb-portal prerender failure" },
+    { "site": "qb-portal", "route": "/landing/accountedge-to-quickbooks", "current": "no built page", "expected": "built page exists", "issue": "C2", "note": "qb-portal prerender failure; also C3 (depth 4 click)" },
+    { "site": "qb-portal", "route": "/landing/affordable-enterprise-conversion", "current": "no built page", "expected": "built page exists", "issue": "C2", "note": "qb-portal prerender failure" },
+    { "site": "qb-portal", "route": "/landing/audit-trail-removal", "current": "no built page", "expected": "built page exists", "issue": "C2", "note": "qb-portal prerender failure" },
+    { "site": "qb-portal", "route": "/landing/enterprise-to-premier-conversion", "current": "no built page", "expected": "built page exists", "issue": "C2", "note": "qb-portal prerender failure" },
+    { "site": "qb-portal", "route": "/landing/etech-alternative", "current": "no built page", "expected": "built page exists", "issue": "C2", "note": "qb-portal prerender failure" },
+    { "site": "qb-portal", "route": "/landing/file-repair", "current": "no built page", "expected": "built page exists", "issue": "C2", "note": "qb-portal prerender failure" },
+    { "site": "qb-portal", "route": "/landing/how-conversion-works", "current": "no built page", "expected": "built page exists", "issue": "C2", "note": "qb-portal prerender failure" },
+    { "site": "qb-portal", "route": "/landing/is-it-safe", "current": "no built page", "expected": "built page exists", "issue": "C2", "note": "qb-portal prerender failure; also C3 (depth 4 click)" },
+    { "site": "qb-portal", "route": "/landing/list-reduction", "current": "no built page", "expected": "built page exists", "issue": "C2", "note": "qb-portal prerender failure; also C3 (depth 4 click)" },
+    { "site": "qb-portal", "route": "/landing/multi-currency-removal", "current": "no built page", "expected": "built page exists", "issue": "C2", "note": "qb-portal prerender failure; also C3 (depth 4 click)" },
+    { "site": "qb-portal", "route": "/landing/qbo-readiness", "current": "no built page", "expected": "built page exists", "issue": "C2", "note": "qb-portal prerender failure" },
+    { "site": "qb-portal", "route": "/landing/quickbooks-company-file-error", "current": "no built page", "expected": "built page exists", "issue": "C2", "note": "qb-portal prerender failure; also C3 (depth 4 click)" },
+    { "site": "qb-portal", "route": "/landing/quickbooks-conversion-canada", "current": "no built page", "expected": "built page exists", "issue": "C2", "note": "qb-portal prerender failure" },
+    { "site": "qb-portal", "route": "/landing/quickbooks-desktop-end-of-life", "current": "no built page", "expected": "built page exists", "issue": "C2", "note": "qb-portal prerender failure" },
+    { "site": "qb-portal", "route": "/landing/quickbooks-file-too-large", "current": "no built page", "expected": "built page exists", "issue": "C2", "note": "qb-portal prerender failure" },
+    { "site": "qb-portal", "route": "/landing/quickbooks-multi-currency-problems", "current": "no built page", "expected": "built page exists", "issue": "C2", "note": "qb-portal prerender failure; also C3 (depth 4 click)" },
+    { "site": "qb-portal", "route": "/landing/quickbooks-running-slow", "current": "no built page", "expected": "built page exists", "issue": "C2", "note": "qb-portal prerender failure" },
+    { "site": "qb-portal", "route": "/landing/quickbooks-support-subscription", "current": "no built page", "expected": "built page exists", "issue": "C2", "note": "qb-portal prerender failure; also M8 (orphan URL — no internal link)" },
+    { "site": "qb-portal", "route": "/landing/sage-50-to-quickbooks", "current": "no built page", "expected": "built page exists", "issue": "C2", "note": "qb-portal prerender failure" },
+    { "site": "qb-portal", "route": "/landing/super-condense", "current": "no built page", "expected": "built page exists", "issue": "C2", "note": "qb-portal prerender failure" },
+    { "site": "qb-portal", "route": "/privacy", "current": "no built page", "expected": "built page exists", "issue": "C2", "note": "qb-portal prerender failure" },
+    { "site": "qb-portal", "route": "/qbm-guide", "current": "no built page", "expected": "built page exists", "issue": "C2", "note": "qb-portal prerender failure" },
+    { "site": "qb-portal", "route": "/service/10-pack-conversions", "current": "no built page", "expected": "built page exists", "issue": "C2", "note": "qb-portal prerender failure" },
+    { "site": "qb-portal", "route": "/service/5-pack-conversions", "current": "no built page", "expected": "built page exists", "issue": "C2", "note": "qb-portal prerender failure" },
+    { "site": "qb-portal", "route": "/service/accountedge-to-quickbooks", "current": "no built page", "expected": "built page exists", "issue": "C2", "note": "qb-portal prerender failure" },
+    { "site": "qb-portal", "route": "/service/audit-trail-cra-bundle", "current": "no built page", "expected": "built page exists", "issue": "C2", "note": "qb-portal prerender failure" },
+    { "site": "qb-portal", "route": "/service/audit-trail-removal", "current": "no built page", "expected": "built page exists", "issue": "C2", "note": "qb-portal prerender failure" },
+    { "site": "qb-portal", "route": "/service/cra-period-copy", "current": "no built page", "expected": "built page exists", "issue": "C2", "note": "qb-portal prerender failure" },
+    { "site": "qb-portal", "route": "/service/enterprise-to-premier-complex", "current": "no built page", "expected": "built page exists", "issue": "C2", "note": "qb-portal prerender failure" },
+    { "site": "qb-portal", "route": "/service/enterprise-to-premier-standard", "current": "no built page", "expected": "built page exists", "issue": "C2", "note": "qb-portal prerender failure" },
+    { "site": "qb-portal", "route": "/service/extended-support", "current": "no built page", "expected": "built page exists", "issue": "C2", "note": "qb-portal prerender failure" },
+    { "site": "qb-portal", "route": "/service/file-health-check", "current": "no built page", "expected": "built page exists", "issue": "C2", "note": "qb-portal prerender failure" },
+    { "site": "qb-portal", "route": "/service/guaranteed-30-minute", "current": "no built page", "expected": "built page exists", "issue": "C2", "note": "qb-portal prerender failure" },
+    { "site": "qb-portal", "route": "/service/list-reduction", "current": "no built page", "expected": "built page exists", "issue": "C2", "note": "qb-portal prerender failure" },
+    { "site": "qb-portal", "route": "/service/multi-currency-removal", "current": "no built page", "expected": "built page exists", "issue": "C2", "note": "qb-portal prerender failure" },
+    { "site": "qb-portal", "route": "/service/qbo-readiness-report", "current": "no built page", "expected": "built page exists", "issue": "C2", "note": "qb-portal prerender failure" },
+    { "site": "qb-portal", "route": "/service/rush-delivery", "current": "no built page", "expected": "built page exists", "issue": "C2", "note": "qb-portal prerender failure" },
+    { "site": "qb-portal", "route": "/service/sage50-to-quickbooks", "current": "no built page", "expected": "built page exists", "issue": "C2", "note": "qb-portal prerender failure" },
+    { "site": "qb-portal", "route": "/service/super-condense", "current": "no built page", "expected": "built page exists", "issue": "C2", "note": "qb-portal prerender failure" },
+    { "site": "qb-portal", "route": "/subscription", "current": "no built page", "expected": "built page exists", "issue": "C2", "note": "qb-portal prerender failure" },
+    { "site": "qb-portal", "route": "/terms", "current": "no built page", "expected": "built page exists", "issue": "C2", "note": "qb-portal prerender failure" },
+    { "site": "qb-portal", "route": "/waitlist", "current": "no built page", "expected": "built page exists", "issue": "C2", "note": "qb-portal prerender failure" }
+  ],
+  "INV-019": [
+    { "site": "qb-portal", "route": "/", "current": "noindex in sitemap URL", "expected": "no noindex on sitemap URLs", "issue": "C2", "note": "qb-portal / is the only page that built; it uses noindex,nofollow (intentional for portal shell). The sitemap includes / but it is protected by auth and intentionally not indexed. Pre-existing — noted in codebase-analysis.md." }
+  ],
+  "INV-020": []
+}
