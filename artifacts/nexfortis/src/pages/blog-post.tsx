@@ -32,6 +32,19 @@ const SEO_TITLE_MAX = 45;
 // of slack for safety.
 const SEO_DESCRIPTION_MAX = 155;
 
+// Per-slug SERP title overrides applied ONLY to the <SEO> component (which
+// drives <title> and og:title). The SEO component appends
+// " | NexFortis IT Solutions" unless the title already contains "NexFortis";
+// for posts whose default title would exceed Seobility's 580px SERP limit,
+// supplying an override that ends in "| NexFortis" makes the SEO component
+// use it verbatim and keeps the SERP title under the limit. The Article
+// JSON-LD headline continues to use the natural article title (deriveSeoTitle)
+// so the structured data is unaffected (audit fix I5).
+const SERP_TITLE_OVERRIDES: Record<string, string> = {
+  "5-signs-your-business-needs-an-it-audit":
+    "5 Signs Your Business Needs an IT Audit | NexFortis",
+};
+
 function deriveSeoTitle(post: BlogPost): string {
   if (post.seoTitle && post.seoTitle.trim().length > 0) {
     return post.seoTitle.trim();
@@ -42,6 +55,10 @@ function deriveSeoTitle(post: BlogPost): string {
   const lastSpace = sliced.lastIndexOf(" ");
   const base = lastSpace > 20 ? sliced.slice(0, lastSpace) : sliced;
   return base.replace(/[\s,.;:!\-—]+$/, "") + "…";
+}
+
+function deriveSerpTitle(post: BlogPost): string {
+  return SERP_TITLE_OVERRIDES[post.slug] ?? deriveSeoTitle(post);
 }
 
 function deriveSeoDescription(post: BlogPost): string {
@@ -89,11 +106,12 @@ export default function BlogPostPage({ slug }: { slug: string }) {
   }
 
   const seoTitle = deriveSeoTitle(post);
+  const serpTitle = deriveSerpTitle(post);
   const seoDescription = deriveSeoDescription(post);
 
   return (
     <div>
-      <SEO title={seoTitle} description={seoDescription} path={`/blog/${post.slug}`} type="article" />
+      <SEO title={serpTitle} description={seoDescription} path={`/blog/${post.slug}`} type="article" />
       <ArticleSchema title={seoTitle} description={seoDescription} datePublished={post.createdAt} url={`/blog/${post.slug}`} />
       <BreadcrumbSchema
         items={[

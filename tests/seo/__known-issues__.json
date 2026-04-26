@@ -21,7 +21,6 @@
     { "site": "nexfortis", "route": "/terms", "current": "2 <h1>", "expected": "1 <h1>", "issue": "M1", "note": "Second H1 is in <noscript> fallback block" }
   ],
   "INV-002": [
-    { "site": "nexfortis", "route": "/blog/5-signs-your-business-needs-an-it-audit", "current": "586px", "expected": "200-580px", "issue": "I5", "note": "Title 2px over limit — confirmed in audit" },
     { "site": "nexfortis", "route": "/services/it-consulting", "current": "595px", "expected": "200-580px", "issue": "I5", "note": "Title too wide — pre-existing audit finding" },
     { "site": "nexfortis", "route": "/services/microsoft-365", "current": "600px", "expected": "200-580px", "issue": "I5", "note": "Title too wide — pre-existing audit finding" },
     { "site": "nexfortis", "route": "/services/workflow-automation", "current": "606px", "expected": "200-580px", "issue": "I5", "note": "Title too wide — pre-existing audit finding" }
