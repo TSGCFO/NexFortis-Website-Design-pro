@@ -7,6 +7,7 @@ import { CheckCircle, Clock, Shield, Lock, ArrowRight, Star, FileCheck, BookOpen
 import { SEO, BASE_URL } from "@/components/seo";
 import { generateServiceSchema, generateBreadcrumbSchema } from "@/lib/seo-schemas";
 import { getServiceLandingLinks } from "@/data/serviceLandingLinks";
+import { teaser } from "@/lib/teaser";
 
 export default function ServiceDetail() {
   const { slug } = useParams<{ slug: string }>();
@@ -121,7 +122,15 @@ export default function ServiceDetail() {
                   {catalog.promo_label}
                 </span>
               )}
-              <p className="text-white/70 text-lg max-w-2xl">{product.description}</p>
+              {/* Hero subtitle uses the unique `tagline` (added in the C1 fix)
+                  rather than `product.description`, which is the canonical
+                  longer paragraph rendered in the "About This Service" card
+                  below. Without this split the same paragraph appeared twice
+                  on every service page and again verbatim on catalog/category
+                  cards, which Seobility flagged as duplicate-content (C1).
+                  Fall back to `description` only if a service is missing a
+                  tagline, so the page never renders an empty subtitle. */}
+              <p className="text-white/70 text-lg max-w-2xl">{product.tagline ?? product.description}</p>
             </div>
             <div className="text-right">
               {promo ? (
@@ -244,7 +253,7 @@ export default function ServiceDetail() {
                         <div key={addon.id} className="flex items-center justify-between p-3 rounded-lg bg-muted">
                           <div>
                             <p className="font-medium text-sm">{addon.name}</p>
-                            <p className="text-xs text-muted-foreground">{addon.description}</p>
+                            <p className="text-xs text-muted-foreground">{teaser(addon.description, 100)}</p>
                           </div>
                           <span className="font-semibold text-accent text-sm">{formatPriceCAD(getActivePrice(addon))}</span>
                         </div>
@@ -345,7 +354,7 @@ export default function ServiceDetail() {
                     <Card className="h-full hover:shadow-md transition-shadow cursor-pointer">
                       <CardContent className="p-4">
                         <h3 className="font-semibold text-sm font-display text-primary mb-1">{rp.name}</h3>
-                        <p className="text-xs text-muted-foreground mb-2 line-clamp-2">{rp.description}</p>
+                        <p className="text-xs text-muted-foreground mb-2 line-clamp-2">{teaser(rp.description, 100)}</p>
                         <div className="flex items-center justify-between">
                           <div>
                             {rp.billing_type === "subscription" ? (
