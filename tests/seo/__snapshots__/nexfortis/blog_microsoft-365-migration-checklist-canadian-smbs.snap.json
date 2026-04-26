@@ -1,0 +1,373 @@
+{
+  "route": "/blog/microsoft-365-migration-checklist-canadian-smbs",
+  "title": "Microsoft 365 Migration Checklist | NexFortis IT Solutions",
+  "description": "A practical, Canadian-SMB-focused Microsoft 365 migration checklist: pre-migration assessment through post-launch support, step by step.",
+  "canonical": "https://nexfortis.com/blog/microsoft-365-migration-checklist-canadian-smbs",
+  "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
+  "og": {
+    "title": "Microsoft 365 Migration Checklist | NexFortis IT Solutions",
+    "description": "A practical, Canadian-SMB-focused Microsoft 365 migration checklist: pre-migration assessment through post-launch support, step by step.",
+    "url": "https://nexfortis.com/blog/microsoft-365-migration-checklist-canadian-smbs",
+    "image": "https://nexfortis.com/opengraph.png",
+    "type": "article"
+  },
+  "twitter": {
+    "card": "summary_large_image"
+  },
+  "headings": [
+    {
+      "level": 1,
+      "text": "Microsoft 365 Migration Checklist for Canadian SMBs"
+    },
+    {
+      "level": 2,
+      "text": "Before You Begin: Why Microsoft 365?"
+    },
+    {
+      "level": 2,
+      "text": "Phase 1: Pre-Migration Assessment"
+    },
+    {
+      "level": 3,
+      "text": "Inventory Your Current Environment"
+    },
+    {
+      "level": 3,
+      "text": "Choose the Right Microsoft 365 Plan"
+    },
+    {
+      "level": 3,
+      "text": "Verify Your Domain"
+    },
+    {
+      "level": 2,
+      "text": "Phase 2: Planning"
+    },
+    {
+      "level": 3,
+      "text": "Create a Migration Timeline"
+    },
+    {
+      "level": 3,
+      "text": "Prepare User Accounts"
+    },
+    {
+      "level": 3,
+      "text": "Data Migration Strategy"
+    },
+    {
+      "level": 2,
+      "text": "Phase 3: Migration Execution"
+    },
+    {
+      "level": 3,
+      "text": "DNS Configuration"
+    },
+    {
+      "level": 3,
+      "text": "Mailbox Migration"
+    },
+    {
+      "level": 3,
+      "text": "File Migration"
+    },
+    {
+      "level": 2,
+      "text": "Phase 4: Post-Migration"
+    },
+    {
+      "level": 3,
+      "text": "Verify and Test"
+    },
+    {
+      "level": 3,
+      "text": "User Training"
+    },
+    {
+      "level": 3,
+      "text": "Security Configuration"
+    },
+    {
+      "level": 2,
+      "text": "Working with a Migration Partner"
+    },
+    {
+      "level": 2,
+      "text": "Enjoyed this article?"
+    },
+    {
+      "level": 4,
+      "text": "Services"
+    },
+    {
+      "level": 4,
+      "text": "Company"
+    },
+    {
+      "level": 4,
+      "text": "Contact"
+    },
+    {
+      "level": 1,
+      "text": "NexFortis IT Solutions"
+    }
+  ],
+  "jsonld": [
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Microsoft 365 Migration Checklist",
+      "description": "A practical, Canadian-SMB-focused Microsoft 365 migration checklist: pre-migration assessment through post-launch support, step by step.",
+      "datePublished": "2026-04-21T03:50:14.372Z",
+      "dateModified": "2026-04-21T03:50:14.372Z",
+      "url": "https://nexfortis.com/blog/microsoft-365-migration-checklist-canadian-smbs",
+      "image": "https://nexfortis.com/opengraph.png",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://nexfortis.com/blog/microsoft-365-migration-checklist-canadian-smbs"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "NexFortis IT Solutions",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://nexfortis.com/images/logo-512.png"
+        }
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Hassan Sadiq",
+        "url": "https://nexfortis.com/about"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://nexfortis.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://nexfortis.com/blog"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Microsoft 365 Migration Checklist for Canadian SMBs",
+          "item": "https://nexfortis.com/blog/microsoft-365-migration-checklist-canadian-smbs"
+        }
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "@id": "https://nexfortis.com/#localbusiness",
+      "name": "NexFortis IT Solutions",
+      "legalName": "17756968 Canada Inc.",
+      "url": "https://nexfortis.com",
+      "logo": "https://nexfortis.com/images/logo-512.png",
+      "image": "https://nexfortis.com/opengraph.png",
+      "description": "NexFortis delivers end-to-end IT solutions for Canadian businesses including managed IT, Microsoft 365, QuickBooks migration, digital marketing, and workflow automation.",
+      "email": "contact@nexfortis.com",
+      "telephone": "+1-416-317-0051",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "204 Hill Farm Rd",
+        "addressLocality": "Nobleton",
+        "addressRegion": "ON",
+        "postalCode": "L7B 0A1",
+        "addressCountry": "CA"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 43.9327,
+        "longitude": -79.6615
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "Canada"
+      },
+      "priceRange": "$$",
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday"
+        ],
+        "opens": "09:00",
+        "closes": "17:00"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/company/nexfortis"
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "@id": "https://nexfortis.com/#organization",
+      "name": "NexFortis IT Solutions",
+      "legalName": "17756968 Canada Inc.",
+      "url": "https://nexfortis.com",
+      "logo": "https://nexfortis.com/images/logo-512.png",
+      "image": "https://nexfortis.com/opengraph.png",
+      "description": "NexFortis delivers end-to-end IT solutions for Canadian businesses including managed IT, Microsoft 365, QuickBooks migration, digital marketing, and workflow automation.",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer service",
+        "email": "contact@nexfortis.com",
+        "telephone": "+1-416-317-0051",
+        "areaServed": "CA",
+        "availableLanguage": [
+          "English"
+        ]
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "204 Hill Farm Rd",
+        "addressLocality": "Nobleton",
+        "addressRegion": "ON",
+        "postalCode": "L7B 0A1",
+        "addressCountry": "CA"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/company/nexfortis"
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "@id": "https://nexfortis.com/#website",
+      "name": "NexFortis IT Solutions",
+      "url": "https://nexfortis.com",
+      "inLanguage": "en-CA",
+      "publisher": {
+        "@id": "https://nexfortis.com/#organization"
+      }
+    }
+  ],
+  "anchors": [
+    {
+      "text": "Skip to main content",
+      "href": "#main-content"
+    },
+    {
+      "text": "",
+      "href": "/"
+    },
+    {
+      "text": "Home",
+      "href": "/"
+    },
+    {
+      "text": "Digital Marketing",
+      "href": "/services/digital-marketing"
+    },
+    {
+      "text": "Microsoft 365 Solutions",
+      "href": "/services/microsoft-365"
+    },
+    {
+      "text": "QuickBooks Migration",
+      "href": "/services/quickbooks"
+    },
+    {
+      "text": "IT Consulting",
+      "href": "/services/it-consulting"
+    },
+    {
+      "text": "Workflow Automation",
+      "href": "/services/workflow-automation"
+    },
+    {
+      "text": "View All Services",
+      "href": "/services"
+    },
+    {
+      "text": "About",
+      "href": "/about"
+    },
+    {
+      "text": "Blog",
+      "href": "/blog"
+    },
+    {
+      "text": "Contact",
+      "href": "/contact"
+    },
+    {
+      "text": "QB Portal",
+      "href": "https://qb.nexfortis.com"
+    },
+    {
+      "text": "Get a Free Quote",
+      "href": "/contact"
+    },
+    {
+      "text": "All Services",
+      "href": "/services"
+    },
+    {
+      "text": "Back to Blog",
+      "href": "/blog"
+    },
+    {
+      "text": "More Articles",
+      "href": "/blog"
+    },
+    {
+      "text": "Contact us",
+      "href": "/contact"
+    },
+    {
+      "text": "About Us",
+      "href": "/about"
+    },
+    {
+      "text": "Privacy Policy",
+      "href": "/privacy"
+    },
+    {
+      "text": "Terms of Service",
+      "href": "/terms"
+    },
+    {
+      "text": "(416) 317-0051",
+      "href": "tel:+14163170051"
+    },
+    {
+      "text": "contact@nexfortis.com",
+      "href": "mailto:contact@nexfortis.com"
+    },
+    {
+      "text": "LinkedIn",
+      "href": "https://www.linkedin.com/company/nexfortis"
+    },
+    {
+      "text": "Privacy",
+      "href": "/privacy"
+    },
+    {
+      "text": "Terms",
+      "href": "/terms"
+    },
+    {
+      "text": "About NexFortis",
+      "href": "/about"
+    },
+    {
+      "text": "Our services",
+      "href": "/services"
+    }
+  ],
+  "rootDivIsEmpty": false,
+  "hasNoindex": false
+}

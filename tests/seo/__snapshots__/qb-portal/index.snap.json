@@ -1,0 +1,40 @@
+{
+  "route": "/",
+  "title": "NexFortis QuickBooks Portal",
+  "description": null,
+  "canonical": null,
+  "robots": "noindex, nofollow",
+  "og": {},
+  "twitter": {},
+  "headings": [
+    {
+      "level": 1,
+      "text": "NexFortis QuickBooks Portal"
+    }
+  ],
+  "jsonld": [],
+  "anchors": [
+    {
+      "text": "support@nexfortis.com",
+      "href": "mailto:support@nexfortis.com"
+    },
+    {
+      "text": "Browse our services",
+      "href": "/catalog"
+    },
+    {
+      "text": "Frequently asked questions",
+      "href": "/faq"
+    },
+    {
+      "text": "How to create a .QBM file",
+      "href": "/qbm-guide"
+    },
+    {
+      "text": "Contact NexFortis",
+      "href": "https://nexfortis.com/contact"
+    }
+  ],
+  "rootDivIsEmpty": true,
+  "hasNoindex": true
+}

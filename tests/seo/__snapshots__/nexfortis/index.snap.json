@@ -1,0 +1,400 @@
+{
+  "route": "/",
+  "title": "NexFortis IT Solutions — Complexity Decoded. Advantage.",
+  "description": "NexFortis delivers end-to-end IT for Canadian businesses — managed IT, Microsoft 365, QuickBooks migration, marketing &amp; automation. Free consultation today.",
+  "canonical": "https://nexfortis.com/",
+  "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
+  "og": {
+    "title": "NexFortis IT Solutions — Complexity Decoded. Advantage.",
+    "description": "NexFortis delivers end-to-end IT for Canadian businesses — managed IT, Microsoft 365, QuickBooks migration, marketing &amp; automation. Free consultation today.",
+    "url": "https://nexfortis.com/",
+    "image": "https://nexfortis.com/opengraph.png",
+    "type": "website"
+  },
+  "twitter": {
+    "card": "summary_large_image"
+  },
+  "headings": [
+    {
+      "level": 1,
+      "text": "Complexity Decoded. Advantage."
+    },
+    {
+      "level": 2,
+      "text": "Comprehensive IT Solutions for Canadian Businesses"
+    },
+    {
+      "level": 2,
+      "text": "Digital Marketing &amp; Web Presence"
+    },
+    {
+      "level": 2,
+      "text": "Microsoft 365 Solutions"
+    },
+    {
+      "level": 2,
+      "text": "QuickBooks Migration &amp; Tools"
+    },
+    {
+      "level": 2,
+      "text": "IT Consulting &amp; Strategy"
+    },
+    {
+      "level": 2,
+      "text": "Workflow Automation &amp; Custom Software"
+    },
+    {
+      "level": 2,
+      "text": "Why Canadian Businesses Choose NexFortis"
+    },
+    {
+      "level": 3,
+      "text": "End-to-End IT Under One Roof"
+    },
+    {
+      "level": 3,
+      "text": "Microsoft AI Cloud Partner"
+    },
+    {
+      "level": 3,
+      "text": "Scalable Solutions for Every Budget"
+    },
+    {
+      "level": 3,
+      "text": "Canadian-Based, Privacy-First Support"
+    },
+    {
+      "level": 2,
+      "text": "How We Deliver Results"
+    },
+    {
+      "level": 3,
+      "text": "Discovery &amp; Audit"
+    },
+    {
+      "level": 3,
+      "text": "Planning &amp; Design"
+    },
+    {
+      "level": 3,
+      "text": "Implementation"
+    },
+    {
+      "level": 3,
+      "text": "Support &amp; Optimization"
+    },
+    {
+      "level": 2,
+      "text": "Industries We Serve"
+    },
+    {
+      "level": 2,
+      "text": "What Our Clients Say"
+    },
+    {
+      "level": 2,
+      "text": "Frequently Asked Questions"
+    },
+    {
+      "level": 2,
+      "text": "Ready to Modernize Your Business IT?"
+    },
+    {
+      "level": 4,
+      "text": "Services"
+    },
+    {
+      "level": 4,
+      "text": "Company"
+    },
+    {
+      "level": 4,
+      "text": "Contact"
+    },
+    {
+      "level": 1,
+      "text": "NexFortis IT Solutions"
+    }
+  ],
+  "jsonld": [
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What does a managed IT provider do?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A managed IT provider like NexFortis handles all of your technology needs — from setting up and maintaining cloud infrastructure, managing cybersecurity, and providing helpdesk support, to planning long-term IT strategy. Instead of hiring a full in-house IT team, you get access to a complete team of specialists for a predictable monthly cost. We proactively monitor your systems, apply patches, manage backups, and ensure your business stays secure and productive."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much does Microsoft 365 migration cost for a small business?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The cost of Microsoft 365 migration depends on the number of users, the complexity of your existing email and file setup, and how much data needs to be transferred. At NexFortis, we offer transparent, flat-rate migration pricing with no hidden fees. Most small businesses (under 50 users) can expect a one-time migration fee plus the ongoing Microsoft 365 subscription. We include zero-downtime migration, data verification, and 30 days of post-migration support as standard."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you work with small businesses or only large enterprises?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We work with businesses of every size — from five-person startups to 200+ seat enterprises. Our solutions are designed to scale with you. Whether you need a simple Microsoft 365 setup, a full QuickBooks migration, or a comprehensive managed IT plan, we tailor our recommendations to your current stage and budget. Many of our longest-running clients started as small businesses and grew with us."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is a virtual CIO and do I need one?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A virtual CIO (Chief Information Officer) provides the strategic technology leadership of a C-level executive without the full-time salary. If your business relies on technology but doesn't have a dedicated IT strategist, a virtual CIO from NexFortis can help you create a technology roadmap, evaluate vendors, optimize licensing costs, and ensure your IT investments align with your business goals. It's ideal for growing businesses that need expert guidance without the overhead."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do you handle data security and Canadian privacy compliance?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Data security and privacy are at the core of everything we do. As a Canadian-based IT provider, we ensure all our solutions comply with PIPEDA (Personal Information Protection and Electronic Documents Act) and provincial privacy regulations. We implement multi-layered security including endpoint protection, encrypted backups, multi-factor authentication, and regular security audits. Your data stays in Canada unless you explicitly choose otherwise."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can you help migrate our accounting data to QuickBooks?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Absolutely. We are certified QuickBooks ProAdvisors specializing in data migration from Sage, SAP, Xero, FreshBooks, and other accounting platforms. Our migration process includes a full data audit, field mapping, test migration, and validation to ensure 100% accuracy — backed by our money-back guarantee. We also offer same-day expedited migration for businesses that need to move quickly."
+          }
+        }
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "@id": "https://nexfortis.com/#localbusiness",
+      "name": "NexFortis IT Solutions",
+      "legalName": "17756968 Canada Inc.",
+      "url": "https://nexfortis.com",
+      "logo": "https://nexfortis.com/images/logo-512.png",
+      "image": "https://nexfortis.com/opengraph.png",
+      "description": "NexFortis delivers end-to-end IT solutions for Canadian businesses including managed IT, Microsoft 365, QuickBooks migration, digital marketing, and workflow automation.",
+      "email": "contact@nexfortis.com",
+      "telephone": "+1-416-317-0051",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "204 Hill Farm Rd",
+        "addressLocality": "Nobleton",
+        "addressRegion": "ON",
+        "postalCode": "L7B 0A1",
+        "addressCountry": "CA"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 43.9327,
+        "longitude": -79.6615
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "Canada"
+      },
+      "priceRange": "$$",
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday"
+        ],
+        "opens": "09:00",
+        "closes": "17:00"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/company/nexfortis"
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "@id": "https://nexfortis.com/#organization",
+      "name": "NexFortis IT Solutions",
+      "legalName": "17756968 Canada Inc.",
+      "url": "https://nexfortis.com",
+      "logo": "https://nexfortis.com/images/logo-512.png",
+      "image": "https://nexfortis.com/opengraph.png",
+      "description": "NexFortis delivers end-to-end IT solutions for Canadian businesses including managed IT, Microsoft 365, QuickBooks migration, digital marketing, and workflow automation.",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer service",
+        "email": "contact@nexfortis.com",
+        "telephone": "+1-416-317-0051",
+        "areaServed": "CA",
+        "availableLanguage": [
+          "English"
+        ]
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "204 Hill Farm Rd",
+        "addressLocality": "Nobleton",
+        "addressRegion": "ON",
+        "postalCode": "L7B 0A1",
+        "addressCountry": "CA"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/company/nexfortis"
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "@id": "https://nexfortis.com/#website",
+      "name": "NexFortis IT Solutions",
+      "url": "https://nexfortis.com",
+      "inLanguage": "en-CA",
+      "publisher": {
+        "@id": "https://nexfortis.com/#organization"
+      }
+    }
+  ],
+  "anchors": [
+    {
+      "text": "Skip to main content",
+      "href": "#main-content"
+    },
+    {
+      "text": "",
+      "href": "/"
+    },
+    {
+      "text": "Home",
+      "href": "/"
+    },
+    {
+      "text": "Digital Marketing",
+      "href": "/services/digital-marketing"
+    },
+    {
+      "text": "Microsoft 365 Solutions",
+      "href": "/services/microsoft-365"
+    },
+    {
+      "text": "QuickBooks Migration",
+      "href": "/services/quickbooks"
+    },
+    {
+      "text": "IT Consulting",
+      "href": "/services/it-consulting"
+    },
+    {
+      "text": "Workflow Automation",
+      "href": "/services/workflow-automation"
+    },
+    {
+      "text": "View All Services",
+      "href": "/services"
+    },
+    {
+      "text": "About",
+      "href": "/about"
+    },
+    {
+      "text": "Blog",
+      "href": "/blog"
+    },
+    {
+      "text": "Contact",
+      "href": "/contact"
+    },
+    {
+      "text": "QB Portal",
+      "href": "https://qb.nexfortis.com"
+    },
+    {
+      "text": "Get a Free Quote",
+      "href": "/contact"
+    },
+    {
+      "text": "All Services",
+      "href": "/services"
+    },
+    {
+      "text": "Explore Our Services",
+      "href": "/services"
+    },
+    {
+      "text": "Get a Free Quote",
+      "href": "/services/digital-marketing"
+    },
+    {
+      "text": "Get a Free Quote",
+      "href": "/services/microsoft-365"
+    },
+    {
+      "text": "Get a Free Quote",
+      "href": "/services/quickbooks"
+    },
+    {
+      "text": "Book a Consultation",
+      "href": "/services/it-consulting"
+    },
+    {
+      "text": "Get a Free Quote",
+      "href": "/services/workflow-automation"
+    },
+    {
+      "text": "Contact us",
+      "href": "/contact"
+    },
+    {
+      "text": "Book a Consultation",
+      "href": "/contact"
+    },
+    {
+      "text": "About Us",
+      "href": "/about"
+    },
+    {
+      "text": "Privacy Policy",
+      "href": "/privacy"
+    },
+    {
+      "text": "Terms of Service",
+      "href": "/terms"
+    },
+    {
+      "text": "(416) 317-0051",
+      "href": "tel:+14163170051"
+    },
+    {
+      "text": "contact@nexfortis.com",
+      "href": "mailto:contact@nexfortis.com"
+    },
+    {
+      "text": "LinkedIn",
+      "href": "https://www.linkedin.com/company/nexfortis"
+    },
+    {
+      "text": "Privacy",
+      "href": "/privacy"
+    },
+    {
+      "text": "Terms",
+      "href": "/terms"
+    },
+    {
+      "text": "About NexFortis",
+      "href": "/about"
+    },
+    {
+      "text": "Our services",
+      "href": "/services"
+    }
+  ],
+  "rootDivIsEmpty": false,
+  "hasNoindex": false
+}

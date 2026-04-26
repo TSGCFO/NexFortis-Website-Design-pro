@@ -1,0 +1,461 @@
+{
+  "route": "/services/quickbooks",
+  "title": "QuickBooks Migration &amp; Recovery | NexFortis IT Solutions",
+  "description": "Certified QuickBooks ProAdvisor team offering 100% accuracy-guaranteed migration from Sage, SAP, and Xero. File recovery and same-day service available.",
+  "canonical": "https://nexfortis.com/services/quickbooks",
+  "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
+  "og": {
+    "title": "QuickBooks Migration &amp; Recovery | NexFortis IT Solutions",
+    "description": "Certified QuickBooks ProAdvisor team offering 100% accuracy-guaranteed migration from Sage, SAP, and Xero. File recovery and same-day service available.",
+    "url": "https://nexfortis.com/services/quickbooks",
+    "image": "https://nexfortis.com/opengraph.png",
+    "type": "website"
+  },
+  "twitter": {
+    "card": "summary_large_image"
+  },
+  "headings": [
+    {
+      "level": 1,
+      "text": "QuickBooks Migration &amp; Tools"
+    },
+    {
+      "level": 2,
+      "text": "Your Accounting Data, Safe and Sound"
+    },
+    {
+      "level": 3,
+      "text": "Data Migration"
+    },
+    {
+      "level": 3,
+      "text": "Data Recovery"
+    },
+    {
+      "level": 3,
+      "text": "Data Services"
+    },
+    {
+      "level": 2,
+      "text": "How Our Migration Process Works"
+    },
+    {
+      "level": 3,
+      "text": "Assessment &amp; Scoping"
+    },
+    {
+      "level": 3,
+      "text": "Secure Data Transfer"
+    },
+    {
+      "level": 3,
+      "text": "Migration &amp; Verification"
+    },
+    {
+      "level": 3,
+      "text": "Delivery &amp; Support"
+    },
+    {
+      "level": 2,
+      "text": "QB Services Portal Catalog"
+    },
+    {
+      "level": 3,
+      "text": "QuickBooks Conversion Services"
+    },
+    {
+      "level": 4,
+      "text": "Enterprise → Premier/Pro Standard"
+    },
+    {
+      "level": 4,
+      "text": "Guaranteed 30-Minute Conversion"
+    },
+    {
+      "level": 4,
+      "text": "File Health Check"
+    },
+    {
+      "level": 3,
+      "text": "QuickBooks Data Services"
+    },
+    {
+      "level": 4,
+      "text": "Audit Trail Removal"
+    },
+    {
+      "level": 4,
+      "text": "Super Condense"
+    },
+    {
+      "level": 4,
+      "text": "Multi-Currency Removal"
+    },
+    {
+      "level": 3,
+      "text": "Platform Migration Services"
+    },
+    {
+      "level": 4,
+      "text": "Sage 50 / Simply Accounting → QuickBooks"
+    },
+    {
+      "level": 4,
+      "text": "AccountEdge / MYOB → QuickBooks"
+    },
+    {
+      "level": 3,
+      "text": "QB Expert Support (Monthly Subscriptions)"
+    },
+    {
+      "level": 4,
+      "text": "Essentials — 3 tickets/month"
+    },
+    {
+      "level": 4,
+      "text": "Professional — 8 tickets/month"
+    },
+    {
+      "level": 4,
+      "text": "Premium — Unlimited tickets"
+    },
+    {
+      "level": 3,
+      "text": "Volume Packs"
+    },
+    {
+      "level": 4,
+      "text": "5-Pack Conversions"
+    },
+    {
+      "level": 4,
+      "text": "10-Pack Conversions"
+    },
+    {
+      "level": 3,
+      "text": "Access Our QuickBooks Tools Online"
+    },
+    {
+      "level": 2,
+      "text": "QuickBooks FAQ"
+    },
+    {
+      "level": 2,
+      "text": "Need Help with QuickBooks?"
+    },
+    {
+      "level": 4,
+      "text": "Services"
+    },
+    {
+      "level": 4,
+      "text": "Company"
+    },
+    {
+      "level": 4,
+      "text": "Contact"
+    },
+    {
+      "level": 1,
+      "text": "NexFortis IT Solutions"
+    }
+  ],
+  "jsonld": [
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://nexfortis.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Services",
+          "item": "https://nexfortis.com/services"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "QuickBooks Solutions",
+          "item": "https://nexfortis.com/services/quickbooks"
+        }
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What accounting platforms can you migrate data from into QuickBooks?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We migrate data from virtually every major accounting platform including Sage 50, Sage 100, SAP Business One, Xero, FreshBooks, Wave, MYOB, NetSuite, and Peachtree. We also handle migrations between QuickBooks versions — Desktop to Online, Enterprise to Pro/Premier, and vice versa. Each migration includes a full data audit, field mapping, test migration, and line-by-line reconciliation to guarantee 100% accuracy."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does your money-back guarantee work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "If the migrated data does not match your source data with 100% accuracy after our verification process, we will either re-do the migration at no additional cost or provide a full refund — your choice. This guarantee covers all data migration and recovery services. We have maintained a 100% satisfaction rate because we run comprehensive reconciliation checks before delivering your completed file."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long does a QuickBooks data migration take?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Standard migrations are completed within one business day. If you need your data sooner, we offer same-day expedited service for an additional fee. The timeline depends on the volume and complexity of your data — a simple migration with a few years of transactions can be done in hours, while larger datasets with complex inventory or custom fields may take a full day. We provide an accurate estimate after reviewing your source file."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can you recover a corrupted QuickBooks file?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Our data recovery services cover a wide range of QuickBooks file issues including TLG file recovery, company file corruption, verify and rebuild errors, network data file problems, and password recovery. We use specialized tools and techniques developed over years of working with QuickBooks file structures. If we cannot recover your data, you pay nothing — that is part of our money-back guarantee."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What are your QuickBooks add-on tools and how do they work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Our QB Services Portal offers five categories of professional services for QuickBooks Desktop users in Canada: Conversion Services (Enterprise → Premier/Pro, with optional 30-minute guaranteed turnaround), Data Services (Audit Trail Removal, Super Condense, List Reduction, Multi-Currency Removal, CRA Period Copy), Platform Migrations (Sage 50/Simply Accounting and AccountEdge/MYOB into QuickBooks), QB Expert Support monthly subscriptions (Essentials, Professional, and Premium tiers), and Volume Packs (5- and 10-pack conversions for accounting firms). Every service is performed by certified ProAdvisors and backed by our 100% accuracy guarantee."
+          }
+        }
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "@id": "https://nexfortis.com/#localbusiness",
+      "name": "NexFortis IT Solutions",
+      "legalName": "17756968 Canada Inc.",
+      "url": "https://nexfortis.com",
+      "logo": "https://nexfortis.com/images/logo-512.png",
+      "image": "https://nexfortis.com/opengraph.png",
+      "description": "NexFortis delivers end-to-end IT solutions for Canadian businesses including managed IT, Microsoft 365, QuickBooks migration, digital marketing, and workflow automation.",
+      "email": "contact@nexfortis.com",
+      "telephone": "+1-416-317-0051",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "204 Hill Farm Rd",
+        "addressLocality": "Nobleton",
+        "addressRegion": "ON",
+        "postalCode": "L7B 0A1",
+        "addressCountry": "CA"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 43.9327,
+        "longitude": -79.6615
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "Canada"
+      },
+      "priceRange": "$$",
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday"
+        ],
+        "opens": "09:00",
+        "closes": "17:00"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/company/nexfortis"
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "@id": "https://nexfortis.com/#organization",
+      "name": "NexFortis IT Solutions",
+      "legalName": "17756968 Canada Inc.",
+      "url": "https://nexfortis.com",
+      "logo": "https://nexfortis.com/images/logo-512.png",
+      "image": "https://nexfortis.com/opengraph.png",
+      "description": "NexFortis delivers end-to-end IT solutions for Canadian businesses including managed IT, Microsoft 365, QuickBooks migration, digital marketing, and workflow automation.",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer service",
+        "email": "contact@nexfortis.com",
+        "telephone": "+1-416-317-0051",
+        "areaServed": "CA",
+        "availableLanguage": [
+          "English"
+        ]
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "204 Hill Farm Rd",
+        "addressLocality": "Nobleton",
+        "addressRegion": "ON",
+        "postalCode": "L7B 0A1",
+        "addressCountry": "CA"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/company/nexfortis"
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "QuickBooks Migration & Tools",
+      "description": "QuickBooks data migration, file recovery, and custom add-on tools for Canadian businesses. Certified ProAdvisor team.",
+      "url": "https://nexfortis.com/services/quickbooks",
+      "provider": {
+        "@type": "Organization",
+        "name": "NexFortis IT Solutions",
+        "url": "https://nexfortis.com"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "Canada"
+      },
+      "serviceType": "IT Services"
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "@id": "https://nexfortis.com/#website",
+      "name": "NexFortis IT Solutions",
+      "url": "https://nexfortis.com",
+      "inLanguage": "en-CA",
+      "publisher": {
+        "@id": "https://nexfortis.com/#organization"
+      }
+    }
+  ],
+  "anchors": [
+    {
+      "text": "Skip to main content",
+      "href": "#main-content"
+    },
+    {
+      "text": "",
+      "href": "/"
+    },
+    {
+      "text": "Home",
+      "href": "/"
+    },
+    {
+      "text": "Digital Marketing",
+      "href": "/services/digital-marketing"
+    },
+    {
+      "text": "Microsoft 365 Solutions",
+      "href": "/services/microsoft-365"
+    },
+    {
+      "text": "QuickBooks Migration",
+      "href": "/services/quickbooks"
+    },
+    {
+      "text": "IT Consulting",
+      "href": "/services/it-consulting"
+    },
+    {
+      "text": "Workflow Automation",
+      "href": "/services/workflow-automation"
+    },
+    {
+      "text": "View All Services",
+      "href": "/services"
+    },
+    {
+      "text": "About",
+      "href": "/about"
+    },
+    {
+      "text": "Blog",
+      "href": "/blog"
+    },
+    {
+      "text": "Contact",
+      "href": "/contact"
+    },
+    {
+      "text": "QB Portal",
+      "href": "https://qb.nexfortis.com"
+    },
+    {
+      "text": "Get a Free Quote",
+      "href": "/contact"
+    },
+    {
+      "text": "All Services",
+      "href": "/services"
+    },
+    {
+      "text": "Services",
+      "href": "/services"
+    },
+    {
+      "text": "our QB Services Portal",
+      "href": "https://qb.nexfortis.com/catalog"
+    },
+    {
+      "text": "Browse QB Services Portal",
+      "href": "https://qb.nexfortis.com/catalog"
+    },
+    {
+      "text": "About Us",
+      "href": "/about"
+    },
+    {
+      "text": "Privacy Policy",
+      "href": "/privacy"
+    },
+    {
+      "text": "Terms of Service",
+      "href": "/terms"
+    },
+    {
+      "text": "(416) 317-0051",
+      "href": "tel:+14163170051"
+    },
+    {
+      "text": "contact@nexfortis.com",
+      "href": "mailto:contact@nexfortis.com"
+    },
+    {
+      "text": "LinkedIn",
+      "href": "https://www.linkedin.com/company/nexfortis"
+    },
+    {
+      "text": "Privacy",
+      "href": "/privacy"
+    },
+    {
+      "text": "Terms",
+      "href": "/terms"
+    },
+    {
+      "text": "About NexFortis",
+      "href": "/about"
+    },
+    {
+      "text": "Our services",
+      "href": "/services"
+    },
+    {
+      "text": "Contact us",
+      "href": "/contact"
+    }
+  ],
+  "rootDivIsEmpty": false,
+  "hasNoindex": false
+}
