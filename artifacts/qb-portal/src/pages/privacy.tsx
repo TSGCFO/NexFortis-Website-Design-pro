@@ -44,7 +44,7 @@ export default function Privacy() {
 
           <h3>4. Data Retention</h3>
           <ul>
-            <li><strong>QuickBooks files:</strong> All uploaded and converted files are permanently deleted within 7 days of delivery.</li>
+            <li><strong>QuickBooks file retention:</strong> All uploaded and converted files are permanently deleted within 7 days of delivery.</li>
             <li><strong>Account data:</strong> Retained while your account is active. You may request deletion at any time.</li>
             <li><strong>Waitlist data:</strong> Retained until the product launches and you are notified, or until you unsubscribe.</li>
             <li><strong>Order records:</strong> Retained for tax and accounting purposes as required by Canadian law.</li>
