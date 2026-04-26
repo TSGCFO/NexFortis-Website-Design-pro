@@ -533,7 +533,7 @@ export const landingPages: LandingPageData[] = [
     h1: "Sage 50 to QuickBooks Migration Service",
     metaTitle: "Sage 50 to QuickBooks Migration | NexFortis Canada",
     metaDescription:
-      "Migrate Sage 50 (Simply Accounting) to QuickBooks Desktop with Canadian Edition support, bilingual data, and CRA-ready GST/HST mapping. From {launchPrice}.",
+      "Migrate Sage 50 (Simply Accounting) to QuickBooks Desktop with Canadian Edition support, bilingual data, and CRA-ready GST/HST. From {launchPrice}.",
     productSlug: "sage50-to-quickbooks",
     ctaLabel: "Start your Sage 50 to QuickBooks conversion",
     ctaHref: "/service/sage50-to-quickbooks",
@@ -812,7 +812,7 @@ export const landingPages: LandingPageData[] = [
     h1: "QuickBooks Desktop to Online Readiness Report",
     metaTitle: "QuickBooks Desktop to Online Readiness Report | NexFortis",
     metaDescription:
-      "Know before you migrate. A detailed readiness report on your QuickBooks Desktop file's compatibility with QuickBooks Online — Canadian-aware. From {launchPrice}.",
+      "Know before you migrate. A readiness report on your QuickBooks Desktop file's compatibility with QuickBooks Online — Canadian-aware. From {launchPrice}.",
     productSlug: "qbo-readiness-report",
     ctaLabel: "Order Readiness Report — From {launchPrice}",
     ctaHref: "/service/qbo-readiness-report",
@@ -1862,7 +1862,7 @@ export const landingPages: LandingPageData[] = [
     h1: "QuickBooks Support Subscription — Predictable Help, Fixed Monthly Cost",
     metaTitle: "QuickBooks Support Subscription | NexFortis Monthly Plans",
     metaDescription:
-      "Monthly QuickBooks Desktop support subscription with predictable response times and a fixed monthly cost. Compare Essentials, Professional, and Premium plans.",
+      "Monthly QuickBooks Desktop support subscription with predictable response times and a fixed monthly cost. Compare Essentials, Professional, and Premium.",
     ctaLabel: "Browse Subscription Plans",
     ctaHref: "/catalog",
     heroImageAlt:
