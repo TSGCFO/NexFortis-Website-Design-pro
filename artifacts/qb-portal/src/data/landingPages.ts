@@ -442,7 +442,7 @@ export const landingPages: LandingPageData[] = [
     metaDescription:
       "Migrate AccountEdge (formerly MYOB) to QuickBooks Desktop with full transaction history, GST/HST preserved, and bilingual data intact. From {launchPrice}.",
     productSlug: "accountedge-to-quickbooks",
-    ctaLabel: "Start Migration — From {launchPrice}",
+    ctaLabel: "Start your AccountEdge to QuickBooks conversion",
     ctaHref: "/service/accountedge-to-quickbooks",
     heroImageAlt:
       "Illustration of AccountEdge data transferring to QuickBooks Desktop",
@@ -535,7 +535,7 @@ export const landingPages: LandingPageData[] = [
     metaDescription:
       "Migrate Sage 50 (Simply Accounting) to QuickBooks Desktop with Canadian Edition support, bilingual data, and CRA-ready GST/HST mapping. From {launchPrice}.",
     productSlug: "sage50-to-quickbooks",
-    ctaLabel: "Start Migration — From {launchPrice}",
+    ctaLabel: "Start your Sage 50 to QuickBooks conversion",
     ctaHref: "/service/sage50-to-quickbooks",
     heroImageAlt:
       "Illustration of Sage 50 Simply Accounting data migrating to QuickBooks Desktop",

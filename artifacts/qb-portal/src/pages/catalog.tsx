@@ -189,7 +189,7 @@ function ProductCard({ product, promo }: { product: Product; promo: boolean }) {
             {product.turnaround && <span className="text-xs text-muted-foreground ml-2">{product.turnaround}</span>}
           </div>
           <Link href={`/service/${product.slug}`}>
-            <Button size="sm" className="bg-rose-gold hover:bg-rose-gold-hover text-white text-xs">View Details</Button>
+            <Button size="sm" className="bg-rose-gold hover:bg-rose-gold-hover text-white text-xs">{product.name}</Button>
           </Link>
         </div>
       </CardContent>

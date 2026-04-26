@@ -20,7 +20,7 @@ const services = [
     benefits: ["Mobile-first responsive design", "Monthly SEO reporting", "Dedicated account manager"],
     href: "/services/digital-marketing",
     badge: "Web & SEO",
-    cta: "Get a Free Quote",
+    cta: "Explore digital marketing",
   },
   {
     icon: Cloud,
@@ -29,7 +29,7 @@ const services = [
     benefits: ["Microsoft AI Cloud Partner", "Zero-downtime migration", "Intune device management"],
     href: "/services/microsoft-365",
     badge: "Cloud & Productivity",
-    cta: "Get a Free Quote",
+    cta: "Explore Microsoft 365 solutions",
   },
   {
     icon: Database,
@@ -38,7 +38,7 @@ const services = [
     benefits: ["Money-back guarantee", "Same-day expedited service", "Certified ProAdvisor team"],
     href: "/services/quickbooks",
     badge: "Accounting & Finance",
-    cta: "Get a Free Quote",
+    cta: "Explore QuickBooks migration",
   },
   {
     icon: Cog,
@@ -47,7 +47,7 @@ const services = [
     benefits: ["Technology roadmap planning", "License cost optimization", "Security gap analysis"],
     href: "/services/it-consulting",
     badge: "Strategy & Advisory",
-    cta: "Book a Consultation",
+    cta: "Explore IT consulting",
   },
   {
     icon: LayoutDashboard,
@@ -56,7 +56,7 @@ const services = [
     benefits: ["Reduce manual work by up to 90%", "Real-time multi-system sync", "Custom dashboards & reporting"],
     href: "/services/workflow-automation",
     badge: "Automation & Dev",
-    cta: "Get a Free Quote",
+    cta: "Explore workflow automation",
   },
 ];
 
@@ -589,7 +589,7 @@ export default function Home() {
             href="/contact"
             className="inline-flex px-8 py-4 min-h-[48px] rounded-xl bg-rose-gold text-rose-gold-foreground font-bold text-lg hover:bg-rose-gold-hover hover:scale-105 transition-all shadow-xl shadow-rose-gold/20 items-center justify-center gap-2"
           >
-            Book a Consultation <ArrowRight className="w-5 h-5" aria-hidden="true" />
+            Contact our team <ArrowRight className="w-5 h-5" aria-hidden="true" />
           </Link>
         </div>
       </section>

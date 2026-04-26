@@ -192,7 +192,7 @@ function ProductCard({ product, promo }: { product: Product; promo: boolean }) {
           </div>
           <Link href={`/service/${product.slug}`}>
             <Button size="sm" className="bg-navy text-white hover:bg-navy/90 gap-1">
-              Details <ArrowRight className="w-3 h-3" />
+              {product.name} <ArrowRight className="w-3 h-3" />
             </Button>
           </Link>
         </div>

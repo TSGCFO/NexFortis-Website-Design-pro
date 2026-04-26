@@ -78,15 +78,9 @@
   "INV-014": [
     { "site": "qb-portal", "route": "/", "current": "empty SPA shell", "expected": "non-empty <div id=\"root\">", "issue": "C2", "note": "qb-portal prerender failed — only index.html produced with empty root div; all qb-portal routes timed out during prerender" }
   ],
-  "INV-015": [
-    { "site": "nexfortis", "text": "get a free quote", "current": "points to /contact, /services/digital-marketing, /services/microsoft-365, /services/quickbooks, /services/workflow-automation", "expected": "unique anchor text per destination", "issue": "I2", "note": "Seobility flagged repeated CTA anchor — I2: five identical anchor-text patterns" },
-    { "site": "nexfortis", "text": "read article", "current": "points to multiple /blog/* URLs", "expected": "unique anchor text per destination", "issue": "I2", "note": "Seobility flagged 'read article' generic anchor on blog listing — I2 + I17" },
-    { "site": "nexfortis", "text": "book a consultation", "current": "points to /services/it-consulting and /contact", "expected": "unique anchor text per destination", "issue": "I2", "note": "Seobility flagged repeated CTA anchor — I2: five identical anchor-text patterns" }
-  ],
+  "INV-015": [],
   "INV-016": [],
-  "INV-017": [
-    { "site": "nexfortis", "route": "/blog", "current": "generic 'Read Article' anchor (4 occurrences)", "expected": "no generic anchor text", "issue": "I2", "note": "Blog listing page uses 'Read Article' as CTA for every post — Seobility flagged; same anchor points to multiple different articles (also INV-015)" }
-  ],
+  "INV-017": [],
   "INV-018": [
     { "site": "qb-portal", "route": "/catalog", "current": "no built page", "expected": "built page exists", "issue": "C2", "note": "qb-portal prerender failure — only / produced during prerender; all other 48 routes timed out" },
     { "site": "qb-portal", "route": "/category/platform-migrations", "current": "no built page", "expected": "built page exists", "issue": "C2", "note": "qb-portal prerender failure" },
