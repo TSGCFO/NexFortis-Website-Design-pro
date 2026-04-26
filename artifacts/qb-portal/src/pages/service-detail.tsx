@@ -350,38 +350,48 @@ export default function ServiceDetail() {
               <h2 className="text-xl font-bold font-display text-primary mb-6">Related Services</h2>
               <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 {relatedProducts.map((rp) => (
-                  <Link key={rp.id} href={`/service/${rp.slug}`}>
-                    <Card className="h-full hover:shadow-md transition-shadow cursor-pointer">
-                      <CardContent className="p-4">
-                        <h3 className="font-semibold text-sm font-display text-primary mb-1">{rp.name}</h3>
-                        <p className="text-xs text-muted-foreground mb-2 line-clamp-2">{teaser(rp.description, 100)}</p>
-                        <div className="flex items-center justify-between">
-                          <div>
-                            {rp.billing_type === "subscription" ? (
-                              promo ? (
-                                <>
-                                  <span className="font-bold text-accent text-sm">{formatPriceCAD(getActivePrice(rp))}/mo</span>
-                                  <span className="text-xs text-muted-foreground line-through ml-2">{formatPriceCAD(rp.base_price_cad)}/mo</span>
-                                </>
-                              ) : (
-                                <span className="font-bold text-accent text-sm">{formatPriceCAD(getActivePrice(rp))}/mo</span>
-                              )
-                            ) : promo ? (
+                  /* Card body (description teaser, price, "Available" badge)
+                     sits OUTSIDE the anchor so the accessible name is just
+                     the service name and stays well under the 120-char SEO
+                     ceiling (audit finding I3). An ::after overlay keeps the
+                     whole card clickable for sighted users. */
+                  <Card key={rp.id} className="relative h-full hover:shadow-md transition-shadow">
+                    <CardContent className="p-4">
+                      <h3 className="font-semibold text-sm font-display text-primary mb-1">
+                        <Link
+                          href={`/service/${rp.slug}`}
+                          className="after:absolute after:inset-0 after:content-[''] hover:underline"
+                        >
+                          {rp.name}
+                        </Link>
+                      </h3>
+                      <p className="text-xs text-muted-foreground mb-2 line-clamp-2">{teaser(rp.description, 100)}</p>
+                      <div className="flex items-center justify-between">
+                        <div>
+                          {rp.billing_type === "subscription" ? (
+                            promo ? (
                               <>
-                                <span className="font-bold text-accent text-sm">{formatPriceCAD(getActivePrice(rp))}</span>
-                                <span className="text-xs text-muted-foreground line-through ml-2">{formatPriceCAD(rp.base_price_cad)}</span>
+                                <span className="font-bold text-accent text-sm">{formatPriceCAD(getActivePrice(rp))}/mo</span>
+                                <span className="text-xs text-muted-foreground line-through ml-2">{formatPriceCAD(rp.base_price_cad)}/mo</span>
                               </>
                             ) : (
+                              <span className="font-bold text-accent text-sm">{formatPriceCAD(getActivePrice(rp))}/mo</span>
+                            )
+                          ) : promo ? (
+                            <>
                               <span className="font-bold text-accent text-sm">{formatPriceCAD(getActivePrice(rp))}</span>
-                            )}
-                          </div>
-                          <span className="px-2 py-0.5 rounded-full text-xs bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">
-                            Available
-                          </span>
+                              <span className="text-xs text-muted-foreground line-through ml-2">{formatPriceCAD(rp.base_price_cad)}</span>
+                            </>
+                          ) : (
+                            <span className="font-bold text-accent text-sm">{formatPriceCAD(getActivePrice(rp))}</span>
+                          )}
                         </div>
-                      </CardContent>
-                    </Card>
-                  </Link>
+                        <span className="px-2 py-0.5 rounded-full text-xs bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">
+                          Available
+                        </span>
+                      </div>
+                    </CardContent>
+                  </Card>
                 ))}
               </div>
             </div>
