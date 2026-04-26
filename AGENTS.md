@@ -33,3 +33,20 @@ DATABASE_URL="postgresql://ubuntu:devpass@localhost:5432/nexfortis" pnpm --filte
 - **Typecheck:** `pnpm typecheck` at root runs composite lib builds first, then per-artifact checks.
 - **No `.env` files.** Environment variables are managed via Replit Secrets in production; in Cursor Cloud, pass them inline or export in the shell session.
 - **`docs/` directory is read-only** — do not modify files there.
+
+### SEO regression test suite
+
+A four-layer regression suite under `tests/seo/` locks every SEO behavior in
+place. **Always run `pnpm test:seo` before opening a PR that touches any
+artifact under `artifacts/nexfortis/` or `artifacts/qb-portal/`.**
+
+Workflow when fixing an audit issue:
+1. Make the code change.
+2. `pnpm build && pnpm test:seo:invariants` — see exactly which invariants
+   used to be allowlisted but no longer fail.
+3. Remove the corresponding entries from `tests/seo/__known-issues__.json`.
+4. `pnpm test:seo:update` — re-baseline snapshots that intentionally changed.
+5. `pnpm test:seo` — must pass before pushing.
+6. Open PR; CI runs the suite again + verifies Render previews.
+
+See `tests/seo/README.md` and `docs/superpowers/specs/2026-04-25-seo-regression-suite-design.md`.
