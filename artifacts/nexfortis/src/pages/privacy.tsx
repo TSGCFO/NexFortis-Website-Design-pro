@@ -26,7 +26,9 @@ export default function Privacy() {
             We comply with the Personal Information Protection and Electronic Documents Act (PIPEDA) and applicable provincial privacy legislation. By using our website or engaging our services, you consent to the practices described in this policy.
           </p>
 
-          <h2>2. Information We Collect</h2>
+          <h2>Information we collect and how we use it</h2>
+
+          <h3>2. Information We Collect</h3>
           <p>We collect personal information that you voluntarily provide to us when you:</p>
           <ul>
             <li>Fill out our contact form (name, email address, phone number, company name, and message details)</li>
@@ -43,7 +45,7 @@ export default function Privacy() {
             <li>Cookies and similar tracking technologies (see Section 7)</li>
           </ul>
 
-          <h2>3. How We Use Your Information</h2>
+          <h3>3. How We Use Your Information</h3>
           <p>We use the personal information we collect for the following purposes:</p>
           <ul>
             <li>To respond to your inquiries and provide requested services</li>
@@ -54,7 +56,7 @@ export default function Privacy() {
             <li>To comply with legal obligations and protect our rights</li>
           </ul>
 
-          <h2>4. Disclosure of Your Information</h2>
+          <h3>4. Disclosure of Your Information</h3>
           <p>
             We do not sell, rent, or trade your personal information to third parties. We may share your information in the following limited circumstances:
           </p>
@@ -64,22 +66,26 @@ export default function Privacy() {
             <li><strong>Business Transfers:</strong> In the event of a merger, acquisition, or sale of assets, your personal information may be transferred as part of that transaction.</li>
           </ul>
 
-          <h2>5. Data Retention</h2>
+          <h2>How we protect your data</h2>
+
+          <h3>5. Data Retention</h3>
           <p>
             We retain your personal information only for as long as necessary to fulfill the purposes for which it was collected, to provide our services, or as required by law. Contact form submissions are retained for up to 24 months unless you request earlier deletion. Client project data is retained for the duration of our engagement plus a reasonable period thereafter to support warranty and follow-up services.
           </p>
 
-          <h2>6. Data Security</h2>
+          <h3>6. Data Security</h3>
           <p>
             We implement appropriate technical and organizational measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction. These measures include encrypted data transmission (TLS/SSL), secure server infrastructure, access controls, and regular security assessments. However, no method of transmission over the Internet or electronic storage is 100% secure, and we cannot guarantee absolute security.
           </p>
 
-          <h2>7. Cookies and Tracking Technologies</h2>
+          <h3>7. Cookies and Tracking Technologies</h3>
           <p>
             Our website uses cookies and similar technologies to enhance your browsing experience, analyze site traffic, and understand user behavior. You can control cookie preferences through your browser settings. Disabling cookies may affect the functionality of certain features on our website.
           </p>
 
-          <h2>8. Your Rights Under PIPEDA</h2>
+          <h2>Your rights, updates, and contact</h2>
+
+          <h3>8. Your Rights Under PIPEDA</h3>
           <p>Under PIPEDA, you have the right to:</p>
           <ul>
             <li>Access the personal information we hold about you</li>
@@ -91,12 +97,12 @@ export default function Privacy() {
             To exercise any of these rights, please contact us using the information provided in Section 10 below.
           </p>
 
-          <h2>9. Changes to This Policy</h2>
+          <h3>9. Changes to This Policy</h3>
           <p>
             We may update this Privacy Policy from time to time to reflect changes in our practices, technology, legal requirements, or other factors. We will post the updated policy on this page with a revised "Last Updated" date. We encourage you to review this page periodically.
           </p>
 
-          <h2>10. Contact us</h2>
+          <h3>10. Contact us</h3>
           <p>
             If you have any questions about this Privacy Policy, wish to exercise your privacy rights, or have concerns about how we handle your personal information, please contact us:
           </p>

@@ -25,54 +25,70 @@
     },
     {
       "level": 2,
+      "text": "Services, products, and payment"
+    },
+    {
+      "level": 3,
       "text": "2. Services"
     },
     {
-      "level": 2,
+      "level": 3,
       "text": "3. Software Products"
     },
     {
-      "level": 2,
+      "level": 3,
       "text": "4. Payment Terms"
     },
     {
-      "level": 2,
+      "level": 3,
       "text": "5. Money-Back Guarantee"
     },
     {
       "level": 2,
+      "text": "Intellectual property, confidentiality, and data"
+    },
+    {
+      "level": 3,
       "text": "6. Intellectual Property"
     },
     {
-      "level": 2,
+      "level": 3,
       "text": "7. Confidentiality"
     },
     {
-      "level": 2,
+      "level": 3,
       "text": "8. Data Handling and Privacy"
     },
     {
       "level": 2,
+      "text": "Liability, indemnification, and termination"
+    },
+    {
+      "level": 3,
       "text": "9. Limitation of Liability"
     },
     {
-      "level": 2,
+      "level": 3,
       "text": "10. Indemnification"
     },
     {
-      "level": 2,
+      "level": 3,
       "text": "11. Termination"
     },
     {
       "level": 2,
+      "text": "Legal terms and contact"
+    },
+    {
+      "level": 3,
       "text": "12. Governing Law"
     },
     {
-      "level": 2,
+      "level": 3,
       "text": "13. Changes to These Terms"
     },
     {
-      "level": 2,
+      "level": 3,
       "text": "14. Contact"
     },
     {
