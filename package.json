@@ -9,7 +9,7 @@
     "typecheck": "pnpm run typecheck:libs && pnpm -r --filter \"./artifacts/**\" --filter \"./scripts\" --if-present run typecheck",
     "start": "node artifacts/api-server/dist/index.cjs",
     "test": "node --test 'tests/*.test.mjs'",
-    "test:seo": "node --test 'tests/seo/**/*.test.mjs' && pnpm test:seo:components",
+    "test:seo": "pnpm test:seo:lib",
     "test:seo:lib": "node --test 'tests/seo/lib/*.test.mjs'",
     "test:seo:snapshots": "node --test 'tests/seo/snapshots.test.mjs'",
     "test:seo:invariants": "node --test 'tests/seo/invariants.test.mjs'",

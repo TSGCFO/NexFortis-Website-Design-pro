@@ -13,10 +13,12 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      // Match the marketing & portal vite configs so component tests can
-      // import from "@/components/..." just like the apps do.
-      "@nx": path.resolve(__dirname, "artifacts/nexfortis/src"),
-      "@qb": path.resolve(__dirname, "artifacts/qb-portal/src"),
+      // Expose the marketing and portal app source roots so component tests can
+      // import them as @nx/* and @qb/*. The two apps each have their own "@"
+      // alias scoped to their own src/, so we use distinct prefixes here to
+      // avoid colliding when a single test file imports from both apps.
+      "@nx": path.resolve(import.meta.dirname, "artifacts/nexfortis/src"),
+      "@qb": path.resolve(import.meta.dirname, "artifacts/qb-portal/src"),
     },
   },
 });

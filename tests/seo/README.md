@@ -6,13 +6,17 @@ for the design rationale.
 
 ## Quick start
 
-| Command | What it does |
-|---|---|
-| `pnpm test:seo` | Run every layer (component → snapshot → invariants) |
-| `pnpm test:seo:components` | Vitest component tests only (fast, no build) |
-| `pnpm test:seo:snapshots` | Compare prerendered HTML to committed baselines (requires `pnpm build` first) |
-| `pnpm test:seo:invariants` | Run programmatic SEO rules against prerendered HTML |
-| `pnpm test:seo:update` | Accept current HTML as the new snapshot baseline |
+> **PR #1 status:** only `pnpm test:seo:lib` is wired up. The remaining commands
+> are declared as documented entry points and become functional in later PRs.
+
+| Command | What it does | Wired in |
+|---|---|---|
+| `pnpm test:seo:lib` | Run library-level tests under `tests/seo/lib/` | PR #1 |
+| `pnpm test:seo` | Run every layer (lib → component → snapshot → invariants) | PR #8 |
+| `pnpm test:seo:components` | Vitest component tests (fast, no build) | PR #8 |
+| `pnpm test:seo:snapshots` | Compare prerendered HTML to committed baselines (requires `pnpm build` first) | PR #6 |
+| `pnpm test:seo:invariants` | Programmatic SEO rules against prerendered HTML | PR #7 |
+| `pnpm test:seo:update` | Accept current HTML as the new snapshot baseline | PR #6 |
 
 ## Layout
 

@@ -125,7 +125,7 @@ For every prerendered HTML file in `artifacts/nexfortis/dist/` and `artifacts/qb
 
 **Test logic:** for each route in dist, compare new fingerprint to `__snapshots__/<site>/<route>.snap.json`. Use a structured diff (not stringify+compare) so failure messages identify the exact field that changed.
 
-**Update workflow:** `pnpm test:seo --update` re-writes all snapshots from current build. Reviewer sees the diff in the PR.
+**Update workflow:** `pnpm test:seo:update` re-writes all snapshots from current build. Reviewer sees the diff in the PR.
 
 #### Layer 2: Invariants (`invariants.test.mjs`)
 
