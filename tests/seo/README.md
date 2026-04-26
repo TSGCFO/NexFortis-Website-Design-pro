@@ -12,7 +12,8 @@ invariant definitions lives in the spec document:
 
 | Command | What it runs | When to use |
 |---|---|---|
-| `pnpm test:seo` | Library unit tests only (`tests/seo/lib/`) | Quick sanity check; also the current full-suite alias (see note below) |
+| `pnpm test:seo` | Full suite: `lib` → `verifiers` → `components` → `snapshots` → `invariants` | Before opening any PR that touches `artifacts/nexfortis/` or `artifacts/qb-portal/` |
+| `pnpm test:seo:fast` | `lib` + `verifiers` + `components` only — no build required | Quick local feedback while iterating |
 | `pnpm test:seo:lib` | Unit tests for every helper in `tests/seo/lib/` | After touching any `lib/*.mjs` file |
 | `pnpm test:seo:components` | Vitest component tests (`tests/seo/components/**`) — no build required | After touching React/component code that affects `<head>` output |
 | `pnpm test:seo:snapshots` | Diff prerendered HTML against committed baselines in `__snapshots__/` | After any `pnpm build` — requires a fresh dist |
@@ -20,9 +21,18 @@ invariant definitions lives in the spec document:
 | `pnpm test:seo:update` | Accept current prerendered HTML as the new snapshot baseline | **Only** after a deliberate, intended change to prerendered output — see below |
 | `pnpm test:seo:verifiers` | Unit tests for `scripts/seo-verification/*.mjs` | After touching any verifier script |
 
-> **Note:** `pnpm test:seo` currently aliases `test:seo:lib`. Running the full
-> suite means chaining `pnpm test:seo:lib && pnpm test:seo:components &&
-> pnpm test:seo:snapshots && pnpm test:seo:invariants`.
+> **Build prerequisite:** `test:seo:snapshots` and `test:seo:invariants` both
+> read prerendered HTML from `artifacts/*/dist/`. Before running them, build the
+> dist artifacts the way CI does — full build for nexfortis, vite-only for
+> qb-portal (qb-portal's prerender step is the documented audit issue C2):
+>
+> ```
+> pnpm --filter @workspace/nexfortis run build
+> pnpm --filter @workspace/qb-portal exec vite build --config vite.config.ts
+> ```
+>
+> Running root `pnpm build` will fail on qb-portal prerender — use the two
+> filtered commands above (mirrors `.github/workflows/seo-tests.yml`).
 
 ---
 
@@ -84,11 +94,13 @@ instead.
 Remove an entry immediately after fixing the underlying issue:
 
 1. Make the code change.
-2. Run `pnpm build && pnpm test:seo:invariants` — confirm the violation no longer occurs.
-3. Delete the allowlist entry.
-4. Run `pnpm test:seo:invariants` again — must pass without the entry.
-5. Update snapshots if HTML changed intentionally: `pnpm test:seo:update`.
-6. Run `pnpm test:seo` end-to-end — must pass.
+2. Build dist artifacts (`pnpm --filter @workspace/nexfortis run build` and
+   `pnpm --filter @workspace/qb-portal exec vite build --config vite.config.ts`).
+3. Run `pnpm test:seo:invariants` — confirm the violation no longer occurs.
+4. Delete the allowlist entry.
+5. Run `pnpm test:seo:invariants` again — must pass without the entry.
+6. Update snapshots if HTML changed intentionally: `pnpm test:seo:update`.
+7. Run `pnpm test:seo` end-to-end — must pass.
 
 ---
 
@@ -96,7 +108,7 @@ Remove an entry immediately after fixing the underlying issue:
 
 When `pnpm test:seo:snapshots` reports an unexpected diff:
 
-- [ ] Did you run `pnpm build` before the test? (stale dist = false diff)
+- [ ] Did you build the dist artifacts before the test? (stale dist = false diff)
 - [ ] Is the changed file inside `artifacts/nexfortis/` or `artifacts/qb-portal/`?
 - [ ] Does the diff correspond to an intentional change in the current branch?
 - [ ] Does the diff match an allowlisted issue that is now fixed?

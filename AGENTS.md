@@ -42,11 +42,18 @@ artifact under `artifacts/nexfortis/` or `artifacts/qb-portal/`.**
 
 Workflow when fixing an audit issue:
 1. Make the code change.
-2. `pnpm build && pnpm test:seo:invariants` — see exactly which invariants
-   used to be allowlisted but no longer fail.
-3. Remove the corresponding entries from `tests/seo/__known-issues__.json`.
-4. `pnpm test:seo:update` — re-baseline snapshots that intentionally changed.
-5. `pnpm test:seo` — must pass before pushing.
-6. Open PR; CI runs the suite again + verifies Render previews.
+2. Build dist artifacts (root `pnpm build` fails on qb-portal prerender —
+   issue C2 — so mirror CI):
+   ```
+   pnpm --filter @workspace/nexfortis run build
+   pnpm --filter @workspace/qb-portal exec vite build --config vite.config.ts
+   ```
+3. `pnpm test:seo:invariants` — see exactly which invariants used to be
+   allowlisted but no longer fail.
+4. Remove the corresponding entries from `tests/seo/__known-issues__.json`.
+5. `pnpm test:seo:update` — re-baseline snapshots that intentionally changed.
+6. `pnpm test:seo` — must pass before pushing (runs the full chain:
+   `lib` → `verifiers` → `components` → `snapshots` → `invariants`).
+7. Open PR; CI runs the suite again + verifies Render previews.
 
 See `tests/seo/README.md` and `docs/superpowers/specs/2026-04-25-seo-regression-suite-design.md`.
