@@ -94,14 +94,21 @@ export function FAQItem({ question, answer, isOpen, onToggle }: { question: stri
   );
 }
 
-export function PageHero({ title, subtitle, imagePath, imageWebpPath }: { title: string, subtitle: string, imagePath?: string, imageWebpPath?: string }) {
+export function PageHero({ title, subtitle, imagePath, imageWebpPath, imageAlt }: { title: string, subtitle: string, imagePath?: string, imageWebpPath?: string, imageAlt?: string }) {
+  const hasDescriptiveAlt = typeof imageAlt === "string" && imageAlt.length > 0;
   return (
     <div className="relative pt-28 pb-20 md:pt-36 md:pb-28 section-brand-navy overflow-hidden">
       {imagePath && (
         <div className="absolute inset-0 z-0">
           <picture>
             {imageWebpPath && <source srcSet={imageWebpPath} type="image/webp" />}
-            <img src={imagePath} alt="" className="w-full h-full object-cover opacity-15" loading="eager" aria-hidden="true" />
+            <img
+              src={imagePath}
+              alt={hasDescriptiveAlt ? imageAlt : ""}
+              className="w-full h-full object-cover opacity-15"
+              loading="eager"
+              aria-hidden={hasDescriptiveAlt ? undefined : true}
+            />
           </picture>
           <div className="absolute inset-0 bg-gradient-to-t from-[var(--nf-navy)] via-[var(--nf-navy)]/80 to-transparent" />
         </div>

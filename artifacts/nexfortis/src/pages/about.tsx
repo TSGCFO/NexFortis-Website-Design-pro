@@ -49,6 +49,7 @@ export default function About() {
         subtitle="Empowering Canadian businesses with innovative, reliable, and scalable IT solutions."
         imagePath={`${import.meta.env.BASE_URL}images/about-team.png`}
         imageWebpPath={`${import.meta.env.BASE_URL}images/about-team.webp`}
+        imageAlt="The NexFortis IT Solutions team collaborating in their Nobleton, Ontario office"
       />
       <PageBreadcrumbs items={[
         { label: "Home", href: "/" },
