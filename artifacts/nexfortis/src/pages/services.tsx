@@ -12,7 +12,7 @@ const services = [
     benefits: ["Custom web design & development", "On-page & technical SEO optimization", "Google Ads & PPC management", "99.9% uptime cloud hosting"],
     href: "/services/digital-marketing",
     badge: "Web & SEO",
-    cta: "Get a Free Quote",
+    cta: "Explore digital marketing",
   },
   {
     icon: Cloud,
@@ -21,7 +21,7 @@ const services = [
     benefits: ["Zero-downtime email migration", "Microsoft Teams & SharePoint setup", "Intune mobile device management", "MFA & conditional access security"],
     href: "/services/microsoft-365",
     badge: "Cloud & Productivity",
-    cta: "Get a Free Quote",
+    cta: "Explore Microsoft 365 solutions",
   },
   {
     icon: Database,
@@ -30,7 +30,7 @@ const services = [
     benefits: ["Migration from 10+ accounting platforms", "Error code & file corruption repair", "Custom financial add-on tools", "Money-back guarantee on all services"],
     href: "/services/quickbooks",
     badge: "Accounting & Finance",
-    cta: "Get a Free Quote",
+    cta: "Explore QuickBooks migration",
   },
   {
     icon: Cog,
@@ -39,7 +39,7 @@ const services = [
     benefits: ["Virtual CIO & technology strategy", "End-to-end project management", "IT audit & license optimization", "Cybersecurity posture assessments"],
     href: "/services/it-consulting",
     badge: "Strategy & Advisory",
-    cta: "Book a Consultation",
+    cta: "Explore IT consulting",
   },
   {
     icon: LayoutDashboard,
@@ -48,7 +48,7 @@ const services = [
     benefits: ["Up to 90% reduction in manual data entry", "Custom API integrations & middleware", "Full-stack web application development", "Real-time multi-system data sync"],
     href: "/services/workflow-automation",
     badge: "Automation & Dev",
-    cta: "Get a Free Quote",
+    cta: "Explore workflow automation",
   },
 ];
 
@@ -148,7 +148,7 @@ export default function ServicesOverview() {
             href="/contact"
             className="inline-flex items-center gap-2 px-8 py-4 min-h-[48px] rounded-xl bg-rose-gold text-rose-gold-foreground font-bold text-lg hover:bg-rose-gold-hover hover:-translate-y-0.5 transition-all shadow-xl shadow-rose-gold/20"
           >
-            Book a Consultation <ArrowRight className="w-5 h-5" aria-hidden="true" />
+            Contact our team <ArrowRight className="w-5 h-5" aria-hidden="true" />
           </Link>
         </div>
       </Section>

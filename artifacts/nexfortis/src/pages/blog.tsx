@@ -251,8 +251,9 @@ export default function Blog() {
                       <Link
                         href={`/blog/${post.slug}`}
                         className="text-accent font-semibold text-sm hover:underline mt-auto inline-flex items-center gap-1"
+                        aria-label={`Read article: ${post.title}`}
                       >
-                        Read Article <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                        {post.title} <ArrowRight className="w-4 h-4" aria-hidden="true" />
                       </Link>
                     </div>
                   </motion.article>

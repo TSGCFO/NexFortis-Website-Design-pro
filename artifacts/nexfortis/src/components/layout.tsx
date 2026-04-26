@@ -235,7 +235,7 @@ export function Layout({ children }: { children: ReactNode }) {
                     className="flex items-center gap-2 px-4 py-3 text-sm font-display font-semibold text-accent hover:bg-secondary transition-colors"
                     role="listitem"
                   >
-                    View All Services <ArrowRight className="w-4 h-4" />
+                    Browse our IT services <ArrowRight className="w-4 h-4" />
                   </Link>
                 </div>
               </div>

@@ -250,7 +250,7 @@ export default function Home() {
             </Link>
             <Link href="/catalog">
               <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10 font-display font-medium text-lg px-8 rounded-full">
-                View All Services
+                Browse all QuickBooks services
               </Button>
             </Link>
           </motion.div>
