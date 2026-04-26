@@ -20,12 +20,20 @@
 
 import fs from "node:fs/promises";
 
-const SITEMAPS = [
+const PROD_SITEMAPS = [
   "https://qb.nexfortis.com/sitemap.xml",
   "https://nexfortis.com/sitemap.xml",
 ];
 
-const jsonMode = process.argv.includes("--json");
+export function resolveSitemaps() {
+  const env = process.env.SITEMAP_URLS;
+  if (!env) return PROD_SITEMAPS;
+  return env.split(",").map((s) => s.trim()).filter(Boolean);
+}
+
+const isMain = import.meta.url === `file://${process.argv[1]}` || process.argv[1]?.endsWith("verify-head-tags.mjs");
+
+const jsonMode = isMain && process.argv.includes("--json");
 const log = (...a) => { if (!jsonMode) console.log(...a); };
 const err = (...a) => console.error(...a);
 
@@ -174,51 +182,54 @@ async function check(url) {
 }
 
 // --- main ---
-log(`[seo-verify] loading URLs from ${SITEMAPS.length} sitemaps...`);
-const allUrls = [];
-for (const sm of SITEMAPS) {
-  const urls = await loadUrlsFromSitemap(sm);
-  log(`[seo-verify]   ${sm}: ${urls.length} URLs`);
-  allUrls.push(...urls);
-}
+if (isMain) {
+  const SITEMAPS = resolveSitemaps();
+  log(`[seo-verify] loading URLs from ${SITEMAPS.length} sitemaps...`);
+  const allUrls = [];
+  for (const sm of SITEMAPS) {
+    const urls = await loadUrlsFromSitemap(sm);
+    log(`[seo-verify]   ${sm}: ${urls.length} URLs`);
+    allUrls.push(...urls);
+  }
 
-log(`[seo-verify] checking ${allUrls.length} URLs...`);
-const results = [];
-const batchSize = 10;
-for (let i = 0; i < allUrls.length; i += batchSize) {
-  const batch = allUrls.slice(i, i + batchSize);
-  const br = await Promise.all(batch.map(check));
-  results.push(...br);
-  if (!jsonMode) process.stderr.write(`.`);
-}
-if (!jsonMode) process.stderr.write(`\n`);
+  log(`[seo-verify] checking ${allUrls.length} URLs...`);
+  const results = [];
+  const batchSize = 10;
+  for (let i = 0; i < allUrls.length; i += batchSize) {
+    const batch = allUrls.slice(i, i + batchSize);
+    const br = await Promise.all(batch.map(check));
+    results.push(...br);
+    if (!jsonMode) process.stderr.write(`.`);
+  }
+  if (!jsonMode) process.stderr.write(`\n`);
 
-const critical = results.filter((r) => r.errors.length > 0);
-const warned = results.filter((r) => r.errors.length === 0 && r.warnings.length > 0);
-const clean = results.filter((r) => r.errors.length === 0 && r.warnings.length === 0);
+  const critical = results.filter((r) => r.errors.length > 0);
+  const warned = results.filter((r) => r.errors.length === 0 && r.warnings.length > 0);
+  const clean = results.filter((r) => r.errors.length === 0 && r.warnings.length === 0);
 
-if (jsonMode) {
-  console.log(JSON.stringify({ total: results.length, clean: clean.length, warned: warned.length, critical: critical.length, results }, null, 2));
-} else {
-  log(`\n=== SUMMARY ===`);
-  log(`Total URLs: ${results.length}`);
-  log(`Clean: ${clean.length}`);
-  log(`Warnings only: ${warned.length}`);
-  log(`Critical errors: ${critical.length}`);
-  if (critical.length > 0) {
-    log(`\n--- CRITICAL ---`);
-    for (const r of critical) {
-      log(`[${r.status}] ${r.url}`);
-      for (const e of r.errors) log(`    ERR: ${e}`);
+  if (jsonMode) {
+    console.log(JSON.stringify({ total: results.length, clean: clean.length, warned: warned.length, critical: critical.length, results }, null, 2));
+  } else {
+    log(`\n=== SUMMARY ===`);
+    log(`Total URLs: ${results.length}`);
+    log(`Clean: ${clean.length}`);
+    log(`Warnings only: ${warned.length}`);
+    log(`Critical errors: ${critical.length}`);
+    if (critical.length > 0) {
+      log(`\n--- CRITICAL ---`);
+      for (const r of critical) {
+        log(`[${r.status}] ${r.url}`);
+        for (const e of r.errors) log(`    ERR: ${e}`);
+      }
+    }
+    if (warned.length > 0) {
+      log(`\n--- WARNINGS ---`);
+      for (const r of warned) {
+        log(`[${r.status}] ${r.url}`);
+        for (const w of r.warnings) log(`    WARN: ${w}`);
+      }
     }
   }
-  if (warned.length > 0) {
-    log(`\n--- WARNINGS ---`);
-    for (const r of warned) {
-      log(`[${r.status}] ${r.url}`);
-      for (const w of r.warnings) log(`    WARN: ${w}`);
-    }
-  }
-}
 
-process.exit(critical.length > 0 ? 1 : 0);
+  process.exit(critical.length > 0 ? 1 : 0);
+}

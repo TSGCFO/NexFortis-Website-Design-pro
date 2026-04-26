@@ -20,12 +20,20 @@
 //
 // Exit code: 0 if every URL passes, 1 if any URL fails.
 
-const SITEMAPS = [
+const PROD_SITEMAPS = [
   "https://qb.nexfortis.com/sitemap.xml",
   "https://nexfortis.com/sitemap.xml",
 ];
 
-const jsonMode = process.argv.includes("--json");
+export function resolveSitemaps() {
+  const env = process.env.SITEMAP_URLS;
+  if (!env) return PROD_SITEMAPS;
+  return env.split(",").map((s) => s.trim()).filter(Boolean);
+}
+
+const isMain = import.meta.url === `file://${process.argv[1]}` || process.argv[1]?.endsWith("verify-rendered-content.mjs");
+
+const jsonMode = isMain && process.argv.includes("--json");
 const log = (...a) => { if (!jsonMode) console.log(...a); };
 
 // --- URL discovery ---
@@ -107,51 +115,54 @@ async function check(url) {
 }
 
 // --- main ---
-log(`[prerender-verify] loading URLs from ${SITEMAPS.length} sitemaps...`);
-const allUrls = [];
-for (const sm of SITEMAPS) {
-  const urls = await loadUrlsFromSitemap(sm);
-  log(`[prerender-verify]   ${sm}: ${urls.length} URLs`);
-  allUrls.push(...urls);
-}
+if (isMain) {
+  const SITEMAPS = resolveSitemaps();
+  log(`[prerender-verify] loading URLs from ${SITEMAPS.length} sitemaps...`);
+  const allUrls = [];
+  for (const sm of SITEMAPS) {
+    const urls = await loadUrlsFromSitemap(sm);
+    log(`[prerender-verify]   ${sm}: ${urls.length} URLs`);
+    allUrls.push(...urls);
+  }
 
-log(`[prerender-verify] checking ${allUrls.length} URLs...`);
-const results = [];
-const batchSize = 10;
-for (let i = 0; i < allUrls.length; i += batchSize) {
-  const batch = allUrls.slice(i, i + batchSize);
-  const br = await Promise.all(batch.map(check));
-  results.push(...br);
-  if (!jsonMode) process.stderr.write(`.`);
-}
-if (!jsonMode) process.stderr.write(`\n`);
+  log(`[prerender-verify] checking ${allUrls.length} URLs...`);
+  const results = [];
+  const batchSize = 10;
+  for (let i = 0; i < allUrls.length; i += batchSize) {
+    const batch = allUrls.slice(i, i + batchSize);
+    const br = await Promise.all(batch.map(check));
+    results.push(...br);
+    if (!jsonMode) process.stderr.write(`.`);
+  }
+  if (!jsonMode) process.stderr.write(`\n`);
 
-const passed = results.filter((r) => r.passed);
-const failed = results.filter((r) => !r.passed);
+  const passed = results.filter((r) => r.passed);
+  const failed = results.filter((r) => !r.passed);
 
-if (jsonMode) {
-  console.log(JSON.stringify({ total: results.length, passed: passed.length, failed: failed.length, results }, null, 2));
-} else {
-  log(`\n=== PRERENDER VERIFICATION ===`);
-  log(`Total: ${results.length}`);
-  log(`Passed (markers found + #root has children + not empty shell): ${passed.length}`);
-  log(`Failed: ${failed.length}`);
-  if (failed.length > 0) {
-    log(`\n--- FAILURES ---`);
-    for (const r of failed) {
-      log(r.url);
-      if (r.error) log(`  error: ${r.error}`);
-      else {
-        log(`  isEmptyShell=${r.isEmptyShell}  rootHasChildren=${r.rootHasChildren}  bodyBytes=${r.bodyBytes}`);
-        if (r.missingMarkers?.length) log(`  missing markers: ${r.missingMarkers.join(", ")}`);
+  if (jsonMode) {
+    console.log(JSON.stringify({ total: results.length, passed: passed.length, failed: failed.length, results }, null, 2));
+  } else {
+    log(`\n=== PRERENDER VERIFICATION ===`);
+    log(`Total: ${results.length}`);
+    log(`Passed (markers found + #root has children + not empty shell): ${passed.length}`);
+    log(`Failed: ${failed.length}`);
+    if (failed.length > 0) {
+      log(`\n--- FAILURES ---`);
+      for (const r of failed) {
+        log(r.url);
+        if (r.error) log(`  error: ${r.error}`);
+        else {
+          log(`  isEmptyShell=${r.isEmptyShell}  rootHasChildren=${r.rootHasChildren}  bodyBytes=${r.bodyBytes}`);
+          if (r.missingMarkers?.length) log(`  missing markers: ${r.missingMarkers.join(", ")}`);
+        }
       }
     }
+    const emptyShells = results.filter((r) => r.isEmptyShell);
+    const noChildren = results.filter((r) => !r.rootHasChildren);
+    log(`\n--- SPA shell indicators ---`);
+    log(`  Pages with empty <div id="root"></div>: ${emptyShells.length}`);
+    log(`  Pages where #root has no child element: ${noChildren.length}`);
   }
-  const emptyShells = results.filter((r) => r.isEmptyShell);
-  const noChildren = results.filter((r) => !r.rootHasChildren);
-  log(`\n--- SPA shell indicators ---`);
-  log(`  Pages with empty <div id="root"></div>: ${emptyShells.length}`);
-  log(`  Pages where #root has no child element: ${noChildren.length}`);
-}
 
-process.exit(failed.length > 0 ? 1 : 0);
+  process.exit(failed.length > 0 ? 1 : 0);
+}
