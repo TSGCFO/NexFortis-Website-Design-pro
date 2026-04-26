@@ -121,3 +121,35 @@ test("extract — hasNoindex true when robots contains noindex", () => {
 test("extract — hasNoindex false otherwise", () => {
   assert.equal(extract(`<head></head>`, "/").hasNoindex, false);
 });
+
+test("extract — meta tags work with content= before name=", () => {
+  const html = `<head><meta content="Hello." name="description"></head>`;
+  assert.equal(extract(html, "/").description, "Hello.");
+});
+
+test("extract — robots reversed attribute order", () => {
+  const html = `<head><meta content="noindex,follow" name="robots"></head>`;
+  const fp = extract(html, "/");
+  assert.equal(fp.robots, "noindex,follow");
+  assert.equal(fp.hasNoindex, true);
+});
+
+test("extract — link rel reversed attribute order", () => {
+  const html = `<head><link href="https://nexfortis.com/" rel="canonical"></head>`;
+  assert.equal(extract(html, "/").canonical, "https://nexfortis.com/");
+});
+
+test("extract — og:title with property after content", () => {
+  const html = `<head><meta content="Hello" property="og:title"></head>`;
+  assert.deepEqual(extract(html, "/").og, { title: "Hello" });
+});
+
+test("extract — hasNoindex case-insensitive (NOINDEX)", () => {
+  const html = `<head><meta name="robots" content="NOINDEX,follow"></head>`;
+  assert.equal(extract(html, "/").hasNoindex, true);
+});
+
+test("extract — hasNoindex case-insensitive (NoIndex)", () => {
+  const html = `<head><meta name="robots" content="NoIndex"></head>`;
+  assert.equal(extract(html, "/").hasNoindex, true);
+});

@@ -15,7 +15,7 @@ export function extract(html, route) {
     jsonld: extractJsonLd(html),
     anchors: extractAnchors(html),
     rootDivIsEmpty: isRootDivEmpty(html),
-    hasNoindex: (matchMeta(html, "robots") ?? "").includes("noindex"),
+    hasNoindex: /noindex/i.test(matchMeta(html, "robots") ?? ""),
   };
 }
 
@@ -25,33 +25,39 @@ function matchTitle(html) {
 }
 
 function matchMeta(html, name) {
-  const re = new RegExp(
-    `<meta\\s+[^>]*name=["']${name}["'][^>]*content=(?:"([^"]*)"|'([^']*)')[^>]*>`,
-    "i",
-  );
-  const m = html.match(re);
-  if (!m) return null;
-  return (m[1] ?? m[2]).trim();
+  const tagRe = /<meta\s+([^>]*)>/gi;
+  for (const m of html.matchAll(tagRe)) {
+    const attrs = m[1];
+    const nameRe = new RegExp(`\\bname=["']${escapeRegex(name)}["']`, "i");
+    if (!nameRe.test(attrs)) continue;
+    const contentMatch = attrs.match(/\bcontent=(?:"([^"]*)"|'([^']*)')/i);
+    if (contentMatch) return (contentMatch[1] ?? contentMatch[2]).trim();
+  }
+  return null;
 }
 
 function matchProperty(html, property) {
-  const re = new RegExp(
-    `<meta\\s+[^>]*property=["']${property}["'][^>]*content=(?:"([^"]*)"|'([^']*)')[^>]*>`,
-    "i",
-  );
-  const m = html.match(re);
-  if (!m) return null;
-  return (m[1] ?? m[2]).trim();
+  const tagRe = /<meta\s+([^>]*)>/gi;
+  for (const m of html.matchAll(tagRe)) {
+    const attrs = m[1];
+    const propRe = new RegExp(`\\bproperty=["']${escapeRegex(property)}["']`, "i");
+    if (!propRe.test(attrs)) continue;
+    const contentMatch = attrs.match(/\bcontent=(?:"([^"]*)"|'([^']*)')/i);
+    if (contentMatch) return (contentMatch[1] ?? contentMatch[2]).trim();
+  }
+  return null;
 }
 
 function matchLink(html, rel) {
-  const re = new RegExp(
-    `<link\\s+[^>]*rel=["']${rel}["'][^>]*href=(?:"([^"]*)"|'([^']*)')[^>]*>`,
-    "i",
-  );
-  const m = html.match(re);
-  if (!m) return null;
-  return (m[1] ?? m[2]).trim();
+  const tagRe = /<link\s+([^>]*)>/gi;
+  for (const m of html.matchAll(tagRe)) {
+    const attrs = m[1];
+    const relRe = new RegExp(`\\brel=["']${escapeRegex(rel)}["']`, "i");
+    if (!relRe.test(attrs)) continue;
+    const hrefMatch = attrs.match(/\bhref=(?:"([^"]*)"|'([^']*)')/i);
+    if (hrefMatch) return (hrefMatch[1] ?? hrefMatch[2]).trim();
+  }
+  return null;
 }
 
 function extractOg(html) {
@@ -110,4 +116,8 @@ function isRootDivEmpty(html) {
   const m = html.match(/<div\s+id=["']root["'][^>]*>([\s\S]*?)<\/div>\s*(?:<script|<\/body)/i);
   if (!m) return false;
   return m[1].replace(/\s+/g, "").length === 0;
+}
+
+function escapeRegex(s) {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
