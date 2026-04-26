@@ -49,8 +49,8 @@ jobs:
         run: |
           set -e
           PR=${{ github.event.pull_request.number }}
-          MARKETING="https://pr-${PR}-nexfortis-marketing.onrender.com"
-          QB="https://pr-${PR}-nexfortis-qb-portal.onrender.com"
+          MARKETING="https://nexfortis-marketing-pr-${PR}.onrender.com"
+          QB="https://nexfortis-qb-portal-pr-${PR}.onrender.com"
           echo "Waiting for $MARKETING and $QB ..."
           for url in "$MARKETING" "$QB"; do
             for i in {1..60}; do
