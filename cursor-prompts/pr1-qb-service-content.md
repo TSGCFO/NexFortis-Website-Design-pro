@@ -260,12 +260,26 @@ test("no paragraph text repeats across different service pages", () => {
 });
 
 // Title-keyword-in-body coverage (audit PDF p.38-39).
-// Map each slug to the keywords the audit reported as missing-from-body.
-// Fill this in based on the PDF column "Keywords not contained in the body of the page".
+// The bolded "Words from the page title that don't appear in the text" column
+// is reproduced verbatim below. For all 9 affected QB service pages the only
+// missing keyword is "Portal" — every service title ends with
+// "| NexFortis QuickBooks Portal" but body copy never says "Portal".
+// Fix: include the literal word "Portal" (or phrase "QuickBooks Portal")
+// at least once in each service's combined body copy.
 const TITLE_KEYWORDS = {
-  // Example — populate the rest from PDF p.38-39:
-  // "enterprise-to-premier-standard": ["enterprise", "premier", "standard"],
-  // …
+  "enterprise-to-premier-standard": ["Portal"],     // PDF entry #8
+  "enterprise-to-premier-complex":  ["Portal"],     // PDF entry #16
+  "guaranteed-30-minute":           ["Portal"],     // PDF entry #11
+  "file-health-check":              ["Portal"],     // PDF entry #17
+  "rush-delivery":                  ["Portal"],     // PDF entry #18
+  "extended-support":               ["Portal"],     // PDF entry #19
+  "audit-trail-cra-bundle":         ["Portal"],     // PDF entry #9
+  "sage50-to-quickbooks":           ["Portal"],     // PDF entry #12
+  "5-pack-conversions":             ["Portal"],     // PDF entry #10
+  // The remaining 7 service slugs (audit-trail-removal, super-condense,
+  // list-reduction, multi-currency-removal, qbo-readiness-report,
+  // cra-period-copy, accountedge-to-quickbooks, 10-pack-conversions)
+  // were NOT flagged on PDF p.38-39, so no required keyword inclusion.
 };
 
 test("title keywords appear in body for affected service pages", () => {
