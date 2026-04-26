@@ -175,3 +175,23 @@ test("extract — rootDivIsEmpty handles nested divs in content", () => {
   const html = `<body><div id="root"><div class="x"><span>hi</span></div></div></body>`;
   assert.equal(extract(html, "/").rootDivIsEmpty, false);
 });
+
+test("extract — meta with spaces around = signs", () => {
+  const html = `<head><meta name = "description" content = "Hello"></head>`;
+  assert.equal(extract(html, "/").description, "Hello");
+});
+
+test("extract — link with spaces around = signs", () => {
+  const html = `<head><link rel = 'canonical' href = 'https://nexfortis.com/'></head>`;
+  assert.equal(extract(html, "/").canonical, "https://nexfortis.com/");
+});
+
+test("extract — rootDivIsEmpty when class precedes id", () => {
+  const html = `<body><div class="app" id="root"></div><noscript></noscript></body>`;
+  assert.equal(extract(html, "/").rootDivIsEmpty, true);
+});
+
+test("extract — rootDivIsEmpty false when class precedes id and content present", () => {
+  const html = `<body><div class="app" id="root"><h1>Hi</h1></div></body>`;
+  assert.equal(extract(html, "/").rootDivIsEmpty, false);
+});
