@@ -28,7 +28,27 @@ const PROD_SITEMAPS = [
 export function resolveSitemaps() {
   const env = process.env.SITEMAP_URLS;
   if (!env) return PROD_SITEMAPS;
-  return env.split(",").map((s) => s.trim()).filter(Boolean);
+  const list = env.split(",").map((s) => s.trim()).filter(Boolean);
+  if (list.length === 0) {
+    throw new Error(
+      "SITEMAP_URLS is set but contains no sitemap URLs after trimming.",
+    );
+  }
+  return list;
+}
+
+// Rewrites a <loc> URL so its origin matches the sitemap origin it came
+// from. No-op when both origins are identical (production). Returns the
+// fetched URL alongside the canonical host so route detection still works
+// on Render preview deployments.
+export function rewriteLocToOrigin(locUrl, sitemapUrl) {
+  const loc = new URL(locUrl);
+  const sm = new URL(sitemapUrl);
+  if (loc.host === sm.host) return { url: locUrl, canonicalHost: loc.host };
+  return {
+    url: `${sm.protocol}//${sm.host}${loc.pathname}${loc.search}${loc.hash}`,
+    canonicalHost: loc.host,
+  };
 }
 
 const isMain = import.meta.url === `file://${process.argv[1]}` || process.argv[1]?.endsWith("verify-rendered-content.mjs");
@@ -37,22 +57,27 @@ const jsonMode = isMain && process.argv.includes("--json");
 const log = (...a) => { if (!jsonMode) console.log(...a); };
 
 // --- URL discovery ---
+// Returns entries of { url, canonicalHost } so marker selection still keys
+// off the canonical host even when fetching from a Render preview.
 async function loadUrlsFromSitemap(sitemapUrl) {
   const res = await fetch(sitemapUrl, { signal: AbortSignal.timeout(10000) });
   if (!res.ok) throw new Error(`sitemap ${sitemapUrl} returned ${res.status}`);
   const xml = await res.text();
-  return [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1].trim());
+  return [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) =>
+    rewriteLocToOrigin(m[1].trim(), sitemapUrl),
+  );
 }
 
 // Markers unique to each route's rendered React component.
 // For /service/*, /category/*, /landing/*, and /blog/*, we derive markers
 // from the slug itself \u2014 any word >=4 chars in the slug should appear in
 // the rendered content (H1, product name, category label, etc).
-function markersFor(url) {
+function markersFor(url, canonicalHost) {
   const u = new URL(url);
   const path = u.pathname;
+  const host = canonicalHost ?? u.host;
 
-  if (u.host === "qb.nexfortis.com") {
+  if (host === "qb.nexfortis.com") {
     if (path === "/") return ["Enterprise to Premier", "QuickBooks"];
     if (path === "/catalog") return ["Enterprise to Premier", "Super Condense", "Audit Trail", "File Health"];
     if (path === "/faq") return ["FAQ"];
@@ -66,7 +91,7 @@ function markersFor(url) {
       return slug.replace(/-/g, " ").split(" ").filter((w) => w.length > 3).slice(0, 2);
     }
   }
-  if (u.host === "nexfortis.com") {
+  if (host === "nexfortis.com") {
     if (path === "/") return ["NexFortis", "IT"];
     if (path === "/about") return ["About", "NexFortis"];
     if (path === "/services") return ["Services", "Microsoft"];
@@ -87,12 +112,12 @@ function markersFor(url) {
   return [];
 }
 
-async function check(url) {
+async function check({ url, canonicalHost }) {
   const started = Date.now();
   try {
     const res = await fetch(url, { redirect: "follow", signal: AbortSignal.timeout(20000) });
     const html = await res.text();
-    const markers = markersFor(url);
+    const markers = markersFor(url, canonicalHost);
     const lowered = html.toLowerCase();
     const missing = markers.filter((m) => !lowered.includes(m.toLowerCase()));
     const isEmptyShell = /<div[^>]*id=["']root["'][^>]*>\s*<\/div>\s*<\/body>/i.test(html);

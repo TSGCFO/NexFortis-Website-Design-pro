@@ -34,6 +34,7 @@ jobs:
       - run: pnpm test:seo:snapshots
       - run: pnpm test:seo:invariants
       - run: pnpm test:seo:lib
+      - run: pnpm test:seo:verifiers
 
   preview-verifiers:
     name: Verify Render PR previews

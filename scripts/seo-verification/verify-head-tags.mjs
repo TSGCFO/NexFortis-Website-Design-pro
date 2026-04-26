@@ -28,7 +28,25 @@ const PROD_SITEMAPS = [
 export function resolveSitemaps() {
   const env = process.env.SITEMAP_URLS;
   if (!env) return PROD_SITEMAPS;
-  return env.split(",").map((s) => s.trim()).filter(Boolean);
+  const list = env.split(",").map((s) => s.trim()).filter(Boolean);
+  if (list.length === 0) {
+    throw new Error(
+      "SITEMAP_URLS is set but contains no sitemap URLs after trimming.",
+    );
+  }
+  return list;
+}
+
+// Rewrites a <loc> URL so its origin matches the sitemap origin it came
+// from. No-op when both origins are identical (production).
+export function rewriteLocToOrigin(locUrl, sitemapUrl) {
+  const loc = new URL(locUrl);
+  const sm = new URL(sitemapUrl);
+  if (loc.host === sm.host) return { url: locUrl, canonicalHost: loc.host };
+  return {
+    url: `${sm.protocol}//${sm.host}${loc.pathname}${loc.search}${loc.hash}`,
+    canonicalHost: loc.host,
+  };
 }
 
 const isMain = import.meta.url === `file://${process.argv[1]}` || process.argv[1]?.endsWith("verify-head-tags.mjs");
@@ -38,11 +56,16 @@ const log = (...a) => { if (!jsonMode) console.log(...a); };
 const err = (...a) => console.error(...a);
 
 // --- URL discovery ---
+// Returns entries of { url, canonicalHost } so downstream checks can verify
+// that <link rel="canonical"> points at the canonical host even when the
+// fetched URL is a Render preview.
 async function loadUrlsFromSitemap(sitemapUrl) {
   const res = await fetch(sitemapUrl, { signal: AbortSignal.timeout(10000) });
   if (!res.ok) throw new Error(`sitemap ${sitemapUrl} returned ${res.status}`);
   const xml = await res.text();
-  return [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1].trim());
+  return [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) =>
+    rewriteLocToOrigin(m[1].trim(), sitemapUrl),
+  );
 }
 
 // --- HTML head extraction ---
@@ -135,7 +158,7 @@ const REQUIRED = [
   "twitter_card",
 ];
 
-async function check(url) {
+async function check({ url, canonicalHost }) {
   const r = { url, errors: [], warnings: [] };
   try {
     const res = await fetch(url, { redirect: "follow", signal: AbortSignal.timeout(20000) });
@@ -153,9 +176,20 @@ async function check(url) {
     for (const k of REQUIRED) if (!tag[k]) r.errors.push(`missing:${k}`);
 
     if (tag.canonical) {
-      const norm = (u) => u.replace(/\/$/, "").toLowerCase();
-      if (norm(tag.canonical) !== norm(url)) {
+      // For preview deployments, the canonical tag correctly points to the
+      // production host, but the fetched URL is the preview host. Compare
+      // paths against each other while requiring the canonical host to
+      // match the expected canonical host.
+      const fetchedUrl = new URL(url);
+      const normPath = (p) => p.replace(/\/$/, "").toLowerCase() || "/";
+      let canonicalParsed;
+      try { canonicalParsed = new URL(tag.canonical); } catch {}
+      if (!canonicalParsed) {
         r.errors.push(`canonical-mismatch: canonical=${tag.canonical}`);
+      } else if (canonicalParsed.host !== canonicalHost) {
+        r.errors.push(`canonical-host-mismatch: expected=${canonicalHost} got=${canonicalParsed.host}`);
+      } else if (normPath(canonicalParsed.pathname) !== normPath(fetchedUrl.pathname)) {
+        r.errors.push(`canonical-path-mismatch: canonical=${tag.canonical}`);
       }
     }
     if (tag.robots && /noindex/i.test(tag.robots)) {
