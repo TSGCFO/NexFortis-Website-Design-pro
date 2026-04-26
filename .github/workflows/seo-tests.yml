@@ -1,0 +1,69 @@
+name: SEO Tests
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  local-tests:
+    name: Local SEO test suite
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm typecheck
+      - run: pnpm test:seo:components
+      # Build marketing site fully (prerender works) but qb-portal
+      # with vite-only — qb-portal's prerender step is the documented
+      # known issue C2 (helmet timeout) and is allowlisted in the
+      # SEO snapshot/invariant baselines. The committed public/sitemap.xml
+      # is the canonical source and is copied verbatim by vite.
+      - name: Build nexfortis (full) + qb-portal (vite-only)
+        run: |
+          pnpm --filter @workspace/nexfortis run build
+          pnpm --filter @workspace/qb-portal exec vite build --config vite.config.ts
+      - run: pnpm test:seo:snapshots
+      - run: pnpm test:seo:invariants
+      - run: pnpm test:seo:lib
+      - run: pnpm test:seo:verifiers
+
+  preview-verifiers:
+    name: Verify Render PR previews
+    runs-on: ubuntu-latest
+    needs: local-tests
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Wait for previews to be live and verify
+        run: |
+          set -e
+          PR=${{ github.event.pull_request.number }}
+          MARKETING="https://nexfortis-marketing-pr-${PR}.onrender.com"
+          QB="https://nexfortis-qb-portal-pr-${PR}.onrender.com"
+          echo "Waiting for $MARKETING and $QB ..."
+          for url in "$MARKETING" "$QB"; do
+            for i in {1..60}; do
+              if curl -sfI "$url/" | head -1 | grep -q "200"; then
+                echo "$url is live"; break
+              fi
+              if [ $i -eq 60 ]; then
+                echo "$url did not become live in 10 minutes" >&2; exit 1
+              fi
+              sleep 10
+            done
+          done
+          export SITEMAP_URLS="${MARKETING}/sitemap.xml,${QB}/sitemap.xml"
+          node scripts/seo-verification/verify-head-tags.mjs
+          node scripts/seo-verification/verify-rendered-content.mjs
