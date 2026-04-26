@@ -21,7 +21,9 @@ export default function Terms() {
           <h2>1. Agreement</h2>
           <p>By using the NexFortis QuickBooks Service Portal ("Service"), operated by NexFortis IT Solutions (17756968 Canada Inc.), you agree to these Terms of Service. If you do not agree, do not use the Service.</p>
 
-          <h2>2. Services Offered</h2>
+          <h2>Services, pricing, and refunds</h2>
+
+          <h3>2. Services Offered</h3>
           <p>NexFortis offers 20 QuickBooks-related services across five categories:</p>
           <ul>
             <li><strong>QuickBooks Conversion:</strong> Enterprise to Premier/Pro Standard and Complex conversions, Guaranteed 30-Minute conversion.</li>
@@ -31,13 +33,13 @@ export default function Terms() {
             <li><strong>Volume Packs:</strong> 5-Pack and 10-Pack conversion bundles at discounted rates.</li>
           </ul>
 
-          <h2>3. Pricing</h2>
+          <h3>3. Pricing</h3>
           <p>All prices are in Canadian Dollars (CAD). Prices are subject to applicable GST/HST. The current pricing is listed on the Service website and in the product catalog. NexFortis reserves the right to modify pricing with notice.</p>
 
-          <h2>4. Coming Soon Products</h2>
+          <h3>4. Coming Soon Products</h3>
           <p>Products marked "Coming Soon" are available for waitlist registration only. No payment is collected for Coming Soon products. Waitlist registration does not constitute a purchase commitment. Final pricing and availability may change before launch.</p>
 
-          <h2>5. Refund Policy</h2>
+          <h3>5. Refund Policy</h3>
           <ul>
             <li><strong>Technical failure:</strong> If we cannot complete the conversion due to a technical error on our end, you receive a full refund.</li>
             <li><strong>Incompatible files:</strong> If your file is already in Premier/Pro format or is a Pro edition (not Enterprise), you receive a full refund.</li>
@@ -46,22 +48,26 @@ export default function Terms() {
           </ul>
           <p>Refunds are processed within 3-5 business days to the original payment method.</p>
 
-          <h2>6. File Upload and Processing</h2>
+          <h2>File handling and affiliations</h2>
+
+          <h3>6. File Upload and Processing</h3>
           <p>Only .QBM (Portable Company File) format is accepted. Maximum file size is 500 MB. Files are processed on secure systems with restricted access. All customer files are deleted within 7 days of delivery.</p>
 
-          <h2>7. No Affiliation</h2>
+          <h3>7. No Affiliation</h3>
           <p>NexFortis IT Solutions is not affiliated with, endorsed by, or sponsored by Intuit Inc. (maker of QuickBooks), Sage Software, or any other software vendor mentioned on this site. QuickBooks, Sage 50, and other product names are trademarks of their respective owners.</p>
 
-          <h2>8. Limitation of Liability</h2>
+          <h2>Liability and legal terms</h2>
+
+          <h3>8. Limitation of Liability</h3>
           <p>NexFortis IT Solutions' total liability for any claim related to the Service is limited to the amount paid by the customer for the specific service in question. We are not liable for indirect, incidental, consequential, or punitive damages.</p>
 
-          <h2>9. Data Integrity</h2>
+          <h3>9. Data Integrity</h3>
           <p>While we guarantee penny-perfect accuracy in our conversion process, we strongly recommend that customers verify their converted files and maintain original backups. NexFortis is not responsible for data loss resulting from failure to maintain backups.</p>
 
-          <h2>10. Governing Law</h2>
+          <h3>10. Governing Law</h3>
           <p>These Terms are governed by the laws of the Province of Ontario, Canada. Any disputes will be resolved in the courts of Ontario.</p>
 
-          <h2>11. Contact</h2>
+          <h3>11. Contact</h3>
           <p>For questions about these Terms, contact us at <a href="mailto:support@nexfortis.com">support@nexfortis.com</a>.</p>
         </div>
       </section>

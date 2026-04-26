@@ -56,14 +56,12 @@
     { "site": "nexfortis", "route": "/blog/top-5-workflow-automation-wins-small-businesses", "current": "jumped H2→H4", "expected": "no level skipped", "issue": "I6", "note": "Heading hierarchy flaw — pre-existing" },
     { "site": "nexfortis", "route": "/blog/what-is-pipeda-why-it-matters", "current": "jumped H2→H4", "expected": "no level skipped", "issue": "I6", "note": "Heading hierarchy flaw — pre-existing" },
     { "site": "nexfortis", "route": "/", "current": "jumped H2→H4", "expected": "no level skipped", "issue": "I6", "note": "Heading hierarchy flaw — pre-existing" },
-    { "site": "nexfortis", "route": "/privacy", "current": "jumped H2→H4", "expected": "no level skipped", "issue": "I6", "note": "Heading hierarchy flaw — Seobility flagged privacy/terms pages" },
     { "site": "nexfortis", "route": "/services/digital-marketing", "current": "jumped H2→H4", "expected": "no level skipped", "issue": "I6", "note": "Heading hierarchy flaw — pre-existing" },
     { "site": "nexfortis", "route": "/services", "current": "jumped H2→H4", "expected": "no level skipped", "issue": "I6", "note": "Heading hierarchy flaw — pre-existing" },
     { "site": "nexfortis", "route": "/services/it-consulting", "current": "jumped H1→H3", "expected": "no level skipped", "issue": "I6", "note": "Heading hierarchy flaw — pre-existing" },
     { "site": "nexfortis", "route": "/services/microsoft-365", "current": "jumped H2→H4", "expected": "no level skipped", "issue": "I6", "note": "Heading hierarchy flaw — pre-existing" },
     { "site": "nexfortis", "route": "/services/quickbooks", "current": "jumped H2→H4", "expected": "no level skipped", "issue": "I6", "note": "Heading hierarchy flaw — pre-existing" },
-    { "site": "nexfortis", "route": "/services/workflow-automation", "current": "jumped H2→H4", "expected": "no level skipped", "issue": "I6", "note": "Heading hierarchy flaw — pre-existing" },
-    { "site": "nexfortis", "route": "/terms", "current": "jumped H2→H4", "expected": "no level skipped", "issue": "I6", "note": "Heading hierarchy flaw — Seobility flagged privacy/terms pages" }
+    { "site": "nexfortis", "route": "/services/workflow-automation", "current": "jumped H2→H4", "expected": "no level skipped", "issue": "I6", "note": "Heading hierarchy flaw — pre-existing" }
   ],
   "INV-009": [
     { "site": "qb-portal", "route": "/", "current": "no JSON-LD", "expected": "at least one JSON-LD block", "issue": "C2", "note": "qb-portal index.html is a minimal SPA shell — prerender failure; no JSON-LD in dist" }
