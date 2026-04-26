@@ -91,7 +91,7 @@ services:
       pnpm run typecheck:libs
       PORT=3000 BASE_PATH=/ pnpm --filter @workspace/nexfortis... --stream build
     staticPublishPath: artifacts/nexfortis/dist/public
-    pullRequestPreviewsEnabled: false
+    pullRequestPreviewsEnabled: true
     envVars:
       - key: NODE_VERSION
         value: "24"
@@ -164,7 +164,7 @@ services:
       pnpm run typecheck:libs
       PORT=3000 BASE_PATH=/ pnpm --filter @workspace/qb-portal... build
     staticPublishPath: artifacts/qb-portal/dist/public
-    pullRequestPreviewsEnabled: false
+    pullRequestPreviewsEnabled: true
     envVars:
       - key: NODE_VERSION
         value: "24"
