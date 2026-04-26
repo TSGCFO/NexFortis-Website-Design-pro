@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { Link } from "wouter";
 import { motion } from "framer-motion";
-import { Shield, Upload, Clock, CheckCircle, ArrowRight, Lock, DollarSign, MapPin, Zap, Award, Headphones } from "lucide-react";
+import { Shield, Upload, Clock, CheckCircle, ArrowRight, Lock, DollarSign, MapPin, Zap, Award, Headphones, BookOpen } from "lucide-react";
 import { formatPriceCAD, getActivePrice, getProductBySlug, loadProducts, type ProductCatalog } from "@/lib/products";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -19,6 +19,45 @@ const stagger = {
   whileInView: { opacity: 1, y: 0 },
   viewport: { once: true, margin: "-50px" },
 };
+
+// Surface six high-value QuickBooks landing pages directly from the home
+// page (audit issue C3 — these were 4 clicks deep before, which suppressed
+// crawl frequency). Each anchor must be unique and keyword-rich (no generic
+// "Read more" / "Learn more" — INV-015 anchor uniqueness, INV-017 generic
+// anchors). Rendered server-side / pre-rendered in the noscript shell as
+// well so search engines see the links even before React hydrates.
+const commonScenarios = [
+  {
+    href: "/landing/accountedge-to-quickbooks",
+    text: "AccountEdge to QuickBooks migration: full guide",
+    desc: "Move your AccountEdge (formerly MYOB) company file into QuickBooks Desktop with transaction history and GST/HST intact.",
+  },
+  {
+    href: "/landing/quickbooks-company-file-error",
+    text: "Repair a QuickBooks company file error",
+    desc: "Diagnose and recover from H-series and 6000-series QuickBooks company file errors that block CRA prep.",
+  },
+  {
+    href: "/landing/multi-currency-removal",
+    text: "Remove QuickBooks multi-currency from your file",
+    desc: "Turn off multi-currency at the file level after an accidental enable — the only path Intuit does not provide in-product.",
+  },
+  {
+    href: "/landing/quickbooks-multi-currency-problems",
+    text: "Fix common QuickBooks multi-currency problems",
+    desc: "Common multi-currency report and data-entry issues, and how NexFortis cleans them up without losing balances.",
+  },
+  {
+    href: "/landing/list-reduction",
+    text: "Reduce bloated QuickBooks lists",
+    desc: "Get back under QuickBooks list limits by merging duplicates and inactivating unused names — without breaking reports.",
+  },
+  {
+    href: "/landing/is-it-safe",
+    text: "How we keep your QuickBooks data safe",
+    desc: "Encryption in transit, 7-day retention, and PIPEDA-compliant handling of your QuickBooks company file.",
+  },
+];
 
 const trustBadges = [
   { icon: MapPin, label: "Canadian-First" },
@@ -411,6 +450,42 @@ export default function Home() {
               </Button>
             </Link>
           </motion.div>
+        </div>
+      </section>
+
+      <section className="py-20 bg-background">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div {...fadeInUp} className="text-center mb-12">
+            <h2 className="text-3xl font-bold font-display tracking-tight text-primary mb-4">Common QuickBooks Scenarios</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              In-depth guides for the QuickBooks problems we see most often. Pick the scenario that matches yours.
+            </p>
+          </motion.div>
+          <motion.ul
+            {...fadeInUp}
+            className="grid md:grid-cols-2 gap-4 list-none p-0"
+            aria-label="Common QuickBooks scenarios"
+          >
+            {commonScenarios.map((s) => (
+              <li key={s.href}>
+                <Link href={s.href}>
+                  <a className="block h-full p-5 rounded-lg border border-border bg-white dark:bg-slate-900 hover:border-accent hover:shadow-md transition-all group">
+                    <div className="flex items-start gap-3">
+                      <div className="w-9 h-9 rounded-md bg-accent/10 text-accent flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <BookOpen className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <h3 className="font-semibold font-display text-primary group-hover:text-accent transition-colors mb-1">
+                          {s.text}
+                        </h3>
+                        <p className="text-sm text-muted-foreground">{s.desc}</p>
+                      </div>
+                    </div>
+                  </a>
+                </Link>
+              </li>
+            ))}
+          </motion.ul>
         </div>
       </section>
 
