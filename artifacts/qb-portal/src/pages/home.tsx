@@ -468,21 +468,28 @@ export default function Home() {
           >
             {commonScenarios.map((s) => (
               <li key={s.href}>
-                <Link href={s.href}>
-                  <a className="block h-full p-5 rounded-lg border border-border bg-white dark:bg-slate-900 hover:border-accent hover:shadow-md transition-all group">
-                    <div className="flex items-start gap-3">
-                      <div className="w-9 h-9 rounded-md bg-accent/10 text-accent flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <BookOpen className="w-4 h-4" />
-                      </div>
-                      <div>
-                        <h3 className="font-semibold font-display text-primary group-hover:text-accent transition-colors mb-1">
-                          {s.text}
-                        </h3>
-                        <p className="text-sm text-muted-foreground">{s.desc}</p>
-                      </div>
+                {/* Card body (`s.desc`) sits OUTSIDE the anchor so the
+                    accessible name stays under the 120-char SEO ceiling
+                    (audit finding I3). The ::after overlay keeps the whole
+                    card clickable for sighted users. */}
+                <div className="relative h-full p-5 rounded-lg border border-border bg-white dark:bg-slate-900 hover:border-accent hover:shadow-md transition-all group">
+                  <div className="flex items-start gap-3">
+                    <div className="w-9 h-9 rounded-md bg-accent/10 text-accent flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <BookOpen className="w-4 h-4" />
                     </div>
-                  </a>
-                </Link>
+                    <div>
+                      <h3 className="font-semibold font-display text-primary group-hover:text-accent transition-colors mb-1">
+                        <Link
+                          href={s.href}
+                          className="after:absolute after:inset-0 after:content-['']"
+                        >
+                          {s.text}
+                        </Link>
+                      </h3>
+                      <p className="text-sm text-muted-foreground">{s.desc}</p>
+                    </div>
+                  </div>
+                </div>
               </li>
             ))}
           </motion.ul>
