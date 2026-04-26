@@ -32,10 +32,14 @@ Close the following audit findings (PDF p.34-46) by rewriting the QB service-pag
 - `artifacts/qb-portal/public/products.json` — add new copy fields per service (see Schema Additions below).
 - `artifacts/qb-portal/src/lib/products.ts` — extend the `Product` TypeScript type with the new optional fields.
 - `artifacts/qb-portal/src/pages/service-detail.tsx` — render the new fields when present.
+- `artifacts/qb-portal/prerender.mjs` — enumerate dynamic slugs so service pages are emitted to `dist/public/service/<slug>/index.html` (see "Prerender slug enumeration" below).
 
 **Create:**
 
+- `tests/seo/lib/paragraphs.mjs` — small pure regex helper to extract `<p>` text content from prerendered HTML (matches the style of `tests/seo/lib/extract.mjs`).
 - `tests/seo/service-pages.content.test.mjs` — TDD test file (see Test Spec below).
+
+**Do NOT add `cheerio` or any other npm dep.** Use the existing hand-written regex helpers under `tests/seo/lib/` (`extract.mjs`, `load-dist.mjs`, `pixel-width.mjs`, etc.). Add new helpers next to them following the same style. The repo deliberately keeps SEO tests dep-free.
 
 **Out of scope:**
 
@@ -185,6 +189,22 @@ JSON-LD: ensure `generateServiceSchema` continues to use the existing `descripti
 
 Adding 5 new H2s per page must not push the page over Seobility's "too many headings" threshold (≤8). Pre-existing H2s on the service page: "About This Service", "What's Included", optionally "Available Add-Ons", "Related Services" — that's 3-4. Adding Overview + Why this matters + How it works + (one heading per featureSection) + Frequently asked questions could exceed 8. **Mitigation:** keep `featureSections` to **3 per page max**, and skip "Why this matters" if a service has it covered by longDescription. Aim for total H2 count ≤8 per service-detail page.
 
+## Prerender slug enumeration — `artifacts/qb-portal/prerender.mjs`
+
+**Today** the prerender excludes `/service/:slug`, `/category/:slug`, and `/landing/:slug` from `EXCLUDED_ROUTES`. That means `dist/public/service/<slug>/index.html` does not exist after `pnpm --filter qb-portal build`. The TDD test below cannot go green until prerender emits these files.
+
+**Required changes:**
+
+1. Remove `/service/:slug`, `/category/:slug`, `/landing/:slug` from `EXCLUDED_ROUTES`.
+2. After `discoverStaticRoutes()` builds the static-route list, append dynamic slugs:
+   - Read `artifacts/qb-portal/public/products.json` synchronously and push `/service/<slug>` for every entry in `services[]`.
+   - Take the unique set of `services[].category_slug` and push `/category/<slug>` for each.
+   - Import or read `artifacts/qb-portal/src/data/landingPages.ts` (parse with the same source-text regex pattern the existing prerender uses against `App.tsx`) and push `/landing/<slug>` for every entry.
+3. Pass the combined list into the existing puppeteer rendering loop — do not invent a new code path.
+4. After build, verify `dist/public/service/enterprise-to-premier-standard/index.html` exists, contains a `<title>`, an `<h1>`, and the new body copy.
+
+Keep the noindex check, head-tag dedupe, and validation calls already in `prerender.mjs` — just expand the input route list. Do not modify anything under `scripts/seo-verification/`.
+
 ## TDD test spec — `tests/seo/service-pages.content.test.mjs`
 
 ```js
@@ -192,7 +212,7 @@ import { test } from "node:test";
 import { strict as assert } from "node:assert";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import * as cheerio from "cheerio";
+import { extractParagraphs, stripBoilerplate } from "./lib/paragraphs.mjs";
 
 const SERVICE_SLUGS = [
   "enterprise-to-premier-standard",
@@ -216,17 +236,15 @@ const SERVICE_SLUGS = [
 
 const QB_DIST = "artifacts/qb-portal/dist/public";
 
-function loadPrerenderedBody(slug) {
+function loadPrerendered(slug) {
   const p = join(QB_DIST, "service", slug, "index.html");
   const html = readFileSync(p, "utf8");
-  const $ = cheerio.load(html);
-  $("script,style,noscript").remove();
-  return { $, text: $("main").text().replace(/\s+/g, " ").trim() };
+  return { html, text: stripBoilerplate(html), paragraphs: extractParagraphs(html) };
 }
 
 test("each QB service page renders ≥500 words of body text", () => {
   for (const slug of SERVICE_SLUGS) {
-    const { text } = loadPrerenderedBody(slug);
+    const { text } = loadPrerendered(slug);
     const wordCount = text.split(/\s+/).filter(Boolean).length;
     assert.ok(wordCount >= 500, `${slug}: ${wordCount} words (need ≥500)`);
   }
@@ -234,11 +252,9 @@ test("each QB service page renders ≥500 words of body text", () => {
 
 test("no paragraph text repeats within a single service page", () => {
   for (const slug of SERVICE_SLUGS) {
-    const { $ } = loadPrerenderedBody(slug);
-    const paragraphs = $("main p").map((_, el) => $(el).text().replace(/\s+/g, " ").trim()).get()
-      .filter(p => p.length >= 80);
+    const { paragraphs } = loadPrerendered(slug);
     const seen = new Map();
-    for (const p of paragraphs) {
+    for (const p of paragraphs.filter(p => p.length >= 80)) {
       assert.ok(!seen.has(p), `${slug}: duplicate paragraph: "${p.slice(0, 80)}…"`);
       seen.set(p, true);
     }
@@ -248,10 +264,8 @@ test("no paragraph text repeats within a single service page", () => {
 test("no paragraph text repeats across different service pages", () => {
   const seen = new Map(); // text -> slug
   for (const slug of SERVICE_SLUGS) {
-    const { $ } = loadPrerenderedBody(slug);
-    const paragraphs = $("main p").map((_, el) => $(el).text().replace(/\s+/g, " ").trim()).get()
-      .filter(p => p.length >= 80);
-    for (const p of paragraphs) {
+    const { paragraphs } = loadPrerendered(slug);
+    for (const p of paragraphs.filter(p => p.length >= 80)) {
       const owner = seen.get(p);
       assert.ok(!owner || owner === slug, `paragraph reused on ${slug} (originally on ${owner}): "${p.slice(0, 80)}…"`);
       seen.set(p, slug);
@@ -284,7 +298,7 @@ const TITLE_KEYWORDS = {
 
 test("title keywords appear in body for affected service pages", () => {
   for (const [slug, keywords] of Object.entries(TITLE_KEYWORDS)) {
-    const { text } = loadPrerenderedBody(slug);
+    const { text } = loadPrerendered(slug);
     const lower = text.toLowerCase();
     for (const kw of keywords) {
       assert.ok(lower.includes(kw.toLowerCase()),
@@ -294,16 +308,48 @@ test("title keywords appear in body for affected service pages", () => {
 });
 ```
 
+### Helper to create — `tests/seo/lib/paragraphs.mjs`
+
+Pure-JS, regex-based, no dependencies. Match the style of `tests/seo/lib/extract.mjs`:
+
+```js
+// Extract <p>…</p> text content from prerendered HTML.
+// Pure function. No filesystem, no network. Mirrors the regex style of extract.mjs.
+export function extractParagraphs(html) {
+  const out = [];
+  const re = /<p\b[^>]*>([\s\S]*?)<\/p>/gi;
+  for (const m of html.matchAll(re)) {
+    const text = stripTags(m[1]).replace(/\s+/g, " ").trim();
+    if (text) out.push(text);
+  }
+  return out;
+}
+
+// Return all visible body text with <script>, <style>, <noscript>, and tags removed.
+export function stripBoilerplate(html) {
+  const noScripts = html
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, " ")
+    .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, " ")
+    .replace(/<noscript\b[^>]*>[\s\S]*?<\/noscript>/gi, " ");
+  return stripTags(noScripts).replace(/\s+/g, " ").trim();
+}
+
+function stripTags(s) {
+  return s.replace(/<[^>]+>/g, " ");
+}
+```
+
 **TDD discipline:** write the test first, run it, see it fail (no prerender output yet has the new copy), THEN add the copy and template changes. Run again — must pass.
 
 ## Verification commands
 
+`pnpm --filter qb-portal build` already runs `vite build && node prerender.mjs && node scripts/generate-sitemap.mjs`, so there is no separate prerender step. Just:
+
 ```bash
 pnpm install
-pnpm test          # all suites green
 pnpm --filter qb-portal build
-pnpm --filter qb-portal prerender
 node --test tests/seo/service-pages.content.test.mjs
+pnpm test
 ```
 
 All four must exit 0.
@@ -312,7 +358,8 @@ All four must exit 0.
 
 - One logical commit (or split into "schema + types", "template", "copy", "tests" if it helps review).
 - Commit message style: `feat(qb-portal): unique 500-word body copy for 17 service pages (audit PR-1)`
-- Open PR via `gh pr create --base main --head phase2/pr1-qb-service-content --title "PR #1 — QB service-page content rewrite (audit, 17 pages)" --body-file <(echo "Closes audit findings: duplicate content (9/16), duplicate paragraphs (16/16), thin text (15/28), title-keyword-not-in-body (~12/33). See docs/superpowers/specs/2026-04-26-seo-audit-fix-plan.md § PR #1.")`
+- Open PR via `gh pr create --base main --head phase2/pr1-qb-service-content --title "PR #1 — QB service-page content rewrite (audit, 17 pages)" --body-file <(echo "Closes audit findings: duplicate content (9/16), duplicate paragraphs (16/16), thin text (15/28), title-keyword-not-in-body (~12/33). See cursor-prompts/pr1-qb-service-content.md in this PR for the full working spec; the audit source of truth is 2026-04-25_venture-full-export.pdf p.34-46.")`
+- **Do not link** `docs/superpowers/specs/2026-04-26-seo-audit-fix-plan.md` from the PR body — that file lives on a separate `spec/` branch that has not been merged to main and the link would 404.
 - Wait for both required checks to be green before flagging ready for review.
 
 ## Stop conditions
