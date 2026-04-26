@@ -80,6 +80,26 @@ export default function Contact() {
       ]} />
 
       <Section bg="brand-light" className="relative">
+        <div className="max-w-3xl mb-12 space-y-4">
+          <p className="text-muted-foreground leading-relaxed">
+            Whether you are migrating to Microsoft 365, untangling a QuickBooks
+            file, or planning a multi-year IT roadmap, NexFortis works with
+            Canadian small and mid-sized businesses to translate technical
+            complexity into a clear, costed plan you can act on.
+          </p>
+          <p className="text-muted-foreground leading-relaxed">
+            Every consultation starts with a 30-minute discovery call where we
+            map your current tools, identify the highest-impact issues, and
+            outline next steps in plain language — no obligation and no
+            pressure to commit before you have what you need to decide.
+          </p>
+          <p className="text-muted-foreground leading-relaxed">
+            Prefer to skip the form? You can reach our Nobleton, Ontario office
+            directly at (416) 317-0051 or contact@nexfortis.com during business
+            hours, and we will reply the same business day with a real person,
+            not a chatbot.
+          </p>
+        </div>
         <div className="grid lg:grid-cols-5 gap-12 items-start">
 
           <div className="lg:col-span-2 space-y-8">
