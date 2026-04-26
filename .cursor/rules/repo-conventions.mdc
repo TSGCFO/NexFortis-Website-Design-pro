@@ -5,10 +5,12 @@ alwaysApply: true
 
 # NexFortis repo conventions
 
-This is a pnpm workspace monorepo (TypeScript, Node.js 22+, pnpm 10). The full
-agent-facing guide is in [AGENTS.md](mdc:AGENTS.md). The full SEO suite guide
-is in [tests/seo/README.md](mdc:tests/seo/README.md). Read those if anything
-below is unclear.
+This is a pnpm workspace monorepo (TypeScript, **Node.js 24**, pnpm 10). CI
+(`.github/workflows/seo-tests.yml`) and Render (`render.yaml`) both pin
+Node 24 — local environments must match. The full agent-facing guide is in
+[AGENTS.md](mdc:AGENTS.md). The full SEO suite guide is in
+[tests/seo/README.md](mdc:tests/seo/README.md). Read those if anything below
+is unclear.
 
 ## Hard rules — do not violate
 

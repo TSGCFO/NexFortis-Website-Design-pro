@@ -73,7 +73,9 @@ tracked Phase 2 audit item.
 
 A four-layer regression suite under `tests/seo/` locks every SEO behaviour in
 place. **Always run `pnpm test:seo` before opening a PR that touches anything
-under `artifacts/nexfortis/src/` or `artifacts/qb-portal/src/`.**
+under `artifacts/nexfortis/` or `artifacts/qb-portal/`** — including non-`src/`
+assets like `public/sitemap.xml`, `public/robots.txt`, or other prerender
+inputs.
 
 | Command | What it runs |
 |---|---|

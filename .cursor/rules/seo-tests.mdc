@@ -1,6 +1,6 @@
 ---
 description: SEO regression test suite — auto-attaches when editing tests/seo/, scripts/seo-verification/, or any artifacts/* page/component
-globs: tests/seo/**, scripts/seo-verification/**, artifacts/nexfortis/src/**, artifacts/qb-portal/src/**
+globs: tests/seo/**, scripts/seo-verification/**, artifacts/nexfortis/src/**, artifacts/qb-portal/src/**, artifacts/nexfortis/public/**, artifacts/qb-portal/public/**
 alwaysApply: false
 ---
 
@@ -39,7 +39,12 @@ the suite genuinely needs new helper functionality, open a separate
 
 ## When you change `__known-issues__.json`
 
-Each entry must keep this exact shape:
+Entries are keyed by invariant ID (`INV-001`, `INV-002`, ...). The per-entry
+shape varies by invariant — match the shape already used by the invariant
+you're touching. The two shapes in current use are:
+
+**Route-keyed shape** (used by INV-001, 002, 003, 004, 005, 006, 007, 008,
+009, 011, 014, 017, 018, 019 — anything that fingerprints a specific route):
 
 ```json
 {
@@ -51,6 +56,25 @@ Each entry must keep this exact shape:
   "note": "<short explanation>"
 }
 ```
+
+**Anchor-text-keyed shape** (used by INV-015 and any future invariant that
+checks anchor-text uniqueness across the whole site, where the violation is
+not owned by a single route):
+
+```json
+{
+  "site": "nexfortis" | "qb-portal",
+  "text": "<lowercased anchor text, e.g. 'get a free quote'>",
+  "current": "<list of destinations the anchor points to>",
+  "expected": "<value the invariant requires>",
+  "issue": "<audit ID like I2>",
+  "note": "<short explanation>"
+}
+```
+
+Do not "normalize" `text` entries into `route` entries — the invariant code in
+`tests/seo/invariants.test.mjs` reads the key it expects per invariant. When in
+doubt, look at adjacent entries under the same `INV-XXX` key and match them.
 
 Never add new entries to silence a violation introduced by your own change —
 fix the violation instead. Adding entries is reserved for seeding pre-existing
