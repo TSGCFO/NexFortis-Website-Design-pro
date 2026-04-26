@@ -1,0 +1,65 @@
+---
+description: SEO regression test suite — auto-attaches when editing tests/seo/, scripts/seo-verification/, or any artifacts/* page/component
+globs: tests/seo/**, scripts/seo-verification/**, artifacts/nexfortis/src/**, artifacts/qb-portal/src/**
+alwaysApply: false
+---
+
+# SEO regression test suite — file-scoped guidance
+
+You are touching code that is covered by the four-layer SEO regression test
+suite. Read these before changing anything:
+
+- [tests/seo/README.md](mdc:tests/seo/README.md) — full guide (commands,
+  allowlist, snapshot review checklist, layout)
+- [docs/superpowers/specs/2026-04-25-seo-regression-suite-design.md](mdc:docs/superpowers/specs/2026-04-25-seo-regression-suite-design.md) — design rationale and invariant definitions
+- [tests/seo/__known-issues__.json](mdc:tests/seo/__known-issues__.json) — allowlist of pre-existing audit findings
+
+## When you change a page or component under `artifacts/*/src/pages/` or `artifacts/*/src/components/`
+
+1. Build the dist artifacts the way CI does:
+   ```
+   pnpm --filter @workspace/nexfortis run build
+   pnpm --filter @workspace/qb-portal exec vite build --config vite.config.ts
+   ```
+2. Run `pnpm test:seo`. It MUST pass.
+3. If `test:seo:snapshots` reports a diff:
+   - Walk the snapshot diff review checklist in `tests/seo/README.md`.
+   - If every diff is the intended consequence of your change, run
+     `pnpm test:seo:update` and re-run `pnpm test:seo`.
+   - If any diff is unexpected, investigate before updating.
+4. If your change fixes a Phase 2 audit issue, remove the corresponding entry
+   from `tests/seo/__known-issues__.json` in the same PR. Confirm
+   `pnpm test:seo:invariants` still passes after removal.
+
+## When you change `tests/seo/lib/*` or `scripts/seo-verification/*`
+
+This is test infrastructure. Do not modify it as part of an audit fix PR. If
+the suite genuinely needs new helper functionality, open a separate
+`feat(seo-tests):` PR for it.
+
+## When you change `__known-issues__.json`
+
+Each entry must keep this exact shape:
+
+```json
+{
+  "site": "nexfortis" | "qb-portal",
+  "route": "/some/path",
+  "current": "<observed failing value>",
+  "expected": "<value the invariant requires>",
+  "issue": "<audit ID like C1, I5, M2>",
+  "note": "<short explanation>"
+}
+```
+
+Never add new entries to silence a violation introduced by your own change —
+fix the violation instead. Adding entries is reserved for seeding pre-existing
+audit findings.
+
+## When you touch routes that affect the sitemap
+
+Both sites publish a `sitemap.xml`. The committed
+[artifacts/qb-portal/public/sitemap.xml](mdc:artifacts/qb-portal/public/sitemap.xml)
+is canonical for qb-portal (vite copies it verbatim into dist). If you add or
+remove routes, update both the sitemap and the snapshots in
+`tests/seo/__snapshots__/<site>/sitemap.snap.json`.

@@ -1,0 +1,86 @@
+---
+description: Core NexFortis repo conventions (always-on)
+alwaysApply: true
+---
+
+# NexFortis repo conventions
+
+This is a pnpm workspace monorepo (TypeScript, Node.js 22+, pnpm 10). The full
+agent-facing guide is in [AGENTS.md](mdc:AGENTS.md). The full SEO suite guide
+is in [tests/seo/README.md](mdc:tests/seo/README.md). Read those if anything
+below is unclear.
+
+## Hard rules — do not violate
+
+- **`docs/` is read-only by repo convention.** The ONLY writable subpaths under
+  `docs/` are `docs/superpowers/specs/` and `docs/superpowers/plans/`. Do not
+  modify anything else under `docs/`.
+- **Branch protection on `main` is active** (ruleset 15556829). All work goes
+  through a PR. Squash merges only. Both `Local SEO test suite` and
+  `Verify Render PR previews` checks must pass, and every review thread must
+  be resolved, before a PR can merge.
+- **Use pnpm.** `npm` and `yarn` are blocked by the `preinstall` hook.
+- **No `.env` files.** Pass env vars inline (`PORT`, `BASE_PATH`, `DATABASE_URL`).
+- **Use the words "collect", "extract", "browse", "read"** when describing
+  fetching pages. Do not use "scrape" or "crawl" in code, comments, or docs.
+
+## Build commands
+
+Root `pnpm build` runs typecheck then `pnpm -r run build`. The qb-portal
+`build` script includes a prerender step that fails (issue C2 — helmet
+timeout). For local SEO work and CI, mirror the workflow at
+`.github/workflows/seo-tests.yml`:
+
+```
+pnpm --filter @workspace/nexfortis run build
+pnpm --filter @workspace/qb-portal exec vite build --config vite.config.ts
+```
+
+Do not "fix" the qb-portal build by changing the build script — C2 is tracked
+as a Phase 2 audit item.
+
+## SEO regression test suite
+
+A four-layer regression suite under `tests/seo/` locks every SEO behaviour in
+place. **Always run `pnpm test:seo` before opening a PR that touches anything
+under `artifacts/nexfortis/` or `artifacts/qb-portal/`.**
+
+| Command | What it runs |
+|---|---|
+| `pnpm test:seo` | Full chain: lib → verifiers → components → snapshots → invariants |
+| `pnpm test:seo:fast` | lib + verifiers + components only (no build needed) |
+| `pnpm test:seo:lib` | Unit tests under `tests/seo/lib/` |
+| `pnpm test:seo:components` | Vitest component tests |
+| `pnpm test:seo:snapshots` | Diff prerendered HTML vs `__snapshots__/` (build first) |
+| `pnpm test:seo:invariants` | Programmatic SEO rules (build first) |
+| `pnpm test:seo:update` | Re-baseline snapshots — only after intentional changes |
+| `pnpm test:seo:verifiers` | Unit tests for `scripts/seo-verification/*.mjs` |
+
+Pre-existing audit findings are allowlisted in
+[tests/seo/__known-issues__.json](mdc:tests/seo/__known-issues__.json). When you
+fix an audit issue you MUST remove its allowlist entry in the same PR.
+
+The Phase 2 fix workflow (one PR per audit issue) is documented in
+[tests/seo/seo-fix-prompt-template.md](mdc:tests/seo/seo-fix-prompt-template.md).
+
+## TypeScript
+
+- Composite project. `pnpm typecheck:libs` builds the lib chain via `tsc -b`.
+- `pnpm typecheck` runs that plus per-artifact typechecks.
+- Do not introduce `any` to silence type errors. Fix the type or escalate.
+
+## React / wouter
+
+- Both site apps (`artifacts/nexfortis`, `artifacts/qb-portal`) use
+  [`wouter`](https://github.com/molefrog/wouter) for routing, not React Router.
+- Component tests under `tests/seo/components/**` use `wouter`'s
+  `memoryLocation` to mount routes — copy the existing pattern, do not switch
+  to React Router or jsdom location stubs.
+
+## When you finish a task
+
+- Run `pnpm test:seo` (or at least `pnpm test:seo:fast` while iterating).
+- Run `pnpm typecheck`.
+- Open a PR. Title: `<type>(<scope>): <description>` (`fix(seo): I5 ...`,
+  `feat(seo-tests): ...`, `docs(seo-tests): ...`, `chore(...): ...`).
+- Wait for CI to go green and resolve every review thread before merging.
