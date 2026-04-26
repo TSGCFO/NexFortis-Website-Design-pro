@@ -113,9 +113,29 @@ function extractJsonLd(html) {
 }
 
 function isRootDivEmpty(html) {
-  const m = html.match(/<div\s+id=["']root["'][^>]*>([\s\S]*?)<\/div>\s*(?:<script|<\/body)/i);
-  if (!m) return false;
-  return m[1].replace(/\s+/g, "").length === 0;
+  const openRe = /<div\s+id=["']root["'][^>]*>/i;
+  const open = openRe.exec(html);
+  if (!open) return false;
+  const start = open.index + open[0].length;
+  // Walk forward, tracking nested <div> depth to find the matching </div>.
+  const tagRe = /<(\/?)div\b[^>]*>/gi;
+  tagRe.lastIndex = start;
+  let depth = 1;
+  let m;
+  while ((m = tagRe.exec(html)) !== null) {
+    if (m[1] === "/") {
+      depth--;
+      if (depth === 0) {
+        const inner = html.slice(start, m.index);
+        // Strip HTML comments before checking emptiness.
+        const stripped = inner.replace(/<!--[\s\S]*?-->/g, "").replace(/\s+/g, "");
+        return stripped.length === 0;
+      }
+    } else {
+      depth++;
+    }
+  }
+  return false;
 }
 
 function escapeRegex(s) {

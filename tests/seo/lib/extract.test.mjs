@@ -6,8 +6,11 @@ const html = `<!doctype html><html><head>
   <title>About NexFortis | NexFortis IT Solutions</title>
 </head><body><div id="root"><h1>About NexFortis</h1></div></body></html>`;
 
-test("extract — title is captured verbatim", () => {
-  const fp = extract(html, "/about");
+test("extract — title is captured and whitespace is normalized", () => {
+  const html2 = `<!doctype html><html><head>
+    <title>  About   NexFortis  |   NexFortis IT Solutions  </title>
+  </head><body><div id="root"><h1>About NexFortis</h1></div></body></html>`;
+  const fp = extract(html2, "/about");
   assert.equal(fp.title, "About NexFortis | NexFortis IT Solutions");
 });
 
@@ -152,4 +155,23 @@ test("extract — hasNoindex case-insensitive (NOINDEX)", () => {
 test("extract — hasNoindex case-insensitive (NoIndex)", () => {
   const html = `<head><meta name="robots" content="NoIndex"></head>`;
   assert.equal(extract(html, "/").hasNoindex, true);
+});
+
+test("extract — rootDivIsEmpty true when followed by <noscript>", () => {
+  const html = `<body>
+    <div id="root"></div>
+    <noscript>JS required</noscript>
+    <script src="/main.js"></script>
+  </body>`;
+  assert.equal(extract(html, "/").rootDivIsEmpty, true);
+});
+
+test("extract — rootDivIsEmpty true with HTML comment inside", () => {
+  const html = `<body><div id="root"><!-- placeholder --></div><noscript></noscript></body>`;
+  assert.equal(extract(html, "/").rootDivIsEmpty, true);
+});
+
+test("extract — rootDivIsEmpty handles nested divs in content", () => {
+  const html = `<body><div id="root"><div class="x"><span>hi</span></div></div></body>`;
+  assert.equal(extract(html, "/").rootDivIsEmpty, false);
 });
