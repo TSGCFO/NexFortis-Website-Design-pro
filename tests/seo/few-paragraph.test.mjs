@@ -12,6 +12,25 @@ const PAGES = [
   "artifacts/qb-portal/dist/public/waitlist/index.html",
 ];
 
+// TODO(seo-audit-followup): switch to `node:assert/strict` import to match the
+// rest of the repo (e.g. tests/seo/invariants.test.mjs). Cosmetic only —
+// behavior is identical. Tracked from Copilot PR #82 review.
+
+// TODO(seo-audit-followup): wire this test into CI. The GitHub Actions SEO
+// workflow (.github/workflows/seo-tests.yml) runs each :seo:* sub-test
+// individually rather than invoking `pnpm test:seo`, so the chain entry added
+// in this PR's package.json does not gate CI. Either (a) add a workflow step
+// that runs `pnpm test:seo:few-paragraphs`, or (b) switch the workflow to call
+// `pnpm test:seo` and drop the per-sub-test steps. Tracked from Copilot
+// PR #82 review.
+
+// TODO(seo-audit-followup): the existsSync skip below makes this test pass
+// even if *every* target HTML file is missing (e.g. build output path
+// changes). Add a `checkedPages > 0` assertion at the end of the loop, and/or
+// split into per-page sub-tests with explicit `t.skip()` so missing pages are
+// visible in the test output rather than silently skipped. Tracked from
+// Copilot PR #82 review.
+
 test("each page has >=3 paragraphs of >=100 chars", () => {
   for (const p of PAGES) {
     // qb-portal prerender (audit issue C2 — helmet timeout) is not run in CI;
