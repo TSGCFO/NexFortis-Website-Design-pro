@@ -18,10 +18,47 @@
       "badge": "available",
       "is_addon": false,
       "requires_service": null,
-      "accepted_file_types": [
-        ".qbm"
+      "accepted_file_types": [".qbm"],
+      "sort_order": 1,
+      "longDescription": [
+        "Premier and Pro lock you out of any company file that was last opened in QuickBooks Enterprise, which is the reason most Canadian accounting practices keep paying the Enterprise per-seat tag for years longer than they actually need to. The Standard service inside this NexFortis QuickBooks Portal handles that exact downgrade in a single round trip. You upload a clean .qbm portable file, our team rebuilds the data in Premier or Pro Desktop on a current release, runs a list-by-list verification, and ships back a working .qbm that you restore on your own workstation.",
+        "We file a job under Standard when the source matches the unmessy half of the Enterprise install base: a single company, a tidy chart of accounts, no advanced inventory turned on, and list totals that fit comfortably inside the Premier ceiling on customers, vendors, items, and employees combined. If your file is missing any of those characteristics our intake step routes you to the Complex tier instead, but in our queue the majority of incoming Enterprise files qualify for Standard, and that is what keeps the per-job clock so short.",
+        "Every Standard conversion rebuilds account balances penny-perfect against the Enterprise source. We compare opening balances, closing trial balances, A/R and A/P agings, undeposited funds, sales tax payable, and payroll liability accounts on both sides before the file leaves our environment. The verification stage also confirms list counts haven't drifted, customer balances reconcile per name, and bill payments still tie back to their originating bills. If any of those checks fail we fix the gap before delivery — we never bill for a job we cannot stand behind.",
+        "Pricing on this NexFortis QuickBooks Portal is quoted in Canadian dollars, GST or HST is added at checkout based on your billing province, and every order is backed by our written money-back guarantee. The launch rate of $75.00 CAD covers the conversion itself, the verification report, and two follow-up support tickets inside the next fourteen days. Files are encrypted in transit, deleted from our processing host after seven days, and are never used to train any external model. The deliverable is your own company data rebuilt in Premier or Pro.",
+        "Most clients restore the converted file the same business day we send it back. We target currently-supported Premier and Pro releases on Windows 10 and Windows 11, so the .qbm is ready for either Desktop family without a separate compatibility step. Your usernames, password policies, customer types, vendor types, classes, payroll history, and transaction detail all carry over unchanged. The only thing that actually changes is the file format — your bookkeeper opens the new copy in Premier or Pro and continues posting where Enterprise left off, with no relearning curve at all."
       ],
-      "sort_order": 1
+      "featureSections": [
+        {
+          "heading": "What we verify before delivery",
+          "body": "Every Standard conversion is checked against a fixed list before the .qbm leaves our processing host: the trial balance reconciles to the dollar against the Enterprise source, list counts on customers, vendors, items, and accounts match exactly, A/R and A/P aging buckets line up by name, sales tax liability rolls forward correctly, and the bank-reconciliation status on every reconciled account is preserved. We then document the result in a short verification PDF that you can hand directly to a reviewing accountant — our deliverable is a working Premier or Pro file plus the evidence that it is working."
+        },
+        {
+          "heading": "Files we accept and what you receive back",
+          "body": "We accept QuickBooks Enterprise portable backups (.qbm) only. Use File → Create Copy → Portable company file inside Enterprise to produce one before uploading. We do not need .qbb full backups, and we never ask for the live .qbw working file because portable copies preserve the underlying data with much smaller file sizes and shorter transfer times. You receive a single converted .qbm plus the verification PDF. Restoring on your end is the same File → Open or Restore Company → Restore a portable file workflow you already use on any other QuickBooks backup."
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Will the converted file open on every supported Premier or Pro release?",
+          "answer": "Yes — the .qbm we deliver opens cleanly on currently-supported QuickBooks Desktop Premier and Pro releases running on Windows. If your firm is still on a specific legacy build we can target it on request before we start the conversion. Once the file is restored you can keep updating Premier or Pro on its own release cycle without ever opening Enterprise again, which is the entire point of moving down — predictable per-seat pricing without losing your underlying transaction history."
+        },
+        {
+          "question": "What happens if my Enterprise file does not qualify as Standard?",
+          "answer": "If we open the upload and find advanced inventory turned on, multi-currency enabled, non-default custom fields, or list counts above the Premier ceiling, we pause the job and email you before processing further. You receive a clear explanation of which trigger fired and an optional upgrade quote to the Complex service. You can also cancel at that point for a full refund — we never auto-bill the larger amount, and you never end up with a half-finished file you cannot actually open."
+        },
+        {
+          "question": "How do I send my .qbm to your team securely?",
+          "answer": "Every order in this Portal includes an encrypted upload link tied to your account, with 256-bit transport encryption and a per-order access token that expires after delivery. We do not accept email attachments because email is not an appropriate transport for multi-megabyte company files containing payroll history and banking details. After we deliver the converted file we retain your upload for seven days to support follow-up tickets, then we permanently delete it from our processing host."
+        },
+        {
+          "question": "Does the conversion preserve my custom reports and memorized transactions?",
+          "answer": "Premier and Pro share the QuickBooks Desktop report engine with Enterprise, so memorized reports, memorized transactions, customer types, vendor types, terms, payment methods, and most other internal lookups carry across without change. The only routine casualties are Enterprise-only features such as advanced reporting and roles-based permissions that have no Premier counterpart at all — our verification report calls those out by name so you know exactly what was dropped before you start working day-to-day in the new file."
+        },
+        {
+          "question": "Are CAD prices final, or does GST/HST get added at checkout?",
+          "answer": "Every price you see on this Portal is in Canadian dollars before tax. Canadian customers pay GST or HST at checkout based on the billing province, exactly the way QuickBooks itself layers sales tax on a domestic invoice. We never bill in USD, we never surprise-add a foreign-currency surcharge, and we do not charge any kind of monthly maintenance fee on top of the one-time conversion price. The line items on your invoice match the prices shown on the order page."
+        }
+      ]
     },
     {
       "id": 2,
@@ -39,10 +76,47 @@
       "badge": "available",
       "is_addon": false,
       "requires_service": null,
-      "accepted_file_types": [
-        ".qbm"
+      "accepted_file_types": [".qbm"],
+      "sort_order": 2,
+      "longDescription": [
+        "Complex Enterprise files have a way of compounding small inconveniences into a project nobody at the practice wants to take on. Advanced inventory, classes layered on top of locations, custom fields nobody documented, multi-currency that someone enabled three fiscal years ago and forgot, list counts brushing the Premier ceiling — each one on its own is solvable, but stacked together they turn a one-hour conversion into a week of triage. The Complex service in this NexFortis QuickBooks Portal exists for exactly that profile, and it is the same engineers, same audit trail, same money-back guarantee.",
+        "Where the Standard service simply rebuilds your data in Premier or Pro, Complex begins with a structured pre-flight: a full diagnostic over the source file to enumerate every advanced feature in use, identify list-count headroom against the Premier name caps, flag custom-field usage by transaction type, and quantify the audit-trail and inventory-history footprint. The diagnostic output is what we use to plan the conversion path — what to migrate as-is, what to flatten, and what to surface to you as a deliberate choice before processing.",
+        "Multi-currency in particular gets careful handling on a Complex job. Intuit treats multi-currency as a one-way switch inside Enterprise, so any legacy currency-tagged transactions need to be reconciled to a single home currency on the Premier or Pro side without breaking historical reports. Our process preserves the original transaction amounts, applies your chosen translation rule per source currency, and writes a parallel audit log of every adjustment so your reviewing accountant can see exactly which lines were touched and why, down to the journal entry.",
+        "Pricing for Complex is $100.00 CAD at the launch rate (regular $199.00 CAD) and the turnaround target stays under sixty minutes for the conversion itself, with the diagnostic running in parallel rather than adding to the clock. Files move over an encrypted upload tied to your Portal account, are processed inside our isolated Canadian environment, and are deleted seven days after delivery. The deliverable is a working Premier or Pro .qbm plus a written audit document that maps every non-trivial transformation back to the source.",
+        "After delivery you keep the entire Standard checklist — penny-perfect balances, list parity, A/R and A/P agings, sales-tax rollforward — plus the Complex-only audit document and a thirty-minute review call with the engineer who ran your conversion. The review call is the part most firms tell us they value most: a single conversation with the person who actually touched the data, not a support queue, walking through each non-trivial decision before you put the file in front of a reviewing partner or close out the engagement."
       ],
-      "sort_order": 2
+      "featureSections": [
+        {
+          "heading": "When to choose Complex over Standard",
+          "body": "Pick the Complex tier when any of the following apply to your source file: advanced inventory is enabled (FIFO, lot/serial tracking, or bin locations), multi-currency has ever been turned on, custom fields are in use beyond the Enterprise default set, list counts on customers, vendors, items, or employees are within ten percent of the Premier 14,500-name ceiling, classes and locations are both in use simultaneously, or you have unit-of-measure conversions defined on inventory items. If the file matches none of those, the Standard service is the right fit and saves you the upcharge."
+        },
+        {
+          "heading": "How we handle large lists and advanced inventory",
+          "body": "Premier and Pro do not support advanced inventory, so any FIFO, lot, serial, or bin data has to be flattened into a structure both editions can carry forward without breaking historical reports. Our pipeline preserves quantity-on-hand and average cost per item exactly, archives the advanced-inventory metadata to a structured CSV that you can re-import if you ever scale back into Enterprise, and writes adjustment transactions on the converted file rather than back-dating quantity changes. The result is a Premier or Pro file that ties to the source and a clean off-ramp if requirements change later."
+        }
+      ],
+      "faqs": [
+        {
+          "question": "How is Complex different from the Standard service in practice?",
+          "answer": "Standard runs as a fixed pipeline on a clean source file and ships in a single round trip. Complex begins with a separate diagnostic pass on your data, may pause for confirmation if the diagnostic flags an irreversible decision (collapsing currencies, dropping advanced inventory metadata, retiring deprecated custom fields), and finishes with a written audit document plus a review call. Same engineers, same delivery format, same .qbm output — but the work needed to land that output safely is materially larger, which is why the rate sits a tier above Standard."
+        },
+        {
+          "question": "What happens to advanced inventory data after conversion?",
+          "answer": "Premier and Pro do not have a place to store FIFO costing layers, lot or serial tracking, or bin locations, so we flatten that data into the historical record and archive the original metadata into a structured CSV that ships alongside the .qbm. Quantity-on-hand and average cost stay accurate on every item, ledger balances tie back to the Enterprise source to the cent, and the archive lets you reconstruct the advanced-inventory state if you ever migrate back up the SKU stack later in the company's life."
+        },
+        {
+          "question": "Can you keep my custom fields on customers, vendors, and items?",
+          "answer": "Premier and Pro support a smaller set of custom fields than Enterprise, so we map your existing custom fields against the destination edition's capacity and report any overflow before the conversion starts. Where the destination has room, the field name and per-record values come across unchanged. Where the destination cannot carry a field, we archive it to the same audit document we use for currency and inventory decisions, with the per-record values exported to CSV so a future tool can re-import them on demand."
+        },
+        {
+          "question": "Will the thirty-minute review call cover all my reviewers' questions?",
+          "answer": "The review call covers every decision the diagnostic flagged on your specific file, the verification numbers from our standard checklist, and any follow-up points your reviewing accountant raises in the days after delivery. Most firms only need a single call. If your reviewer surfaces additional questions inside the fourteen-day support window we answer them through the Portal at no extra charge — we do not run a per-minute meter on conversions, and we do not punt complex follow-ups into a separate paid engagement."
+        },
+        {
+          "question": "Is the Complex service still under sixty minutes end to end?",
+          "answer": "The conversion itself targets the same under-sixty-minute clock as Standard. The diagnostic that gates the conversion runs in parallel rather than in series, so it does not extend the wall-clock time you see in the Portal. The thirty-minute review call is scheduled separately at your convenience, usually within forty-eight hours of delivery, and is not on the conversion clock. If a diagnostic-flagged decision needs your input we pause and notify you, which can extend the total elapsed time but never the active processing minutes you are billed for."
+        }
+      ]
     },
     {
       "id": 3,
@@ -59,10 +133,43 @@
       "badge": "available",
       "is_addon": false,
       "requires_service": null,
-      "accepted_file_types": [
-        ".qbm"
+      "accepted_file_types": [".qbm"],
+      "sort_order": 3,
+      "longDescription": [
+        "Some Enterprise conversions cannot share a queue with anything else. A reviewing partner is on a plane in two hours, a CRA submission window closes at the end of the business day, a buyer's accountant is sitting in a meeting room waiting for the file — these are the calls we hear weekly, and they are why this NexFortis QuickBooks Portal carries a Guaranteed 30-Minute Conversion as a distinct, separately priced service. Order it and your file is pulled to the front of every other ticket in our system, with a written turnaround promise behind it.",
+        "The thirty-minute clock in this service starts the moment your encrypted upload finishes inside the Portal, not when the order is placed. We size the engineering rotation so a senior conversion engineer is always available during posted business hours; if your file lands outside business hours, the clock starts at the next opening bell and you keep the priority slot for that morning. We publish business hours plainly on the order page and confirm them in the order receipt before you commit, so the guarantee never becomes a surprise.",
+        "Every step of the Standard conversion still runs — penny-perfect balance verification, list-count parity, A/R and A/P agings, sales-tax liability rollforward, bank-reconciliation status preservation — they simply run on a dedicated processing host with no queue ahead of them. The thirty-minute promise is about scheduling, not about cutting checks. We never ship a file that fails our verification just to hit the clock; if a real issue surfaces during processing we contact you immediately and you choose between a refund and a slower correct delivery.",
+        "Pricing is $125.00 CAD at the launch rate (regular $249.00 CAD), GST or HST added at checkout, and the deliverable is the same .qbm plus verification PDF you would receive on a regular Standard order. The premium covers the dedicated engineer, the priority queue access, and the written guarantee — if we miss the thirty-minute target for a reason that is on us, your conversion is fully refunded and you keep the converted file at no charge. We do not stretch the definition of 'on us' to wriggle out of the refund.",
+        "Use this service when a missed deadline costs more than the price difference. Most clients reach for it during quarter-end accountant reviews, business-sale due diligence sprints, CRA audit-response windows, and short-fuse migrations where the previous bookkeeper held the file too long. If your timing is comfortable, the Standard service ships in well under sixty minutes anyway and saves you the premium — we will tell you that during pre-purchase chat if you ask. We would rather you buy the right tier than the most expensive tier."
       ],
-      "sort_order": 3
+      "featureSections": [
+        {
+          "heading": "How the thirty-minute guarantee works",
+          "body": "The clock begins when your encrypted upload finishes inside the Portal during posted business hours. A senior engineer pulls the job ahead of every other ticket, runs the full Standard checklist on a dedicated processing host, and ships the converted .qbm plus verification PDF before the thirty-minute mark. If we miss the target for a reason on our side — capacity, tooling, engineer availability — your conversion is refunded in full and you keep the file at no charge. The guarantee is in writing on every receipt, so there is nothing for either side to interpret after the fact."
+        },
+        {
+          "heading": "When this service is the right call",
+          "body": "Pick the Guaranteed 30-Minute service when a missed window has a downstream cost: an accountant review meeting that is already booked, a CRA submission portal that closes at end of day, a business-sale due-diligence checklist that is gating a transaction, or a year-end soft close that has to wrap before the bank cuts off. If you have flex on timing, the Standard service ships under sixty minutes anyway and is materially less expensive. We will tell you that during pre-purchase chat if you ask, because the right product call is what keeps you in this Portal long-term."
+        }
+      ],
+      "faqs": [
+        {
+          "question": "What exactly counts as missing the thirty-minute target?",
+          "answer": "Missing the target means the converted .qbm is not in your Portal download area within thirty minutes of upload completion during posted business hours, for any reason that is not your input — engineer availability, processing-host capacity, tooling failure, or a queue mistake on our side. If the file fails our verification mid-job we pause and contact you, the clock stops, and the guarantee converts to a full refund at your option. The trigger is purely time-on-our-side, not the absence of post-delivery support tickets."
+        },
+        {
+          "question": "Does the guarantee apply to Complex files or only Standard?",
+          "answer": "The Guaranteed 30-Minute Conversion is sized for the Standard pipeline — clean source, no advanced inventory, no multi-currency, no oversized lists. If your file matches the Complex profile our diagnostic flags it on intake and we contact you before starting; you can either step down to Complex (which targets sixty minutes) or cancel for a full refund. We never run a Complex-shaped file through the thirty-minute lane silently because the work simply does not fit the slot, and we will not bill the premium for a service that cannot deliver."
+        },
+        {
+          "question": "What if I upload outside business hours — does the clock start anyway?",
+          "answer": "No. The clock starts at the next opening of posted business hours, and your job keeps the priority slot for that morning so it is the first conversion processed once the team is back on shift. We confirm business hours plainly in the order receipt before you commit so this is never a surprise. If you absolutely need a conversion completed before the next business day we have an after-hours escalation path; contact pre-purchase support through this Portal and we will scope it directly."
+        },
+        {
+          "question": "Will I still receive the verification PDF on a thirty-minute order?",
+          "answer": "Yes. The Guaranteed 30-Minute service runs the same verification checklist as the Standard service — trial balance reconciliation, list-count parity, A/R and A/P aging match, sales-tax rollforward, bank-reconciliation status preservation. The PDF lands in your Portal download area alongside the converted .qbm at the same time. The thirty-minute promise covers both deliverables in one envelope; we do not deliver the file inside the window and then drag the verification document out into a separate clock."
+        }
+      ]
     },
     {
       "id": 4,
@@ -79,10 +186,47 @@
       "badge": "available",
       "is_addon": true,
       "requires_service": null,
-      "accepted_file_types": [
-        ".qbm"
+      "accepted_file_types": [".qbm"],
+      "sort_order": 4,
+      "longDescription": [
+        "QuickBooks files do not announce that they have crossed the line from healthy to unhealthy — performance just slowly degrades, the audit trail balloons, lists get harder to scroll, the Verify Data utility starts taking longer to finish, and one day a routine task in Premier or Enterprise that used to take a minute is suddenly a five-minute coffee break. The File Health Check service in this NexFortis QuickBooks Portal is a structured diagnostic that surfaces every contributor to that drift, ranks them by how much they cost you in performance and risk, and tells you which ones are worth fixing.",
+        "We look at twelve categories on every file we open: data integrity (the same Verify pass QuickBooks runs internally, plus a few of our own checks), audit-trail size, list bloat across customers, vendors, items, and accounts, orphaned transactions, undeposited-funds residue, sales-tax-liability roll, A/R and A/P aging anomalies, bank-reconciliation drift, payroll-liability accuracy, attachment storage footprint, and total file size against the practical Premier or Enterprise ceiling. Each category gets its own page in the report so a reviewing partner can flip directly to whatever they are accountable for that morning.",
+        "The deliverable is a written health report, not a verbal summary. Every finding ships with three things: the underlying evidence (counts, file-size deltas, trial-balance impact), our recommendation in plain language, and an estimate of how much faster the file would feel if the recommendation were implemented. We also tell you when a finding is cosmetic and not worth touching — most files have a few of those, and naming them up front saves you and your bookkeeper from chasing a fix that does not move the needle in real-world use.",
+        "Pricing on the Health Check is $25.00 CAD at the launch rate (regular $49.00 CAD) and the turnaround target is same-business-day during posted hours. The diagnostic does not modify your data — we open a copy in our isolated Canadian environment, run the checks, and discard the working copy after the report is written. The .qbm you uploaded is retained for seven days in case you decide to follow the report up with one of our remediation services (Audit Trail Removal, Super Condense, List Reduction, Multi-Currency Removal), and is then permanently deleted.",
+        "The Health Check is the recommended starting point any time you are not sure which remediation service to buy. The audit-trail removal is the right answer for files where the audit trail is the dominant size driver; super condense is the right answer when transaction history is the driver; list reduction is the right answer when names lists are the driver. Without a diagnostic to point at the actual cause, it is easy to spend on the wrong fix and end up with a file that is still slow. Twenty-five dollars buys you the right answer."
       ],
-      "sort_order": 4
+      "featureSections": [
+        {
+          "heading": "What the diagnostic actually inspects",
+          "body": "Each Health Check inspects twelve categories: data integrity (Verify Data plus our own consistency checks), audit-trail size and growth rate, list bloat across customers, vendors, items, and accounts, orphaned and unmatched transactions, undeposited-funds residue, sales-tax-liability rollforward accuracy, A/R and A/P aging anomalies, bank-reconciliation drift on every reconciled account, payroll-liability accuracy against the underlying payroll items, attachment storage footprint, and total file size relative to the practical Premier or Enterprise ceiling. Every category is reported as a separate finding, ranked by impact, with concrete numbers attached so the recommendation is auditable."
+        },
+        {
+          "heading": "How the report is structured for reviewers",
+          "body": "The report is laid out so a reviewing partner can read only the executive summary and still walk away with an informed opinion. Page one ranks every finding by performance impact and gives a one-line recommendation per finding. Pages two onward expand each finding with raw counts, file-size deltas, and the specific remediation service that addresses it (with launch price quoted in Canadian dollars). The final page lists everything we explicitly looked at and found healthy, so reviewers see the negative-space evidence too — what is not broken is documented alongside what is."
+        },
+        {
+          "heading": "What we will not do during a Health Check",
+          "body": "The Health Check is read-only. We do not condense your file, remove your audit trail, merge any names, archive any transactions, or modify a single line of data on the source. The diagnostic runs against an isolated copy and the working copy is destroyed when the report is finalized. If a finding makes you want to act, the report names the specific remediation service in this Portal and links you straight to its order page — but the Health Check itself never touches the production file, which is why same-day turnaround is an honest promise instead of a stretch goal."
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Do I have to act on every finding in the Health Check report?",
+          "answer": "No. The report ranks findings by real-world impact precisely so you can choose where to spend remediation budget instead of treating every finding as a must-fix. Most files end up with two or three findings worth acting on and a longer tail of cosmetic items the report explicitly tells you to ignore. We are not paid by the number of follow-up services you buy, so we do not pad the recommendations — the goal is the smallest set of fixes that returns your file to healthy."
+        },
+        {
+          "question": "How does the Health Check compare to QuickBooks Verify Data?",
+          "answer": "Verify Data inside QuickBooks runs an internal consistency check and either reports OK or surfaces a generic error code. The Health Check does the same Verify pass for completeness, then layers our own audit-trail, list-bloat, orphaned-transaction, sales-tax, payroll, and reconciliation checks on top, with concrete numbers attached. Verify tells you if the file is broken; the Health Check tells you why the file is slow, where the bloat sits, and which remediation moves the needle most."
+        },
+        {
+          "question": "Will running the Health Check change anything in my file?",
+          "answer": "No. The diagnostic is read-only. We open a copy of your .qbm in an isolated Canadian processing environment, run every inspection against that copy, write the report, and then discard the working copy. Your original .qbm on our processing host is retained for seven days in case you decide to follow up with a remediation service and is then permanently deleted. The file that lives in QuickBooks on your machine is never opened, modified, or rewritten by our team during a Health Check."
+        },
+        {
+          "question": "Can I use the Health Check as an audit-readiness step?",
+          "answer": "Yes — many practices buy the Health Check before a CRA submission, a year-end review, or a due-diligence engagement specifically to surface unflattering findings under their own control rather than discovering them mid-audit. The report is written so it can be handed to a reviewer as evidence of file integrity, with every healthy category explicitly named alongside the findings. If the diagnostic surfaces something material we recommend a specific remediation service in the Portal so the audit trail of work done is also clean."
+        }
+      ]
     },
     {
       "id": 5,
@@ -100,7 +244,46 @@
       "is_addon": true,
       "requires_service": null,
       "accepted_file_types": [],
-      "sort_order": 5
+      "sort_order": 5,
+      "longDescription": [
+        "Rush Delivery is the lever you pull when a service you have already ordered in this NexFortis QuickBooks Portal needs to land sooner than the regular queue allows. It is not a separate conversion — it is a priority flag attached to an existing order so your file is pulled forward of every ticket that is not also flagged as rush. Buy it any time before processing starts and it applies retroactively; buy it after delivery and we will refund the charge automatically because the lever has nothing left to pull on.",
+        "The mechanic is intentionally simple. Standard orders run in a first-in, first-served queue under our posted same-day or under-sixty-minute targets, depending on the service. Rush Delivery moves your specific ticket to the head of that queue ahead of any non-rush ticket already waiting, and any non-rush ticket that arrives after yours stays behind it. It does not override the Guaranteed 30-Minute Conversion, which has its own dedicated processing lane, and it does not stack with that service either — the thirty-minute guarantee already includes the priority lane Rush Delivery would otherwise grant.",
+        "Pricing is $25.00 CAD at the launch rate (regular $49.00 CAD), GST or HST added at checkout, and the charge is independent of the underlying service price. You can attach Rush to any non-thirty-minute conversion order at the time of purchase, or add it to an existing in-queue order through the Portal as long as processing has not started. The interface confirms the new placement and shows the revised expected delivery window before you commit, so the value of the rush is always visible up front rather than implied.",
+        "Real-world use cases tend to cluster around external deadlines: an accountant who is reviewing the file the next morning, a buyer's CPA who is on a flight tomorrow, a CRA window that closes at five o'clock, a payroll cutoff that the previous bookkeeper missed. If your timing pressure is internal — an end-of-month soft close, a partner meeting later in the week — the regular queue is usually plenty fast and you save the upcharge. We will tell you that pre-purchase if you ask, because we would rather match the lever to the actual problem.",
+        "Rush Delivery has no effect on the verification work, the deliverable, or the support window that comes with the underlying service. You receive the same .qbm or report, the same verification PDF, the same fourteen-day support tickets, and the same money-back guarantee — just sooner. If we accept a Rush charge and then fail to materially advance your delivery time relative to the regular queue (because, for example, the queue happened to be empty when you ordered), the Rush portion is refunded automatically without you having to ask for it."
+      ],
+      "featureSections": [
+        {
+          "heading": "What Rush Delivery actually does",
+          "body": "Rush Delivery moves your existing order to the head of the standard processing queue ahead of every non-rush ticket in line, and keeps any non-rush ticket that arrives after yours behind it for the duration of the engagement. It does not change the verification work, the deliverable format, or the support window — it only changes scheduling. The Portal updates your expected delivery window the moment the rush flag is applied, so you always see the value of the upcharge before you commit to it instead of after the fact."
+        },
+        {
+          "heading": "When Rush is the wrong purchase",
+          "body": "Skip Rush Delivery if you have already ordered the Guaranteed 30-Minute Conversion — that service includes the priority lane and a written time guarantee, so adding Rush is duplicate spending. Skip it also when the regular queue is fast enough for your timeline; same-day services in the Portal already run inside business hours, and standard conversions ship in well under sixty minutes most days. We will tell you pre-purchase if your specific order is unlikely to benefit from a rush so the lever stays meaningful when you actually need it."
+        },
+        {
+          "heading": "Refund policy on un-needed Rush",
+          "body": "If we accept a Rush charge on an order that does not actually move to the head of a populated queue — because the queue was already empty, because the underlying service was upgraded to thirty-minute mid-flight, or because we shipped your file in the regular window anyway — the Rush portion is refunded automatically the same day delivery completes. You do not need to file a ticket or ask, and the refund posts to the same payment method that funded the original Portal order. The auto-refund logic is documented in the Portal's order-history view so the math is auditable."
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Can Rush Delivery be added after I have already placed an order?",
+          "answer": "Yes — as long as your order has not entered active processing, you can attach Rush Delivery to it through the Portal's order detail page. The interface confirms the revised expected delivery window before you commit, so the value of the rush is visible up front. If processing has already begun, the lever has nothing left to pull on and the Portal blocks the upgrade automatically rather than charging you for an upgrade that cannot deliver any actual time savings on your specific ticket."
+        },
+        {
+          "question": "Does Rush Delivery stack with the Guaranteed 30-Minute Conversion?",
+          "answer": "No. The Guaranteed 30-Minute Conversion already includes the priority lane that Rush Delivery would otherwise add, plus a written time guarantee, so stacking them is duplicate spending. The Portal will not let you add Rush to a thirty-minute order because it would do nothing the underlying service has not already promised. If you ever see Rush eligible on a thirty-minute order, treat that as a bug and let pre-purchase support know — the rule is enforced both in the cart and in the order-detail upgrade flow."
+        },
+        {
+          "question": "What if Rush turns out not to actually advance my delivery?",
+          "answer": "The Portal automatically refunds the Rush portion of the order if your file ships in the same window it would have shipped without the upgrade — for example, when the queue was already empty, or when we matched your delivery to the regular target rather than beating it. You do not have to file a ticket or chase the refund. The credit posts to the same payment method that funded the original order on the same business day delivery completes, and the order-history view shows the refund line item."
+        },
+        {
+          "question": "Does Rush Delivery affect the verification or support window?",
+          "answer": "No. The verification work, the deliverable format, the fourteen-day support window, and the money-back guarantee on the underlying service are unchanged when Rush is attached. The only difference is scheduling — the file lands sooner. We do not abbreviate verification to hit a rush schedule, and we do not shorten the support window to compensate for a faster delivery; both ends of the engagement stay the same shape, only the start-to-delivery clock is compressed."
+        }
+      ]
     },
     {
       "id": 6,
@@ -119,7 +302,46 @@
       "is_addon": true,
       "requires_service": null,
       "accepted_file_types": [],
-      "sort_order": 6
+      "sort_order": 6,
+      "longDescription": [
+        "Every conversion order in this NexFortis QuickBooks Portal includes two follow-up support tickets within fourteen days of delivery, scoped to the specific order. That is enough for the vast majority of files — most clients use one ticket for a quick question and never raise a second one. Extended Support is the upgrade for the minority of engagements where two tickets and fourteen days are clearly not enough: a complex Premier rollout across multiple users, a transition that overlaps an external accountant review, a file that lands at quarter-end, anything where the questions keep coming for thirty days, not two weeks.",
+        "The upgrade does three concrete things. It lifts your ticket allotment from two to five over the support window, it lifts the response SLA from our normal one-to-two-hour business-hour target to a guaranteed one-hour priority SLA, and it broadens the scope from 'questions about your specific order' to 'questions about your QuickBooks Desktop file in general' for the duration of the window. That last point is the one most firms tell us they value: the same engineer who ran your conversion is on the line for unrelated Premier or Pro questions for thirty days, not just questions about the conversion itself.",
+        "Pricing is $25.00 CAD at the launch rate (regular $49.00 CAD) and the support window is thirty days from the date of delivery on the underlying conversion or remediation order. Tickets are filed through the Portal so there is a single audit trail and a single timestamp on response time, which keeps the SLA promise honest. Unused tickets do not roll over after the window — if you only use one ticket in thirty days, the remaining four expire — but unused tickets also do not result in a partial refund, because the value of the service is the priority SLA and the broader scope, not the ticket count alone.",
+        "The five-ticket count is sized against real usage data from the practices we work with regularly. Two tickets is the median spend; five tickets covers the ninety-fifth percentile. If your ticket usage routinely runs above that we typically suggest a different posture entirely — usually retainer-style engineering rather than per-conversion support — and the pre-purchase chat in the Portal will surface that recommendation if your account history shows it. Extended Support is for clients whose support need is meaningfully bigger than the included two tickets but still bounded by a single conversion engagement.",
+        "Extended Support is the only add-on you can attach to an order after delivery, as long as the underlying conversion's fourteen-day window has not already closed. That makes it useful as an after-the-fact upgrade when a client realizes mid-week that their question list is going to outgrow the included support — the Portal lets you upgrade in place and the SLA promise applies to every ticket from the upgrade timestamp forward. It does not retroactively re-time tickets already filed under the included two-ticket allotment, but those tickets continue to count toward your five."
+      ],
+      "featureSections": [
+        {
+          "heading": "What changes versus included support",
+          "body": "Included support gives you two tickets within fourteen days, scoped to questions about the specific conversion or remediation order, with a one-to-two-hour business-hour response target. Extended Support raises the count to five tickets, lengthens the window to thirty days from delivery, broadens the scope to questions about your QuickBooks Desktop file in general (not just the order itself), and tightens the response SLA to a written one-hour priority target during posted business hours. Same engineers, same Portal ticket interface, same single audit trail — only the dials are different."
+        },
+        {
+          "heading": "How the one-hour SLA is measured",
+          "body": "The SLA clock starts when your ticket is filed in the Portal during posted business hours. We respond within one hour with either an answer to the question or a clear next step (a follow-up question, a request for a screenshot, a scheduled callback). Tickets filed outside business hours start the clock at the next opening and keep their priority placement for that morning. If we miss the SLA on a ticket for a reason on our side, that ticket is credited back to your remaining allotment automatically — you do not have to file a separate ticket to claim the credit, because the SLA is auditable from timestamps."
+        },
+        {
+          "heading": "When Extended Support is the wrong fit",
+          "body": "Skip Extended Support if your ticket usage on past orders has been zero or one, because the included two-ticket allotment already covers that pattern with margin. Skip it also if your support need is structurally larger than five tickets a month — that is not an Extended Support shape, it is a retainer engineering shape, and the pre-purchase chat in this Portal will recommend the right posture if your history shows it. The upgrade is sized for the middle of the curve, not the long tail; honest sizing is what keeps the SLA promise sustainable."
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Can I add Extended Support after my conversion has been delivered?",
+          "answer": "Yes — Extended Support is the only add-on you can attach after delivery, as long as the underlying conversion's fourteen-day support window has not already closed. The Portal upgrade flow keeps the same engineer on the case, applies the priority SLA from the upgrade timestamp forward, and counts any tickets already filed under your included two-ticket allotment toward the new five-ticket total. Tickets filed before the upgrade do not retroactively get the priority SLA, but they continue to live in the same ticket interface."
+        },
+        {
+          "question": "Do unused tickets roll over after the thirty-day window?",
+          "answer": "No. Tickets are tied to the specific support window on the underlying order — they do not roll over to a future engagement, and they do not convert into a credit. The value of Extended Support is the priority SLA and the broader scope, not the ticket count alone, which is why we size the count against real usage data instead of selling tickets as a commodity. If you find yourself routinely under-using the upgrade, the right answer is the included support, not a discounted Extended Support tier."
+        },
+        {
+          "question": "What does broader scope mean in practice during the support window?",
+          "answer": "Included support is scoped to questions about the specific order — for example, why a particular customer balance reconciles a certain way after the conversion. Extended Support broadens that scope to questions about your QuickBooks Desktop file in general for the duration of the window: how to set up a memorized transaction, how to reconfigure sales tax, how to investigate an item-list bloat issue, anything that does not require us to actually edit your file. Hands-on file edits are still ordered as their own services in the Portal."
+        },
+        {
+          "question": "Is Extended Support a substitute for a retainer engagement?",
+          "answer": "No, and we will say so out loud during pre-purchase chat if your account history suggests retainer usage. Extended Support is sized for engagements where the support need is meaningfully bigger than two tickets but still bounded by a single conversion or remediation order. If your firm runs five-plus QuickBooks Desktop tickets a month on an ongoing basis, that is a retainer shape, and we will scope it directly rather than letting you stack Extended Support on every order. Honest sizing is what keeps the SLA promise sustainable for everyone."
+        }
+      ]
     },
     {
       "id": 7,
@@ -136,10 +358,47 @@
       "badge": "available",
       "is_addon": false,
       "requires_service": null,
-      "accepted_file_types": [
-        ".qbm"
+      "accepted_file_types": [".qbm"],
+      "sort_order": 7,
+      "longDescription": [
+        "QuickBooks Desktop never deletes an audit-trail row. Every edit, void, delete, re-date, and reclassification a user has made in the file's lifetime is still sitting in the audit table, and on a file that has been in active use for ten or fifteen years, the audit trail can easily dominate file size — sometimes by a multiple over the actual transaction data underneath. The Audit Trail Removal service in the NexFortis catalog opens that table, drops it, and rebuilds the indexes so the file reopens fast, runs the Verify utility quickly, and stops dragging on every search the staff runs day-to-day.",
+        "The deliverable is a same-day rebuild of your file with the audit trail removed and every other data structure preserved exactly. We do not condense any transactions, we do not merge or delete any list entries, we do not touch your reconciliation history, and we do not modify a single posted dollar. The only thing the file loses is the long tail of administrative edit history that QuickBooks accumulated invisibly behind the scenes. Most clients see a fifty-to-eighty percent reduction in file size on first delivery, with proportionate gains on backup time, Verify time, and routine search responsiveness.",
+        "Removing the audit trail does not affect transaction-level audit information that lives on the transactions themselves — bill payments still show their originating bills, journal entries still carry their full history, customer balances still tie to invoices and payments, and bank reconciliations still show the cleared status on every line. What disappears is the meta-history: the record that user A edited line three of invoice 12345 at 14:32 on June 8, 2017. If your practice retains that history outside QuickBooks (most do, in audit-software exports or PDF year-end backups), there is no operational loss.",
+        "Pricing is $50.00 CAD at the launch rate (regular $99.00 CAD) and the turnaround target is same-business-day during posted hours. The service runs on a copy of your file inside our isolated Canadian processing environment; the deliverable is a working .qbm restored on your machine through the standard File → Open or Restore Company → Restore a portable file flow. You receive a verification PDF documenting before-and-after file size, before-and-after Verify time, and a confirmation that no transaction-level data has been altered. Files are deleted from our processing host seven days after delivery.",
+        "We recommend pairing this service with the CRA Period Copy add-on for any practice that ever has to respond to a CRA audit window, because the period copy bakes a frozen, date-range slice of the pre-removal file as evidence — see the Audit Trail + CRA Period Copy Bundle for the discounted combo. If your file's bloat is driven mostly by transaction history rather than audit trail, the right service is Super Condense; if the driver is bloated names lists, the right service is List Reduction. The File Health Check service is the cheapest way to find out which driver is dominating yours."
       ],
-      "sort_order": 7
+      "featureSections": [
+        {
+          "heading": "What stays and what goes during removal",
+          "body": "Audit Trail Removal drops the meta-history table — the record of who edited which line of which transaction at which timestamp — and rebuilds the file's indexes so reopening is fast. Everything else stays untouched: every posted transaction, every customer and vendor balance, every bill payment linkage, every reconciliation status, every memorized transaction, every payroll item, every custom field. We do not remove a single name from any list, we do not collapse any historical period into a journal entry, and we do not adjust any account balance. The deliverable is the same file at the same balance, just smaller and faster."
+        },
+        {
+          "heading": "Expected size and speed gains",
+          "body": "On files that have been in active use for ten years or more, the audit-trail table routinely accounts for fifty to eighty percent of file size, so removal yields a proportionate reduction. Backup times shrink in line with the new size, the Verify Data utility runs proportionally faster, and routine searches across customers, vendors, items, and historical transactions feel materially snappier. Files that were brushing the practical Premier ceiling typically drop a full tier and stop triggering the soft warnings QuickBooks raises when files cross size thresholds, which is a quality-of-life upgrade for everyone using the file day-to-day."
+        },
+        {
+          "heading": "When this is the wrong service",
+          "body": "Audit Trail Removal is the right answer when the audit-trail table is the dominant size driver in your file. It is the wrong answer when the driver is transaction history (the right service there is Super Condense), bloated names lists (List Reduction), or multi-currency overhead (Multi-Currency Removal). The File Health Check service in this Portal explicitly identifies the dominant driver and recommends the corresponding remediation, so any time you are uncertain which service to buy, the Health Check at $25.00 CAD is the cheapest way to make sure the next $50.00 CAD goes against the actual problem."
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Will my reviewing accountant see the audit trail as missing?",
+          "answer": "Reviewers see the audit trail as removed, not missing — the file documents the removal date and the engineer who performed it, and the verification PDF that ships with delivery records the before-and-after file size and the integrity result. If your reviewing accountant requires the historical audit trail for a specific period, the recommended approach is to pair this service with the CRA Period Copy in a single bundle, which bakes a frozen pre-removal slice as evidence. Most reviewers accept the documented removal once the integrity result is presented."
+        },
+        {
+          "question": "Does the removal affect bank reconciliations or payroll history?",
+          "answer": "No. Bank-reconciliation status on every reconciled account is preserved exactly, including which lines were cleared, which were uncleared, and the historical reconciliation summary on each account. Payroll history stays intact — every paycheque, every tax deposit, every year-to-date amount on every employee — because that data lives on the transactions themselves rather than in the audit-trail meta-table. The verification PDF specifically calls out reconciliation status and payroll integrity as separate confirmation items so reviewers see them named, not implied."
+        },
+        {
+          "question": "Is the service reversible after delivery?",
+          "answer": "The audit-trail removal itself is not reversible — once the meta-history table is dropped, the per-edit history is gone for good. However, we retain your original uploaded .qbm on the processing host for seven days after delivery for exactly this scenario, and you can request the original back at any time during that window if you change your mind. After seven days the upload is permanently deleted along with all working copies, so the practical reversibility window matches the file-retention policy on this Portal."
+        },
+        {
+          "question": "How much smaller will my file actually be after removal?",
+          "answer": "It depends on your file's age and how heavily users have edited transactions over its lifetime. Files less than three years old and minimally edited typically lose ten to twenty percent of file size, which is rarely worth the order on its own. Files in active use for ten years or more — the typical buyer of this service — routinely lose fifty to eighty percent of file size. The File Health Check service in this Portal can predict your specific reduction in advance, which is useful for setting expectations before placing the remediation order."
+        }
+      ]
     },
     {
       "id": 8,
@@ -156,10 +415,47 @@
       "badge": "available",
       "is_addon": false,
       "requires_service": null,
-      "accepted_file_types": [
-        ".qbm"
+      "accepted_file_types": [".qbm"],
+      "sort_order": 8,
+      "longDescription": [
+        "QuickBooks Desktop ships a built-in Condense Data utility, but it is famously conservative about what it will actually condense and aggressive about what it will silently break. Inventory items quietly get reset, payroll history trips it up, multi-currency transactions stop it cold, and on large files the wall-clock time often runs longer than rebuilding the file by hand would. Super Condense is the QuickBooks Data Services replacement for that utility — a same-day rebuild that collapses pre-cutoff transaction history into per-period journal entries while preserving every list entry and every account balance to the cent.",
+        "The mechanic is straightforward in concept and exacting in execution. You pick a cutoff date — usually the start of a recent fiscal year — and we collapse every posted transaction before that date into a single opening journal entry per ledger account, keyed back to a 'Pre-Cutoff Opening' control account so the audit trail of the collapse is itself documented inside the file. Every transaction on or after the cutoff date stays untouched and fully drillable. The trial balance on the cutoff date matches the source file dollar-for-dollar; we verify that as a non-negotiable gate before the file leaves our environment.",
+        "Lists survive the condense intact. Customers, vendors, items, accounts, classes, locations, employees, terms, payment methods, custom fields, memorized transactions, and memorized reports all carry across exactly. The condense touches transaction tables, not list tables, which is the structural difference between Super Condense and Intuit's built-in utility — Intuit's tool will sometimes drop names that have no post-cutoff activity, while ours never does because dropping a name is a List Reduction decision, not a Super Condense decision, and they are intentionally separate services in this catalog.",
+        "Pricing is $50.00 CAD at the launch rate (regular $99.00 CAD), GST or HST added at checkout, and the turnaround target is same-business-day during posted hours. The service runs on a copy of your file in our isolated Canadian processing environment; the deliverable is a working .qbm plus a verification PDF documenting before-and-after file size, before-and-after transaction count, the chosen cutoff date, and the trial-balance match at cutoff. We retain your original .qbm on the processing host for seven days post-delivery, then permanently delete it along with all working copies.",
+        "Super Condense is the right service when transaction history is the dominant size driver in your file — large practices with a decade or more of detailed posting history, multi-entity setups that have been running on a single file for too long, file sizes that are starting to approach the practical Premier or Pro ceiling. If the dominant driver is the audit trail rather than transactions, the right service is Audit Trail Removal; if the driver is bloated names lists, it is List Reduction. The File Health Check identifies the dominant driver in advance for $25.00 CAD, which is consistently the cheapest way to put the next remediation dollar against the right target."
       ],
-      "sort_order": 8
+      "featureSections": [
+        {
+          "heading": "What gets condensed and what does not",
+          "body": "Super Condense collapses every posted transaction dated before your chosen cutoff into a single per-account opening journal entry that ties back to a documented 'Pre-Cutoff Opening' control account. Transactions on or after the cutoff stay untouched and fully drillable — invoices, bills, payments, journal entries, sales receipts, payroll runs, the lot. List tables are out of scope: customers, vendors, items, accounts, classes, locations, employees, and every other list survive the condense exactly. The structural rule is that the service only touches transactions, never lists, which is why it never silently drops a name."
+        },
+        {
+          "heading": "Verification and the trial-balance match",
+          "body": "Every Super Condense delivery is gated by a hard trial-balance match: the trial balance on the cutoff date in the condensed file equals the trial balance on the cutoff date in the source file dollar-for-dollar, on every account, and the verification PDF documents that match line by line. We also confirm A/R and A/P agings as of cutoff, sales-tax liability as of cutoff, payroll-liability accuracy as of cutoff, and bank-reconciliation status on every reconciled account. If any of those checks fail the file does not leave our environment — we fix the gap or refund the order, never a partial delivery."
+        },
+        {
+          "heading": "Why this exists separately from the built-in Condense Data",
+          "body": "Intuit's built-in Condense Data utility is intentionally conservative about which files it will condense and known to behave oddly on multi-currency, advanced inventory, and payroll-heavy files. It also can take longer to run on a large file than rebuilding the file by hand would, with no progress visibility while it runs. Super Condense replaces that utility for the firms whose files actually hit the limits — same-day delivery, predictable wall-clock time, deterministic verification, and a clear refund posture if anything fails the integrity gate. Different shape, different target audience."
+        }
+      ],
+      "faqs": [
+        {
+          "question": "How do I pick the right cutoff date for the condense?",
+          "answer": "Most clients pick the start of the most recent closed fiscal year, which keeps the entire current year fully drillable while collapsing the long tail of older history into the opening journals. If your business deals with regulated retention windows we recommend picking a cutoff at least one full year past the retention requirement so the open period covers any reasonable audit ask. The pre-purchase chat in the Portal will walk through your specific situation if you are not sure — this is the single decision that most affects the post-condense feel of the file."
+        },
+        {
+          "question": "Will historical reports still work for periods before the cutoff?",
+          "answer": "Reports that summarize at the period level — monthly P&Ls, quarterly trial balances, annual balance sheets — continue to work correctly for periods before the cutoff because the opening journal entries roll up to the same totals. Reports that drill into individual pre-cutoff transactions no longer work because the underlying transactions have been replaced by the opening journals. If your practice needs ongoing transaction-level access to pre-cutoff data, the recommended pairing is the CRA Period Copy service, which bakes a separate frozen file at the source detail."
+        },
+        {
+          "question": "Does Super Condense work on multi-currency or payroll-heavy files?",
+          "answer": "Yes — those are the file shapes Intuit's built-in Condense Data tool is most fragile against, and a major reason this service exists separately. Multi-currency transactions are condensed in their original posting currency with the per-account opening journals reflecting the home-currency balance at cutoff. Payroll runs and tax deposits are collapsed at the per-account level, with year-to-date amounts on each employee preserved as of cutoff. The verification PDF specifically lists multi-currency and payroll integrity as separate gating items so reviewers see them named."
+        },
+        {
+          "question": "How does Super Condense compare to Audit Trail Removal?",
+          "answer": "They target different bloat sources. Super Condense reduces file size by collapsing transaction history before a chosen cutoff date — the right service when transaction count is the dominant driver. Audit Trail Removal reduces file size by dropping the meta-history table that records every per-edit timestamp — the right service when the audit trail itself is the dominant driver. Many large practices benefit from both, run in sequence; the File Health Check service tells you which one to run first based on actual numbers from your specific file rather than on rules of thumb."
+        }
+      ]
     },
     {
       "id": 9,
@@ -176,10 +472,47 @@
       "badge": "available",
       "is_addon": false,
       "requires_service": null,
-      "accepted_file_types": [
-        ".qbm"
+      "accepted_file_types": [".qbm"],
+      "sort_order": 9,
+      "longDescription": [
+        "QuickBooks list pages get slow when the underlying tables grow past a few thousand entries — Premier and Pro start to feel sluggish on routine drop-down picks, search results return more candidates than the user can reasonably scan, and accidental name creation becomes the path of least resistance because finding the right existing name takes longer than typing a new one. List Reduction is the same-day cleanup service that brings your customers, vendors, items, and accounts back to a list size where the drop-downs are usable again, without losing a single posted transaction or a single dollar of historical activity.",
+        "The work has two halves. The first half is duplicate detection — we find the obvious cases (same legal name with different punctuation, same vendor with and without 'Inc.', same customer entered twice with different mailing addresses, same item with a typo in the SKU) and the less obvious ones (an item created in 2014 that is functionally identical to an item created in 2019, two customer records that differ only by the salesperson who entered them). The second half is the merge itself, which moves every transaction off the duplicate onto the survivor, deactivates the duplicate, and writes a structured CSV log of the entire move so the audit trail of the cleanup is reviewable.",
+        "Inactive-name pruning runs on a separate, configurable rule. By default we deactivate any name with no transaction activity in the last three years and no balance — a conservative threshold that catches the long tail without ever deactivating a name a reviewer might want to see. The rule is configurable up or down before processing starts, and any name that does not match the rule remains active and untouched. We never delete names outright because the audit-trail consequences are larger than deactivation; deactivation hides them from drop-downs without losing the historical record.",
+        "Pricing is $40.00 CAD at the launch rate (regular $79.00 CAD), GST or HST added at checkout, and the turnaround target is same-business-day during posted hours. The service runs on a copy of your file in our isolated Canadian processing environment; the deliverable is a working .qbm plus a verification PDF documenting before-and-after list counts on every list, the merge log in CSV form, and the trial-balance match — list reduction never affects account balances, but the verification still includes the balance match as a non-negotiable gate before the file leaves our environment.",
+        "List Reduction is the right service when bloated names lists are the dominant performance driver in your file — typically firms in their second decade of QuickBooks use, multi-location retailers with thousands of items, B2B operations with thousands of customers turned over once or twice. If the dominant driver is the audit trail or transaction history instead, the right services are Audit Trail Removal and Super Condense respectively. The File Health Check service explicitly identifies which driver dominates yours, which we recommend running before any of the three remediation services if there is any doubt — the diagnostic price is small enough to never regret."
       ],
-      "sort_order": 9
+      "featureSections": [
+        {
+          "heading": "What we merge and how the audit log works",
+          "body": "Each merge moves every transaction off the duplicate name onto the survivor, deactivates the duplicate, and writes a single line to a structured CSV log capturing the duplicate, the survivor, the count of transactions moved, and the timestamp of the merge. The CSV ships alongside the .qbm so the cleanup is fully auditable. We never delete a duplicate outright — deactivation hides it from drop-downs without losing the historical record, which is the right posture for reviewers who may need to see the original name months later. Survivors are picked by activity volume and recency, with ties broken in favour of the legal-format name."
+        },
+        {
+          "heading": "How inactive-name pruning is scoped",
+          "body": "Inactive pruning runs on a configurable rule, which defaults to 'no transaction activity in the last three years and no current balance.' That threshold catches the long tail of customers and vendors who have not been touched in a decade without ever deactivating a name a reviewer might want to see. The rule is adjustable up to five years or down to two before processing starts; pre-purchase chat in the Portal walks through the right setting for your industry. Names that fail the rule are deactivated, never deleted, so the historical record stays intact and reactivation is a single click on your end."
+        },
+        {
+          "heading": "Lists in scope and lists out of scope",
+          "body": "List Reduction covers customers, vendors, items, accounts, employees, classes, and locations — the high-volume operational lists. It does not cover terms, payment methods, customer types, vendor types, or other configuration lists, because those are typically small enough to clean by hand and the merge consequences are different. The verification PDF reports before-and-after counts on every list in scope, so the deliverable is auditable line by line. If you need cleanup on the configuration lists, that is best handled inside QuickBooks directly with our Extended Support upgrade attached for the support-ticket coverage."
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Will any historical transactions be deleted during list reduction?",
+          "answer": "No. The service is structurally incapable of deleting a transaction — every merge moves transactions from the duplicate to the survivor, and inactive-name pruning only deactivates names with no transaction activity matching the configured rule. The verification PDF gates delivery on a trial-balance match against the source file even though list reduction does not touch balances by design, specifically because we want the deliverable to document explicitly that no posting was changed. If a balance ever drifted during processing the file would not leave our environment."
+        },
+        {
+          "question": "How are duplicate-name candidates actually identified?",
+          "answer": "We run a deterministic similarity rule across each list — exact match after punctuation normalization, case folding, and whitespace collapse, plus a configurable fuzzy match for transposed characters and obvious typos. Every candidate is paired with the suggested survivor and the merge is run only after the structured CSV log captures the pairing. Names that look similar but represent different real-world entities (two different 'John Smith' customers in different cities, for example) are kept separate by default; pre-processing chat reviews any ambiguous cases your file flags."
+        },
+        {
+          "question": "Can I exclude specific names from the cleanup before processing?",
+          "answer": "Yes — pre-processing chat in the Portal lets you flag any names that should be excluded from both merging and inactive pruning regardless of activity history. Common exclusions include placeholder customers used for cash sales, vendor records used for one-time payments, and item records that are intentionally retained for historical reporting even though they have no recent activity. The exclusion list is recorded in the verification PDF so the deliverable documents not just what was changed but what was deliberately left alone, which reviewers appreciate."
+        },
+        {
+          "question": "Does the cleanup affect inventory quantities or reorder points?",
+          "answer": "No. Item-level merges keep the survivor's quantity-on-hand, average cost, and reorder configuration, and add the duplicate's posted transactions to the survivor's history without changing any quantities. The verification PDF reports per-item quantity-on-hand against the source file as a separate gating item, so any drift would block delivery. If your reorder points need adjustment after the cleanup we recommend doing that inside QuickBooks once the new list shape is in front of you, since the right reorder level depends on the new aggregated history."
+        }
+      ]
     },
     {
       "id": 10,
@@ -196,10 +529,47 @@
       "badge": "available",
       "is_addon": false,
       "requires_service": null,
-      "accepted_file_types": [
-        ".qbm"
+      "accepted_file_types": [".qbm"],
+      "sort_order": 10,
+      "longDescription": [
+        "Intuit treats multi-currency in QuickBooks Desktop as a one-way switch: once a user clicks Enable Multi-Currency in the preferences, the option to disable it disappears from the interface and Intuit's documentation simply notes that the change is permanent. That is a reasonable engineering posture for a feature that touches every transaction table — but it is also a problem for the substantial number of files where multi-currency was turned on by accident, by a previous bookkeeper, or by a former owner who used to invoice in USD and no longer does. Multi-Currency Removal is the QuickBooks Data Services answer for those files.",
+        "The service rebuilds your company file with multi-currency disabled at the engine level while preserving every historical transaction in its original posting currency. Foreign-currency transactions stay readable in their source amount, the home-currency conversion stays at the original posted rate, and the trial balance in your home currency matches the source file dollar-for-dollar at every period close. What disappears is the active multi-currency apparatus — the foreign-currency drop-downs in transaction forms, the per-name preferred currency, the daily exchange-rate refresh, and every other piece of UI that exists only to support new foreign-currency posting going forward.",
+        "Multi-currency removal is materially more involved than the other QuickBooks Data Services entries in this Portal, which is reflected in both the price and the one-to-two-business-day turnaround. The diagnostic phase enumerates every foreign-currency transaction in your file, every multi-currency-tagged name on every list, and every preference and report definition that references multi-currency, and produces a structured plan for the rebuild. Processing then runs through the plan deterministically, with a checkpoint at the end of each major stage so any unexpected condition triggers a pause-and-confirm rather than a silent best-guess.",
+        "Pricing is $75.00 CAD at the launch rate (regular $149.00 CAD), GST or HST added at checkout. The service runs in our isolated Canadian processing environment and the deliverable is a working .qbm plus a written audit document mapping every non-trivial transformation back to the source — same shape as the audit document in the Complex Enterprise conversion service, because the level of forensic detail is comparable. We retain your original .qbm on the processing host for seven days post-delivery, then permanently delete it along with all working copies and the working audit document.",
+        "Use this service when multi-currency was enabled and the practice no longer needs the apparatus — most commonly an inadvertent enablement, a one-time foreign customer that has since gone away, or a business sale that retired the foreign-currency line. Use it also as a precondition to a downgrade to Pro, which has weaker multi-currency support than Premier, or to a clean QBO migration where multi-currency would otherwise need to be re-architected on the destination side. If you are not sure whether your file even has multi-currency enabled, the File Health Check identifies it in writing for $25.00 CAD."
       ],
-      "sort_order": 10
+      "featureSections": [
+        {
+          "heading": "What is preserved and what is removed",
+          "body": "Every historical transaction is preserved in its original posting currency at its original posted exchange rate, with the home-currency conversion intact. What is removed is the active multi-currency apparatus going forward: the foreign-currency drop-down on new transaction forms, the per-name preferred currency, the daily exchange-rate refresh, the multi-currency-only reports, and the preference flag itself. The trial balance in your home currency matches the source file dollar-for-dollar at every period close. The audit document delivered with the .qbm maps each non-trivial transformation back to the source so the deliverable is fully reviewable."
+        },
+        {
+          "heading": "Why this requires one to two business days",
+          "body": "The other entries in QuickBooks Data Services target a single dimension of the file (audit trail, transaction history, list bloat) and run as deterministic same-day pipelines. Multi-currency touches every transaction table, every name list, every preference, every report definition, and the audit-trail meta-table simultaneously, which is why the work cannot fit a same-day clock honestly. The diagnostic phase alone takes longer than a typical Audit Trail Removal job from start to finish, and the rebuild has hard checkpoints between stages so any unexpected condition pauses for confirmation rather than guessing forward."
+        },
+        {
+          "heading": "Pairing this service with a conversion or migration",
+          "body": "Multi-currency removal is a common precondition to a conversion to Pro (which has weaker multi-currency handling than Premier) and to a clean QBO migration (where multi-currency on QBO is structurally different from Desktop and rebuilding on the destination side is materially more painful). If you are buying both, ordering Multi-Currency Removal first and the conversion or migration second is almost always the right sequence. The pre-purchase chat in this Portal will scope the right combined order if your engagement spans both services so you avoid running the file through two separate audit cycles unnecessarily."
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Will my historical foreign-currency invoices still be readable after removal?",
+          "answer": "Yes. Every historical foreign-currency transaction stays in its original posting currency at its original posted exchange rate, with the home-currency conversion intact. The transaction form still shows the foreign amount and the historical rate. What changes is forward-looking: new transactions created after the rebuild are home-currency only, and the foreign-currency drop-down is no longer in the interface. The audit document records the boundary date so reviewers can immediately distinguish historical multi-currency activity from post-removal activity without having to dig through transaction-level metadata."
+        },
+        {
+          "question": "How does this differ from changing the home currency?",
+          "answer": "Changing the home currency is a different operation entirely — it converts every historical transaction at a chosen exchange rate into a new home currency, which is a destructive operation we generally do not recommend on a production file. Multi-Currency Removal preserves the existing home currency and every historical posted amount; it only removes the multi-currency apparatus going forward. If you actually need a different home currency, that is a custom engagement scoped through pre-purchase chat in the Portal, not a Multi-Currency Removal job. The two services solve different problems."
+        },
+        {
+          "question": "Is the rebuild reversible if we change our mind later?",
+          "answer": "The rebuild itself is not reversible at the file level — once multi-currency is disabled in the rebuilt file, re-enabling would put us right back in Intuit's one-way switch territory, only on the new file. However, we retain your original uploaded .qbm on the processing host for seven days after delivery, exactly so a change of heart in the first week falls within a reversibility window. After seven days the upload is permanently deleted. If you anticipate any chance you might want multi-currency back, hold off until that question is settled before placing the order."
+        },
+        {
+          "question": "Can I have the audit document handed directly to my reviewing accountant?",
+          "answer": "Yes — the audit document is written specifically for that handoff. It is structured by file area (preferences, name lists, transaction tables, reports, audit trail), enumerates every non-trivial transformation with a reference to the source state and the post-removal state, and ends with the full set of verification gates the rebuild passed before delivery (trial-balance match, A/R and A/P agings match, sales-tax rollforward match, payroll integrity). Reviewers we have worked with consistently treat the audit document as sufficient evidence without requiring additional ad-hoc explanation calls."
+        }
+      ]
     },
     {
       "id": 11,
@@ -217,10 +587,47 @@
       "badge": "available",
       "is_addon": false,
       "requires_service": null,
-      "accepted_file_types": [
-        ".qbm"
+      "accepted_file_types": [".qbm"],
+      "sort_order": 11,
+      "longDescription": [
+        "QuickBooks Online and QuickBooks Desktop look similar from a distance and behave very differently up close. Intuit's own Desktop-to-QBO export tool will accept almost any source file, but it silently drops or simplifies a long list of features along the way: classes get flattened into a single dimension, recurring transactions are partially mapped, custom fields are reduced, advanced inventory disappears, payroll history transitions imperfectly, and reconciliation history typically does not move at all. The QBO Readiness Report is a same-day diagnostic that names every one of those landmines for your specific file before you commit to the migration.",
+        "We run the diagnostic against a copy of your .qbm in our isolated Canadian processing environment and produce a written report covering twelve categories: chart-of-accounts compatibility, list sizes against QBO's own ceilings (which are different from Desktop's), classes and locations versus QBO's tagging model, recurring transactions, advanced inventory, multi-currency posture, payroll history portability, attachment storage, custom fields, sales-tax configuration, bank-reconciliation history, and integration apps that bind to Desktop-only APIs. Each category gets a verdict (clean migration, simplified migration, manual rebuild required) plus a concrete remediation step.",
+        "The deliverable is the report, not a guarantee about what Intuit's tool will do. We are reading the source file and applying the publicly documented Intuit migration rules plus our own field experience from the Canadian practices we work with regularly. The report tells you which preferences and structures need to change in Desktop before migration to maximize fidelity, which need to be re-built in QBO after migration, and which are simply not worth carrying across at all. That up-front decision-making is the difference between a migration that lands smoothly and one that surfaces surprises three months in.",
+        "Pricing is $25.00 CAD at the launch rate (regular $49.00 CAD) and the turnaround target is same-business-day during posted hours. The diagnostic does not modify your file in any way — it runs read-only against a copy and the working copy is destroyed when the report is finalized. Your original .qbm is retained for seven days in case you decide to follow up with one of our pre-migration remediation services (Multi-Currency Removal, List Reduction, Audit Trail Removal, Super Condense), then is permanently deleted along with all working artifacts on the processing host.",
+        "We strongly recommend ordering the QBO Readiness Report before placing any irreversible decision around a Desktop-to-QBO migration. Twenty-five dollars buys the answer to the single most important question of any migration: 'what will my file actually look like once it lands.' If the report concludes that your file would migrate cleanly, the remediation cost goes to zero and you proceed with confidence. If it surfaces concrete issues, the report names the specific remediation services in this Portal that address them, with launch prices quoted in Canadian dollars so the total cost is visible up front."
       ],
-      "sort_order": 11
+      "featureSections": [
+        {
+          "heading": "What the readiness report covers",
+          "body": "The report covers twelve categories: chart-of-accounts compatibility against QBO conventions, list sizes against QBO's own ceilings, classes and locations versus QBO's tagging model, recurring transactions, advanced inventory, multi-currency posture, payroll history portability, attachment storage, custom fields, sales-tax configuration, bank-reconciliation history, and Desktop-only integration apps. Each category receives a verdict — clean migration, simplified migration, or manual rebuild required — plus a concrete remediation step quoted against the relevant service in this Portal. The structure is reusable, so a second readiness report after remediation produces a like-for-like comparison."
+        },
+        {
+          "heading": "What the report does not promise",
+          "body": "We do not run Intuit's actual Desktop-to-QBO migration during the readiness diagnostic and we do not guarantee what Intuit's tool will do on any specific file. The report applies the publicly documented migration rules and our own field experience from Canadian practices to predict the outcome of the migration with high confidence; it is not a substitute for actually running the migration. The intent is to surface every meaningful landmine before you commit, so that the actual migration is uneventful — which is the opposite of running the migration first and discovering surprises three months in."
+        },
+        {
+          "heading": "Why this is read-only and same-day",
+          "body": "The diagnostic does not modify your file in any way. We open a copy in our isolated Canadian processing environment, run the inspection passes, write the report, and discard the working copy. No tables are touched on the source, no transactions are re-keyed, no preferences are changed. That is what makes the same-business-day turnaround an honest target — we are not rebuilding anything, we are reading. If the report surfaces issues that need rebuilding, those rebuilds are separate paid services in this Portal and the report tells you which one fits each specific finding."
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Should I run remediation services before or after the readiness report?",
+          "answer": "Run the readiness report first. The report tells you which remediation services to buy and which ones not to bother with, which is consistently the cheapest way to allocate the next dollar. Buying remediation services blind, on the assumption that they are obviously needed, is how practices end up with a clean Multi-Currency Removal followed by a discovery that the actual migration blocker was advanced inventory all along. Twenty-five dollars to know which order to spend in is a small price relative to the cost of the wrong order."
+        },
+        {
+          "question": "Does the report cover Canadian sales-tax configuration specifically?",
+          "answer": "Yes. Sales-tax configuration is one of the twelve report categories, and it is the category where Canadian practices most often hit avoidable QBO migration friction because the Desktop sales-tax structure does not map perfectly onto QBO's tax-rate model. The report enumerates every active sales-tax code and item in your Desktop file, predicts the post-migration mapping, and flags any code that would need to be rebuilt manually in QBO. We test the predictions against current QBO releases for Canadian users specifically, not the U.S. defaults that most external guidance assumes."
+        },
+        {
+          "question": "How does the report handle Desktop-only integration apps?",
+          "answer": "The report enumerates every integration that has touched your Desktop file via the QuickBooks SDK or Web Connector and categorizes each by its QBO-side availability — same vendor with a QBO build, different vendor required, no QBO equivalent yet. For integrations with no QBO build, the report records what data the integration was writing to the file so you can either pause that workflow during migration or rebuild it on a different platform afterward. The category is one of the most overlooked migration risks and a major reason the report exists."
+        },
+        {
+          "question": "Will the report tell me whether QBO is actually the right move?",
+          "answer": "The report is scoped to migration readiness on your specific file, not to the broader strategic question of whether QBO is the right platform for your business. That said, the report's findings often inform the strategic question — a file that scores well on readiness migrates cleanly and the strategic decision becomes easier; a file that scores poorly may be better served by staying on Desktop or by a more substantial pre-migration rebuild. Pre-purchase chat in the Portal can scope a strategic review separately if you want a stand-alone recommendation."
+        }
+      ]
     },
     {
       "id": 12,
@@ -237,10 +644,47 @@
       "badge": "available",
       "is_addon": false,
       "requires_service": null,
-      "accepted_file_types": [
-        ".qbm"
+      "accepted_file_types": [".qbm"],
+      "sort_order": 12,
+      "longDescription": [
+        "Canada Revenue Agency audit windows have a specific shape: a defined date range, a reasonable expectation of detailed transaction-level support, and a strong preference for a focused file rather than a full company database with sensitive forward-looking data inside it. CRA Period Copy is the QuickBooks Data Services entry that produces exactly that file: a frozen, auditable slice of your books containing every transaction inside the requested date range, exactly as posted, with no later edits and no out-of-period transactions, ready to hand to a CRA auditor or your reviewing accountant.",
+        "The output is not a condensed file or a summarized journal — every in-range transaction appears at full posting detail, including the original entry timestamp, the posting user, the audit-trail status as of the period close, and any attachment that was attached at the time. Out-of-range transactions are removed cleanly along with any forward-looking data the CRA scope does not require. List entries that were active during the period are preserved; list entries created entirely outside the range are removed unless they appear in the audit trail of an in-range transaction, in which case they remain visible.",
+        "The service is the most common pairing in this Portal with the Audit Trail Removal service, which is why we offer the Audit Trail + CRA Period Copy Bundle at a meaningful discount over buying the two separately. The bundle order produces both deliverables — the trimmed period copy for the CRA window and the post-removal main file for the practice's continuing day-to-day use — in a single round trip, with both files cross-verified so the audit trail of the bundling itself is documented. Most practices order the bundle rather than the individual services for that reason.",
+        "Pricing for the standalone CRA Period Copy is $50.00 CAD at the launch rate (regular $99.00 CAD), GST or HST added at checkout, and the turnaround target is same-business-day during posted hours. The service runs on a copy of your file inside our isolated Canadian processing environment; the deliverable is a working .qbm scoped to the requested date range plus a verification PDF that documents the period boundary, the trial-balance match at period start and period end, and the in-period transaction count. Files are encrypted in transit and deleted from our processing host seven days after delivery.",
+        "The verification PDF is structured for direct handoff to a CRA auditor or reviewing accountant. It enumerates the period boundary unambiguously (start date, end date, posting cutoff timestamp), records the trial-balance match against the source file at both endpoints, lists the in-period transaction counts by category, and confirms that no later edits have been applied to in-period transactions. Reviewers we have worked with consistently treat the PDF plus the .qbm as a self-contained audit response without requiring additional ad-hoc support, which is the entire point of producing a frozen period copy in the first place."
       ],
-      "sort_order": 12
+      "featureSections": [
+        {
+          "heading": "How the period boundary is constructed",
+          "body": "The boundary is defined by a start date and an end date plus an optional posting-cutoff timestamp, which is what we use to handle late-posted entries that hit the period after the fact. Every transaction with a transaction date inside the range is preserved at full detail; every transaction outside the range is removed. The trial balance at the start of the period and at the end of the period both match the source file dollar-for-dollar. The audit-trail status as of the period close is preserved on every in-period transaction so the reviewing party sees the same drill-down behaviour the source file would have shown at that moment in time."
+        },
+        {
+          "heading": "What is preserved and what is removed",
+          "body": "In-period transactions are preserved at full posting detail, including the original entry timestamp, the posting user, the audit-trail status, and any attachment that was attached at the time. List entries active during the period are preserved; list entries created entirely outside the range are removed unless they appear in the audit trail of an in-period transaction. Out-of-period transactions, recurring schedules whose first instance falls outside the range, and any preference changes recorded outside the range are removed cleanly. The result is a focused file with no forward-looking data, which is the posture CRA auditors prefer."
+        },
+        {
+          "heading": "Why this pairs with Audit Trail Removal",
+          "body": "Most practices that order Audit Trail Removal also need a CRA-ready slice of the pre-removal file as evidence of the historical state, because the audit-trail removal is irreversible. Producing the period copy first, before removal, captures that evidence cleanly. The Audit Trail + CRA Period Copy Bundle in this Portal handles the sequencing automatically and produces both files in a single round trip at a discount over buying them separately, with both files cross-verified so the audit trail of the bundling itself is documented in the verification PDF that ships with the bundle."
+        }
+      ],
+      "faqs": [
+        {
+          "question": "How does CRA Period Copy differ from Super Condense?",
+          "answer": "Super Condense reduces file size by collapsing pre-cutoff transaction history into per-account opening journals, leaving the post-cutoff period at full transaction detail. The result is one ongoing file that is smaller and faster. CRA Period Copy keeps in-range transactions at full posting detail and removes everything outside the range, producing a frozen file with no forward-looking content. The two services are not interchangeable — Super Condense is a remediation for an active operating file, and Period Copy is an evidence file for a closed audit window. Many practices use both at different times."
+        },
+        {
+          "question": "Can the period copy include attachments and receipts?",
+          "answer": "Yes. Every attachment that was attached to an in-period transaction at the time of posting is preserved with the transaction in the period copy. Attachments that were added to the source file outside the period are not carried across because they are out of scope by definition. The verification PDF reports the in-period attachment count alongside the in-period transaction count so the deliverable is auditable on attachments specifically — this matters for CRA audits that hinge on receipt evidence and for reviewing accountants who want to see attachment integrity confirmed in writing."
+        },
+        {
+          "question": "What date format should I use when ordering the period copy?",
+          "answer": "Use ISO 8601 date format (YYYY-MM-DD) for both the start date and the end date when placing the order in the Portal. The order form will accept a few other formats but ISO is the unambiguous standard and avoids any month-day-year versus day-month-year confusion. The verification PDF echoes the period boundary back in ISO format so there is no ambiguity in the deliverable either. If your CRA request specifies a particular fiscal-year convention we will default to that convention; just note it in the order details before submitting."
+        },
+        {
+          "question": "Is the period copy the same as making a backup of the file?",
+          "answer": "No. A standard QuickBooks backup contains the entire company file at a moment in time — every transaction, every list, every preference, every forward-looking item. A CRA Period Copy is a date-range-isolated derivative of the source file with everything outside the period cleanly removed and the trial balance verified at both endpoints. Reviewers we have worked with consistently prefer the period copy over a full backup for audit responses because it scopes the surface area to exactly the period under review without the noise and the privacy concerns of forward-looking data."
+        }
+      ]
     },
     {
       "id": 13,
@@ -257,10 +701,47 @@
       "badge": "available",
       "is_addon": false,
       "requires_service": null,
-      "accepted_file_types": [
-        ".qbm"
+      "accepted_file_types": [".qbm"],
+      "sort_order": 13,
+      "longDescription": [
+        "Audit Trail Removal and CRA Period Copy are the two most-frequently-paired QuickBooks Data Services in this NexFortis QuickBooks Portal, and they are paired for a structural reason: every practice that orders an audit-trail removal needs a frozen, audit-ready slice of the pre-removal file as evidence of the historical state, because the removal itself is irreversible. The Audit Trail + CRA Period Copy Bundle exists to make that pairing the default rather than an after-the-fact realization, with the two services run in the correct sequence and cross-verified in a single delivery.",
+        "The bundle starts by producing the CRA Period Copy from your uploaded source file, against the start and end dates you supply at order time. That deliverable is set aside, then the Audit Trail Removal service runs against the same source file, producing a smaller, faster main company file for your practice's continuing day-to-day use. Both files are cross-verified — the trial balance at period close matches across both files dollar-for-dollar, list parity is confirmed where it should be confirmed, and any deviation between the two outputs is documented in the bundle's verification PDF rather than smoothed over silently.",
+        "Pricing on the bundle is $75.00 CAD at the launch rate (regular $149.00 CAD), which is a meaningful discount against the sum of the two standalone services ($50.00 + $50.00 = $100.00 at launch, $99.00 + $99.00 = $198.00 at regular). The discount reflects the shared diagnostic and verification overhead of running both services in a single round trip, not a quality compromise — the two deliverables are the same files you would receive if you bought the services separately, simply ordered in the correct sequence and verified together. GST or HST is added at checkout.",
+        "Turnaround is same-business-day during posted hours, which is the same target as the standalone Audit Trail Removal service. The bundle does not run the period copy and the removal in series end-to-end; the diagnostic phases overlap, and the verification gates run against both deliverables in parallel, so the wall-clock time you see in the Portal does not double when you order the bundle instead of the standalone removal. If your engagement needs a tighter clock than same-day, the Rush Delivery add-on attaches to the bundle the same way it does to any other order in this catalog.",
+        "Use this bundle whenever a CRA audit window is open or anticipated and you also want to take the opportunity to remove the audit trail from the operating file. It is also the right shape when a business sale or partner buy-in is in progress and the buyer's accountant wants a frozen period file as part of due diligence — the period copy serves that need cleanly while the post-removal main file becomes the smaller, faster operating file your practice continues using day-to-day. The pre-purchase chat in the Portal will scope the right boundary dates if your engagement is unusual."
       ],
-      "sort_order": 13
+      "featureSections": [
+        {
+          "heading": "Why the period copy runs first in the sequence",
+          "body": "Audit Trail Removal is irreversible — once the meta-history table is dropped, the per-edit history is gone for good. Producing the CRA Period Copy first, against the still-intact source file, captures the historical audit-trail state cleanly inside the period boundary so the period copy carries that evidence forward. Running the order in the opposite sequence would mean the period copy reflects the post-removal state, which is materially less useful for an actual CRA audit response. The bundle locks the sequence in so order-time mistakes that would otherwise be irrecoverable become impossible to make."
+        },
+        {
+          "heading": "What the cross-verification step adds",
+          "body": "Each standalone service has its own verification PDF documenting the trial-balance match against the source. The bundle adds a cross-verification step that confirms the period copy's end-of-period trial balance matches the post-removal file's opening trial balance at the same date, dollar-for-dollar, on every account. That match is the structural integrity gate of the bundle: if it ever failed, neither file would leave our environment, because a mismatch would mean one of the two services produced a deviation. The cross-verification PDF documents the match line by line for direct reviewer handoff."
+        },
+        {
+          "heading": "Pricing math against the standalone services",
+          "body": "Standalone Audit Trail Removal is $50.00 CAD at the launch rate ($99.00 CAD regular). Standalone CRA Period Copy is $50.00 CAD at the launch rate ($99.00 CAD regular). Bundle launch is $75.00 CAD against a regular price of $149.00 CAD, which is a meaningful discount over either combination of standalones. The discount reflects shared diagnostic and verification overhead, not a quality compromise — the deliverables are identical to the two standalones with the additional cross-verification step on top, ordered in the correct sequence to preserve the historical audit-trail evidence inside the period boundary."
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Can I buy this bundle without an open CRA audit?",
+          "answer": "Yes — most practices order the bundle proactively rather than reactively, often during a year-end close or a fiscal-year transition when both deliverables make sense at the same moment. The period copy serves as a frozen historical reference even outside an active audit, and the post-removal main file becomes the smaller, faster operating file your practice continues using day-to-day. Pre-purchase chat in the Portal will scope the right period boundary dates if your engagement is proactive rather than triggered by a specific CRA letter."
+        },
+        {
+          "question": "Does the bundle support custom period boundaries beyond fiscal years?",
+          "answer": "Yes. The period boundary is defined by a start date and an end date plus an optional posting-cutoff timestamp, and there is no constraint that the boundary align to a fiscal year. Common non-fiscal boundaries include a partner-buy-in event date, a sale-of-business closing date, a multi-month CRA audit window that spans two fiscal years, and a retroactive period requested by an external accountant. The verification PDF echoes the boundary back in ISO format unambiguously so the deliverable matches the request exactly."
+        },
+        {
+          "question": "Is the cross-verification PDF separate from the per-service verifications?",
+          "answer": "The bundle delivers three documents: the period-copy verification PDF, the audit-trail-removal verification PDF, and the bundle cross-verification PDF that confirms the two outputs reconcile against each other. All three travel together in your Portal download alongside the two .qbm files. Reviewers we have worked with consistently treat the cross-verification PDF as the high-confidence document of the engagement because it answers the integrity question that the two standalone PDFs cannot answer on their own — that the two deliverables are consistent."
+        },
+        {
+          "question": "Can I attach Rush Delivery to the bundle?",
+          "answer": "Yes. The Rush Delivery add-on attaches to the bundle the same way it does to any other order in this Portal, moving the bundle to the head of the standard processing queue ahead of every non-rush ticket. The cross-verification step is still run in full — Rush only changes scheduling, not the verification work or the deliverable shape — so the rush bundle ships with all three verification documents on the faster clock. If your timing is tighter than rush would deliver, pre-purchase chat can scope a custom escalation directly."
+        }
+      ]
     },
     {
       "id": 14,
@@ -277,12 +758,47 @@
       "badge": "available",
       "is_addon": false,
       "requires_service": null,
-      "accepted_file_types": [
-        ".zip",
-        ".myo",
-        ".myox"
+      "accepted_file_types": [".zip", ".myo", ".myox"],
+      "sort_order": 14,
+      "longDescription": [
+        "AccountEdge and MYOB users in Canada have a growing problem: vendor support has narrowed, the Canadian payroll integration is no longer first-class, and the platform's gravity has shifted toward QuickBooks Desktop and Online for any practice that needs a current, well-maintained accounting platform with active third-party integrations. The AccountEdge/MYOB to QuickBooks Desktop migration in this catalog is the structured rebuild that gets your live data — chart of accounts, customers, vendors, items, employees, transaction history — out of the legacy file and into a working Premier or Pro file ready for day-one operations.",
+        "The migration accepts the source as a .zip export from AccountEdge, a .myo file from older MYOB releases, or a .myox file from current MYOB releases. Every accepted format is parsed against the same internal canonical representation, so the destination QuickBooks file is structurally identical regardless of which source format you started from. That matters when a practice has files from multiple AccountEdge or MYOB releases — the resulting QuickBooks files line up cleanly against each other and reporting at the practice level becomes consistent without a separate normalization pass.",
+        "What moves: the entire chart of accounts, every customer with addresses and balances, every vendor with terms and balances, every item with cost and price information, every employee with year-to-date payroll figures as of the migration cutoff, every posted transaction in detail through the migration boundary, sales tax codes, payment methods, and class structures where the destination edition supports them. What stays out: AccountEdge-specific or MYOB-specific UI customizations that have no QuickBooks counterpart, custom report definitions written against the source platform's report writer, and any third-party integration tied to the source platform's APIs.",
+        "Pricing is $125.00 CAD at the launch rate (regular $249.00 CAD), GST or HST added at checkout, and the turnaround target is one to two business days end-to-end. The work runs in our isolated Canadian processing environment and the deliverable is a working QuickBooks Desktop .qbm plus a written audit document that maps every non-trivial transformation back to the source — same forensic shape as the audit document that ships with the Complex Enterprise conversion and the Multi-Currency Removal service. We retain your source upload for seven days post-delivery and then permanently delete it.",
+        "The thirty-minute review call that ships with this service is where most practices land their AccountEdge or MYOB-specific questions. The call covers the per-decision audit document on your file, the verification numbers from our standard checklist, and any follow-up points your reviewing accountant raises in the days after delivery. Most engagements only need one call. Inside the fourteen-day support window, additional questions are handled through the Portal at no extra charge — we do not run a per-minute meter on platform migrations any more than we do on Complex Enterprise conversions, and the support posture is intentionally identical."
       ],
-      "sort_order": 14
+      "featureSections": [
+        {
+          "heading": "Source formats accepted and why",
+          "body": "We accept three source formats: a .zip export from AccountEdge, a .myo file from older MYOB releases (typically pre-2020), and a .myox file from current MYOB releases. Each format is parsed against the same internal canonical representation and the resulting QuickBooks Desktop file is structurally identical regardless of which source format you started from. That equivalence matters when a practice has files from multiple eras — the resulting QuickBooks files line up cleanly against each other and reporting at the practice level becomes consistent without a separate normalization pass after the migration is done."
+        },
+        {
+          "heading": "What the audit document records",
+          "body": "The audit document maps every non-trivial transformation between the source platform and the QuickBooks destination, organized by file area: chart of accounts mapping, customer and vendor list reconciliation, item structure conversion, payroll year-to-date carryforward, sales-tax code translation, class and location handling, custom-field disposition, and any AccountEdge or MYOB feature with no QuickBooks counterpart. The document is structured so a reviewing accountant can read it linearly and walk away with a complete picture of every decision the migration made. Reviewers we have worked with consistently treat the document as sufficient evidence."
+        },
+        {
+          "heading": "Why one to two business days, not same day",
+          "body": "Platform migrations are categorically more involved than even the Complex Enterprise conversion in this Portal because the source and destination data models are not just different versions of the same product — they are different products with different conventions for accounts, items, payroll, and sales tax. The diagnostic phase is longer, the canonical-representation pass is real engineering work, and the verification step has to confirm correctness across two structurally different schemas. One to two business days is an honest target; we do not compress it artificially to look better next to single-day services that target a much narrower scope."
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Will my historical reports still match after the migration?",
+          "answer": "Period-level historical reports — monthly P&Ls, quarterly trial balances, annual balance sheets — match the source platform's reports dollar-for-dollar at every period close as a hard verification gate. Detail-level reports against AccountEdge or MYOB-native reporting features may not have a direct QuickBooks counterpart and need to be rebuilt in QuickBooks's report writer. The audit document calls those out individually so you know which reports need a rebuild before the migration concludes. Most practices find the rebuild is straightforward once the underlying data has landed cleanly in the destination."
+        },
+        {
+          "question": "How is payroll history carried across?",
+          "answer": "Every active employee comes across with year-to-date payroll figures as of the migration cutoff date, mapped onto QuickBooks Desktop's payroll item structure for Canadian payroll. Historical payroll runs prior to the cutoff are summarized rather than reposted at full per-paycheque detail, which is the standard practice for cross-platform migrations and avoids re-running source-deductions calculations against a different platform's tax engine. The audit document records the cutoff date and the summarization approach so the deliverable is auditable on payroll specifically."
+        },
+        {
+          "question": "What if my AccountEdge or MYOB file uses features QuickBooks does not have?",
+          "answer": "Some AccountEdge and MYOB features have no first-party QuickBooks counterpart — particular custom report types, certain UI-level customizations, specific job-tracking shapes that overlap with QuickBooks's class and location model rather than living in their own dedicated structure. The audit document calls every one of those out, with a recommended QuickBooks-native pattern that captures the same operational intent. We do not silently invent half-mapped equivalents during processing; if a feature has no clean destination, the document names it as such and recommends the closest native pattern."
+        },
+        {
+          "question": "Can I migrate to QuickBooks Online instead of Desktop?",
+          "answer": "This service targets QuickBooks Desktop (Premier or Pro) as the destination. If your end goal is QuickBooks Online, the recommended path is to migrate to Desktop first using this service, then run the QBO Readiness Report on the resulting file, then execute Intuit's Desktop-to-QBO migration with any pre-migration remediation the readiness report recommends. The two-step approach yields cleaner data than going directly cross-platform to QBO because the canonicalization step is done in a structured environment rather than during Intuit's QBO import, which has different behaviour."
+        }
+      ]
     },
     {
       "id": 15,
@@ -299,12 +815,47 @@
       "badge": "available",
       "is_addon": false,
       "requires_service": null,
-      "accepted_file_types": [
-        ".cab",
-        ".zip",
-        ".sai"
+      "accepted_file_types": [".cab", ".zip", ".sai"],
+      "sort_order": 15,
+      "longDescription": [
+        "Sage 50 in Canada — formerly Simply Accounting, and still called Simply by a substantial number of long-tenured Canadian bookkeepers — has been the default small-business accounting platform for a generation, and over the last few years a noticeable number of those practices have decided to consolidate onto QuickBooks Desktop instead. The reasons vary by practice (third-party integration coverage, multi-user posture on Windows, modern bank-feed connectors, the practice's own future hires), but the migration shape is consistent enough that the QuickBooks Portal carries it as a dedicated service with its own audit posture and turnaround target.",
+        "We accept three Sage 50 source formats: a .cab cabinet file (the modern Sage 50 backup format), a .zip archive (used by older Simply Accounting releases and some Sage 50 export workflows), and a .sai standalone file (occasionally produced by export tools that operate against a live Sage 50 database). All three formats are parsed against the same internal canonical representation, so the resulting QuickBooks Desktop file is structurally identical regardless of which Sage 50 era the source belongs to. That equivalence matters for practices migrating multiple files from multiple Sage 50 versions.",
+        "Sage 50's data model differs from QuickBooks's in several specific areas that our migration handles deliberately: Sage 50's account-segment structure (accounts segmented by department or division) maps to QuickBooks's class structure rather than to additional account-list entries, Sage 50's project-tracking apparatus maps to QuickBooks's job structure on the customer rather than a parallel project entity, and Sage 50's GIFI codes are preserved as a custom field on accounts rather than dropped, because Canadian practices use them for T2 corporate tax filings and they are non-trivial to recreate manually after the fact.",
+        "Pricing is $125.00 CAD at the launch rate (regular $249.00 CAD), GST or HST added at checkout, and the turnaround target is one to two business days end-to-end — same shape as the AccountEdge/MYOB migration in this Portal, because the engineering involvement is comparable. The work runs inside our isolated Canadian processing environment and the deliverable is a working QuickBooks Desktop .qbm plus a written audit document mapping every non-trivial transformation back to the Sage 50 source. We retain your source upload for seven days post-delivery and then permanently delete it.",
+        "If your Sage 50 file uses a database password or a multi-user setup with per-user permissions, please include the password and a list of active user accounts in the Portal order notes — we cannot read the file without the password, and the migration treats the active user list as the basis for the QuickBooks user setup if you ask us to recreate user accounts on the destination. The audit document records the user-mapping decision so it is auditable. Same thirty-minute review call as the AccountEdge migration, same fourteen-day support window with no per-minute meter, same money-back guarantee posture across the catalog."
       ],
-      "sort_order": 15
+      "featureSections": [
+        {
+          "heading": "Sage 50 source formats accepted",
+          "body": "We accept three Sage 50 source formats: a .cab cabinet file (the modern Sage 50 backup format produced by the platform's own backup workflow), a .zip archive (used by older Simply Accounting releases and some Sage 50 export tools), and a .sai standalone file (occasionally produced by third-party export utilities that operate directly against a live Sage 50 database). Each format is parsed against the same internal canonical representation and the resulting QuickBooks Desktop file is structurally identical, which matters when a practice has files from multiple Sage 50 versions and needs reporting consistency across the whole portfolio."
+        },
+        {
+          "heading": "How Sage 50 specifics translate to QuickBooks",
+          "body": "Sage 50's account-segment structure maps to QuickBooks's class structure rather than to additional account-list entries, which is the right structural fit and avoids inflating the chart of accounts unnecessarily. Sage 50's project-tracking apparatus maps to QuickBooks's job structure on the customer record. GIFI codes on accounts are preserved as a QuickBooks custom field on the account because Canadian practices use them for T2 corporate tax filings and they are non-trivial to recreate manually. Each translation choice is documented in the audit document line by line so reviewing accountants see the reasoning."
+        },
+        {
+          "heading": "Database passwords and user accounts",
+          "body": "If your Sage 50 file is password-protected, include the database password in the Portal order notes — we cannot parse a protected file without it, and the order will pause on intake otherwise. Multi-user Sage 50 setups carry a list of active users with per-user permissions; if you want us to recreate the user list on the destination QuickBooks file, include the list in the order notes too. The audit document records both decisions. Passwords supplied via Portal order notes are encrypted at rest, accessible only to the engineer running your conversion, and discarded along with the working files seven days after delivery."
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Are GIFI codes preserved during the migration?",
+          "answer": "Yes. GIFI codes on accounts are preserved as a QuickBooks custom field on the account record specifically because Canadian practices use them for T2 corporate tax filings and they are time-consuming to recreate manually after the fact. The audit document records the GIFI mapping line by line so the deliverable is auditable on tax codes specifically. If your tax software pulls GIFI codes through a custom-field lookup, the QuickBooks destination structure works with that lookup once the tax software is pointed at the new field, which is a five-minute configuration on the tax-software side."
+        },
+        {
+          "question": "Will Sage 50 project tracking work the same way in QuickBooks?",
+          "answer": "Sage 50's project-tracking apparatus maps to QuickBooks's job structure on the customer record, which captures the same operational intent — tracking revenue and cost against a defined project — but uses a different navigation pattern in the QuickBooks interface. Project-level reporting is rebuilt against QuickBooks's job-based reports, which work natively without custom report definitions. The audit document calls out project mapping as a named section so reviewing accountants see the structural decision in writing rather than having to reverse-engineer it from the deliverable file later."
+        },
+        {
+          "question": "How is multi-user Sage 50 handled in the destination file?",
+          "answer": "Multi-user setups in Sage 50 carry a list of active users with per-user permissions. If you supply the user list in the Portal order notes, we recreate the user accounts on the destination QuickBooks file with the closest QuickBooks-native permission set per user. If you do not supply the list, the destination file ships with a single Admin user and you set up additional users yourself inside QuickBooks afterward. Either path is valid; most practices prefer to set up users themselves so passwords are never transmitted off-site, which is also the safer default."
+        },
+        {
+          "question": "How do I produce the right Sage 50 backup before uploading?",
+          "answer": "Inside Sage 50, run File → Backup, choose a folder, and let Sage 50 produce a .cab file with a date-stamped name. That .cab is the modern format and the one we recommend by default. If your release of Sage 50 produces a .zip archive instead, that is also accepted. If you need to use a third-party export tool to produce a .sai file, please confirm in the Portal order notes which tool produced the file so we know which canonical-representation parser path to apply. Pre-purchase chat in the Portal walks through the right backup workflow for your specific Sage 50 version."
+        }
+      ]
     },
     {
       "id": 19,
@@ -324,7 +875,46 @@
       "requires_service": null,
       "accepted_file_types": [],
       "sort_order": 19,
-      "pack_size": 5
+      "pack_size": 5,
+      "longDescription": [
+        "Accounting practices and bookkeeping firms tend to run their Enterprise-to-Premier conversions in clusters rather than one at a time. A single new client engagement might bring in three files at once; a year-end retainer might involve converting five client files inside a six-week window; an acquisition might require converting the acquiring firm's entire portfolio in one sprint. Buying five standalone conversions through the Portal works fine for that pattern, but the per-credit pricing shape we offer on the 5-Pack matches the practice's actual cash flow better and removes a meaningful amount of friction from the order rhythm.",
+        "Each credit in the pack redeems for one Enterprise → Premier/Pro Standard conversion, the same service id 1 you would otherwise order on its own — same engineers, same verification PDF, same two-ticket support window per redemption, same money-back guarantee. Credits are issued to your Portal account the moment the order completes (no waiting period, no separate provisioning step) and remain valid for twelve months from the purchase date. Inside that window you can redeem the credits one at a time as files arrive, or in a single batch if it suits the engagement, with no per-redemption admin overhead.",
+        "The per-credit math at the launch rate works out to $65.00 CAD per conversion on the 5-Pack ($325.00 CAD ÷ 5), against $75.00 CAD per standalone Standard conversion at the same launch promotion. The regular-price math is $129.80 CAD per credit on the 5-Pack ($649.00 CAD ÷ 5), against $149.00 CAD per standalone. The savings reflect the operational simplicity of provisioning credits in advance, not a reduction in service quality — every redeemed credit produces a full Standard conversion with the full audit document and verification gate, identical to a standalone purchase in every respect.",
+        "Volume packs are scoped to the Standard conversion only because that is the file shape practices buy in clusters. If a redemption surfaces a Complex file shape on intake (advanced inventory, multi-currency enabled, oversized lists, or non-default custom fields), the order pauses and we offer an upgrade path to the Complex tier with a transparent dollar adjustment — you do not lose the credit, you do not lose the file, and you decide whether to upgrade or to redirect that credit to a different file. Most practices appreciate the explicit pause-and-confirm, because silent auto-upgrades on a clustered engagement are a billing-surprise pattern we deliberately avoid.",
+        "The 5-Pack is the right shape for a practice with four to seven anticipated conversions inside a twelve-month window. Below four, the savings against five standalones are real but modest, and the unused-credit risk is meaningful. Above seven, the 10-Pack gives you a better per-credit rate plus the bundled Guaranteed 30-Minute turnaround on every redemption, which is enough of a structural difference to justify a separate volume tier. Pre-purchase chat in the Portal will recommend the right pack size against your forecast — we would rather sell the right pack than the most expensive one."
+      ],
+      "featureSections": [
+        {
+          "heading": "How credit redemption works",
+          "body": "Credits are issued to your Portal account immediately on order completion and remain valid for twelve months from the purchase date. Each credit redeems for one Standard Enterprise → Premier/Pro conversion (service id 1) — same engineers, same verification PDF, same two-ticket support window per redemption, same money-back guarantee. Redemption is a single click on a new conversion order against the credited account. Credits do not require advance scheduling and are not tied to specific client engagements at issuance, so you can route them across whichever client files arrive inside the validity window without administrative overhead."
+        },
+        {
+          "heading": "Per-credit math at launch and regular pricing",
+          "body": "Launch-rate math: the 5-Pack at $325.00 CAD divides to $65.00 CAD per credit, against $75.00 CAD per standalone Standard conversion at the same launch promotion. Regular-rate math: the 5-Pack at $649.00 CAD divides to $129.80 CAD per credit, against $149.00 CAD per standalone. The per-credit savings reflect operational simplicity of provisioning in advance, not a reduction in service quality — every redeemed credit produces a complete Standard conversion identical to a standalone purchase in every respect, with the same audit document and verification gate written for every delivery."
+        },
+        {
+          "heading": "Complex-file handling on a redemption",
+          "body": "Volume packs are scoped to the Standard conversion only. If a redemption uploads a file that surfaces a Complex shape on intake — advanced inventory, multi-currency, oversized lists, non-default custom fields — the order pauses and we offer an upgrade path to the Complex tier with a transparent dollar adjustment. You do not lose the credit if you decline the upgrade; the credit is returned to your account and you redirect it to a different Standard-shaped file. We never silently auto-upgrade a credit redemption to a higher tier because surprise billing on a clustered engagement is the worst experience we can provide."
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Are 5-Pack credits transferable between client engagements?",
+          "answer": "Yes. Credits live on your Portal account, not on a specific client engagement, so you can redeem them across whichever client files arrive inside the twelve-month validity window. Practices commonly route credits across multiple client files inside a single fiscal year and across multiple fiscal years if the validity window straddles two. The audit document on each redemption records the client identifier we ran against, so the practice's internal billing system can attribute credit usage to the right client engagement after the fact without ambiguity in the trail."
+        },
+        {
+          "question": "What happens to unused credits after twelve months?",
+          "answer": "Unused credits expire at the end of the twelve-month validity window from the purchase date. Pre-expiry, the Portal sends reminder emails at sixty, thirty, and seven days remaining so the expiration is never a surprise. If your firm's conversion volume is lighter than the pack size implies on the buying side, the right answer is a smaller engagement or standalones rather than rolling over expired credits — the per-credit savings are sized against actual usage, and stretching the window artificially would erode the operational simplicity that makes the pack pricing sustainable in the first place."
+        },
+        {
+          "question": "Can I redeem 5-Pack credits for the Guaranteed 30-Minute service?",
+          "answer": "No. The 5-Pack is scoped to the Standard Enterprise → Premier/Pro conversion only because that is the file shape practices buy in clusters. The Guaranteed 30-Minute Conversion has its own dedicated processing lane with sized engineering capacity, and bundling it into a volume pack would either misprice the lane or compromise the time guarantee. If your practice routinely needs the thirty-minute service, the 10-Pack includes the bundled Guaranteed 30-Minute turnaround on every redemption — which is the structural difference that justifies a separate volume tier."
+        },
+        {
+          "question": "Do redemptions count separately for the support and money-back guarantee?",
+          "answer": "Yes. Each redeemed credit produces a complete Standard conversion that ships with its own two-ticket support window inside fourteen days and its own money-back guarantee — exactly the same posture as a standalone purchase. Redemptions do not pool into a single shared support window or a single guarantee scope, because pooling would change the support shape against the practice's actual usage patterns. The Extended Support add-on attaches to individual redemptions the same way it attaches to standalone Standard orders."
+        }
+      ]
     },
     {
       "id": 20,
@@ -344,7 +934,46 @@
       "requires_service": null,
       "accepted_file_types": [],
       "sort_order": 20,
-      "pack_size": 10
+      "pack_size": 10,
+      "longDescription": [
+        "Accounting firms with a steady book of Enterprise-using clients run conversions as a year-round workflow rather than a clustered project. Ten files in a calendar year is a realistic floor for a mid-sized Canadian practice with even a modest QuickBooks-Desktop-using client base, especially during the years following a Premier or Pro release that tightens compatibility against older Enterprise file formats. The 10-Pack Conversions bundle is sized for that ongoing rhythm, with the lowest per-credit rate in the catalog and a structural feature that the 5-Pack does not include: the Guaranteed 30-Minute Conversion turnaround on every redemption.",
+        "Each credit in the 10-Pack redeems for one Enterprise → Premier/Pro Standard conversion run on the dedicated thirty-minute processing lane, not the standard queue. That difference is more than a scheduling preference — it is a structural change in how the redemptions land. Same engineers, same verification PDF, same two-ticket support window, same money-back guarantee, but every redemption ships within thirty minutes of upload completion during posted business hours. The thirty-minute promise is the same one written into the standalone Guaranteed 30-Minute Conversion service in this catalog, on every credit you redeem from the pack.",
+        "The per-credit math at the launch rate works out to $60.00 CAD per conversion on the 10-Pack ($600.00 CAD ÷ 10), against $65.00 CAD per credit on the 5-Pack and $125.00 CAD for a standalone Guaranteed 30-Minute order at the launch promotion. The regular-price math is $119.90 CAD per credit on the 10-Pack ($1,199.00 CAD ÷ 10), against $129.80 CAD per credit on the 5-Pack. The savings reflect both the operational simplicity of provisioning credits in advance and the predictability of running a steady-state thirty-minute lane against a known forward-volume commitment, which is materially easier to staff than spot demand.",
+        "Volume-pack credits are scoped to the Standard conversion only, exactly as the 5-Pack is. If a redemption surfaces a Complex file shape on intake (advanced inventory, multi-currency enabled, oversized lists, non-default custom fields), the order pauses and we offer an explicit upgrade path with a transparent dollar adjustment. You do not lose the credit if you decline; we return it to your Portal account and you redirect to a different file. Silent auto-upgrades on a clustered engagement remain something we deliberately avoid, because surprise billing inside a steady-state retainer is the worst experience we can provide.",
+        "The 10-Pack is the right shape for a practice with eight or more anticipated conversions inside a twelve-month window, especially when at least some of those conversions sit on a meaningful external deadline. The bundled thirty-minute lane converts a per-pack saving against the 5-Pack into a per-engagement velocity advantage that pays for itself the first time a partner-review meeting hangs on getting a file ready in the next forty-five minutes. Below eight conversions, the 5-Pack is a better fit; above twelve or so, pre-purchase chat in the Portal scopes a custom retainer arrangement directly."
+      ],
+      "featureSections": [
+        {
+          "heading": "What the bundled thirty-minute lane changes",
+          "body": "Every credit in the 10-Pack redeems on the dedicated Guaranteed 30-Minute processing lane rather than the standard queue. Same engineers, same verification PDF, same two-ticket support window per redemption, same money-back guarantee — every redemption simply ships within thirty minutes of upload completion during posted business hours. The thirty-minute promise on each credit is the same written guarantee that ships with the standalone Guaranteed 30-Minute Conversion service. If we miss it on a credit redemption for a reason on our side, that credit is refunded as a separate line item and the converted file remains yours."
+        },
+        {
+          "heading": "Per-credit math at launch and regular pricing",
+          "body": "Launch-rate math: the 10-Pack at $600.00 CAD divides to $60.00 CAD per credit, against $65.00 CAD per credit on the 5-Pack and $125.00 CAD for a standalone Guaranteed 30-Minute Conversion at the same launch promotion. Regular-rate math: the 10-Pack at $1,199.00 CAD divides to $119.90 CAD per credit, against $129.80 CAD per credit on the 5-Pack. The savings reflect the predictability of running a steady-state thirty-minute lane against a known forward-volume commitment, which is materially easier to capacity-plan than spot demand at the same posture."
+        },
+        {
+          "heading": "When the 10-Pack is the wrong call",
+          "body": "Skip the 10-Pack if your forecast volume is below eight conversions inside the twelve-month validity window — at that volume, the 5-Pack is a better fit even before accounting for the unused-credit risk on a larger pack. Skip it also if your conversion volume is structurally above twelve per year on an ongoing basis, because that is a retainer shape rather than a volume-pack shape, and the right posture is a custom arrangement scoped through pre-purchase chat in the Portal. Honest sizing is what keeps the bundled thirty-minute lane sustainable for everyone using the pack at the right scale."
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Does every 10-Pack credit really get the thirty-minute guarantee?",
+          "answer": "Yes — every credit in the 10-Pack redeems on the dedicated Guaranteed 30-Minute processing lane rather than the standard queue, with the same written guarantee that ships with the standalone Guaranteed 30-Minute Conversion service. The guarantee is on each individual credit, not on the pack as a whole, so missing the target on one redemption refunds that credit specifically without affecting the other nine. The structural difference between the 5-Pack and the 10-Pack is exactly this lane assignment, and it is the reason the 10-Pack is sized for steady-state firm usage."
+        },
+        {
+          "question": "How does the 10-Pack compare to a custom retainer arrangement?",
+          "answer": "The 10-Pack is the right tier for a forecast of eight to twelve conversions inside a twelve-month window. Above twelve per year on an ongoing basis, a custom retainer arrangement scoped through pre-purchase chat in the Portal is materially better — capacity is reserved, billing is monthly rather than upfront, and the engineer rotation can be assigned to your firm specifically for the retainer's duration. We will recommend the retainer over a 10-Pack during pre-purchase chat if your forecast supports it, because matching tier to forecast is what keeps the per-credit pricing honest at every scale."
+        },
+        {
+          "question": "Can 10-Pack credits be downgraded to standard-queue redemptions for cost savings?",
+          "answer": "No. The 10-Pack is structurally a thirty-minute-lane bundle, and credit redemption always runs on that lane — there is no in-Portal toggle to drop a redemption to the standard queue in exchange for a different cost. The lane assignment is what makes the per-credit pricing sustainable on the supply side. If your engagement does not need the thirty-minute lane on most files, the right tier is the 5-Pack at the standard-queue rate; the 10-Pack should be sized against actual thirty-minute-lane usage, not against trying to extract a discount on standard-queue work."
+        },
+        {
+          "question": "What happens if a redemption misses the thirty-minute target?",
+          "answer": "The miss-the-target rules on a credit redemption are the same as on a standalone Guaranteed 30-Minute Conversion order. If the converted file is not in your Portal download area within thirty minutes of upload completion during posted business hours, for any reason on our side, the credit specifically is refunded automatically as a separate line item and the converted file remains yours. The miss does not affect the other nine credits in the pack, does not extend any other credit's validity window, and does not require you to file a separate ticket — the SLA is auditable from timestamps."
+        }
+      ]
     }
   ]
 }
