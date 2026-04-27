@@ -22,8 +22,15 @@ export default function ServiceDetail() {
         const p = getProductBySlug(c, slug);
         if (p) {
           setProduct(p);
+          // Related Services excludes add-ons because add-ons get their own
+          // "Available Add-Ons" card on conversion-category pages — rendering
+          // them in both places caused the same teaser text to appear twice
+          // on a single page (and across the three non-add-on conversion
+          // pages), which Seobility flags as duplicate-paragraph content
+          // (audit PDF p.36-37). Filtering here keeps each cross-listing
+          // unique without losing any authored copy.
           const related = c.services
-            .filter((r) => r.category === p.category && r.id !== p.id)
+            .filter((r) => r.category === p.category && r.id !== p.id && !r.is_addon)
             .slice(0, 4);
           setRelatedProducts(related);
         }
@@ -329,7 +336,14 @@ export default function ServiceDetail() {
                         <div key={addon.id} className="flex items-center justify-between p-3 rounded-lg bg-muted">
                           <div>
                             <p className="font-medium text-sm">{addon.name}</p>
-                            <p className="text-xs text-muted-foreground">{teaser(addon.description, 100)}</p>
+                            {/* Short teaser (<=75 chars) keeps each Add-On row
+                                as navigation-shaped text rather than a body
+                                paragraph. Same Add-Ons card renders on every
+                                non-add-on conversion page, so anything 80+
+                                chars here would duplicate across those pages
+                                and trip the cross-page paragraph-uniqueness
+                                rule (audit PDF p.36-37, p.45-46). */}
+                            <p className="text-xs text-muted-foreground">{teaser(addon.description, 75)}</p>
                           </div>
                           <span className="font-semibold text-accent text-sm">{formatPriceCAD(getActivePrice(addon))}</span>
                         </div>
@@ -441,7 +455,13 @@ export default function ServiceDetail() {
                           {rp.name}
                         </Link>
                       </h3>
-                      <p className="text-xs text-muted-foreground mb-2 line-clamp-2">{teaser(rp.description, 100)}</p>
+                      {/* Same short-teaser logic as the Add-Ons card above:
+                          Related Services rows are navigation-shaped, not
+                          body copy, and rendering the same 100-char teaser
+                          for service B on every other service page in the
+                          same category would duplicate that string across
+                          pages (audit PDF p.36-37, p.45-46). */}
+                      <p className="text-xs text-muted-foreground mb-2 line-clamp-2">{teaser(rp.description, 75)}</p>
                       <div className="flex items-center justify-between">
                         <div>
                           {rp.billing_type === "subscription" ? (
