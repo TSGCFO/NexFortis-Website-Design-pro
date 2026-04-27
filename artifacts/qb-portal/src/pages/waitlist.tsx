@@ -105,32 +105,6 @@ export default function Waitlist() {
 
       <div className="brand-divider" />
 
-      <section className="py-10 bg-background border-b border-border">
-        <div className="max-w-2xl mx-auto px-4 space-y-4 text-muted-foreground leading-relaxed">
-          <p>
-            Our waitlist is a low-volume notification list for upcoming
-            QuickBooks services and tools we are still building out — for
-            example, additional platform migrations, regional support tiers,
-            and bundled compliance offerings that are not yet generally
-            available in the catalog.
-          </p>
-          <p>
-            When you sign up we record only your email address and the
-            specific product you are interested in. You will receive at most
-            one launch announcement per service, plus an early-access invite
-            if we run a private beta, and you can unsubscribe with a single
-            click from any message we send.
-          </p>
-          <p>
-            If you have an immediate need that cannot wait for a public
-            launch, browse the live catalog or contact our team directly —
-            many waitlisted scenarios (multi-currency removal, list
-            reduction, audit-trail bundles) can already be delivered as
-            one-off services through our standard intake process.
-          </p>
-        </div>
-      </section>
-
       <section className="py-16 section-brand-light">
         <div className="max-w-md mx-auto px-4">
           {submitted ? (
