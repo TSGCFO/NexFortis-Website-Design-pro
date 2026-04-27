@@ -15,6 +15,7 @@
     "test:seo:verifiers": "node --test 'scripts/seo-verification/*.test.mjs'",
     "test:seo:snapshots": "node --test 'tests/seo/snapshots.test.mjs'",
     "test:seo:invariants": "node --test 'tests/seo/invariants.test.mjs'",
+    "test:seo:audit:qb-privacy-bold": "node --test 'tests/seo/qb-privacy-bold.test.mjs'",
     "test:seo:components": "vitest run --config vitest.config.ts",
     "test:seo:update": "UPDATE_SNAPSHOTS=1 node --test 'tests/seo/snapshots.test.mjs'"
   },
@@ -25,6 +26,7 @@
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@vitejs/plugin-react": "catalog:",
+    "cheerio": "^1.2.0",
     "jsdom": "^29.0.2",
     "prettier": "^3.8.1",
     "react": "catalog:",
