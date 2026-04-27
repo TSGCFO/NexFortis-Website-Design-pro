@@ -69,6 +69,31 @@ export default function FAQ() {
 
       <div className="brand-divider" />
 
+      <section className="py-10 bg-background border-b border-border">
+        <div className="max-w-3xl mx-auto px-4 space-y-4 text-muted-foreground leading-relaxed">
+          <p>
+            This page collects the questions our team hears most often about
+            QuickBooks Enterprise to Premier or Pro conversion, our Canadian
+            tax-code handling, file-health add-ons, multi-platform migrations
+            from AccountEdge or Sage 50, and ongoing QB Expert Support plans.
+          </p>
+          <p>
+            Use the category filter below to narrow the list to a specific
+            topic — Conversion, Data Services, Migration, Support, Volume
+            Packs, or General — or browse the full set to get a sense of how
+            our pricing, turnaround time, and refund policy compare to
+            competitors such as Big Red Consulting and E-Tech.
+          </p>
+          <p>
+            If you do not see your question, email contact@nexfortis.com or
+            visit our contact page; a Canadian QuickBooks ProAdvisor on our
+            team typically replies within one to two business hours during
+            weekdays, and every paid order also includes two support tickets
+            within thirty days of file delivery at no extra cost.
+          </p>
+        </div>
+      </section>
+
       <section className="py-8 bg-background border-b border-border">
         <div className="max-w-3xl mx-auto px-4 flex flex-wrap gap-2 justify-center">
           <button
