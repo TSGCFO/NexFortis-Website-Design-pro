@@ -1,3 +1,24 @@
+// Long-form body-copy schema (added in audit PR-1, 2026-04-26).
+//
+// Each service in products.json may now carry up to five optional content
+// blocks that the service-detail template renders as separate cards. The
+// fields are intentionally optional so the template stays valid for
+// services that haven't been authored yet, and so future PRs (notably PR
+// #4 heading hierarchy) can extend coverage without breaking existing
+// data.
+export interface ProductFAQ {
+  question: string;
+  answer: string;
+}
+export interface ProductHowItWorksStep {
+  step: string;
+  body: string;
+}
+export interface ProductFeatureSection {
+  heading: string;
+  body: string;
+}
+
 export interface Product {
   id: number;
   slug: string;
@@ -28,6 +49,17 @@ export interface Product {
   billing_type?: "subscription";
   billing_interval?: "month";
   pack_size?: number;
+  // Long-form body copy. Each paragraph must be unique within and across
+  // services (audit PDF p.45-46, p.36-37). Audit PR-1 populates
+  // longDescription, featureSections, and faqs for every service to push
+  // each page above the 500-word floor (PDF p.34-35). whyItMatters and
+  // howItWorks remain in the schema for future PRs but are intentionally
+  // not populated in PR-1 to keep the H2 count <=8 per page.
+  longDescription?: string[];
+  whyItMatters?: string;
+  howItWorks?: ProductHowItWorksStep[];
+  featureSections?: ProductFeatureSection[];
+  faqs?: ProductFAQ[];
 }
 
 export interface ProductCatalog {
