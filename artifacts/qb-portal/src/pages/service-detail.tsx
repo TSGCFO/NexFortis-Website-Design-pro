@@ -176,6 +176,82 @@ export default function ServiceDetail() {
                 </CardContent>
               </Card>
 
+              {/* Long-form body copy (audit PR-1). Each block renders only
+                  when its data exists in products.json so services with no
+                  authored long copy render exactly the original layout.
+                  Heading budget cap: 8 H2s per service-detail page — PR-1
+                  populates Overview, Feature Sections (2-3), and FAQs;
+                  Why this matters / How it works are reserved for a later
+                  PR after PR-4 reworks heading hierarchy site-wide. */}
+              {product.longDescription && product.longDescription.length > 0 && (
+                <Card>
+                  <CardContent className="p-6">
+                    <h2 className="text-xl font-bold font-display text-primary mb-4">Overview</h2>
+                    <div className="prose prose-sm max-w-none text-muted-foreground space-y-4">
+                      {product.longDescription.map((p, i) => (
+                        <p key={i}>{p}</p>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+
+              {product.whyItMatters && (
+                <Card>
+                  <CardContent className="p-6">
+                    <h2 className="text-xl font-bold font-display text-primary mb-4">Why this matters</h2>
+                    <p className="text-muted-foreground leading-relaxed">{product.whyItMatters}</p>
+                  </CardContent>
+                </Card>
+              )}
+
+              {product.howItWorks && product.howItWorks.length > 0 && (
+                <Card>
+                  <CardContent className="p-6">
+                    <h2 className="text-xl font-bold font-display text-primary mb-4">How it works</h2>
+                    <ol className="space-y-4">
+                      {product.howItWorks.map((s, i) => (
+                        <li key={i}>
+                          <h3 className="font-semibold text-primary">{s.step}</h3>
+                          <p className="text-sm text-muted-foreground mt-1">{s.body}</p>
+                        </li>
+                      ))}
+                    </ol>
+                  </CardContent>
+                </Card>
+              )}
+
+              {product.featureSections && product.featureSections.length > 0 && (
+                <Card>
+                  <CardContent className="p-6">
+                    <div className="space-y-6">
+                      {product.featureSections.map((fs, i) => (
+                        <div key={i}>
+                          <h2 className="text-xl font-bold font-display text-primary mb-2">{fs.heading}</h2>
+                          <p className="text-muted-foreground leading-relaxed">{fs.body}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+
+              {product.faqs && product.faqs.length > 0 && (
+                <Card>
+                  <CardContent className="p-6">
+                    <h2 className="text-xl font-bold font-display text-primary mb-4">Frequently asked questions</h2>
+                    <div className="space-y-4">
+                      {product.faqs.map((f, i) => (
+                        <div key={i}>
+                          <h3 className="font-semibold text-primary">{f.question}</h3>
+                          <p className="text-sm text-muted-foreground mt-1">{f.answer}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+
               <Card>
                 <CardContent className="p-6">
                   <h2 className="text-xl font-bold font-display text-primary mb-4">What's Included</h2>
