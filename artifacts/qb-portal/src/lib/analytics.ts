@@ -26,6 +26,53 @@ const CROSS_DOMAINS = ["nexfortis.com", "qb.nexfortis.com"];
 
 const CONSENT_KEY = "nf_analytics_consent";
 
+// Public marketing paths on qb.nexfortis.com — these are the SEO-targeted
+// pages that ad campaigns drive traffic to (catalog, FAQ, the QuickBooks
+// Migration Guide, individual service / category / landing pages, etc.).
+// Granting the three ads-side consent signals is appropriate ONLY on these
+// paths, because they are the surfaces we run remarketing against.
+//
+// Anything not in this set — the customer portal, authenticated pages,
+// admin pages — must keep ads-side consent denied. Page paths and titles
+// on those routes can carry order IDs, ticket IDs, and customer-data
+// adjacency that should never feed Google Ads audience export.
+const PUBLIC_MARKETING_PATHS: ReadonlySet<string> = new Set([
+  "/",
+  "/catalog",
+  "/faq",
+  "/qbm-guide",
+  "/terms",
+  "/privacy",
+  "/waitlist",
+]);
+
+const PUBLIC_MARKETING_PREFIXES: readonly string[] = [
+  "/service/",
+  "/category/",
+  "/landing/",
+];
+
+// Strip the Vite/qb-portal base prefix from a pathname so the predicate
+// works whether the app is served at `/` (production: BASE_PATH=/) or at
+// a subpath (dev: BASE_PATH=/qb-portal/, or any future subpath deploy).
+// Without this, e.g. dev pathnames like `/qb-portal/catalog` would never
+// match `/catalog` and the three ads-side signals would stay denied on
+// public marketing pages.
+function stripBasePrefix(pathname: string): string {
+  if (typeof import.meta === "undefined") return pathname;
+  const base = (import.meta.env?.BASE_URL ?? "/").replace(/\/+$/, "");
+  if (!base) return pathname;
+  if (pathname === base) return "/";
+  if (pathname.startsWith(base + "/")) return pathname.slice(base.length);
+  return pathname;
+}
+
+export function isPublicMarketingPath(pathname: string): boolean {
+  const normalized = stripBasePrefix(pathname);
+  if (PUBLIC_MARKETING_PATHS.has(normalized)) return true;
+  return PUBLIC_MARKETING_PREFIXES.some((p) => normalized.startsWith(p));
+}
+
 export type ConsentStatus = "granted" | "denied" | "unset";
 
 export function getConsent(): ConsentStatus {
@@ -88,9 +135,24 @@ export function initAnalytics(): void {
     ad_user_data: "denied",
     ad_personalization: "denied",
   });
-  gtag("consent", "update", {
-    analytics_storage: "granted",
-  });
+  // Path-aware consent grant. On public marketing paths we grant all four
+  // Consent Mode v2 signals so remarketing audiences and ad measurement
+  // can function. On portal / authenticated paths we grant only
+  // analytics_storage — ads-side signals stay denied so that page paths
+  // carrying order IDs, ticket IDs, or other customer-data adjacency are
+  // never used for Google Ads audience export.
+  if (isPublicMarketingPath(window.location.pathname)) {
+    gtag("consent", "update", {
+      ad_storage: "granted",
+      ad_user_data: "granted",
+      ad_personalization: "granted",
+      analytics_storage: "granted",
+    });
+  } else {
+    gtag("consent", "update", {
+      analytics_storage: "granted",
+    });
+  }
 
   gtag("js", new Date());
   gtag("config", MEASUREMENT_ID, {
@@ -113,7 +175,14 @@ function disableAnalytics(): void {
   // any future hits are gated, then keep the legacy ga-disable-<ID> flag as
   // belt-and-suspenders for older gtag.js builds.
   if (typeof window.gtag === "function") {
+    // Deny all four Consent Mode v2 signals on withdrawal regardless of
+    // path. Even though ads-side signals were only ever granted on public
+    // marketing paths, denying them everywhere on Decline is the safest
+    // and most explicit posture.
     window.gtag("consent", "update", {
+      ad_storage: "denied",
+      ad_user_data: "denied",
+      ad_personalization: "denied",
       analytics_storage: "denied",
     });
   }

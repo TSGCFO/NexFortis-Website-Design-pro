@@ -75,7 +75,16 @@ export function initAnalytics(): void {
     ad_user_data: "denied",
     ad_personalization: "denied",
   });
+  // Grant all four Consent Mode v2 signals — analytics_storage unblocks the
+  // /g/collect hit (behavioral analytics), and ad_storage / ad_user_data /
+  // ad_personalization unblock the three ads-side signals so audience
+  // remarketing, ads measurement, and conversion export to Google Ads can
+  // function. The user has just clicked Accept on the cookie banner, which
+  // discloses both analytics and advertising features.
   gtag("consent", "update", {
+    ad_storage: "granted",
+    ad_user_data: "granted",
+    ad_personalization: "granted",
     analytics_storage: "granted",
   });
 
@@ -100,7 +109,13 @@ function disableAnalytics(): void {
   // any future hits are gated, then keep the legacy ga-disable-<ID> flag as
   // belt-and-suspenders for older gtag.js builds.
   if (typeof window.gtag === "function") {
+    // Deny all four Consent Mode v2 signals on withdrawal — granting any of
+    // them on Accept means we must explicitly revoke all of them on Decline,
+    // not just analytics_storage.
     window.gtag("consent", "update", {
+      ad_storage: "denied",
+      ad_user_data: "denied",
+      ad_personalization: "denied",
       analytics_storage: "denied",
     });
   }
@@ -122,4 +137,30 @@ export function trackEvent(
 
 export function isAnalyticsConfigured(): boolean {
   return Boolean(MEASUREMENT_ID);
+}
+
+/**
+ * Fire the GA4 `qualify_lead` key event — used to mark a visitor as a
+ * qualified lead (typically on contact-form submit success or a
+ * "book a consultation" CTA click). This is the conversion-side signal
+ * GA4 uses for audience building, ads attribution, and conversion export.
+ *
+ * Pair with `trackEvent("contact_form_submit", …)` rather than replace it:
+ * `contact_form_submit` is the behavioral form-completion signal,
+ * `qualify_lead` is the business-conversion signal. Both should fire on a
+ * successful submit.
+ */
+export function trackQualifyLead(params: {
+  form_id?: string;
+  service_interest?: string;
+}): void {
+  if (typeof window === "undefined") return;
+  if (!MEASUREMENT_ID) return;
+  if (getConsent() !== "granted") return;
+  if (typeof window.gtag !== "function") return;
+  window.gtag("event", "qualify_lead", {
+    form_id: params.form_id ?? "contact",
+    form_destination: window.location.pathname,
+    service_interest: params.service_interest ?? "general",
+  });
 }

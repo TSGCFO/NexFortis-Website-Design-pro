@@ -80,7 +80,41 @@ export default function Privacy() {
 
           <h3>7. Cookies and Tracking Technologies</h3>
           <p>
-            Our website uses cookies and similar technologies to enhance your browsing experience, analyze site traffic, and understand user behavior. You can control cookie preferences through your browser settings. Disabling cookies may affect the functionality of certain features on our website.
+            Our website uses Google Analytics 4 (GA4) for analytics and advertising
+            features. After you accept the cookie banner, GA4 sets cookies that
+            store a Google Analytics client identifier and enable remarketing
+            audiences, conversion measurement, and ad personalization. Data is
+            sent to Google as a data sub-processor. Your IP address is anonymized
+            before being sent to Google.
+          </p>
+          <p>
+            We use this data to understand how visitors use our site, to measure
+            the performance of our marketing campaigns, and to show relevant ads
+            on Google services and partner sites to people who have visited our
+            site. Analytics events are retained in Google Analytics for 14 months.
+          </p>
+          <p>
+            You can decline cookie usage by clicking <strong>Decline</strong>{" "}
+            on the cookie banner the first time you visit. After that initial
+            choice you can clear site data in your browser to be re-prompted,
+            or opt out of personalized advertising at{" "}
+            <a
+              href="https://adssettings.google.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              adssettings.google.com
+            </a>
+            . For more information about how Google uses data from this site, see{" "}
+            <a
+              href="https://policies.google.com/technologies/partner-sites"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Google&rsquo;s data practices
+            </a>
+            . Disabling cookies may affect the functionality of certain features
+            on our website.
           </p>
 
           <h2>Your rights, updates, and contact</h2>

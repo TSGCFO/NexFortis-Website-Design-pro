@@ -33,8 +33,7 @@ export function CookieConsent() {
     >
       <div className="mx-auto max-w-4xl bg-card border border-border shadow-2xl rounded-2xl p-5 sm:p-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <p className="text-sm text-foreground leading-relaxed">
-          We use cookies for analytics to understand how visitors use our site
-          and improve our services. No personal information is sold. See our{" "}
+          We use cookies for analytics and advertising. See our{" "}
           <Link
             href="/privacy"
             className="text-accent font-semibold underline underline-offset-2 hover:text-accent/80"
@@ -62,7 +61,7 @@ export function CookieConsent() {
             }}
             className="px-4 py-2.5 min-h-[44px] rounded-xl bg-accent text-white text-sm font-display font-semibold hover:bg-accent/90 transition-colors"
           >
-            Accept analytics
+            Accept
           </button>
         </div>
       </div>
