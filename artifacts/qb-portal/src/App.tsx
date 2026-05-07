@@ -8,6 +8,7 @@ import { AuthProvider } from "@/lib/auth";
 import { ThemeProvider } from "@/hooks/use-theme";
 import { Layout } from "@/components/layout";
 import { CookieConsent } from "@/components/cookie-consent";
+import { useConsentByPath } from "@/hooks/use-consent-by-path";
 import Home from "@/pages/home";
 import Catalog from "@/pages/catalog";
 import FAQ from "@/pages/faq";
@@ -114,6 +115,12 @@ function CustomerRoutes() {
 }
 
 function Router() {
+  // Re-evaluates Consent Mode v2 ads-side signals on every route change.
+  // Must be inside the <WouterRouter> boundary (it uses useLocation), and
+  // Router() is the always-rendered component for both /admin/* and the
+  // <CustomerRoutes /> fallback below — so this hook fires on every
+  // navigation regardless of which switch arm matched.
+  useConsentByPath();
   return (
     <Suspense fallback={<PageFallback />}>
       <Switch>

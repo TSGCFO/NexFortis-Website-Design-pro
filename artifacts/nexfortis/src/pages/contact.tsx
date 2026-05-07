@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-import { trackEvent } from "@/lib/analytics";
+import { trackEvent, trackQualifyLead } from "@/lib/analytics";
 import { apiUrl } from "@/lib/api";
 
 const formSchema = z.object({
@@ -45,6 +45,13 @@ export default function Contact() {
       trackEvent("contact_form_submit", {
         service: data.service,
         has_company: Boolean(data.company),
+      });
+      // Conversion-side signal for GA4 audience building and ads
+      // attribution. Pairs with `contact_form_submit` above — the latter is
+      // a behavioral signal, this one is a business-conversion key event.
+      trackQualifyLead({
+        form_id: "contact",
+        service_interest: data.service,
       });
       toast.success("Message Sent!", {
         description: "We'll get back to you within 1–2 business hours.",

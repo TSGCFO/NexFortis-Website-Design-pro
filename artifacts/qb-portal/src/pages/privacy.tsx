@@ -65,8 +65,61 @@ export default function Privacy() {
             <li>Customer files are permanently deleted within 7 days of service completion.</li>
           </ul>
 
-          <h3>7. Cookies</h3>
-          <p>We use essential cookies for authentication and session management. We do not use tracking or advertising cookies.</p>
+          <h3>7. Cookies and analytics</h3>
+          <p>
+            Our site uses two distinct cookie postures depending on where you are.
+          </p>
+          <p>
+            <strong>On public marketing pages</strong> (the home page, service
+            catalog, FAQ, the QuickBooks Migration Guide at{" "}
+            <code>/qbm-guide</code>, service detail pages at <code>/service/...</code>,
+            category pages at <code>/category/...</code>, and ad landing pages at{" "}
+            <code>/landing/...</code>), we use Google Analytics 4 (GA4) with
+            advertising features enabled. This includes remarketing audiences and
+            ad measurement, allowing us to show relevant ads on Google services
+            and partner sites to people who have visited our marketing pages.
+            Cookies set on these pages include analytics cookies (storing a Google
+            Analytics client identifier) and advertising cookies used by Google
+            for remarketing and ad personalization. Data is sent to Google as a
+            data sub-processor. IP addresses are anonymized before being sent to
+            Google. For more information, see{" "}
+            <a
+              href="https://policies.google.com/technologies/partner-sites"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Google&rsquo;s data practices
+            </a>
+            .
+          </p>
+          <p>
+            <strong>On customer portal and authenticated pages</strong> (
+            <code>/portal</code>, <code>/order</code>, <code>/order/:id</code>,{" "}
+            <code>/subscription</code>, <code>/ticket/:id</code>, and any{" "}
+            <code>/admin</code> route), we use only essential cookies for
+            authentication and session management, plus analytics cookies for
+            measuring portal usage. We do not enable advertising cookies on these
+            pages. The QuickBooks files you upload, their metadata, and the
+            contents of your account dashboards are never shared with Google or
+            any other third party for advertising purposes.
+          </p>
+          <p>
+            Analytics events from public marketing pages are retained in Google
+            Analytics for 14 months. You can decline cookie usage by clicking{" "}
+            <strong>Decline</strong> on the cookie banner the first time you visit
+            each of our hosts (you will be asked separately on{" "}
+            <code>nexfortis.com</code> and <code>qb.nexfortis.com</code> because
+            consent is stored per origin), by clearing site data in your browser,
+            or by opting out of personalized advertising at{" "}
+            <a
+              href="https://adssettings.google.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              adssettings.google.com
+            </a>
+            .
+          </p>
 
           <h2>Your rights, updates, and contact</h2>
 
