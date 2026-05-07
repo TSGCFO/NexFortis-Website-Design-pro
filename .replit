@@ -60,19 +60,3 @@ STRIPE_PRICE_PREMIUM = "price_1TMj4NCsnLlfv2j7RAtc6I3c"
 STRIPE_PRICE_PREMIUM_PROMO = "price_1TMj4NCsnLlfv2j7bMwLDRd3"
 STRIPE_COUPON_PRO_10 = "pro_service_10"
 STRIPE_COUPON_PREMIUM_20 = "premium_service_20"
-
-[[ports]]
-localPort = 8080
-externalPort = 8080
-
-[[ports]]
-localPort = 8081
-externalPort = 80
-
-[[ports]]
-localPort = 19446
-externalPort = 3000
-
-[[ports]]
-localPort = 20914
-externalPort = 3001
