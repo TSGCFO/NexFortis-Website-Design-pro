@@ -47,6 +47,13 @@ export function initAnalytics(): void {
   }
   window.gtag = gtag as typeof window.gtag;
 
+  window.gtag?.("consent", "update", {
+    ad_storage: "granted",
+    ad_user_data: "granted",
+    ad_personalization: "granted",
+    analytics_storage: "granted",
+  });
+
   gtag("js", new Date());
   gtag("config", MEASUREMENT_ID, {
     anonymize_ip: true,
@@ -67,6 +74,12 @@ function disableAnalytics(): void {
   (window as unknown as Record<string, boolean>)[
     `ga-disable-${MEASUREMENT_ID}`
   ] = true;
+  window.gtag?.("consent", "update", {
+    ad_storage: "denied",
+    ad_user_data: "denied",
+    ad_personalization: "denied",
+    analytics_storage: "denied",
+  });
 }
 
 export function trackEvent(
@@ -82,4 +95,16 @@ export function trackEvent(
 
 export function isAnalyticsConfigured(): boolean {
   return Boolean(MEASUREMENT_ID);
+}
+
+export function trackQualifyLead(params: {
+  form_id?: string;
+  service_interest?: string;
+}): void {
+  if (typeof window === "undefined" || !window.gtag) return;
+  window.gtag("event", "qualify_lead", {
+    form_id: params.form_id ?? "contact",
+    form_destination: window.location.pathname,
+    service_interest: params.service_interest ?? "general",
+  });
 }
