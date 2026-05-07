@@ -88,7 +88,17 @@ export function initAnalytics(): void {
     ad_user_data: "denied",
     ad_personalization: "denied",
   });
+  // Grant all four Consent Mode v2 signals — analytics_storage unblocks the
+  // /g/collect hit (behavioral analytics), and ad_storage / ad_user_data /
+  // ad_personalization unblock the three ads-side signals so audience
+  // remarketing, ads measurement, and conversion export to Google Ads can
+  // function. The user has just clicked Accept on the cookie banner, which
+  // means consent for both analytics AND advertising is given by our
+  // banner copy.
   gtag("consent", "update", {
+    ad_storage: "granted",
+    ad_user_data: "granted",
+    ad_personalization: "granted",
     analytics_storage: "granted",
   });
 
@@ -113,7 +123,13 @@ function disableAnalytics(): void {
   // any future hits are gated, then keep the legacy ga-disable-<ID> flag as
   // belt-and-suspenders for older gtag.js builds.
   if (typeof window.gtag === "function") {
+    // Deny all four Consent Mode v2 signals on withdrawal — granting any of
+    // them on Accept means we must explicitly revoke all of them on Decline,
+    // not just analytics_storage.
     window.gtag("consent", "update", {
+      ad_storage: "denied",
+      ad_user_data: "denied",
+      ad_personalization: "denied",
       analytics_storage: "denied",
     });
   }
