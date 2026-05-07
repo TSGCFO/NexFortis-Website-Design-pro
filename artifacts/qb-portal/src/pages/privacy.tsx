@@ -109,8 +109,9 @@ export default function Privacy() {
             <strong>Decline</strong> on the cookie banner the first time you visit
             each of our hosts (you will be asked separately on{" "}
             <code>nexfortis.com</code> and <code>qb.nexfortis.com</code> because
-            consent is stored per origin), by clearing site data in your browser,
-            or by opting out of personalized advertising at{" "}
+            consent is stored per origin). After that initial choice you can
+            clear site data in your browser to be re-prompted, or opt out of
+            personalized advertising at{" "}
             <a
               href="https://adssettings.google.com"
               target="_blank"

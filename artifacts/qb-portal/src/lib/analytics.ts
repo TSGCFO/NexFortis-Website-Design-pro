@@ -52,9 +52,25 @@ const PUBLIC_MARKETING_PREFIXES: readonly string[] = [
   "/landing/",
 ];
 
+// Strip the Vite/qb-portal base prefix from a pathname so the predicate
+// works whether the app is served at `/` (production: BASE_PATH=/) or at
+// a subpath (dev: BASE_PATH=/qb-portal/, or any future subpath deploy).
+// Without this, e.g. dev pathnames like `/qb-portal/catalog` would never
+// match `/catalog` and the three ads-side signals would stay denied on
+// public marketing pages.
+function stripBasePrefix(pathname: string): string {
+  if (typeof import.meta === "undefined") return pathname;
+  const base = (import.meta.env?.BASE_URL ?? "/").replace(/\/+$/, "");
+  if (!base) return pathname;
+  if (pathname === base) return "/";
+  if (pathname.startsWith(base + "/")) return pathname.slice(base.length);
+  return pathname;
+}
+
 export function isPublicMarketingPath(pathname: string): boolean {
-  if (PUBLIC_MARKETING_PATHS.has(pathname)) return true;
-  return PUBLIC_MARKETING_PREFIXES.some((p) => pathname.startsWith(p));
+  const normalized = stripBasePrefix(pathname);
+  if (PUBLIC_MARKETING_PATHS.has(normalized)) return true;
+  return PUBLIC_MARKETING_PREFIXES.some((p) => normalized.startsWith(p));
 }
 
 export type ConsentStatus = "granted" | "denied" | "unset";

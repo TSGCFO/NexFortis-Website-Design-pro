@@ -94,10 +94,10 @@ export default function Privacy() {
             site. Analytics events are retained in Google Analytics for 14 months.
           </p>
           <p>
-            You can decline cookie usage at any time by clicking{" "}
-            <strong>Decline</strong> on the cookie banner the first time you visit,
-            by clearing site data in your browser, or by opting out of personalized
-            advertising at{" "}
+            You can decline cookie usage by clicking <strong>Decline</strong>{" "}
+            on the cookie banner the first time you visit. After that initial
+            choice you can clear site data in your browser to be re-prompted,
+            or opt out of personalized advertising at{" "}
             <a
               href="https://adssettings.google.com"
               target="_blank"
