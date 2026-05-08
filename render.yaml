@@ -104,9 +104,29 @@ services:
       # permits the production custom domains; setting this env var would make
       # the bundle call the API cross-origin and every request would be blocked.
     headers:
+      # Hashed asset bundles — immutable, cache for a year. Vite emits unique
+      # filenames per build (e.g. /assets/index-abc123.js) so a cached old
+      # version is never served for a new build. This more-specific path
+      # rule overrides the broader /* Cache-Control below for asset URLs.
       - path: /assets/*
         name: Cache-Control
         value: public, max-age=31536000, immutable
+      # HTML pages and everything else — cache 24h at the Cloudflare edge
+      # (s-maxage), but force browsers to re-validate every request
+      # (max-age=0). The 5-minute Render default of s-maxage=300 caused
+      # cache misses on every SEObility crawl from Germany, inflating their
+      # measured TTFB from ~150-200ms (cached edge) to 500-750ms (origin
+      # fetch). 24h s-maxage keeps low-traffic landing/service pages warm
+      # at the edge between crawls. stale-while-revalidate=86400 lets the
+      # edge serve a slightly-stale page (up to 48h old total) instantly
+      # while refreshing in the background.
+      #
+      # On deploy, Render automatically purges its CDN cache so new HTML
+      # is served immediately. Manual Cloudflare cache purge is also
+      # available from the dashboard for hot-fixes.
+      - path: /*
+        name: Cache-Control
+        value: public, max-age=0, s-maxage=86400, stale-while-revalidate=86400
       - path: /*
         name: X-Frame-Options
         value: DENY
@@ -185,9 +205,26 @@ services:
       # CORS; setting this env var would break every API call on the temporary
       # *.onrender.com URLs because they're not in the API's CORS allow-list).
     headers:
+      # Hashed asset bundles — immutable, cache for a year. Vite emits unique
+      # filenames per build (e.g. /assets/index-abc123.js) so a cached old
+      # version is never served for a new build. This more-specific path
+      # rule overrides the broader /* Cache-Control below for asset URLs.
       - path: /assets/*
         name: Cache-Control
         value: public, max-age=31536000, immutable
+      # HTML pages and everything else — cache 24h at the Cloudflare edge
+      # but force browsers to re-validate every request. See marketing
+      # service above for full rationale (SEObility cache-miss issue).
+      #
+      # IMPORTANT: SPA-shell routes (/login, /portal, /admin, /order/:id,
+      # /ticket/:id, /auth/*) are rewritten to /spa-shell.html. The shell
+      # is a generic noindex SPA bootloader that serves identical content
+      # to every authenticated path, so caching it for 24h is safe — the
+      # actual auth-gated UI is rendered client-side from the React app
+      # after hydration, which fetches fresh data from the API.
+      - path: /*
+        name: Cache-Control
+        value: public, max-age=0, s-maxage=86400, stale-while-revalidate=86400
       - path: /*
         name: X-Frame-Options
         value: DENY
