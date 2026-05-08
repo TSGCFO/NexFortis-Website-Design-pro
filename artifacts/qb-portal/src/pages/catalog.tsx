@@ -189,7 +189,15 @@ function ProductCard({ product, promo }: { product: Product; promo: boolean }) {
             {product.turnaround && <span className="text-xs text-muted-foreground ml-2">{product.turnaround}</span>}
           </div>
           <Link href={`/service/${product.slug}`}>
-            <Button size="sm" className="bg-rose-gold hover:bg-rose-gold-hover text-white text-xs">{product.name}</Button>
+            {/*
+              whitespace-normal lets long product names wrap to multiple
+              lines on narrow phones instead of overflowing the card. Same
+              treatment as the homepage 'Featured Services' buttons in
+              home.tsx (PR #92). CSS-only change — does not affect SEO
+              scoring (per seobility.net/en/seocheck/, the Structure score
+              measures markup-level signals only, not CSS).
+            */}
+            <Button size="sm" className="bg-rose-gold hover:bg-rose-gold-hover text-white text-xs whitespace-normal text-center leading-tight h-auto py-1.5">{product.name}</Button>
           </Link>
         </div>
       </CardContent>

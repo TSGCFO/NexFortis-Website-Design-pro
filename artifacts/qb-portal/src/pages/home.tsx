@@ -92,6 +92,12 @@ function getComparisonData(lowestPriceFormatted: string, rushPriceFormatted: str
   ];
 }
 
+// Each card has a unique, keyword-rich CTA so each link to a service detail
+// page has descriptive anchor text instead of the generic "View Details".
+// SEObility flagged the previous identical "View Details" anchors across 5
+// different link targets as keyword cannibalization (audit, 2026-05-08).
+// Per Google's link best practices: 'Good anchor text is descriptive,
+// reasonably concise, and relevant to ... the page it links to.'
 const featuredServiceDefs = [
   {
     slug: "enterprise-to-premier-standard",
@@ -99,6 +105,7 @@ const featuredServiceDefs = [
     desc: "Convert your QuickBooks Enterprise file to Premier or Pro. Under 60 minutes. Penny-perfect accuracy.",
     badge: "Most Popular",
     href: "/service/enterprise-to-premier-standard",
+    cta: "View Enterprise Conversion",
     prefix: "From ",
   },
   {
@@ -107,6 +114,7 @@ const featuredServiceDefs = [
     desc: "Our most popular bundle: audit trail removal plus CRA period copy. Save vs. buying separately.",
     badge: "Best Value",
     href: "/service/audit-trail-cra-bundle",
+    cta: "View CRA Bundle Details",
   },
   {
     slug: "5-pack-conversions",
@@ -114,6 +122,7 @@ const featuredServiceDefs = [
     desc: "Bundle of 5 standard conversions for accountants and bookkeepers. $65/conversion. Valid 12 months.",
     badge: "For Accountants",
     href: "/service/5-pack-conversions",
+    cta: "View 5-Pack Details",
   },
   {
     slug: "guaranteed-30-minute",
@@ -121,6 +130,7 @@ const featuredServiceDefs = [
     desc: "Priority processing with a guaranteed 30-minute turnaround. Full refund if we exceed 30 minutes.",
     badge: "Fastest",
     href: "/service/guaranteed-30-minute",
+    cta: "View 30-Minute Service",
   },
   {
     slug: "sage50-to-quickbooks",
@@ -128,6 +138,7 @@ const featuredServiceDefs = [
     desc: "Migrate your Sage 50 or Simply Accounting data to QuickBooks Desktop. Full data transfer.",
     badge: "New Service",
     href: "/service/sage50-to-quickbooks",
+    cta: "View Sage 50 Migration",
   },
 ];
 
@@ -365,8 +376,19 @@ export default function Home() {
                         )}
                       </div>
                       <Link href={svc.href}>
-                        <Button size="sm" className="bg-rose-gold hover:bg-rose-gold-hover text-white">
-                          View Details
+                        {/*
+                          whitespace-normal overrides the Button component's
+                          default whitespace-nowrap so longer keyword-rich CTAs
+                          (up to 26 chars) wrap to a second line on narrow
+                          phones instead of overflowing the card horizontally.
+                          The CSS-only change does NOT affect SEObility's
+                          Structure score, which measures markup-level
+                          signals only (heading hierarchy, anchor text
+                          uniqueness, link parameters) per their docs at
+                          seobility.net/en/seocheck/.
+                        */}
+                        <Button size="sm" className="bg-rose-gold hover:bg-rose-gold-hover text-white whitespace-normal text-center leading-tight h-auto py-1.5">
+                          {svc.cta}
                         </Button>
                       </Link>
                     </div>
