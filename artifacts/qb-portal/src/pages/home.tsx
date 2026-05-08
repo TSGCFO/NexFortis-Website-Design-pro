@@ -376,7 +376,18 @@ export default function Home() {
                         )}
                       </div>
                       <Link href={svc.href}>
-                        <Button size="sm" className="bg-rose-gold hover:bg-rose-gold-hover text-white">
+                        {/*
+                          whitespace-normal overrides the Button component's
+                          default whitespace-nowrap so longer keyword-rich CTAs
+                          (up to 26 chars) wrap to a second line on narrow
+                          phones instead of overflowing the card horizontally.
+                          The CSS-only change does NOT affect SEObility's
+                          Structure score, which measures markup-level
+                          signals only (heading hierarchy, anchor text
+                          uniqueness, link parameters) per their docs at
+                          seobility.net/en/seocheck/.
+                        */}
+                        <Button size="sm" className="bg-rose-gold hover:bg-rose-gold-hover text-white whitespace-normal text-center leading-tight h-auto py-1.5">
                           {svc.cta}
                         </Button>
                       </Link>
