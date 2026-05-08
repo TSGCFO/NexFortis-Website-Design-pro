@@ -104,6 +104,15 @@ services:
       # permits the production custom domains; setting this env var would make
       # the bundle call the API cross-origin and every request would be blocked.
     headers:
+      # API reverse-proxy routes — NEVER cache. The /api/* rewrite (further
+      # below) proxies to the API service, which may return user-specific
+      # responses (auth tokens, account data, order details). Caching API
+      # responses at the Cloudflare edge would either serve stale data or
+      # leak one user's response to another. This rule comes FIRST so it
+      # takes precedence over the broader /* Cache-Control rule below.
+      - path: /api/*
+        name: Cache-Control
+        value: private, no-store, no-cache, must-revalidate, max-age=0
       # Hashed asset bundles — immutable, cache for a year. Vite emits unique
       # filenames per build (e.g. /assets/index-abc123.js) so a cached old
       # version is never served for a new build. This more-specific path
@@ -205,6 +214,13 @@ services:
       # CORS; setting this env var would break every API call on the temporary
       # *.onrender.com URLs because they're not in the API's CORS allow-list).
     headers:
+      # API reverse-proxy routes — NEVER cache (see marketing service above
+      # for the rationale: API responses may be user-specific and must not
+      # be cached at the edge). This rule comes FIRST so it takes precedence
+      # over the broader /* Cache-Control rule below.
+      - path: /api/*
+        name: Cache-Control
+        value: private, no-store, no-cache, must-revalidate, max-age=0
       # Hashed asset bundles — immutable, cache for a year. Vite emits unique
       # filenames per build (e.g. /assets/index-abc123.js) so a cached old
       # version is never served for a new build. This more-specific path
