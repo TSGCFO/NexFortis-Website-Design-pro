@@ -5,8 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowRight, Clock, BookOpen } from "lucide-react";
 import { SEO } from "@/components/seo";
-import { generateBreadcrumbSchema } from "@/lib/seo-schemas";
+import { generateBreadcrumbSchema, generateFAQSchema } from "@/lib/seo-schemas";
 import { getCategoryLandingLinks } from "@/data/serviceLandingLinks";
+import { getCategoryContent } from "@/data/categoryContent";
 import { teaser } from "@/lib/teaser";
 
 export default function Category() {
@@ -52,18 +53,37 @@ export default function Category() {
           services services". Example category names from products.json:
           "QuickBooks Conversion Services", "Platform Migration Services",
           "Volume Packs". */}
-      <SEO
-        title={categoryName}
-        description={(() => {
+      {(() => {
+        // Hoisted so the SEO meta description and the in-page FAQ section read
+        // from the same source of truth. When `content` is null (slug has no
+        // curated content yet) we fall back to the original auto-generated
+        // description, preserving the previous behaviour.
+        const content = getCategoryContent(slug ?? "");
+        const fallbackDescription = (() => {
           const trimmed = categoryName
             .replace(/^QuickBooks\s+/i, "")
             .replace(/\s+services$/i, "")
             .toLowerCase();
           return `Browse ${products.length} QuickBooks ${trimmed} ${products.length === 1 ? "service" : "services"} for Canadian businesses. Fixed-price, professional solutions.`;
-        })()}
-        path={`/category/${slug}`}
-        jsonLd={generateBreadcrumbSchema([{ name: "Services", path: "/catalog" }, { name: categoryName, path: `/category/${slug}` }])}
-      />
+        })();
+        const description = content?.metaDescription ?? fallbackDescription;
+        const breadcrumb = generateBreadcrumbSchema([
+          { name: "Services", path: "/catalog" },
+          { name: categoryName, path: `/category/${slug}` },
+        ]);
+        const jsonLd =
+          content && content.faqs.length > 0
+            ? [breadcrumb, generateFAQSchema(content.faqs.map(({ question, answer }) => ({ question, answer })))]
+            : breadcrumb;
+        return (
+          <SEO
+            title={categoryName}
+            description={description}
+            path={`/category/${slug}`}
+            jsonLd={jsonLd}
+          />
+        );
+      })()}
       <section className="section-brand-navy py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-2 text-sm text-white/50 mb-4">
@@ -87,6 +107,21 @@ export default function Category() {
 
       <section className="py-12 section-brand-light">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {(() => {
+            // Per-category prose intro — added to differentiate this page
+            // from /catalog (SEObility duplicate-content remediation) and
+            // give Google a substantive answer to category-level search
+            // intent before the product grid.
+            const content = getCategoryContent(slug ?? "");
+            if (!content) return null;
+            return (
+              <div className="mb-10 max-w-4xl">
+                <p className="text-base text-foreground/90 leading-relaxed">
+                  {content.intro}
+                </p>
+              </div>
+            );
+          })()}
           {slug === "quickbooks-conversion" && (
             <div className="mb-8 p-4 rounded-lg bg-accent/5 border border-accent/20">
               <p className="text-sm text-foreground">
@@ -134,6 +169,28 @@ export default function Category() {
           <p className="text-xs text-muted-foreground text-center mt-8">
             All prices in Canadian dollars (CAD). GST/HST will be added at checkout based on your province.
           </p>
+          {(() => {
+            // Long-form FAQ section — pairs with the FAQPage JSON-LD
+            // emitted in the <SEO> block above so each FAQ is eligible
+            // for rich-result rendering on Google and Bing.
+            const content = getCategoryContent(slug ?? "");
+            if (!content || content.faqs.length === 0) return null;
+            return (
+              <div className="mt-16 max-w-4xl">
+                <h2 className="text-2xl font-bold font-display text-primary mb-6">
+                  Frequently asked questions
+                </h2>
+                <div className="space-y-6">
+                  {content.faqs.map((faq) => (
+                    <div key={faq.question}>
+                      <h3 className="font-semibold text-primary mb-2">{faq.question}</h3>
+                      <p className="text-sm text-foreground/80 leading-relaxed">{faq.answer}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            );
+          })()}
         </div>
       </section>
     </div>
