@@ -15,7 +15,18 @@ interface SEOProps {
 }
 
 export const BASE_URL = "https://qb.nexfortis.com";
+// Used for og:site_name (social-share preview cards) and JSON-LD
+// Organization schema (Google knowledge panels). Keep the descriptive
+// full brand name here — those surfaces have generous space.
 const SITE_NAME = "NexFortis QuickBooks Portal";
+// Used as the title suffix only. Shorter than SITE_NAME because Google
+// truncates SERP titles around ~580 pixels and the longer suffix put
+// 7 service / homepage titles over that limit (Seobility audit
+// 2026-05-08). Per Google's title-link guidance:
+// 'Brand your titles concisely... include just your site name at the
+// beginning or end of each <title> element' —
+// developers.google.com/search/docs/appearance/title-link
+const TITLE_SUFFIX = "NexFortis";
 const DEFAULT_OG_IMAGE = `${BASE_URL}/opengraph.jpg`;
 
 export function SEO({
@@ -31,7 +42,7 @@ export function SEO({
   articleModifiedTime,
   articleAuthor,
 }: SEOProps) {
-  const fullTitle = title.includes("NexFortis") ? title : `${title} | ${SITE_NAME}`;
+  const fullTitle = title.includes("NexFortis") ? title : `${title} | ${TITLE_SUFFIX}`;
   const canonicalUrl = canonical || (path ? `${BASE_URL}${path}` : undefined);
   const image = ogImage || DEFAULT_OG_IMAGE;
 
