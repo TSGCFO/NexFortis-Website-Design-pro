@@ -1,7 +1,20 @@
+> ## ⚠️ SUPERSEDED — DO NOT IMPLEMENT FROM THIS DOCUMENT
+>
+> This v1.0 PRD has been superseded by **v2** in a separate repository:
+> **[TSGCFO/nexfortis-content-pipeline](https://github.com/TSGCFO/nexfortis-content-pipeline)** → see [`docs/ways-of-work/plan/content-pipeline-v2/epic-prd.md`](https://github.com/TSGCFO/nexfortis-content-pipeline/blob/main/docs/ways-of-work/plan/content-pipeline-v2/epic-prd.md).
+>
+> **What changed in v2:** The center of gravity moved from a Monday-only Telegram interview (single point of failure: Hassan's cognitive state on one morning per week) to **continuous capture of Hassan's existing expertise** (Claude exports, Perplexity threads, Microsoft 365 email, Teams transcripts, Telegram voice notes), embedded in Supabase pgvector, synthesized nightly, and surfaced to a **journalist-mode** Telegram bot that asks targeted, evidence-grounded questions rather than generic ones. Drafting moved from Frase to **SEOwind Pro** (native Custom Brand Voice, "Your own insights", "Statistics & Quotes" structured fields). Quality gating is now three stages (rule-based + Clearscope + Aleyda Solis E-E-A-T GPT). Sanity remains the CMS. See the v2 [v1 Amendment Note](https://github.com/TSGCFO/nexfortis-content-pipeline/blob/main/docs/ways-of-work/plan/content-pipeline-v2/v1-amendment-note.md) for the full diff between v1 and v2.
+>
+> **Why this file remains:** It is preserved unedited below for historical reference. The original research documents in [`docs/content-pipeline/research/`](./research/) are still valid — those informed v2 as well.
+>
+> **Do not build from this file.** Use the v2 repo.
+
+---
+
 # NexFortis Automated Content Pipeline — Product Requirements Document
 
 **Document Owner:** Hassan Sadiq, NexFortis  
-**Status:** Draft v1.0  
+**Status:** Draft v1.0 (SUPERSEDED — see banner above)  
 **Created:** 2026  
 **Last Updated:** 2026  
 **Audience:** Hassan Sadiq, any future developer or contractor who works on this system
