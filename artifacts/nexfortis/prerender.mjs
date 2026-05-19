@@ -382,18 +382,20 @@ async function prerender() {
     try { await browser.close(); } catch (e) { console.warn("[prerender] browser.close failed:", e.message); }
     try { server.close(); } catch (e) { console.warn("[prerender] server.close failed:", e.message); }
   }
-  // Write two copies of the noindex shell:
-  //   - 200.html: Render's SPA fallback for unknown URLs (keeps existing behavior)
-  //   - spa-shell.html: explicit target for intentional SPA-only rewrites
-  //     (e.g. /admin, /blog/admin). These routes are NOT prerendered, so
-  //     rewriting them to /index.html would serve the fully prerendered
-  //     homepage (with index,follow robots + homepage canonical) and Google
-  //     would see them as duplicates of /. Rewriting them to
-  //     /spa-shell.html serves the bare noindex shell instead, which
-  //     Google correctly skips.
-  const fallbackPath = path.join(distDir, "200.html");
-  await fs.writeFile(fallbackPath, shellHtml, "utf-8");
-  console.log(`[prerender] wrote noindex SPA fallback -> 200.html`);
+  // Write the noindex shell to spa-shell.html for explicit SPA-only
+  // rewrites (e.g. /admin, /blog/admin). These routes are NOT prerendered,
+  // so rewriting them to /index.html would serve the fully prerendered
+  // homepage (with index,follow robots + homepage canonical) and Google
+  // would see them as duplicates of /. Rewriting them to /spa-shell.html
+  // serves the bare noindex shell instead, which Google correctly skips.
+  //
+  // NOTE: We intentionally do NOT write 200.html. Render's undocumented
+  // SPA-fallback convention serves 200.html (with HTTP 200) for any path
+  // that doesn't match a real file or rewrite rule, which produces a
+  // soft-404 for genuinely-missing URLs (e.g. /pricing, /danny). With the
+  // marketing render.yaml using explicit per-page rewrites (no wildcard),
+  // unknown paths now fall through to Render's default 404 with a real
+  // 404 status code, which is what Google expects.
   const spaShellPath = path.join(distDir, "spa-shell.html");
   await fs.writeFile(spaShellPath, shellHtml, "utf-8");
   console.log(`[prerender] wrote noindex SPA shell -> spa-shell.html`);
