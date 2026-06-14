@@ -13,10 +13,26 @@
 # then extract it ourselves with the system `unzip` into the exact path
 # Puppeteer resolves at launch: <cache>/chrome/linux-<buildId>/chrome-linux64/.
 set -e
-CACHE="${PUPPETEER_CACHE_DIR:-${XDG_CACHE_HOME:-$HOME/.cache}/puppeteer}"
+
+# Resolve the same cache dir Puppeteer uses: it honors PUPPETEER_CACHE_DIR and
+# otherwise defaults to $HOME/.cache/puppeteer (it does NOT read XDG_CACHE_HOME).
+# Export it so the puppeteer download below and `node prerender.mjs` agree on the
+# location regardless of how each resolves its default.
+CACHE="${PUPPETEER_CACHE_DIR:-$HOME/.cache/puppeteer}"
+export PUPPETEER_CACHE_DIR="$CACHE"
+
+# True only when a real Chrome binary exists and is a non-empty executable.
+chrome_ok() {
+  for f in "$CACHE"/chrome/*/chrome-linux64/chrome; do
+    if [ -s "$f" ] && [ -x "$f" ]; then
+      return 0
+    fi
+  done
+  return 1
+}
 
 # Fast path: a complete Chrome is already cached (healed/previous build).
-if ls "$CACHE"/chrome/*/chrome-linux64/chrome >/dev/null 2>&1; then
+if chrome_ok; then
   echo "[ensure-chrome] Chrome already present in $CACHE"
   exit 0
 fi
@@ -25,11 +41,14 @@ fi
 rm -rf "$CACHE/chrome"
 
 # Download the pinned zip. Puppeteer's extraction may fail (broken on Render)
-# but exits 0; we don't depend on it — we just need the downloaded zip.
-pnpm exec puppeteer browsers install chrome || true
+# but exits 0; we don't depend on it — we just need the downloaded zip. Preserve
+# its exit status for diagnostics rather than discarding it.
+install_status=0
+pnpm exec puppeteer browsers install chrome || install_status=$?
+echo "[ensure-chrome] puppeteer install exit=$install_status"
 
 # If Puppeteer's extraction actually worked (other environments), we're done.
-if ls "$CACHE"/chrome/*/chrome-linux64/chrome >/dev/null 2>&1; then
+if chrome_ok; then
   echo "[ensure-chrome] Puppeteer extraction succeeded"
   exit 0
 fi
@@ -37,7 +56,7 @@ fi
 # Otherwise extract the downloaded zip ourselves with the system unzip.
 ZIP=$(ls "$CACHE"/chrome/*-chrome-linux64.zip 2>/dev/null | head -1)
 if [ -z "$ZIP" ]; then
-  echo "[ensure-chrome] ERROR: chrome zip not found after download" >&2
+  echo "[ensure-chrome] ERROR: chrome zip not found after download (puppeteer install exit=$install_status)" >&2
   exit 1
 fi
 if ! command -v unzip >/dev/null 2>&1; then
@@ -53,7 +72,7 @@ unzip -q -o "$ZIP" -d "$DEST"
 chmod +x "$DEST/chrome-linux64/chrome" 2>/dev/null || true
 rm -f "$ZIP"
 
-if ls "$DEST/chrome-linux64/chrome" >/dev/null 2>&1; then
+if chrome_ok; then
   echo "[ensure-chrome] OK: $DEST/chrome-linux64/chrome"
 else
   echo "[ensure-chrome] ERROR: chrome binary still missing after unzip" >&2
