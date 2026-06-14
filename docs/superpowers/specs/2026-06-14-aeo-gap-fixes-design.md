@@ -148,8 +148,19 @@ existing `scripts/generate-sitemap.mjs`.
 - Wired into the portal `build` script after prerender:
   `... && node scripts/generate-sitemap.mjs && node scripts/generate-pricing.mjs`
 - Add a `"pricing"` npm script alias mirroring the `"sitemap"` alias.
-- Link `pricing.md` from the portal `llms.txt`. Decide during implementation
-  whether to add it to the sitemap (likely not — it is not an HTML page).
+
+**Discoverability (DECIDED):** `pricing.md` is discoverable via three paths and
+is **NOT** added to `sitemap.xml` (it is a utility file, not an HTML page):
+1. The portal `llms.txt` links to it directly (primary AI-agent path):
+   `- [Pricing (machine-readable)](https://qb.nexfortis.com/pricing.md)`
+2. Predictable root URL convention (`/pricing.md`).
+3. A normal in-page hyperlink to `/pricing.md` (e.g., footer or catalog page)
+   so any link-following crawler can reach it. Exact placement decided in the
+   implementation plan.
+
+Sitemaps target search-engine indexing of HTML pages; AI agents do not rely on
+the sitemap to find utility files, so adding it there would mainly signal
+Googlebot (undesired for a non-page) with no agent-discovery benefit.
 
 **Why its own PR:** touches the build pipeline → real deploy risk → deserves
 focused review (verify script output + confirm build still passes the existing
@@ -183,6 +194,8 @@ citations, and notifies the user. Each run consumes credits.
       correct verified URLs, canonical org name.
 - [ ] PR 2: `generate-pricing.mjs` produces accurate CAD pricing (cents/100),
       grouped by category, dual-written, wired into build; CI passes.
+- [ ] PR 2: `pricing.md` linked from portal `llms.txt` + an in-page hyperlink;
+      NOT added to sitemap.xml.
 - [ ] Both PRs open for user review; nothing merged to main by the assistant.
 - [ ] Monitoring: baseline table delivered; recurring task scheduled at
       user-confirmed cadence.
