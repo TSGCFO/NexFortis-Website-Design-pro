@@ -1,0 +1,14 @@
+# NexFortis IT Solutions — QuickBooks Conversion Portal
+
+> Productized, fixed-price QuickBooks file conversion and data migration services for Canadian businesses (Enterprise/Premier/Pro conversions, file recovery, .QBM handling, add-ons). Operated by NexFortis IT Solutions, Nobleton, ON.
+
+## Key pages
+- [Service catalog](https://qb.nexfortis.com/catalog)
+- [FAQ](https://qb.nexfortis.com/faq)
+- [QBM file guide](https://qb.nexfortis.com/qbm-guide)
+- [Subscription / support plans](https://qb.nexfortis.com/subscription)
+- [Pricing (machine-readable)](https://qb.nexfortis.com/pricing.md)
+
+## Notes
+- Individual services live under /service/<slug>; categories under /category/<slug> — all linked from the catalog.
+- Portal, login, checkout, and admin routes are private and excluded.
