@@ -6,7 +6,9 @@
 
 **Architecture:** Two PRs from branch `seo/aeo-gap-fixes`. PR 1 = static discovery files (robots.txt edits + llms.txt) with no build changes. PR 2 = a Node build script (`generate-pricing.mjs`) modeled on the existing `generate-sitemap.mjs` that reads `public/products.json` and emits `pricing.md`. Monitoring is a separate non-code workstream (baseline + scheduled task).
 
-**Tech Stack:** Static text/markdown files; Node ESM build script (`node:fs`, `node:path`); existing pnpm + Vite build; Vitest (repo's existing test runner) for the generator's pure formatting logic.
+**Tech Stack:** Static text/markdown files; Node ESM build script (`node:fs`, `node:path`); existing pnpm@10.33.2 + Vite build; **`node --test` (Node's built-in test runner) with `node:test` + `node:assert/strict`** for the generator's pure formatting logic — this is the repo convention (e.g. `tests/seo-dedupe.test.mjs`). Do NOT use Vitest for this; qb-portal has no Vitest dependency and the repo reserves Vitest only for `test:seo:components`.
+
+**CI reality (verified):** The repo's SEO test suite (`tests/seo/invariants.test.mjs`, `tests/seo/snapshots.test.mjs`) asserts only on rendered HTML and sitemap `<loc>` URLs. It does NOT enumerate `public/` files or assert on robots.txt content. Therefore robots.txt edits, llms.txt, and pricing.md are CI-safe **provided the sitemap is not changed** (another reason pricing.md stays out of the sitemap). CI builds qb-portal **vite-only** (`vite build`), deliberately skipping its prerender step (known issue C2, helmet timeout). All qb-portal build verification in this plan uses `vite build`, never full `pnpm build`.
 
 **Process constraint (non-negotiable):** Nothing is committed or pushed to `main`. All work lands via PRs for the user to review and merge. The implementer does NOT merge.
 
@@ -23,10 +25,11 @@
 **PR 2 (generated pricing.md):**
 - Create: `artifacts/qb-portal/scripts/generate-pricing.mjs` (generator)
 - Create: `artifacts/qb-portal/scripts/pricing-lib.mjs` (pure formatting helpers, testable)
-- Create: `artifacts/qb-portal/scripts/pricing-lib.test.mjs` (unit tests)
+- Create: `tests/pricing-lib.test.mjs` (unit tests, root `tests/` dir, run via `node --test`)
 - Modify: `artifacts/qb-portal/package.json` (build script + `"pricing"` alias)
-- Modify: `artifacts/qb-portal/public/llms.txt` (already created in PR1; the link is added in PR1 — see Task 3)
 - Modify: one in-page component (footer) to link `/pricing.md`
+
+(The pricing.md → llms.txt link is added in PR1's Task 3, so PR2 does not re-touch llms.txt.)
 
 > Splitting the generator into `pricing-lib.mjs` (pure functions: cents→CAD, group-by-category, render-markdown) and `generate-pricing.mjs` (I/O: read JSON, call lib, write files) keeps the testable logic isolated from filesystem side effects — mirrors how the codebase separates concerns and lets us TDD the formatting without touching disk.
 
@@ -313,73 +316,71 @@ Expected: PR URL printed. **Do not merge — hand off to the user.**
 
 **Files:**
 - Create: `artifacts/qb-portal/scripts/pricing-lib.mjs`
-- Test: `artifacts/qb-portal/scripts/pricing-lib.test.mjs`
+- Test: `tests/pricing-lib.test.mjs` (root `tests/` dir — matches repo convention; run via `node --test`)
 
-**Context:** Prices in `products.json` are integer CENTS (e.g., `14900` = `$149.00`). Catalog shape: `{ promo_active: boolean, promo_label: string, services: Product[] }`. Each service has `name`, `category`, `base_price_cad`, `launch_price_cad`, `turnaround`, `is_addon`. There are 4 categories. The repo uses Vitest.
+**Context:** Prices in `products.json` are integer CENTS (e.g., `14900` = `$149.00`). Catalog shape: `{ promo_active: boolean, promo_label: string, services: Product[] }`. Each service has `name`, `category`, `base_price_cad`, `launch_price_cad`, `turnaround`, `is_addon`. There are 4 real categories. **The repo uses Node's built-in test runner (`node --test`), NOT Vitest.** Tests live in the root `tests/` dir as `*.test.mjs` using `node:test` + `node:assert/strict` (see `tests/seo-dedupe.test.mjs` for the pattern). The import path from `tests/` to the lib is `../artifacts/qb-portal/scripts/pricing-lib.mjs`.
 
 - [ ] **Step 1: Write failing tests**
 
-Create `artifacts/qb-portal/scripts/pricing-lib.test.mjs`:
+Create `tests/pricing-lib.test.mjs`:
 
 ```js
-import { describe, it, expect } from "vitest";
-import { centsToCAD, groupByCategory, renderPricingMarkdown } from "./pricing-lib.mjs";
+import { test } from "node:test";
+import assert from "node:assert/strict";
+import {
+  centsToCAD,
+  groupByCategory,
+  renderPricingMarkdown,
+} from "../artifacts/qb-portal/scripts/pricing-lib.mjs";
 
-describe("centsToCAD", () => {
-  it("formats cents as CAD with 2 decimals", () => {
-    expect(centsToCAD(14900)).toBe("$149.00 CAD");
-    expect(centsToCAD(7500)).toBe("$75.00 CAD");
-    expect(centsToCAD(0)).toBe("$0.00 CAD");
-  });
+test("centsToCAD formats cents as CAD with 2 decimals", () => {
+  assert.equal(centsToCAD(14900), "$149.00 CAD");
+  assert.equal(centsToCAD(7500), "$75.00 CAD");
+  assert.equal(centsToCAD(0), "$0.00 CAD");
 });
 
-describe("groupByCategory", () => {
-  it("groups services by category preserving order of first appearance", () => {
-    const services = [
-      { name: "A", category: "Cat1", base_price_cad: 100, launch_price_cad: 50, turnaround: "1h" },
-      { name: "B", category: "Cat2", base_price_cad: 200, launch_price_cad: 100, turnaround: "2h" },
-      { name: "C", category: "Cat1", base_price_cad: 300, launch_price_cad: 150, turnaround: "3h" },
-    ];
-    const grouped = groupByCategory(services);
-    expect([...grouped.keys()]).toEqual(["Cat1", "Cat2"]);
-    expect(grouped.get("Cat1").map((s) => s.name)).toEqual(["A", "C"]);
-  });
+test("groupByCategory groups by category preserving first-appearance order", () => {
+  const services = [
+    { name: "A", category: "Cat1", base_price_cad: 100, launch_price_cad: 50, turnaround: "1h" },
+    { name: "B", category: "Cat2", base_price_cad: 200, launch_price_cad: 100, turnaround: "2h" },
+    { name: "C", category: "Cat1", base_price_cad: 300, launch_price_cad: 150, turnaround: "3h" },
+  ];
+  const grouped = groupByCategory(services);
+  assert.deepEqual([...grouped.keys()], ["Cat1", "Cat2"]);
+  assert.deepEqual(grouped.get("Cat1").map((s) => s.name), ["A", "C"]);
 });
 
-describe("renderPricingMarkdown", () => {
+test("renderPricingMarkdown renders title, promo, category, prices, footer", () => {
   const catalog = {
     promo_active: true,
     promo_label: "Launch Special — 50% Off",
     services: [
-      { name: "Enterprise → Premier/Pro Standard", category: "QuickBooks Conversion Services", base_price_cad: 14900, launch_price_cad: 7500, turnaround: "Under 60 minutes" },
+      {
+        name: "Enterprise → Premier/Pro Standard",
+        category: "QuickBooks Conversion Services",
+        base_price_cad: 14900,
+        launch_price_cad: 7500,
+        turnaround: "Under 60 minutes",
+      },
     ],
   };
   const md = renderPricingMarkdown(catalog, { generatedAt: "2026-06-14" });
-
-  it("includes title and canonical org name", () => {
-    expect(md).toContain("# NexFortis IT Solutions — QuickBooks Conversion Pricing");
-  });
-  it("shows the active promo label when promo_active", () => {
-    expect(md).toContain("Launch Special — 50% Off");
-  });
-  it("renders a category heading and the service with both prices", () => {
-    expect(md).toContain("## QuickBooks Conversion Services");
-    expect(md).toContain("Enterprise → Premier/Pro Standard");
-    expect(md).toContain("$75.00 CAD");   // launch price
-    expect(md).toContain("$149.00 CAD");  // regular price
-    expect(md).toContain("Under 60 minutes");
-  });
-  it("includes a generated-on date and currency note", () => {
-    expect(md).toContain("2026-06-14");
-    expect(md).toContain("All prices in CAD");
-  });
+  assert.ok(md.includes("# NexFortis IT Solutions — QuickBooks Conversion Pricing"));
+  assert.ok(md.includes("Launch Special — 50% Off"));
+  assert.ok(md.includes("## QuickBooks Conversion Services"));
+  assert.ok(md.includes("Enterprise → Premier/Pro Standard"));
+  assert.ok(md.includes("$75.00 CAD"));   // launch price
+  assert.ok(md.includes("$149.00 CAD"));  // regular price
+  assert.ok(md.includes("Under 60 minutes"));
+  assert.ok(md.includes("2026-06-14"));
+  assert.ok(md.includes("All prices in CAD"));
 });
 ```
 
 - [ ] **Step 2: Run tests to verify they fail**
 
-Run: `cd artifacts/qb-portal && pnpm vitest run scripts/pricing-lib.test.mjs`
-Expected: FAIL — `pricing-lib.mjs` does not exist / exports undefined.
+Run (from repo root): `node --test tests/pricing-lib.test.mjs`
+Expected: FAIL — cannot find module `pricing-lib.mjs` / exports undefined.
 
 - [ ] **Step 3: Implement the library**
 
@@ -438,13 +439,13 @@ export function renderPricingMarkdown(catalog, { generatedAt }) {
 
 - [ ] **Step 4: Run tests to verify they pass**
 
-Run: `cd artifacts/qb-portal && pnpm vitest run scripts/pricing-lib.test.mjs`
-Expected: PASS (all assertions green).
+Run (from repo root): `node --test tests/pricing-lib.test.mjs`
+Expected: PASS (all tests green).
 
 - [ ] **Step 5: Commit**
 
 ```bash
-git add artifacts/qb-portal/scripts/pricing-lib.mjs artifacts/qb-portal/scripts/pricing-lib.test.mjs
+git add artifacts/qb-portal/scripts/pricing-lib.mjs tests/pricing-lib.test.mjs
 git commit -m "feat(qb): add tested pricing-markdown formatting library"
 ```
 
@@ -528,13 +529,17 @@ In `artifacts/qb-portal/package.json`, change the `"build"` line to append the p
 "pricing": "node scripts/generate-pricing.mjs",
 ```
 
-- [ ] **Step 2: Verify the full build produces pricing.md in dist**
+- [ ] **Step 2: Verify the build produces pricing.md in dist (vite-only, matching CI)**
 
-Run:
+> IMPORTANT: qb-portal's full `pnpm build` runs prerender, which fails locally (known issue C2, helmet timeout). CI runs qb-portal vite-only. So verify by running vite build, then the generator (which the build appends), then checking the dist file:
+
+Run (from repo root):
 ```bash
-cd artifacts/qb-portal && pnpm build && test -s dist/public/pricing.md && echo "dist pricing OK"
+pnpm --filter @workspace/qb-portal exec vite build --config vite.config.ts
+pnpm --filter @workspace/qb-portal run pricing
+test -s artifacts/qb-portal/dist/public/pricing.md && echo "dist pricing OK"
 ```
-Expected: build succeeds; "dist pricing OK" prints.
+Expected: vite build succeeds; generator writes both public and dist copies; "dist pricing OK" prints. (The build-script edit is still correct for production, where prerender runs; we just can't exercise the full chain locally.)
 
 - [ ] **Step 3: Commit**
 
@@ -574,10 +579,10 @@ Match the surrounding className exactly; do not invent new styling.
 
 - [ ] **Step 3: Verify it renders and points to the asset**
 
-Run: `cd artifacts/qb-portal && pnpm build`
-Expected: build passes. Manually confirm the footer markup contains `href="/pricing.md"`:
+Run (from repo root): `pnpm --filter @workspace/qb-portal exec vite build --config vite.config.ts`
+Expected: build passes. Confirm the footer markup contains `href="/pricing.md"`:
 ```bash
-grep -rn 'href="/pricing.md"' src/
+grep -rn 'href="/pricing.md"' artifacts/qb-portal/src/
 ```
 Expected: one match in the footer component.
 
@@ -594,13 +599,14 @@ git commit -m "feat(qb): link pricing.md from footer for crawl discovery"
 
 **Files:** none
 
-- [ ] **Step 1: Run the repo's SEO test suite locally if present**
+- [ ] **Step 1: Run typecheck + the new unit test + the SEO lib tests**
 
-Run:
+Run (from repo root):
 ```bash
-cd artifacts/qb-portal && pnpm vitest run
+node --test tests/pricing-lib.test.mjs
+pnpm typecheck
 ```
-Expected: all tests pass (including the new `pricing-lib.test.mjs`).
+Expected: pricing-lib tests pass; typecheck passes. (Full `pnpm test:seo` requires built dist for both sites; CI runs the complete suite on the PR. The robots.txt/llms.txt/pricing.md changes do not touch rendered HTML or the sitemap, so they are not expected to affect the SEO invariant/snapshot baselines.)
 
 - [ ] **Step 2: Push and open PR (does NOT merge)**
 
