@@ -1,0 +1,16 @@
+# NexFortis IT Solutions
+
+> Canadian IT services company (Nobleton, ON) providing managed IT, Microsoft 365, QuickBooks migration, digital marketing, and workflow automation for small-to-medium businesses across Canada.
+
+## Services
+- [Services overview](https://nexfortis.com/services)
+- [IT Consulting & Managed IT](https://nexfortis.com/services/it-consulting)
+- [Microsoft 365](https://nexfortis.com/services/microsoft-365)
+- [QuickBooks Migration & Tools](https://nexfortis.com/services/quickbooks)
+- [Digital Marketing](https://nexfortis.com/services/digital-marketing)
+- [Workflow Automation](https://nexfortis.com/services/workflow-automation)
+
+## Key pages
+- [About](https://nexfortis.com/about)
+- [Contact](https://nexfortis.com/contact)
+- [Blog](https://nexfortis.com/blog)
