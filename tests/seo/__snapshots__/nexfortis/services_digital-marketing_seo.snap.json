@@ -1,13 +1,13 @@
 {
-  "route": "/services/digital-marketing",
-  "title": "Digital Marketing Services | NexFortis IT Solutions",
-  "description": "Digital marketing for Canadian businesses: SEO, local search, AI search (GEO), Google Ads, web design, and analytics — one connected strategy.",
-  "canonical": "https://nexfortis.com/services/digital-marketing",
+  "route": "/services/digital-marketing/seo",
+  "title": "SEO Services in Canada | NexFortis IT Solutions",
+  "description": "SEO services for Canadian businesses: keyword strategy, on-page and technical optimization, and content that ranks for the searches that bring real buyers.",
+  "canonical": "https://nexfortis.com/services/digital-marketing/seo",
   "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
   "og": {
-    "title": "Digital Marketing Services | NexFortis IT Solutions",
-    "description": "Digital marketing for Canadian businesses: SEO, local search, AI search (GEO), Google Ads, web design, and analytics — one connected strategy.",
-    "url": "https://nexfortis.com/services/digital-marketing",
+    "title": "SEO Services in Canada | NexFortis IT Solutions",
+    "description": "SEO services for Canadian businesses: keyword strategy, on-page and technical optimization, and content that ranks for the searches that bring real buyers.",
+    "url": "https://nexfortis.com/services/digital-marketing/seo",
     "image": "https://nexfortis.com/opengraph.png",
     "type": "website"
   },
@@ -17,19 +17,75 @@
   "headings": [
     {
       "level": 1,
-      "text": "Digital Marketing Services for Canadian Businesses"
+      "text": "SEO Services That Rank Canadian Businesses"
     },
     {
       "level": 2,
-      "text": "Marketing that brings you customers, not just clicks"
+      "text": "Rankings that actually grow revenue"
     },
     {
       "level": 2,
-      "text": "Our digital marketing services"
+      "text": "What's included in our SEO services"
     },
     {
       "level": 3,
-      "text": "SEO Services"
+      "text": "Keyword &amp; intent research"
+    },
+    {
+      "level": 3,
+      "text": "On-page optimization"
+    },
+    {
+      "level": 3,
+      "text": "Technical foundations"
+    },
+    {
+      "level": 3,
+      "text": "Content that earns rankings"
+    },
+    {
+      "level": 3,
+      "text": "Authority building"
+    },
+    {
+      "level": 3,
+      "text": "Measurement &amp; reporting"
+    },
+    {
+      "level": 2,
+      "text": "How we deliver SEO"
+    },
+    {
+      "level": 3,
+      "text": "Audit &amp; strategy"
+    },
+    {
+      "level": 3,
+      "text": "Fix &amp; optimize"
+    },
+    {
+      "level": 3,
+      "text": "Build authority"
+    },
+    {
+      "level": 3,
+      "text": "Measure &amp; compound"
+    },
+    {
+      "level": 2,
+      "text": "NexFortis vs. a typical SEO agency"
+    },
+    {
+      "level": 2,
+      "text": "What SEO costs"
+    },
+    {
+      "level": 3,
+      "text": "Retainers scaled to your market"
+    },
+    {
+      "level": 2,
+      "text": "Related services"
     },
     {
       "level": 3,
@@ -41,91 +97,11 @@
     },
     {
       "level": 2,
-      "text": "Also available across the cluster"
-    },
-    {
-      "level": 3,
-      "text": "Technical SEO"
-    },
-    {
-      "level": 3,
-      "text": "Google Business Profile"
-    },
-    {
-      "level": 3,
-      "text": "Content Marketing"
-    },
-    {
-      "level": 3,
-      "text": "Link Building &amp; Digital PR"
-    },
-    {
-      "level": 3,
-      "text": "Google Ads Management"
-    },
-    {
-      "level": 3,
-      "text": "Social Media Marketing"
-    },
-    {
-      "level": 3,
-      "text": "Web Design &amp; Development"
-    },
-    {
-      "level": 3,
-      "text": "Email Marketing"
-    },
-    {
-      "level": 3,
-      "text": "Conversion Rate Optimization"
-    },
-    {
-      "level": 3,
-      "text": "Analytics &amp; Reporting"
-    },
-    {
-      "level": 2,
-      "text": "Search: the foundation of everything"
-    },
-    {
-      "level": 2,
-      "text": "AI search: the shift most agencies are missing"
-    },
-    {
-      "level": 2,
-      "text": "Ads, content, web, and the data behind it"
-    },
-    {
-      "level": 2,
-      "text": "How we work"
-    },
-    {
-      "level": 3,
-      "text": "Discovery &amp; strategy"
-    },
-    {
-      "level": 3,
-      "text": "Build &amp; launch"
-    },
-    {
-      "level": 3,
-      "text": "Measure &amp; optimize"
-    },
-    {
-      "level": 3,
-      "text": "Scale what works"
-    },
-    {
-      "level": 2,
-      "text": "Why businesses choose NexFortis"
-    },
-    {
-      "level": 2,
       "text": "Frequently Asked Questions"
     },
     {
       "level": 2,
-      "text": "Ready to grow your online presence?"
+      "text": "Ready to rank for the searches that matter?"
     },
     {
       "level": 4,
@@ -166,6 +142,12 @@
           "position": 3,
           "name": "Digital Marketing",
           "item": "https://nexfortis.com/services/digital-marketing"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "SEO Services",
+          "item": "https://nexfortis.com/services/digital-marketing/seo"
         }
       ]
     },
@@ -175,66 +157,50 @@
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "What does a digital marketing agency actually do?",
+          "name": "How long does SEO take to work?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "A good one grows the number of qualified customers finding and choosing your business online. That spans search engine optimization, local search, paid ads, content, web design, and analytics. At NexFortis we run these as one connected strategy rather than disconnected services, so every channel reinforces the others instead of competing for budget."
+            "text": "Most campaigns see early movement on lower-competition terms within two to three months, with meaningful traffic gains around the six-month mark. SEO compounds — the work you do in month one keeps paying off in month twelve, which is why it outperforms ads over the long run. Anyone promising page-one rankings in 30 days is selling a shortcut that risks a penalty."
           }
         },
         {
           "@type": "Question",
-          "name": "How much does digital marketing cost?",
+          "name": "Do you guarantee #1 rankings?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "It depends on your market and goals, which is why we price in transparent ranges rather than one-size packages. Most small and mid-sized Canadian businesses invest somewhere between a maintainer budget for steady local visibility and a growth budget for competitive markets. You get a fixed monthly scope, clear reporting, and no long-term lock-in, so you can scale up or down as results come in."
+            "text": "No reputable SEO can, because Google's results depend on factors no agency controls. What we guarantee is the work: the audit, the fixes, the content, and the links, all reported transparently. We focus on rankings for the terms that drive revenue and on the leads those rankings produce."
           }
         },
         {
           "@type": "Question",
-          "name": "How is NexFortis different from a typical agency?",
+          "name": "What is the difference between SEO and local SEO?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Three ways. You work directly with a senior consultant instead of being handed to a junior. Every plan is built on real Canadian search data, not a generic playbook. And we include AI search optimization — getting you cited by ChatGPT and Google's AI Overviews — which almost no local competitor offers yet."
+            "text": "SEO earns rankings in the standard organic results for any searcher. Local SEO focuses on the Google map pack and 'near me' searches for businesses that serve a specific area. Most local businesses need both, and we run them together so the map and the organic results reinforce each other."
           }
         },
         {
           "@type": "Question",
-          "name": "Do I need SEO, ads, or both?",
+          "name": "Will you need to change my website?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "It depends on your timeline and margins. Ads buy visibility immediately but stop the moment you stop paying. SEO and local search take a few months but compound into traffic you don't rent. Most businesses start with one and layer in the other; we'll recommend the mix that fits your goals rather than selling you everything at once."
+            "text": "Usually some. SEO touches page content, structure, internal links, and technical settings. We work with your existing site and developers wherever possible, and we flag anything that needs a build change before we touch it — nothing ships without your sign-off."
           }
         },
         {
           "@type": "Question",
-          "name": "How quickly will I see results?",
+          "name": "How do you report results?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Paid ads and Google Business Profile improvements can drive enquiries within weeks. SEO and content typically show meaningful gains around the three-to-six-month mark and keep compounding from there. We set realistic expectations against your specific market up front, and we report progress every month so you're never guessing."
+            "text": "You get a monthly report in plain language: which keywords moved, how organic traffic and leads changed, what we shipped, and what's next. We connect GA4 and Google Search Console so the numbers come straight from Google, not a black box."
           }
         },
         {
           "@type": "Question",
-          "name": "Do you work with businesses outside the GTA?",
+          "name": "Is SEO still worth it now that AI answers questions directly?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes. We're based in Nobleton and know the Greater Toronto Area well, but search marketing works anywhere. We serve clients across Ontario and the rest of Canada, and our local SEO work simply targets whichever cities and service areas matter to you."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "What is GEO or AI search, and do I need it?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "GEO — Generative Engine Optimization — is the work that gets your brand cited by AI engines like ChatGPT, Google's AI Overviews, Perplexity, and Gemini, where a fast-growing share of buyers now start. If your customers are researching online, you'll want to be in those answers before your competitors are. It's a forward-looking add-on we build on top of solid SEO foundations."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Can you take over marketing we've already started?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes, and most of our clients come to us that way. We start by auditing what's already in place — your website, any past SEO work, ad accounts, and analytics — then keep what's working and fix or replace what isn't. You won't pay us to redo good work, and we'll be straight with you about what a previous provider got right and where the gaps are."
+            "text": "More than ever. The same strong, well-structured content that ranks in Google is what AI engines such as ChatGPT and Google's AI Overviews cite when they answer. We build for both, and our Generative Engine Optimization service adds the AI-specific layer on top of solid SEO foundations."
           }
         }
       ]
@@ -330,9 +296,9 @@
     {
       "@context": "https://schema.org",
       "@type": "Service",
-      "name": "Digital Marketing Services",
-      "description": "Full-service digital marketing for Canadian businesses — SEO, local SEO, AI search optimization, paid media, web design, and analytics.",
-      "url": "https://nexfortis.com/services/digital-marketing",
+      "name": "SEO Services",
+      "description": "Search engine optimization for Canadian businesses — keyword strategy, on-page and technical SEO, content, and authority building.",
+      "url": "https://nexfortis.com/services/digital-marketing/seo",
       "provider": {
         "@type": "Organization",
         "name": "NexFortis IT Solutions",
@@ -342,7 +308,7 @@
         "@type": "Country",
         "name": "Canada"
       },
-      "serviceType": "Digital Marketing"
+      "serviceType": "Search Engine Optimization"
     },
     {
       "@context": "https://schema.org",
@@ -422,32 +388,24 @@
       "href": "/services"
     },
     {
-      "text": "SEO services",
-      "href": "/services/digital-marketing/seo"
+      "text": "digital marketing services",
+      "href": "/services/digital-marketing"
     },
     {
       "text": "local SEO",
       "href": "/services/digital-marketing/local-seo"
     },
     {
-      "text": "Generative Engine Optimization",
-      "href": "/services/digital-marketing/generative-engine-optimization"
-    },
-    {
       "text": "Source: Statcounter Global Stats",
       "href": "https://gs.statcounter.com/search-engine-market-share"
     },
     {
-      "text": "Source: Semrush study, via Search Engine Land",
-      "href": "https://searchengineland.com/google-ai-overviews-surge-pullback-data-466314"
+      "text": "Source: Backlinko, 4M-result CTR study",
+      "href": "https://backlinko.com/google-ctr-stats"
     },
     {
-      "text": "Source: BrightLocal Local Consumer Review Survey 2024",
-      "href": "https://www.brightlocal.com/research/local-consumer-review-survey-2024/"
-    },
-    {
-      "text": "SEO Services",
-      "href": "/services/digital-marketing/seo"
+      "text": "Source: 2024 Web Almanac, HTTP Archive",
+      "href": "https://almanac.httparchive.org/en/2024/performance"
     },
     {
       "text": "Local SEO",
