@@ -1,0 +1,24 @@
+#!/bin/sh
+# NexFortis content pre-push gate — the ONE enforcement that works in any tool
+# (Cursor, Claude Code, CI, a human), because it lives in git, not the model.
+#
+# Blocks a push if:
+#   1. keyword cannibalization exists (two pages own the same keyword), or
+#   2. any page marked published lacks its run-book artifacts.
+#
+# INSTALL (once, per clone):  git config core.hooksPath seo-tools/runbook/git-hooks
+# (On Unix also: chmod +x seo-tools/runbook/git-hooks/pre-push)
+#
+# NOTE: a determined caller can bypass with `git push --no-verify`. Don't.
+# This deliberately does NOT run `pnpm test:seo` (that needs a full build/prerender);
+# CI runs the SEO suite, and the agent runs it at Step 8. This hook is the fast,
+# build-free gate that catches the two run-book-specific failures.
+set -e
+
+echo "[pre-push] 1/2 cannibalization check..."
+node seo-tools/runbook/check-cannibalization.mjs
+
+echo "[pre-push] 2/2 publish-readiness check (published pages must have run-book artifacts)..."
+node seo-tools/runbook/check-publish-readiness.mjs
+
+echo "[pre-push] gates passed."
