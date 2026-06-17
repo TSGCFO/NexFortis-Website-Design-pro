@@ -110,3 +110,37 @@ The Phase 2 fix prompt template (one PR per audit issue) is at
 Further reading:
 - [tests/seo/README.md](./tests/seo/README.md) — full guide (commands, allowlist, snapshot review checklist, layout)
 - [docs/superpowers/specs/2026-04-25-seo-regression-suite-design.md](./docs/superpowers/specs/2026-04-25-seo-regression-suite-design.md) — design rationale and invariant definitions
+
+## Cursor Cloud specific instructions
+
+The Cloud VM snapshot already has Node 24, pnpm 10.33.2, and PostgreSQL 16
+installed; the startup update script runs `pnpm install --frozen-lockfile`.
+The notes below are the non-obvious gotchas — standard dev/build/test commands
+live in the [Services overview](#services-overview), [Build commands](#build-commands),
+and [SEO regression test suite](#seo-regression-test-suite) sections above.
+
+- **Node version.** The base image's default `node` (`/exec-daemon/node`) is
+  v22, which shadows nvm in non-login shells. Node 24 is forced to win via
+  symlinks in `/usr/local/cargo/bin` (that dir sits ahead of `/exec-daemon`
+  in `PATH`), so `node`/`pnpm`/`npm`/`npx` already resolve to the Node 24
+  toolchain — you do not need to run `nvm use`. Verify with `node --version`
+  (expect `v24.x`).
+- **PostgreSQL is not auto-started.** Data, the `nexfortis` database, and the
+  `ubuntu`/`devpass` superuser all persist in the snapshot, but the cluster
+  does not start on boot. Run `sudo pg_ctlcluster 16 main start` once per
+  session before starting the API server. Re-run
+  `DATABASE_URL="postgresql://ubuntu:devpass@localhost:5432/nexfortis" pnpm --filter @workspace/db push`
+  only after a schema change.
+- **Run the API on port 8080 for qb-portal UI testing.** The qb-portal Vite
+  dev server proxies `/api` → `http://localhost:8080` (hardcoded in
+  `artifacts/qb-portal/vite.config.ts`). To exercise qb-portal end-to-end
+  through the browser, start the API with `PORT=8080` instead of the `3001`
+  shown in the services table. The `nexfortis` dev server has **no** `/api`
+  proxy, so its API-backed features (contact form) won't reach the backend in
+  dev unless you add a proxy or set an API base URL.
+- **End-to-end smoke test that needs no external services:** with the API
+  (`PORT=8080`) and qb-portal (`PORT=5174`, `BASE_PATH="/"`) running, open
+  `http://localhost:5174/order?service=19`, fill name + email, accept the
+  terms checkbox, and submit. Stripe is unconfigured so the order is created
+  with a simulated payment (`status="submitted"`) — confirm with
+  `psql "postgresql://ubuntu:devpass@localhost:5432/nexfortis" -c "SELECT id, status FROM qb_orders ORDER BY id DESC LIMIT 1;"`.
