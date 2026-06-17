@@ -85,7 +85,7 @@ For each page, create `seo-tools/runbook/<slug>/` (pillar slug = `pillar`) and w
 | `05-draft.md` | 5 | Word count in the Step-4 range; **every statistic carries an inline source URL or a `[NEEDS SOURCE]`/`[CONFIRM]` tag**; no banned jargon. |
 | `06a-factcheck.json` | 6a | A line-referenced ledger of every stat/outcome/capability claim → verified (with source) / cut / `[CONFIRM]`. Zero unresolved fabrications. |
 | `06b-eeat.json` | 6b | Self-audited EEAT ≥ 8/10 (see §7) with the concrete fixes you applied. |
-| `06d-aidetect.json` | 6d | Undetectable.ai AI score **< 50** (human) for the page's prose + a plagiarism spot-check result. If `UNDETECTABLE_AI_API_KEY` isn't set, `{"status":"pending-operator"}`. |
+| `06d-aidetect.json` | 6d | Undetectable.ai AI score **< 50** (human) AND a Winston AI **plagiarism scan** (low score, no unattributed verbatim matches). If a key is missing, `{"status":"pending-operator"}`. |
 | `07-onpage.json` | 7 | Records the title/meta/schema + the internal links wired (cluster-correct only). |
 | `08-qa.json` | 8 | `pnpm test:seo` result + `check-cannibalization.mjs` result + the live-URL HTTP check. |
 
@@ -111,9 +111,9 @@ The Local SEO page already has `01`, `02`, and a reusable brief (`seo-tools/tmp/
   per-call). If the operator's launch message **pre-authorized a budget**, proceed within it and log
   every spend. Otherwise, STOP before the first paid call of each type and request approval. Always
   reuse an existing `seo-tools/tmp/brief-*.json` before creating a new brief.
-- **AI-detection (Undetectable.ai).** Gate 3 runs `seo-tools/undetectable-detect.mjs` — needs
-  `UNDETECTABLE_AI_API_KEY`. If absent, mark Gate 3 `pending-operator`. Plagiarism is a free browser
-  spot-check (§5), not an API.
+- **Gate-3 keys.** AI-detection = Undetectable.ai (`UNDETECTABLE_AI_API_KEY`, runs
+  `seo-tools/undetectable-detect.mjs`). Plagiarism = Winston AI (`WINSTON_AI_API_KEY`, free tier to
+  start). If either key is absent, mark that half of Gate 3 `pending-operator`.
 
 ---
 
@@ -131,7 +131,7 @@ setups pass `--no-verify` or skip `core.hooksPath`). If any differs, adapt and t
 | Ahrefs / Semrush cross-check | ❌ (Claude Code MCP plugins) | **Fallback:** DataForSEO + KI are sufficient for the consensus; if the operator wants the 3rd/4th source, they run it and hand you the numbers. Note the gap in `01-keywords.json`. |
 | EEAT audit (aaron auditor) | ❌ (Claude Code plugin) | **Fallback:** self-audit against the CORE-EEAT checklist in §7. Record score + fixes in `06b-eeat.json`. |
 | AI-detection (Gate 3) | ✅ Undetectable.ai via `node seo-tools/undetectable-detect.mjs` (key `UNDETECTABLE_AI_API_KEY`) | Primary. Extract page prose to `seo-tools/tmp/detect/<slug>.txt`, run it, target **AI score < 50**; if flagged, humanize and re-run. |
-| Plagiarism | ⚠️ no API key | **Free:** you have computer-use — spot-check 2–3 distinctive sentences in a browser against Google / a free checker; investigate any verbatim match. (Optional API that does AI+plagiarism in one: Winston AI, low monthly.) |
+| Plagiarism (Gate 3) | ✅ Winston AI Plagiarism API (`WINSTON_AI_API_KEY`) | Real gate (Undetectable has no plagiarism API). Free tier = 2,500 credits; paid from ~$10/mo. Submit each page's prose → read `plagiarismScore` + sources; investigate any unattributed match. Wire a small helper like `undetectable-detect.mjs`, using the spec at `docs.gowinston.ai/api-reference/plagiarism`. |
 | Live page verification | ✅ you control a browser/VM (computer-use) | **Build, deploy the preview, and visually verify the live page yourself** (Step 8); use `curl` for quick HTTP/SEO-tag spot checks too. |
 | Web fact-checking (Step 6a) | ✅ your built-in web/fetch tools | Verify every stat against a real primary source. |
 
@@ -171,7 +171,8 @@ visitor decide to buy?**
    `[CONFIRM]`. A generic "double-check the stats" does NOT satisfy this. (6b) **EEAT self-audit** (§7),
    target 8+. (6c) **Humanize** — write clean from the start; only sharpen. (6d) **AI-detection + plagiarism**
    LAST (after all edits): `node seo-tools/undetectable-detect.mjs` (Undetectable.ai) → target AI
-   score **< 50**; if flagged, humanize and re-run. Plus a free browser plagiarism spot-check (§5).
+   score **< 50**; if flagged, humanize and re-run. **Plagiarism: Winston AI Plagiarism API**
+   (`WINSTON_AI_API_KEY`) — scan each page's prose, investigate any unattributed verbatim match.
 7. **On-page + internal links** → `07-onpage.json` + the actual code (§9). Title/meta/schema; wire
    links via the typed link graph (cluster-correct only); flip `published: true`; add the nav entry.
 8. **Publish QA** → `08-qa.json`. Build + `pnpm test:seo` (must pass) + `check-cannibalization.mjs`
@@ -194,7 +195,7 @@ Record the score, the veto results, and the fixes you applied in `06b-eeat.json`
 
 **Hard Gate 1** = cannibalization (Step 2, `check-cannibalization.mjs`).
 **Hard Gate 2** = the itemized fact-check ledger (Step 6a).
-**Hard Gate 3** = Undetectable.ai AI-detection (AI score < 50) + a free plagiarism spot-check (Step 6d), or `pending-operator`.
+**Hard Gate 3** = Undetectable.ai AI-detection (AI score < 50) + Winston AI plagiarism scan (low score, no unattributed matches) (Step 6d), or `pending-operator`.
 
 ---
 
@@ -238,8 +239,8 @@ The architecture already exists; each page is: content entry → wrapper → rou
 ## 11. DEFINITION OF DONE (per page) + final handoff
 A page is **done** when: all 10 artifacts exist and pass their done-checks; `pnpm test:seo` and
 `check-cannibalization.mjs` are green; the page is wired + published + in the nav; you have
-visually verified the live preview page; and Gate 3 (Undetectable AI score < 50 + plagiarism
-spot-check) is either passed or explicitly `pending-operator`.
+visually verified the live preview page; and Gate 3 (Undetectable AI score < 50 + Winston
+plagiarism scan) is either passed or explicitly `pending-operator`.
 
 **Per page, hand back:** the PR link; word count vs. the SERP-derived target (+ the length trade-off);
 the **Step-6a verification ledger** (every stat/claim → verified/cut/`[CONFIRM]`); the cluster it

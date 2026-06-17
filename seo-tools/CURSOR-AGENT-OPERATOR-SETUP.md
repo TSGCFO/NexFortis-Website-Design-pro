@@ -30,6 +30,7 @@ Provide these to the Cursor cloud environment (as Cursor secrets/env vars, or in
 - `KEYWORD_INSIGHTS_FOLDER_ID` (the NexFortis Keyword Insights workspace folder id — copy it from the KI app URL, or from your existing `seo-tools/secrets.local.json`; don't paste it into committed files)
 - `DATAFORSEO_LOGIN` and `DATAFORSEO_PASSWORD`
 - `UNDETECTABLE_AI_API_KEY` (Undetectable.ai — Gate-3 AI-detection; you have API access for this)
+- `WINSTON_AI_API_KEY` (Winston AI — Gate-3 plagiarism; free account = 2,500 credits to start, paid from ~$10/mo)
 
 Balances last seen: Keyword Insights ≈ 14,710 credits; DataForSEO ≈ $30. **14 briefs ≈ 7,000 KI credits**
 — enough, but confirm before launch.
@@ -53,9 +54,11 @@ path in your launch message.
 - **Undetectable.ai** (Gate-3 AI-detection) — ✅ you have API access; the repo helper
   `undetectable-detect.mjs` is wired. Just set `UNDETECTABLE_AI_API_KEY`. (Undetectable does
   AI-detection + humanizing, **not** plagiarism.)
-- **Plagiarism** — no API. The agent does a free browser spot-check (it has computer-use). If you want
-  a single API that does AI-detection *and* plagiarism later, **Winston AI** is low-cost (not the
-  hundreds Originality charges) — but it's an extra subscription; not needed to launch.
+- **Plagiarism** — ✅ **Winston AI Plagiarism API** (verified: Undetectable has **no** plagiarism API,
+  UI-only). Create a free Winston account (2,500 free credits), set `WINSTON_AI_API_KEY`; paid plans
+  from ~$10/mo — not the hundreds Originality charges. (Winston *also* does AI-detection, so you could
+  consolidate both Gate-3 halves onto it; but Undetectable is already wired for AI-detection, so the
+  simplest split is **Undetectable = AI-detection, Winston = plagiarism**.)
 - **Live verification + self-testing** — ✅ Cursor cloud agents now run a VM with a browser
   (computer-use), so the agent builds, opens the Render preview, and visually verifies each live page
   itself; you don't need to wire a browser tool.
@@ -82,5 +85,5 @@ open `[CONFIRM]` list, and total credits spent. **You merge; the agent never doe
 > before the next, and never fabricate. Order: pillar first, then the 13 spokes starting with Local
 > SEO (reuse its Steps 1–3). Facts source: `<path you provide>`. Budget approved: up to 14 KI briefs
 > (~7,000 credits) + DataForSEO pulls; reuse existing briefs; do NOT use the ~1,200-credit KI writer.
-> Gate-3 AI-detection: Undetectable.ai (`UNDETECTABLE_AI_API_KEY` is set); plagiarism = free browser
-> spot-check. Open one PR and STOP — do not merge.
+> Gate 3: AI-detection via Undetectable.ai (`UNDETECTABLE_AI_API_KEY`) + plagiarism via Winston AI
+> (`WINSTON_AI_API_KEY`). Open one PR and STOP — do not merge.
