@@ -1,13 +1,13 @@
 {
-  "route": "/services/digital-marketing",
-  "title": "Digital Marketing Services | NexFortis IT Solutions",
-  "description": "Digital marketing for Canadian businesses: SEO, local search, AI search (GEO), Google Ads, web design, and analytics — one connected strategy.",
-  "canonical": "https://nexfortis.com/services/digital-marketing",
+  "route": "/services/digital-marketing/local-seo",
+  "title": "Local SEO Services | NexFortis IT Solutions",
+  "description": "Local SEO for GTA businesses: rank in the Google Map Pack and 'near me' searches, win your Google Business Profile, and turn nearby searches into calls.",
+  "canonical": "https://nexfortis.com/services/digital-marketing/local-seo",
   "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
   "og": {
-    "title": "Digital Marketing Services | NexFortis IT Solutions",
-    "description": "Digital marketing for Canadian businesses: SEO, local search, AI search (GEO), Google Ads, web design, and analytics — one connected strategy.",
-    "url": "https://nexfortis.com/services/digital-marketing",
+    "title": "Local SEO Services | NexFortis IT Solutions",
+    "description": "Local SEO for GTA businesses: rank in the Google Map Pack and 'near me' searches, win your Google Business Profile, and turn nearby searches into calls.",
+    "url": "https://nexfortis.com/services/digital-marketing/local-seo",
     "image": "https://nexfortis.com/opengraph.png",
     "type": "website"
   },
@@ -17,15 +17,75 @@
   "headings": [
     {
       "level": 1,
-      "text": "Digital Marketing Services for Canadian Businesses"
+      "text": "Local SEO That Puts You on the Map"
     },
     {
       "level": 2,
-      "text": "Marketing that brings you customers, not just clicks"
+      "text": "Get found by customers down the street"
     },
     {
       "level": 2,
-      "text": "Our digital marketing services"
+      "text": "What's included in local SEO"
+    },
+    {
+      "level": 3,
+      "text": "Google Business Profile optimization"
+    },
+    {
+      "level": 3,
+      "text": "Citations &amp; NAP consistency"
+    },
+    {
+      "level": 3,
+      "text": "Review generation &amp; response"
+    },
+    {
+      "level": 3,
+      "text": "Location &amp; service-area pages"
+    },
+    {
+      "level": 3,
+      "text": "Local content &amp; link building"
+    },
+    {
+      "level": 3,
+      "text": "Local rank &amp; call tracking"
+    },
+    {
+      "level": 2,
+      "text": "How we deliver local SEO"
+    },
+    {
+      "level": 3,
+      "text": "Local audit"
+    },
+    {
+      "level": 3,
+      "text": "Profile &amp; citations"
+    },
+    {
+      "level": 3,
+      "text": "Reviews &amp; local pages"
+    },
+    {
+      "level": 3,
+      "text": "Track &amp; grow"
+    },
+    {
+      "level": 2,
+      "text": "NexFortis vs. a typical local SEO provider"
+    },
+    {
+      "level": 2,
+      "text": "What local SEO costs"
+    },
+    {
+      "level": 3,
+      "text": "Priced by area and competition"
+    },
+    {
+      "level": 2,
+      "text": "Related services"
     },
     {
       "level": 3,
@@ -33,91 +93,7 @@
     },
     {
       "level": 3,
-      "text": "Local SEO"
-    },
-    {
-      "level": 3,
       "text": "GEO &amp; AI Search"
-    },
-    {
-      "level": 2,
-      "text": "Also available across the cluster"
-    },
-    {
-      "level": 3,
-      "text": "Technical SEO"
-    },
-    {
-      "level": 3,
-      "text": "Google Business Profile"
-    },
-    {
-      "level": 3,
-      "text": "Content Marketing"
-    },
-    {
-      "level": 3,
-      "text": "Link Building &amp; Digital PR"
-    },
-    {
-      "level": 3,
-      "text": "Google Ads Management"
-    },
-    {
-      "level": 3,
-      "text": "Social Media Marketing"
-    },
-    {
-      "level": 3,
-      "text": "Web Design &amp; Development"
-    },
-    {
-      "level": 3,
-      "text": "Email Marketing"
-    },
-    {
-      "level": 3,
-      "text": "Conversion Rate Optimization"
-    },
-    {
-      "level": 3,
-      "text": "Analytics &amp; Reporting"
-    },
-    {
-      "level": 2,
-      "text": "Search: the foundation of everything"
-    },
-    {
-      "level": 2,
-      "text": "AI search: the shift most agencies are missing"
-    },
-    {
-      "level": 2,
-      "text": "Ads, content, web, and the data behind it"
-    },
-    {
-      "level": 2,
-      "text": "How we work"
-    },
-    {
-      "level": 3,
-      "text": "Discovery &amp; strategy"
-    },
-    {
-      "level": 3,
-      "text": "Build &amp; launch"
-    },
-    {
-      "level": 3,
-      "text": "Measure &amp; optimize"
-    },
-    {
-      "level": 3,
-      "text": "Scale what works"
-    },
-    {
-      "level": 2,
-      "text": "Why businesses choose NexFortis"
     },
     {
       "level": 2,
@@ -125,7 +101,7 @@
     },
     {
       "level": 2,
-      "text": "Ready to grow your online presence?"
+      "text": "Want to own your local search results?"
     },
     {
       "level": 4,
@@ -166,6 +142,12 @@
           "position": 3,
           "name": "Digital Marketing",
           "item": "https://nexfortis.com/services/digital-marketing"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Local SEO",
+          "item": "https://nexfortis.com/services/digital-marketing/local-seo"
         }
       ]
     },
@@ -175,66 +157,42 @@
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "What does a digital marketing agency actually do?",
+          "name": "What is local SEO?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "A good one grows the number of qualified customers finding and choosing your business online. That spans search engine optimization, local search, paid ads, content, web design, and analytics. At NexFortis we run these as one connected strategy rather than disconnected services, so every channel reinforces the others instead of competing for budget."
+            "text": "Local SEO is the work that gets your business shown to people searching nearby — in the Google map pack, on 'near me' queries, and on Google Maps. It's driven mostly by your Google Business Profile, consistent business information across the web, reviews, and location-relevant content."
           }
         },
         {
           "@type": "Question",
-          "name": "How much does digital marketing cost?",
+          "name": "Do I need a storefront to do local SEO?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "It depends on your market and goals, which is why we price in transparent ranges rather than one-size packages. Most small and mid-sized Canadian businesses invest somewhere between a maintainer budget for steady local visibility and a growth budget for competitive markets. You get a fixed monthly scope, clear reporting, and no long-term lock-in, so you can scale up or down as results come in."
+            "text": "No. Service-area businesses that travel to customers — IT support, trades, consultants, home services — can rank locally without a public address by setting a service area on the Google Business Profile. We configure it correctly so you appear for the areas you actually serve."
           }
         },
         {
           "@type": "Question",
-          "name": "How is NexFortis different from a typical agency?",
+          "name": "How important are Google reviews?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Three ways. You work directly with a senior consultant instead of being handed to a junior. Every plan is built on real Canadian search data, not a generic playbook. And we include AI search optimization — getting you cited by ChatGPT and Google's AI Overviews — which almost no local competitor offers yet."
+            "text": "Very. Reviews influence both your map-pack ranking and whether a searcher chooses you over the business listed next to you. Steady, genuine reviews and prompt responses are one of the highest-return activities in local SEO, so we build a simple system to earn them."
           }
         },
         {
           "@type": "Question",
-          "name": "Do I need SEO, ads, or both?",
+          "name": "How long does local SEO take?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "It depends on your timeline and margins. Ads buy visibility immediately but stop the moment you stop paying. SEO and local search take a few months but compound into traffic you don't rent. Most businesses start with one and layer in the other; we'll recommend the mix that fits your goals rather than selling you everything at once."
+            "text": "Google Business Profile improvements can move the map pack within weeks, faster than standard SEO. Citations, reviews, and location pages compound over two to four months. Competitive urban areas take longer than quieter suburbs, and we set expectations against your specific market up front."
           }
         },
         {
           "@type": "Question",
-          "name": "How quickly will I see results?",
+          "name": "Can you handle multiple locations?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Paid ads and Google Business Profile improvements can drive enquiries within weeks. SEO and content typically show meaningful gains around the three-to-six-month mark and keep compounding from there. We set realistic expectations against your specific market up front, and we report progress every month so you're never guessing."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Do you work with businesses outside the GTA?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes. We're based in Nobleton and know the Greater Toronto Area well, but search marketing works anywhere. We serve clients across Ontario and the rest of Canada, and our local SEO work simply targets whichever cities and service areas matter to you."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "What is GEO or AI search, and do I need it?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "GEO — Generative Engine Optimization — is the work that gets your brand cited by AI engines like ChatGPT, Google's AI Overviews, Perplexity, and Gemini, where a fast-growing share of buyers now start. If your customers are researching online, you'll want to be in those answers before your competitors are. It's a forward-looking add-on we build on top of solid SEO foundations."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Can you take over marketing we've already started?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes, and most of our clients come to us that way. We start by auditing what's already in place — your website, any past SEO work, ad accounts, and analytics — then keep what's working and fix or replace what isn't. You won't pay us to redo good work, and we'll be straight with you about what a previous provider got right and where the gaps are."
+            "text": "Yes. We manage separate profiles, citations, and location pages for each branch or service area, keeping the business information consistent across all of them while tailoring the local content to each place you operate."
           }
         }
       ]
@@ -330,9 +288,9 @@
     {
       "@context": "https://schema.org",
       "@type": "Service",
-      "name": "Digital Marketing Services",
-      "description": "Full-service digital marketing for Canadian businesses — SEO, local SEO, AI search optimization, paid media, web design, and analytics.",
-      "url": "https://nexfortis.com/services/digital-marketing",
+      "name": "Local SEO Services",
+      "description": "Local search optimization for businesses across the Greater Toronto Area — Google Business Profile, citations, reviews, and location pages.",
+      "url": "https://nexfortis.com/services/digital-marketing/local-seo",
       "provider": {
         "@type": "Organization",
         "name": "NexFortis IT Solutions",
@@ -342,7 +300,7 @@
         "@type": "Country",
         "name": "Canada"
       },
-      "serviceType": "Digital Marketing"
+      "serviceType": "Local SEO"
     },
     {
       "@context": "https://schema.org",
@@ -422,36 +380,28 @@
       "href": "/services"
     },
     {
+      "text": "digital marketing services",
+      "href": "/services/digital-marketing"
+    },
+    {
       "text": "SEO services",
       "href": "/services/digital-marketing/seo"
-    },
-    {
-      "text": "local SEO",
-      "href": "/services/digital-marketing/local-seo"
-    },
-    {
-      "text": "Generative Engine Optimization",
-      "href": "/services/digital-marketing/generative-engine-optimization"
-    },
-    {
-      "text": "Source: Statcounter Global Stats",
-      "href": "https://gs.statcounter.com/search-engine-market-share"
-    },
-    {
-      "text": "Source: Semrush study, via Search Engine Land",
-      "href": "https://searchengineland.com/google-ai-overviews-surge-pullback-data-466314"
     },
     {
       "text": "Source: BrightLocal Local Consumer Review Survey 2024",
       "href": "https://www.brightlocal.com/research/local-consumer-review-survey-2024/"
     },
     {
-      "text": "SEO Services",
-      "href": "/services/digital-marketing/seo"
+      "text": "Source: BrightLocal Local SEO Statistics",
+      "href": "https://www.brightlocal.com/resources/local-seo-statistics/"
     },
     {
-      "text": "Local SEO",
-      "href": "/services/digital-marketing/local-seo"
+      "text": "Source: Statcounter Global Stats",
+      "href": "https://gs.statcounter.com/search-engine-market-share"
+    },
+    {
+      "text": "SEO Services",
+      "href": "/services/digital-marketing/seo"
     },
     {
       "text": "GEO &amp; AI Search",

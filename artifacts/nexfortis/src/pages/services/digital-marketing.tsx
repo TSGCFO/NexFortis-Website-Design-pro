@@ -1,188 +1,335 @@
-import { PageHero, Section, SectionHeader, FAQItem, PageBreadcrumbs } from "@/components/ui-elements";
-import { SEO, ServiceSchema, BreadcrumbSchema, FAQSchema } from "@/components/seo";
-import { Globe, Server, Search, PenTool, BarChart, Settings, ArrowRight, CheckCircle2 } from "lucide-react";
-import { Link } from "wouter";
-import { motion } from "framer-motion";
 import { useState } from "react";
+import {
+  SEO,
+  ServiceSchema,
+  BreadcrumbSchema,
+  FAQSchema,
+  PersonSchema,
+} from "@/components/seo";
+import {
+  Section,
+  SectionHeader,
+  PageHero,
+  PageBreadcrumbs,
+  FAQItem,
+} from "@/components/ui-elements";
+import { StatBand } from "@/components/content/StatBand";
+import { StepsTimeline } from "@/components/content/StepsTimeline";
+import { FeatureComparison } from "@/components/content/FeatureComparison";
+import { RelatedServices } from "@/components/content/RelatedServices";
+import { FeatureGrid } from "@/components/content/FeatureGrid";
+import { CTAStrip } from "@/components/content/CTAStrip";
+import { AuthorBio } from "@/components/content/AuthorBio";
+import { InlineLink } from "@/components/content/InlineLink";
+import {
+  getPublishedSpokes,
+  getDmSpoke,
+  DM_SPOKES,
+  DM_PILLAR_HREF,
+} from "@/lib/internal-links";
+import { DM_AUTHOR } from "./digital-marketing/_dmContent";
+import type { SourcedStat } from "@/components/content/types";
 
-const dmFaqs = [
+const seo = getDmSpoke("seo");
+const localSeo = getDmSpoke("local-seo");
+const geo = getDmSpoke("generative-engine-optimization");
+
+// The remaining (not-yet-published) capabilities, rendered as descriptive
+// (non-linked) cards so the hub shows its full breadth without linking an
+// unbuilt spoke or repeating the published cards shown above.
+const FULL_MENU = DM_SPOKES.filter((s) => !s.published).map((s) => ({
+  icon: s.icon,
+  title: s.title,
+  description: s.blurb,
+}));
+
+const STATS: readonly SourcedStat[] = [
   {
-    question: "How long does it take to build a custom business website?",
-    answer: "Most custom business websites are completed within four to six weeks from kickoff to launch. This includes discovery, wireframing, design, development, content integration, and testing. Simpler sites (five to ten pages) can be ready in as little as three weeks, while larger sites with e-commerce, client portals, or complex integrations may take eight to twelve weeks. We provide a clear timeline during our discovery phase so you know exactly what to expect.",
+    value: "≈90%",
+    label: "of global search runs on Google — still the centre of demand.",
+    sourceName: "Statcounter Global Stats",
+    sourceUrl: "https://gs.statcounter.com/search-engine-market-share",
   },
   {
-    question: "Do you offer ongoing SEO services or just one-time optimization?",
-    answer: "We offer both. Every website we build includes foundational on-page SEO — optimized title tags, meta descriptions, header structure, image alt text, schema markup, and site speed optimization. For businesses that want to actively grow their organic traffic, we offer monthly SEO retainers that include keyword research, content planning, link building, technical audits, and monthly performance reporting. Most of our clients see measurable ranking improvements within three to six months of ongoing SEO work.",
+    value: "≈16%",
+    label: "of Google searches showed an AI Overview by late 2025 — search is changing fast.",
+    sourceName: "Semrush study, via Search Engine Land",
+    sourceUrl: "https://searchengineland.com/google-ai-overviews-surge-pullback-data-466314",
   },
   {
-    question: "Can you manage our Google Ads campaigns?",
-    answer: "Yes. We create and manage data-driven Google Ads campaigns including search ads, display ads, and remarketing. Our approach starts with keyword research and competitor analysis, followed by ad copy creation, landing page optimization, and ongoing bid management. We provide transparent monthly reporting showing impressions, clicks, conversions, and cost per acquisition so you always know your return on ad spend.",
+    value: "81%",
+    label: "of consumers used Google to evaluate local businesses in 2024.",
+    sourceName: "BrightLocal Local Consumer Review Survey 2024",
+    sourceUrl: "https://www.brightlocal.com/research/local-consumer-review-survey-2024/",
+  },
+];
+
+const PROCESS = [
+  {
+    step: "01",
+    title: "Discovery & strategy",
+    description:
+      "We learn your business, your best customers, and your numbers — then research the market and competitors to build a prioritized plan you can actually see.",
   },
   {
-    question: "Do you provide website hosting and maintenance?",
-    answer: "We provide secure, high-performance cloud hosting with a 99.9% uptime SLA, daily automated backups, SSL certificates, and CDN distribution for fast loading times across Canada. Our maintenance plans include regular security patches, plugin and framework updates, performance monitoring, and content updates. You never have to worry about your site going down or falling behind on security updates.",
+    step: "02",
+    title: "Build & launch",
+    description:
+      "We execute the highest-impact work first, whether that's fixing technical SEO, launching campaigns, or shipping new pages — with your sign-off before anything goes live.",
   },
   {
-    question: "Will my website work well on mobile devices?",
-    answer: "Every website we build follows a mobile-first responsive design approach, meaning the mobile experience is designed first and then enhanced for larger screens. This ensures your site looks and performs well on smartphones, tablets, laptops, and desktops. We test across multiple devices and browsers before launch, and Google now uses mobile-first indexing, so a strong mobile experience directly impacts your search rankings.",
+    step: "03",
+    title: "Measure & optimize",
+    description:
+      "We track leads and revenue, not vanity metrics, and refine continuously: cut what isn't working, double down on what is, and report it all in plain language.",
+  },
+  {
+    step: "04",
+    title: "Scale what works",
+    description:
+      "Once a channel is profitable, we reinvest to grow it and add the next one — so your marketing compounds instead of stalling after the first quarter.",
+  },
+];
+
+const COMPARISON = [
+  { feature: "Who does your work", us: "A senior consultant you can reach directly", them: "A rotating junior account manager" },
+  { feature: "Scope", us: "SEO, local, AI search, ads, web, and analytics under one roof", them: "One channel, siloed from the rest" },
+  { feature: "AI search (GEO)", us: "Built in — few competitors offer it", them: "Not on the menu" },
+  { feature: "Reporting", us: "Tied to leads and revenue", them: "Traffic charts and rank screenshots" },
+  { feature: "Pricing", us: "Transparent ranges, month-to-month", them: "Opaque quotes, locked contracts" },
+  { feature: "Data", us: "Real Canadian search data behind every plan", them: "Generic, off-the-shelf playbooks" },
+];
+
+const FAQS = [
+  {
+    question: "What does a digital marketing agency actually do?",
+    answer:
+      "A good one grows the number of qualified customers finding and choosing your business online. That spans search engine optimization, local search, paid ads, content, web design, and analytics. At NexFortis we run these as one connected strategy rather than disconnected services, so every channel reinforces the others instead of competing for budget.",
+  },
+  {
+    question: "How much does digital marketing cost?",
+    answer:
+      "It depends on your market and goals, which is why we price in transparent ranges rather than one-size packages. Most small and mid-sized Canadian businesses invest somewhere between a maintainer budget for steady local visibility and a growth budget for competitive markets. You get a fixed monthly scope, clear reporting, and no long-term lock-in, so you can scale up or down as results come in.",
+  },
+  {
+    question: "How is NexFortis different from a typical agency?",
+    answer:
+      "Three ways. You work directly with a senior consultant instead of being handed to a junior. Every plan is built on real Canadian search data, not a generic playbook. And we include AI search optimization — getting you cited by ChatGPT and Google's AI Overviews — which almost no local competitor offers yet.",
+  },
+  {
+    question: "Do I need SEO, ads, or both?",
+    answer:
+      "It depends on your timeline and margins. Ads buy visibility immediately but stop the moment you stop paying. SEO and local search take a few months but compound into traffic you don't rent. Most businesses start with one and layer in the other; we'll recommend the mix that fits your goals rather than selling you everything at once.",
+  },
+  {
+    question: "How quickly will I see results?",
+    answer:
+      "Paid ads and Google Business Profile improvements can drive enquiries within weeks. SEO and content typically show meaningful gains around the three-to-six-month mark and keep compounding from there. We set realistic expectations against your specific market up front, and we report progress every month so you're never guessing.",
+  },
+  {
+    question: "Do you work with businesses outside the GTA?",
+    answer:
+      "Yes. We're based in Nobleton and know the Greater Toronto Area well, but search marketing works anywhere. We serve clients across Ontario and the rest of Canada, and our local SEO work simply targets whichever cities and service areas matter to you.",
+  },
+  {
+    question: "What is GEO or AI search, and do I need it?",
+    answer:
+      "GEO — Generative Engine Optimization — is the work that gets your brand cited by AI engines like ChatGPT, Google's AI Overviews, Perplexity, and Gemini, where a fast-growing share of buyers now start. If your customers are researching online, you'll want to be in those answers before your competitors are. It's a forward-looking add-on we build on top of solid SEO foundations.",
+  },
+  {
+    question: "Can you take over marketing we've already started?",
+    answer:
+      "Yes, and most of our clients come to us that way. We start by auditing what's already in place — your website, any past SEO work, ad accounts, and analytics — then keep what's working and fix or replace what isn't. You won't pay us to redo good work, and we'll be straight with you about what a previous provider got right and where the gaps are.",
   },
 ];
 
 export default function DigitalMarketing() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
-
-  const offerings = [
-    { icon: Globe, title: "Web Design & Development", desc: "Modern, responsive, and high-converting websites built on the latest frameworks. We design for your audience, optimize for search engines, and build for performance — every site includes mobile-first responsive layouts, accessibility compliance, and analytics integration." },
-    { icon: Server, title: "Hosting & Domain Management", desc: "Secure, fast, and reliable cloud hosting with 99.9% uptime SLA, automated daily backups, and complete domain administration. We handle SSL certificates, DNS configuration, CDN distribution, and server monitoring so you never have to think about infrastructure." },
-    { icon: Search, title: "SEO Optimization", desc: "Comprehensive on-page and technical SEO to improve your visibility on Google and other search engines. We cover keyword research, content optimization, meta tags, schema markup, site speed, mobile usability, and monthly ranking reports — targeted at the Canadian search market." },
-    { icon: BarChart, title: "Google Ads Management", desc: "Data-driven PPC campaigns designed to maximize your ROI. We handle keyword bidding, ad copy, landing page optimization, A/B testing, and conversion tracking. Monthly reports show exactly where your budget goes and what results it delivers." },
-    { icon: PenTool, title: "Content Creation", desc: "Engaging copy, blog articles, and visual assets that resonate with your target audience and support your SEO strategy. Our content team produces industry-relevant articles, case studies, social media posts, and email newsletters that build authority and drive organic traffic." },
-    { icon: Settings, title: "Website Maintenance", desc: "Ongoing updates, security patches, plugin upgrades, and performance optimization. Our maintenance plans ensure your website stays fast, secure, and up-to-date without requiring any technical knowledge from your team." },
-  ];
-
-  const process = [
-    { step: "01", title: "Discovery & Strategy", desc: "We analyze your brand, target audience, competitors, and business goals to build a comprehensive digital strategy. This includes keyword research, content planning, and a clear roadmap for your online presence." },
-    { step: "02", title: "Design & Build", desc: "Our team designs and develops your digital presence with performance, conversion, and SEO built in from the ground up. You review and approve designs before development begins, and we provide regular progress updates throughout the build." },
-    { step: "03", title: "Launch & Optimize", desc: "We go live with thorough pre-launch testing, configure analytics and tracking, submit your site to search engines, and begin monitoring performance. Initial optimizations are made based on real user data within the first two weeks." },
-    { step: "04", title: "Grow & Scale", desc: "Ongoing campaigns, content creation, technical SEO, and performance optimization to drive sustainable traffic growth. Monthly reporting keeps you informed of rankings, traffic trends, and conversion metrics." },
-  ];
+  const spokes = getPublishedSpokes();
 
   return (
     <div>
-      <SEO title="Digital Marketing & Web Design" description="Digital marketing for Canadian businesses: custom web design, SEO, Google Ads management, and content creation. Drive traffic and convert more visitors." path="/services/digital-marketing" />
-      <ServiceSchema name="Digital Marketing & Web Presence" description="Full-service digital marketing including web design, hosting, SEO, Google Ads, and content creation for Canadian businesses." url="/services/digital-marketing" />
-      <BreadcrumbSchema items={[
-        { name: "Home", url: "/" },
-        { name: "Services", url: "/services" },
-        { name: "Digital Marketing", url: "/services/digital-marketing" },
-      ]} />
-      <FAQSchema faqs={dmFaqs} />
-      <PageHero 
-        title="Digital Marketing & Web Presence" 
-        subtitle="Your digital storefront matters. We build, host, and optimize your online presence to attract and convert."
+      <SEO
+        title="Digital Marketing Services"
+        description="Digital marketing for Canadian businesses: SEO, local search, AI search (GEO), Google Ads, web design, and analytics — one connected strategy."
+        path={DM_PILLAR_HREF}
       />
-      <PageBreadcrumbs items={[
-        { label: "Home", href: "/" },
-        { label: "Services", href: "/services" },
-        { label: "Digital Marketing" },
-      ]} />
+      <ServiceSchema
+        name="Digital Marketing Services"
+        description="Full-service digital marketing for Canadian businesses — SEO, local SEO, AI search optimization, paid media, web design, and analytics."
+        url={DM_PILLAR_HREF}
+        serviceType="Digital Marketing"
+      />
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "/" },
+          { name: "Services", url: "/services" },
+          { name: "Digital Marketing", url: DM_PILLAR_HREF },
+        ]}
+      />
+      <FAQSchema faqs={FAQS} />
+      <PersonSchema name={DM_AUTHOR.name} jobTitle={DM_AUTHOR.title} url="/about" />
 
+      <PageHero
+        title="Digital Marketing Services for Canadian Businesses"
+        subtitle="One partner for everything that brings you customers online — search, AI search, ads, content, and the website that ties it together."
+      />
+      <PageBreadcrumbs
+        items={[
+          { label: "Home", href: "/" },
+          { label: "Services", href: "/services" },
+          { label: "Digital Marketing" },
+        ]}
+      />
+
+      {/* Intro + market stats */}
       <Section bg="brand-light">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          <div>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4 }}
-            >
-              <span className="inline-block px-4 py-1.5 rounded-full bg-accent/10 text-accent text-sm font-display font-bold mb-6">Full-Service Digital Agency</span>
-              <h2 className="text-3xl md:text-4xl font-display font-bold text-primary mb-6">
-                Your Complete Online Identity, Handled
-              </h2>
-              <p className="text-lg text-muted-foreground leading-relaxed mb-4">
-                From the first pixel to the final conversion, we handle every aspect of your online identity. No more juggling five different vendors — NexFortis delivers web design, hosting, SEO, ads, and content under one roof.
-              </p>
-              <p className="text-lg text-muted-foreground leading-relaxed mb-8">
-                Our digital marketing team understands the Canadian market. We know how to target local search intent, structure content for Canadian audiences, and optimize campaigns for the regions and industries that matter to your business. Whether you serve customers in the GTA, across Ontario, or nationwide, we build a digital strategy that reaches them where they are searching.
-              </p>
-              <ul className="space-y-3">
-                {["Mobile-first responsive design", "99.9% uptime SLA on hosting", "Monthly SEO & analytics reporting", "Dedicated account manager"].map((item, i) => (
-                  <li key={i} className="flex items-center gap-3 text-foreground">
-                    <CheckCircle2 className="w-5 h-5 text-accent shrink-0" />
-                    <span className="font-medium">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
+        <div className="max-w-3xl mx-auto">
+          <SectionHeader title="Marketing that brings you customers, not just clicks" />
+          <div className="space-y-5 text-lg text-muted-foreground leading-relaxed">
+            <p>
+              Most Canadian businesses don&rsquo;t need more marketing noise &mdash; they need more
+              of the right customers finding them at the moment they&rsquo;re ready to buy. That
+              means showing up in Google&rsquo;s results, in the local map pack, and now in the AI
+              answers that are reshaping how people search.
+            </p>
+            <p>
+              NexFortis runs all of it as one connected strategy. We start with{" "}
+              <InlineLink href={seo.href}>{seo.linkText}</InlineLink> as the foundation, add{" "}
+              <InlineLink href={localSeo.href}>{localSeo.linkText}</InlineLink> for businesses that
+              serve a specific area, and layer on{" "}
+              <InlineLink href={geo.href}>{geo.linkText}</InlineLink> so you&rsquo;re cited where
+              buyers increasingly start: ChatGPT and Google&rsquo;s AI Overviews. Paid ads, content,
+              web design, and analytics round out the picture.
+            </p>
+            <p>
+              You work directly with a senior consultant, every plan is built on real Canadian
+              search data, and every report ties back to leads and revenue &mdash; not vanity
+              metrics.
+            </p>
           </div>
-          <div className="space-y-4">
-            {offerings.slice(0, 4).map((item, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.3, delay: i * 0.08 }}
-                className="flex items-start gap-4 py-3"
-              >
-                <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center text-accent shrink-0">
-                  <item.icon className="w-5 h-5" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-primary text-sm">{item.title}</h3>
-                  <p className="text-xs text-muted-foreground mt-1">{item.desc.split('. ')[0]}.</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+        </div>
+        <div className="mt-16">
+          <StatBand stats={STATS} />
         </div>
       </Section>
 
-      <Section bg="brand-light">
-        <SectionHeader 
-          title="Comprehensive Digital Solutions" 
-          subtitle="Everything you need to establish, grow, and dominate your online presence — from design and development through to ongoing content and optimization."
-          centered
-        />
-        
-        <div className="max-w-4xl mx-auto space-y-12 mt-12">
-          {offerings.map((item, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.3, delay: i * 0.06 }}
-              className="flex items-start gap-6"
-            >
-              <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center text-accent shrink-0">
-                <item.icon className="w-6 h-6" />
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-primary mb-2">{item.title}</h3>
-                <p className="text-muted-foreground leading-relaxed">{item.desc}</p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </Section>
-
+      {/* The services (published spokes) */}
       <Section bg="white">
-        <SectionHeader title="Our Process" subtitle="A proven four-step approach to transforming your digital presence — from strategy through to ongoing growth." centered />
-        <div className="relative max-w-4xl mx-auto mt-12">
-          <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-accent/20 hidden md:block" aria-hidden="true" />
-          <div className="space-y-12">
-            {process.map((item, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.3, delay: i * 0.1 }}
-                className="relative flex gap-6 md:gap-8 items-start"
-              >
-                <div className="relative z-10 w-12 h-12 rounded-full bg-accent flex items-center justify-center shrink-0">
-                  <span className="text-white font-bold text-sm">{item.step}</span>
-                </div>
-                <div className="pt-1">
-                  <h3 className="text-xl font-bold text-primary mb-2">{item.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed">{item.desc}</p>
-                </div>
-              </motion.div>
-            ))}
+        <SectionHeader
+          title="Our digital marketing services"
+          subtitle="Each is a deep capability in its own right — explore the ones live today, with more rolling out across the cluster."
+          centered
+        />
+        <div className="mt-12">
+          <RelatedServices spokes={spokes} />
+        </div>
+      </Section>
+
+      {/* Remaining capabilities (not yet on their own page) */}
+      <Section bg="secondary">
+        <SectionHeader
+          title="Also available across the cluster"
+          subtitle="These capabilities are live too — ask us about any of them while we publish their dedicated pages."
+          centered
+        />
+        <div className="mt-12">
+          <FeatureGrid items={FULL_MENU} />
+        </div>
+      </Section>
+
+      {/* Coverage: search */}
+      <Section bg="brand-light">
+        <div className="max-w-3xl mx-auto">
+          <SectionHeader title="Search: the foundation of everything" />
+          <div className="space-y-5 text-lg text-muted-foreground leading-relaxed">
+            <p>
+              Search is where buying decisions still begin, and it&rsquo;s the highest-return
+              channel we run because the traffic compounds. Our{" "}
+              <InlineLink href={seo.href}>{seo.linkText}</InlineLink> work covers keyword and intent
+              research, on-page optimization, the technical foundations that let Google crawl and
+              rank your site, and the content that earns positions you keep for years.
+            </p>
+            <p>
+              For businesses that serve customers in a specific place, <InlineLink href={localSeo.href}>{localSeo.linkText}</InlineLink>{" "}
+              puts you in the Google map pack and &ldquo;near me&rdquo; results through an optimized
+              Google Business Profile, consistent listings, genuine reviews, and location pages.
+              Most local businesses need both, and we run them together so the map and the organic
+              results reinforce each other.
+            </p>
           </div>
         </div>
       </Section>
 
+      {/* Coverage: AI search */}
+      <Section bg="white">
+        <div className="max-w-3xl mx-auto">
+          <SectionHeader title="AI search: the shift most agencies are missing" />
+          <div className="space-y-5 text-lg text-muted-foreground leading-relaxed">
+            <p>
+              A growing share of searches now end with an AI-generated answer instead of a list of
+              links. These engines cite only a handful of sources, so being one of them is the new
+              version of ranking first. Our{" "}
+              <InlineLink href={geo.href}>{geo.linkText}</InlineLink> service earns those citations
+              through passage-level content structure, the right schema, and brand mentions across
+              the sources language models trust.
+            </p>
+            <p>
+              It&rsquo;s the most forward-looking part of what we do, and almost no GTA competitor
+              offers it yet &mdash; which is exactly why the businesses that move now will be hard
+              to displace later.
+            </p>
+          </div>
+        </div>
+      </Section>
+
+      {/* Coverage: the rest */}
       <Section bg="brand-light">
-        <SectionHeader
-          title="Digital Marketing FAQ"
-          subtitle="Common questions about web design, SEO, Google Ads, and digital marketing services for Canadian businesses."
-          centered
-        />
-        <div className="max-w-3xl mx-auto border-t border-border">
-          {dmFaqs.map((faq, i) => (
+        <div className="max-w-3xl mx-auto">
+          <SectionHeader title="Ads, content, web, and the data behind it" />
+          <div className="space-y-5 text-lg text-muted-foreground leading-relaxed">
+            <p>
+              When you need visibility now, paid media delivers it. We plan and manage Google Ads
+              and paid social campaigns built around real buyer intent, with transparent reporting
+              on every dollar of ad spend and a clear view of your cost per lead.
+            </p>
+            <p>
+              Content marketing and digital PR build the authority that makes search work, turning
+              research-led articles and earned mentions into rankings and trust. Web design and
+              conversion optimization make sure the traffic you earn actually becomes enquiries
+              &mdash; a fast, mobile-first site that&rsquo;s built to rank and built to convert.
+            </p>
+            <p>
+              Underpinning all of it, we wire up analytics and reporting &mdash; GA4, Search
+              Console, and call tracking &mdash; so every channel is measured against the only
+              metric that matters: customers. These capabilities are rolling out as dedicated pages
+              across the cluster; ask us about any of them today.
+            </p>
+          </div>
+        </div>
+      </Section>
+
+      {/* How we work */}
+      <Section bg="white">
+        <SectionHeader title="How we work" centered />
+        <div className="mt-12">
+          <StepsTimeline steps={PROCESS} />
+        </div>
+      </Section>
+
+      {/* Why NexFortis */}
+      <Section bg="brand-light">
+        <SectionHeader title="Why businesses choose NexFortis" centered />
+        <div className="mt-12 max-w-4xl mx-auto">
+          <FeatureComparison rows={COMPARISON} />
+        </div>
+      </Section>
+
+      {/* FAQ */}
+      <Section bg="white">
+        <SectionHeader title="Frequently Asked Questions" centered />
+        <div className="max-w-3xl mx-auto border-t border-border mt-8">
+          {FAQS.map((faq, i) => (
             <FAQItem
               key={i}
               question={faq.question}
@@ -194,16 +341,23 @@ export default function DigitalMarketing() {
         </div>
       </Section>
 
-      <Section bg="brand-navy">
-        <div className="text-center max-w-3xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-6">Ready to Grow Your Online Presence?</h2>
-          <p className="text-lg text-white/80 mb-10">
-            Let's discuss how we can build a digital strategy that drives real results for your business.
+      {/* Author / EEAT */}
+      <Section bg="brand-light">
+        <AuthorBio name={DM_AUTHOR.name} title={DM_AUTHOR.title}>
+          <p>
+            Hassan leads digital marketing and IT strategy at NexFortis, helping Canadian businesses
+            turn search, local, and AI discovery into a predictable flow of customers &mdash;
+            working directly with every client, with no hand-off to a junior team.
           </p>
-          <Link href="/contact" className="inline-flex px-8 py-4 min-h-[48px] rounded-xl bg-rose-gold text-rose-gold-foreground font-bold text-lg hover:bg-rose-gold-hover transition-all items-center justify-center gap-2 hover:-translate-y-0.5">
-            Get a Free Quote <ArrowRight className="w-5 h-5" />
-          </Link>
-        </div>
+        </AuthorBio>
+      </Section>
+
+      {/* CTA */}
+      <Section bg="brand-navy">
+        <CTAStrip
+          heading="Ready to grow your online presence?"
+          subtext="Get a free, no-obligation assessment of your digital marketing — your search visibility, your competitors, and the fastest path to more customers."
+        />
       </Section>
     </div>
   );

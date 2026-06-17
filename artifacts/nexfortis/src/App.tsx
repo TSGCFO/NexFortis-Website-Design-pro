@@ -14,6 +14,9 @@ const Microsoft365 = lazy(() => import("@/pages/services/microsoft-365"));
 const QuickBooks = lazy(() => import("@/pages/services/quickbooks"));
 const ITConsulting = lazy(() => import("@/pages/services/it-consulting"));
 const AutomationSoftware = lazy(() => import("@/pages/services/automation"));
+const DmSeo = lazy(() => import("@/pages/services/digital-marketing/seo"));
+const DmLocalSeo = lazy(() => import("@/pages/services/digital-marketing/local-seo"));
+const DmGeo = lazy(() => import("@/pages/services/digital-marketing/generative-engine-optimization"));
 const Contact = lazy(() => import("@/pages/contact"));
 const Blog = lazy(() => import("@/pages/blog"));
 const BlogPostPage = lazy(() => import("@/pages/blog-post"));
@@ -42,6 +45,9 @@ function Router() {
           <Route path="/about" component={About} />
           <Route path="/services" component={ServicesOverview} />
           <Route path="/services/digital-marketing" component={DigitalMarketing} />
+          <Route path="/services/digital-marketing/seo" component={DmSeo} />
+          <Route path="/services/digital-marketing/local-seo" component={DmLocalSeo} />
+          <Route path="/services/digital-marketing/generative-engine-optimization" component={DmGeo} />
           <Route path="/services/microsoft-365" component={Microsoft365} />
           <Route path="/services/quickbooks" component={QuickBooks} />
           <Route path="/services/it-consulting" component={ITConsulting} />

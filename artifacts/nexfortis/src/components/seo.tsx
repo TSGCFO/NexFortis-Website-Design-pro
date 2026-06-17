@@ -161,7 +161,7 @@ export function WebSiteSchema() {
   );
 }
 
-export function ServiceSchema({ name, description, url }: { name: string; description: string; url?: string }) {
+export function ServiceSchema({ name, description, url, serviceType = "IT Services" }: { name: string; description: string; url?: string; serviceType?: string }) {
   const siteUrl = SITE_URL;
   const resolvedUrl = url ? (url.startsWith("http") ? url : `${siteUrl}${url}`) : `${siteUrl}/services`;
   const schema = {
@@ -179,7 +179,7 @@ export function ServiceSchema({ name, description, url }: { name: string; descri
       "@type": "Country",
       name: "Canada",
     },
-    serviceType: "IT Services",
+    serviceType,
   };
 
   return (
@@ -268,6 +268,41 @@ export function ArticleSchema({ title, description, datePublished, dateModified,
       name: "Hassan Sadiq",
       url: `${siteUrl}/about`,
     },
+  };
+
+  return (
+    <Helmet>
+      <script type="application/ld+json">{JSON.stringify(schema)}</script>
+    </Helmet>
+  );
+}
+
+// Person schema for author/expertise EEAT signals on service pages. Reuses the
+// "Hassan Sadiq" identity already named as author in ArticleSchema, and links
+// to the global Organization via worksFor. Emits a single Person @type, so it
+// never collides with the page's other JSON-LD blocks (INV-013).
+export function PersonSchema({
+  name = "Hassan Sadiq",
+  jobTitle,
+  url,
+}: {
+  name?: string;
+  jobTitle?: string;
+  url?: string;
+}) {
+  const siteUrl = SITE_URL;
+  const resolvedUrl = url
+    ? url.startsWith("http")
+      ? url
+      : `${siteUrl}${url}`
+    : `${siteUrl}/about`;
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name,
+    ...(jobTitle ? { jobTitle } : {}),
+    url: resolvedUrl,
+    worksFor: { "@id": `${siteUrl}/#organization` },
   };
 
   return (
