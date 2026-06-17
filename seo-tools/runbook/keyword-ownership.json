@@ -1,0 +1,101 @@
+{
+  "_purpose": "Cannibalization registry: which page owns which keywords. One page = one cluster. No keyword may appear under two pages.",
+  "_rule": "Checked by seo-tools/runbook/check-cannibalization.mjs — it fails (exit 1) if any keyword is owned by more than one page.",
+  "_status_legend": {
+    "confirmed": "Owned cluster verified via live KI SERP-overlap clustering.",
+    "tentative": "Seed head terms only — REPLACE with real KI clustering when this page is produced through the run book.",
+    "reserved": "Informational terms parked on the blog/guide cluster so no service spoke claims them."
+  },
+  "pages": {
+    "/services/digital-marketing": {
+      "name": "Digital Marketing (pillar)",
+      "status": "tentative",
+      "primary": ["digital marketing services", "digital marketing agency"],
+      "secondary": []
+    },
+    "/services/digital-marketing/local-seo": {
+      "name": "Local SEO",
+      "status": "confirmed (KI cluster order 60ed2346, 2026-06-15)",
+      "primary": ["local seo services", "local seo company", "local seo agency"],
+      "secondary": ["local seo near me", "local seo expert"]
+    },
+    "/services/digital-marketing/seo": {
+      "name": "SEO Services",
+      "status": "tentative",
+      "primary": ["seo services", "seo company", "seo agency"],
+      "secondary": []
+    },
+    "/services/digital-marketing/technical-seo": {
+      "name": "Technical SEO",
+      "status": "tentative",
+      "primary": ["technical seo", "technical seo services", "technical seo audit"],
+      "secondary": []
+    },
+    "/services/digital-marketing/google-business-profile": {
+      "name": "Google Business Profile",
+      "status": "confirmed-reserved (GBP terms fenced off Local SEO per KI intent)",
+      "primary": ["google business profile optimization", "gmb optimization", "google business profile management"],
+      "secondary": ["gmb"]
+    },
+    "/services/digital-marketing/content-marketing": {
+      "name": "Content Marketing",
+      "status": "tentative",
+      "primary": ["content marketing services", "content marketing agency"],
+      "secondary": []
+    },
+    "/services/digital-marketing/link-building": {
+      "name": "Link Building & Digital PR",
+      "status": "tentative",
+      "primary": ["link building services", "link building agency"],
+      "secondary": []
+    },
+    "/services/digital-marketing/generative-engine-optimization": {
+      "name": "GEO & AI Search",
+      "status": "tentative",
+      "primary": ["generative engine optimization", "answer engine optimization", "ai search optimization"],
+      "secondary": []
+    },
+    "/services/digital-marketing/google-ads": {
+      "name": "Google Ads Management",
+      "status": "tentative",
+      "primary": ["google ads management", "ppc management", "google ads agency"],
+      "secondary": []
+    },
+    "/services/digital-marketing/social-media-marketing": {
+      "name": "Social Media Marketing",
+      "status": "tentative",
+      "primary": ["social media marketing services", "social media management"],
+      "secondary": []
+    },
+    "/services/digital-marketing/web-design": {
+      "name": "Web Design & Development",
+      "status": "tentative",
+      "primary": ["web design services", "web design and development"],
+      "secondary": []
+    },
+    "/services/digital-marketing/email-marketing": {
+      "name": "Email Marketing",
+      "status": "tentative",
+      "primary": ["email marketing services", "email marketing agency"],
+      "secondary": []
+    },
+    "/services/digital-marketing/conversion-rate-optimization": {
+      "name": "Conversion Rate Optimization",
+      "status": "tentative",
+      "primary": ["conversion rate optimization services", "cro services"],
+      "secondary": []
+    },
+    "/services/digital-marketing/analytics-reporting": {
+      "name": "Analytics & Reporting",
+      "status": "tentative",
+      "primary": ["marketing analytics services", "analytics and reporting"],
+      "secondary": []
+    },
+    "blog": {
+      "name": "Informational blog/guide cluster (links UP to the service pages)",
+      "status": "reserved",
+      "primary": ["local seo", "local seo for small business", "local search marketing"],
+      "secondary": []
+    }
+  }
+}

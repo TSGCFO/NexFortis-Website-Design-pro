@@ -1,0 +1,24 @@
+{
+  "project_name": "NexFortis Local SEO cluster test",
+  "language": "en",
+  "location": "Canada",
+  "device": "desktop",
+  "clustering_method": "volume",
+  "grouping_accuracy": 4,
+  "hub_creation_method": "medium",
+  "insights": ["cluster", "rank", "context"],
+  "url": "https://nexfortis.com",
+  "keywords": [
+    "local seo",
+    "local seo services",
+    "local seo company",
+    "local seo agency",
+    "local seo for small business",
+    "local seo near me",
+    "google business profile optimization",
+    "gmb optimization",
+    "local search marketing",
+    "local seo expert"
+  ],
+  "search_volumes": [1900, 3300, 1800, 1200, 200, 100, 200, 100, 200, 300]
+}
