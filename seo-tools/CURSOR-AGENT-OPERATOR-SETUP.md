@@ -54,11 +54,14 @@ path in your launch message.
 - **Undetectable.ai** (Gate-3 AI-detection) — ✅ you have API access; the repo helper
   `undetectable-detect.mjs` is wired. Just set `UNDETECTABLE_AI_API_KEY`. (Undetectable does
   AI-detection + humanizing, **not** plagiarism.)
-- **Plagiarism** — ✅ **Winston AI Plagiarism API** (verified: Undetectable has **no** plagiarism API,
-  UI-only). Create a free Winston account (2,500 free credits), set `WINSTON_AI_API_KEY`; paid plans
-  from ~$10/mo — not the hundreds Originality charges. (Winston *also* does AI-detection, so you could
-  consolidate both Gate-3 halves onto it; but Undetectable is already wired for AI-detection, so the
-  simplest split is **Undetectable = AI-detection, Winston = plagiarism**.)
+- **Plagiarism** — ✅ **Winston AI** (verified: Undetectable has **no** plagiarism API, UI-only). The
+  helper `seo-tools/plagiarism-check.mjs` is **built and key-verified** (`node seo-tools/plagiarism-check.mjs auth`
+  returned OK). **Cost: 2 credits/word** — a ~1,500-word page ≈ 3,000 credits, so your free ~2,500
+  covers **less than one page** and the full 14-page run is **~42,000 credits** → buy a paid plan
+  sized for that before launch (the Local SEO pilot or a single page is fine on the free tier).
+  (Winston also does AI-detection, so you *could* consolidate both Gate-3 halves onto it; but
+  Undetectable is already wired for AI-detection, so the simplest split is **Undetectable = AI,
+  Winston = plagiarism**.)
 - **Live verification + self-testing** — ✅ Cursor cloud agents now run a VM with a browser
   (computer-use), so the agent builds, opens the Render preview, and visually verifies each live page
   itself; you don't need to wire a browser tool.

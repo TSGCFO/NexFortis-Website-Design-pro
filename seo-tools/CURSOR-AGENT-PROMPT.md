@@ -112,8 +112,9 @@ The Local SEO page already has `01`, `02`, and a reusable brief (`seo-tools/tmp/
   every spend. Otherwise, STOP before the first paid call of each type and request approval. Always
   reuse an existing `seo-tools/tmp/brief-*.json` before creating a new brief.
 - **Gate-3 keys.** AI-detection = Undetectable.ai (`UNDETECTABLE_AI_API_KEY`, runs
-  `seo-tools/undetectable-detect.mjs`). Plagiarism = Winston AI (`WINSTON_AI_API_KEY`, free tier to
-  start). If either key is absent, mark that half of Gate 3 `pending-operator`.
+  `seo-tools/undetectable-detect.mjs`). Plagiarism = Winston AI (`WINSTON_AI_API_KEY`, runs
+  `seo-tools/plagiarism-check.mjs`; **2 credits/word**, so a paid Winston plan is needed for the full
+  14-page run). If either key is absent, mark that half of Gate 3 `pending-operator`.
 
 ---
 
@@ -131,7 +132,7 @@ setups pass `--no-verify` or skip `core.hooksPath`). If any differs, adapt and t
 | Ahrefs / Semrush cross-check | ❌ (Claude Code MCP plugins) | **Fallback:** DataForSEO + KI are sufficient for the consensus; if the operator wants the 3rd/4th source, they run it and hand you the numbers. Note the gap in `01-keywords.json`. |
 | EEAT audit (aaron auditor) | ❌ (Claude Code plugin) | **Fallback:** self-audit against the CORE-EEAT checklist in §7. Record score + fixes in `06b-eeat.json`. |
 | AI-detection (Gate 3) | ✅ Undetectable.ai via `node seo-tools/undetectable-detect.mjs` (key `UNDETECTABLE_AI_API_KEY`) | Primary. Extract page prose to `seo-tools/tmp/detect/<slug>.txt`, run it, target **AI score < 50**; if flagged, humanize and re-run. |
-| Plagiarism (Gate 3) | ✅ Winston AI Plagiarism API (`WINSTON_AI_API_KEY`) | Real gate (Undetectable has no plagiarism API). Free tier = 2,500 credits; paid from ~$10/mo. Submit each page's prose → read `plagiarismScore` + sources; investigate any unattributed match. Wire a small helper like `undetectable-detect.mjs`, using the spec at `docs.gowinston.ai/api-reference/plagiarism`. |
+| Plagiarism (Gate 3) | ✅ Winston AI via `node seo-tools/plagiarism-check.mjs scan` (built + verified; key `WINSTON_AI_API_KEY`) | Reads each page's prose from `seo-tools/tmp/detect/<slug>.txt`; reports `result.score` (0–100) + matched sources. **Cost: 2 credits/word** (~1,500-word page ≈ 3,000 credits) — the free ~2,500 covers <1 page, so the full 14-page run needs a paid plan (~42k credits). Investigate any page scoring **≥15%** or with a high-match source. |
 | Live page verification | ✅ you control a browser/VM (computer-use) | **Build, deploy the preview, and visually verify the live page yourself** (Step 8); use `curl` for quick HTTP/SEO-tag spot checks too. |
 | Web fact-checking (Step 6a) | ✅ your built-in web/fetch tools | Verify every stat against a real primary source. |
 
@@ -171,8 +172,8 @@ visitor decide to buy?**
    `[CONFIRM]`. A generic "double-check the stats" does NOT satisfy this. (6b) **EEAT self-audit** (§7),
    target 8+. (6c) **Humanize** — write clean from the start; only sharpen. (6d) **AI-detection + plagiarism**
    LAST (after all edits): `node seo-tools/undetectable-detect.mjs` (Undetectable.ai) → target AI
-   score **< 50**; if flagged, humanize and re-run. **Plagiarism: Winston AI Plagiarism API**
-   (`WINSTON_AI_API_KEY`) — scan each page's prose, investigate any unattributed verbatim match.
+   score **< 50**; if flagged, humanize and re-run. **Plagiarism:** `node seo-tools/plagiarism-check.mjs scan`
+   (Winston AI) — investigate any page scoring **≥15%** or with a high-match source.
 7. **On-page + internal links** → `07-onpage.json` + the actual code (§9). Title/meta/schema; wire
    links via the typed link graph (cluster-correct only); flip `published: true`; add the nav entry.
 8. **Publish QA** → `08-qa.json`. Build + `pnpm test:seo` (must pass) + `check-cannibalization.mjs`
