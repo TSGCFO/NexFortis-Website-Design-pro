@@ -84,7 +84,7 @@ For each page, create `seo-tools/runbook/<slug>/` (pillar slug = `pillar`) and w
 | `04-outline.md` | 4 | A target word **range** with the competitor numbers it's derived from; every heading maps to a brief question or this cluster's keyword; nothing from another page's cluster. |
 | `05-draft.md` | 5 | Word count in the Step-4 range; **every statistic carries an inline source URL or a `[NEEDS SOURCE]`/`[CONFIRM]` tag**; no banned jargon. |
 | `06a-factcheck.json` | 6a | A line-referenced ledger of every stat/outcome/capability claim → verified (with source) / cut / `[CONFIRM]`. Zero unresolved fabrications. |
-| `06b-eeat.json` | 6b | Self-audited EEAT ≥ 8/10 (see §7) with the concrete fixes you applied. |
+| `06b-eeat.json` | 6b | aaron content-quality-auditor EEAT ≥ 8/10 (see §7) with the concrete fixes you applied. |
 | `06d-aidetect.json` | 6d | Undetectable.ai AI score **< 50** (human) AND a Winston AI **plagiarism scan** (low score, no unattributed verbatim matches). If a key is missing, `{"status":"pending-operator"}`. |
 | `07-onpage.json` | 7 | Records the title/meta/schema + the internal links wired (cluster-correct only). |
 | `08-qa.json` | 8 | `pnpm test:seo` result + `check-cannibalization.mjs` result + the live-URL HTTP check. |
@@ -103,10 +103,12 @@ The Local SEO page already has `01`, `02`, and a reusable brief (`seo-tools/tmp/
   `KEYWORD_INSIGHTS_FOLDER_ID`, `DATAFORSEO_LOGIN`, `DATAFORSEO_PASSWORD` (in `seo-tools/secrets.local.json`
   or env). **Never hardcode, echo, log, or commit secrets.** `secrets.local.json` and `tmp/` are
   gitignored — keep it that way.
-- **NexFortis facts source.** You may only state real, verifiable facts. Extract NexFortis's real
-  facts from the repo (existing pages, `about`, brand-voice files) AND from any facts doc the operator
-  supplied. If no facts doc exists and the repo lacks a needed fact, **do not invent it** — describe
-  the *approach* or flag `[CONFIRM]` (see §8).
+- **NexFortis facts — gather them yourself (no operator doc).** You may only state real, verifiable
+  facts. Build the fact base from **(a) the repo** (existing pages, `about`, services, brand-voice
+  files) **and (b) the live site `nexfortis.com`** — browse it with your computer-use to read the real
+  services, positioning, service area, and any publicly-stated claims. Use those as ground truth. Only
+  when a needed specific (a stat, a named client result) is **nowhere** in the repo or on the live
+  site, **do not invent it** — describe the *approach* or flag `[CONFIRM]` (see §8).
 - **Credit budget.** Paid calls spend the operator's credits (KI brief ≈ 500 credits each; DataForSEO
   per-call). If the operator's launch message **pre-authorized a budget**, proceed within it and log
   every spend. Otherwise, STOP before the first paid call of each type and request approval. Always
@@ -119,18 +121,18 @@ The Local SEO page already has `01`, `02`, and a reusable brief (`seo-tools/tmp/
 ---
 
 ## 5. TOOLS IN CURSOR — what you have, what you don't, and the fallback
-You are in Cursor, **not** Claude Code — several Claude Code plugins are unavailable. Plan for it.
-**Verify, don't assume:** the rows below are the author's best understanding of a Cursor Cloud Agent,
-**not confirmed in your actual environment**. Before relying on any of it, confirm how *your* Cursor
-agent handles secrets/env, outbound web/API access, and whether `git` runs the pre-push hook (some
-setups pass `--no-verify` or skip `core.hooksPath`). If any differs, adapt and tell the operator.
+Your Cursor environment has the **same SEO tooling as the author's** — the **Ahrefs & Semrush MCP**
+tools and the **aaron-seo-geo plugin** (the content-quality-auditor + SEO skills) — **plus** the
+run-book scripts and **computer-use** (browser/VM). Use them. (Still verify the basics for *your*
+setup: that the secrets/env are wired, and that `git` actually runs the pre-push hook — some configs
+pass `--no-verify` or skip `core.hooksPath`.)
 
 | Need | Wired here? | Use this |
 |---|---|---|
 | Keyword volume + difficulty | ✅ DataForSEO via `node seo-tools/dataforseo.mjs keywords "..." 2124 en` | Primary. |
 | Clustering + intent + SERP brief | ✅ Keyword Insights via `seo-tools/keyword-insights.mjs` (`cluster`, `brief`/`wait-brief`, `read-xlsx.mjs`, `inspect-brief.mjs`) | Primary. KI difficulty == DataForSEO. |
-| Ahrefs / Semrush cross-check | ❌ (Claude Code MCP plugins) | **Fallback:** DataForSEO + KI are sufficient for the consensus; if the operator wants the 3rd/4th source, they run it and hand you the numbers. Note the gap in `01-keywords.json`. |
-| EEAT audit (aaron auditor) | ❌ (Claude Code plugin) | **Fallback:** self-audit against the CORE-EEAT checklist in §7. Record score + fixes in `06b-eeat.json`. |
+| Ahrefs / Semrush cross-check | ✅ available (MCP) | Use both with DataForSEO for the 3-way volume/difficulty **consensus** (`mcp__...ahrefs__keywords-explorer-*`; Semrush `phrase_these`/`phrase_kdi`; Canada). |
+| EEAT audit (aaron-seo-geo) | ✅ available (plugin) | Run the **content-quality-auditor** skill (80-item CORE-EEAT), target 8+, apply its fixes → `06b-eeat.json`. The §7 checklist is a manual backup. |
 | AI-detection (Gate 3) | ✅ Undetectable.ai via `node seo-tools/undetectable-detect.mjs` (key `UNDETECTABLE_AI_API_KEY`) | Primary. Extract page prose to `seo-tools/tmp/detect/<slug>.txt`, run it, target **AI score < 50**; if flagged, humanize and re-run. |
 | Plagiarism (Gate 3) | ✅ Winston AI via `node seo-tools/plagiarism-check.mjs scan` (built + verified; key `WINSTON_AI_API_KEY`) | Reads each page's prose from `seo-tools/tmp/detect/<slug>.txt`; reports `result.score` (0–100) + matched sources. **Cost: 2 credits/word** (~1,500-word page ≈ 3,000 credits) — the free ~2,500 covers <1 page, so the full 14-page run needs a paid plan (~42k credits). Investigate any page scoring **≥15%** or with a high-match source. |
 | Live page verification | ✅ you control a browser/VM (computer-use) | **Build, deploy the preview, and visually verify the live page yourself** (Step 8); use `curl` for quick HTTP/SEO-tag spot checks too. |
@@ -148,8 +150,8 @@ visitor decide to buy?**
 > real repo scripts/tests as you execute, and expect to *harden* them on the first page you build (the
 > pillar) before scaling to the rest.
 
-1. **Keyword research** → `01-keywords.json`. DataForSEO + KI (Canada, loc 2124). Tools disagree
-   on difficulty — record a **band**, not one number, + the live-SERP intent.
+1. **Keyword research** → `01-keywords.json`. **DataForSEO + Ahrefs + Semrush** (Canada, loc 2124).
+   Tools disagree on difficulty — take the **consensus band**, not one number, + the live-SERP intent.
 2. **Cluster + cannibalization (HARD GATE 1)** → `02-cluster.json`. Assign the page exactly one
    primary cluster; record it in `keyword-ownership.json`; run `node seo-tools/runbook/check-cannibalization.mjs`
    (must exit 0). **One page = one cluster; no keyword on two pages.** Pillar owns the head term
@@ -169,8 +171,8 @@ visitor decide to buy?**
    price). Tag every stat with a source or `[NEEDS SOURCE]`/`[CONFIRM]`.
 6. **Gate stack** → `06a/06b/06d`. (6a) **Itemized fact-check (HARD GATE 2):** line-referenced ledger
    of every stat/number/outcome/capability claim → verify against a real primary source, cut, or flag
-   `[CONFIRM]`. A generic "double-check the stats" does NOT satisfy this. (6b) **EEAT self-audit** (§7),
-   target 8+. (6c) **Humanize** — write clean from the start; only sharpen. (6d) **AI-detection + plagiarism**
+   `[CONFIRM]`. A generic "double-check the stats" does NOT satisfy this. (6b) **EEAT audit** via the
+   aaron-seo-geo **content-quality-auditor** (80-item CORE-EEAT, target 8+; §7 checklist = backup). (6c) **Humanize** — write clean from the start; only sharpen. (6d) **AI-detection + plagiarism**
    LAST (after all edits): `node seo-tools/undetectable-detect.mjs` (Undetectable.ai) → target AI
    score **< 50**; if flagged, humanize and re-run. **Plagiarism:** `node seo-tools/plagiarism-check.mjs scan`
    (Winston AI) — investigate any page scoring **≥15%** or with a high-match source.
@@ -186,7 +188,7 @@ visitor decide to buy?**
 ## 7. THE GATES — inlined so you don't need the plugins
 **Two gates (priority order):** (1) ranking, (2) conversion.
 
-**EEAT self-audit (Step 6b), score each 0–2, target total ≥ 8/10):**
+**EEAT checklist — manual *backup* for Step 6b (the aaron content-quality-auditor is the primary tool; use this only if it's unavailable). Score each 0–2, target ≥ 8/10:**
 1. **Experience** — does it read like a real practitioner wrote it (concrete specifics, real GTA/local detail), not generic AI filler?
 2. **Expertise** — accurate, specific, correctly-scoped claims; correct terminology; depth that matches the SERP winners.
 3. **Authoritativeness** — real, named primary sources for any stat; LocalBusiness/Service schema; author byline (Hassan Sadiq) where the template supports it.

@@ -40,17 +40,17 @@ The agent stops before each paid call **unless your launch message pre-authorize
 it run unattended, include something explicit like: *"Budget approved: up to 14 KI briefs (~7,000
 credits) + DataForSEO keyword pulls. Reuse existing briefs. Do not use the ~1,200-credit KI writer."*
 
-## 4. The NexFortis facts source (required — or the agent flags everything)
-The agent may only state **real** facts. Give it a short **facts doc** — real services offered,
-demonstrated results you can stand behind, true service-area coverage, approved brand voice, your
-correct title/byline. Without it, the agent grounds in the repo and marks anything unverifiable
-`[CONFIRM]` for you (safe, but you'll have more to confirm). Drop the doc in the repo and name its
-path in your launch message.
+## 4. NexFortis facts — the agent gathers them (no doc needed)
+The agent builds its fact base **itself**, from **the repo + the live `nexfortis.com` site** (it
+browses the site with computer-use). You do **not** need to write a facts doc. Optional only: if you
+have extra *real* proof you want included — a specific client result, a real metric — that isn't
+already public, drop it in the repo and name the path. Otherwise the agent uses what's real in the
+repo/site and flags anything it can't verify as `[CONFIRM]` rather than inventing it.
 
 ## 5. Tools that are NOT available in Cursor (decide how to handle)
-- **Ahrefs / Semrush** (Claude Code plugins) — the agent falls back to DataForSEO + KI (sufficient).
-  If you want the 3rd/4th cross-check, run them yourself and hand the agent the numbers.
-- **EEAT auditor** (aaron plugin) — the agent self-audits against the CORE-EEAT checklist in the prompt.
+- **Ahrefs / Semrush + the aaron-seo-geo plugin** — ✅ available in your Cursor environment (same as
+  the author's). The agent uses **Ahrefs + Semrush** for the 3-way keyword consensus and the aaron
+  **content-quality-auditor** for the EEAT gate. Nothing for you to wire.
 - **Undetectable.ai** (Gate-3 AI-detection) — ✅ you have API access; the repo helper
   `undetectable-detect.mjs` is wired. Just set `UNDETECTABLE_AI_API_KEY`. (Undetectable does
   AI-detection + humanizing, **not** plagiarism.)
@@ -86,7 +86,8 @@ open `[CONFIRM]` list, and total credits spent. **You merge; the agent never doe
 > Build the NexFortis digital-marketing pillar + 13 spokes per `seo-tools/CURSOR-AGENT-PROMPT.md`,
 > Opus 4.8 / high effort. Work one page at a time, one step at a time, write each step's artifact
 > before the next, and never fabricate. Order: pillar first, then the 13 spokes starting with Local
-> SEO (reuse its Steps 1–3). Facts source: `<path you provide>`. Budget approved: up to 14 KI briefs
+> SEO (reuse its Steps 1–3). Gather NexFortis facts from the repo + the live nexfortis.com site.
+> Budget approved: up to 14 KI briefs
 > (~7,000 credits) + DataForSEO pulls; reuse existing briefs; do NOT use the ~1,200-credit KI writer.
 > Gate 3: AI-detection via Undetectable.ai (`UNDETECTABLE_AI_API_KEY`) + plagiarism via Winston AI
 > (`WINSTON_AI_API_KEY`). Open one PR and STOP — do not merge.
