@@ -52,12 +52,12 @@
       "text": "Content Marketing"
     },
     {
-      "level": 2,
-      "text": "Also available across the cluster"
-    },
-    {
       "level": 3,
       "text": "Link Building &amp; Digital PR"
+    },
+    {
+      "level": 2,
+      "text": "Also available across the cluster"
     },
     {
       "level": 3,
@@ -396,6 +396,10 @@
     {
       "text": "Content Marketing",
       "href": "/services/digital-marketing/content-marketing"
+    },
+    {
+      "text": "Link Building &amp; Digital PR",
+      "href": "/services/digital-marketing/link-building"
     },
     {
       "text": "Microsoft 365 Solutions",

@@ -135,7 +135,7 @@ export const DM_SPOKES: readonly DmSpoke[] = [
       "Earn editorial backlinks from real publications to grow the authority that decides how high you can rank.",
     icon: Link2,
     category: "Link Building / Off-Page",
-    published: false,
+    published: true,
   },
   {
     slug: "google-ads",

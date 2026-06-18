@@ -45,9 +45,9 @@
     },
     "/services/digital-marketing/link-building": {
       "name": "Link Building & Digital PR",
-      "status": "tentative",
-      "primary": ["link building services", "link building agency"],
-      "secondary": []
+      "status": "confirmed (KI cluster order d1e91f67, 2026-06-18)",
+      "primary": ["link building services", "link building agency", "link building company", "backlink services"],
+      "secondary": ["digital pr services", "guest posting services", "blogger outreach services", "off page seo services", "link building consultant", "white hat link building"]
     },
     "/services/digital-marketing/generative-engine-optimization": {
       "name": "GEO & AI Search",

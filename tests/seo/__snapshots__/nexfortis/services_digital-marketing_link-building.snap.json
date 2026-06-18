@@ -1,13 +1,13 @@
 {
-  "route": "/services/digital-marketing/google-business-profile",
-  "title": "Google Business Profile | NexFortis IT Solutions",
-  "description": "Google Business Profile management for GTA businesses: optimization, posts, reviews, and listing consistency to win the Map Pack and earn more calls.",
-  "canonical": "https://nexfortis.com/services/digital-marketing/google-business-profile",
+  "route": "/services/digital-marketing/link-building",
+  "title": "Link Building &amp; Digital PR | NexFortis IT Solutions",
+  "description": "White-hat link building and digital PR for Canadian businesses: earned editorial backlinks from real publications that build the authority behind your rankings.",
+  "canonical": "https://nexfortis.com/services/digital-marketing/link-building",
   "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
   "og": {
-    "title": "Google Business Profile | NexFortis IT Solutions",
-    "description": "Google Business Profile management for GTA businesses: optimization, posts, reviews, and listing consistency to win the Map Pack and earn more calls.",
-    "url": "https://nexfortis.com/services/digital-marketing/google-business-profile",
+    "title": "Link Building &amp; Digital PR | NexFortis IT Solutions",
+    "description": "White-hat link building and digital PR for Canadian businesses: earned editorial backlinks from real publications that build the authority behind your rankings.",
+    "url": "https://nexfortis.com/services/digital-marketing/link-building",
     "image": "https://nexfortis.com/opengraph.png",
     "type": "website"
   },
@@ -17,71 +17,71 @@
   "headings": [
     {
       "level": 1,
-      "text": "Google Business Profile Management &amp; Optimization"
+      "text": "Link Building &amp; Digital PR Services"
     },
     {
       "level": 2,
-      "text": "Your profile is the single biggest lever on the map pack"
+      "text": "Authority is still earned through links"
     },
     {
       "level": 2,
-      "text": "What's included in our Google Business Profile management"
+      "text": "What's included in our link building &amp; digital PR"
     },
     {
       "level": 3,
-      "text": "Full profile build-out &amp; optimization"
+      "text": "Backlink audit &amp; strategy"
     },
     {
       "level": 3,
-      "text": "Ongoing management &amp; posts"
+      "text": "Digital PR &amp; editorial links"
     },
     {
       "level": 3,
-      "text": "Review generation &amp; response"
+      "text": "Guest posting on relevant sites"
     },
     {
       "level": 3,
-      "text": "Photos, products &amp; services"
+      "text": "Niche &amp; blogger outreach"
     },
     {
       "level": 3,
-      "text": "Listing consistency &amp; duplicates"
+      "text": "Broken-link &amp; reclamation"
     },
     {
       "level": 3,
-      "text": "Insights &amp; call tracking"
+      "text": "Reporting on links &amp; authority"
     },
     {
       "level": 2,
-      "text": "How we manage your Google Business Profile"
+      "text": "How we deliver link building"
     },
     {
       "level": 3,
-      "text": "Audit &amp; claim"
+      "text": "Audit &amp; target"
     },
     {
       "level": 3,
-      "text": "Optimize"
+      "text": "Create link-worthy assets"
     },
     {
       "level": 3,
-      "text": "Activate"
+      "text": "Outreach &amp; earn"
     },
     {
       "level": 3,
-      "text": "Track &amp; refine"
+      "text": "Report &amp; build"
     },
     {
       "level": 2,
-      "text": "NexFortis vs. a set-and-forget provider"
+      "text": "NexFortis vs. a typical link vendor"
     },
     {
       "level": 2,
-      "text": "What Google Business Profile management costs"
+      "text": "What link building costs"
     },
     {
       "level": 3,
-      "text": "Priced by competition and number of locations"
+      "text": "Priced by authority and competition"
     },
     {
       "level": 2,
@@ -105,7 +105,7 @@
     },
     {
       "level": 2,
-      "text": "Want to win your local map pack?"
+      "text": "Want the authority to finally rank?"
     },
     {
       "level": 4,
@@ -150,8 +150,8 @@
         {
           "@type": "ListItem",
           "position": 4,
-          "name": "Google Business Profile",
-          "item": "https://nexfortis.com/services/digital-marketing/google-business-profile"
+          "name": "Link Building & Digital PR",
+          "item": "https://nexfortis.com/services/digital-marketing/link-building"
         }
       ]
     },
@@ -161,42 +161,42 @@
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "Is a Google Business Profile free?",
+          "name": "What is link building?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes — creating and managing your own Google Business Profile costs nothing; Google doesn't charge for it. What you're paying for with a service like ours is the expertise and the ongoing work: optimizing every field correctly, earning reviews, posting, fixing listing inconsistencies, and tracking what's actually driving calls. The profile is free; getting it to win the map pack is the job."
+            "text": "Link building is the work of earning links from other websites to yours. Search engines treat those links as votes of confidence, so a strong, relevant backlink profile is one of the biggest factors in how high you can rank. The key word is earned — links have to come from real, relevant sites to help rather than hurt."
           }
         },
         {
           "@type": "Question",
-          "name": "Can I rank without a storefront or public address?",
+          "name": "Why is link building important?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes. Service-area businesses that travel to customers can set a service area instead of showing a public address. We configure it correctly so you appear for the areas you actually serve without breaking Google's guidelines — a common mistake that gets profiles suspended."
+            "text": "Because authority is still largely decided by links. Top-ranking pages consistently have more and better backlinks than the pages below them, yet most pages on the web have none at all. If your content is good but isn't ranking, a weak link profile is usually the reason — and it's the gap link building closes."
           }
         },
         {
           "@type": "Question",
-          "name": "What's the difference between setup and ongoing management?",
+          "name": "Is link building safe? What about Google penalties?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Setup is a one-time optimization — completing the profile, sorting categories, adding photos. Management is the ongoing work that actually holds and grows your position: posting, earning and answering reviews, keeping information current, and fixing problems as they appear. Google rewards active profiles, so management is where most of the long-term value is."
+            "text": "It's safe when it's done right and risky when it isn't. Bought links, spun content, and private blog networks can trigger a Google penalty that's expensive to recover from. We only build white-hat, editorial links from real, relevant sites — the kind Google wants you to earn — so you get the ranking benefit without the risk."
           }
         },
         {
           "@type": "Question",
-          "name": "How important are reviews to my profile?",
+          "name": "What's the difference between digital PR and guest posting?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Very. Reviews influence both your map-pack ranking and whether a searcher picks you over the business beside you. A steady stream of genuine reviews and a prompt response to each is one of the highest-return things you can do, so we build a simple system to keep them coming."
+            "text": "Digital PR earns links by pitching genuinely newsworthy stories, data, or commentary to journalists and publications — high-authority, editorial links you can't buy. Guest posting places a useful article you've written on a relevant site. Both are legitimate when done with real sites; we use the mix that fits your industry and goals."
           }
         },
         {
           "@type": "Question",
-          "name": "How quickly will I see results?",
+          "name": "How many links will I get, and how fast?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Profile improvements can move the map pack within a few weeks — faster than most SEO. Reviews and listing cleanup compound over the following months. Competitive urban areas take longer than quieter suburbs, and we set honest expectations against your specific market up front."
+            "text": "We don't promise a number, because earned links depend on outreach and what's link-worthy — and anyone guaranteeing X links a month is usually selling the risky kind. We focus on quality and relevance over volume, report every placement, and build steadily. A few strong editorial links beat dozens of junk ones every time."
           }
         }
       ]
@@ -292,9 +292,9 @@
     {
       "@context": "https://schema.org",
       "@type": "Service",
-      "name": "Google Business Profile Management",
-      "description": "Google Business Profile optimization and management for businesses across the Greater Toronto Area — profile build-out, posts, reviews, photos, and listing consistency.",
-      "url": "https://nexfortis.com/services/digital-marketing/google-business-profile",
+      "name": "Link Building & Digital PR Services",
+      "description": "White-hat link building and digital PR for Canadian businesses — backlink audits, editorial outreach, guest posting, and authority building that lifts rankings.",
+      "url": "https://nexfortis.com/services/digital-marketing/link-building",
       "provider": {
         "@type": "Organization",
         "name": "NexFortis IT Solutions",
@@ -304,7 +304,7 @@
         "@type": "Country",
         "name": "Canada"
       },
-      "serviceType": "Google Business Profile Management"
+      "serviceType": "Link Building"
     },
     {
       "@context": "https://schema.org",
@@ -412,20 +412,20 @@
       "href": "/services"
     },
     {
-      "text": "local SEO",
-      "href": "/services/digital-marketing/local-seo"
+      "text": "SEO services",
+      "href": "/services/digital-marketing/seo"
     },
     {
       "text": "digital marketing services",
       "href": "/services/digital-marketing"
     },
     {
-      "text": "Source: Google (via BrightLocal Local SEO Statistics)",
-      "href": "https://www.brightlocal.com/resources/local-seo-statistics/"
+      "text": "Source: Backlinko, 11.8M-result ranking study",
+      "href": "https://backlinko.com/search-engine-ranking"
     },
     {
-      "text": "Source: BrightLocal Local Consumer Review Survey 2024",
-      "href": "https://www.brightlocal.com/research/local-consumer-review-survey-2024/"
+      "text": "Source: Ahrefs, 1-billion-page study",
+      "href": "https://ahrefs.com/blog/search-traffic-study/"
     },
     {
       "text": "Source: Statcounter Global Stats",

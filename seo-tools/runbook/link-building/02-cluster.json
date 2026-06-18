@@ -1,0 +1,22 @@
+{
+  "_step": "2 — Cluster + cannibalization (HARD GATE 1)", "_page": "link-building",
+  "_source": "KI clustering order d1e91f67-8aa4-44d3-ae72-d7c0672b4a7f (2026-06-18, Canada). All terms commercial/transactional (buyer intent).",
+  "cluster_evidence": {
+    "link building services": {"intent": "Commercial", "note": "PRIMARY."},
+    "link building agency": {"intent": "Commercial", "note": "PRIMARY."},
+    "link building company": {"intent": "Transactional", "note": "PRIMARY."},
+    "backlink services": {"intent": "Transactional", "note": "PRIMARY (backlink synonym)."},
+    "digital pr services": {"intent": "Commercial", "note": "Secondary — editorial-link method."},
+    "guest posting services": {"intent": "Transactional", "note": "Secondary."},
+    "blogger outreach services": {"intent": "Commercial", "note": "Secondary."},
+    "off page seo services": {"intent": "Commercial", "note": "Secondary (off-page = link building)."},
+    "link building consultant": {"intent": "Commercial", "note": "Secondary."},
+    "white hat link building": {"intent": "Informational", "note": "Secondary (quality angle)."}
+  },
+  "assignment": {
+    "owns_primary": ["link building services", "link building agency", "link building company", "backlink services"],
+    "owns_secondary": ["digital pr services", "guest posting services", "blogger outreach services", "off page seo services", "link building consultant", "white hat link building"]
+  },
+  "fence_note": "Off-page / authority intent — distinct from the SEO spoke (on-page/technical) and content-marketing (production). 'off page seo services' is owned here, not by the SEO spoke.",
+  "_done_check": "PASS — one primary cluster; registry updated; check-cannibalization exit 0."
+}

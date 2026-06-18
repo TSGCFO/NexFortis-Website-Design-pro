@@ -1244,4 +1244,193 @@ export const DM_SPOKE_CONTENT: Partial<Record<DmSpokeSlug, DmSpokeContent>> = {
     ctaSubtext:
       "Get a free content assessment — what's worth keeping, the gaps your competitors are filling, and the topics you can own.",
   },
+
+  // ----------------------------------- LINK BUILDING & DIGITAL PR ----
+  "link-building": {
+    metaTitle: "Link Building & Digital PR",
+    metaDescription:
+      "White-hat link building and digital PR for Canadian businesses: earned editorial backlinks from real publications that build the authority behind your rankings.",
+    h1: "Link Building & Digital PR Services",
+    heroSubtitle:
+      "Earn editorial backlinks from real publications — the off-site authority that still decides how high you can realistically rank.",
+    serviceType: "Link Building",
+    serviceSchemaName: "Link Building & Digital PR Services",
+    serviceSchemaDescription:
+      "White-hat link building and digital PR for Canadian businesses — backlink audits, editorial outreach, guest posting, and authority building that lifts rankings.",
+    introHeading: "Authority is still earned through links",
+    intro: (
+      <>
+        <p>
+          Google has spent two decades treating links as votes. Despite every algorithm change, a
+          page&rsquo;s backlink profile is still one of the clearest signals of how much authority it
+          deserves &mdash; which is why the pages sitting at the top of competitive results almost
+          always have more, and better, links behind them. If your content is strong but stuck on
+          page two, a thin link profile is usually why.
+        </p>
+        <p>
+          The catch is that the wrong kind of links &mdash; bought, spun, or farmed from private
+          networks &mdash; now do more harm than good. We only build the kind that lasts: earned,
+          editorial links from real publications and relevant sites, through digital PR, genuine
+          outreach, and content worth linking to. It is the off-page half of{" "}
+          <InlineLink href={seo.href}>{seo.linkText}</InlineLink> and part of our{" "}
+          <InlineLink href={DM_PILLAR_HREF}>{DM_PILLAR_LINK_TEXT}</InlineLink>.
+        </p>
+        <p>
+          Every campaign starts with an honest audit of your current profile and your competitors&rsquo;,
+          so the links we pursue are the ones that will actually move your rankings &mdash; not vanity
+          metrics that look good in a report.
+        </p>
+      </>
+    ),
+    stats: [
+      {
+        value: "3.8×",
+        label: "more backlinks the #1 result has than positions #2–#10, on average.",
+        sourceName: "Backlinko, 11.8M-result ranking study",
+        sourceUrl: "https://backlinko.com/search-engine-ranking",
+      },
+      {
+        value: "66%",
+        label: "of pages have zero backlinks — most sites never earn a single one.",
+        sourceName: "Ahrefs, 1-billion-page study",
+        sourceUrl: "https://ahrefs.com/blog/search-traffic-study/",
+      },
+      {
+        value: "≈90%",
+        label: "of global search runs on Google — where link authority pays off.",
+        sourceName: "Statcounter Global Stats",
+        sourceUrl: "https://gs.statcounter.com/search-engine-market-share",
+      },
+    ],
+    featuresHeading: "What's included in our link building & digital PR",
+    featuresSubtitle: "Earned, editorial links — never bought, spun, or farmed.",
+    features: [
+      {
+        icon: Search,
+        title: "Backlink audit & strategy",
+        description:
+          "We benchmark your link profile against the competitors outranking you, find the gaps, and build a target list of the publications and pages worth earning links from — so effort goes where it moves rankings.",
+      },
+      {
+        icon: Sparkles,
+        title: "Digital PR & editorial links",
+        description:
+          "We pitch genuinely newsworthy angles, data, and commentary to real publications and journalists, earning the high-authority editorial links that matter most and can't be bought safely.",
+      },
+      {
+        icon: FileText,
+        title: "Guest posting on relevant sites",
+        description:
+          "We place well-written, genuinely useful guest articles on relevant, real sites in your space — not link farms — so each placement carries actual authority and referral value.",
+      },
+      {
+        icon: Users,
+        title: "Niche & blogger outreach",
+        description:
+          "We build relationships with the bloggers, creators, and site owners your audience already trusts, earning contextual links and mentions that send relevant traffic, not just SEO value.",
+      },
+      {
+        icon: Link2,
+        title: "Broken-link & reclamation",
+        description:
+          "We find unlinked mentions of your brand and broken links pointing at competitors or dead pages, and turn them into links to you — some of the lowest-risk, highest-return links available.",
+      },
+      {
+        icon: LineChart,
+        title: "Reporting on links & authority",
+        description:
+          "You get a clear monthly report of the links earned, where they came from, and how your domain authority and rankings are moving — real placements you can click, not a spreadsheet of junk.",
+      },
+    ],
+    processHeading: "How we deliver link building",
+    process: [
+      {
+        step: "01",
+        title: "Audit & target",
+        description:
+          "We analyze your backlink profile and your competitors', identify the gap, and build a vetted target list of real, relevant sites and angles worth pursuing.",
+      },
+      {
+        step: "02",
+        title: "Create link-worthy assets",
+        description:
+          "Links are earned, not asked for. We develop the data, content, and PR angles that give real publications a genuine reason to link to you.",
+      },
+      {
+        step: "03",
+        title: "Outreach & earn",
+        description:
+          "We run personalised outreach and digital PR to earn editorial placements, guest posts, and mentions on relevant, authoritative sites — every link vetted for quality.",
+      },
+      {
+        step: "04",
+        title: "Report & build",
+        description:
+          "We report every link earned and track authority and rankings month over month, then keep building on the angles and relationships that are working.",
+      },
+    ],
+    comparisonHeading: "NexFortis vs. a typical link vendor",
+    comparison: [
+      { feature: "Link type", us: "Earned editorial & relevant", them: "Bought, spun, or PBN links" },
+      { feature: "Risk", us: "White-hat, penalty-safe", them: "Risks a Google penalty" },
+      { feature: "Relevance", us: "Real sites in your space", them: "Any site that'll take the link" },
+      { feature: "Reporting", us: "Real placements you can click", them: "A list of low-quality URLs" },
+      { feature: "Who does the work", us: "A senior consultant you can reach", them: "An offshore link mill" },
+      { feature: "Commitment", us: "Month-to-month — we earn the renewal", them: "Locked contracts" },
+    ],
+    pricingHeading: "What link building costs",
+    pricing: {
+      fromLabel: "Priced by authority and competition",
+      note: (
+        <>
+          <p className="mb-4">
+            Earned editorial links cost more than farmed ones for a reason &mdash; they take real
+            outreach and real content, and they actually work. We price by how competitive your
+            space is and the quality of links you need, never by churning out cheap, risky volume.
+          </p>
+          <p>
+            You get a fixed monthly scope, transparent reporting, and no long-term lock-in. Ask for a
+            free backlink audit and we&rsquo;ll show you the gap and what it takes to close it.
+          </p>
+        </>
+      ),
+    },
+    faq: [
+      {
+        question: "What is link building?",
+        answer:
+          "Link building is the work of earning links from other websites to yours. Search engines treat those links as votes of confidence, so a strong, relevant backlink profile is one of the biggest factors in how high you can rank. The key word is earned — links have to come from real, relevant sites to help rather than hurt.",
+      },
+      {
+        question: "Why is link building important?",
+        answer:
+          "Because authority is still largely decided by links. Top-ranking pages consistently have more and better backlinks than the pages below them, yet most pages on the web have none at all. If your content is good but isn't ranking, a weak link profile is usually the reason — and it's the gap link building closes.",
+      },
+      {
+        question: "Is link building safe? What about Google penalties?",
+        answer:
+          "It's safe when it's done right and risky when it isn't. Bought links, spun content, and private blog networks can trigger a Google penalty that's expensive to recover from. We only build white-hat, editorial links from real, relevant sites — the kind Google wants you to earn — so you get the ranking benefit without the risk.",
+      },
+      {
+        question: "What's the difference between digital PR and guest posting?",
+        answer:
+          "Digital PR earns links by pitching genuinely newsworthy stories, data, or commentary to journalists and publications — high-authority, editorial links you can't buy. Guest posting places a useful article you've written on a relevant site. Both are legitimate when done with real sites; we use the mix that fits your industry and goals.",
+      },
+      {
+        question: "How many links will I get, and how fast?",
+        answer:
+          "We don't promise a number, because earned links depend on outreach and what's link-worthy — and anyone guaranteeing X links a month is usually selling the risky kind. We focus on quality and relevance over volume, report every placement, and build steadily. A few strong editorial links beat dozens of junk ones every time.",
+      },
+    ],
+    authorNote: (
+      <p>
+        Hassan leads link building and digital PR at NexFortis, focused on the earned, editorial
+        links that lift authority safely. As founder and CEO he stays hands-on with every engagement
+        &mdash; no link mills, no risky shortcuts.
+      </p>
+    ),
+    ctaHeading: "Want the authority to finally rank?",
+    ctaSubtext:
+      "Get a free backlink audit — see the gap between your link profile and the competitors outranking you, and how to close it safely.",
+  },
 };
