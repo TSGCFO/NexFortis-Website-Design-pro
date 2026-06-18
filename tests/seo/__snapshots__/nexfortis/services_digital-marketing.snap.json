@@ -48,12 +48,12 @@
       "text": "Google Business Profile"
     },
     {
-      "level": 2,
-      "text": "Also available across the cluster"
-    },
-    {
       "level": 3,
       "text": "Content Marketing"
+    },
+    {
+      "level": 2,
+      "text": "Also available across the cluster"
     },
     {
       "level": 3,
@@ -392,6 +392,10 @@
     {
       "text": "Google Business Profile",
       "href": "/services/digital-marketing/google-business-profile"
+    },
+    {
+      "text": "Content Marketing",
+      "href": "/services/digital-marketing/content-marketing"
     },
     {
       "text": "Microsoft 365 Solutions",

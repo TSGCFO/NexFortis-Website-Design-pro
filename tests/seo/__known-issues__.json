@@ -23,7 +23,8 @@
     { "site": "nexfortis", "route": "/services/digital-marketing/local-seo", "current": "2 <h1>", "expected": "1 <h1>", "issue": "M1", "note": "Second H1 is in <noscript> fallback block — pre-existing global pattern on all nexfortis pages" },
     { "site": "nexfortis", "route": "/services/digital-marketing/generative-engine-optimization", "current": "2 <h1>", "expected": "1 <h1>", "issue": "M1", "note": "Second H1 is in <noscript> fallback block — pre-existing global pattern on all nexfortis pages" },
     { "site": "nexfortis", "route": "/services/digital-marketing/technical-seo", "current": "2 <h1>", "expected": "1 <h1>", "issue": "M1", "note": "Second H1 is in <noscript> fallback block — pre-existing global pattern on all nexfortis pages" },
-    { "site": "nexfortis", "route": "/services/digital-marketing/google-business-profile", "current": "2 <h1>", "expected": "1 <h1>", "issue": "M1", "note": "Second H1 is in <noscript> fallback block — pre-existing global pattern on all nexfortis pages" }
+    { "site": "nexfortis", "route": "/services/digital-marketing/google-business-profile", "current": "2 <h1>", "expected": "1 <h1>", "issue": "M1", "note": "Second H1 is in <noscript> fallback block — pre-existing global pattern on all nexfortis pages" },
+    { "site": "nexfortis", "route": "/services/digital-marketing/content-marketing", "current": "2 <h1>", "expected": "1 <h1>", "issue": "M1", "note": "Second H1 is in <noscript> fallback block — pre-existing global pattern on all nexfortis pages" }
   ],
   "INV-002": [
     { "site": "nexfortis", "route": "/services/it-consulting", "current": "595px", "expected": "200-580px", "issue": "I5", "note": "Title too wide — pre-existing audit finding" },
@@ -71,7 +72,8 @@
     { "site": "nexfortis", "route": "/services/digital-marketing/local-seo", "current": "jumped H2→H4", "expected": "no level skipped", "issue": "I6", "note": "Footer H2→H4 + noscript H1 — pre-existing global pattern on all nexfortis pages" },
     { "site": "nexfortis", "route": "/services/digital-marketing/generative-engine-optimization", "current": "jumped H2→H4", "expected": "no level skipped", "issue": "I6", "note": "Footer H2→H4 + noscript H1 — pre-existing global pattern on all nexfortis pages" },
     { "site": "nexfortis", "route": "/services/digital-marketing/technical-seo", "current": "jumped H2→H4", "expected": "no level skipped", "issue": "I6", "note": "Footer H2→H4 + noscript H1 — pre-existing global pattern on all nexfortis pages" },
-    { "site": "nexfortis", "route": "/services/digital-marketing/google-business-profile", "current": "jumped H2→H4", "expected": "no level skipped", "issue": "I6", "note": "Footer H2→H4 + noscript H1 — pre-existing global pattern on all nexfortis pages" }
+    { "site": "nexfortis", "route": "/services/digital-marketing/google-business-profile", "current": "jumped H2→H4", "expected": "no level skipped", "issue": "I6", "note": "Footer H2→H4 + noscript H1 — pre-existing global pattern on all nexfortis pages" },
+    { "site": "nexfortis", "route": "/services/digital-marketing/content-marketing", "current": "jumped H2→H4", "expected": "no level skipped", "issue": "I6", "note": "Footer H2→H4 + noscript H1 — pre-existing global pattern on all nexfortis pages" }
   ],
   "INV-009": [
     { "site": "qb-portal", "route": "/", "current": "no JSON-LD", "expected": "at least one JSON-LD block", "issue": "C2", "note": "qb-portal index.html is a minimal SPA shell — prerender failure; no JSON-LD in dist" }

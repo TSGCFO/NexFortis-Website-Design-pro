@@ -124,7 +124,7 @@ export const DM_SPOKES: readonly DmSpoke[] = [
       "Research-led articles, pillar pages, and topic clusters that build authority and capture demand at every stage.",
     icon: PenTool,
     category: "Content Production",
-    published: false,
+    published: true,
   },
   {
     slug: "link-building",

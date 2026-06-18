@@ -39,9 +39,9 @@
     },
     "/services/digital-marketing/content-marketing": {
       "name": "Content Marketing",
-      "status": "tentative",
-      "primary": ["content marketing services", "content marketing agency"],
-      "secondary": []
+      "status": "confirmed (KI cluster order 206d4516, 2026-06-18)",
+      "primary": ["content marketing services", "content marketing agency", "content marketing company"],
+      "secondary": ["content writing services", "content creation services", "content strategy services", "blog writing services", "content marketing consultant"]
     },
     "/services/digital-marketing/link-building": {
       "name": "Link Building & Digital PR",

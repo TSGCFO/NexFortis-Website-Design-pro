@@ -1054,4 +1054,194 @@ export const DM_SPOKE_CONTENT: Partial<Record<DmSpokeSlug, DmSpokeContent>> = {
     ctaSubtext:
       "Get a free Google Business Profile audit — your gaps, your competitors' edge, and the fastest path to more calls from nearby searches.",
   },
+
+  // -------------------------------------------- CONTENT MARKETING ----
+  "content-marketing": {
+    metaTitle: "Content Marketing Services",
+    metaDescription:
+      "Content marketing services for Canadian businesses: research-led articles, pillar pages, and topic clusters that rank, build authority, and get cited by AI.",
+    h1: "Content Marketing Services That Earn Demand",
+    heroSubtitle:
+      "Research-led content that ranks, builds authority, and gets cited — not filler churned out to hit a word count.",
+    serviceType: "Content Marketing",
+    serviceSchemaName: "Content Marketing Services",
+    serviceSchemaDescription:
+      "Content marketing for Canadian businesses — content strategy, SEO articles, pillar pages and topic clusters, and content built to rank and earn AI citations.",
+    introHeading: "Content that does a job, not content for its own sake",
+    intro: (
+      <>
+        <p>
+          Most content marketing fails for a boring reason: it is published to fill a calendar, not
+          to answer a real question a buyer is asking. The internet is already drowning in that
+          stuff, and AI can generate more of it by the second. What actually moves the needle is
+          content thorough and useful enough that Google ranks it, readers trust it, and &mdash;
+          increasingly &mdash; AI engines quote it.
+        </p>
+        <p>
+          That is what we build. We start from what your customers are searching and the questions
+          they ask before they buy, then produce the articles, pillar pages, and topic clusters that
+          own those topics. It is the engine that makes{" "}
+          <InlineLink href={seo.href}>{seo.linkText}</InlineLink> work &mdash; rankings need
+          something worth ranking &mdash; and a core part of our{" "}
+          <InlineLink href={DM_PILLAR_HREF}>{DM_PILLAR_LINK_TEXT}</InlineLink>.
+        </p>
+        <p>
+          Every piece is tied to a goal: a keyword to win, a question to own, a stage of the buying
+          journey to support. We would rather publish one page that ranks and converts than ten that
+          quietly sink.
+        </p>
+      </>
+    ),
+    stats: [
+      {
+        value: "≈90%",
+        label: "of global search runs on Google — where good content gets found.",
+        sourceName: "Statcounter Global Stats",
+        sourceUrl: "https://gs.statcounter.com/search-engine-market-share",
+      },
+      {
+        value: "27.6%",
+        label: "average click-through rate of the #1 organic result — the prize for content that ranks.",
+        sourceName: "Backlinko, 4M-result CTR study",
+        sourceUrl: "https://backlinko.com/google-ctr-stats",
+      },
+      {
+        value: "≈16%",
+        label: "of Google searches showed an AI Overview by late 2025 — and AI cites real content.",
+        sourceName: "Semrush study, via Search Engine Land",
+        sourceUrl: "https://searchengineland.com/google-ai-overviews-surge-pullback-data-466314",
+      },
+    ],
+    featuresHeading: "What's included in our content marketing services",
+    featuresSubtitle: "Strategy, production, and distribution — built around what your buyers search.",
+    features: [
+      {
+        icon: Search,
+        title: "Content strategy & topic clusters",
+        description:
+          "We map the topics your buyers search, group them into pillar-and-cluster structures, and prioritise by what you can realistically win — so every piece has a job instead of guessing at ideas.",
+      },
+      {
+        icon: FileText,
+        title: "SEO articles & guides",
+        description:
+          "We write research-led articles and guides that cover a topic thoroughly enough to outrank thinner competitors and stay useful for years, not weeks — the opposite of AI-spun filler.",
+      },
+      {
+        icon: FileCode,
+        title: "Pillar pages",
+        description:
+          "We build comprehensive pillar pages that establish your authority on a core topic and tie your cluster together with internal links — the structure Google and AI engines both reward.",
+      },
+      {
+        icon: PenTool,
+        title: "Blog & ongoing writing",
+        description:
+          "We keep a steady, planned cadence of posts going so your site keeps earning new rankings and gives returning visitors a reason to come back — consistency without the filler.",
+      },
+      {
+        icon: Bot,
+        title: "Content built for AI search",
+        description:
+          "We structure content into clear, self-contained passages with the right schema, so it is easy for AI engines to lift and cite — the content layer beneath strong Generative Engine Optimization.",
+      },
+      {
+        icon: Share2,
+        title: "Distribution & repurposing",
+        description:
+          "Good content is wasted if nobody sees it. We repurpose each piece across the channels your audience uses and feed it into email and social so one article works in several places.",
+      },
+    ],
+    processHeading: "How we deliver content marketing",
+    process: [
+      {
+        step: "01",
+        title: "Strategy & research",
+        description:
+          "We research what your buyers search and ask, audit what you already have, and build a prioritised content plan mapped to real keywords and buying stages.",
+      },
+      {
+        step: "02",
+        title: "Create",
+        description:
+          "We produce research-led, genuinely useful pieces — drafted, edited, and fact-checked — with your review before anything publishes. No filler, no spun AI copy.",
+      },
+      {
+        step: "03",
+        title: "Optimize & publish",
+        description:
+          "We optimize each piece for search and AI, wire up internal links, and publish on a cadence you can sustain, so the library compounds over time.",
+      },
+      {
+        step: "04",
+        title: "Measure & refresh",
+        description:
+          "We track rankings, traffic, and leads per piece, refresh content that's slipping, and double down on the topics that are working.",
+      },
+    ],
+    comparisonHeading: "NexFortis vs. a typical content shop",
+    comparison: [
+      { feature: "Content", us: "Research-led and genuinely useful", them: "AI-spun filler to hit a quota" },
+      { feature: "Strategy", us: "Topic clusters mapped to keywords", them: "A random list of post ideas" },
+      { feature: "Built for", us: "Search and AI citation", them: "A word count" },
+      { feature: "Fact-checking", us: "Every claim verified or cut", them: "Whatever the AI wrote" },
+      { feature: "Who does the work", us: "A senior consultant you can reach", them: "A rotating junior or offshore mill" },
+      { feature: "Commitment", us: "Month-to-month — we earn the renewal", them: "Locked contracts" },
+    ],
+    pricingHeading: "What content marketing costs",
+    pricing: {
+      fromLabel: "Scaled to volume and depth",
+      note: (
+        <>
+          <p className="mb-4">
+            Cost depends on how much you publish and how deep each piece needs to be &mdash; a
+            steady stream of focused articles is very different from a few comprehensive pillar
+            pages. We price by the program, not by a per-word rate that rewards padding.
+          </p>
+          <p>
+            You get a fixed monthly scope, transparent pricing, and no long-term lock-in. Ask for a
+            free content assessment and we&rsquo;ll recommend the cadence and depth that fit your
+            goals.
+          </p>
+        </>
+      ),
+    },
+    faq: [
+      {
+        question: "What is content marketing?",
+        answer:
+          "Content marketing is the practice of earning customers by publishing genuinely useful content — articles, guides, pillar pages — instead of just buying their attention with ads. Done well, it ranks in search, builds trust over time, and increasingly gets cited by AI engines. It's a long-term asset: a good page keeps bringing in readers and leads for years.",
+      },
+      {
+        question: "Why is content marketing important?",
+        answer:
+          "Because rankings need something worth ranking, and buyers research before they buy. Content is what answers their questions, earns their trust, and gives Google and AI engines a reason to point to you instead of a competitor. It also compounds — unlike ads, the work keeps paying off long after it's published.",
+      },
+      {
+        question: "Does content marketing help my SEO and AI visibility?",
+        answer:
+          "Directly. Strong, well-structured content is the raw material SEO ranks and AI engines cite. We build content with both in mind — thorough enough to rank, and structured into clear passages with the right schema so AI tools can lift and quote it. It works hand in hand with our SEO and Generative Engine Optimization services.",
+      },
+      {
+        question: "Do you write the content yourselves?",
+        answer:
+          "Yes. We research, draft, edit, and fact-check each piece, with your review before it publishes. We use AI as a tool where it helps, but we don't ship spun, unverified copy — every claim is checked against a real source or cut, because thin AI filler is exactly what Google's helpful-content system penalises.",
+      },
+      {
+        question: "How long until content marketing works?",
+        answer:
+          "Like SEO, it's a compounding play rather than an instant one. Expect early traction on lower-competition topics within a few months and meaningful momentum around the six-month mark, building from there. We report rankings, traffic, and leads per piece so you can see it working along the way.",
+      },
+    ],
+    authorNote: (
+      <p>
+        Hassan leads content strategy at NexFortis, helping Canadian businesses turn research-led
+        content into rankings, trust, and leads. As founder and CEO he stays hands-on with every
+        engagement &mdash; no spun copy, no hand-off to a junior.
+      </p>
+    ),
+    ctaHeading: "Ready for content that actually earns its keep?",
+    ctaSubtext:
+      "Get a free content assessment — what's worth keeping, the gaps your competitors are filling, and the topics you can own.",
+  },
 };

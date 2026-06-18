@@ -1,13 +1,13 @@
 {
-  "route": "/services/digital-marketing/technical-seo",
-  "title": "Technical SEO Services | NexFortis IT Solutions",
-  "description": "Technical SEO services for Canadian businesses: crawlability, indexation, Core Web Vitals, structured data, and rendering fixes that let Google rank you.",
-  "canonical": "https://nexfortis.com/services/digital-marketing/technical-seo",
+  "route": "/services/digital-marketing/content-marketing",
+  "title": "Content Marketing Services | NexFortis IT Solutions",
+  "description": "Content marketing services for Canadian businesses: research-led articles, pillar pages, and topic clusters that rank, build authority, and get cited by AI.",
+  "canonical": "https://nexfortis.com/services/digital-marketing/content-marketing",
   "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
   "og": {
-    "title": "Technical SEO Services | NexFortis IT Solutions",
-    "description": "Technical SEO services for Canadian businesses: crawlability, indexation, Core Web Vitals, structured data, and rendering fixes that let Google rank you.",
-    "url": "https://nexfortis.com/services/digital-marketing/technical-seo",
+    "title": "Content Marketing Services | NexFortis IT Solutions",
+    "description": "Content marketing services for Canadian businesses: research-led articles, pillar pages, and topic clusters that rank, build authority, and get cited by AI.",
+    "url": "https://nexfortis.com/services/digital-marketing/content-marketing",
     "image": "https://nexfortis.com/opengraph.png",
     "type": "website"
   },
@@ -17,71 +17,71 @@
   "headings": [
     {
       "level": 1,
-      "text": "Technical SEO Services That Unblock Rankings"
+      "text": "Content Marketing Services That Earn Demand"
     },
     {
       "level": 2,
-      "text": "The work that decides whether your other SEO pays off"
+      "text": "Content that does a job, not content for its own sake"
     },
     {
       "level": 2,
-      "text": "What's included in our technical SEO services"
+      "text": "What's included in our content marketing services"
     },
     {
       "level": 3,
-      "text": "Technical SEO audit"
+      "text": "Content strategy &amp; topic clusters"
     },
     {
       "level": 3,
-      "text": "Crawlability &amp; indexation"
+      "text": "SEO articles &amp; guides"
     },
     {
       "level": 3,
-      "text": "Core Web Vitals &amp; speed"
+      "text": "Pillar pages"
     },
     {
       "level": 3,
-      "text": "Structured data &amp; schema"
+      "text": "Blog &amp; ongoing writing"
     },
     {
       "level": 3,
-      "text": "Site architecture &amp; internal links"
+      "text": "Content built for AI search"
     },
     {
       "level": 3,
-      "text": "Rendering, JavaScript &amp; migrations"
+      "text": "Distribution &amp; repurposing"
     },
     {
       "level": 2,
-      "text": "How we deliver technical SEO"
+      "text": "How we deliver content marketing"
     },
     {
       "level": 3,
-      "text": "Crawl &amp; audit"
+      "text": "Strategy &amp; research"
     },
     {
       "level": 3,
-      "text": "Fix the blockers"
+      "text": "Create"
     },
     {
       "level": 3,
-      "text": "Validate &amp; monitor"
+      "text": "Optimize &amp; publish"
     },
     {
       "level": 3,
-      "text": "Keep it healthy"
+      "text": "Measure &amp; refresh"
     },
     {
       "level": 2,
-      "text": "NexFortis vs. a typical SEO provider"
+      "text": "NexFortis vs. a typical content shop"
     },
     {
       "level": 2,
-      "text": "What technical SEO costs"
+      "text": "What content marketing costs"
     },
     {
       "level": 3,
-      "text": "Audit first, then scoped to what's broken"
+      "text": "Scaled to volume and depth"
     },
     {
       "level": 2,
@@ -105,7 +105,7 @@
     },
     {
       "level": 2,
-      "text": "Is something under the hood holding you back?"
+      "text": "Ready for content that actually earns its keep?"
     },
     {
       "level": 4,
@@ -150,8 +150,8 @@
         {
           "@type": "ListItem",
           "position": 4,
-          "name": "Technical SEO",
-          "item": "https://nexfortis.com/services/digital-marketing/technical-seo"
+          "name": "Content Marketing",
+          "item": "https://nexfortis.com/services/digital-marketing/content-marketing"
         }
       ]
     },
@@ -161,42 +161,42 @@
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "What is technical SEO?",
+          "name": "What is content marketing?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Technical SEO is the work that makes sure search engines can crawl, render, index, and trust your site. It covers things like site speed and Core Web Vitals, crawlability, indexation, structured data, site architecture, and JavaScript rendering. It's the layer underneath your content and links — when it's broken, the rest of your SEO underperforms no matter how good it is."
+            "text": "Content marketing is the practice of earning customers by publishing genuinely useful content — articles, guides, pillar pages — instead of just buying their attention with ads. Done well, it ranks in search, builds trust over time, and increasingly gets cited by AI engines. It's a long-term asset: a good page keeps bringing in readers and leads for years."
           }
         },
         {
           "@type": "Question",
-          "name": "What is a technical SEO audit?",
+          "name": "Why is content marketing important?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "It's a structured review of everything that affects how search engines access and understand your site. We crawl it the way Google does, pull data from Search Console and Core Web Vitals, and produce a prioritised list of issues with the highest-impact fixes first. It's the starting point for every technical engagement, because guessing at problems wastes money."
+            "text": "Because rankings need something worth ranking, and buyers research before they buy. Content is what answers their questions, earns their trust, and gives Google and AI engines a reason to point to you instead of a competitor. It also compounds — unlike ads, the work keeps paying off long after it's published."
           }
         },
         {
           "@type": "Question",
-          "name": "What's the difference between on-page and technical SEO?",
+          "name": "Does content marketing help my SEO and AI visibility?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "On-page SEO is about the content of a page — titles, headings, copy, and keywords. Technical SEO is about the plumbing that lets Google reach and process that page at all — speed, crawling, indexing, structured data, and rendering. You need both, and we handle them together as part of a full SEO engagement."
+            "text": "Directly. Strong, well-structured content is the raw material SEO ranks and AI engines cite. We build content with both in mind — thorough enough to rank, and structured into clear passages with the right schema so AI tools can lift and quote it. It works hand in hand with our SEO and Generative Engine Optimization services."
           }
         },
         {
           "@type": "Question",
-          "name": "How do I know if I need technical SEO?",
+          "name": "Do you write the content yourselves?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Common signs: pages that won't rank despite good content, traffic that dropped after a redesign or migration, slow load times, pages missing from Google, or a Search Console full of coverage and Core Web Vitals warnings. If any of those sound familiar, a technical audit will tell you what's wrong and what it's costing you."
+            "text": "Yes. We research, draft, edit, and fact-check each piece, with your review before it publishes. We use AI as a tool where it helps, but we don't ship spun, unverified copy — every claim is checked against a real source or cut, because thin AI filler is exactly what Google's helpful-content system penalises."
           }
         },
         {
           "@type": "Question",
-          "name": "Will you work with my existing developers?",
+          "name": "How long until content marketing works?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes. We can either implement fixes directly or hand your team clear, prioritised specifications they can ship — whatever fits how you work. Either way, nothing goes live without your sign-off, and we validate each change afterward so you know it actually worked."
+            "text": "Like SEO, it's a compounding play rather than an instant one. Expect early traction on lower-competition topics within a few months and meaningful momentum around the six-month mark, building from there. We report rankings, traffic, and leads per piece so you can see it working along the way."
           }
         }
       ]
@@ -292,9 +292,9 @@
     {
       "@context": "https://schema.org",
       "@type": "Service",
-      "name": "Technical SEO Services",
-      "description": "Technical search engine optimization for Canadian businesses — site audits, crawlability and indexation, Core Web Vitals, structured data, and rendering fixes.",
-      "url": "https://nexfortis.com/services/digital-marketing/technical-seo",
+      "name": "Content Marketing Services",
+      "description": "Content marketing for Canadian businesses — content strategy, SEO articles, pillar pages and topic clusters, and content built to rank and earn AI citations.",
+      "url": "https://nexfortis.com/services/digital-marketing/content-marketing",
       "provider": {
         "@type": "Organization",
         "name": "NexFortis IT Solutions",
@@ -304,7 +304,7 @@
         "@type": "Country",
         "name": "Canada"
       },
-      "serviceType": "Technical SEO"
+      "serviceType": "Content Marketing"
     },
     {
       "@context": "https://schema.org",
@@ -420,12 +420,12 @@
       "href": "https://gs.statcounter.com/search-engine-market-share"
     },
     {
-      "text": "Source: 2024 Web Almanac, HTTP Archive",
-      "href": "https://almanac.httparchive.org/en/2024/performance"
+      "text": "Source: Backlinko, 4M-result CTR study",
+      "href": "https://backlinko.com/google-ctr-stats"
     },
     {
-      "text": "Source: Google, The Need for Mobile Speed",
-      "href": "https://blog.google/products/admanager/the-need-for-mobile-speed/"
+      "text": "Source: Semrush study, via Search Engine Land",
+      "href": "https://searchengineland.com/google-ai-overviews-surge-pullback-data-466314"
     },
     {
       "text": "More about NexFortis",
