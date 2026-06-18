@@ -102,7 +102,7 @@ export const DM_SPOKES: readonly DmSpoke[] = [
       "Core Web Vitals, crawlability, structured data, and rendering fixes that let Google index and rank every page.",
     icon: Gauge,
     category: "Technical SEO",
-    published: false,
+    published: true,
   },
   {
     slug: "google-business-profile",

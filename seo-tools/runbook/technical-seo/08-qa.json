@@ -1,0 +1,10 @@
+{
+  "_step": "8 — Publish QA", "_page": "technical-seo", "_date": "2026-06-18",
+  "build": "nexfortis (21 routes incl. new technical-seo) + qb-portal OK.",
+  "test_seo": "PASS — all suites green; snapshots re-baselined: site-wide 'Technical SEO' nav/footer anchor (verified /about), new technical-seo page snapshot, sitemap urlCount 20->21.",
+  "content_gate": "PASS — technical-seo 1504 words within 1100-1900; 3 distinct external citations; FAQPage 5; Service+Person; author named; no banned jargon; no dup paragraphs.",
+  "cannibalization": "PASS (exit 0).", "publish_readiness": "PASS (exit 0) — 4 published pages with artifacts.",
+  "live_check": {"http_status": 200, "h1": "Technical SEO Services That Unblock Rankings", "title": "Technical SEO Services | NexFortis IT Solutions", "distinct_external_citations": 3, "template": "DmSpokePageBody (visually verified on pillar)."},
+  "gate3": "Winston 0% (binding PASS); Undetectable advisory 84.2.",
+  "_done_check": "PASS — new spoke fully wired (content+wrapper+route+publish+nav), build+test green, both gates green, live 200 + H1 + 3 citations."
+}

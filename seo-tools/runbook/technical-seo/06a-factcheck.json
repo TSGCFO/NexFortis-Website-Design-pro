@@ -1,0 +1,16 @@
+{
+  "_step": "6a — Itemized fact-check (HARD GATE 2)", "_page": "technical-seo", "_date": "2026-06-18",
+  "statistics": [
+    {"claim": "≈90% of global search runs on Google", "verdict": "VERIFIED", "source": "Statcounter Global Stats.", "url": "https://gs.statcounter.com/search-engine-market-share"},
+    {"claim": "43% of mobile sites pass all three Core Web Vitals", "verdict": "VERIFIED", "source": "2024 Web Almanac, HTTP Archive Performance (43% mobile with INP).", "url": "https://almanac.httparchive.org/en/2024/performance"},
+    {"claim": "53% of mobile visits are abandoned if a page takes over 3 seconds to load", "verdict": "VERIFIED", "source": "Google, 'The Need for Mobile Speed' (2016, 10,000+ mobile domains).", "url": "https://blog.google/products/admanager/the-need-for-mobile-speed/"}
+  ],
+  "capability_and_market_claims": [
+    {"claim": "audit, crawlability/indexation, CWV/speed, structured data, architecture, rendering/migrations", "verdict": "VERIFIED as approach", "basis": "Standard technical-SEO scope; framed as our process; no client-count/result claims."},
+    {"claim": "Hassan brings an IT/engineering background to technical SEO", "verdict": "VERIFIED", "basis": "_facts.md: NexFortis is an IT firm; Hassan 15+ yrs enterprise IT/cloud — legitimate, not a marketing-track-record claim."},
+    {"claim": "audit-first, validated fixes, work with your developers, month-to-month", "verdict": "VERIFIED as approach", "basis": "_facts.md transparent/month-to-month; process framing."}
+  ],
+  "cannibalization_note": "Owns technical seo services/agency/company/consultant (+ audit). Speed/CWV/schema are features, not targeted terms. Fenced from generic SEO + local-seo + the blog ('technical seo'/'website speed optimization').",
+  "fabrication_scan": {"invented_results_metrics": "NONE", "invented_prices_guarantees": "NONE", "undemonstrated_capabilities": "NONE (IT background is real; framed as approach)"},
+  "_done_check": "PASS — 3 stats verified to distinct primary sources; claims grounded; zero fabrications."
+}

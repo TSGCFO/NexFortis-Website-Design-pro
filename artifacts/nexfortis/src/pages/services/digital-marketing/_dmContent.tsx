@@ -674,4 +674,195 @@ export const DM_SPOKE_CONTENT: Partial<Record<DmSpokeSlug, DmSpokeContent>> = {
     ctaSubtext:
       "Get a free AI visibility check — see which engines cite you today, where your competitors lead, and the fastest way to close the gap.",
   },
+
+  // ------------------------------------------------ TECHNICAL SEO ----
+  "technical-seo": {
+    metaTitle: "Technical SEO Services",
+    metaDescription:
+      "Technical SEO services for Canadian businesses: crawlability, indexation, Core Web Vitals, structured data, and rendering fixes that let Google rank you.",
+    h1: "Technical SEO Services That Unblock Rankings",
+    heroSubtitle:
+      "Fix the crawl, indexation, speed, and structured-data problems quietly holding your site back — so the rest of your SEO can finally work.",
+    serviceType: "Technical SEO",
+    serviceSchemaName: "Technical SEO Services",
+    serviceSchemaDescription:
+      "Technical search engine optimization for Canadian businesses — site audits, crawlability and indexation, Core Web Vitals, structured data, and rendering fixes.",
+    introHeading: "The work that decides whether your other SEO pays off",
+    intro: (
+      <>
+        <p>
+          You can write the best page on the internet, but if Google cannot crawl it, render it, or
+          load it before a visitor gives up, none of that effort lands. That is the quiet trap most
+          sites fall into: the content and the links are fine, yet rankings stall because something
+          under the hood is broken. Technical SEO is the unglamorous job of finding and fixing those
+          things.
+        </p>
+        <p>
+          It is the foundation beneath every other part of our{" "}
+          <InlineLink href={seo.href}>{seo.linkText}</InlineLink> work &mdash; crawl paths, how your
+          pages get indexed, Core Web Vitals and load speed, structured data, site architecture, and
+          the JavaScript-rendering issues that trip up modern sites. Get these right and the keyword
+          work, the content, and the links you invest in actually have a chance to rank. It is part
+          of our broader{" "}
+          <InlineLink href={DM_PILLAR_HREF}>{DM_PILLAR_LINK_TEXT}</InlineLink>.
+        </p>
+        <p>
+          We start every engagement with an audit, because guessing at technical problems wastes
+          money. You get a prioritised list of what is actually costing you rankings, in plain
+          language, with the high-impact fixes first.
+        </p>
+      </>
+    ),
+    stats: [
+      {
+        value: "≈90%",
+        label: "of global search runs on Google — the crawler you have to satisfy.",
+        sourceName: "Statcounter Global Stats",
+        sourceUrl: "https://gs.statcounter.com/search-engine-market-share",
+      },
+      {
+        value: "43%",
+        label: "of mobile sites pass all three Core Web Vitals — so speed is still an edge.",
+        sourceName: "2024 Web Almanac, HTTP Archive",
+        sourceUrl: "https://almanac.httparchive.org/en/2024/performance",
+      },
+      {
+        value: "53%",
+        label: "of mobile visits are abandoned if a page takes over 3 seconds to load.",
+        sourceName: "Google, The Need for Mobile Speed",
+        sourceUrl: "https://blog.google/products/admanager/the-need-for-mobile-speed/",
+      },
+    ],
+    featuresHeading: "What's included in our technical SEO services",
+    featuresSubtitle:
+      "Everything that controls whether Google can crawl, index, and rank your site.",
+    features: [
+      {
+        icon: Gauge,
+        title: "Technical SEO audit",
+        description:
+          "We crawl your site the way Google does and surface what's actually capping rankings — then hand you a prioritised, plain-language fix list with the highest-impact items first, not a 200-row spreadsheet nobody reads.",
+      },
+      {
+        icon: Bot,
+        title: "Crawlability & indexation",
+        description:
+          "We make sure Google can reach and index the pages you want ranked — robots.txt, XML sitemaps, canonical tags, redirect chains, and the crawl-budget waste that quietly buries your important pages.",
+      },
+      {
+        icon: LineChart,
+        title: "Core Web Vitals & speed",
+        description:
+          "We diagnose and fix the loading, interactivity, and layout-shift problems behind poor Core Web Vitals — the field-measured scores Google uses and the ones that decide whether a visitor stays or bounces.",
+      },
+      {
+        icon: FileCode,
+        title: "Structured data & schema",
+        description:
+          "We implement and validate the schema that helps Google understand your pages and earn rich results — and the same markup increasingly helps AI engines trust and cite your content.",
+      },
+      {
+        icon: Search,
+        title: "Site architecture & internal links",
+        description:
+          "We organise your URLs and internal links so authority flows to the pages that matter and Google can understand how your site fits together — the structure that makes everything else rank more easily.",
+      },
+      {
+        icon: FileText,
+        title: "Rendering, JavaScript & migrations",
+        description:
+          "We catch the JavaScript-rendering issues that hide content from crawlers, and we plan and protect site migrations so a redesign or replatform doesn't quietly erase years of rankings.",
+      },
+    ],
+    processHeading: "How we deliver technical SEO",
+    process: [
+      {
+        step: "01",
+        title: "Crawl & audit",
+        description:
+          "We crawl your site, pull Search Console and Core Web Vitals data, and find what's actually blocking rankings — then turn it into a prioritised plan you can see.",
+      },
+      {
+        step: "02",
+        title: "Fix the blockers",
+        description:
+          "We work top-down by impact: crawl and indexation issues first, then speed and structured data, with your sign-off before anything touches the live site.",
+      },
+      {
+        step: "03",
+        title: "Validate & monitor",
+        description:
+          "We confirm each fix in the field — re-crawl, re-test Core Web Vitals, watch indexation — so we know a change actually worked, not just that it shipped.",
+      },
+      {
+        step: "04",
+        title: "Keep it healthy",
+        description:
+          "Technical debt creeps back as a site grows. We monitor for new errors, regressions, and crawl waste, and fix them before they cost you rankings.",
+      },
+    ],
+    comparisonHeading: "NexFortis vs. a typical SEO provider",
+    comparison: [
+      { feature: "Technical SEO", us: "A core service, audited and fixed", them: "Often out of scope or skipped" },
+      { feature: "Audit output", us: "Prioritised, plain-language fix list", them: "A raw 200-row export" },
+      { feature: "Core Web Vitals", us: "Diagnosed and fixed in the field", them: "A Lighthouse screenshot" },
+      { feature: "Fixes", us: "Validated after they ship", them: "Marked done and forgotten" },
+      { feature: "Who does the work", us: "A senior consultant you can reach", them: "A rotating junior" },
+      { feature: "Commitment", us: "Month-to-month — we earn the renewal", them: "Locked contracts" },
+    ],
+    pricingHeading: "What technical SEO costs",
+    pricing: {
+      fromLabel: "Audit first, then scoped to what's broken",
+      note: (
+        <>
+          <p className="mb-4">
+            A clean, modern site needs far less than a large or aging one carrying years of technical
+            debt, so we don&rsquo;t quote a flat package blind. We start with an audit, show you
+            what&rsquo;s actually costing you rankings, and scope the fixes from there.
+          </p>
+          <p>
+            You get transparent pricing, a fixed scope, and no long-term lock-in. Ask for a free
+            technical assessment and we&rsquo;ll tell you what&rsquo;s worth fixing first.
+          </p>
+        </>
+      ),
+    },
+    faq: [
+      {
+        question: "What is technical SEO?",
+        answer:
+          "Technical SEO is the work that makes sure search engines can crawl, render, index, and trust your site. It covers things like site speed and Core Web Vitals, crawlability, indexation, structured data, site architecture, and JavaScript rendering. It's the layer underneath your content and links — when it's broken, the rest of your SEO underperforms no matter how good it is.",
+      },
+      {
+        question: "What is a technical SEO audit?",
+        answer:
+          "It's a structured review of everything that affects how search engines access and understand your site. We crawl it the way Google does, pull data from Search Console and Core Web Vitals, and produce a prioritised list of issues with the highest-impact fixes first. It's the starting point for every technical engagement, because guessing at problems wastes money.",
+      },
+      {
+        question: "What's the difference between on-page and technical SEO?",
+        answer:
+          "On-page SEO is about the content of a page — titles, headings, copy, and keywords. Technical SEO is about the plumbing that lets Google reach and process that page at all — speed, crawling, indexing, structured data, and rendering. You need both, and we handle them together as part of a full SEO engagement.",
+      },
+      {
+        question: "How do I know if I need technical SEO?",
+        answer:
+          "Common signs: pages that won't rank despite good content, traffic that dropped after a redesign or migration, slow load times, pages missing from Google, or a Search Console full of coverage and Core Web Vitals warnings. If any of those sound familiar, a technical audit will tell you what's wrong and what it's costing you.",
+      },
+      {
+        question: "Will you work with my existing developers?",
+        answer:
+          "Yes. We can either implement fixes directly or hand your team clear, prioritised specifications they can ship — whatever fits how you work. Either way, nothing goes live without your sign-off, and we validate each change afterward so you know it actually worked.",
+      },
+    ],
+    authorNote: (
+      <p>
+        Hassan leads technical SEO at NexFortis, bringing an IT and engineering background to the
+        crawl, indexation, speed, and rendering work that decides whether a site can rank at all. As
+        founder and CEO he stays hands-on with every engagement.
+      </p>
+    ),
+    ctaHeading: "Is something under the hood holding you back?",
+    ctaSubtext:
+      "Get a free technical SEO assessment — we'll crawl your site, find what's capping your rankings, and show you the fixes that matter most.",
+  },
 };

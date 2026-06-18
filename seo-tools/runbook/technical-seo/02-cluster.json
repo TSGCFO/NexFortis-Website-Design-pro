@@ -1,0 +1,22 @@
+{
+  "_step": "2 — Cluster + cannibalization (HARD GATE 1)", "_page": "technical-seo",
+  "_source": "KI clustering order 4c38469c-b04b-4aec-8caf-2f99cecfa241 (2026-06-18, Canada).",
+  "cluster_evidence": {
+    "technical seo services": {"ki_cluster": "technical seo agency", "intent": "Commercial", "note": "Grouped into the commercial 'technical seo agency' cluster. PRIMARY."},
+    "technical seo agency": {"ki_cluster": "technical seo agency", "intent": "Commercial", "note": "PRIMARY."},
+    "technical seo company": {"ki_cluster": "technical seo agency", "intent": "Commercial", "note": "PRIMARY (same cluster)."},
+    "technical seo consultant": {"ki_cluster": "technical seo agency", "intent": "Commercial", "note": "PRIMARY (same cluster)."},
+    "technical seo audit": {"ki_cluster": "technical seo audit", "intent": "Informational", "note": "Own cluster, KI marks informational; it is a core deliverable buyers also search commercially. SECONDARY."},
+    "technical seo": {"ki_cluster": "technical seo", "intent": "Informational", "note": "EXCLUDED to blog (head, informational, hard)."},
+    "website speed optimization": {"ki_cluster": "website speed optimization", "intent": "Informational", "note": "EXCLUDED (brutal + informational); covered as a feature."},
+    "core web vitals optimization": {"ki_cluster": "core web vitals optimization", "intent": "Informational", "note": "Feature, not targeted (too thin)."},
+    "schema markup services": {"ki_cluster": "schema markup services", "intent": "Informational", "note": "Feature, not targeted (too thin)."}
+  },
+  "assignment": {
+    "owns_primary": ["technical seo services", "technical seo agency", "technical seo company", "technical seo consultant"],
+    "owns_secondary": ["technical seo audit"],
+    "excluded": {"technical seo": "blog", "website speed optimization": "blog/feature", "core web vitals optimization": "feature", "schema markup services": "feature"}
+  },
+  "fence_note": "Distinct from the generic SEO spoke (seo services/company/agency) and local-seo. Generic SEO page links here for 'technical foundations' without targeting technical-seo terms.",
+  "_done_check": "PASS — one primary cluster; registry updated; check-cannibalization exit 0."
+}

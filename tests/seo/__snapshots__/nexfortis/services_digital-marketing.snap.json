@@ -40,12 +40,12 @@
       "text": "GEO &amp; AI Search"
     },
     {
-      "level": 2,
-      "text": "Also available across the cluster"
-    },
-    {
       "level": 3,
       "text": "Technical SEO"
+    },
+    {
+      "level": 2,
+      "text": "Also available across the cluster"
     },
     {
       "level": 3,
@@ -384,6 +384,10 @@
     {
       "text": "GEO &amp; AI Search",
       "href": "/services/digital-marketing/generative-engine-optimization"
+    },
+    {
+      "text": "Technical SEO",
+      "href": "/services/digital-marketing/technical-seo"
     },
     {
       "text": "Microsoft 365 Solutions",

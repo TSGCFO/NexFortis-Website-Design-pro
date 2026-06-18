@@ -1,13 +1,13 @@
 {
-  "route": "/services/microsoft-365",
-  "title": "Microsoft 365 Deployment &amp; Security | NexFortis IT Solutions",
-  "description": "Microsoft AI Cloud Partner: zero-downtime email migration, Teams &amp; SharePoint setup, Intune MDM, and zero-trust security for Canadian SMBs and enterprises.",
-  "canonical": "https://nexfortis.com/services/microsoft-365",
+  "route": "/services/digital-marketing/technical-seo",
+  "title": "Technical SEO Services | NexFortis IT Solutions",
+  "description": "Technical SEO services for Canadian businesses: crawlability, indexation, Core Web Vitals, structured data, and rendering fixes that let Google rank you.",
+  "canonical": "https://nexfortis.com/services/digital-marketing/technical-seo",
   "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
   "og": {
-    "title": "Microsoft 365 Deployment &amp; Security | NexFortis IT Solutions",
-    "description": "Microsoft AI Cloud Partner: zero-downtime email migration, Teams &amp; SharePoint setup, Intune MDM, and zero-trust security for Canadian SMBs and enterprises.",
-    "url": "https://nexfortis.com/services/microsoft-365",
+    "title": "Technical SEO Services | NexFortis IT Solutions",
+    "description": "Technical SEO services for Canadian businesses: crawlability, indexation, Core Web Vitals, structured data, and rendering fixes that let Google rank you.",
+    "url": "https://nexfortis.com/services/digital-marketing/technical-seo",
     "image": "https://nexfortis.com/opengraph.png",
     "type": "website"
   },
@@ -17,59 +17,95 @@
   "headings": [
     {
       "level": 1,
-      "text": "Microsoft 365 Solutions"
+      "text": "Technical SEO Services That Unblock Rankings"
     },
     {
       "level": 2,
-      "text": "Work Anywhere. Securely."
-    },
-    {
-      "level": 3,
-      "text": "Business Email"
-    },
-    {
-      "level": 3,
-      "text": "Teams Deployment"
-    },
-    {
-      "level": 3,
-      "text": "Intune MDM"
-    },
-    {
-      "level": 3,
-      "text": "Advanced Security"
+      "text": "The work that decides whether your other SEO pays off"
     },
     {
       "level": 2,
-      "text": "Migration Process"
+      "text": "What's included in our technical SEO services"
     },
     {
       "level": 3,
-      "text": "Assessment"
+      "text": "Technical SEO audit"
     },
     {
       "level": 3,
-      "text": "Planning"
+      "text": "Crawlability &amp; indexation"
     },
     {
       "level": 3,
-      "text": "Migration"
+      "text": "Core Web Vitals &amp; speed"
     },
     {
       "level": 3,
-      "text": "Training &amp; Support"
+      "text": "Structured data &amp; schema"
+    },
+    {
+      "level": 3,
+      "text": "Site architecture &amp; internal links"
+    },
+    {
+      "level": 3,
+      "text": "Rendering, JavaScript &amp; migrations"
     },
     {
       "level": 2,
-      "text": "Choose Your Tier"
+      "text": "How we deliver technical SEO"
+    },
+    {
+      "level": 3,
+      "text": "Crawl &amp; audit"
+    },
+    {
+      "level": 3,
+      "text": "Fix the blockers"
+    },
+    {
+      "level": 3,
+      "text": "Validate &amp; monitor"
+    },
+    {
+      "level": 3,
+      "text": "Keep it healthy"
     },
     {
       "level": 2,
-      "text": "Microsoft 365 FAQ"
+      "text": "NexFortis vs. a typical SEO provider"
     },
     {
       "level": 2,
-      "text": "Ready to Modernize Your Workspace?"
+      "text": "What technical SEO costs"
+    },
+    {
+      "level": 3,
+      "text": "Audit first, then scoped to what's broken"
+    },
+    {
+      "level": 2,
+      "text": "Related services"
+    },
+    {
+      "level": 3,
+      "text": "SEO Services"
+    },
+    {
+      "level": 3,
+      "text": "Local SEO"
+    },
+    {
+      "level": 3,
+      "text": "GEO &amp; AI Search"
+    },
+    {
+      "level": 2,
+      "text": "Frequently Asked Questions"
+    },
+    {
+      "level": 2,
+      "text": "Is something under the hood holding you back?"
     },
     {
       "level": 4,
@@ -108,8 +144,14 @@
         {
           "@type": "ListItem",
           "position": 3,
-          "name": "Microsoft 365",
-          "item": "https://nexfortis.com/services/microsoft-365"
+          "name": "Digital Marketing",
+          "item": "https://nexfortis.com/services/digital-marketing"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Technical SEO",
+          "item": "https://nexfortis.com/services/digital-marketing/technical-seo"
         }
       ]
     },
@@ -119,42 +161,42 @@
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "How long does a Microsoft 365 migration take for a small business?",
+          "name": "What is technical SEO?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "For most small businesses with under 50 users, a complete Microsoft 365 migration typically takes one to two weeks from planning through completion. This includes the initial assessment, mailbox migration, file transfer, security configuration, and user training. We perform zero-downtime migrations, so your team continues working without interruption throughout the process. Larger organizations or those with complex on-premises setups may require three to four weeks."
+            "text": "Technical SEO is the work that makes sure search engines can crawl, render, index, and trust your site. It covers things like site speed and Core Web Vitals, crawlability, indexation, structured data, site architecture, and JavaScript rendering. It's the layer underneath your content and links — when it's broken, the rest of your SEO underperforms no matter how good it is."
           }
         },
         {
           "@type": "Question",
-          "name": "Will we lose any emails or files during the migration?",
+          "name": "What is a technical SEO audit?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "No. Our migration methodology includes a full pre-migration backup, staged data transfer with continuous verification, and a post-migration reconciliation check that confirms every mailbox, calendar entry, contact, and file has been transferred completely. We maintain your original environment in read-only mode until you confirm everything is working correctly in Microsoft 365. Our zero-data-loss track record spans thousands of migrations."
+            "text": "It's a structured review of everything that affects how search engines access and understand your site. We crawl it the way Google does, pull data from Search Console and Core Web Vitals, and produce a prioritised list of issues with the highest-impact fixes first. It's the starting point for every technical engagement, because guessing at problems wastes money."
           }
         },
         {
           "@type": "Question",
-          "name": "What is Intune MDM and does my business need it?",
+          "name": "What's the difference between on-page and technical SEO?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Microsoft Intune is a mobile device management (MDM) solution that lets you secure and manage company data on employee devices — whether they are company-owned laptops, personal smartphones, or tablets. If your team accesses work email, files, or applications from any device outside the office, Intune ensures those devices meet your security policies. It is especially important for businesses with remote or hybrid workers, and is required for compliance with many industry regulations including PIPEDA."
+            "text": "On-page SEO is about the content of a page — titles, headings, copy, and keywords. Technical SEO is about the plumbing that lets Google reach and process that page at all — speed, crawling, indexing, structured data, and rendering. You need both, and we handle them together as part of a full SEO engagement."
           }
         },
         {
           "@type": "Question",
-          "name": "Can you set up Microsoft Teams for our entire organization?",
+          "name": "How do I know if I need technical SEO?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes. We handle full Microsoft Teams deployments including channel architecture, meeting room configuration, external collaboration policies, and integration with your existing phone system. We also provide hands-on training for your staff to ensure rapid adoption. For larger organizations, we create a phased rollout plan that starts with pilot teams before expanding company-wide."
+            "text": "Common signs: pages that won't rank despite good content, traffic that dropped after a redesign or migration, slow load times, pages missing from Google, or a Search Console full of coverage and Core Web Vitals warnings. If any of those sound familiar, a technical audit will tell you what's wrong and what it's costing you."
           }
         },
         {
           "@type": "Question",
-          "name": "Do you offer ongoing support after the migration is complete?",
+          "name": "Will you work with my existing developers?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Every migration includes 30 days of complimentary post-migration support. During this period, our team handles any issues that arise, answers user questions, and fine-tunes your configuration. After the support window, you can continue with our managed IT services for ongoing administration, security monitoring, user onboarding and offboarding, and license management at a predictable monthly rate."
+            "text": "Yes. We can either implement fixes directly or hand your team clear, prioritised specifications they can ship — whatever fits how you work. Either way, nothing goes live without your sign-off, and we validate each change afterward so you know it actually worked."
           }
         }
       ]
@@ -239,10 +281,20 @@
     },
     {
       "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Hassan Sadiq",
+      "jobTitle": "Founder & CEO, NexFortis IT Solutions",
+      "url": "https://nexfortis.com/about",
+      "worksFor": {
+        "@id": "https://nexfortis.com/#organization"
+      }
+    },
+    {
+      "@context": "https://schema.org",
       "@type": "Service",
-      "name": "Microsoft 365 Solutions",
-      "description": "Microsoft 365 deployment, email migration, Teams, Intune MDM, and enterprise security for Canadian businesses.",
-      "url": "https://nexfortis.com/services/microsoft-365",
+      "name": "Technical SEO Services",
+      "description": "Technical search engine optimization for Canadian businesses — site audits, crawlability and indexation, Core Web Vitals, structured data, and rendering fixes.",
+      "url": "https://nexfortis.com/services/digital-marketing/technical-seo",
       "provider": {
         "@type": "Organization",
         "name": "NexFortis IT Solutions",
@@ -252,7 +304,7 @@
         "@type": "Country",
         "name": "Canada"
       },
-      "serviceType": "IT Services"
+      "serviceType": "Technical SEO"
     },
     {
       "@context": "https://schema.org",
@@ -348,8 +400,28 @@
       "href": "/services"
     },
     {
-      "text": "contact us for a quote",
-      "href": "/contact"
+      "text": "SEO services",
+      "href": "/services/digital-marketing/seo"
+    },
+    {
+      "text": "digital marketing services",
+      "href": "/services/digital-marketing"
+    },
+    {
+      "text": "Source: Statcounter Global Stats",
+      "href": "https://gs.statcounter.com/search-engine-market-share"
+    },
+    {
+      "text": "Source: 2024 Web Almanac, HTTP Archive",
+      "href": "https://almanac.httparchive.org/en/2024/performance"
+    },
+    {
+      "text": "Source: Google, The Need for Mobile Speed",
+      "href": "https://blog.google/products/admanager/the-need-for-mobile-speed/"
+    },
+    {
+      "text": "More about NexFortis",
+      "href": "/about"
     },
     {
       "text": "About Us",

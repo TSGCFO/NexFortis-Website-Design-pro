@@ -5,6 +5,7 @@
     "services/digital-marketing": { "kind": "pillar", "min": 1900, "max": 3000, "source": "03-brief: CA SERP service-page subset ~1.4k-2.4k main; hub for 13 spokes sits at substantive end. Current 2122." },
     "services/digital-marketing/local-seo": { "kind": "spoke", "min": 1100, "max": 1900, "source": "03-brief: CA service-page subset ~700-3200 main; focused spoke mid-band. Current 1215." },
     "services/digital-marketing/seo": { "kind": "spoke", "min": 1200, "max": 2100, "source": "03-brief: CA service-page subset ~1300-3400 main; comprehensive-but-focused spoke. Current 1455." },
-    "services/digital-marketing/generative-engine-optimization": { "kind": "spoke", "min": 1100, "max": 2000, "source": "03-brief: CA service-page subset ~900-2300 main; emerging niche, educate+sell. Current 1464." }
+    "services/digital-marketing/generative-engine-optimization": { "kind": "spoke", "min": 1100, "max": 2000, "source": "03-brief: CA service-page subset ~900-2300 main; emerging niche, educate+sell. Current 1464." },
+    "services/digital-marketing/technical-seo": { "kind": "spoke", "min": 1100, "max": 1900, "source": "03-brief: CA focused service pages ~600-1900 main (excl. 4.3k/5.5k outliers)." }
   }
 }
