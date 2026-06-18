@@ -865,4 +865,193 @@ export const DM_SPOKE_CONTENT: Partial<Record<DmSpokeSlug, DmSpokeContent>> = {
     ctaSubtext:
       "Get a free technical SEO assessment — we'll crawl your site, find what's capping your rankings, and show you the fixes that matter most.",
   },
+
+  // ------------------------------------- GOOGLE BUSINESS PROFILE ----
+  "google-business-profile": {
+    metaTitle: "Google Business Profile",
+    metaDescription:
+      "Google Business Profile management for GTA businesses: optimization, posts, reviews, and listing consistency to win the Map Pack and earn more calls.",
+    h1: "Google Business Profile Management & Optimization",
+    heroSubtitle:
+      "Claim, optimize, and actively manage the profile that decides whether you show up in the Google Map Pack — and turn that visibility into calls.",
+    serviceType: "Google Business Profile Management",
+    serviceSchemaName: "Google Business Profile Management",
+    serviceSchemaDescription:
+      "Google Business Profile optimization and management for businesses across the Greater Toronto Area — profile build-out, posts, reviews, photos, and listing consistency.",
+    introHeading: "Your profile is the single biggest lever on the map pack",
+    intro: (
+      <>
+        <p>
+          For a local business, your Google Business Profile is doing more work than your website on
+          most days. It is the box with your map pin, hours, reviews, and call button that shows up
+          the moment someone searches for what you do nearby &mdash; often before they ever reach a
+          website. Get it right and you are in the running for the Map Pack; leave it half-finished
+          and you are handing those calls to the business listed above you.
+        </p>
+        <p>
+          The profile itself is free to set up. The hard part is everything after that: keeping it
+          complete and accurate, posting, earning and answering reviews, fixing duplicate or
+          inconsistent listings, and reading the insights to see what is actually driving calls. We
+          manage that end to end. It is one of the strongest levers in our{" "}
+          <InlineLink href={localSeo.href}>{localSeo.linkText}</InlineLink> work and part of the
+          wider <InlineLink href={DM_PILLAR_HREF}>{DM_PILLAR_LINK_TEXT}</InlineLink>.
+        </p>
+        <p>
+          Most providers optimize a profile once and never touch it again. Google rewards active,
+          accurate profiles, so we treat it as an ongoing program &mdash; which is what actually
+          moves and holds map-pack position.
+        </p>
+      </>
+    ),
+    stats: [
+      {
+        value: "2.7×",
+        label: "more likely customers consider a business reputable with a complete profile.",
+        sourceName: "Google (via BrightLocal Local SEO Statistics)",
+        sourceUrl: "https://www.brightlocal.com/resources/local-seo-statistics/",
+      },
+      {
+        value: "81%",
+        label: "of consumers used Google to evaluate local businesses in 2024.",
+        sourceName: "BrightLocal Local Consumer Review Survey 2024",
+        sourceUrl: "https://www.brightlocal.com/research/local-consumer-review-survey-2024/",
+      },
+      {
+        value: "≈90%",
+        label: "of search runs on Google — where your Business Profile lives.",
+        sourceName: "Statcounter Global Stats",
+        sourceUrl: "https://gs.statcounter.com/search-engine-market-share",
+      },
+    ],
+    featuresHeading: "What's included in our Google Business Profile management",
+    featuresSubtitle: "Everything it takes to win and hold the map pack — not a one-time tidy-up.",
+    features: [
+      {
+        icon: Building2,
+        title: "Full profile build-out & optimization",
+        description:
+          "We complete every field that matters — categories, services, hours, attributes, and a keyword-aware description — because a complete profile is what Google rewards and what makes a searcher choose you.",
+      },
+      {
+        icon: MapPin,
+        title: "Ongoing management & posts",
+        description:
+          "We keep the profile active with regular posts, offers, and updates, and fix issues as they appear. Active profiles hold map-pack position; neglected ones quietly slide.",
+      },
+      {
+        icon: Star,
+        title: "Review generation & response",
+        description:
+          "We set up a simple system to earn steady, genuine reviews and respond to every one — a direct ranking signal and the first thing a nearby buyer reads before they call.",
+      },
+      {
+        icon: Map,
+        title: "Photos, products & services",
+        description:
+          "We add and refresh the photos, products, and service listings that make your profile richer and more clickable — the details that turn a listing view into a visit or a call.",
+      },
+      {
+        icon: Users,
+        title: "Listing consistency & duplicates",
+        description:
+          "We make sure your name, address, and phone match across Google and the directories that feed it, and clean up duplicate or out-of-date listings that confuse Google and customers alike.",
+      },
+      {
+        icon: LineChart,
+        title: "Insights & call tracking",
+        description:
+          "We track profile views, searches, calls, and direction requests so you can see exactly what the profile is returning — not just that it exists.",
+      },
+    ],
+    processHeading: "How we manage your Google Business Profile",
+    process: [
+      {
+        step: "01",
+        title: "Audit & claim",
+        description:
+          "We review (or claim and verify) your profile, benchmark it against the competitors winning your map pack, and flag every gap and inconsistency.",
+      },
+      {
+        step: "02",
+        title: "Optimize",
+        description:
+          "We complete and optimize every field, sort out categories and services, fix listing inconsistencies, and load the photos and details that make the profile compete.",
+      },
+      {
+        step: "03",
+        title: "Activate",
+        description:
+          "We turn on review generation, start a posting cadence, and keep the profile fresh — the ongoing activity Google rewards with map-pack visibility.",
+      },
+      {
+        step: "04",
+        title: "Track & refine",
+        description:
+          "We monitor insights and map-pack position, respond to reviews, and refine the profile month over month so the results compound.",
+      },
+    ],
+    comparisonHeading: "NexFortis vs. a set-and-forget provider",
+    comparison: [
+      { feature: "Profile", us: "Actively managed every month", them: "Optimized once, then ignored" },
+      { feature: "Reviews", us: "A system that earns and responds", them: "Left to chance" },
+      { feature: "Listings", us: "Audited and kept consistent", them: "Never revisited" },
+      { feature: "Reporting", us: "Profile insights tied to calls", them: "None" },
+      { feature: "Who does the work", us: "A senior consultant you can reach", them: "A rotating junior" },
+      { feature: "Commitment", us: "Month-to-month — we earn the renewal", them: "Locked contracts" },
+    ],
+    pricingHeading: "What Google Business Profile management costs",
+    pricing: {
+      fromLabel: "Priced by competition and number of locations",
+      note: (
+        <>
+          <p className="mb-4">
+            Setting up the profile is free &mdash; the value is in the ongoing management, and that
+            scales with how competitive your area is and how many locations you run. A single quiet
+            niche needs far less than a multi-location business fighting for a busy map pack.
+          </p>
+          <p>
+            You get a fixed monthly scope, transparent pricing, and no long-term lock-in. Ask for a
+            free profile audit and we&rsquo;ll quote it against your area and your competition.
+          </p>
+        </>
+      ),
+    },
+    faq: [
+      {
+        question: "Is a Google Business Profile free?",
+        answer:
+          "Yes — creating and managing your own Google Business Profile costs nothing; Google doesn't charge for it. What you're paying for with a service like ours is the expertise and the ongoing work: optimizing every field correctly, earning reviews, posting, fixing listing inconsistencies, and tracking what's actually driving calls. The profile is free; getting it to win the map pack is the job.",
+      },
+      {
+        question: "Can I rank without a storefront or public address?",
+        answer:
+          "Yes. Service-area businesses that travel to customers can set a service area instead of showing a public address. We configure it correctly so you appear for the areas you actually serve without breaking Google's guidelines — a common mistake that gets profiles suspended.",
+      },
+      {
+        question: "What's the difference between setup and ongoing management?",
+        answer:
+          "Setup is a one-time optimization — completing the profile, sorting categories, adding photos. Management is the ongoing work that actually holds and grows your position: posting, earning and answering reviews, keeping information current, and fixing problems as they appear. Google rewards active profiles, so management is where most of the long-term value is.",
+      },
+      {
+        question: "How important are reviews to my profile?",
+        answer:
+          "Very. Reviews influence both your map-pack ranking and whether a searcher picks you over the business beside you. A steady stream of genuine reviews and a prompt response to each is one of the highest-return things you can do, so we build a simple system to keep them coming.",
+      },
+      {
+        question: "How quickly will I see results?",
+        answer:
+          "Profile improvements can move the map pack within a few weeks — faster than most SEO. Reviews and listing cleanup compound over the following months. Competitive urban areas take longer than quieter suburbs, and we set honest expectations against your specific market up front.",
+      },
+    ],
+    authorNote: (
+      <p>
+        Hassan helps GTA businesses turn their Google Business Profile into a steady source of calls
+        and visits. As founder and CEO of NexFortis he works hands-on with every engagement, so the
+        person managing your profile is the same one you can reach directly.
+      </p>
+    ),
+    ctaHeading: "Want to win your local map pack?",
+    ctaSubtext:
+      "Get a free Google Business Profile audit — your gaps, your competitors' edge, and the fastest path to more calls from nearby searches.",
+  },
 };

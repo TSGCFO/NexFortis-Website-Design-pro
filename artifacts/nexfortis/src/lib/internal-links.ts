@@ -113,7 +113,7 @@ export const DM_SPOKES: readonly DmSpoke[] = [
       "Claim, optimize, and actively manage your Google Business Profile to win the local pack and earn more calls.",
     icon: Building2,
     category: "Google Business Profile",
-    published: false,
+    published: true,
   },
   {
     slug: "content-marketing",

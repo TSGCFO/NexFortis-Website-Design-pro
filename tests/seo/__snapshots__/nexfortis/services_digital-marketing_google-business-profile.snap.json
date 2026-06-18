@@ -1,13 +1,13 @@
 {
-  "route": "/services",
-  "title": "IT Services for Canadian Businesses | NexFortis IT Solutions",
-  "description": "Managed IT services for Canadian SMBs: digital marketing, Microsoft 365, QuickBooks migration, IT consulting, and workflow automation — all under one roof.",
-  "canonical": "https://nexfortis.com/services",
+  "route": "/services/digital-marketing/google-business-profile",
+  "title": "Google Business Profile | NexFortis IT Solutions",
+  "description": "Google Business Profile management for GTA businesses: optimization, posts, reviews, and listing consistency to win the Map Pack and earn more calls.",
+  "canonical": "https://nexfortis.com/services/digital-marketing/google-business-profile",
   "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
   "og": {
-    "title": "IT Services for Canadian Businesses | NexFortis IT Solutions",
-    "description": "Managed IT services for Canadian SMBs: digital marketing, Microsoft 365, QuickBooks migration, IT consulting, and workflow automation — all under one roof.",
-    "url": "https://nexfortis.com/services",
+    "title": "Google Business Profile | NexFortis IT Solutions",
+    "description": "Google Business Profile management for GTA businesses: optimization, posts, reviews, and listing consistency to win the Map Pack and earn more calls.",
+    "url": "https://nexfortis.com/services/digital-marketing/google-business-profile",
     "image": "https://nexfortis.com/opengraph.png",
     "type": "website"
   },
@@ -17,31 +17,95 @@
   "headings": [
     {
       "level": 1,
-      "text": "IT Services for Canadian Businesses"
+      "text": "Google Business Profile Management &amp; Optimization"
     },
     {
       "level": 2,
-      "text": "Digital Marketing &amp; Web Presence"
+      "text": "Your profile is the single biggest lever on the map pack"
     },
     {
       "level": 2,
-      "text": "Microsoft 365 Solutions"
+      "text": "What's included in our Google Business Profile management"
+    },
+    {
+      "level": 3,
+      "text": "Full profile build-out &amp; optimization"
+    },
+    {
+      "level": 3,
+      "text": "Ongoing management &amp; posts"
+    },
+    {
+      "level": 3,
+      "text": "Review generation &amp; response"
+    },
+    {
+      "level": 3,
+      "text": "Photos, products &amp; services"
+    },
+    {
+      "level": 3,
+      "text": "Listing consistency &amp; duplicates"
+    },
+    {
+      "level": 3,
+      "text": "Insights &amp; call tracking"
     },
     {
       "level": 2,
-      "text": "QuickBooks Migration &amp; Tools"
+      "text": "How we manage your Google Business Profile"
+    },
+    {
+      "level": 3,
+      "text": "Audit &amp; claim"
+    },
+    {
+      "level": 3,
+      "text": "Optimize"
+    },
+    {
+      "level": 3,
+      "text": "Activate"
+    },
+    {
+      "level": 3,
+      "text": "Track &amp; refine"
     },
     {
       "level": 2,
-      "text": "IT Consulting &amp; Project Management"
+      "text": "NexFortis vs. a set-and-forget provider"
     },
     {
       "level": 2,
-      "text": "Workflow Automation &amp; Custom Software"
+      "text": "What Google Business Profile management costs"
+    },
+    {
+      "level": 3,
+      "text": "Priced by competition and number of locations"
     },
     {
       "level": 2,
-      "text": "Not Sure Where to Start?"
+      "text": "Related services"
+    },
+    {
+      "level": 3,
+      "text": "SEO Services"
+    },
+    {
+      "level": 3,
+      "text": "Local SEO"
+    },
+    {
+      "level": 3,
+      "text": "GEO &amp; AI Search"
+    },
+    {
+      "level": 2,
+      "text": "Frequently Asked Questions"
+    },
+    {
+      "level": 2,
+      "text": "Want to win your local map pack?"
     },
     {
       "level": 4,
@@ -76,6 +140,64 @@
           "position": 2,
           "name": "Services",
           "item": "https://nexfortis.com/services"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Digital Marketing",
+          "item": "https://nexfortis.com/services/digital-marketing"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Google Business Profile",
+          "item": "https://nexfortis.com/services/digital-marketing/google-business-profile"
+        }
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is a Google Business Profile free?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes — creating and managing your own Google Business Profile costs nothing; Google doesn't charge for it. What you're paying for with a service like ours is the expertise and the ongoing work: optimizing every field correctly, earning reviews, posting, fixing listing inconsistencies, and tracking what's actually driving calls. The profile is free; getting it to win the map pack is the job."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I rank without a storefront or public address?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Service-area businesses that travel to customers can set a service area instead of showing a public address. We configure it correctly so you appear for the areas you actually serve without breaking Google's guidelines — a common mistake that gets profiles suspended."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What's the difference between setup and ongoing management?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Setup is a one-time optimization — completing the profile, sorting categories, adding photos. Management is the ongoing work that actually holds and grows your position: posting, earning and answering reviews, keeping information current, and fixing problems as they appear. Google rewards active profiles, so management is where most of the long-term value is."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How important are reviews to my profile?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Very. Reviews influence both your map-pack ranking and whether a searcher picks you over the business beside you. A steady stream of genuine reviews and a prompt response to each is one of the highest-return things you can do, so we build a simple system to keep them coming."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How quickly will I see results?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Profile improvements can move the map pack within a few weeks — faster than most SEO. Reviews and listing cleanup compound over the following months. Competitive urban areas take longer than quieter suburbs, and we set honest expectations against your specific market up front."
+          }
         }
       ]
     },
@@ -159,10 +281,20 @@
     },
     {
       "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Hassan Sadiq",
+      "jobTitle": "Founder & CEO, NexFortis IT Solutions",
+      "url": "https://nexfortis.com/about",
+      "worksFor": {
+        "@id": "https://nexfortis.com/#organization"
+      }
+    },
+    {
+      "@context": "https://schema.org",
       "@type": "Service",
-      "name": "NexFortis IT Services",
-      "description": "Managed IT services for Canadian SMBs: digital marketing, Microsoft 365, QuickBooks migration, IT consulting, and workflow automation — all under one roof.",
-      "url": "https://nexfortis.com/services",
+      "name": "Google Business Profile Management",
+      "description": "Google Business Profile optimization and management for businesses across the Greater Toronto Area — profile build-out, posts, reviews, photos, and listing consistency.",
+      "url": "https://nexfortis.com/services/digital-marketing/google-business-profile",
       "provider": {
         "@type": "Organization",
         "name": "NexFortis IT Solutions",
@@ -172,7 +304,7 @@
         "@type": "Country",
         "name": "Canada"
       },
-      "serviceType": "IT Services"
+      "serviceType": "Google Business Profile Management"
     },
     {
       "@context": "https://schema.org",
@@ -268,28 +400,32 @@
       "href": "/services"
     },
     {
-      "text": "Explore digital marketing",
+      "text": "Services",
+      "href": "/services"
+    },
+    {
+      "text": "local SEO",
+      "href": "/services/digital-marketing/local-seo"
+    },
+    {
+      "text": "digital marketing services",
       "href": "/services/digital-marketing"
     },
     {
-      "text": "Explore Microsoft 365 solutions",
-      "href": "/services/microsoft-365"
+      "text": "Source: Google (via BrightLocal Local SEO Statistics)",
+      "href": "https://www.brightlocal.com/resources/local-seo-statistics/"
     },
     {
-      "text": "Explore QuickBooks migration",
-      "href": "/services/quickbooks"
+      "text": "Source: BrightLocal Local Consumer Review Survey 2024",
+      "href": "https://www.brightlocal.com/research/local-consumer-review-survey-2024/"
     },
     {
-      "text": "Explore IT consulting",
-      "href": "/services/it-consulting"
+      "text": "Source: Statcounter Global Stats",
+      "href": "https://gs.statcounter.com/search-engine-market-share"
     },
     {
-      "text": "Explore workflow automation",
-      "href": "/services/workflow-automation"
-    },
-    {
-      "text": "Contact our team",
-      "href": "/contact"
+      "text": "More about NexFortis",
+      "href": "/about"
     },
     {
       "text": "About Us",

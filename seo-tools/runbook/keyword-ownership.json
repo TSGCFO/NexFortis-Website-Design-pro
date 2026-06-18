@@ -33,9 +33,9 @@
     },
     "/services/digital-marketing/google-business-profile": {
       "name": "Google Business Profile",
-      "status": "confirmed-reserved (GBP terms fenced off Local SEO per KI intent)",
-      "primary": ["google business profile optimization", "gmb optimization", "google business profile management"],
-      "secondary": ["gmb"]
+      "status": "confirmed (KI cluster order 4bf86c20, 2026-06-18; GBP terms fenced off Local SEO)",
+      "primary": ["google business profile optimization", "google business profile management", "google business profile services"],
+      "secondary": ["gmb optimization", "google my business optimization", "gmb management", "google business profile setup", "google maps optimization", "local listing management", "gmb"]
     },
     "/services/digital-marketing/content-marketing": {
       "name": "Content Marketing",

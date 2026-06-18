@@ -44,12 +44,12 @@
       "text": "Technical SEO"
     },
     {
-      "level": 2,
-      "text": "Also available across the cluster"
-    },
-    {
       "level": 3,
       "text": "Google Business Profile"
+    },
+    {
+      "level": 2,
+      "text": "Also available across the cluster"
     },
     {
       "level": 3,
@@ -388,6 +388,10 @@
     {
       "text": "Technical SEO",
       "href": "/services/digital-marketing/technical-seo"
+    },
+    {
+      "text": "Google Business Profile",
+      "href": "/services/digital-marketing/google-business-profile"
     },
     {
       "text": "Microsoft 365 Solutions",

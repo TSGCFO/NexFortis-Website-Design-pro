@@ -1,0 +1,11 @@
+{
+  "_step": "6b — EEAT audit (§7)", "_page": "google-business-profile", "_date": "2026-06-18", "_scale": "0-2; target >=8/10.",
+  "scores": {
+    "experience": {"score": 1, "why": "Concrete local/map-pack framing + managed-service detail; held at 1 (no citable client case study)."},
+    "expertise": {"score": 2, "why": "Accurate GBP mechanics (categories/attributes, service-area config, reviews, listing consistency, insights); correct terminology; managed-vs-setup nuance."},
+    "authoritativeness": {"score": 2, "why": "3 distinct named sources (Google-via-BrightLocal, BrightLocal LCRS2024, Statcounter) w/ URLs; Service+Person+Breadcrumb schema; Hassan Founder & CEO byline."},
+    "trust": {"score": 2, "why": "Honest 'profile is free'; transparent pricing; fenced cannibalization; warns about suspension from wrong service-area config; no fabrication."},
+    "veto_checks": {"score": 2, "passed": true}
+  },
+  "total": "9/10"
+}
