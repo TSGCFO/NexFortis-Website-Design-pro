@@ -1,0 +1,11 @@
+{
+  "_step": "6b — EEAT audit (§7)", "_page": "web-design", "_date": "2026-06-18", "_scale": "0-2; target >=8/10.",
+  "scores": {
+    "experience": {"score": 1, "why": "Strong engineering POV (built-to-rank, the firm's own site is prerendered/SEO-tested); held at 1 (no public client portfolio shown)."},
+    "expertise": {"score": 2, "why": "Accurate web mechanics (mobile-first, modern frameworks, CWV, SEO foundations, conversion UX); correct terminology."},
+    "authoritativeness": {"score": 2, "why": "3 distinct named sources (Google, Web Almanac, Statcounter) w/ URLs; Service+Person+Breadcrumb schema; Hassan Founder & CEO byline; real IT/engineering credibility."},
+    "trust": {"score": 2, "why": "Honest custom-vs-builder advice, scoped pricing, careful-launch (protect rankings); no fabricated portfolio; the build-to-rank claim is demonstrable."},
+    "veto_checks": {"score": 2, "passed": true}
+  },
+  "total": "9/10"
+}

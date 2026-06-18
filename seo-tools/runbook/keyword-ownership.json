@@ -69,9 +69,9 @@
     },
     "/services/digital-marketing/web-design": {
       "name": "Web Design & Development",
-      "status": "tentative",
-      "primary": ["web design services", "web design and development"],
-      "secondary": []
+      "status": "confirmed (KI cluster order df986641, 2026-06-18)",
+      "primary": ["web design services", "web design company", "web design agency", "website design services"],
+      "secondary": ["custom web design", "website development services", "ecommerce web design", "web design and development", "web design for small business"]
     },
     "/services/digital-marketing/email-marketing": {
       "name": "Email Marketing",
@@ -94,7 +94,7 @@
     "blog": {
       "name": "Informational blog/guide cluster (links UP to the service pages)",
       "status": "reserved",
-      "primary": ["local seo", "local seo for small business", "local search marketing", "digital marketing", "seo", "search engine optimization", "seo expert", "technical seo", "website speed optimization"],
+      "primary": ["local seo", "local seo for small business", "local search marketing", "digital marketing", "seo", "search engine optimization", "seo expert", "technical seo", "website speed optimization", "responsive web design"],
       "secondary": []
     }
   }

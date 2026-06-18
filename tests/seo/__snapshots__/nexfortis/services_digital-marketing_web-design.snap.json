@@ -1,13 +1,13 @@
 {
-  "route": "/services/microsoft-365",
-  "title": "Microsoft 365 Deployment &amp; Security | NexFortis IT Solutions",
-  "description": "Microsoft AI Cloud Partner: zero-downtime email migration, Teams &amp; SharePoint setup, Intune MDM, and zero-trust security for Canadian SMBs and enterprises.",
-  "canonical": "https://nexfortis.com/services/microsoft-365",
+  "route": "/services/digital-marketing/web-design",
+  "title": "Web Design &amp; Development | NexFortis IT Solutions",
+  "description": "Web design &amp; development for Canadian businesses: fast, mobile-first websites built on modern frameworks and engineered to rank and convert.",
+  "canonical": "https://nexfortis.com/services/digital-marketing/web-design",
   "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
   "og": {
-    "title": "Microsoft 365 Deployment &amp; Security | NexFortis IT Solutions",
-    "description": "Microsoft AI Cloud Partner: zero-downtime email migration, Teams &amp; SharePoint setup, Intune MDM, and zero-trust security for Canadian SMBs and enterprises.",
-    "url": "https://nexfortis.com/services/microsoft-365",
+    "title": "Web Design &amp; Development | NexFortis IT Solutions",
+    "description": "Web design &amp; development for Canadian businesses: fast, mobile-first websites built on modern frameworks and engineered to rank and convert.",
+    "url": "https://nexfortis.com/services/digital-marketing/web-design",
     "image": "https://nexfortis.com/opengraph.png",
     "type": "website"
   },
@@ -17,59 +17,95 @@
   "headings": [
     {
       "level": 1,
-      "text": "Microsoft 365 Solutions"
+      "text": "Web Design &amp; Development That Converts"
     },
     {
       "level": 2,
-      "text": "Work Anywhere. Securely."
-    },
-    {
-      "level": 3,
-      "text": "Business Email"
-    },
-    {
-      "level": 3,
-      "text": "Teams Deployment"
-    },
-    {
-      "level": 3,
-      "text": "Intune MDM"
-    },
-    {
-      "level": 3,
-      "text": "Advanced Security"
+      "text": "A website should earn its keep, not just look nice"
     },
     {
       "level": 2,
-      "text": "Migration Process"
+      "text": "What's included in our web design &amp; development"
     },
     {
       "level": 3,
-      "text": "Assessment"
+      "text": "Custom design"
     },
     {
       "level": 3,
-      "text": "Planning"
+      "text": "Responsive &amp; mobile-first"
     },
     {
       "level": 3,
-      "text": "Migration"
+      "text": "Built on modern frameworks"
     },
     {
       "level": 3,
-      "text": "Training &amp; Support"
+      "text": "SEO-ready foundations"
+    },
+    {
+      "level": 3,
+      "text": "Conversion-focused UX"
+    },
+    {
+      "level": 3,
+      "text": "Speed &amp; Core Web Vitals"
     },
     {
       "level": 2,
-      "text": "Choose Your Tier"
+      "text": "How we design &amp; build your site"
+    },
+    {
+      "level": 3,
+      "text": "Discover &amp; plan"
+    },
+    {
+      "level": 3,
+      "text": "Design"
+    },
+    {
+      "level": 3,
+      "text": "Build &amp; optimize"
+    },
+    {
+      "level": 3,
+      "text": "Launch &amp; support"
     },
     {
       "level": 2,
-      "text": "Microsoft 365 FAQ"
+      "text": "NexFortis vs. a typical web shop"
     },
     {
       "level": 2,
-      "text": "Ready to Modernize Your Workspace?"
+      "text": "What a website costs"
+    },
+    {
+      "level": 3,
+      "text": "Scoped to pages, features, and complexity"
+    },
+    {
+      "level": 2,
+      "text": "Related services"
+    },
+    {
+      "level": 3,
+      "text": "SEO Services"
+    },
+    {
+      "level": 3,
+      "text": "Local SEO"
+    },
+    {
+      "level": 3,
+      "text": "GEO &amp; AI Search"
+    },
+    {
+      "level": 2,
+      "text": "Frequently Asked Questions"
+    },
+    {
+      "level": 2,
+      "text": "Want a website that works as hard as you do?"
     },
     {
       "level": 4,
@@ -108,8 +144,14 @@
         {
           "@type": "ListItem",
           "position": 3,
-          "name": "Microsoft 365",
-          "item": "https://nexfortis.com/services/microsoft-365"
+          "name": "Digital Marketing",
+          "item": "https://nexfortis.com/services/digital-marketing"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Web Design & Development",
+          "item": "https://nexfortis.com/services/digital-marketing/web-design"
         }
       ]
     },
@@ -119,42 +161,42 @@
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "How long does a Microsoft 365 migration take for a small business?",
+          "name": "How much does a website cost?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "For most small businesses with under 50 users, a complete Microsoft 365 migration typically takes one to two weeks from planning through completion. This includes the initial assessment, mailbox migration, file transfer, security configuration, and user training. We perform zero-downtime migrations, so your team continues working without interruption throughout the process. Larger organizations or those with complex on-premises setups may require three to four weeks."
+            "text": "It depends on the scope — number of pages, features, and whether you need e-commerce or custom functionality. A clean brochure site is far less than a large or transactional build, so we scope and quote each project rather than quoting blind. Whatever the number, you'll know exactly what's included before we start, with no surprise add-ons."
           }
         },
         {
           "@type": "Question",
-          "name": "Will we lose any emails or files during the migration?",
+          "name": "How long does it take to build a website?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "No. Our migration methodology includes a full pre-migration backup, staged data transfer with continuous verification, and a post-migration reconciliation check that confirms every mailbox, calendar entry, contact, and file has been transferred completely. We maintain your original environment in read-only mode until you confirm everything is working correctly in Microsoft 365. Our zero-data-loss track record spans thousands of migrations."
+            "text": "Most small-business sites take a few weeks from kickoff to launch; larger or e-commerce builds take longer. The biggest variable is usually how quickly content and feedback come back from your side. We'll give you a realistic timeline up front and keep the project moving against it."
           }
         },
         {
           "@type": "Question",
-          "name": "What is Intune MDM and does my business need it?",
+          "name": "Custom design or a template/builder?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Microsoft Intune is a mobile device management (MDM) solution that lets you secure and manage company data on employee devices — whether they are company-owned laptops, personal smartphones, or tablets. If your team accesses work email, files, or applications from any device outside the office, Intune ensures those devices meet your security policies. It is especially important for businesses with remote or hybrid workers, and is required for compliance with many industry regulations including PIPEDA."
+            "text": "Builders like Wix or Squarespace can work for a very simple site, but they trade away speed, flexibility, and SEO control as you grow. We build custom on modern frameworks so your site is faster, more maintainable, and genuinely yours — without the limits and bloat that hold template sites back. We'll be honest if a simple builder is genuinely all you need."
           }
         },
         {
           "@type": "Question",
-          "name": "Can you set up Microsoft Teams for our entire organization?",
+          "name": "Will my site be mobile-friendly and SEO-ready?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes. We handle full Microsoft Teams deployments including channel architecture, meeting room configuration, external collaboration policies, and integration with your existing phone system. We also provide hands-on training for your staff to ensure rapid adoption. For larger organizations, we create a phased rollout plan that starts with pilot teams before expanding company-wide."
+            "text": "Always. We design mobile-first because that's where most of your visitors are, and we build in the crawlability, structure, speed, and metadata search engines need from day one. The goal is a site that can rank from launch instead of needing an SEO rescue six months later."
           }
         },
         {
           "@type": "Question",
-          "name": "Do you offer ongoing support after the migration is complete?",
+          "name": "Do you handle hosting and maintenance?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Every migration includes 30 days of complimentary post-migration support. During this period, our team handles any issues that arise, answers user questions, and fine-tunes your configuration. After the support window, you can continue with our managed IT services for ongoing administration, security monitoring, user onboarding and offboarding, and license management at a predictable monthly rate."
+            "text": "We can. A website isn't finished at launch — it needs updates, security, backups, and the occasional fix. We offer ongoing support and maintenance so your site stays fast, secure, and current, or we can hand it over cleanly if you'd rather manage it yourself."
           }
         }
       ]
@@ -239,10 +281,20 @@
     },
     {
       "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Hassan Sadiq",
+      "jobTitle": "Founder & CEO, NexFortis IT Solutions",
+      "url": "https://nexfortis.com/about",
+      "worksFor": {
+        "@id": "https://nexfortis.com/#organization"
+      }
+    },
+    {
+      "@context": "https://schema.org",
       "@type": "Service",
-      "name": "Microsoft 365 Solutions",
-      "description": "Microsoft 365 deployment, email migration, Teams, Intune MDM, and enterprise security for Canadian businesses.",
-      "url": "https://nexfortis.com/services/microsoft-365",
+      "name": "Web Design & Development Services",
+      "description": "Web design and development for Canadian businesses — custom, responsive, conversion-focused websites built on modern frameworks and engineered to rank and perform.",
+      "url": "https://nexfortis.com/services/digital-marketing/web-design",
       "provider": {
         "@type": "Organization",
         "name": "NexFortis IT Solutions",
@@ -252,7 +304,7 @@
         "@type": "Country",
         "name": "Canada"
       },
-      "serviceType": "IT Services"
+      "serviceType": "Web Design and Development"
     },
     {
       "@context": "https://schema.org",
@@ -372,8 +424,28 @@
       "href": "/services"
     },
     {
-      "text": "contact us for a quote",
-      "href": "/contact"
+      "text": "technical SEO",
+      "href": "/services/digital-marketing/technical-seo"
+    },
+    {
+      "text": "digital marketing services",
+      "href": "/services/digital-marketing"
+    },
+    {
+      "text": "Source: Google, The Need for Mobile Speed",
+      "href": "https://blog.google/products/admanager/the-need-for-mobile-speed/"
+    },
+    {
+      "text": "Source: 2024 Web Almanac, HTTP Archive",
+      "href": "https://almanac.httparchive.org/en/2024/performance"
+    },
+    {
+      "text": "Source: Statcounter Global Stats",
+      "href": "https://gs.statcounter.com/search-engine-market-share"
+    },
+    {
+      "text": "More about NexFortis",
+      "href": "/about"
     },
     {
       "text": "About Us",

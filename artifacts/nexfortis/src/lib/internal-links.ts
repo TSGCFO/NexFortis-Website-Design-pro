@@ -168,7 +168,7 @@ export const DM_SPOKES: readonly DmSpoke[] = [
       "Fast, mobile-first, conversion-focused websites built on modern frameworks and engineered to rank from day one.",
     icon: LayoutTemplate,
     category: "Web Design / Dev",
-    published: false,
+    published: true,
   },
   {
     slug: "email-marketing",

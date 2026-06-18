@@ -1,0 +1,11 @@
+{
+  "_step": "7 — On-page + internal links", "_page": "web-design", "_date": "2026-06-18",
+  "_note": "metaDescription trimmed to <=160 chars (was 161).",
+  "files": "NEW: content entry + wrapper web-design.tsx + App.tsx lazy import + Route. Published=true. Allowlist INV-001/INV-008 entries added.",
+  "title": {"metaTitle": "Web Design & Development", "rendered_title": "Web Design & Development | NexFortis IT Solutions", "h1": "Web Design & Development That Converts"},
+  "meta_description": "Web design & development for Canadian businesses: fast, mobile-first websites built on modern frameworks and engineered to rank and convert.",
+  "schema": {"page_level": ["Service (Web Design and Development)", "BreadcrumbList", "FAQPage", "Person"], "global_from_layout": ["Organization", "LocalBusiness", "WebSite"]},
+  "internal_links": {"in_prose": [{"anchor": "technical SEO", "href": "/services/digital-marketing/technical-seo"}, {"anchor": "digital marketing services", "href": "/services/digital-marketing"}], "related_services": "published siblings", "cluster_correct": true},
+  "nav": "Surfaced in Services mega-menu + footer.",
+  "_done_check": "PASS."
+}

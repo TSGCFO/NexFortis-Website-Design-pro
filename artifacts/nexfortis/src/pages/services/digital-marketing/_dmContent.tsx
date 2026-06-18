@@ -1811,4 +1811,193 @@ export const DM_SPOKE_CONTENT: Partial<Record<DmSpokeSlug, DmSpokeContent>> = {
     ctaSubtext:
       "Get a free social media audit — where your audience really is, what's working, and the fastest path to brand presence that drives leads.",
   },
+
+  // -------------------------------------- WEB DESIGN & DEVELOPMENT ----
+  "web-design": {
+    metaTitle: "Web Design & Development",
+    metaDescription:
+      "Web design & development for Canadian businesses: fast, mobile-first websites built on modern frameworks and engineered to rank and convert.",
+    h1: "Web Design & Development That Converts",
+    heroSubtitle:
+      "Fast, mobile-first websites built on modern frameworks — engineered to rank in search and turn visitors into customers, not just look good.",
+    serviceType: "Web Design and Development",
+    serviceSchemaName: "Web Design & Development Services",
+    serviceSchemaDescription:
+      "Web design and development for Canadian businesses — custom, responsive, conversion-focused websites built on modern frameworks and engineered to rank and perform.",
+    introHeading: "A website should earn its keep, not just look nice",
+    intro: (
+      <>
+        <p>
+          A beautiful website that loads slowly, can&rsquo;t be found in Google, or doesn&rsquo;t
+          turn visitors into enquiries is an expensive brochure. Plenty of businesses pay for the
+          first part and quietly lose on the other three. We build sites that do all four: look the
+          part, load fast, rank, and convert.
+        </p>
+        <p>
+          That comes from treating a website as engineering, not just decoration. We build on modern
+          frameworks, design mobile-first, and bake in the technical foundations search engines
+          reward &mdash; so your new site is set up to win from launch. It works hand in hand with
+          our <InlineLink href={getDmSpoke("technical-seo").href}>{getDmSpoke("technical-seo").linkText}</InlineLink>{" "}
+          work and is part of the wider{" "}
+          <InlineLink href={DM_PILLAR_HREF}>{DM_PILLAR_LINK_TEXT}</InlineLink>.
+        </p>
+        <p>
+          We are an IT and engineering firm at heart, so &ldquo;built to rank and convert&rdquo;
+          isn&rsquo;t a slogan &mdash; it&rsquo;s how we approach every build, down to the speed and
+          structure most agencies leave as an afterthought.
+        </p>
+      </>
+    ),
+    stats: [
+      {
+        value: "53%",
+        label: "of mobile visits are abandoned if a page takes over 3 seconds to load.",
+        sourceName: "Google, The Need for Mobile Speed",
+        sourceUrl: "https://blog.google/products/admanager/the-need-for-mobile-speed/",
+      },
+      {
+        value: "43%",
+        label: "of mobile sites pass all three Core Web Vitals — most don't.",
+        sourceName: "2024 Web Almanac, HTTP Archive",
+        sourceUrl: "https://almanac.httparchive.org/en/2024/performance",
+      },
+      {
+        value: "≈90%",
+        label: "of global search runs on Google — so a site has to be built to rank there.",
+        sourceName: "Statcounter Global Stats",
+        sourceUrl: "https://gs.statcounter.com/search-engine-market-share",
+      },
+    ],
+    featuresHeading: "What's included in our web design & development",
+    featuresSubtitle: "Design, build, and the engineering that makes a site fast and findable.",
+    features: [
+      {
+        icon: PenTool,
+        title: "Custom design",
+        description:
+          "We design a site around your brand and your customers, not a recycled template — clean, modern, and built to guide visitors toward the action you want them to take.",
+      },
+      {
+        icon: Gauge,
+        title: "Responsive & mobile-first",
+        description:
+          "Most of your visitors are on a phone, so we design for that screen first and scale up — your site looks and works right on every device, not just a designer's desktop.",
+      },
+      {
+        icon: FileCode,
+        title: "Built on modern frameworks",
+        description:
+          "We build on current, well-supported frameworks, so your site is fast, secure, and maintainable — not a fragile pile of plugins that breaks the next time something updates.",
+      },
+      {
+        icon: Search,
+        title: "SEO-ready foundations",
+        description:
+          "We bake in the crawlability, structure, and metadata search engines need from day one, so your new site can rank instead of starting life invisible to Google.",
+      },
+      {
+        icon: Users,
+        title: "Conversion-focused UX",
+        description:
+          "We design the layout, calls to action, and page flow around turning visitors into enquiries — because traffic that doesn't convert is just a number on a chart.",
+      },
+      {
+        icon: LineChart,
+        title: "Speed & Core Web Vitals",
+        description:
+          "We optimise load time and Core Web Vitals as we build, not as a bolt-on later — because speed affects both your rankings and whether a visitor sticks around at all.",
+      },
+    ],
+    processHeading: "How we design & build your site",
+    process: [
+      {
+        step: "01",
+        title: "Discover & plan",
+        description:
+          "We learn your business, your customers, and your goals, map the pages and content you need, and plan a site structured to rank and convert.",
+      },
+      {
+        step: "02",
+        title: "Design",
+        description:
+          "We design the look and feel and the page layouts, mobile-first, and refine with you until it represents your brand and guides visitors to act.",
+      },
+      {
+        step: "03",
+        title: "Build & optimize",
+        description:
+          "We develop the site on a modern framework with SEO foundations, speed, and accessibility built in — then test it across devices before anything goes live.",
+      },
+      {
+        step: "04",
+        title: "Launch & support",
+        description:
+          "We launch carefully (protecting any existing rankings), confirm everything works, and can keep the site updated, secure, and fast afterward.",
+      },
+    ],
+    comparisonHeading: "NexFortis vs. a typical web shop",
+    comparison: [
+      { feature: "Built for", us: "Speed, search, and conversion", them: "Looks alone" },
+      { feature: "Foundation", us: "Modern framework, maintainable", them: "Plugin-heavy and fragile" },
+      { feature: "SEO", us: "Baked in from day one", them: "An afterthought or upsell" },
+      { feature: "Mobile", us: "Designed mobile-first", them: "Desktop design squeezed down" },
+      { feature: "Who does the work", us: "A senior consultant you can reach", them: "A rotating junior" },
+      { feature: "After launch", us: "Support and optimization available", them: "Handed over and gone" },
+    ],
+    pricingHeading: "What a website costs",
+    pricing: {
+      fromLabel: "Scoped to pages, features, and complexity",
+      note: (
+        <>
+          <p className="mb-4">
+            A simple, polished brochure site is a very different project from a large or
+            e-commerce build, so we scope and quote each one rather than quoting a flat package
+            blind. You&rsquo;ll know exactly what&rsquo;s included before any work starts.
+          </p>
+          <p>
+            Pricing is transparent, with no surprise add-ons, and we can bundle ongoing support if
+            you want it. Ask for a free website review and we&rsquo;ll recommend the right scope for
+            your goals and budget.
+          </p>
+        </>
+      ),
+    },
+    faq: [
+      {
+        question: "How much does a website cost?",
+        answer:
+          "It depends on the scope — number of pages, features, and whether you need e-commerce or custom functionality. A clean brochure site is far less than a large or transactional build, so we scope and quote each project rather than quoting blind. Whatever the number, you'll know exactly what's included before we start, with no surprise add-ons.",
+      },
+      {
+        question: "How long does it take to build a website?",
+        answer:
+          "Most small-business sites take a few weeks from kickoff to launch; larger or e-commerce builds take longer. The biggest variable is usually how quickly content and feedback come back from your side. We'll give you a realistic timeline up front and keep the project moving against it.",
+      },
+      {
+        question: "Custom design or a template/builder?",
+        answer:
+          "Builders like Wix or Squarespace can work for a very simple site, but they trade away speed, flexibility, and SEO control as you grow. We build custom on modern frameworks so your site is faster, more maintainable, and genuinely yours — without the limits and bloat that hold template sites back. We'll be honest if a simple builder is genuinely all you need.",
+      },
+      {
+        question: "Will my site be mobile-friendly and SEO-ready?",
+        answer:
+          "Always. We design mobile-first because that's where most of your visitors are, and we build in the crawlability, structure, speed, and metadata search engines need from day one. The goal is a site that can rank from launch instead of needing an SEO rescue six months later.",
+      },
+      {
+        question: "Do you handle hosting and maintenance?",
+        answer:
+          "We can. A website isn't finished at launch — it needs updates, security, backups, and the occasional fix. We offer ongoing support and maintenance so your site stays fast, secure, and current, or we can hand it over cleanly if you'd rather manage it yourself.",
+      },
+    ],
+    authorNote: (
+      <p>
+        Hassan leads web design and development at NexFortis, bringing an IT and engineering
+        background to sites built for speed, search, and conversion. As founder and CEO he stays
+        hands-on with every build.
+      </p>
+    ),
+    ctaHeading: "Want a website that works as hard as you do?",
+    ctaSubtext:
+      "Get a free website review — what's helping, what's holding you back, and what a fast, ranking, converting site would look like for your business.",
+  },
 };

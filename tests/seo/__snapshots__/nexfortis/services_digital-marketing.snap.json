@@ -64,12 +64,12 @@
       "text": "Social Media Marketing"
     },
     {
-      "level": 2,
-      "text": "Also available across the cluster"
-    },
-    {
       "level": 3,
       "text": "Web Design &amp; Development"
+    },
+    {
+      "level": 2,
+      "text": "Also available across the cluster"
     },
     {
       "level": 3,
@@ -408,6 +408,10 @@
     {
       "text": "Social Media Marketing",
       "href": "/services/digital-marketing/social-media-marketing"
+    },
+    {
+      "text": "Web Design &amp; Development",
+      "href": "/services/digital-marketing/web-design"
     },
     {
       "text": "Microsoft 365 Solutions",
