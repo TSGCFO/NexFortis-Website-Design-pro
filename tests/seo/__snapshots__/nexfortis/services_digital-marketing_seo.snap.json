@@ -156,7 +156,7 @@
           "name": "How long does SEO take to work?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Most campaigns see early movement on lower-competition terms within two to three months, with meaningful traffic gains around the six-month mark. SEO compounds — the work you do in month one keeps paying off in month twelve, which is why it outperforms ads over the long run. Anyone promising page-one rankings in 30 days is selling a shortcut that risks a penalty."
+            "text": "You will usually see the first movement on the easier, lower-competition terms inside two to three months, with traffic you can actually feel around the six-month mark. The reason SEO is worth the wait is that it compounds — what you publish in month one is still earning in month twelve, which is exactly how it overtakes paid ads over time. If someone promises you page one in 30 days, they are selling a shortcut that tends to end in a penalty."
           }
         },
         {
@@ -164,7 +164,7 @@
           "name": "Do you guarantee #1 rankings?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "No reputable SEO can, because Google's results depend on factors no agency controls. What we guarantee is the work: the audit, the fixes, the content, and the links, all reported transparently. We focus on rankings for the terms that drive revenue and on the leads those rankings produce."
+            "text": "No, and be wary of anyone who does — Google's results hinge on things no agency controls. What we will guarantee is the work itself: the audit, the fixes, the content, the links, all reported openly. We aim at the rankings that bring revenue and at the leads those rankings actually produce, not a screenshot of position one for a term nobody searches."
           }
         },
         {
@@ -172,7 +172,7 @@
           "name": "What is the difference between SEO and local SEO?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "SEO earns rankings in the standard organic results for any searcher. Local SEO focuses on the Google map pack and 'near me' searches for businesses that serve a specific area. Most local businesses need both, and we run them together so the map and the organic results reinforce each other."
+            "text": "Plain SEO is about ranking in the normal organic results for anyone, anywhere. Local SEO is the narrower game of winning the Google map pack and 'near me' searches when someone is looking for a business in a specific area. Most local businesses genuinely need both, so we run them together and let the map listing and the organic ranking back each other up."
           }
         },
         {
@@ -180,7 +180,7 @@
           "name": "Will you need to change my website?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Usually some. SEO touches page content, structure, internal links, and technical settings. We work with your existing site and developers wherever possible, and we flag anything that needs a build change before we touch it — nothing ships without your sign-off."
+            "text": "Almost always a little. SEO touches page content, structure, internal links, and technical settings under the hood. We work with the site and the developers you already have wherever we can, and anything that needs a real build change gets flagged and explained before we touch it. Nothing ships without your sign-off."
           }
         },
         {
@@ -188,7 +188,7 @@
           "name": "How do you report results?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "You get a monthly report in plain language: which keywords moved, how organic traffic and leads changed, what we shipped, and what's next. We connect GA4 and Google Search Console so the numbers come straight from Google, not a black box."
+            "text": "Once a month, in plain English: which keywords moved, what happened to organic traffic and leads, what we shipped, and what is next. We pull the numbers straight from GA4 and Google Search Console, so you are looking at Google's own data, not a figure we massaged in a dashboard."
           }
         },
         {
@@ -196,7 +196,7 @@
           "name": "Is SEO still worth it now that AI answers questions directly?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "More than ever. The same strong, well-structured content that ranks in Google is what AI engines such as ChatGPT and Google's AI Overviews cite when they answer. We build for both, and our Generative Engine Optimization service adds the AI-specific layer on top of solid SEO foundations."
+            "text": "Arguably more than before. The same well-structured, genuinely useful content that ranks in Google is what ChatGPT and Google's AI Overviews reach for when they write an answer. We build for both at once, and our Generative Engine Optimization service adds the AI-specific layer on top of solid SEO foundations."
           }
         }
       ]
@@ -334,6 +334,10 @@
     {
       "text": "Digital Marketing",
       "href": "/services/digital-marketing"
+    },
+    {
+      "text": "SEO Services",
+      "href": "/services/digital-marketing/seo"
     },
     {
       "text": "Local SEO",

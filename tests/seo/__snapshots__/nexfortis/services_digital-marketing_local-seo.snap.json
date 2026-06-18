@@ -85,6 +85,14 @@
     },
     {
       "level": 2,
+      "text": "Related services"
+    },
+    {
+      "level": 3,
+      "text": "SEO Services"
+    },
+    {
+      "level": 2,
       "text": "Frequently Asked Questions"
     },
     {
@@ -318,6 +326,10 @@
     {
       "text": "Digital Marketing",
       "href": "/services/digital-marketing"
+    },
+    {
+      "text": "SEO Services",
+      "href": "/services/digital-marketing/seo"
     },
     {
       "text": "Local SEO",

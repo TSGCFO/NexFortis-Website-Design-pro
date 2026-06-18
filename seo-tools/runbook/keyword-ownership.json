@@ -21,9 +21,9 @@
     },
     "/services/digital-marketing/seo": {
       "name": "SEO Services",
-      "status": "tentative",
+      "status": "confirmed (KI cluster order 362f44e6, 2026-06-18)",
       "primary": ["seo services", "seo company", "seo agency"],
-      "secondary": []
+      "secondary": ["seo consultant", "seo agency near me", "affordable seo services", "seo services for small business"]
     },
     "/services/digital-marketing/technical-seo": {
       "name": "Technical SEO",
@@ -94,7 +94,7 @@
     "blog": {
       "name": "Informational blog/guide cluster (links UP to the service pages)",
       "status": "reserved",
-      "primary": ["local seo", "local seo for small business", "local search marketing", "digital marketing"],
+      "primary": ["local seo", "local seo for small business", "local search marketing", "digital marketing", "seo", "search engine optimization", "seo expert"],
       "secondary": []
     }
   }

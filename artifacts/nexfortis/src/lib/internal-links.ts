@@ -69,8 +69,7 @@ export const DM_SPOKES: readonly DmSpoke[] = [
       "Keyword strategy, on-page optimization, and content built to earn rankings that send qualified buyers to your site.",
     icon: Search,
     category: "On-Page & Discovery",
-    // Throwaway pilot content — unpublished until regenerated through the run book.
-    published: false,
+    published: true,
   },
   {
     slug: "local-seo",

@@ -1,0 +1,10 @@
+{
+  "_step": "7 — On-page + internal links", "_page": "seo", "_date": "2026-06-18",
+  "files": "Content: _dmContent.tsx 'seo' entry (regenerated). Wrapper digital-marketing/seo.tsx + App.tsx route (existing). Published=true (internal-links.ts).",
+  "title": {"metaTitle": "SEO Services in Canada", "rendered_title": "SEO Services in Canada | NexFortis IT Solutions", "h1": "SEO Services That Rank Canadian Businesses"},
+  "meta_description": "SEO services for Canadian businesses: keyword strategy, on-page and technical optimization, and content that ranks for the searches that bring real buyers.",
+  "schema": {"page_level": ["Service (Search Engine Optimization)", "BreadcrumbList", "FAQPage", "Person"], "global_from_layout": ["Organization", "LocalBusiness", "WebSite"]},
+  "internal_links": {"in_prose": [{"anchor": "digital marketing services", "href": "/services/digital-marketing"}, {"anchor": "local SEO", "href": "/services/digital-marketing/local-seo"}], "related_services": "published siblings", "cluster_correct": true},
+  "nav": "Surfaced in Services mega-menu + footer (published=true).",
+  "_done_check": "PASS."
+}

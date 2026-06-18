@@ -95,25 +95,27 @@ export const DM_SPOKE_CONTENT: Partial<Record<DmSpokeSlug, DmSpokeContent>> = {
     intro: (
       <>
         <p>
-          Most Canadian businesses don&rsquo;t have a traffic problem &mdash; they have a
-          visibility problem. Your customers are already searching; your site just isn&rsquo;t
-          where Google shows the answer. SEO closes that gap by aligning your pages with what
-          people actually type, then earning the authority and technical health that let those
-          pages rank.
+          Most of the Canadian businesses we talk to do not actually have a traffic problem. They
+          have a visibility problem. Their customers are out there searching every day; the site
+          just is not the one Google decides to show. SEO is how you close that gap &mdash; you line
+          your pages up with what people genuinely type, then earn the technical health and
+          authority that let Google trust those pages enough to rank them.
         </p>
         <p>
-          At NexFortis, SEO is the engine of our{" "}
-          <InlineLink href={DM_PILLAR_HREF}>{DM_PILLAR_LINK_TEXT}</InlineLink>. You get an SEO
-          company and strategist in one &mdash; not a faceless agency that hands you to a junior. We
-          start with the searches that signal buying intent, map each one to the right page, and
-          build out the on-page, technical, and content work needed to compete. For businesses that
-          serve a specific area, we pair it with{" "}
-          <InlineLink href={localSeo.href}>{localSeo.linkText}</InlineLink> so you win the map
-          results too.
+          At NexFortis this is the engine under our{" "}
+          <InlineLink href={DM_PILLAR_HREF}>{DM_PILLAR_LINK_TEXT}</InlineLink>. You get the company
+          and the strategist in one person, not a logo that quietly passes you to a junior the day
+          the contract is signed. We start from the searches that smell like money &mdash; someone
+          ready to buy, not just browsing &mdash; map each one to the page that should answer it, and
+          then do the on-page, technical, and content work it takes to win the spot. If you also
+          serve a defined area, we run{" "}
+          <InlineLink href={localSeo.href}>{localSeo.linkText}</InlineLink> alongside it so you take
+          the map results too.
         </p>
         <p>
-          Every change ties back to a number you care about &mdash; qualified traffic, leads, and
-          revenue &mdash; not vanity rankings on terms nobody buys from.
+          And every change we make has to earn its place against a number you actually care about:
+          qualified visits, leads, revenue. Ranking first for a phrase nobody buys from is a vanity
+          metric, and we are not interested in those.
         </p>
       </>
     ),
@@ -237,39 +239,40 @@ export const DM_SPOKE_CONTENT: Partial<Record<DmSpokeSlug, DmSpokeContent>> = {
       {
         question: "How long does SEO take to work?",
         answer:
-          "Most campaigns see early movement on lower-competition terms within two to three months, with meaningful traffic gains around the six-month mark. SEO compounds — the work you do in month one keeps paying off in month twelve, which is why it outperforms ads over the long run. Anyone promising page-one rankings in 30 days is selling a shortcut that risks a penalty.",
+          "You will usually see the first movement on the easier, lower-competition terms inside two to three months, with traffic you can actually feel around the six-month mark. The reason SEO is worth the wait is that it compounds — what you publish in month one is still earning in month twelve, which is exactly how it overtakes paid ads over time. If someone promises you page one in 30 days, they are selling a shortcut that tends to end in a penalty.",
       },
       {
         question: "Do you guarantee #1 rankings?",
         answer:
-          "No reputable SEO can, because Google's results depend on factors no agency controls. What we guarantee is the work: the audit, the fixes, the content, and the links, all reported transparently. We focus on rankings for the terms that drive revenue and on the leads those rankings produce.",
+          "No, and be wary of anyone who does — Google's results hinge on things no agency controls. What we will guarantee is the work itself: the audit, the fixes, the content, the links, all reported openly. We aim at the rankings that bring revenue and at the leads those rankings actually produce, not a screenshot of position one for a term nobody searches.",
       },
       {
         question: "What is the difference between SEO and local SEO?",
         answer:
-          "SEO earns rankings in the standard organic results for any searcher. Local SEO focuses on the Google map pack and 'near me' searches for businesses that serve a specific area. Most local businesses need both, and we run them together so the map and the organic results reinforce each other.",
+          "Plain SEO is about ranking in the normal organic results for anyone, anywhere. Local SEO is the narrower game of winning the Google map pack and 'near me' searches when someone is looking for a business in a specific area. Most local businesses genuinely need both, so we run them together and let the map listing and the organic ranking back each other up.",
       },
       {
         question: "Will you need to change my website?",
         answer:
-          "Usually some. SEO touches page content, structure, internal links, and technical settings. We work with your existing site and developers wherever possible, and we flag anything that needs a build change before we touch it — nothing ships without your sign-off.",
+          "Almost always a little. SEO touches page content, structure, internal links, and technical settings under the hood. We work with the site and the developers you already have wherever we can, and anything that needs a real build change gets flagged and explained before we touch it. Nothing ships without your sign-off.",
       },
       {
         question: "How do you report results?",
         answer:
-          "You get a monthly report in plain language: which keywords moved, how organic traffic and leads changed, what we shipped, and what's next. We connect GA4 and Google Search Console so the numbers come straight from Google, not a black box.",
+          "Once a month, in plain English: which keywords moved, what happened to organic traffic and leads, what we shipped, and what is next. We pull the numbers straight from GA4 and Google Search Console, so you are looking at Google's own data, not a figure we massaged in a dashboard.",
       },
       {
         question: "Is SEO still worth it now that AI answers questions directly?",
         answer:
-          "More than ever. The same strong, well-structured content that ranks in Google is what AI engines such as ChatGPT and Google's AI Overviews cite when they answer. We build for both, and our Generative Engine Optimization service adds the AI-specific layer on top of solid SEO foundations.",
+          "Arguably more than before. The same well-structured, genuinely useful content that ranks in Google is what ChatGPT and Google's AI Overviews reach for when they write an answer. We build for both at once, and our Generative Engine Optimization service adds the AI-specific layer on top of solid SEO foundations.",
       },
     ],
     authorNote: (
       <p>
-        Hassan leads SEO and digital strategy at NexFortis, helping Canadian businesses turn
-        search into a predictable source of leads. He works directly with every client &mdash; no
-        hand-off to a junior team.
+        Hassan leads SEO and digital strategy at NexFortis, where he has built the practice around a
+        simple idea: turn search into a lead source a business owner can actually count on. As
+        founder and CEO he stays on every engagement himself, so the person setting your strategy is
+        the same one who picks up when you call &mdash; no hand-off to a junior team.
       </p>
     ),
     ctaHeading: "Ready to rank for the searches that matter?",

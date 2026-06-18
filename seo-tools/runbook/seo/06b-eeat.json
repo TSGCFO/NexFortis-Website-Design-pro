@@ -1,0 +1,11 @@
+{
+  "_step": "6b — EEAT audit (§7 checklist)", "_page": "seo", "_date": "2026-06-18", "_scale": "0-2; target >=8/10.",
+  "scores": {
+    "experience": {"score": 1, "why": "Real practitioner framing (traffic-vs-visibility, buyer-intent keywords); held at 1 for no citable client case study."},
+    "expertise": {"score": 2, "why": "Accurate SEO scope + correct terminology (on-page/technical/CWV/INP/authority); depth matches SERP winners."},
+    "authoritativeness": {"score": 2, "why": "3 distinct named primary sources (Statcounter, Backlinko, Web Almanac) w/ URLs; Service+Person+Breadcrumb schema; Hassan Founder & CEO byline."},
+    "trust": {"score": 2, "why": "No #1 guarantee (honest); transparent pricing after free audit; verified stats; fenced cannibalization; no fabrication."},
+    "veto_checks": {"score": 2, "passed": true}
+  },
+  "total": "9/10"
+}
