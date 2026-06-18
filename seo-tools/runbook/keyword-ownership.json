@@ -63,9 +63,9 @@
     },
     "/services/digital-marketing/social-media-marketing": {
       "name": "Social Media Marketing",
-      "status": "tentative",
-      "primary": ["social media marketing services", "social media management"],
-      "secondary": []
+      "status": "confirmed (KI cluster order f62c5303, 2026-06-18)",
+      "primary": ["social media marketing services", "social media management", "social media marketing agency", "social media agency", "social media marketing company"],
+      "secondary": ["social media management services", "social media marketing for small business", "social media advertising", "facebook ads management", "meta ads management"]
     },
     "/services/digital-marketing/web-design": {
       "name": "Web Design & Development",

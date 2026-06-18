@@ -1621,4 +1621,194 @@ export const DM_SPOKE_CONTENT: Partial<Record<DmSpokeSlug, DmSpokeContent>> = {
     ctaSubtext:
       "Get a free Google Ads account audit — we'll show you where the budget is leaking and what a profitable campaign would look like.",
   },
+
+  // ----------------------------------------- SOCIAL MEDIA MARKETING ----
+  "social-media-marketing": {
+    metaTitle: "Social Media Marketing",
+    metaDescription:
+      "Social media marketing & management for Canadian businesses: organic social, content, and Meta Ads that build your brand and feed your funnel.",
+    h1: "Social Media Marketing That Builds Your Brand",
+    heroSubtitle:
+      "Organic social and Meta Ads that put your brand where your buyers already spend hours every day — and turn that attention into customers.",
+    serviceType: "Social Media Marketing",
+    serviceSchemaName: "Social Media Marketing Services",
+    serviceSchemaDescription:
+      "Social media marketing and management for Canadian businesses — strategy, content creation, organic management, community engagement, and paid social (Meta Ads).",
+    introHeading: "Be where your customers already are",
+    intro: (
+      <>
+        <p>
+          Your customers spend a couple of hours a day on social platforms whether or not your
+          business shows up there. Social media marketing is how you make that time work for you
+          &mdash; staying visible, building trust, and feeding your funnel on the channels your
+          audience actually uses, instead of shouting into an empty feed or posting at random when
+          someone remembers to.
+        </p>
+        <p>
+          We run both sides of it: organic social that builds your brand over time, and paid social
+          (Meta Ads) that puts the right message in front of the right people fast. It pairs
+          naturally with our{" "}
+          <InlineLink href={getDmSpoke("content-marketing").href}>{getDmSpoke("content-marketing").linkText}</InlineLink>{" "}
+          and is part of the wider{" "}
+          <InlineLink href={DM_PILLAR_HREF}>{DM_PILLAR_LINK_TEXT}</InlineLink>.
+        </p>
+        <p>
+          And we are honest about it: not every platform is worth your time. We focus your effort on
+          the one or two channels where your buyers actually are, rather than spreading you thin
+          across all of them for the sake of looking busy.
+        </p>
+      </>
+    ),
+    stats: [
+      {
+        value: "5.24B",
+        label: "active social media user identities worldwide in early 2025.",
+        sourceName: "DataReportal, Digital 2025",
+        sourceUrl: "https://datareportal.com/reports/digital-2025-sub-section-state-of-social",
+      },
+      {
+        value: "2h 21m",
+        label: "the typical internet user spends on social media every day.",
+        sourceName: "Meltwater / We Are Social, Digital 2025",
+        sourceUrl: "https://www.meltwater.com/en/blog/digital-2025",
+      },
+      {
+        value: "$243B",
+        label: "spent on social media advertising in 2024 — up 15% year over year.",
+        sourceName: "Digital 2025 report (social ad spend)",
+        sourceUrl: "https://www.meltwater.com/en/about/press-releases/digital-2025-ai-accelerates-youtube-tops-user-charts-social-ad-spend-soars-and-more",
+      },
+    ],
+    featuresHeading: "What's included in our social media marketing",
+    featuresSubtitle: "Strategy, content, community, and paid social — focused where it counts.",
+    features: [
+      {
+        icon: Search,
+        title: "Strategy & platform selection",
+        description:
+          "We figure out which one or two platforms your buyers actually use and build a strategy around them, instead of stretching your budget across every network for the sake of it.",
+      },
+      {
+        icon: PenTool,
+        title: "Content creation",
+        description:
+          "We plan and produce the posts, graphics, and short-form video that fit each platform and actually get engagement — on a consistent schedule, not in random bursts.",
+      },
+      {
+        icon: Share2,
+        title: "Organic management & scheduling",
+        description:
+          "We manage your profiles end to end — calendar, scheduling, posting, and optimization — so your presence stays active and on-brand without eating up your week.",
+      },
+      {
+        icon: Users,
+        title: "Community engagement",
+        description:
+          "We monitor and respond to comments and messages so followers feel heard and prospects get answers — the part most businesses neglect and the part that actually builds loyalty.",
+      },
+      {
+        icon: BarChart3,
+        title: "Paid social & Meta Ads",
+        description:
+          "We plan and run targeted Meta (Facebook and Instagram) ad campaigns to reach the right audiences fast, with transparent reporting on spend and results — organic builds trust, paid adds reach.",
+      },
+      {
+        icon: LineChart,
+        title: "Analytics & reporting",
+        description:
+          "We track the metrics that tie social to your business — reach, engagement, traffic, and leads — and report in plain language, not a wall of vanity numbers.",
+      },
+    ],
+    processHeading: "How we deliver social media marketing",
+    process: [
+      {
+        step: "01",
+        title: "Audit & strategy",
+        description:
+          "We review your current presence and competitors, pick the platforms worth your time, and set a content and (if it fits) paid-social plan with clear goals.",
+      },
+      {
+        step: "02",
+        title: "Create & schedule",
+        description:
+          "We build a content calendar and produce posts and creative on a steady cadence, with your sign-off, so your feeds stay active and consistent.",
+      },
+      {
+        step: "03",
+        title: "Engage & amplify",
+        description:
+          "We manage community engagement and, where it makes sense, run Meta Ads to put your best content and offers in front of the right audiences.",
+      },
+      {
+        step: "04",
+        title: "Measure & refine",
+        description:
+          "We report on what's working — reach, engagement, traffic, leads — and double down on the content and campaigns that earn results.",
+      },
+    ],
+    comparisonHeading: "NexFortis vs. a typical social media provider",
+    comparison: [
+      { feature: "Strategy", us: "Focused on the platforms that matter", them: "Posting everywhere for the sake of it" },
+      { feature: "Content", us: "Planned, on-brand, consistent", them: "Random posts when someone remembers" },
+      { feature: "Paid social", us: "Targeted Meta Ads, transparent spend", them: "Boosted posts with no plan" },
+      { feature: "Reporting", us: "Tied to traffic and leads", them: "Follower and like counts" },
+      { feature: "Who does the work", us: "A senior consultant you can reach", them: "An intern or a rotating junior" },
+      { feature: "Commitment", us: "Month-to-month — we earn the renewal", them: "Locked contracts" },
+    ],
+    pricingHeading: "What social media marketing costs",
+    pricing: {
+      fromLabel: "Scaled to platforms, posting volume, and paid spend",
+      note: (
+        <>
+          <p className="mb-4">
+            Cost depends on how many platforms you run, how much content you publish, and whether you
+            add paid social. Managing one focused channel well is very different from running several
+            with an ad budget on top &mdash; so we price by the program, not a fixed package.
+          </p>
+          <p>
+            Paid-social ad spend is separate and goes to the platforms. You get a fixed monthly
+            scope, transparent reporting, and no long-term lock-in. Ask for a free social audit and
+            we&rsquo;ll recommend where to focus.
+          </p>
+        </>
+      ),
+    },
+    faq: [
+      {
+        question: "What is social media marketing?",
+        answer:
+          "Social media marketing is using platforms like Instagram, Facebook, LinkedIn, and TikTok to build your brand, engage your audience, and drive traffic and leads — through a mix of organic content and paid ads. Done well it's a consistent, strategic presence on the channels your buyers use, not just posting whenever you have a spare moment.",
+      },
+      {
+        question: "Why is social media marketing important?",
+        answer:
+          "Because that's where attention is. Billions of people use social platforms for a couple of hours a day, and it's where a lot of discovery, research, and trust-building now happens before someone buys. If your business isn't visible and credible there, you're invisible at a moment that increasingly shapes the buying decision.",
+      },
+      {
+        question: "How much does social media marketing cost?",
+        answer:
+          "It depends on how many platforms you run, how much content you publish, and whether you add paid social. Managing one channel well costs far less than running several with an ad budget on top. We price by the program and keep it transparent — and any paid-social ad spend is separate, going directly to the platforms. You'll get a clear number after a free audit.",
+      },
+      {
+        question: "Which platforms should my business be on?",
+        answer:
+          "Only the ones your buyers actually use — which is usually one or two, not all of them. A B2B firm might live on LinkedIn while a local retailer does better on Instagram and Facebook. We'll recommend where to focus based on your audience and goals rather than spreading you thin trying to be everywhere.",
+      },
+      {
+        question: "How do you measure social media success?",
+        answer:
+          "By the metrics that connect to your business, not just likes. We track reach and engagement, but more importantly the traffic and leads social sends you, and report it in plain language each month. That way you can see whether the work is building real results, not just a follower count.",
+      },
+    ],
+    authorNote: (
+      <p>
+        Hassan leads social media strategy at NexFortis, helping Canadian businesses build a focused,
+        credible presence on the platforms that matter. As founder and CEO he stays hands-on with
+        every engagement &mdash; strategy first, never random posting.
+      </p>
+    ),
+    ctaHeading: "Ready to make social media actually work?",
+    ctaSubtext:
+      "Get a free social media audit — where your audience really is, what's working, and the fastest path to brand presence that drives leads.",
+  },
 };

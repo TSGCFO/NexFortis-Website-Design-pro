@@ -157,7 +157,7 @@ export const DM_SPOKES: readonly DmSpoke[] = [
       "Organic social and Meta Ads that build brand surface area and feed your funnel on the platforms your buyers use.",
     icon: Share2,
     category: "Social / Paid Social",
-    published: false,
+    published: true,
   },
   {
     slug: "web-design",

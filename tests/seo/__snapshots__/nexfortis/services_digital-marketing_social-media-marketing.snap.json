@@ -1,13 +1,13 @@
 {
-  "route": "/services/digital-marketing/link-building",
-  "title": "Link Building &amp; Digital PR | NexFortis IT Solutions",
-  "description": "White-hat link building and digital PR for Canadian businesses: earned editorial backlinks from real publications that build the authority behind your rankings.",
-  "canonical": "https://nexfortis.com/services/digital-marketing/link-building",
+  "route": "/services/digital-marketing/social-media-marketing",
+  "title": "Social Media Marketing | NexFortis IT Solutions",
+  "description": "Social media marketing &amp; management for Canadian businesses: organic social, content, and Meta Ads that build your brand and feed your funnel.",
+  "canonical": "https://nexfortis.com/services/digital-marketing/social-media-marketing",
   "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
   "og": {
-    "title": "Link Building &amp; Digital PR | NexFortis IT Solutions",
-    "description": "White-hat link building and digital PR for Canadian businesses: earned editorial backlinks from real publications that build the authority behind your rankings.",
-    "url": "https://nexfortis.com/services/digital-marketing/link-building",
+    "title": "Social Media Marketing | NexFortis IT Solutions",
+    "description": "Social media marketing &amp; management for Canadian businesses: organic social, content, and Meta Ads that build your brand and feed your funnel.",
+    "url": "https://nexfortis.com/services/digital-marketing/social-media-marketing",
     "image": "https://nexfortis.com/opengraph.png",
     "type": "website"
   },
@@ -17,71 +17,71 @@
   "headings": [
     {
       "level": 1,
-      "text": "Link Building &amp; Digital PR Services"
+      "text": "Social Media Marketing That Builds Your Brand"
     },
     {
       "level": 2,
-      "text": "Authority is still earned through links"
+      "text": "Be where your customers already are"
     },
     {
       "level": 2,
-      "text": "What's included in our link building &amp; digital PR"
+      "text": "What's included in our social media marketing"
     },
     {
       "level": 3,
-      "text": "Backlink audit &amp; strategy"
+      "text": "Strategy &amp; platform selection"
     },
     {
       "level": 3,
-      "text": "Digital PR &amp; editorial links"
+      "text": "Content creation"
     },
     {
       "level": 3,
-      "text": "Guest posting on relevant sites"
+      "text": "Organic management &amp; scheduling"
     },
     {
       "level": 3,
-      "text": "Niche &amp; blogger outreach"
+      "text": "Community engagement"
     },
     {
       "level": 3,
-      "text": "Broken-link &amp; reclamation"
+      "text": "Paid social &amp; Meta Ads"
     },
     {
       "level": 3,
-      "text": "Reporting on links &amp; authority"
+      "text": "Analytics &amp; reporting"
     },
     {
       "level": 2,
-      "text": "How we deliver link building"
+      "text": "How we deliver social media marketing"
     },
     {
       "level": 3,
-      "text": "Audit &amp; target"
+      "text": "Audit &amp; strategy"
     },
     {
       "level": 3,
-      "text": "Create link-worthy assets"
+      "text": "Create &amp; schedule"
     },
     {
       "level": 3,
-      "text": "Outreach &amp; earn"
+      "text": "Engage &amp; amplify"
     },
     {
       "level": 3,
-      "text": "Report &amp; build"
+      "text": "Measure &amp; refine"
     },
     {
       "level": 2,
-      "text": "NexFortis vs. a typical link vendor"
+      "text": "NexFortis vs. a typical social media provider"
     },
     {
       "level": 2,
-      "text": "What link building costs"
+      "text": "What social media marketing costs"
     },
     {
       "level": 3,
-      "text": "Priced by authority and competition"
+      "text": "Scaled to platforms, posting volume, and paid spend"
     },
     {
       "level": 2,
@@ -105,7 +105,7 @@
     },
     {
       "level": 2,
-      "text": "Want the authority to finally rank?"
+      "text": "Ready to make social media actually work?"
     },
     {
       "level": 4,
@@ -150,8 +150,8 @@
         {
           "@type": "ListItem",
           "position": 4,
-          "name": "Link Building & Digital PR",
-          "item": "https://nexfortis.com/services/digital-marketing/link-building"
+          "name": "Social Media Marketing",
+          "item": "https://nexfortis.com/services/digital-marketing/social-media-marketing"
         }
       ]
     },
@@ -161,42 +161,42 @@
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "What is link building?",
+          "name": "What is social media marketing?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Link building is the work of earning links from other websites to yours. Search engines treat those links as votes of confidence, so a strong, relevant backlink profile is one of the biggest factors in how high you can rank. The key word is earned — links have to come from real, relevant sites to help rather than hurt."
+            "text": "Social media marketing is using platforms like Instagram, Facebook, LinkedIn, and TikTok to build your brand, engage your audience, and drive traffic and leads — through a mix of organic content and paid ads. Done well it's a consistent, strategic presence on the channels your buyers use, not just posting whenever you have a spare moment."
           }
         },
         {
           "@type": "Question",
-          "name": "Why is link building important?",
+          "name": "Why is social media marketing important?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Because authority is still largely decided by links. Top-ranking pages consistently have more and better backlinks than the pages below them, yet most pages on the web have none at all. If your content is good but isn't ranking, a weak link profile is usually the reason — and it's the gap link building closes."
+            "text": "Because that's where attention is. Billions of people use social platforms for a couple of hours a day, and it's where a lot of discovery, research, and trust-building now happens before someone buys. If your business isn't visible and credible there, you're invisible at a moment that increasingly shapes the buying decision."
           }
         },
         {
           "@type": "Question",
-          "name": "Is link building safe? What about Google penalties?",
+          "name": "How much does social media marketing cost?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "It's safe when it's done right and risky when it isn't. Bought links, spun content, and private blog networks can trigger a Google penalty that's expensive to recover from. We only build white-hat, editorial links from real, relevant sites — the kind Google wants you to earn — so you get the ranking benefit without the risk."
+            "text": "It depends on how many platforms you run, how much content you publish, and whether you add paid social. Managing one channel well costs far less than running several with an ad budget on top. We price by the program and keep it transparent — and any paid-social ad spend is separate, going directly to the platforms. You'll get a clear number after a free audit."
           }
         },
         {
           "@type": "Question",
-          "name": "What's the difference between digital PR and guest posting?",
+          "name": "Which platforms should my business be on?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Digital PR earns links by pitching genuinely newsworthy stories, data, or commentary to journalists and publications — high-authority, editorial links you can't buy. Guest posting places a useful article you've written on a relevant site. Both are legitimate when done with real sites; we use the mix that fits your industry and goals."
+            "text": "Only the ones your buyers actually use — which is usually one or two, not all of them. A B2B firm might live on LinkedIn while a local retailer does better on Instagram and Facebook. We'll recommend where to focus based on your audience and goals rather than spreading you thin trying to be everywhere."
           }
         },
         {
           "@type": "Question",
-          "name": "How many links will I get, and how fast?",
+          "name": "How do you measure social media success?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "We don't promise a number, because earned links depend on outreach and what's link-worthy — and anyone guaranteeing X links a month is usually selling the risky kind. We focus on quality and relevance over volume, report every placement, and build steadily. A few strong editorial links beat dozens of junk ones every time."
+            "text": "By the metrics that connect to your business, not just likes. We track reach and engagement, but more importantly the traffic and leads social sends you, and report it in plain language each month. That way you can see whether the work is building real results, not just a follower count."
           }
         }
       ]
@@ -292,9 +292,9 @@
     {
       "@context": "https://schema.org",
       "@type": "Service",
-      "name": "Link Building & Digital PR Services",
-      "description": "White-hat link building and digital PR for Canadian businesses — backlink audits, editorial outreach, guest posting, and authority building that lifts rankings.",
-      "url": "https://nexfortis.com/services/digital-marketing/link-building",
+      "name": "Social Media Marketing Services",
+      "description": "Social media marketing and management for Canadian businesses — strategy, content creation, organic management, community engagement, and paid social (Meta Ads).",
+      "url": "https://nexfortis.com/services/digital-marketing/social-media-marketing",
       "provider": {
         "@type": "Organization",
         "name": "NexFortis IT Solutions",
@@ -304,7 +304,7 @@
         "@type": "Country",
         "name": "Canada"
       },
-      "serviceType": "Link Building"
+      "serviceType": "Social Media Marketing"
     },
     {
       "@context": "https://schema.org",
@@ -420,24 +420,24 @@
       "href": "/services"
     },
     {
-      "text": "SEO services",
-      "href": "/services/digital-marketing/seo"
+      "text": "content marketing",
+      "href": "/services/digital-marketing/content-marketing"
     },
     {
       "text": "digital marketing services",
       "href": "/services/digital-marketing"
     },
     {
-      "text": "Source: Backlinko, 11.8M-result ranking study",
-      "href": "https://backlinko.com/search-engine-ranking"
+      "text": "Source: DataReportal, Digital 2025",
+      "href": "https://datareportal.com/reports/digital-2025-sub-section-state-of-social"
     },
     {
-      "text": "Source: Ahrefs, 1-billion-page study",
-      "href": "https://ahrefs.com/blog/search-traffic-study/"
+      "text": "Source: Meltwater / We Are Social, Digital 2025",
+      "href": "https://www.meltwater.com/en/blog/digital-2025"
     },
     {
-      "text": "Source: Statcounter Global Stats",
-      "href": "https://gs.statcounter.com/search-engine-market-share"
+      "text": "Source: Digital 2025 report (social ad spend)",
+      "href": "https://www.meltwater.com/en/about/press-releases/digital-2025-ai-accelerates-youtube-tops-user-charts-social-ad-spend-soars-and-more"
     },
     {
       "text": "More about NexFortis",

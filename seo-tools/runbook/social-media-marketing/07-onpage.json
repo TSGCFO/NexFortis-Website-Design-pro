@@ -1,0 +1,10 @@
+{
+  "_step": "7 — On-page + internal links", "_page": "social-media-marketing", "_date": "2026-06-18",
+  "files": "NEW: content entry + wrapper social-media-marketing.tsx + App.tsx lazy import + Route. Published=true. Allowlist INV-001/INV-008 entries added.",
+  "title": {"metaTitle": "Social Media Marketing", "rendered_title": "Social Media Marketing | NexFortis IT Solutions", "h1": "Social Media Marketing That Builds Your Brand"},
+  "meta_description": "Social media marketing & management for Canadian businesses: organic social, content, and Meta Ads that build your brand and feed your funnel.",
+  "schema": {"page_level": ["Service (Social Media Marketing)", "BreadcrumbList", "FAQPage", "Person"], "global_from_layout": ["Organization", "LocalBusiness", "WebSite"]},
+  "internal_links": {"in_prose": [{"anchor": "content marketing", "href": "/services/digital-marketing/content-marketing"}, {"anchor": "digital marketing services", "href": "/services/digital-marketing"}], "related_services": "published siblings", "cluster_correct": true},
+  "nav": "Surfaced in Services mega-menu + footer.",
+  "_done_check": "PASS."
+}

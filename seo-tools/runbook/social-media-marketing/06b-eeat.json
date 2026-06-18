@@ -1,0 +1,11 @@
+{
+  "_step": "6b — EEAT audit (§7)", "_page": "social-media-marketing", "_date": "2026-06-18", "_scale": "0-2; target >=8/10.",
+  "scores": {
+    "experience": {"score": 1, "why": "Practitioner POV (focus-not-everywhere, organic+paid balance); held at 1 (no citable client case study)."},
+    "expertise": {"score": 2, "why": "Accurate SMM mechanics (platform selection, content, community, Meta Ads, measurement); correct terminology."},
+    "authoritativeness": {"score": 2, "why": "3 distinct named sources (DataReportal, Meltwater x2 different paths) w/ URLs; Service+Person+Breadcrumb schema; Hassan Founder & CEO byline."},
+    "trust": {"score": 2, "why": "Honest 'not every platform', separate ad spend, measure-real-results stance; transparent pricing; no fabrication."},
+    "veto_checks": {"score": 2, "passed": true}
+  },
+  "total": "9/10"
+}

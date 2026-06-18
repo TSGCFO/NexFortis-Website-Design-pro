@@ -60,12 +60,12 @@
       "text": "Google Ads Management"
     },
     {
-      "level": 2,
-      "text": "Also available across the cluster"
-    },
-    {
       "level": 3,
       "text": "Social Media Marketing"
+    },
+    {
+      "level": 2,
+      "text": "Also available across the cluster"
     },
     {
       "level": 3,
@@ -404,6 +404,10 @@
     {
       "text": "Google Ads Management",
       "href": "/services/digital-marketing/google-ads"
+    },
+    {
+      "text": "Social Media Marketing",
+      "href": "/services/digital-marketing/social-media-marketing"
     },
     {
       "text": "Microsoft 365 Solutions",

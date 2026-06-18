@@ -1,0 +1,16 @@
+{
+  "_step": "6a — Itemized fact-check (HARD GATE 2)", "_page": "social-media-marketing", "_date": "2026-06-18",
+  "statistics": [
+    {"claim": "5.24 billion active social media user identities worldwide (early 2025)", "verdict": "VERIFIED", "source": "DataReportal / Kepios, Digital 2025 (state of social).", "url": "https://datareportal.com/reports/digital-2025-sub-section-state-of-social"},
+    {"claim": "Typical internet user spends 2h 21m/day on social media", "verdict": "VERIFIED", "source": "Meltwater / We Are Social, Digital 2025 (GWI data).", "url": "https://www.meltwater.com/en/blog/digital-2025"},
+    {"claim": "$243 billion spent on social media advertising in 2024, +15% YoY", "verdict": "VERIFIED", "source": "Meltwater / We Are Social Digital 2025 press release.", "url": "https://www.meltwater.com/en/about/press-releases/digital-2025-ai-accelerates-youtube-tops-user-charts-social-ad-spend-soars-and-more"}
+  ],
+  "capability_and_market_claims": [
+    {"claim": "strategy & platform selection, content, organic management, community engagement, Meta Ads, analytics", "verdict": "VERIFIED as approach", "basis": "Standard SMM scope; process framing; no follower/engagement-result claims for NexFortis."},
+    {"claim": "Not every platform is worth it; focus on 1-2", "verdict": "VERIFIED (honest advice)", "basis": "Sound, non-fabricated guidance."},
+    {"claim": "paid-social ad spend is separate, goes to platforms", "verdict": "VERIFIED as policy", "basis": "Honest fee handling; no invented price."}
+  ],
+  "cannibalization_note": "Organic + paid SOCIAL intent; owns Meta/Facebook ads. Distinct from google-ads (paid SEARCH). Links content-marketing without targeting its terms.",
+  "fabrication_scan": {"invented_results_metrics": "NONE (platform stats attributed; no NexFortis follower/engagement claims)", "invented_prices_guarantees": "NONE", "undemonstrated_capabilities": "NONE"},
+  "_done_check": "PASS — 3 stats verified to distinct sources; claims grounded; zero fabrications."
+}
