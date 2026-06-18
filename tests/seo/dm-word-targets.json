@@ -13,6 +13,7 @@
     "services/digital-marketing/google-ads": { "kind": "spoke", "min": 1100, "max": 1900, "source": "03-brief: CA service pages ~700-1800 main (excl. outliers); focused spoke." },
     "services/digital-marketing/social-media-marketing": { "kind": "spoke", "min": 1100, "max": 1900, "source": "03-brief: CA service pages ~400-1900 main; focused spoke." },
     "services/digital-marketing/web-design": { "kind": "spoke", "min": 1100, "max": 1900, "source": "03-brief: CA agency pages ~500-2200 main (excl. outliers); focused spoke." },
-    "services/digital-marketing/email-marketing": { "kind": "spoke", "min": 1100, "max": 1900, "source": "03-brief: software-heavy SERP; managed-service spoke." }
+    "services/digital-marketing/email-marketing": { "kind": "spoke", "min": 1100, "max": 1900, "source": "03-brief: software-heavy SERP; managed-service spoke." },
+    "services/digital-marketing/conversion-rate-optimization": { "kind": "spoke", "min": 1100, "max": 1900, "source": "03-brief: CA service pages ~1100-1500 main (lean); focused spoke." }
   }
 }

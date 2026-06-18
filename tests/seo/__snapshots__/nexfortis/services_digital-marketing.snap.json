@@ -72,12 +72,12 @@
       "text": "Email Marketing"
     },
     {
-      "level": 2,
-      "text": "Also available across the cluster"
-    },
-    {
       "level": 3,
       "text": "Conversion Rate Optimization"
+    },
+    {
+      "level": 2,
+      "text": "Also available across the cluster"
     },
     {
       "level": 3,
@@ -416,6 +416,10 @@
     {
       "text": "Email Marketing",
       "href": "/services/digital-marketing/email-marketing"
+    },
+    {
+      "text": "Conversion Rate Optimization",
+      "href": "/services/digital-marketing/conversion-rate-optimization"
     },
     {
       "text": "Microsoft 365 Solutions",

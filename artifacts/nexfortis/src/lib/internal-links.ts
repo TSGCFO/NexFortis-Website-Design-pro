@@ -190,7 +190,7 @@ export const DM_SPOKES: readonly DmSpoke[] = [
       "Turn more of the traffic you already have into leads with behaviour analysis, testing, and landing-page fixes.",
     icon: MousePointerClick,
     category: "CRO",
-    published: false,
+    published: true,
   },
   {
     slug: "analytics-reporting",

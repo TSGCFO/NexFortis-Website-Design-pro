@@ -81,9 +81,9 @@
     },
     "/services/digital-marketing/conversion-rate-optimization": {
       "name": "Conversion Rate Optimization",
-      "status": "tentative",
-      "primary": ["conversion rate optimization services", "cro services"],
-      "secondary": []
+      "status": "confirmed (KI cluster order 7c0b4a48, 2026-06-18)",
+      "primary": ["conversion rate optimization services", "cro agency", "conversion rate optimization agency"],
+      "secondary": ["cro services", "conversion optimization services", "landing page optimization", "website conversion optimization", "ab testing services", "cro consultant"]
     },
     "/services/digital-marketing/analytics-reporting": {
       "name": "Analytics & Reporting",
@@ -94,7 +94,7 @@
     "blog": {
       "name": "Informational blog/guide cluster (links UP to the service pages)",
       "status": "reserved",
-      "primary": ["local seo", "local seo for small business", "local search marketing", "digital marketing", "seo", "search engine optimization", "seo expert", "technical seo", "website speed optimization", "responsive web design"],
+      "primary": ["local seo", "local seo for small business", "local search marketing", "digital marketing", "seo", "search engine optimization", "seo expert", "technical seo", "website speed optimization", "responsive web design", "conversion rate optimization"],
       "secondary": []
     }
   }

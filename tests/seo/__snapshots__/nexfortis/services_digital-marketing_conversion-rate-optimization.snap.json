@@ -1,13 +1,13 @@
 {
-  "route": "/services/digital-marketing/technical-seo",
-  "title": "Technical SEO Services | NexFortis IT Solutions",
-  "description": "Technical SEO services for Canadian businesses: crawlability, indexation, Core Web Vitals, structured data, and rendering fixes that let Google rank you.",
-  "canonical": "https://nexfortis.com/services/digital-marketing/technical-seo",
+  "route": "/services/digital-marketing/conversion-rate-optimization",
+  "title": "Conversion Rate Optimization | NexFortis IT Solutions",
+  "description": "Conversion rate optimization for Canadian businesses: turn more of your traffic into leads with behaviour analysis, testing, and landing-page fixes.",
+  "canonical": "https://nexfortis.com/services/digital-marketing/conversion-rate-optimization",
   "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
   "og": {
-    "title": "Technical SEO Services | NexFortis IT Solutions",
-    "description": "Technical SEO services for Canadian businesses: crawlability, indexation, Core Web Vitals, structured data, and rendering fixes that let Google rank you.",
-    "url": "https://nexfortis.com/services/digital-marketing/technical-seo",
+    "title": "Conversion Rate Optimization | NexFortis IT Solutions",
+    "description": "Conversion rate optimization for Canadian businesses: turn more of your traffic into leads with behaviour analysis, testing, and landing-page fixes.",
+    "url": "https://nexfortis.com/services/digital-marketing/conversion-rate-optimization",
     "image": "https://nexfortis.com/opengraph.png",
     "type": "website"
   },
@@ -17,71 +17,71 @@
   "headings": [
     {
       "level": 1,
-      "text": "Technical SEO Services That Unblock Rankings"
+      "text": "Conversion Rate Optimization That Lifts Revenue"
     },
     {
       "level": 2,
-      "text": "The work that decides whether your other SEO pays off"
+      "text": "Get more from the traffic you already pay for"
     },
     {
       "level": 2,
-      "text": "What's included in our technical SEO services"
+      "text": "What's included in our conversion rate optimization"
     },
     {
       "level": 3,
-      "text": "Technical SEO audit"
+      "text": "Data &amp; analytics review"
     },
     {
       "level": 3,
-      "text": "Crawlability &amp; indexation"
+      "text": "User-behaviour analysis"
     },
     {
       "level": 3,
-      "text": "Core Web Vitals &amp; speed"
+      "text": "A/B &amp; multivariate testing"
     },
     {
       "level": 3,
-      "text": "Structured data &amp; schema"
+      "text": "Landing-page &amp; funnel optimization"
     },
     {
       "level": 3,
-      "text": "Site architecture &amp; internal links"
+      "text": "UX &amp; messaging fixes"
     },
     {
       "level": 3,
-      "text": "Rendering, JavaScript &amp; migrations"
+      "text": "Reporting &amp; iteration"
     },
     {
       "level": 2,
-      "text": "How we deliver technical SEO"
+      "text": "How we deliver CRO"
     },
     {
       "level": 3,
-      "text": "Crawl &amp; audit"
+      "text": "Analyze"
     },
     {
       "level": 3,
-      "text": "Fix the blockers"
+      "text": "Hypothesize"
     },
     {
       "level": 3,
-      "text": "Validate &amp; monitor"
+      "text": "Test"
     },
     {
       "level": 3,
-      "text": "Keep it healthy"
+      "text": "Implement &amp; repeat"
     },
     {
       "level": 2,
-      "text": "NexFortis vs. a typical SEO provider"
+      "text": "NexFortis vs. a typical 'redesign' approach"
     },
     {
       "level": 2,
-      "text": "What technical SEO costs"
+      "text": "What CRO costs"
     },
     {
       "level": 3,
-      "text": "Audit first, then scoped to what's broken"
+      "text": "Priced by traffic, testing volume, and scope"
     },
     {
       "level": 2,
@@ -105,7 +105,7 @@
     },
     {
       "level": 2,
-      "text": "Is something under the hood holding you back?"
+      "text": "Turning enough of your traffic into leads?"
     },
     {
       "level": 4,
@@ -150,8 +150,8 @@
         {
           "@type": "ListItem",
           "position": 4,
-          "name": "Technical SEO",
-          "item": "https://nexfortis.com/services/digital-marketing/technical-seo"
+          "name": "Conversion Rate Optimization",
+          "item": "https://nexfortis.com/services/digital-marketing/conversion-rate-optimization"
         }
       ]
     },
@@ -161,42 +161,42 @@
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "What is technical SEO?",
+          "name": "What is conversion rate optimization?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Technical SEO is the work that makes sure search engines can crawl, render, index, and trust your site. It covers things like site speed and Core Web Vitals, crawlability, indexation, structured data, site architecture, and JavaScript rendering. It's the layer underneath your content and links — when it's broken, the rest of your SEO underperforms no matter how good it is."
+            "text": "CRO is the practice of increasing the percentage of your visitors who take a desired action — filling a form, calling, or buying — without needing more traffic. It combines analytics, user-behaviour research, and controlled testing to find and fix what's stopping people from converting, so you get more results from the visitors you already have."
           }
         },
         {
           "@type": "Question",
-          "name": "What is a technical SEO audit?",
+          "name": "How does CRO actually work?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "It's a structured review of everything that affects how search engines access and understand your site. We crawl it the way Google does, pull data from Search Console and Core Web Vitals, and produce a prioritised list of issues with the highest-impact fixes first. It's the starting point for every technical engagement, because guessing at problems wastes money."
+            "text": "It's a cycle: analyze the data to find where visitors drop off, form a hypothesis about why, test a change against the original, and keep whatever wins. Then repeat. The discipline is what makes it work — decisions come from evidence, not opinion, so you stop guessing and start compounding small, proven gains."
           }
         },
         {
           "@type": "Question",
-          "name": "What's the difference between on-page and technical SEO?",
+          "name": "Do I have enough traffic for CRO?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "On-page SEO is about the content of a page — titles, headings, copy, and keywords. Technical SEO is about the plumbing that lets Google reach and process that page at all — speed, crawling, indexing, structured data, and rendering. You need both, and we handle them together as part of a full SEO engagement."
+            "text": "A/B testing needs a reasonable volume of visitors and conversions to reach statistical confidence, so very low-traffic sites get less from formal testing. But CRO isn't only testing — a conversion audit, analytics review, and UX fixes deliver value at almost any traffic level. We'll tell you honestly which approach fits your situation."
           }
         },
         {
           "@type": "Question",
-          "name": "How do I know if I need technical SEO?",
+          "name": "How much does CRO cost?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Common signs: pages that won't rank despite good content, traffic that dropped after a redesign or migration, slow load times, pages missing from Google, or a Search Console full of coverage and Core Web Vitals warnings. If any of those sound familiar, a technical audit will tell you what's wrong and what it's costing you."
+            "text": "It depends on your traffic, how much testing you want, and how much implementation we handle. A one-time conversion audit with prioritised fixes is very different from an ongoing testing program. We scope and price it transparently after a free audit, with no long-term lock-in."
           }
         },
         {
           "@type": "Question",
-          "name": "Will you work with my existing developers?",
+          "name": "How long until I see results from CRO?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes. We can either implement fixes directly or hand your team clear, prioritised specifications they can ship — whatever fits how you work. Either way, nothing goes live without your sign-off, and we validate each change afterward so you know it actually worked."
+            "text": "Some fixes — a clearer call to action, a faster page, a simpler form — can lift conversions almost immediately. Formal A/B tests need to run long enough to reach confidence, usually a few weeks each. CRO is a compounding program: individual wins add up, and the gains stick because they're tied to your real visitors."
           }
         }
       ]
@@ -292,9 +292,9 @@
     {
       "@context": "https://schema.org",
       "@type": "Service",
-      "name": "Technical SEO Services",
-      "description": "Technical search engine optimization for Canadian businesses — site audits, crawlability and indexation, Core Web Vitals, structured data, and rendering fixes.",
-      "url": "https://nexfortis.com/services/digital-marketing/technical-seo",
+      "name": "Conversion Rate Optimization Services",
+      "description": "Conversion rate optimization for Canadian businesses — analytics review, user-behaviour analysis, A/B testing, and landing-page and funnel optimization.",
+      "url": "https://nexfortis.com/services/digital-marketing/conversion-rate-optimization",
       "provider": {
         "@type": "Organization",
         "name": "NexFortis IT Solutions",
@@ -304,7 +304,7 @@
         "@type": "Country",
         "name": "Canada"
       },
-      "serviceType": "Technical SEO"
+      "serviceType": "Conversion Rate Optimization"
     },
     {
       "@context": "https://schema.org",
@@ -436,20 +436,24 @@
       "href": "/services/digital-marketing/seo"
     },
     {
+      "text": "web design and development",
+      "href": "/services/digital-marketing/web-design"
+    },
+    {
       "text": "digital marketing services",
       "href": "/services/digital-marketing"
     },
     {
-      "text": "Source: Statcounter Global Stats",
-      "href": "https://gs.statcounter.com/search-engine-market-share"
-    },
-    {
-      "text": "Source: 2024 Web Almanac, HTTP Archive",
-      "href": "https://almanac.httparchive.org/en/2024/performance"
+      "text": "Source: WordStream conversion-rate analysis",
+      "href": "https://www.wordstream.com/blog/ws/2014/03/17/what-is-a-good-conversion-rate"
     },
     {
       "text": "Source: Google, The Need for Mobile Speed",
       "href": "https://blog.google/products/admanager/the-need-for-mobile-speed/"
+    },
+    {
+      "text": "Source: Statcounter Global Stats",
+      "href": "https://gs.statcounter.com/search-engine-market-share"
     },
     {
       "text": "More about NexFortis",
