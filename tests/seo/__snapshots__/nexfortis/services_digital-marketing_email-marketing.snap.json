@@ -1,13 +1,13 @@
 {
-  "route": "/services/quickbooks",
-  "title": "QuickBooks Migration &amp; Recovery | NexFortis IT Solutions",
-  "description": "Certified QuickBooks ProAdvisor team offering 100% accuracy-guaranteed migration from Sage, SAP, and Xero. File recovery and same-day service available.",
-  "canonical": "https://nexfortis.com/services/quickbooks",
+  "route": "/services/digital-marketing/email-marketing",
+  "title": "Email Marketing | NexFortis IT Solutions",
+  "description": "Email marketing for Canadian businesses: newsletters, nurture flows, and automations that turn your list into repeat revenue you actually own.",
+  "canonical": "https://nexfortis.com/services/digital-marketing/email-marketing",
   "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
   "og": {
-    "title": "QuickBooks Migration &amp; Recovery | NexFortis IT Solutions",
-    "description": "Certified QuickBooks ProAdvisor team offering 100% accuracy-guaranteed migration from Sage, SAP, and Xero. File recovery and same-day service available.",
-    "url": "https://nexfortis.com/services/quickbooks",
+    "title": "Email Marketing | NexFortis IT Solutions",
+    "description": "Email marketing for Canadian businesses: newsletters, nurture flows, and automations that turn your list into repeat revenue you actually own.",
+    "url": "https://nexfortis.com/services/digital-marketing/email-marketing",
     "image": "https://nexfortis.com/opengraph.png",
     "type": "website"
   },
@@ -17,131 +17,95 @@
   "headings": [
     {
       "level": 1,
-      "text": "QuickBooks Migration &amp; Tools"
+      "text": "Email Marketing That Turns Lists Into Revenue"
     },
     {
       "level": 2,
-      "text": "Your Accounting Data, Safe and Sound"
-    },
-    {
-      "level": 3,
-      "text": "Data Migration"
-    },
-    {
-      "level": 3,
-      "text": "Data Recovery"
-    },
-    {
-      "level": 3,
-      "text": "Data Services"
+      "text": "The one audience you actually own"
     },
     {
       "level": 2,
-      "text": "How Our Migration Process Works"
+      "text": "What's included in our email marketing services"
     },
     {
       "level": 3,
-      "text": "Assessment &amp; Scoping"
+      "text": "Strategy &amp; list growth"
     },
     {
       "level": 3,
-      "text": "Secure Data Transfer"
+      "text": "Campaign design &amp; copy"
     },
     {
       "level": 3,
-      "text": "Migration &amp; Verification"
+      "text": "Automation &amp; nurture flows"
     },
     {
       "level": 3,
-      "text": "Delivery &amp; Support"
+      "text": "Segmentation &amp; personalization"
+    },
+    {
+      "level": 3,
+      "text": "Deliverability &amp; compliance"
+    },
+    {
+      "level": 3,
+      "text": "Reporting &amp; optimization"
     },
     {
       "level": 2,
-      "text": "QB Services Portal Catalog"
+      "text": "How we deliver email marketing"
     },
     {
       "level": 3,
-      "text": "QuickBooks Conversion Services"
-    },
-    {
-      "level": 4,
-      "text": "Enterprise → Premier/Pro Standard"
-    },
-    {
-      "level": 4,
-      "text": "Guaranteed 30-Minute Conversion"
-    },
-    {
-      "level": 4,
-      "text": "File Health Check"
+      "text": "Audit &amp; strategy"
     },
     {
       "level": 3,
-      "text": "QuickBooks Data Services"
-    },
-    {
-      "level": 4,
-      "text": "Audit Trail Removal"
-    },
-    {
-      "level": 4,
-      "text": "Super Condense"
-    },
-    {
-      "level": 4,
-      "text": "Multi-Currency Removal"
+      "text": "Build &amp; automate"
     },
     {
       "level": 3,
-      "text": "Platform Migration Services"
-    },
-    {
-      "level": 4,
-      "text": "Sage 50 / Simply Accounting → QuickBooks"
-    },
-    {
-      "level": 4,
-      "text": "AccountEdge / MYOB → QuickBooks"
+      "text": "Send &amp; nurture"
     },
     {
       "level": 3,
-      "text": "QB Expert Support (Monthly Subscriptions)"
-    },
-    {
-      "level": 4,
-      "text": "Essentials — 3 tickets/month"
-    },
-    {
-      "level": 4,
-      "text": "Professional — 8 tickets/month"
-    },
-    {
-      "level": 4,
-      "text": "Premium — Unlimited tickets"
-    },
-    {
-      "level": 3,
-      "text": "Volume Packs"
-    },
-    {
-      "level": 4,
-      "text": "5-Pack Conversions"
-    },
-    {
-      "level": 4,
-      "text": "10-Pack Conversions"
-    },
-    {
-      "level": 3,
-      "text": "Access Our QuickBooks Tools Online"
+      "text": "Measure &amp; improve"
     },
     {
       "level": 2,
-      "text": "QuickBooks FAQ"
+      "text": "NexFortis vs. a typical email provider"
     },
     {
       "level": 2,
-      "text": "Need Help with QuickBooks?"
+      "text": "What email marketing costs"
+    },
+    {
+      "level": 3,
+      "text": "Scaled to volume and automation"
+    },
+    {
+      "level": 2,
+      "text": "Related services"
+    },
+    {
+      "level": 3,
+      "text": "SEO Services"
+    },
+    {
+      "level": 3,
+      "text": "Local SEO"
+    },
+    {
+      "level": 3,
+      "text": "GEO &amp; AI Search"
+    },
+    {
+      "level": 2,
+      "text": "Frequently Asked Questions"
+    },
+    {
+      "level": 2,
+      "text": "Sitting on a list you're not using?"
     },
     {
       "level": 4,
@@ -180,8 +144,14 @@
         {
           "@type": "ListItem",
           "position": 3,
-          "name": "QuickBooks Solutions",
-          "item": "https://nexfortis.com/services/quickbooks"
+          "name": "Digital Marketing",
+          "item": "https://nexfortis.com/services/digital-marketing"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Email Marketing",
+          "item": "https://nexfortis.com/services/digital-marketing/email-marketing"
         }
       ]
     },
@@ -191,42 +161,42 @@
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "What accounting platforms can you migrate data from into QuickBooks?",
+          "name": "What is email marketing?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "We migrate data from virtually every major accounting platform including Sage 50, Sage 100, SAP Business One, Xero, FreshBooks, Wave, MYOB, NetSuite, and Peachtree. We also handle migrations between QuickBooks versions — Desktop to Online, Enterprise to Pro/Premier, and vice versa. Each migration includes a full data audit, field mapping, test migration, and line-by-line reconciliation to guarantee 100% accuracy."
+            "text": "Email marketing is using email to build relationships and drive sales — newsletters, promotions, and automated sequences sent to people who've opted in to hear from you. Unlike social or ads, your list is an audience you own and can reach any time, which is a big part of why it consistently delivers one of the highest returns in marketing."
           }
         },
         {
           "@type": "Question",
-          "name": "How does your money-back guarantee work?",
+          "name": "How effective is email marketing, really?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "If the migrated data does not match your source data with 100% accuracy after our verification process, we will either re-do the migration at no additional cost or provide a full refund — your choice. This guarantee covers all data migration and recovery services. We have maintained a 100% satisfaction rate because we run comprehensive reconciliation checks before delivering your completed file."
+            "text": "Very — it routinely returns far more per dollar than most channels because you're reaching people who already chose to hear from you. Industry studies put the average return around $36 for every $1 spent. Results depend on your list quality and how well the emails are done, which is exactly the part we handle."
           }
         },
         {
           "@type": "Question",
-          "name": "How long does a QuickBooks data migration take?",
+          "name": "Which email platform should I use?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Standard migrations are completed within one business day. If you need your data sooner, we offer same-day expedited service for an additional fee. The timeline depends on the volume and complexity of your data — a simple migration with a few years of transactions can be done in hours, while larger datasets with complex inventory or custom fields may take a full day. We provide an accurate estimate after reviewing your source file."
+            "text": "It depends on your needs — Mailchimp is fine for simple newsletters, Klaviyo is strong for ecommerce automation, and there are others in between. We work across the major platforms and will recommend the right fit, or work with whatever you already have rather than forcing a migration you don't need."
           }
         },
         {
           "@type": "Question",
-          "name": "Can you recover a corrupted QuickBooks file?",
+          "name": "How do you keep emails out of the spam folder?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes. Our data recovery services cover a wide range of QuickBooks file issues including TLG file recovery, company file corruption, verify and rebuild errors, network data file problems, and password recovery. We use specialized tools and techniques developed over years of working with QuickBooks file structures. If we cannot recover your data, you pay nothing — that is part of our money-back guarantee."
+            "text": "Deliverability is part technical, part discipline. We set up proper authentication, keep your list clean, and follow sending best practices to protect your sender reputation — and we make sure your email complies with Canada's anti-spam law (CASL) and CAN-SPAM, which protects both your inbox placement and your business from penalties."
           }
         },
         {
           "@type": "Question",
-          "name": "What are your QuickBooks add-on tools and how do they work?",
+          "name": "How soon will email marketing pay off?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Our QB Services Portal offers five categories of professional services for QuickBooks Desktop users in Canada: Conversion Services (Enterprise → Premier/Pro, with optional 30-minute guaranteed turnaround), Data Services (Audit Trail Removal, Super Condense, List Reduction, Multi-Currency Removal, CRA Period Copy), Platform Migrations (Sage 50/Simply Accounting and AccountEdge/MYOB into QuickBooks), QB Expert Support monthly subscriptions (Essentials, Professional, and Premium tiers), and Volume Packs (5- and 10-pack conversions for accounting firms). Every service is performed by certified ProAdvisors and backed by our 100% accuracy guarantee."
+            "text": "Faster than most channels, because you're emailing people who already know you. A good welcome flow or a re-engagement campaign can produce results within the first few weeks, and the automations keep earning in the background after that. We report from the start so you can see the revenue building."
           }
         }
       ]
@@ -311,10 +281,20 @@
     },
     {
       "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Hassan Sadiq",
+      "jobTitle": "Founder & CEO, NexFortis IT Solutions",
+      "url": "https://nexfortis.com/about",
+      "worksFor": {
+        "@id": "https://nexfortis.com/#organization"
+      }
+    },
+    {
+      "@context": "https://schema.org",
       "@type": "Service",
-      "name": "QuickBooks Migration & Tools",
-      "description": "QuickBooks data migration, file recovery, and custom add-on tools for Canadian businesses. Certified ProAdvisor team.",
-      "url": "https://nexfortis.com/services/quickbooks",
+      "name": "Email Marketing Services",
+      "description": "Email marketing for Canadian businesses — strategy, list growth, campaign design, automation and nurture flows, segmentation, deliverability, and reporting.",
+      "url": "https://nexfortis.com/services/digital-marketing/email-marketing",
       "provider": {
         "@type": "Organization",
         "name": "NexFortis IT Solutions",
@@ -324,7 +304,7 @@
         "@type": "Country",
         "name": "Canada"
       },
-      "serviceType": "IT Services"
+      "serviceType": "Email Marketing"
     },
     {
       "@context": "https://schema.org",
@@ -448,12 +428,28 @@
       "href": "/services"
     },
     {
-      "text": "our QB Services Portal",
-      "href": "https://qb.nexfortis.com/catalog"
+      "text": "content marketing",
+      "href": "/services/digital-marketing/content-marketing"
     },
     {
-      "text": "Browse QB Services Portal",
-      "href": "https://qb.nexfortis.com/catalog"
+      "text": "digital marketing services",
+      "href": "/services/digital-marketing"
+    },
+    {
+      "text": "Source: Litmus, Email Marketing ROI",
+      "href": "https://www.litmus.com/roi-calculator"
+    },
+    {
+      "text": "Source: EmailTooltester, Email Marketing ROI report",
+      "href": "https://www.emailtooltester.com/en/blog/email-marketing-roi/"
+    },
+    {
+      "text": "Source: Radicati Email Statistics Report",
+      "href": "https://radicati.com/wp/wp-content/uploads/2023/04/Email-Statistics-Report-2023-2027-Executive-Summary.pdf"
+    },
+    {
+      "text": "More about NexFortis",
+      "href": "/about"
     },
     {
       "text": "About Us",

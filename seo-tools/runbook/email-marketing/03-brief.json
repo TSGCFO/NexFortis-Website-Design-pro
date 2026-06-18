@@ -1,0 +1,16 @@
+{
+  "_step": "3 — SERP analysis + content brief", "_page": "email-marketing",
+  "_primary_keyword": "email marketing services", "_location": "Canada", "_date": "2026-06-18",
+  "_ki_brief_status": "KI brief tool down -> SERP brief from live Semrush SERP + competitor fetches.",
+  "serp_source": "Semrush phrase_organic (ca, 'email marketing services').",
+  "serp_character": "SOFTWARE-dominated SERP (Mailchimp, HubSpot, Klaviyo, Brevo, MailerLite, SendGrid) + comparison blogs + one agency service page (setsail). -> position as a managed, done-for-you service vs DIY tools.",
+  "competitor_word_counts": {
+    "_method": "Fetched the agency service page + 2 comparison guides for reference (guides excluded from length target).",
+    "service_page": [{"url": "setsail.ca/services/email-marketing", "words_raw": 2517}],
+    "guides_excluded": [{"url": "sender.net/blog/...", "words_raw": 8689}, {"url": "brevo.com/blog/...", "words_raw": 9349}],
+    "length_conclusion": "Service-page evidence thin (SERP is tool-heavy). Focused managed-service spoke ~1100-1900 main."
+  },
+  "questions": {"_source": "Semrush phrase_questions (ca, 'email marketing'), buyer/educational.", "buyer_questions": ["What is email marketing?", "How effective is email marketing / ROI?", "What's included in a managed email service?", "Which platform should I use (Mailchimp/Klaviyo/etc.)?", "How do you keep emails out of spam (deliverability/CAN-SPAM/CASL)?"]},
+  "secondary_keywords": ["email marketing agency", "email marketing company", "email automation services", "email marketing management", "email marketing consultant", "email marketing for small business"],
+  "_done_check": "PASS — competitor evidence + buyer questions + secondary kws (Canada)."
+}

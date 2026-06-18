@@ -75,9 +75,9 @@
     },
     "/services/digital-marketing/email-marketing": {
       "name": "Email Marketing",
-      "status": "tentative",
-      "primary": ["email marketing services", "email marketing agency"],
-      "secondary": []
+      "status": "confirmed (KI cluster order 7ac6fe00, 2026-06-18)",
+      "primary": ["email marketing services", "email marketing agency", "email marketing company"],
+      "secondary": ["email automation services", "email marketing consultant", "email marketing management", "email campaign management", "email marketing for small business"]
     },
     "/services/digital-marketing/conversion-rate-optimization": {
       "name": "Conversion Rate Optimization",

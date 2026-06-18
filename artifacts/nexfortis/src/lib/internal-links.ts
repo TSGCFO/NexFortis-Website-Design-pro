@@ -179,7 +179,7 @@ export const DM_SPOKES: readonly DmSpoke[] = [
       "Newsletters, nurture sequences, and automations that turn your list into repeat revenue you actually own.",
     icon: Mail,
     category: "Email / Lifecycle",
-    published: false,
+    published: true,
   },
   {
     slug: "conversion-rate-optimization",

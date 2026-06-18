@@ -1,0 +1,17 @@
+{
+  "_step": "6a — Itemized fact-check (HARD GATE 2)", "_page": "email-marketing", "_date": "2026-06-18",
+  "statistics": [
+    {"claim": "$36 in return on average for every $1 spent on email marketing", "verdict": "VERIFIED", "source": "Litmus (survey of ~2000 marketers; ~3,500% ROI).", "url": "https://www.litmus.com/roi-calculator"},
+    {"claim": "≈3,500% average email ROI — among the highest of any channel", "verdict": "VERIFIED", "source": "EmailTooltester Email Marketing ROI report (aggregating Litmus/DMA): $36:$1 = ~3,500%, vs SEO/social far lower.", "url": "https://www.emailtooltester.com/en/blog/email-marketing-roi/"},
+    {"claim": "4.48 billion email users worldwide in 2024", "verdict": "VERIFIED", "source": "Radicati Email Statistics Report 2023-2027 (4,481M in 2024).", "url": "https://radicati.com/wp/wp-content/uploads/2023/04/Email-Statistics-Report-2023-2027-Executive-Summary.pdf"}
+  ],
+  "capability_and_market_claims": [
+    {"claim": "strategy & list growth, campaigns, automation/nurture, segmentation, deliverability, reporting", "verdict": "VERIFIED as approach", "basis": "Standard email-marketing scope; process framing; no open/click/revenue-result claims for NexFortis."},
+    {"claim": "We ensure CASL (Canada anti-spam) and CAN-SPAM compliance", "verdict": "VERIFIED (real legal frameworks)", "basis": "CASL + CAN-SPAM are real laws; stating compliance practice is accurate, not a fabricated claim."},
+    {"claim": "email is a channel you own vs rented social/ads", "verdict": "VERIFIED (true)", "basis": "Sound, non-fabricated positioning."},
+    {"claim": "platform subscription separate; managed service", "verdict": "VERIFIED as policy", "basis": "Honest fee handling; no invented price."}
+  ],
+  "cannibalization_note": "Email/lifecycle intent; distinct from all spokes. Links content-marketing without targeting its terms.",
+  "fabrication_scan": {"invented_results_metrics": "NONE (ROI/user stats attributed; no NexFortis open/revenue claims)", "invented_prices_guarantees": "NONE", "undemonstrated_capabilities": "NONE"},
+  "_done_check": "PASS — 3 stats verified to distinct sources; claims grounded; zero fabrications."
+}

@@ -2000,4 +2000,193 @@ export const DM_SPOKE_CONTENT: Partial<Record<DmSpokeSlug, DmSpokeContent>> = {
     ctaSubtext:
       "Get a free website review — what's helping, what's holding you back, and what a fast, ranking, converting site would look like for your business.",
   },
+
+  // ----------------------------------------------- EMAIL MARKETING ----
+  "email-marketing": {
+    metaTitle: "Email Marketing",
+    metaDescription:
+      "Email marketing for Canadian businesses: newsletters, nurture flows, and automations that turn your list into repeat revenue you actually own.",
+    h1: "Email Marketing That Turns Lists Into Revenue",
+    heroSubtitle:
+      "Newsletters, nurture sequences, and automations that turn your email list into repeat revenue — on the one channel you actually own.",
+    serviceType: "Email Marketing",
+    serviceSchemaName: "Email Marketing Services",
+    serviceSchemaDescription:
+      "Email marketing for Canadian businesses — strategy, list growth, campaign design, automation and nurture flows, segmentation, deliverability, and reporting.",
+    introHeading: "The one audience you actually own",
+    intro: (
+      <>
+        <p>
+          Your social followers and ad audiences are rented &mdash; an algorithm change or a rising
+          ad cost can cut you off from them overnight. Your email list is the one channel you own
+          outright. Used well, it&rsquo;s also the highest-returning one: a direct line to people who
+          already raised their hand, that you can reach any time without paying for the privilege.
+        </p>
+        <p>
+          We run email as a revenue channel, not an afterthought &mdash; the strategy, the writing,
+          the automations, and the unglamorous deliverability work that keeps you out of the spam
+          folder. It pairs naturally with our{" "}
+          <InlineLink href={getDmSpoke("content-marketing").href}>{getDmSpoke("content-marketing").linkText}</InlineLink>{" "}
+          and is part of the wider{" "}
+          <InlineLink href={DM_PILLAR_HREF}>{DM_PILLAR_LINK_TEXT}</InlineLink>.
+        </p>
+        <p>
+          Whatever platform you use &mdash; Mailchimp, Klaviyo, or something else &mdash; we handle
+          the strategy and the work, so email stops being the thing you mean to get to and starts
+          bringing in repeat business on its own.
+        </p>
+      </>
+    ),
+    stats: [
+      {
+        value: "$36",
+        label: "in return, on average, for every $1 spent on email marketing.",
+        sourceName: "Litmus, Email Marketing ROI",
+        sourceUrl: "https://www.litmus.com/roi-calculator",
+      },
+      {
+        value: "≈3,500%",
+        label: "average email ROI — among the highest of any marketing channel.",
+        sourceName: "EmailTooltester, Email Marketing ROI report",
+        sourceUrl: "https://www.emailtooltester.com/en/blog/email-marketing-roi/",
+      },
+      {
+        value: "4.48B",
+        label: "email users worldwide in 2024 — nearly everyone you want to reach.",
+        sourceName: "Radicati Email Statistics Report",
+        sourceUrl: "https://radicati.com/wp/wp-content/uploads/2023/04/Email-Statistics-Report-2023-2027-Executive-Summary.pdf",
+      },
+    ],
+    featuresHeading: "What's included in our email marketing services",
+    featuresSubtitle: "Strategy, writing, automation, and deliverability — done for you.",
+    features: [
+      {
+        icon: Users,
+        title: "Strategy & list growth",
+        description:
+          "We build an email strategy around your goals and set up the signup forms, lead magnets, and opt-ins that grow a healthy, permission-based list — quality subscribers, not bought ones that tank your deliverability.",
+      },
+      {
+        icon: PenTool,
+        title: "Campaign design & copy",
+        description:
+          "We design and write newsletters and promotional campaigns that look right in the inbox, sound like you, and are built to get opened, read, and clicked — not deleted on sight.",
+      },
+      {
+        icon: Bot,
+        title: "Automation & nurture flows",
+        description:
+          "We set up the automations that earn the most: welcome series, abandoned-cart and follow-up flows, re-engagement, and post-purchase sequences that sell while you sleep.",
+      },
+      {
+        icon: Sparkles,
+        title: "Segmentation & personalization",
+        description:
+          "We segment your list so the right message reaches the right person — by interest, behaviour, or stage — because a relevant email to a smaller group beats a generic blast to everyone.",
+      },
+      {
+        icon: Gauge,
+        title: "Deliverability & compliance",
+        description:
+          "We handle the technical setup (authentication, list hygiene) that keeps you landing in the inbox, and make sure your email follows Canada's anti-spam law (CASL) and CAN-SPAM — protecting your sender reputation and your business.",
+      },
+      {
+        icon: LineChart,
+        title: "Reporting & optimization",
+        description:
+          "We track opens, clicks, conversions, and revenue per campaign, test subject lines and content, and report in plain language — so email keeps getting better instead of going stale.",
+      },
+    ],
+    processHeading: "How we deliver email marketing",
+    process: [
+      {
+        step: "01",
+        title: "Audit & strategy",
+        description:
+          "We review your list, platform, and past campaigns, then map a strategy: which emails to send, to whom, and which automations will earn the most.",
+      },
+      {
+        step: "02",
+        title: "Build & automate",
+        description:
+          "We set up your templates, signup forms, segments, and the core automated flows, and get deliverability and compliance right from the start.",
+      },
+      {
+        step: "03",
+        title: "Send & nurture",
+        description:
+          "We run your campaigns and newsletters on a consistent schedule and let the automations nurture subscribers toward a purchase in the background.",
+      },
+      {
+        step: "04",
+        title: "Measure & improve",
+        description:
+          "We report on opens, clicks, and revenue, test what moves the numbers, and refine the strategy so each month performs better than the last.",
+      },
+    ],
+    comparisonHeading: "NexFortis vs. a typical email provider",
+    comparison: [
+      { feature: "Approach", us: "A revenue channel with a strategy", them: "The occasional blast" },
+      { feature: "Automation", us: "Welcome, cart, and nurture flows", them: "Manual one-off sends" },
+      { feature: "Targeting", us: "Segmented and personalized", them: "One message to the whole list" },
+      { feature: "Deliverability", us: "Authenticated, CASL-compliant", them: "Hope it lands in the inbox" },
+      { feature: "Reporting", us: "Revenue per campaign", them: "Open rate, maybe" },
+      { feature: "Commitment", us: "Month-to-month — we earn the renewal", them: "Locked contracts" },
+    ],
+    pricingHeading: "What email marketing costs",
+    pricing: {
+      fromLabel: "Scaled to volume and automation",
+      note: (
+        <>
+          <p className="mb-4">
+            Cost depends on how often you send, how many automations you run, and how much design and
+            copy each needs &mdash; a monthly newsletter is very different from a full set of
+            ecommerce flows. We price by the program, not a per-send rate.
+          </p>
+          <p>
+            Your email platform&rsquo;s own subscription is separate and goes to the provider. You get
+            a fixed monthly scope, transparent reporting, and no long-term lock-in. Ask for a free
+            email audit and we&rsquo;ll recommend where the quickest revenue is.
+          </p>
+        </>
+      ),
+    },
+    faq: [
+      {
+        question: "What is email marketing?",
+        answer:
+          "Email marketing is using email to build relationships and drive sales — newsletters, promotions, and automated sequences sent to people who've opted in to hear from you. Unlike social or ads, your list is an audience you own and can reach any time, which is a big part of why it consistently delivers one of the highest returns in marketing.",
+      },
+      {
+        question: "How effective is email marketing, really?",
+        answer:
+          "Very — it routinely returns far more per dollar than most channels because you're reaching people who already chose to hear from you. Industry studies put the average return around $36 for every $1 spent. Results depend on your list quality and how well the emails are done, which is exactly the part we handle.",
+      },
+      {
+        question: "Which email platform should I use?",
+        answer:
+          "It depends on your needs — Mailchimp is fine for simple newsletters, Klaviyo is strong for ecommerce automation, and there are others in between. We work across the major platforms and will recommend the right fit, or work with whatever you already have rather than forcing a migration you don't need.",
+      },
+      {
+        question: "How do you keep emails out of the spam folder?",
+        answer:
+          "Deliverability is part technical, part discipline. We set up proper authentication, keep your list clean, and follow sending best practices to protect your sender reputation — and we make sure your email complies with Canada's anti-spam law (CASL) and CAN-SPAM, which protects both your inbox placement and your business from penalties.",
+      },
+      {
+        question: "How soon will email marketing pay off?",
+        answer:
+          "Faster than most channels, because you're emailing people who already know you. A good welcome flow or a re-engagement campaign can produce results within the first few weeks, and the automations keep earning in the background after that. We report from the start so you can see the revenue building.",
+      },
+    ],
+    authorNote: (
+      <p>
+        Hassan leads email and lifecycle marketing at NexFortis, helping Canadian businesses turn the
+        list they own into repeat revenue. As founder and CEO he stays hands-on with every engagement
+        &mdash; strategy and deliverability included, not just sending.
+      </p>
+    ),
+    ctaHeading: "Sitting on a list you're not using?",
+    ctaSubtext:
+      "Get a free email marketing audit — your list, your automations (or lack of them), and the fastest path to revenue from email.",
+  },
 };
