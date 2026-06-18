@@ -57,9 +57,9 @@
     },
     "/services/digital-marketing/google-ads": {
       "name": "Google Ads Management",
-      "status": "tentative",
-      "primary": ["google ads management", "ppc management", "google ads agency"],
-      "secondary": []
+      "status": "confirmed (KI cluster order b3cd3f2b, 2026-06-18)",
+      "primary": ["google ads management", "google ads agency", "ppc management", "ppc agency"],
+      "secondary": ["ppc services", "sem services", "google ads management services", "ppc management services", "paid search management", "google adwords management"]
     },
     "/services/digital-marketing/social-media-marketing": {
       "name": "Social Media Marketing",

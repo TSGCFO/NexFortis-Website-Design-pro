@@ -56,12 +56,12 @@
       "text": "Link Building &amp; Digital PR"
     },
     {
-      "level": 2,
-      "text": "Also available across the cluster"
-    },
-    {
       "level": 3,
       "text": "Google Ads Management"
+    },
+    {
+      "level": 2,
+      "text": "Also available across the cluster"
     },
     {
       "level": 3,
@@ -400,6 +400,10 @@
     {
       "text": "Link Building &amp; Digital PR",
       "href": "/services/digital-marketing/link-building"
+    },
+    {
+      "text": "Google Ads Management",
+      "href": "/services/digital-marketing/google-ads"
     },
     {
       "text": "Microsoft 365 Solutions",

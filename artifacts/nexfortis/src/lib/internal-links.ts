@@ -146,7 +146,7 @@ export const DM_SPOKES: readonly DmSpoke[] = [
       "Profitable search, display, and remarketing campaigns with transparent reporting on every dollar of ad spend.",
     icon: Megaphone,
     category: "Paid Search",
-    published: false,
+    published: true,
   },
   {
     slug: "social-media-marketing",

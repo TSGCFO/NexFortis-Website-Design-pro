@@ -1433,4 +1433,192 @@ export const DM_SPOKE_CONTENT: Partial<Record<DmSpokeSlug, DmSpokeContent>> = {
     ctaSubtext:
       "Get a free backlink audit — see the gap between your link profile and the competitors outranking you, and how to close it safely.",
   },
+
+  // ------------------------------------------- GOOGLE ADS / PPC ----
+  "google-ads": {
+    metaTitle: "Google Ads Management",
+    metaDescription:
+      "Google Ads & PPC management by a certified Google Partner: profitable search and remarketing campaigns with transparent reporting on every ad dollar.",
+    h1: "Google Ads Management That Pays for Itself",
+    heroSubtitle:
+      "Profitable search, shopping, and remarketing campaigns managed by a certified Google Partner — with transparent reporting on every dollar of ad spend.",
+    serviceType: "Google Ads Management",
+    serviceSchemaName: "Google Ads Management",
+    serviceSchemaDescription:
+      "Google Ads and PPC management for Canadian businesses — campaign strategy, keyword and audience targeting, bid management, conversion tracking, and transparent reporting.",
+    introHeading: "Visibility today — without lighting money on fire",
+    intro: (
+      <>
+        <p>
+          Done right, Google Ads is the fastest way to put your business in front of someone the
+          moment they search for what you sell. Done wrong, it is one of the easiest ways to burn a
+          budget &mdash; broad keywords, weak landing pages, and bids nobody is watching can drain a
+          month&rsquo;s spend with little to show for it. The difference is management, not the
+          platform.
+        </p>
+        <p>
+          We are a certified <strong>Google Partner</strong>, and we run paid search the way we
+          would spend our own money: tight targeting, honest tracking, and a relentless focus on
+          cost per lead rather than clicks. It is the fast-results complement to{" "}
+          <InlineLink href={seo.href}>{seo.linkText}</InlineLink> &mdash; ads bring traffic today
+          while SEO compounds underneath &mdash; and part of our{" "}
+          <InlineLink href={DM_PILLAR_HREF}>{DM_PILLAR_LINK_TEXT}</InlineLink>.
+        </p>
+        <p>
+          Every account starts with an audit. If you are already running ads, we will show you
+          exactly where the budget is leaking before you spend another dollar with us.
+        </p>
+      </>
+    ),
+    stats: [
+      {
+        value: "$2",
+        label: "in revenue, on average, for every $1 spent on Google Ads (Google's own estimate).",
+        sourceName: "Google Economic Impact",
+        sourceUrl: "https://economicimpact.google/methodology/",
+      },
+      {
+        value: "6.96%",
+        label: "average Google Ads conversion rate across industries in 2024.",
+        sourceName: "WordStream / LocaliQ Search Advertising Benchmarks 2024",
+        sourceUrl: "https://www.wordstream.com/wp-content/uploads/2024/05/ws-guide-google-ads-benchmarks-2024.pdf",
+      },
+      {
+        value: "≈90%",
+        label: "of global search runs on Google — the reach behind every search campaign.",
+        sourceName: "Statcounter Global Stats",
+        sourceUrl: "https://gs.statcounter.com/search-engine-market-share",
+      },
+    ],
+    featuresHeading: "What's included in our Google Ads management",
+    featuresSubtitle: "Strategy, build, and ongoing optimization — managed by a Google Partner.",
+    features: [
+      {
+        icon: Search,
+        title: "Campaign strategy & setup",
+        description:
+          "We build your account structure around how people actually search and buy — campaigns, ad groups, and match types organised so budget flows to the terms that convert, not the ones that just spend.",
+      },
+      {
+        icon: Users,
+        title: "Keyword & audience targeting",
+        description:
+          "We target the high-intent searches and audiences worth paying for, and add the negative keywords that stop your budget bleeding into irrelevant clicks — the single biggest source of wasted spend.",
+      },
+      {
+        icon: FileText,
+        title: "Ad copy & creative",
+        description:
+          "We write and test ad copy and assets that earn the click and set the right expectation, so the traffic you pay for is traffic that's likely to convert once it lands.",
+      },
+      {
+        icon: Gauge,
+        title: "Bid & budget management",
+        description:
+          "We manage bids and budgets actively — guiding Google's automation rather than handing it a blank cheque — to keep your cost per lead down as competition and the auction shift.",
+      },
+      {
+        icon: LineChart,
+        title: "Conversion tracking & landing pages",
+        description:
+          "We set up proper conversion tracking so we optimise to real leads, not clicks, and flag the landing-page fixes that turn more of your paid traffic into enquiries.",
+      },
+      {
+        icon: BarChart3,
+        title: "Transparent reporting",
+        description:
+          "You get a clear monthly report showing spend, leads, and cost per lead — what's working, what we changed, and what's next. Your ad account stays yours, always.",
+      },
+    ],
+    processHeading: "How we manage your Google Ads",
+    process: [
+      {
+        step: "01",
+        title: "Audit & plan",
+        description:
+          "We review your account (or build from scratch), research the market and competitors, and set a plan with clear targets for cost per lead and return.",
+      },
+      {
+        step: "02",
+        title: "Build & launch",
+        description:
+          "We structure campaigns, write the ads, set up conversion tracking, and launch — with negative keywords and budgets in place from day one so nothing leaks.",
+      },
+      {
+        step: "03",
+        title: "Optimize",
+        description:
+          "We watch the data and tune continuously: pause what's not converting, scale what is, refine bids and copy, and tighten targeting week over week.",
+      },
+      {
+        step: "04",
+        title: "Report & scale",
+        description:
+          "We report in plain language on spend and leads, then reinvest in the campaigns earning the best return so the account gets more efficient over time.",
+      },
+    ],
+    comparisonHeading: "NexFortis vs. a typical PPC provider",
+    comparison: [
+      { feature: "Certification", us: "Certified Google Partner", them: "Often uncertified" },
+      { feature: "Optimised for", us: "Cost per lead and revenue", them: "Clicks and impressions" },
+      { feature: "Ad spend", us: "Transparent — every dollar reported", them: "Opaque, bundled with fees" },
+      { feature: "Account ownership", us: "You own your account", them: "Held hostage by the agency" },
+      { feature: "Who does the work", us: "A senior consultant you can reach", them: "A rotating junior" },
+      { feature: "Commitment", us: "Month-to-month — we earn the renewal", them: "Locked contracts" },
+    ],
+    pricingHeading: "What Google Ads management costs",
+    pricing: {
+      fromLabel: "A management fee on top of your ad spend",
+      note: (
+        <>
+          <p className="mb-4">
+            Two things to budget for: your ad spend (which goes to Google) and our management fee
+            (which is separate and fully transparent). We scale the fee to the size and complexity
+            of the account, never bundle it into your spend, and never mark up your media.
+          </p>
+          <p>
+            You keep ownership of your account and there&rsquo;s no long-term lock-in. Ask for a free
+            ad-account audit and we&rsquo;ll recommend a realistic budget and what management it needs.
+          </p>
+        </>
+      ),
+    },
+    faq: [
+      {
+        question: "How much does Google Ads management cost?",
+        answer:
+          "There are two parts: the ad spend that goes to Google, and a separate management fee for running the account. We scale the fee to the account's size and complexity and keep it fully transparent — we don't bundle it into your spend or mark up your media. You'll get a clear number after a free audit of your situation.",
+      },
+      {
+        question: "What does a Google Ads manager actually do?",
+        answer:
+          "A lot that isn't visible from the outside: structuring the account, choosing and refining keywords, writing and testing ads, adding negative keywords, managing bids and budgets, setting up conversion tracking, and optimizing continuously toward cost per lead. The platform makes it easy to spend money; management is what makes that money produce customers.",
+      },
+      {
+        question: "Should I hire an agency or run ads in-house?",
+        answer:
+          "If you have the time and expertise in-house, you can absolutely run your own ads. Most owners don't — and Google's auction punishes neglected accounts quickly. A good manager usually pays for itself by cutting wasted spend and improving conversion rates. We're happy to tell you honestly if your account is simple enough to run yourself.",
+      },
+      {
+        question: "How much should I budget for ad spend?",
+        answer:
+          "It depends on your industry's cost per click and how many leads you want. Some competitive categories cost several dollars per click; others are far cheaper. We'll model a realistic budget against your goals during the audit so you start with a number based on your market, not a guess — and scale it as the data comes in.",
+      },
+      {
+        question: "How soon will I see results from Google Ads?",
+        answer:
+          "Faster than SEO — ads can start driving clicks and enquiries within days of launch. The first few weeks are a learning period while we gather conversion data and optimize, so performance typically improves month over month as the account matures. We report from the start so you can see it developing.",
+      },
+    ],
+    authorNote: (
+      <p>
+        Hassan leads paid search at NexFortis, a certified Google Partner, helping Canadian
+        businesses turn ad spend into measurable leads instead of wasted budget. As founder and CEO
+        he stays hands-on with every account.
+      </p>
+    ),
+    ctaHeading: "Want ads that bring leads, not just clicks?",
+    ctaSubtext:
+      "Get a free Google Ads account audit — we'll show you where the budget is leaking and what a profitable campaign would look like.",
+  },
 };

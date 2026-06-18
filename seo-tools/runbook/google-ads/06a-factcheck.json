@@ -1,0 +1,16 @@
+{
+  "_step": "6a — Itemized fact-check (HARD GATE 2)", "_page": "google-ads", "_date": "2026-06-18",
+  "statistics": [
+    {"claim": "$2 in revenue on average for every $1 spent on Google Ads", "verdict": "VERIFIED (framed as Google's own estimate, NOT a NexFortis result)", "source": "Google Economic Impact (Hal Varian, conservative 2x estimate, AER 2009).", "url": "https://economicimpact.google/methodology/"},
+    {"claim": "6.96% average Google Ads conversion rate across industries in 2024", "verdict": "VERIFIED", "source": "WordStream/LocaliQ Search Advertising Benchmarks 2024 (17,000+ campaigns).", "url": "https://www.wordstream.com/wp-content/uploads/2024/05/ws-guide-google-ads-benchmarks-2024.pdf"},
+    {"claim": "≈90% of global search runs on Google", "verdict": "VERIFIED", "source": "Statcounter Global Stats.", "url": "https://gs.statcounter.com/search-engine-market-share"}
+  ],
+  "capability_and_market_claims": [
+    {"claim": "NexFortis is a certified Google Partner", "verdict": "VERIFIED (real)", "basis": "_facts.md + nexfortis.com about page + footer Google Partner badge. Directly relevant proof for this page."},
+    {"claim": "campaign strategy, targeting, ad copy, bid management, conversion tracking, reporting; you own your account; no media markup", "verdict": "VERIFIED as approach/policy", "basis": "Standard PPC-management scope + transparent-pricing policy from _facts.md; no client-count/ROAS-result claims for NexFortis."},
+    {"claim": "management fee separate from ad spend, scaled to account", "verdict": "VERIFIED as policy", "basis": "Honest fee model; no invented price."}
+  ],
+  "cannibalization_note": "Paid-search intent; fenced from organic SEO/local/GEO/content/link spokes.",
+  "fabrication_scan": {"invented_results_metrics": "NONE (the $2:$1 is Google's industry figure, attributed; no NexFortis-specific ROAS claim)", "invented_prices_guarantees": "NONE", "undemonstrated_capabilities": "NONE (Google Partner is real)"},
+  "_done_check": "PASS — 3 stats verified to distinct sources; Google Partner real; zero fabrications."
+}
