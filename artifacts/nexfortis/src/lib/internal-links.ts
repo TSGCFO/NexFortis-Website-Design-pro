@@ -69,7 +69,8 @@ export const DM_SPOKES: readonly DmSpoke[] = [
       "Keyword strategy, on-page optimization, and content built to earn rankings that send qualified buyers to your site.",
     icon: Search,
     category: "On-Page & Discovery",
-    published: true,
+    // Throwaway pilot content — unpublished until regenerated through the run book.
+    published: false,
   },
   {
     slug: "local-seo",
@@ -80,7 +81,8 @@ export const DM_SPOKES: readonly DmSpoke[] = [
       "Rank in the Google Map Pack and 'near me' searches across the GTA so nearby customers find you first.",
     icon: MapPin,
     category: "Local SEO",
-    published: true,
+    // Throwaway pilot content — unpublished until regenerated through the run book.
+    published: false,
   },
   {
     slug: "generative-engine-optimization",
@@ -91,7 +93,8 @@ export const DM_SPOKES: readonly DmSpoke[] = [
       "Get cited by ChatGPT, Google AI Overviews, Perplexity, and Gemini — where a growing share of buyers now start.",
     icon: Sparkles,
     category: "GEO / AI Search",
-    published: true,
+    // Throwaway pilot content — unpublished until regenerated through the run book.
+    published: false,
   },
   {
     slug: "technical-seo",

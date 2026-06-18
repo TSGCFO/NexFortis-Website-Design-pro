@@ -85,18 +85,6 @@
     },
     {
       "level": 2,
-      "text": "Related services"
-    },
-    {
-      "level": 3,
-      "text": "SEO Services"
-    },
-    {
-      "level": 3,
-      "text": "Local SEO"
-    },
-    {
-      "level": 2,
       "text": "Frequently Asked Questions"
     },
     {
@@ -287,7 +275,7 @@
       "@context": "https://schema.org",
       "@type": "Person",
       "name": "Hassan Sadiq",
-      "jobTitle": "Founder & Principal Consultant, NexFortis IT Solutions",
+      "jobTitle": "Founder & CEO, NexFortis IT Solutions",
       "url": "https://nexfortis.com/about",
       "worksFor": {
         "@id": "https://nexfortis.com/#organization"
@@ -406,14 +394,6 @@
     {
       "text": "Source: Adobe, 2025 consumer survey",
       "href": "https://www.adobe.com/express/learn/blog/chatgpt-as-a-search-engine"
-    },
-    {
-      "text": "SEO Services",
-      "href": "/services/digital-marketing/seo"
-    },
-    {
-      "text": "Local SEO",
-      "href": "/services/digital-marketing/local-seo"
     },
     {
       "text": "More about NexFortis",

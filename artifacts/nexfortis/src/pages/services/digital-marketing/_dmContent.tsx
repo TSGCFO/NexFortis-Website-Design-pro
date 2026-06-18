@@ -35,7 +35,7 @@ import type { DmSpokeSlug } from "@/lib/internal-links";
 // with Hassan's exact title and any certifications before scaling further.
 export const DM_AUTHOR = {
   name: "Hassan Sadiq",
-  title: "Founder & Principal Consultant, NexFortis IT Solutions",
+  title: "Founder & CEO, NexFortis IT Solutions",
 };
 
 export type DmSpokeContent = {

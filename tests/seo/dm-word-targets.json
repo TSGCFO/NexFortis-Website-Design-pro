@@ -1,0 +1,5 @@
+{
+  "_purpose": "SERP-derived per-page word-count targets for the digital-marketing hub-and-spoke pages. Replaces the old hard-coded 1,200 (spoke) / 2,000 (pillar) floors. Each page's range is derived in run-book Step 4 from the service-page subset of its Keyword Insights brief's competitor word counts (see seo-tools/runbook/<slug>/04-outline.md). A page is added here ONLY when it has been regenerated through the run book; the content gate (tests/seo/dm-service-pages.content.test.mjs) iterates these entries.",
+  "_schema": "pages[<dist-relative route>] = { kind: 'pillar'|'spoke', min: <int words>, max: <int words>, source: '<which 04-outline range / competitor numbers>' }",
+  "pages": {}
+}

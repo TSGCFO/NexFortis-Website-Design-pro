@@ -4,6 +4,7 @@ import { Menu, X, ChevronDown, Monitor, Database, Cloud, Cog, LayoutDashboard, A
 import { useTheme } from "@/hooks/use-theme";
 import { trackEvent } from "@/lib/analytics";
 import { OrganizationSchema, LocalBusinessSchema, WebSiteSchema } from "@/components/seo";
+import { getPublishedSpokes, DM_PILLAR_HREF } from "@/lib/internal-links";
 
 const services = [
   { name: "Digital Marketing", href: "/services/digital-marketing", icon: Monitor },
@@ -12,6 +13,15 @@ const services = [
   { name: "IT Consulting", href: "/services/it-consulting", icon: Cog },
   { name: "Workflow Automation", href: "/services/workflow-automation", icon: LayoutDashboard },
 ];
+
+// Digital-marketing spokes that are live (published) hang off the Digital
+// Marketing pillar as a mega-menu sub-menu + footer links (the on-page form of
+// the hub-and-spoke link graph). Only published spokes are surfaced so the nav
+// never links an unbuilt route. Anchor text is the spoke's canonical `title`,
+// matching internal-links.ts so a given text always maps to exactly one href
+// (INV-015). Rendered in the DOM even when the menu is visually closed, so
+// crawlers always see the links.
+const dmSpokes = getPublishedSpokes();
 
 function NavLink({ href, children, location }: { href: string; children: React.ReactNode; location: string }) {
   const isActive = location === href || (href !== "/" && location.startsWith(href));
@@ -204,29 +214,52 @@ export function Layout({ children }: { children: ReactNode }) {
                 {services.map((service) => {
                   const Icon = service.icon;
                   const isItemActive = location === service.href;
+                  const isDm = service.href === DM_PILLAR_HREF;
                   return (
-                    <Link
-                      key={service.href}
-                      href={service.href}
-                      className={`flex items-center gap-3 px-4 py-3 transition-colors group ${
-                        isItemActive ? "bg-accent/5" : "hover:bg-secondary"
-                      }`}
-                      role="listitem"
-                      aria-current={isItemActive ? "page" : undefined}
-                    >
-                      <div className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${
-                        isItemActive
-                          ? "bg-accent/10 text-accent"
-                          : "bg-secondary group-hover:bg-accent/10 text-primary group-hover:text-accent"
-                      }`}>
-                        <Icon className="w-4 h-4" />
-                      </div>
-                      <span className={`text-sm font-display font-medium transition-colors ${
-                        isItemActive ? "text-accent" : "text-foreground group-hover:text-accent"
-                      }`}>
-                        {service.name}
-                      </span>
-                    </Link>
+                    <div key={service.href}>
+                      <Link
+                        href={service.href}
+                        className={`flex items-center gap-3 px-4 py-3 transition-colors group ${
+                          isItemActive ? "bg-accent/5" : "hover:bg-secondary"
+                        }`}
+                        role="listitem"
+                        aria-current={isItemActive ? "page" : undefined}
+                      >
+                        <div className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${
+                          isItemActive
+                            ? "bg-accent/10 text-accent"
+                            : "bg-secondary group-hover:bg-accent/10 text-primary group-hover:text-accent"
+                        }`}>
+                          <Icon className="w-4 h-4" />
+                        </div>
+                        <span className={`text-sm font-display font-medium transition-colors ${
+                          isItemActive ? "text-accent" : "text-foreground group-hover:text-accent"
+                        }`}>
+                          {service.name}
+                        </span>
+                      </Link>
+                      {/* Digital-marketing spokes mega-menu sub-list (published only). */}
+                      {isDm && dmSpokes.length > 0 && (
+                        <ul className="pl-12 pr-3 pb-2 space-y-0.5" aria-label="Digital marketing services">
+                          {dmSpokes.map((spoke) => {
+                            const isSpokeActive = location === spoke.href;
+                            return (
+                              <li key={spoke.href}>
+                                <Link
+                                  href={spoke.href}
+                                  className={`block py-1.5 text-[13px] font-display transition-colors ${
+                                    isSpokeActive ? "text-accent" : "text-muted-foreground hover:text-accent"
+                                  }`}
+                                  aria-current={isSpokeActive ? "page" : undefined}
+                                >
+                                  {spoke.title}
+                                </Link>
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      )}
+                    </div>
                   );
                 })}
                 <div className="border-t border-border/50 mt-2 pt-2">
@@ -290,9 +323,20 @@ export function Layout({ children }: { children: ReactNode }) {
             <Link href="/services" className={`text-lg font-display font-semibold min-h-[44px] flex items-center ${location === "/services" ? "text-accent" : ""}`}>All Services</Link>
             <div className="pl-4 flex flex-col gap-3 border-l-2 border-border ml-2">
               {services.map((s) => (
-                <Link key={s.href} href={s.href} className={`min-h-[44px] font-display flex items-center transition-colors ${location === s.href ? "text-accent font-medium" : "text-muted-foreground hover:text-accent"}`}>
-                  {s.name}
-                </Link>
+                <div key={s.href} className="flex flex-col gap-2">
+                  <Link href={s.href} className={`min-h-[44px] font-display flex items-center transition-colors ${location === s.href ? "text-accent font-medium" : "text-muted-foreground hover:text-accent"}`}>
+                    {s.name}
+                  </Link>
+                  {s.href === DM_PILLAR_HREF && dmSpokes.length > 0 && (
+                    <div className="pl-4 flex flex-col gap-1.5 border-l border-border/60">
+                      {dmSpokes.map((spoke) => (
+                        <Link key={spoke.href} href={spoke.href} className={`min-h-[36px] text-sm font-display flex items-center transition-colors ${location === spoke.href ? "text-accent" : "text-muted-foreground hover:text-accent"}`}>
+                          {spoke.title}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
               ))}
             </div>
             <Link href="/about" className={`text-lg font-display font-semibold min-h-[44px] flex items-center ${location === "/about" ? "text-accent" : ""}`}>About</Link>
@@ -350,6 +394,17 @@ export function Layout({ children }: { children: ReactNode }) {
                     <Link href={s.href} className="hover:text-accent transition-colors flex items-center gap-2">
                       <ArrowRight className="w-3 h-3" /> {s.name}
                     </Link>
+                    {s.href === DM_PILLAR_HREF && dmSpokes.length > 0 && (
+                      <ul className="mt-3 ml-5 space-y-2.5 text-xs text-white/50">
+                        {dmSpokes.map((spoke) => (
+                          <li key={spoke.href}>
+                            <Link href={spoke.href} className="hover:text-accent transition-colors">
+                              {spoke.title}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </li>
                 ))}
               </ul>
