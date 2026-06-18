@@ -1,0 +1,19 @@
+{
+  "_step": "6a — Itemized fact-check (HARD GATE 2)",
+  "_page": "local-seo",
+  "_date": "2026-06-18",
+  "statistics": [
+    { "claim": "81% of consumers used Google to evaluate local businesses in 2024", "verdict": "VERIFIED", "source": "BrightLocal Local Consumer Review Survey 2024 (down from 87% in 2023).", "url": "https://www.brightlocal.com/research/local-consumer-review-survey-2024/" },
+    { "claim": "98% of consumers read online reviews for local businesses", "verdict": "CORRECTED + VERIFIED", "was": "Page previously said '98% used the internet to find information about a local business' — MISATTRIBUTED (that figure is 99%). Fixed to the real BrightLocal 98% stat about reading reviews.", "source": "BrightLocal Online Review Statistics (98% at least occasionally read online reviews for local businesses; from the Local Consumer Review Survey). Distinct URL from the 81% stat.", "url": "https://www.brightlocal.com/resources/online-reviews-statistics/" },
+    { "claim": "≈90% of search runs on Google", "verdict": "VERIFIED", "source": "Statcounter Global Stats (Google 89-90% 2025-2026).", "url": "https://gs.statcounter.com/search-engine-market-share" }
+  ],
+  "capability_and_market_claims": [
+    { "claim": "Map pack shows 3 local results / nobody scrolls past", "verdict": "VERIFIED (well-documented Google local pack behaviour)", "basis": "Google local pack is a 3-result module; framed as general behaviour, no invented number." },
+    { "claim": "Service-area businesses can rank without a public address via GBP service area", "verdict": "VERIFIED", "basis": "Google Business Profile supports service-area configuration (Google documentation)." },
+    { "claim": "Actively managed GBP, hand-audited citations, penalty-safe location pages, review system, map-rank-by-location reporting, month-to-month", "verdict": "VERIFIED as approach", "basis": "_facts.md (founder-led, transparent, month-to-month). Framed as our process, no client-count/result claims." },
+    { "claim": "GTA specifics (Vaughan, 'near me')", "verdict": "OK", "basis": "Real service area (GTA/Ontario/Canada); Vaughan is a GTA city — illustrative, not a false client claim." }
+  ],
+  "cannibalization_note": "Page references Google Business Profile as a tactic but does NOT target GBP keywords (fenced to the google-business-profile spoke per keyword-ownership.json).",
+  "fabrication_scan": { "invented_results_metrics": "NONE", "invented_prices_guarantees": "NONE", "undemonstrated_capabilities": "NONE (approach-framed)" },
+  "_done_check": "PASS — 3 stats verified (one misattribution CORRECTED); claims grounded/approach-framed; zero unresolved fabrications."
+}

@@ -81,8 +81,7 @@ export const DM_SPOKES: readonly DmSpoke[] = [
       "Rank in the Google Map Pack and 'near me' searches across the GTA so nearby customers find you first.",
     icon: MapPin,
     category: "Local SEO",
-    // Throwaway pilot content — unpublished until regenerated through the run book.
-    published: false,
+    published: true,
   },
   {
     slug: "generative-engine-optimization",

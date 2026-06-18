@@ -2,6 +2,7 @@
   "_purpose": "SERP-derived per-page word-count targets for the digital-marketing hub-and-spoke pages. Replaces the old hard-coded 1,200 (spoke) / 2,000 (pillar) floors. Each page's range is derived in run-book Step 4 from the service-page subset of its Keyword Insights brief's competitor word counts (see seo-tools/runbook/<slug>/04-outline.md). A page is added here ONLY when it has been regenerated through the run book; the content gate (tests/seo/dm-service-pages.content.test.mjs) iterates these entries.",
   "_schema": "pages[<dist-relative route>] = { kind: 'pillar'|'spoke', min: <int words>, max: <int words>, source: '<which 04-outline range / competitor numbers>' }",
   "pages": {
-    "services/digital-marketing": { "kind": "pillar", "min": 1900, "max": 3000, "source": "03-brief: CA SERP service-page subset ~1.4k-2.4k main; hub for 13 spokes sits at substantive end. Current 2122." }
+    "services/digital-marketing": { "kind": "pillar", "min": 1900, "max": 3000, "source": "03-brief: CA SERP service-page subset ~1.4k-2.4k main; hub for 13 spokes sits at substantive end. Current 2122." },
+    "services/digital-marketing/local-seo": { "kind": "spoke", "min": 1100, "max": 1900, "source": "03-brief: CA service-page subset ~700-3200 main; focused spoke mid-band. Current 1215." }
   }
 }

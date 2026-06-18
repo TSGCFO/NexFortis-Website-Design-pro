@@ -28,16 +28,16 @@
       "text": "Our digital marketing services"
     },
     {
+      "level": 3,
+      "text": "Local SEO"
+    },
+    {
       "level": 2,
       "text": "Also available across the cluster"
     },
     {
       "level": 3,
       "text": "SEO Services"
-    },
-    {
-      "level": 3,
-      "text": "Local SEO"
     },
     {
       "level": 3,
@@ -372,6 +372,10 @@
     {
       "text": "Digital Marketing",
       "href": "/services/digital-marketing"
+    },
+    {
+      "text": "Local SEO",
+      "href": "/services/digital-marketing/local-seo"
     },
     {
       "text": "Microsoft 365 Solutions",
