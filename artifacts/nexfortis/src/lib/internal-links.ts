@@ -91,8 +91,7 @@ export const DM_SPOKES: readonly DmSpoke[] = [
       "Get cited by ChatGPT, Google AI Overviews, Perplexity, and Gemini — where a growing share of buyers now start.",
     icon: Sparkles,
     category: "GEO / AI Search",
-    // Throwaway pilot content — unpublished until regenerated through the run book.
-    published: false,
+    published: true,
   },
   {
     slug: "technical-seo",

@@ -160,7 +160,7 @@
           "name": "What is Generative Engine Optimization (GEO)?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "GEO is the practice of optimizing your content and brand so generative AI engines — ChatGPT, Google AI Overviews, Perplexity, and Gemini — cite you when they answer a buyer's question. It's also called AI search optimization or answer engine optimization. Where SEO competes for rankings, GEO competes for citations in the AI answer itself."
+            "text": "GEO is the work of optimizing your content and brand so that generative AI engines — ChatGPT, Google's AI Overviews, Perplexity, Gemini — cite you when they answer a buyer's question. You will also see it called AI search optimization or answer engine optimization. The simplest way to think about it: SEO is a fight for a ranking, GEO is a fight for a mention inside the answer the AI writes."
           }
         },
         {
@@ -168,7 +168,7 @@
           "name": "Is GEO different from SEO?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "It builds on SEO but isn't the same. Strong, well-structured content helps with both, but GEO adds an extra layer: passage-level structure, entity and Q&A schema, and brand mentions across the sources language models trust. We run GEO on top of solid SEO foundations rather than instead of them."
+            "text": "It grows out of SEO but it is not the same job. Strong, well-organised content helps with both, true, but GEO adds its own layer on top: passage-level structure an engine can lift cleanly, entity and Q&A schema, and brand mentions across the places these models learn to trust. So we run GEO on top of solid SEO, never instead of it."
           }
         },
         {
@@ -176,7 +176,7 @@
           "name": "Which AI engines do you optimize for?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "The ones your buyers actually use: Google's AI Overviews and AI Mode, ChatGPT, Perplexity, and Gemini. We test your priority prompts across all of them, see who's being cited, and focus the work where the opportunity and the audience overlap."
+            "text": "Whichever ones your buyers are actually using — in practice that means Google's AI Overviews and AI Mode, ChatGPT, Perplexity, and Gemini. We run your priority prompts through each, see who is getting cited today, and put the effort where your audience and the opportunity line up."
           }
         },
         {
@@ -184,7 +184,7 @@
           "name": "Can you guarantee my brand gets cited?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "No one can guarantee a specific AI citation any more than a specific Google ranking — the engines decide. What we can do is measurably improve the odds by building the content structure, schema, and brand signals these engines reward, and then track citations over time so you can see the trend."
+            "text": "No, and the same caveat applies as with a Google ranking — the engine makes the call, not us. What we can genuinely do is move the odds: build the structure, schema, and brand signals these engines reward, then track your citations over time so you can watch the trend rather than take it on faith."
           }
         },
         {
@@ -192,7 +192,7 @@
           "name": "How do you measure GEO results?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "We run your target prompts across each engine on a regular cadence and record how often, and how prominently, your brand is cited. That gives you a clear month-over-month trend by engine, instead of a one-time snapshot, so you can see GEO working."
+            "text": "We run your target prompts across each engine on a regular schedule and record how often — and how prominently — your brand turns up. That gives you a month-over-month trend per engine instead of a single snapshot, so you can actually see whether the work is landing."
           }
         },
         {
@@ -200,7 +200,7 @@
           "name": "Is it too early to invest in GEO?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "The opposite — early is the advantage. AI answers already appear on a large share of searches and a growing share of buyers start with ChatGPT, yet almost no local competitors optimize for it. Building credibility with these engines now is far cheaper than trying to catch up once everyone is doing it."
+            "text": "Honestly, early is the whole point. AI answers already show up on a large share of searches and more buyers start with ChatGPT every month, yet hardly any local competitors are optimising for it. Earning these engines' trust now is far cheaper than trying to claw your way in once everyone else has noticed."
           }
         }
       ]
@@ -346,6 +346,10 @@
     {
       "text": "Local SEO",
       "href": "/services/digital-marketing/local-seo"
+    },
+    {
+      "text": "GEO &amp; AI Search",
+      "href": "/services/digital-marketing/generative-engine-optimization"
     },
     {
       "text": "Microsoft 365 Solutions",

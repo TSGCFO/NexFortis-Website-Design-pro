@@ -51,9 +51,9 @@
     },
     "/services/digital-marketing/generative-engine-optimization": {
       "name": "GEO & AI Search",
-      "status": "tentative",
-      "primary": ["generative engine optimization", "answer engine optimization", "ai search optimization"],
-      "secondary": []
+      "status": "confirmed (KI cluster order bb789e7e, 2026-06-18)",
+      "primary": ["generative engine optimization", "generative engine optimization services"],
+      "secondary": ["answer engine optimization", "ai search optimization", "ai overview optimization", "chatgpt seo", "llm optimization"]
     },
     "/services/digital-marketing/google-ads": {
       "name": "Google Ads Management",

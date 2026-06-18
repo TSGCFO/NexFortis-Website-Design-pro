@@ -489,27 +489,29 @@ export const DM_SPOKE_CONTENT: Partial<Record<DmSpokeSlug, DmSpokeContent>> = {
     intro: (
       <>
         <p>
-          Search is splitting in two. Alongside the familiar blue links, a fast-growing share of
-          answers now come straight from AI &mdash; Google&rsquo;s AI Overviews, ChatGPT,
-          Perplexity, and Gemini. These engines don&rsquo;t show ten results; they synthesize one
-          answer and cite a handful of sources. If your brand isn&rsquo;t among them, you&rsquo;re
-          invisible at the exact moment a buyer is deciding.
+          Search is quietly splitting into two. There are still the familiar blue links, but next to
+          them a fast-growing slice of answers now comes straight from an AI &mdash; Google&rsquo;s
+          AI Overviews, ChatGPT, Perplexity, Gemini. These engines do not hand back ten options.
+          They write one answer and name a few sources. If your brand is not one of them, you are
+          simply not in the room at the moment someone is making up their mind.
         </p>
         <p>
-          Generative Engine Optimization is how you earn those citations. It builds on the same
-          foundations as <InlineLink href={seo.href}>{seo.linkText}</InlineLink> but adds the
-          structure, sourcing, and brand signals that language models reward. It&rsquo;s the most
-          forward-looking part of our{" "}
-          <InlineLink href={DM_PILLAR_HREF}>{DM_PILLAR_LINK_TEXT}</InlineLink> &mdash; and almost no
-          GTA competitor offers it yet, which is exactly why the window to lead is open now.
+          Generative Engine Optimization is how you get into that answer. It stands on the same
+          foundations as <InlineLink href={seo.href}>{seo.linkText}</InlineLink>, then adds the
+          structure, the sourcing, and the brand signals that language models actually reward. It is
+          the most forward-looking piece of our{" "}
+          <InlineLink href={DM_PILLAR_HREF}>{DM_PILLAR_LINK_TEXT}</InlineLink>, and it is still rare
+          among GTA agencies &mdash; which, frankly, is the whole opportunity. The brands that teach
+          these engines to trust them now will be the default answers later.
         </p>
       </>
     ),
     introCallout: (
       <CalloutBox title="What is Generative Engine Optimization (GEO)?">
-        GEO — also called AI search optimization or answer engine optimization — is the practice of
-        structuring your content and building your brand so generative AI engines cite you in their
-        answers. Where SEO competes for rankings, GEO competes for citations.
+        GEO &mdash; you will also hear it called AI search optimization or answer engine optimization
+        &mdash; is the work of structuring your content and building your brand so that generative AI
+        engines quote you in the answers they write. Put simply: SEO competes for a ranking, GEO
+        competes for a citation inside the answer itself.
       </CalloutBox>
     ),
     stats: [
@@ -632,38 +634,40 @@ export const DM_SPOKE_CONTENT: Partial<Record<DmSpokeSlug, DmSpokeContent>> = {
       {
         question: "What is Generative Engine Optimization (GEO)?",
         answer:
-          "GEO is the practice of optimizing your content and brand so generative AI engines — ChatGPT, Google AI Overviews, Perplexity, and Gemini — cite you when they answer a buyer's question. It's also called AI search optimization or answer engine optimization. Where SEO competes for rankings, GEO competes for citations in the AI answer itself.",
+          "GEO is the work of optimizing your content and brand so that generative AI engines — ChatGPT, Google's AI Overviews, Perplexity, Gemini — cite you when they answer a buyer's question. You will also see it called AI search optimization or answer engine optimization. The simplest way to think about it: SEO is a fight for a ranking, GEO is a fight for a mention inside the answer the AI writes.",
       },
       {
         question: "Is GEO different from SEO?",
         answer:
-          "It builds on SEO but isn't the same. Strong, well-structured content helps with both, but GEO adds an extra layer: passage-level structure, entity and Q&A schema, and brand mentions across the sources language models trust. We run GEO on top of solid SEO foundations rather than instead of them.",
+          "It grows out of SEO but it is not the same job. Strong, well-organised content helps with both, true, but GEO adds its own layer on top: passage-level structure an engine can lift cleanly, entity and Q&A schema, and brand mentions across the places these models learn to trust. So we run GEO on top of solid SEO, never instead of it.",
       },
       {
         question: "Which AI engines do you optimize for?",
         answer:
-          "The ones your buyers actually use: Google's AI Overviews and AI Mode, ChatGPT, Perplexity, and Gemini. We test your priority prompts across all of them, see who's being cited, and focus the work where the opportunity and the audience overlap.",
+          "Whichever ones your buyers are actually using — in practice that means Google's AI Overviews and AI Mode, ChatGPT, Perplexity, and Gemini. We run your priority prompts through each, see who is getting cited today, and put the effort where your audience and the opportunity line up.",
       },
       {
         question: "Can you guarantee my brand gets cited?",
         answer:
-          "No one can guarantee a specific AI citation any more than a specific Google ranking — the engines decide. What we can do is measurably improve the odds by building the content structure, schema, and brand signals these engines reward, and then track citations over time so you can see the trend.",
+          "No, and the same caveat applies as with a Google ranking — the engine makes the call, not us. What we can genuinely do is move the odds: build the structure, schema, and brand signals these engines reward, then track your citations over time so you can watch the trend rather than take it on faith.",
       },
       {
         question: "How do you measure GEO results?",
         answer:
-          "We run your target prompts across each engine on a regular cadence and record how often, and how prominently, your brand is cited. That gives you a clear month-over-month trend by engine, instead of a one-time snapshot, so you can see GEO working.",
+          "We run your target prompts across each engine on a regular schedule and record how often — and how prominently — your brand turns up. That gives you a month-over-month trend per engine instead of a single snapshot, so you can actually see whether the work is landing.",
       },
       {
         question: "Is it too early to invest in GEO?",
         answer:
-          "The opposite — early is the advantage. AI answers already appear on a large share of searches and a growing share of buyers start with ChatGPT, yet almost no local competitors optimize for it. Building credibility with these engines now is far cheaper than trying to catch up once everyone is doing it.",
+          "Honestly, early is the whole point. AI answers already show up on a large share of searches and more buyers start with ChatGPT every month, yet hardly any local competitors are optimising for it. Earning these engines' trust now is far cheaper than trying to claw your way in once everyone else has noticed.",
       },
     ],
     authorNote: (
       <p>
-        Hassan leads NexFortis's work on AI search, helping Canadian businesses earn visibility in
-        ChatGPT, Google's AI Overviews, and other generative engines before their competitors do.
+        Hassan leads NexFortis&rsquo;s work on AI search, helping Canadian businesses earn a place in
+        ChatGPT, Google&rsquo;s AI Overviews, and the other generative engines before their
+        competitors think to try. As founder and CEO he treats GEO as the firm&rsquo;s bet on where
+        search is heading &mdash; and works on it directly with every client.
       </p>
     ),
     ctaHeading: "Want to be the answer AI gives?",
