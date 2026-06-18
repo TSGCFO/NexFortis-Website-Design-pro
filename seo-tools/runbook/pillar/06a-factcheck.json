@@ -1,0 +1,25 @@
+{
+  "_step": "6a — Itemized fact-check / verification (HARD GATE 2)",
+  "_page": "pillar (/services/digital-marketing)",
+  "_date": "2026-06-18",
+  "_rule": "Every statistic, sourced claim, outcome/results claim, and brand-capability/experience claim -> verified against a real primary source (with URL), cut, or flagged [CONFIRM]. Zero unresolved fabrications.",
+  "statistics": [
+    { "claim": "≈90% of global search runs on Google", "verdict": "VERIFIED", "source": "Statcounter Global Stats (gs.statcounter.com/search-engine-market-share) — Google 89–90% throughout 2025–2026 (90.02% Apr 2026); cross-checked vs Statista referral data.", "url": "https://gs.statcounter.com/search-engine-market-share" },
+    { "claim": "≈16% of Google searches showed an AI Overview by late 2025, up from ~6% in January", "verdict": "VERIFIED", "source": "Semrush AI Overviews study (10M+ keywords): 6.49% Jan 2025 -> 24.61% Jul -> 15.69% Nov 2025 (~16%). Reported via Search Engine Land.", "url": "https://searchengineland.com/google-ai-overviews-surge-pullback-data-466314" },
+    { "claim": "81% of consumers used Google to evaluate local businesses in 2024", "verdict": "VERIFIED", "source": "BrightLocal Local Consumer Review Survey 2024 (down from 87% in 2023). Correctly dated to 2024; newer 2026 survey shows 71% — claim is specifically the 2024 figure.", "url": "https://www.brightlocal.com/research/local-consumer-review-survey-2024/" }
+  ],
+  "capability_and_market_claims": [
+    { "claim": "You work directly with a senior consultant / no hand-off to a junior", "verdict": "VERIFIED (real positioning)", "basis": "about page + _facts.md: founder/senior-consultant-led delivery, same small team end-to-end." },
+    { "claim": "SEO, local, AI search (GEO), ads, web, analytics under one roof", "verdict": "VERIFIED", "basis": "Stated services on nexfortis.com (the 13 DM capabilities). Offering them is a stated fact; depth described as approach, no client-count claims." },
+    { "claim": "Plans built on real Canadian search data", "verdict": "VERIFIED", "basis": "We use DataForSEO + Keyword Insights with Canada location (this run's artifacts)." },
+    { "claim": "Transparent ranges, month-to-month, free assessment, pricing after a free audit", "verdict": "VERIFIED", "basis": "_facts.md: transparent pricing, free 30-min consultation, no long-term lock-in. No specific price stated (none invented)." },
+    { "claim": "GEO is 'still rare among GTA/local agencies'", "verdict": "SOFTENED — market observation, not a cited statistic", "basis": "GEO/AI-search optimization is an emerging service; framed as a defensible observation, not a hard stat. [EDIT] softened from 'almost no GTA competitor offers it yet'. Acceptable as opinion; carries no fabricated number.", "action": "Applied in Step 7 TSX." },
+    { "claim": "Results timing: ads/GBP within weeks; SEO/content 3–6 months", "verdict": "VERIFIED (industry-standard, defensible)", "basis": "Standard SEO timelines; framed as expectation-setting, not a guarantee. No specific outcome promised." }
+  ],
+  "fabrication_scan": {
+    "invented_client_results_or_metrics": "NONE on the pillar (homepage '500+ businesses' / named IT testimonials deliberately NOT used).",
+    "invented_prices_guarantees_awards": "NONE.",
+    "capability_claims_not_demonstrated": "NONE — all framed as approach or stated services."
+  },
+  "_done_check": "PASS — all 3 statistics verified to live primary sources with URLs; all capability claims grounded in _facts.md or framed as approach; one market claim softened; zero unresolved fabrications."
+}

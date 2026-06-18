@@ -9,9 +9,9 @@
   "pages": {
     "/services/digital-marketing": {
       "name": "Digital Marketing (pillar)",
-      "status": "tentative",
-      "primary": ["digital marketing services", "digital marketing agency"],
-      "secondary": []
+      "status": "confirmed (KI cluster order 6b875c46, 2026-06-18)",
+      "primary": ["digital marketing services", "digital marketing agency", "digital marketing company"],
+      "secondary": ["digital marketing firm", "online marketing services", "internet marketing services", "digital marketing agency near me", "digital marketing services for small business"]
     },
     "/services/digital-marketing/local-seo": {
       "name": "Local SEO",
@@ -94,7 +94,7 @@
     "blog": {
       "name": "Informational blog/guide cluster (links UP to the service pages)",
       "status": "reserved",
-      "primary": ["local seo", "local seo for small business", "local search marketing"],
+      "primary": ["local seo", "local seo for small business", "local search marketing", "digital marketing"],
       "secondary": []
     }
   }

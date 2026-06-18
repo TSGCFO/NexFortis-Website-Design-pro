@@ -1,0 +1,20 @@
+{
+  "_step": "8 — Publish QA",
+  "_page": "pillar (/services/digital-marketing)",
+  "_date": "2026-06-18",
+  "build": "pnpm --filter @workspace/nexfortis run build (vite+prerender+sitemap) + qb-portal vite build — both OK.",
+  "test_seo": "PASS — lib(48) + verifiers(11) + components(?) + snapshots(23) + invariants(20) + content(8), all green. Pillar snapshot re-baselined for the intended prose rewrite.",
+  "content_gate": "PASS — pillar 2595 main words within SERP-derived 1900-3000; meta caps ok; >=3 internal links; >=3 sourced-stat citations; FAQPage>=4; Service+Person JSON-LD + author named; no banned jargon; no duplicate paragraphs.",
+  "cannibalization": "PASS (exit 0) — 47 keywords, 15 pages, no overlap.",
+  "publish_readiness": "PASS (exit 0) — pillar not gated (not a DM_SPOKES slug); no published spoke lacks artifacts.",
+  "live_check": {
+    "served": "python http.server on dist; http://localhost:4178/services/digital-marketing/",
+    "http_status": 200,
+    "h1": "Digital Marketing Services for Canadian Businesses",
+    "title": "Digital Marketing Services | NexFortis IT Solutions",
+    "spoke_links_present": ["/services/digital-marketing/seo", "/services/digital-marketing/local-seo", "/services/digital-marketing/generative-engine-optimization"],
+    "visual_verification": "PASS (computer-use browser): hero, 3 sourced stats, 13 capability cards, 3 prose sections, 4-step process, comparison table, interactive FAQ, Hassan Sadiq 'Founder & CEO' bio, CTA, Services nav dropdown — all render cleanly, fully hydrated, no layout bugs. Recording: pillar-digital-marketing-visual-verification.mp4"
+  },
+  "gate3": "Winston plagiarism 0% (binding PASS); Undetectable AI advisory (86.4, calibration-documented in 06d).",
+  "_done_check": "PASS — build green, test:seo green, both gates green, live page 200 + correct H1 + cluster links, visually verified."
+}

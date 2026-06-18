@@ -69,32 +69,32 @@ const PROCESS = [
     step: "01",
     title: "Discovery & strategy",
     description:
-      "We learn your business, your best customers, and your numbers — then research the market and competitors to build a prioritized plan you can actually see.",
+      "First we get to know your business, your best customers, and your numbers. Then we dig into the market and your competitors and turn it into a prioritized plan you can actually read — not a 40-page deck nobody opens.",
   },
   {
     step: "02",
     title: "Build & launch",
     description:
-      "We execute the highest-impact work first, whether that's fixing technical SEO, launching campaigns, or shipping new pages — with your sign-off before anything goes live.",
+      "We tackle the highest-impact work first, whether that is clearing technical SEO problems, getting campaigns live, or shipping new pages. Nothing goes out the door without your sign-off.",
   },
   {
     step: "03",
     title: "Measure & optimize",
     description:
-      "We track leads and revenue, not vanity metrics, and refine continuously: cut what isn't working, double down on what is, and report it all in plain language.",
+      "Every month we look at leads and revenue, not vanity numbers. We cut what is not earning its keep, put more behind what is, and explain the whole thing in plain English.",
   },
   {
     step: "04",
     title: "Scale what works",
     description:
-      "Once a channel is profitable, we reinvest to grow it and add the next one — so your marketing compounds instead of stalling after the first quarter.",
+      "Once a channel is paying for itself, we reinvest to grow it and add the next one. That is how marketing compounds instead of stalling out after the first quarter.",
   },
 ];
 
 const COMPARISON = [
   { feature: "Who does your work", us: "A senior consultant you can reach directly", them: "A rotating junior account manager" },
   { feature: "Scope", us: "SEO, local, AI search, ads, web, and analytics under one roof", them: "One channel, siloed from the rest" },
-  { feature: "AI search (GEO)", us: "Built in — few competitors offer it", them: "Not on the menu" },
+  { feature: "AI search (GEO)", us: "Built in — still rare among local agencies", them: "Not on the menu" },
   { feature: "Reporting", us: "Tied to leads and revenue", them: "Traffic charts and rank screenshots" },
   { feature: "Pricing", us: "Transparent ranges, month-to-month", them: "Opaque quotes, locked contracts" },
   { feature: "Data", us: "Real Canadian search data behind every plan", them: "Generic, off-the-shelf playbooks" },
@@ -104,42 +104,42 @@ const FAQS = [
   {
     question: "What does a digital marketing agency actually do?",
     answer:
-      "A good one grows the number of qualified customers finding and choosing your business online. That spans search engine optimization, local search, paid ads, content, web design, and analytics. At NexFortis we run these as one connected strategy rather than disconnected services, so every channel reinforces the others instead of competing for budget.",
+      "Strip away the jargon and the job is simple: get more of the right people to find you and choose you online. In practice that means SEO, local search, paid ads, content, your website, and the analytics that tell you what is working. The difference at NexFortis is that we run those as one plan, not five invoices from five teams who never talk to each other. When the channels point the same direction, your budget goes a lot further.",
   },
   {
     question: "How much does digital marketing cost?",
     answer:
-      "It depends on your market and goals, which is why we price in transparent ranges rather than one-size packages. Most small and mid-sized Canadian businesses invest somewhere between a maintainer budget for steady local visibility and a growth budget for competitive markets. You get a fixed monthly scope, clear reporting, and no long-term lock-in, so you can scale up or down as results come in.",
+      "Honestly, it depends on your market and what you are trying to do, which is why we quote a real range instead of a one-price-fits-all package. A single-location business holding steady needs far less than a company fighting for competitive keywords. Whatever the number, you get a fixed monthly scope, plain-language reporting, and no long-term lock-in — so you can scale up when it is working or step back if your priorities change. We share specifics after a quick, free audit of your situation.",
   },
   {
     question: "How is NexFortis different from a typical agency?",
     answer:
-      "Three ways. You work directly with a senior consultant instead of being handed to a junior. Every plan is built on real Canadian search data, not a generic playbook. And we include AI search optimization — getting you cited by ChatGPT and Google's AI Overviews — which almost no local competitor offers yet.",
+      "Three things, mainly. You work with a senior person who knows your account, not a junior who churns through ten others. Your plan comes from real Canadian search data, not a recycled template. And we build in AI search — getting you cited by ChatGPT and Google's AI Overviews — which is still rare among local agencies.",
   },
   {
     question: "Do I need SEO, ads, or both?",
     answer:
-      "It depends on your timeline and margins. Ads buy visibility immediately but stop the moment you stop paying. SEO and local search take a few months but compound into traffic you don't rent. Most businesses start with one and layer in the other; we'll recommend the mix that fits your goals rather than selling you everything at once.",
+      "It comes down to your timeline and your margins. Ads switch on visibility today, but the leads stop the day you stop paying. SEO and local search take a few months to build, then keep delivering traffic you are not renting. Plenty of clients start with ads for cash flow and let SEO compound underneath. We will tell you the mix that fits your goals rather than trying to sell you the whole menu on day one.",
   },
   {
     question: "How quickly will I see results?",
     answer:
-      "Paid ads and Google Business Profile improvements can drive enquiries within weeks. SEO and content typically show meaningful gains around the three-to-six-month mark and keep compounding from there. We set realistic expectations against your specific market up front, and we report progress every month so you're never guessing.",
+      "Some of it is fast. Paid ads and a tuned-up Google Business Profile can bring enquiries within a few weeks. SEO and content are the slower burn — usually three to six months before the gains are obvious, and then they keep building. We set honest expectations against your specific market up front, and we report every month so you are never left guessing.",
   },
   {
     question: "Do you work with businesses outside the GTA?",
     answer:
-      "Yes. We're based in Nobleton and know the Greater Toronto Area well, but search marketing works anywhere. We serve clients across Ontario and the rest of Canada, and our local SEO work simply targets whichever cities and service areas matter to you.",
+      "Yes. We are based in Nobleton and we know the Greater Toronto Area inside out, but search marketing is not bound by geography. We work with clients across Ontario and the rest of Canada, and the local SEO side simply targets whichever cities and service areas actually matter to your business.",
   },
   {
     question: "What is GEO or AI search, and do I need it?",
     answer:
-      "GEO — Generative Engine Optimization — is the work that gets your brand cited by AI engines like ChatGPT, Google's AI Overviews, Perplexity, and Gemini, where a fast-growing share of buyers now start. If your customers are researching online, you'll want to be in those answers before your competitors are. It's a forward-looking add-on we build on top of solid SEO foundations.",
+      "GEO stands for Generative Engine Optimization — the work that gets your brand quoted by AI tools like ChatGPT, Google's AI Overviews, Perplexity, and Gemini. A growing slice of buyers now start their research there instead of on a search page. If that describes your customers, you want to be in those answers before your competitors figure it out. We build it on top of solid SEO rather than as a gimmick on its own.",
   },
   {
     question: "Can you take over marketing we've already started?",
     answer:
-      "Yes, and most of our clients come to us that way. We start by auditing what's already in place — your website, any past SEO work, ad accounts, and analytics — then keep what's working and fix or replace what isn't. You won't pay us to redo good work, and we'll be straight with you about what a previous provider got right and where the gaps are.",
+      "Almost everyone comes to us mid-stream, so yes. We start by looking at what you already have — the website, any past SEO, the ad accounts, the analytics — and we keep what is pulling its weight before changing anything. You will not pay us to redo good work, and we will be straight with you about what the last provider got right and where the gaps are.",
   },
 ];
 
@@ -188,24 +188,28 @@ export default function DigitalMarketing() {
           <SectionHeader title="Marketing that brings you customers, not just clicks" />
           <div className="space-y-5 text-lg text-muted-foreground leading-relaxed">
             <p>
-              Most Canadian businesses don&rsquo;t need more marketing noise &mdash; they need more
-              of the right customers finding them at the moment they&rsquo;re ready to buy. That
-              means showing up in Google&rsquo;s results, in the local map pack, and now in the AI
-              answers that are reshaping how people search.
+              Here is the uncomfortable truth most agencies won&rsquo;t tell you: more marketing
+              rarely fixes a slow month. The customers you want are already searching for what you
+              sell. The question is whether they find you or the company three spots above you. Win
+              that moment in Google&rsquo;s results, in the local map, and now inside the AI answers
+              people read instead of clicking, and the phone starts ringing on its own.
             </p>
             <p>
-              NexFortis runs all of it as one connected strategy. We start with{" "}
-              <InlineLink href={seo.href}>{seo.linkText}</InlineLink> as the foundation, add{" "}
-              <InlineLink href={localSeo.href}>{localSeo.linkText}</InlineLink> for businesses that
-              serve a specific area, and layer on{" "}
-              <InlineLink href={geo.href}>{geo.linkText}</InlineLink> so you&rsquo;re cited where
-              buyers increasingly start: ChatGPT and Google&rsquo;s AI Overviews. Paid ads, content,
-              web design, and analytics round out the picture.
+              We handle the whole picture rather than one slice of it. Most engagements start with{" "}
+              <InlineLink href={seo.href}>{seo.linkText}</InlineLink>, because organic rankings keep
+              paying off long after the work is done. If you serve a city or a few neighbourhoods, we
+              add <InlineLink href={localSeo.href}>{localSeo.linkText}</InlineLink>. And because a
+              real share of buyers now ask ChatGPT or read Google&rsquo;s AI Overviews before they
+              ever visit a website, we layer on{" "}
+              <InlineLink href={geo.href}>{geo.linkText}</InlineLink> so your name shows up in those
+              answers too. Paid ads, content, web design, and the analytics behind them fill in the
+              rest as you need them.
             </p>
             <p>
-              You work directly with a senior consultant, every plan is built on real Canadian
-              search data, and every report ties back to leads and revenue &mdash; not vanity
-              metrics.
+              One more thing that matters: you deal with a senior person who actually knows your
+              account, not a junior who rotates off in three months. Every plan is built on real
+              Canadian search data, and every report we send answers the only question you care
+              about &mdash; how many leads did this bring in.
             </p>
           </div>
         </div>
@@ -244,18 +248,21 @@ export default function DigitalMarketing() {
           <SectionHeader title="Search: the foundation of everything" />
           <div className="space-y-5 text-lg text-muted-foreground leading-relaxed">
             <p>
-              Search is where buying decisions still begin, and it&rsquo;s the highest-return
-              channel we run because the traffic compounds. Our{" "}
-              <InlineLink href={seo.href}>{seo.linkText}</InlineLink> work covers keyword and intent
-              research, on-page optimization, the technical foundations that let Google crawl and
-              rank your site, and the content that earns positions you keep for years.
+              Buying decisions still start with a search, and search is the channel we lean on
+              hardest because the results stack up over time instead of vanishing when you stop
+              paying. Our <InlineLink href={seo.href}>{seo.linkText}</InlineLink> work is the
+              unglamorous stuff that actually moves rankings: finding the terms your buyers really
+              type, fixing the technical issues that quietly hold a site back, and writing pages
+              thorough enough that Google has no reason to rank a competitor ahead of you.
             </p>
             <p>
-              For businesses that serve customers in a specific place, <InlineLink href={localSeo.href}>{localSeo.linkText}</InlineLink>{" "}
-              puts you in the Google map pack and &ldquo;near me&rdquo; results through an optimized
-              Google Business Profile, consistent listings, genuine reviews, and location pages.
-              Most local businesses need both, and we run them together so the map and the organic
-              results reinforce each other.
+              Got a storefront or a service area? Then{" "}
+              <InlineLink href={localSeo.href}>{localSeo.linkText}</InlineLink> is where the fast
+              wins live. We get you into the Google map pack and the &ldquo;near me&rdquo; results
+              with a properly built Google Business Profile, listings that all say the same thing,
+              real reviews, and pages written for each place you serve. Most local businesses want
+              both, and they work better together &mdash; the map listing earns trust, the organic
+              ranking backs it up.
             </p>
           </div>
         </div>
@@ -267,17 +274,17 @@ export default function DigitalMarketing() {
           <SectionHeader title="AI search: the shift most agencies are missing" />
           <div className="space-y-5 text-lg text-muted-foreground leading-relaxed">
             <p>
-              A growing share of searches now end with an AI-generated answer instead of a list of
-              links. These engines cite only a handful of sources, so being one of them is the new
-              version of ranking first. Our{" "}
-              <InlineLink href={geo.href}>{geo.linkText}</InlineLink> service earns those citations
-              through passage-level content structure, the right schema, and brand mentions across
-              the sources language models trust.
+              More and more searches end with a written answer, not ten blue links. The catch is
+              that an AI answer names only a few sources, so the game has shifted from ranking first
+              to being one of the handful it decides to quote. That is what our{" "}
+              <InlineLink href={geo.href}>{geo.linkText}</InlineLink> work is for: structuring your
+              pages so a model can lift a clean answer from them, adding the schema that tells it
+              what you are, and building the mentions across the web that teach it to trust you.
             </p>
             <p>
-              It&rsquo;s the most forward-looking part of what we do, and almost no GTA competitor
-              offers it yet &mdash; which is exactly why the businesses that move now will be hard
-              to displace later.
+              It is the newest thing we do and still rare among GTA agencies. We think that window
+              matters. The companies that earn an AI engine&rsquo;s trust now will be a lot harder to
+              dislodge once everyone else catches on.
             </p>
           </div>
         </div>
@@ -289,21 +296,22 @@ export default function DigitalMarketing() {
           <SectionHeader title="Ads, content, web, and the data behind it" />
           <div className="space-y-5 text-lg text-muted-foreground leading-relaxed">
             <p>
-              When you need visibility now, paid media delivers it. We plan and manage Google Ads
-              and paid social campaigns built around real buyer intent, with transparent reporting
-              on every dollar of ad spend and a clear view of your cost per lead.
+              SEO is patient work. Sometimes you need leads this week, and that is what paid media
+              is for. We plan and run Google Ads and paid social around genuine buyer intent, and we
+              show you exactly what each dollar bought &mdash; right down to the cost of a single
+              lead, so you always know whether to spend more or pull back.
             </p>
             <p>
-              Content marketing and digital PR build the authority that makes search work, turning
-              research-led articles and earned mentions into rankings and trust. Web design and
-              conversion optimization make sure the traffic you earn actually becomes enquiries
-              &mdash; a fast, mobile-first site that&rsquo;s built to rank and built to convert.
+              The rest of the stack supports those two engines. Content marketing and digital PR
+              earn the authority that makes ranking possible in the first place. A fast,
+              mobile-first website &mdash; and the conversion work that goes with it &mdash; makes
+              sure the visitors you fought for actually pick up the phone instead of bouncing.
             </p>
             <p>
-              Underpinning all of it, we wire up analytics and reporting &mdash; GA4, Search
-              Console, and call tracking &mdash; so every channel is measured against the only
-              metric that matters: customers. These capabilities are rolling out as dedicated pages
-              across the cluster; ask us about any of them today.
+              And none of it is worth much if you cannot see what is working. We wire up GA4, Search
+              Console, and call tracking so every channel is judged on customers, not clicks. Each
+              of these is becoming its own dedicated page across the cluster; until then, just ask
+              and we will walk you through how we handle it.
             </p>
           </div>
         </div>
@@ -345,9 +353,11 @@ export default function DigitalMarketing() {
       <Section bg="brand-light">
         <AuthorBio name={DM_AUTHOR.name} title={DM_AUTHOR.title}>
           <p>
-            Hassan leads digital marketing and IT strategy at NexFortis, helping Canadian businesses
-            turn search, local, and AI discovery into a predictable flow of customers &mdash;
-            working directly with every client, with no hand-off to a junior team.
+            Hassan runs digital marketing and IT strategy at NexFortis. He started the firm to give
+            Canadian small and mid-sized businesses the kind of senior attention they usually only
+            get from an in-house hire &mdash; helping them turn search, local, and AI discovery into
+            a steady flow of customers. When you work with NexFortis, you work with him and his team
+            directly. Nobody gets handed off to a junior.
           </p>
         </AuthorBio>
       </Section>
