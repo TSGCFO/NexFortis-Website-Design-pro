@@ -1,15 +1,15 @@
 {
-  "route": "/blog/microsoft-365-migration-checklist-canadian-smbs",
-  "title": "Microsoft 365 Migration Checklist | NexFortis IT Solutions",
-  "description": "A practical, Canadian-SMB-focused Microsoft 365 migration checklist: pre-migration assessment through post-launch support, step by step.",
-  "canonical": "https://nexfortis.com/blog/microsoft-365-migration-checklist-canadian-smbs",
+  "route": "/services/digital-marketing/analytics-reporting",
+  "title": "Analytics &amp; Reporting | NexFortis IT Solutions",
+  "description": "Marketing analytics &amp; reporting for Canadian businesses: GA4, Search Console, and call tracking in monthly reports that tie marketing to revenue.",
+  "canonical": "https://nexfortis.com/services/digital-marketing/analytics-reporting",
   "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
   "og": {
-    "title": "Microsoft 365 Migration Checklist | NexFortis IT Solutions",
-    "description": "A practical, Canadian-SMB-focused Microsoft 365 migration checklist: pre-migration assessment through post-launch support, step by step.",
-    "url": "https://nexfortis.com/blog/microsoft-365-migration-checklist-canadian-smbs",
+    "title": "Analytics &amp; Reporting | NexFortis IT Solutions",
+    "description": "Marketing analytics &amp; reporting for Canadian businesses: GA4, Search Console, and call tracking in monthly reports that tie marketing to revenue.",
+    "url": "https://nexfortis.com/services/digital-marketing/analytics-reporting",
     "image": "https://nexfortis.com/opengraph.png",
-    "type": "article"
+    "type": "website"
   },
   "twitter": {
     "card": "summary_large_image"
@@ -17,83 +17,95 @@
   "headings": [
     {
       "level": 1,
-      "text": "Microsoft 365 Migration Checklist for Canadian SMBs"
+      "text": "Analytics &amp; Reporting That Proves What Works"
     },
     {
       "level": 2,
-      "text": "Before You Begin: Why Microsoft 365?"
+      "text": "If you can't measure it, you can't grow it"
     },
     {
       "level": 2,
-      "text": "Phase 1: Pre-Migration Assessment"
+      "text": "What's included in our analytics &amp; reporting"
     },
     {
       "level": 3,
-      "text": "Inventory Your Current Environment"
+      "text": "GA4 &amp; tracking setup"
     },
     {
       "level": 3,
-      "text": "Choose the Right Microsoft 365 Plan"
+      "text": "Search Console &amp; SEO data"
     },
     {
       "level": 3,
-      "text": "Verify Your Domain"
+      "text": "Call &amp; conversion tracking"
+    },
+    {
+      "level": 3,
+      "text": "Custom dashboards"
+    },
+    {
+      "level": 3,
+      "text": "Monthly reporting"
+    },
+    {
+      "level": 3,
+      "text": "Insights &amp; recommendations"
     },
     {
       "level": 2,
-      "text": "Phase 2: Planning"
+      "text": "How we deliver analytics &amp; reporting"
     },
     {
       "level": 3,
-      "text": "Create a Migration Timeline"
+      "text": "Audit the setup"
     },
     {
       "level": 3,
-      "text": "Prepare User Accounts"
+      "text": "Fix &amp; configure"
     },
     {
       "level": 3,
-      "text": "Data Migration Strategy"
+      "text": "Build dashboards"
+    },
+    {
+      "level": 3,
+      "text": "Report &amp; advise"
     },
     {
       "level": 2,
-      "text": "Phase 3: Migration Execution"
-    },
-    {
-      "level": 3,
-      "text": "DNS Configuration"
-    },
-    {
-      "level": 3,
-      "text": "Mailbox Migration"
-    },
-    {
-      "level": 3,
-      "text": "File Migration"
+      "text": "NexFortis vs. a typical reporting setup"
     },
     {
       "level": 2,
-      "text": "Phase 4: Post-Migration"
+      "text": "What analytics &amp; reporting costs"
     },
     {
       "level": 3,
-      "text": "Verify and Test"
-    },
-    {
-      "level": 3,
-      "text": "User Training"
-    },
-    {
-      "level": 3,
-      "text": "Security Configuration"
+      "text": "Setup plus ongoing reporting"
     },
     {
       "level": 2,
-      "text": "Working with a Migration Partner"
+      "text": "Related services"
+    },
+    {
+      "level": 3,
+      "text": "SEO Services"
+    },
+    {
+      "level": 3,
+      "text": "Local SEO"
+    },
+    {
+      "level": 3,
+      "text": "GEO &amp; AI Search"
     },
     {
       "level": 2,
-      "text": "Enjoyed this article?"
+      "text": "Frequently Asked Questions"
+    },
+    {
+      "level": 2,
+      "text": "Know which half of your marketing is working?"
     },
     {
       "level": 4,
@@ -115,33 +127,6 @@
   "jsonld": [
     {
       "@context": "https://schema.org",
-      "@type": "Article",
-      "headline": "Microsoft 365 Migration Checklist",
-      "description": "A practical, Canadian-SMB-focused Microsoft 365 migration checklist: pre-migration assessment through post-launch support, step by step.",
-      "datePublished": "2026-04-21T03:50:14.372Z",
-      "dateModified": "2026-04-21T03:50:14.372Z",
-      "url": "https://nexfortis.com/blog/microsoft-365-migration-checklist-canadian-smbs",
-      "image": "https://nexfortis.com/opengraph.png",
-      "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "https://nexfortis.com/blog/microsoft-365-migration-checklist-canadian-smbs"
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "NexFortis IT Solutions",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://nexfortis.com/images/logo-512.png"
-        }
-      },
-      "author": {
-        "@type": "Person",
-        "name": "Hassan Sadiq",
-        "url": "https://nexfortis.com/about"
-      }
-    },
-    {
-      "@context": "https://schema.org",
       "@type": "BreadcrumbList",
       "itemListElement": [
         {
@@ -153,14 +138,66 @@
         {
           "@type": "ListItem",
           "position": 2,
-          "name": "Blog",
-          "item": "https://nexfortis.com/blog"
+          "name": "Services",
+          "item": "https://nexfortis.com/services"
         },
         {
           "@type": "ListItem",
           "position": 3,
-          "name": "Microsoft 365 Migration Checklist for Canadian SMBs",
-          "item": "https://nexfortis.com/blog/microsoft-365-migration-checklist-canadian-smbs"
+          "name": "Digital Marketing",
+          "item": "https://nexfortis.com/services/digital-marketing"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Analytics & Reporting",
+          "item": "https://nexfortis.com/services/digital-marketing/analytics-reporting"
+        }
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is marketing analytics and reporting?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It's the work of measuring your marketing accurately and turning that data into decisions. That means setting up tools like GA4, Search Console, and conversion tracking correctly, then reporting on the metrics that matter — leads, cost per lead, and revenue by channel — so you can see what's working and put your budget where it pays off."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need GA4 set up, or is my old analytics fine?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "You need GA4. Google's previous version, Universal Analytics, stopped processing data in 2023, so any old setup is no longer collecting anything. Many businesses migrated in a hurry and have GA4 configured incorrectly — missing conversions or double-counting — which means the numbers they're trusting are wrong. We check and fix that."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What metrics actually matter?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The ones tied to your business, not vanity numbers. Sessions and pageviews are easy to report and tell you little. We focus on leads, cost per lead, conversion rate, and revenue by channel — the metrics that tell you whether your marketing is making money and where to invest next."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How often will I get reports?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Monthly, as standard — a clear, plain-language report on what moved, what we did, and what it meant for leads and revenue, ending with a recommendation. We can also build live dashboards you can check any time, so you're never waiting on a report to see how things are going."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can you fix tracking that's already broken?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes — that's often where we start. We audit your existing GA4, tags, and conversion tracking to find what's missing, double-counted, or misconfigured, then fix it so your data is trustworthy. There's no point reporting on numbers you can't rely on, so getting the setup right comes first."
+          }
         }
       ]
     },
@@ -241,6 +278,33 @@
       "sameAs": [
         "https://www.linkedin.com/company/nexfortis"
       ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Hassan Sadiq",
+      "jobTitle": "Founder & CEO, NexFortis IT Solutions",
+      "url": "https://nexfortis.com/about",
+      "worksFor": {
+        "@id": "https://nexfortis.com/#organization"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "Marketing Analytics & Reporting Services",
+      "description": "Marketing analytics and reporting for Canadian businesses — GA4 and conversion-tracking setup, Search Console, call tracking, custom dashboards, and monthly reporting.",
+      "url": "https://nexfortis.com/services/digital-marketing/analytics-reporting",
+      "provider": {
+        "@type": "Organization",
+        "name": "NexFortis IT Solutions",
+        "url": "https://nexfortis.com"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "Canada"
+      },
+      "serviceType": "Marketing Analytics and Reporting"
     },
     {
       "@context": "https://schema.org",
@@ -368,16 +432,28 @@
       "href": "/services"
     },
     {
-      "text": "Back to Blog",
-      "href": "/blog"
+      "text": "Services",
+      "href": "/services"
     },
     {
-      "text": "More Articles",
-      "href": "/blog"
+      "text": "digital marketing services",
+      "href": "/services/digital-marketing"
     },
     {
-      "text": "Contact us",
-      "href": "/contact"
+      "text": "Source: Firework, Marketing ROI Statistics",
+      "href": "https://firework.com/blog/marketing-roi-statistics"
+    },
+    {
+      "text": "Source: Google / Dentsu, GA4 transition",
+      "href": "https://www.dentsu.com/nl/en/google-is-sunsetting-universal-analytics-in-favor-of-ga4"
+    },
+    {
+      "text": "Source: Statcounter Global Stats",
+      "href": "https://gs.statcounter.com/search-engine-market-share"
+    },
+    {
+      "text": "More about NexFortis",
+      "href": "/about"
     },
     {
       "text": "About Us",
@@ -418,6 +494,10 @@
     {
       "text": "Our services",
       "href": "/services"
+    },
+    {
+      "text": "Contact us",
+      "href": "/contact"
     }
   ],
   "rootDivIsEmpty": false,

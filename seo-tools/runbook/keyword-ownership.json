@@ -87,9 +87,9 @@
     },
     "/services/digital-marketing/analytics-reporting": {
       "name": "Analytics & Reporting",
-      "status": "tentative",
-      "primary": ["marketing analytics services", "analytics and reporting"],
-      "secondary": []
+      "status": "confirmed (KI cluster order 96b19961, 2026-06-18)",
+      "primary": ["marketing analytics services", "marketing analytics agency"],
+      "secondary": ["ga4 services", "marketing reporting services", "marketing dashboard services", "analytics consulting services", "conversion tracking services", "google analytics services", "google analytics setup"]
     },
     "blog": {
       "name": "Informational blog/guide cluster (links UP to the service pages)",

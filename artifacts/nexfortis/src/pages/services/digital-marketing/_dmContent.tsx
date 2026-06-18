@@ -2379,4 +2379,191 @@ export const DM_SPOKE_CONTENT: Partial<Record<DmSpokeSlug, DmSpokeContent>> = {
     ctaSubtext:
       "Get a free conversion audit — where you're losing visitors, the highest-impact fixes, and what lifting your conversion rate would be worth.",
   },
+
+  // -------------------------------------------- ANALYTICS & REPORTING ----
+  "analytics-reporting": {
+    metaTitle: "Analytics & Reporting",
+    metaDescription:
+      "Marketing analytics & reporting for Canadian businesses: GA4, Search Console, and call tracking in monthly reports that tie marketing to revenue.",
+    h1: "Analytics & Reporting That Proves What Works",
+    heroSubtitle:
+      "GA4, Search Console, and call tracking wired into clear monthly reports — so you finally know which marketing is making you money.",
+    serviceType: "Marketing Analytics and Reporting",
+    serviceSchemaName: "Marketing Analytics & Reporting Services",
+    serviceSchemaDescription:
+      "Marketing analytics and reporting for Canadian businesses — GA4 and conversion-tracking setup, Search Console, call tracking, custom dashboards, and monthly reporting.",
+    introHeading: "If you can't measure it, you can't grow it",
+    intro: (
+      <>
+        <p>
+          Ask most business owners which half of their marketing budget is working and they
+          genuinely can&rsquo;t tell you &mdash; the tracking was never set up properly, or the
+          reports are a wall of numbers nobody acts on. That&rsquo;s an expensive blind spot: you end
+          up cutting what works and feeding what doesn&rsquo;t, on a hunch.
+        </p>
+        <p>
+          We fix the measurement. We set up GA4, conversion and call tracking, and Search Console
+          correctly, then turn the data into a clear monthly report that answers one question: what
+          is actually bringing in customers? It&rsquo;s the layer underneath every other part of our{" "}
+          <InlineLink href={DM_PILLAR_HREF}>{DM_PILLAR_LINK_TEXT}</InlineLink> &mdash; the reason we
+          can tell you a campaign is working instead of hoping it is.
+        </p>
+        <p>
+          No vanity dashboards. Just the numbers that tie your marketing to leads and revenue, in
+          plain language, with a recommendation on what to do next.
+        </p>
+      </>
+    ),
+    stats: [
+      {
+        value: "36%",
+        label: "of marketers say they can accurately measure their marketing ROI.",
+        sourceName: "Firework, Marketing ROI Statistics",
+        sourceUrl: "https://firework.com/blog/marketing-roi-statistics",
+      },
+      {
+        value: "2023",
+        label: "Universal Analytics shut down — GA4 is the standard, and many setups are still incomplete.",
+        sourceName: "Google / Dentsu, GA4 transition",
+        sourceUrl: "https://www.dentsu.com/nl/en/google-is-sunsetting-universal-analytics-in-favor-of-ga4",
+      },
+      {
+        value: "≈90%",
+        label: "of search runs on Google — where GA4 and Search Console measure your results.",
+        sourceName: "Statcounter Global Stats",
+        sourceUrl: "https://gs.statcounter.com/search-engine-market-share",
+      },
+    ],
+    featuresHeading: "What's included in our analytics & reporting",
+    featuresSubtitle: "Proper measurement, then reports you'll actually use.",
+    features: [
+      {
+        icon: Gauge,
+        title: "GA4 & tracking setup",
+        description:
+          "We set up Google Analytics 4 properly — events, conversions, and the configuration most setups get wrong — so the data you're making decisions on is actually trustworthy.",
+      },
+      {
+        icon: Search,
+        title: "Search Console & SEO data",
+        description:
+          "We connect and configure Google Search Console so you can see the queries, rankings, and pages driving your organic traffic — the data that makes SEO measurable instead of a black box.",
+      },
+      {
+        icon: LineChart,
+        title: "Call & conversion tracking",
+        description:
+          "We track the things that actually matter to your business — form fills, calls, and bookings — and tie them back to the channel and campaign that produced them, so you know what's earning its keep.",
+      },
+      {
+        icon: BarChart3,
+        title: "Custom dashboards",
+        description:
+          "We build dashboards that show the handful of numbers you care about at a glance — leads, cost per lead, and revenue by channel — instead of burying them in default reports.",
+      },
+      {
+        icon: FileText,
+        title: "Monthly reporting",
+        description:
+          "Every month you get a clear, plain-language report: what moved, what we did, and what it meant for leads and revenue — not a screenshot dump you have to decode.",
+      },
+      {
+        icon: Sparkles,
+        title: "Insights & recommendations",
+        description:
+          "Numbers without a next step are just trivia. Every report ends with what we recommend doing about it — where to invest more, what to cut, and what to test next.",
+      },
+    ],
+    processHeading: "How we deliver analytics & reporting",
+    process: [
+      {
+        step: "01",
+        title: "Audit the setup",
+        description:
+          "We review your existing analytics, tracking, and tags to find what's broken, double-counted, or missing — because most reporting problems start with a flawed setup.",
+      },
+      {
+        step: "02",
+        title: "Fix & configure",
+        description:
+          "We set up GA4, conversion and call tracking, and Search Console correctly so the data is accurate and tied to real business outcomes.",
+      },
+      {
+        step: "03",
+        title: "Build dashboards",
+        description:
+          "We build the dashboards and report templates around the metrics that matter to you, so the important numbers are always one click away.",
+      },
+      {
+        step: "04",
+        title: "Report & advise",
+        description:
+          "Each month we deliver a clear report with insights and recommendations, so the data turns into decisions instead of sitting unused.",
+      },
+    ],
+    comparisonHeading: "NexFortis vs. a typical reporting setup",
+    comparison: [
+      { feature: "Tracking", us: "Set up correctly and verified", them: "Default install, often broken" },
+      { feature: "Metrics", us: "Leads, cost per lead, revenue", them: "Sessions and pageviews" },
+      { feature: "Reports", us: "Plain language with a recommendation", them: "A screenshot dump" },
+      { feature: "Tie to revenue", us: "Every channel measured against leads", them: "Vanity metrics" },
+      { feature: "Who does the work", us: "A senior consultant you can reach", them: "An automated export" },
+      { feature: "Commitment", us: "Month-to-month — we earn the renewal", them: "Locked contracts" },
+    ],
+    pricingHeading: "What analytics & reporting costs",
+    pricing: {
+      fromLabel: "Setup plus ongoing reporting",
+      note: (
+        <>
+          <p className="mb-4">
+            There are two parts: a one-time setup to get tracking and dashboards right, and an
+            ongoing monthly cost for reporting and analysis. The setup depends on how much needs
+            fixing; the ongoing cost scales with how many channels and reports you need.
+          </p>
+          <p>
+            It&rsquo;s often bundled with our other services, since measurement makes all of them
+            better. Pricing is transparent with no lock-in &mdash; ask for a free analytics audit and
+            we&rsquo;ll tell you what&rsquo;s broken and what it takes to fix it.
+          </p>
+        </>
+      ),
+    },
+    faq: [
+      {
+        question: "What is marketing analytics and reporting?",
+        answer:
+          "It's the work of measuring your marketing accurately and turning that data into decisions. That means setting up tools like GA4, Search Console, and conversion tracking correctly, then reporting on the metrics that matter — leads, cost per lead, and revenue by channel — so you can see what's working and put your budget where it pays off.",
+      },
+      {
+        question: "Do I need GA4 set up, or is my old analytics fine?",
+        answer:
+          "You need GA4. Google's previous version, Universal Analytics, stopped processing data in 2023, so any old setup is no longer collecting anything. Many businesses migrated in a hurry and have GA4 configured incorrectly — missing conversions or double-counting — which means the numbers they're trusting are wrong. We check and fix that.",
+      },
+      {
+        question: "What metrics actually matter?",
+        answer:
+          "The ones tied to your business, not vanity numbers. Sessions and pageviews are easy to report and tell you little. We focus on leads, cost per lead, conversion rate, and revenue by channel — the metrics that tell you whether your marketing is making money and where to invest next.",
+      },
+      {
+        question: "How often will I get reports?",
+        answer:
+          "Monthly, as standard — a clear, plain-language report on what moved, what we did, and what it meant for leads and revenue, ending with a recommendation. We can also build live dashboards you can check any time, so you're never waiting on a report to see how things are going.",
+      },
+      {
+        question: "Can you fix tracking that's already broken?",
+        answer:
+          "Yes — that's often where we start. We audit your existing GA4, tags, and conversion tracking to find what's missing, double-counted, or misconfigured, then fix it so your data is trustworthy. There's no point reporting on numbers you can't rely on, so getting the setup right comes first.",
+      },
+    ],
+    authorNote: (
+      <p>
+        Hassan leads analytics and reporting at NexFortis, bringing an IT and data background to the
+        tracking setup and measurement that make every other marketing channel accountable. As
+        founder and CEO he stays hands-on with every engagement.
+      </p>
+    ),
+    ctaHeading: "Know which half of your marketing is working?",
+    ctaSubtext:
+      "Get a free analytics audit — what your tracking is missing, which numbers to trust, and how to finally tie your marketing to revenue.",
+  },
 };

@@ -76,12 +76,12 @@
       "text": "Conversion Rate Optimization"
     },
     {
-      "level": 2,
-      "text": "Also available across the cluster"
-    },
-    {
       "level": 3,
       "text": "Analytics &amp; Reporting"
+    },
+    {
+      "level": 2,
+      "text": "Also available across the cluster"
     },
     {
       "level": 2,
@@ -420,6 +420,10 @@
     {
       "text": "Conversion Rate Optimization",
       "href": "/services/digital-marketing/conversion-rate-optimization"
+    },
+    {
+      "text": "Analytics &amp; Reporting",
+      "href": "/services/digital-marketing/analytics-reporting"
     },
     {
       "text": "Microsoft 365 Solutions",

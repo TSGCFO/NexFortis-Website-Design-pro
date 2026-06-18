@@ -201,7 +201,7 @@ export const DM_SPOKES: readonly DmSpoke[] = [
       "GA4, Search Console, and call tracking wired into clear monthly reports that tie marketing to real revenue.",
     icon: BarChart3,
     category: "Analytics / Reporting",
-    published: false,
+    published: true,
   },
 ];
 
