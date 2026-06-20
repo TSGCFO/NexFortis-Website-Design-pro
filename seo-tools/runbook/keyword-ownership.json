@@ -1,101 +1,56 @@
 {
   "_purpose": "Cannibalization registry: which page owns which keywords. One page = one cluster. No keyword may appear under two pages.",
   "_rule": "Checked by seo-tools/runbook/check-cannibalization.mjs — it fails (exit 1) if any keyword is owned by more than one page.",
-  "_status_legend": {
-    "confirmed": "Owned cluster verified via live KI SERP-overlap clustering.",
-    "tentative": "Seed head terms only — REPLACE with real KI clustering when this page is produced through the run book.",
-    "reserved": "Informational terms parked on the blog/guide cluster so no service spoke claims them."
-  },
+  "_provenance": "National service-page map (Phase A), 2026-06-20. Business-logic grouping informed by KI clustering (order b0574d01, agglomerative/accuracy-2) + 3-tool intent (DataForSEO/Semrush/Ahrefs). SUPERSEDES and DISCARDS the prior PR #107 spoke set. Folds: GBP -> local-seo; technical+ecommerce SEO -> seo; PPC -> google-ads-ppc; GEO+AI -> geo-ai-search; website-maintenance -> web-design; analytics-reporting -> dropped. Geo [service]+[city] = Layer-2 (Phase B), appended later. Detail: seo-tools/runbook/02-page-map.md.",
   "pages": {
-    "/services/digital-marketing": {
-      "name": "Digital Marketing (pillar)",
-      "status": "confirmed (KI cluster order 6b875c46, 2026-06-18)",
-      "primary": ["digital marketing services", "digital marketing agency", "digital marketing company"],
-      "secondary": ["digital marketing firm", "online marketing services", "internet marketing services", "digital marketing agency near me", "digital marketing services for small business"]
+    "digital-marketing": {
+      "_role": "PILLAR (exists) — hub linking all spokes",
+      "primary": ["digital marketing services"],
+      "secondary": ["digital marketing agency", "digital marketing company", "digital marketing firm", "online marketing services", "internet marketing services", "digital marketing agency near me", "digital marketing services for small business"]
     },
-    "/services/digital-marketing/local-seo": {
-      "name": "Local SEO",
-      "status": "confirmed (KI cluster order 60ed2346, 2026-06-15)",
-      "primary": ["local seo services", "local seo company", "local seo agency"],
-      "secondary": ["local seo near me", "local seo expert"]
+    "seo": {
+      "primary": ["seo services"],
+      "secondary": ["seo company", "seo agency", "professional seo services", "seo service", "seo canada", "seo consultant", "seo specialist", "seo expert", "ecommerce seo agency", "technical seo services", "technical seo audit"]
     },
-    "/services/digital-marketing/seo": {
-      "name": "SEO Services",
-      "status": "confirmed (KI cluster order 362f44e6, 2026-06-18)",
-      "primary": ["seo services", "seo company", "seo agency"],
-      "secondary": ["seo consultant", "seo agency near me", "affordable seo services", "seo services for small business"]
+    "local-seo": {
+      "primary": ["local seo services"],
+      "secondary": ["local seo company", "local seo agency", "local seo service", "local seo consultant", "local seo services for small business", "google business profile optimization", "google business profile management", "google business profile services"]
     },
-    "/services/digital-marketing/technical-seo": {
-      "name": "Technical SEO",
-      "status": "confirmed (KI cluster order 4c38469c, 2026-06-18)",
-      "primary": ["technical seo services", "technical seo agency", "technical seo company", "technical seo consultant"],
-      "secondary": ["technical seo audit"]
+    "web-design": {
+      "primary": ["web design services"],
+      "secondary": ["web design company", "web design agency", "custom web design", "best web design company", "web design and development", "website maintenance services"]
     },
-    "/services/digital-marketing/google-business-profile": {
-      "name": "Google Business Profile",
-      "status": "confirmed (KI cluster order 4bf86c20, 2026-06-18; GBP terms fenced off Local SEO)",
-      "primary": ["google business profile optimization", "google business profile management", "google business profile services"],
-      "secondary": ["gmb optimization", "google my business optimization", "gmb management", "google business profile setup", "google maps optimization", "local listing management", "gmb"]
+    "google-ads-ppc": {
+      "primary": ["google ads management"],
+      "secondary": ["google ads agency", "google ads services", "google ads management services", "ppc agency", "ppc services", "ppc management", "ppc management services", "ppc management company", "ppc company", "ppc marketing agency", "ppc advertising agency", "google ppc services", "google local service ads"]
     },
-    "/services/digital-marketing/content-marketing": {
-      "name": "Content Marketing",
-      "status": "confirmed (KI cluster order 206d4516, 2026-06-18)",
-      "primary": ["content marketing services", "content marketing agency", "content marketing company"],
-      "secondary": ["content writing services", "content creation services", "content strategy services", "blog writing services", "content marketing consultant"]
+    "social-media-marketing": {
+      "primary": ["social media marketing services"],
+      "secondary": ["social media marketing agency", "social media marketing company", "social media marketing companies"]
     },
-    "/services/digital-marketing/link-building": {
-      "name": "Link Building & Digital PR",
-      "status": "confirmed (KI cluster order d1e91f67, 2026-06-18)",
-      "primary": ["link building services", "link building agency", "link building company", "backlink services"],
-      "secondary": ["digital pr services", "guest posting services", "blogger outreach services", "off page seo services", "link building consultant", "white hat link building"]
+    "content-marketing": {
+      "primary": ["content marketing services"],
+      "secondary": ["content marketing agency", "content marketing service", "b2b content marketing agency", "video content marketing services"]
     },
-    "/services/digital-marketing/generative-engine-optimization": {
-      "name": "GEO & AI Search",
-      "status": "confirmed (KI cluster order bb789e7e, 2026-06-18)",
-      "primary": ["generative engine optimization", "generative engine optimization services"],
-      "secondary": ["answer engine optimization", "ai search optimization", "ai overview optimization", "chatgpt seo", "llm optimization"]
+    "link-building": {
+      "primary": ["link building services"],
+      "secondary": ["link building service", "seo link building services", "best link building service", "link building packages", "seo link building company", "link building outreach service"]
     },
-    "/services/digital-marketing/google-ads": {
-      "name": "Google Ads Management",
-      "status": "confirmed (KI cluster order b3cd3f2b, 2026-06-18)",
-      "primary": ["google ads management", "google ads agency", "ppc management", "ppc agency"],
-      "secondary": ["ppc services", "sem services", "google ads management services", "ppc management services", "paid search management", "google adwords management"]
+    "geo-ai-search": {
+      "primary": ["generative engine optimization"],
+      "secondary": ["answer engine optimization", "generative engine optimization services", "ai seo services", "ai seo agency", "ai seo optimization"]
     },
-    "/services/digital-marketing/social-media-marketing": {
-      "name": "Social Media Marketing",
-      "status": "confirmed (KI cluster order f62c5303, 2026-06-18)",
-      "primary": ["social media marketing services", "social media management", "social media marketing agency", "social media agency", "social media marketing company"],
-      "secondary": ["social media management services", "social media marketing for small business", "social media advertising", "facebook ads management", "meta ads management"]
+    "reputation-management": {
+      "primary": ["reputation management services"],
+      "secondary": ["online reputation management services", "online reputation management agency", "reputation management company", "reputation management agency", "brand reputation management"]
     },
-    "/services/digital-marketing/web-design": {
-      "name": "Web Design & Development",
-      "status": "confirmed (KI cluster order df986641, 2026-06-18)",
-      "primary": ["web design services", "web design company", "web design agency", "website design services"],
-      "secondary": ["custom web design", "website development services", "ecommerce web design", "web design and development", "web design for small business"]
+    "email-marketing": {
+      "primary": ["email marketing services"],
+      "secondary": ["email marketing agency", "email marketing company", "email marketing automation", "small business email marketing"]
     },
-    "/services/digital-marketing/email-marketing": {
-      "name": "Email Marketing",
-      "status": "confirmed (KI cluster order 7ac6fe00, 2026-06-18)",
-      "primary": ["email marketing services", "email marketing agency", "email marketing company"],
-      "secondary": ["email automation services", "email marketing consultant", "email marketing management", "email campaign management", "email marketing for small business"]
-    },
-    "/services/digital-marketing/conversion-rate-optimization": {
-      "name": "Conversion Rate Optimization",
-      "status": "confirmed (KI cluster order 7c0b4a48, 2026-06-18)",
-      "primary": ["conversion rate optimization services", "cro agency", "conversion rate optimization agency"],
-      "secondary": ["cro services", "conversion optimization services", "landing page optimization", "website conversion optimization", "ab testing services", "cro consultant"]
-    },
-    "/services/digital-marketing/analytics-reporting": {
-      "name": "Analytics & Reporting",
-      "status": "confirmed (KI cluster order 96b19961, 2026-06-18)",
-      "primary": ["marketing analytics services", "marketing analytics agency"],
-      "secondary": ["ga4 services", "marketing reporting services", "marketing dashboard services", "analytics consulting services", "conversion tracking services", "google analytics services", "google analytics setup"]
-    },
-    "blog": {
-      "name": "Informational blog/guide cluster (links UP to the service pages)",
-      "status": "reserved",
-      "primary": ["local seo", "local seo for small business", "local search marketing", "digital marketing", "seo", "search engine optimization", "seo expert", "technical seo", "website speed optimization", "responsive web design", "conversion rate optimization"],
-      "secondary": []
+    "conversion-rate-optimization": {
+      "primary": ["conversion rate optimization services"],
+      "secondary": ["conversion rate optimization agency", "conversion rate optimization company", "conversion rate optimization consultant"]
     }
   }
 }
