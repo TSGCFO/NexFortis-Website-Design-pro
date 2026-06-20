@@ -1,9 +1,18 @@
 # Step 4 — Outline + SERP-derived length — Local SEO (/services/digital-marketing/local-seo)
 
-## Word-count target (SERP-derived)
-- **Target range: 1,100–1,900 main-content words.**
-- From 03-brief: CA service-page subset ~974–3,732 raw HTML (~700–3,200 main); thin end ~700–1,000.
-  A focused spoke should clear the thin pages and sit mid-band without guide bloat. Current = 1,215.
+## Word-count target (SERP-derived — RECONCILED to the REAL KI brief)
+- **Target range: 700–1,700 main-content words.**
+- From the REAL KI brief (order 4980d254): competitor **main-content** word count is **avg 454 /
+  min 431 / max 567** across the scraped ranking service pages — i.e., the SERP for "local seo
+  services" is dominated by SHORT service pages (~430–570 words of core copy). This matches the run
+  book's stated 340–1,650 service-page range for this term.
+- Gate-1/gate-2 trade-off: beat the thin ~454-word competitors with a richer, more trustworthy page,
+  but DON'T balloon to guide length. The page's length above the ~454 core comes from
+  conversion-oriented structure (6 feature cards, process, comparison, pricing, FAQ = gate 2), not
+  padded prose. Target band 700–1,700; current rendered ~1,500 sits at the substantive end, still
+  inside the run book's 340–1,650 SERP range and well below guide/directory length.
+- (Earlier 1,100–1,900 target was based on my raw-<body> competitor counts, which over-counted vs
+  KI's main-content method; corrected here to the real KI numbers.)
 
 ## Intent & cluster (cannibalization-safe)
 - Owns the **local seo services / company / agency** cluster (+ secondary: local seo near me, local

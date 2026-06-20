@@ -296,26 +296,28 @@ export const DM_SPOKE_CONTENT: Partial<Record<DmSpokeSlug, DmSpokeContent>> = {
     intro: (
       <>
         <p>
-          Picture someone in Vaughan whose server just died, thumbing &ldquo;IT support near
-          me&rdquo; into their phone. Google hands them a little map with three businesses pinned to
-          it, and almost nobody scrolls past those three. If your name is not one of them, that
-          customer never knows you exist &mdash; even if you are the better choice and half a
-          kilometre closer.
+          Think about someone in Vaughan with a server crash in the middle of the night. They do a
+          search for &ldquo;IT support near me&rdquo; on their phone, and Google returns a small map
+          with three businesses pinned to it. The vast majority of people then click one of those
+          three to read more about their services; almost nobody scrolls down to the businesses
+          listed below. As a result, a company that&rsquo;s better suited to deal with the problem
+          &mdash; even one half a kilometre closer &mdash; never even gets noticed, simply because
+          it isn&rsquo;t one of the three.
         </p>
         <p>
-          Getting into that map pack is what local SEO is for. There is no single switch; it is the
-          sum of a properly built Google Business Profile, business details that match everywhere
-          they appear online, a steady trickle of real reviews, and pages that speak to the specific
-          places you serve. Together those tell Google you are a real, trusted option in the area.
-          It is one slice of our wider{" "}
-          <InlineLink href={DM_PILLAR_HREF}>{DM_PILLAR_LINK_TEXT}</InlineLink>, and it works hand in
-          glove with <InlineLink href={seo.href}>{seo.linkText}</InlineLink> when you want both the
-          map and the regular results working for you.
+          Local SEO is how you get into that map pack. There&rsquo;s no single switch to flip;
+          rather, a number of factors combine to make it happen. We build out your Google Business
+          Profile, make sure your business details are accurate and consistent across every online
+          listing, earn you real reviews, and create location-based pages for the areas you actually
+          serve. Together those elements tell Google you&rsquo;re a legitimate, trusted business in
+          the area. Local SEO is just one of the many{" "}
+          <InlineLink href={DM_PILLAR_HREF}>{DM_PILLAR_LINK_TEXT}</InlineLink> we offer &mdash; on
+          its own or alongside our <InlineLink href={seo.href}>{seo.linkText}</InlineLink> &mdash; to
+          win both the map pack and the regular search results.
         </p>
         <p>
-          The reason it is worth the effort is simple: people searching locally are usually ready to
-          act. They call, they ask for directions, they show up &mdash; and the businesses sitting
-          in the map pack get first crack at all of it.
+          Local searchers are ready to act, and you get first crack at them when you&rsquo;re listed
+          in the map pack. They&rsquo;ll call you, look up directions to your door, and show up.
         </p>
       </>
     ),
@@ -352,31 +354,31 @@ export const DM_SPOKE_CONTENT: Partial<Record<DmSpokeSlug, DmSpokeContent>> = {
         icon: MapPin,
         title: "Citations & NAP consistency",
         description:
-          "We make sure your name, address, and phone number match exactly across Google, Bing, Apple Maps, and the directories that matter in Canada — inconsistencies quietly erode local trust.",
+          "We make sure your name, address, and phone number stay accurate and consistent across Google, Bing, Apple Maps, and the Canadian directories that matter — small mismatches quietly erode local trust.",
       },
       {
         icon: Star,
         title: "Review generation & response",
         description:
-          "We set up a simple system to earn steady, genuine reviews and respond to every one — a ranking signal and the first thing a nearby buyer reads before they call.",
+          "We set up a simple way to bring in a steady stream of genuine reviews and reply to every single one — reviews are both a ranking signal and the first thing a nearby customer reads before they call.",
       },
       {
         icon: Map,
         title: "Location & service-area pages",
         description:
-          "We build genuinely useful pages for the cities and neighbourhoods you serve — real local detail, not thin duplicates — so you rank for each area without tripping Google's doorway-page rules.",
+          "We create genuinely useful pages for every city and neighbourhood you want to be found in — real local content, not thin duplicates — so you can rank across all of them without tripping Google's doorway-page rules.",
       },
       {
         icon: Users,
         title: "Local content & link building",
         description:
-          "We earn mentions and links from local publications, partners, and community sites — the regional signals that move the map pack more than national links ever will.",
+          "We earn local press coverage, partner mentions, and links from community-focused sites and publications — regional signals that move the map pack far more than national links ever will.",
       },
       {
         icon: LineChart,
         title: "Local rank & call tracking",
         description:
-          "We track your position in the map pack by location and tie calls and direction requests back to the work, so you can see exactly what local SEO is returning.",
+          "We track your map-pack position by location and tie calls and direction requests back to the work, so you get a clear picture of what your local SEO is actually producing.",
       },
     ],
     processHeading: "How we deliver local SEO",
@@ -430,6 +432,12 @@ export const DM_SPOKE_CONTENT: Partial<Record<DmSpokeSlug, DmSpokeContent>> = {
             monthly scope and no long-term lock-in. Ask for a quote tied to your city and your
             competition.
           </p>
+          <p className="mt-4">
+            Whether you&rsquo;re shopping for a local SEO company, a local SEO agency, or a hands-on
+            local SEO expert &mdash; or you simply searched &ldquo;local SEO near me&rdquo; and
+            landed here &mdash; you get the same senior attention and transparent pricing, with no
+            hand-off to a junior.
+          </p>
         </>
       ),
     },
@@ -437,35 +445,36 @@ export const DM_SPOKE_CONTENT: Partial<Record<DmSpokeSlug, DmSpokeContent>> = {
       {
         question: "What is local SEO?",
         answer:
-          "Local SEO is the work that puts your business in front of people searching nearby — the Google map pack, 'near me' searches, and Google Maps. Most of it comes down to four things: your Google Business Profile, business details that stay consistent everywhere online, your reviews, and content that actually speaks to the area you serve.",
+          "For most businesses, local SEO is what gets them in front of customers searching nearby — the 'map pack', 'near me' searches, and Google Maps. Improving your visibility in those places comes down to four things: your Google Business Profile, consistent business details across the web, your reviews, and content that's relevant to the area you serve.",
       },
       {
         question: "Do I need a storefront to do local SEO?",
         answer:
-          "Not at all. Plenty of our clients go to the customer rather than the other way around — IT support, trades, consultants, home services. Google lets you set a service area instead of a public address, and as long as it is configured properly you show up for the places you actually cover. We set that up so you are not accidentally invisible or, worse, ranking for towns you don't serve.",
+          "No — many of our clients are out of the office and travel to their customers instead: IT support, tradespeople, consultants, and plenty of home-services providers. Google lets you define a service area instead of a physical address, and as long as it's set up correctly you'll show up for the areas you actually cover. We make sure it's configured properly so you're not accidentally invisible — or, worse, ranking for places you don't serve.",
       },
       {
         question: "How important are Google reviews?",
         answer:
-          "Hugely, and on two fronts. Reviews feed into where you land in the map pack, and they are usually the deciding factor when a searcher is choosing between you and the business listed right beside you. A slow, steady stream of genuine reviews — and a reply to every one — is one of the highest-return things a local business can do, so we put a simple system in place to keep them coming.",
+          "Reviews are a huge part of the local SEO work we do, on two fronts. They help decide where you land in the map pack, and they're usually the biggest factor when a searcher is choosing between you and the business right beside you. A steady stream of genuine reviews — and a reply to every one — is one of the highest-return things a local business can do, so we put a simple system in place to keep them coming.",
       },
       {
         question: "How long does local SEO take?",
         answer:
-          "Some of it moves quickly. Tidying up and optimising a Google Business Profile can shift the map pack within a few weeks. The slower-burning pieces — citations, reviews, location pages — tend to build over two to four months. A busy downtown market takes longer than a quieter suburb, and we will tell you honestly which one you are in before we start.",
+          "Some of it moves fast — getting your Google Business Profile sorted can move the map pack within a few weeks. The slower-burning pieces — citations, reviews, location pages — tend to build over two to four months. A busy downtown market with lots of competitors takes longer than a quieter suburb, and we'll tell you honestly which one you're in before we start.",
       },
       {
         question: "Can you handle multiple locations?",
         answer:
-          "Yes. Each branch or service area gets its own profile, its own citations, and its own location page, all kept consistent with each other while the content stays specific to each place. We do this for businesses running anything from two locations to a dozen.",
+          "Yes. Each branch or service area gets its own profile, its own citations, and its own location page — all kept consistent with each other while the content stays specific to each place. We do this for businesses running anything from two locations to a dozen or more.",
       },
     ],
     authorNote: (
       <p>
-        Hassan helps businesses across the GTA win the local search moments that actually turn into
-        calls &mdash; the map pack, the Google Business Profile, the &ldquo;near me&rdquo; searches.
-        As founder and CEO of NexFortis he stays hands-on with every engagement, so the person
-        planning your local strategy is the same one you can pick up the phone and reach.
+        Hassan and the team at NexFortis help businesses across the GTA win the local-search moments
+        that actually turn into calls &mdash; the map pack, the Google Business Profile, the
+        &ldquo;near me&rdquo; searches. As founder and CEO, Hassan stays hands-on with every
+        engagement, so the person planning your local strategy is the same one you can pick up the
+        phone and reach.
       </p>
     ),
     ctaHeading: "Want to own your local search results?",

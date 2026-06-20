@@ -1,5 +1,13 @@
 # Step 5 — Draft — Local SEO (/services/digital-marketing/local-seo)
 
+> UPDATE 2026-06-18 (corrected-process re-run): Step 3 brief regenerated from the REAL completed KI
+> brief (order 4980d254); Step-4 length retargeted to KI's competitor word counts (avg 454; band
+> 700–1700). Step 6c HUMANIZER applied to all prose + feature descriptions (Undetectable v11) — prose
+> AI 76.5 -> 47.5 (HUMAN); Winston plagiarism still 0%. Keyword-retention check added: 4 secondary
+> keywords were absent (pre-existing gap), backfilled naturally via the pricing section. Full prose
+> below reflects the humanized + proofread copy in _dmContent.tsx.
+
+
 Primary kw: **local seo services**. Canadian English, owner-focused, outcomes = calls/visits/map
 presence. CTA = free local visibility check. Pricing after a free audit (no invented price). Wired
 into the `local-seo` entry of `_dmContent.tsx` (Step 7). Stats verified in 06a.
