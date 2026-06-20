@@ -230,6 +230,64 @@ async function waitWriter(id, maxSeconds = 900) {
   process.exit(1);
 }
 
+// ---- AI Outline generation for an existing content brief ----
+// POST /api/content-brief/order/{order_id}/outline/  -> { auto_generate_order_id }
+// GET  /api/content-brief/order/{order_id}/outline/?auto_generate_order_id=  -> poll until status===true
+// Returns payload.list (structured heading items: the machine-readable H2/H3 outline)
+// + payload.string (concatenated outline text). The base brief does NOT include the
+// outline — it must be generated with this call. No extra credit cost (the outline POST
+// returns no `cost`, unlike brief creation). Verified against KI Swagger
+// (api.keywordinsights.ai/public_api_spec.json) + docs public-api-content-brief.
+async function outline(orderId, context) {
+  if (!orderId) {
+    console.error('Usage: outline <order_id> ["<additional_context>"]');
+    process.exit(1);
+  }
+  const body = {};
+  if (context) body.additional_context = context;
+  const { status, json } = await request(
+    "POST",
+    `/api/content-brief/order/${encodeURIComponent(orderId)}/outline/`,
+    body,
+  );
+  const autoId = unwrap(json)?.auto_generate_order_id;
+  console.log(`HTTP ${status} — auto_generate_order_id=${autoId ?? "(none)"}`);
+  console.log(JSON.stringify(json, null, 2));
+  if (autoId)
+    console.log(`\nNext: node seo-tools/keyword-insights.mjs wait-outline ${orderId} ${autoId}`);
+}
+
+// Poll an outline generation order until KI marks it done (payload.status === true),
+// then save the structured outline (list + string) and print the text.
+async function waitOutline(orderId, autoId, maxSeconds = 600) {
+  if (!orderId || !autoId) {
+    console.error("Usage: wait-outline <order_id> <auto_generate_order_id> [maxSeconds]");
+    process.exit(1);
+  }
+  const deadline = Date.now() + maxSeconds * 1000;
+  while (Date.now() < deadline) {
+    const { json } = await request(
+      "GET",
+      `/api/content-brief/order/${encodeURIComponent(orderId)}/outline/?auto_generate_order_id=${encodeURIComponent(autoId)}`,
+    );
+    const p = unwrap(json) ?? {};
+    const items = Array.isArray(p.list) ? p.list.length : 0;
+    console.log(`status=${p.status} items=${items}`);
+    if (p.status === true) {
+      const out = `seo-tools/tmp/outline-${orderId}.json`;
+      writeFileSync(out, JSON.stringify(p, null, 2));
+      console.log(`DONE -> saved outline to ${out} (${items} heading items)`);
+      if (p.string) console.log("\n===== OUTLINE =====\n" + p.string);
+      return;
+    }
+    await new Promise((r) => setTimeout(r, 10000));
+  }
+  console.error(
+    `Timed out after ${maxSeconds}s — outline still generating. Re-run: wait-outline ${orderId} ${autoId}`,
+  );
+  process.exit(1);
+}
+
 const [cmd, ...args] = process.argv.slice(2);
 if (cmd === "auth") await auth();
 else if (cmd === "wait-brief") await waitBrief(args[0], Number(args[1] || 360));
@@ -241,6 +299,8 @@ else if (cmd === "get-brief") await getBrief(args[0]);
 else if (cmd === "writer-options") await writerOptions();
 else if (cmd === "writer") await writer(args[0], args[1], args[2], args[3]);
 else if (cmd === "wait-writer") await waitWriter(args[0], Number(args[1] || 900));
+else if (cmd === "outline") await outline(args[0], args[1]);
+else if (cmd === "wait-outline") await waitOutline(args[0], args[1], Number(args[2] || 600));
 else
   console.log(
     [
@@ -253,5 +313,7 @@ else
       "  node seo-tools/keyword-insights.mjs writer-options",
       '  node seo-tools/keyword-insights.mjs writer "<keyword>" "Canada" landing_page "<additional_insights>"',
       "  node seo-tools/keyword-insights.mjs wait-writer <order_id>",
+      '  node seo-tools/keyword-insights.mjs outline <order_id> "<additional_context>"',
+      "  node seo-tools/keyword-insights.mjs wait-outline <order_id> <auto_generate_order_id>",
     ].join("\n"),
   );
