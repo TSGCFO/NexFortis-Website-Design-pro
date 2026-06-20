@@ -1,0 +1,16 @@
+{
+  "_slug": "seo",
+  "_purpose": "Locked outline headings for the keyword+outline coverage gate. The page content (draft, humanized, and rendered) MUST contain the H1 and every H2 verbatim, plus every owned keyword from keyword-ownership.json.",
+  "_source": "Step 4 grounded outline (04-outline.md); KI brief e563a06d.",
+  "primary": "seo services",
+  "h1": "NexFortis SEO Services | Canadian SEO Company",
+  "h2": [
+    "What NexFortis SEO services include",
+    "Our SEO services",
+    "Who our SEO services are for",
+    "Our SEO process",
+    "Why choose NexFortis for SEO",
+    "SEO pricing after a free audit",
+    "Frequently asked questions about our SEO services"
+  ]
+}

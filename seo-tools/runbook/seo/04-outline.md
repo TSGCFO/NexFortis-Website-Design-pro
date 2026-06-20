@@ -1,29 +1,38 @@
-# Step 4 — Outline + SERP-derived length — SEO (/services/digital-marketing/seo)
+# Step 4 — SEO page outline (LOCKED, grounded) — /services/digital-marketing/seo
 
-## Target: 1,200–2,100 main-content words.
-From 03-brief: CA service-page subset ~733–3,933 raw (~1,300–3,400 main); thin end ~700–1,000.
-Comprehensive-but-focused spoke beats the thin pages, sits near the substantive median. Current 1,455.
+**Primary:** `seo services` · **Date:** 2026-06-20 (supersedes PR #107)
+**Source:** KI auto-generate outline (brief `e563a06d`, auto_generate_order_id `09334dfe`; raw in `tmp/outline-e563a06d-….json`) — **REVIEWED & GROUNDED** against the brief's `raw[]` (20 ranking pages' real scraped headings) + `people_also_asked`/`questions`. Brief: `tmp/brief-e563a06d-….json`.
 
-## Intent & cluster (cannibalization-safe)
-Owns **seo services / company / agency** (+ secondary: seo consultant, seo agency near me, affordable
-seo services, seo services for small business). Fenced: local seo* → local-seo spoke; technical seo*
-→ technical-seo spoke; bare "seo"/"search engine optimization"/"seo expert" → blog (informational).
-Transactional; owner voice; outcomes = rankings→leads→revenue; CTA free assessment; price after audit.
+## Grounded-review result
 
-## Outline (maps to brief questions)
-- H1 "SEO Services That Rank Canadian Businesses". metaTitle "SEO Services in Canada".
-- Intro "Rankings that actually grow revenue" → what SEO services are / why SMBs need them; links
-  pillar + local-seo. StatBand (3 sourced, verified 6a).
-- "What's included in our SEO services" (6: keyword/intent research, on-page, technical foundations,
-  content, authority building, measurement) → answers "what's included / on-page seo services".
-- "How we deliver SEO" (4 steps).
-- "NexFortis vs typical SEO agency" (comparison).
-- "What SEO costs" (ranges, after free audit, no invented price).
-- FAQ (6): how long; guarantee #1; SEO vs local SEO; will you change my site; reporting; SEO + AI.
-- Author (Hassan, Founder & CEO) + CTA.
+KI's service themes MATCH the real ranking SERP: Technical SEO (4p), On-Page (5p), Link Building/Off-Page (4p), Keyword Research (4p), Content Marketing (2p), Local SEO (2p), process/"how it works" (2p). Reconciliations applied (not blind-accepted):
 
-## Sources to verify (6a)
-- ≈90% Google search — Statcounter (verified). 27.6% #1 CTR — Backlinko — VERIFY. 43% mobile pass
-  Core Web Vitals — HTTP Archive Web Almanac 2024 — VERIFY.
+- **FAQ ADD:** "How much do SEO services cost in Canada?" (#1 PAA — was missing from KI's outline).
+- **FAQ ADD:** "Is SEO still worth it in 2026 / what about AI search?" (PAA ×3; links to geo-ai-search) + "Should I do SEO myself or hire a company?" (DIY/ChatGPT PAAs).
+- **Ecommerce SEO:** keep as a minor service point (own `ecommerce seo agency`, 1000 vol); not a head theme.
+- **Local SEO + Social Media:** brief mention + INTERNAL LINK to their own pages (no cannibalization).
+- **Trust/social-proof:** ranking pages show testimonials/"proven track record" — DO NOT fabricate (per `_facts.md`); honest differentiation only.
 
-## Guardrails: no invented stats/clients/prices; fenced terms not targeted; humanize voice.
+## Locked outline
+
+- **H1:** NexFortis SEO Services | Canadian SEO Company
+- **H2 1. What NexFortis SEO Services Include** — full-spectrum SEO; ongoing campaign vs one-off; ties optimization to organic traffic, rankings, ROI for Canadian businesses.
+- **H2 2. Our SEO Services** *(one section, grouped points)* — On-Page SEO · Technical SEO (site audit, crawlability, site speed, schema, mobile) · Keyword Research & strategy · Content development · Link Building / Off-Page (white-hat, backlink-profile/disavow) · Ecommerce SEO *(minor)* · Local SEO → link to local-seo page.
+- **H2 3. Who Our SEO Services Are For** — SMBs, ecommerce, service businesses, multi-location, in-house teams needing a partner, companies starting from zero; "signs it's time to hire an SEO company."
+- **H2 4. Our SEO Process** — Free SEO Audit → Strategy → Execution → Monthly Reporting & ongoing optimization (outcomes, not vanity metrics).
+- **H2 5. Why Choose NexFortis for SEO** — Canadian expertise; integrated (no silos); transparent reporting; ethical/white-hat; dedicated SEO consultant; full-funnel alignment; honest ("no fabricated timelines/guarantees").
+- **H2 6. SEO Pricing After a Free Audit** — no fixed price; factors; monthly retainer; ecommerce/enterprise scoped separately; CTA to free audit.
+- **H2 7. FAQ** — cost in Canada · how long for results · SEO company vs consultant · DIY/AI vs hire · what the free audit includes · Google-penalty recovery · SEO across Canada.
+
+## Owned secondary keywords to cover (keyword-ownership.json → seo) — for the coverage gate
+
+`seo company` · `seo agency` · `professional seo services` · `seo service` · `seo canada` · `seo consultant` · `seo specialist` · `seo expert` · `ecommerce seo agency` · `technical seo services` · `technical seo audit`. (Primary: `seo services`.)
+
+## Draft directives (Step 5)
+
+- ~1,800 words, substantive hub (KI `word_count_avg` 216 is artificially low — ignore).
+- **Canadian English** (-ize: optimization; -our: behaviour/colour).
+- **Ground strictly in `_facts.md`** — NO invented stats, client results, testimonials, prices, guarantees, or ranking timelines.
+- Every owned secondary keyword present (keyword-coverage gate).
+- Internal links: pillar `digital-marketing` + `local-seo`, `content-marketing`, `link-building`, `web-design`, `geo-ai-search` where referenced.
+- CTA: free SEO audit/consultation. Schema: Service + Person (Hassan Sadiq) + FAQPage.

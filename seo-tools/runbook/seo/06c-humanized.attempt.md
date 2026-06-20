@@ -1,6 +1,6 @@
 # NexFortis SEO Services | Canadian SEO Company
 
-NexFortis is a Canadian SEO company that helps business owners turn organic search into a dependable source of leads and revenue. Our SEO services cover the full picture — technical SEO, on-page optimization, keyword research, content, and link building — managed as one ongoing campaign rather than a checklist of one-off fixes. Every engagement is led by a senior consultant, not handed off to a junior, and every plan is built on real Canadian search data.
+NexFortis is a Canadian SEO company that helps business owners turn organic search into a dependable source of leads and revenue. Our complete packages of SEO services (SEO) cover technical SEO, on-page SEO, keyword research, content, and link building. Unlike most other SEO companies we treat all of these as one campaign as opposed to a list of things to check off. Our seasoned consultants (senior) lead each engagement as opposed to passing it off to a junior. Our custom plans are based on real search data from Canadian searches.
 
 If you want to know exactly where your website stands, start with a **free SEO audit** — a no-obligation, 30-minute review of your rankings, technical health, and biggest opportunities.
 
@@ -8,9 +8,9 @@ If you want to know exactly where your website stands, start with a **free SEO a
 
 Search engine optimization is the work of earning visibility in Google and Bing for the terms your customers actually search. Done well, it compounds: the rankings you build this quarter keep sending qualified traffic long after the work is done.
 
-Professional SEO services are not a one-time project. Search results shift, competitors publish, and Google updates its algorithm — so SEO is an ongoing discipline of research, optimization, and measurement. As a full-service SEO agency, NexFortis combines technical SEO, on-page optimization, content strategy, and link building into one cohesive SEO service, so the pieces reinforce each other instead of working in isolation.
+Professional SEO services is not a one-off task. Search engine results will change over time, as will your competitors’ online efforts and the criteria Google uses to rank results. SEO is a discipline which requires ongoing research, optimization and measurement. The services offered by NexFortis as a full-service SEO agency are combined into a single program of work, or SEO service, so that each of the individual components of SEO are working in conjunction with each other to optimum effect.
 
-Because we are a Canadian-based SEO company, we understand how Canadian buyers search, how the Greater Toronto Area market behaves, and where the real competition sits in your industry. And because SEO is tied to measurable outcomes — organic traffic, conversions, and revenue — we report on what matters to your business, not vanity metrics.
+As a Canadian-based SEO company, we have a deep understanding of how Canadian search behavior works, as well as the inner workings of the Greater Toronto Area’s search market. We also have a clear understanding of the real competition you face in your industry. Unlike many other SEO vendors, our results are measured in organic traffic, conversions and revenue. We provide you with the metrics that truly matter to your business as opposed to the more colorful but less relevant metrics.
 
 ## Our SEO services
 
@@ -62,7 +62,7 @@ As a certified Microsoft Solutions Partner, NexFortis also brings genuine techni
 
 ## SEO pricing after a free audit
 
-We do not publish fixed SEO prices, because no two websites or markets are the same. Pricing is scoped after your free SEO audit, based on your site's current health, the number and competitiveness of your target keywords, the technical work required, and the volume of content and link building involved.
+We don’t provide fixed SEO prices for a number of reasons. Not least, every website and every market is different. After your free SEO audit we will provide a detailed scope of work for carrying out effective SEO on your site, based on the current health of your site and other factors including; the number of relevant keywords you wish to rank for and the level of competition, the technical work required to enable effective SEO, the volume of relevant content required and the volume and quality of relevant links required.
 
 Most SEO engagements are structured as a monthly retainer, reflecting the ongoing nature of search engine optimization. Ecommerce and enterprise campaigns are scoped separately given their complexity. You will know exactly what you are paying for — and why — before you commit.
 
@@ -76,7 +76,7 @@ Most SEO engagements are structured as a monthly retainer, reflecting the ongoin
 
 **What is the difference between an SEO company and an SEO consultant?** An SEO company provides a full team across technical SEO, content, and link building; an SEO consultant typically advises on strategy. NexFortis offers both — a dedicated consultant backed by a senior execution team of SEO specialists.
 
-**Should I do SEO myself, or hire an SEO company?** AI tools and DIY guides can help with the basics, but competitive rankings still need experienced judgement across technical SEO, content, and links — plus the time to execute consistently. As AI search grows, that strategy work matters more, not less; see our [generative engine optimization](/services/digital-marketing/geo-ai-search) services for how we prepare sites for AI-driven results.
+**Should you do SEO yourself or outsource it to an AI SEO consultant?** For simple websites and those that receive occasional updates, certain SEO elements can be managed by using various AI-based SEO tools along with do it yourself SEO guides and tutorials. For more complex websites, particularly those who compete with other sites for ranking positions, it typically requires the judgment of a seasoned SEO professional. Time is also a key factor for successful SEO and carrying out all the necessary elements on a consistent basis is crucial. In a time when AI search is on the increase, the quality of the SEO strategy (or planning) becomes even more important and will be even more relevant, not less. Our services at [generative engine optimization](/services/digital-marketing/geo-ai-search) help to prepare websites for search results generated by AI.
 
 **What does the free SEO audit include?** It covers your technical SEO health, crawlability and indexing, on-page gaps, current keyword rankings, backlink profile, and a competitive overview of your search landscape.
 
