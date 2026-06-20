@@ -54,3 +54,11 @@ Thumbs.db
 .env.production
 .env.*.local
 *.key
+
+# SEO tool API secrets (never commit)
+seo-tools/secrets.local.json
+# SEO tool scratch output
+seo-tools/tmp/
+
+# Local agent/journal environment (not project source)
+.private-journal/
