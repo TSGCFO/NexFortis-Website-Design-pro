@@ -1,0 +1,509 @@
+{
+  "route": "/services/digital-marketing/email-marketing",
+  "title": "Email Marketing | NexFortis IT Solutions",
+  "description": "Email marketing for Canadian businesses: newsletters, nurture flows, and automations that turn your list into repeat revenue you actually own.",
+  "canonical": "https://nexfortis.com/services/digital-marketing/email-marketing",
+  "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
+  "og": {
+    "title": "Email Marketing | NexFortis IT Solutions",
+    "description": "Email marketing for Canadian businesses: newsletters, nurture flows, and automations that turn your list into repeat revenue you actually own.",
+    "url": "https://nexfortis.com/services/digital-marketing/email-marketing",
+    "image": "https://nexfortis.com/opengraph.png",
+    "type": "website"
+  },
+  "twitter": {
+    "card": "summary_large_image"
+  },
+  "headings": [
+    {
+      "level": 1,
+      "text": "Email Marketing That Turns Lists Into Revenue"
+    },
+    {
+      "level": 2,
+      "text": "The one audience you actually own"
+    },
+    {
+      "level": 2,
+      "text": "What's included in our email marketing services"
+    },
+    {
+      "level": 3,
+      "text": "Strategy &amp; list growth"
+    },
+    {
+      "level": 3,
+      "text": "Campaign design &amp; copy"
+    },
+    {
+      "level": 3,
+      "text": "Automation &amp; nurture flows"
+    },
+    {
+      "level": 3,
+      "text": "Segmentation &amp; personalization"
+    },
+    {
+      "level": 3,
+      "text": "Deliverability &amp; compliance"
+    },
+    {
+      "level": 3,
+      "text": "Reporting &amp; optimization"
+    },
+    {
+      "level": 2,
+      "text": "How we deliver email marketing"
+    },
+    {
+      "level": 3,
+      "text": "Audit &amp; strategy"
+    },
+    {
+      "level": 3,
+      "text": "Build &amp; automate"
+    },
+    {
+      "level": 3,
+      "text": "Send &amp; nurture"
+    },
+    {
+      "level": 3,
+      "text": "Measure &amp; improve"
+    },
+    {
+      "level": 2,
+      "text": "NexFortis vs. a typical email provider"
+    },
+    {
+      "level": 2,
+      "text": "What email marketing costs"
+    },
+    {
+      "level": 3,
+      "text": "Scaled to volume and automation"
+    },
+    {
+      "level": 2,
+      "text": "Related services"
+    },
+    {
+      "level": 3,
+      "text": "SEO Services"
+    },
+    {
+      "level": 3,
+      "text": "Local SEO"
+    },
+    {
+      "level": 3,
+      "text": "GEO &amp; AI Search"
+    },
+    {
+      "level": 2,
+      "text": "Frequently Asked Questions"
+    },
+    {
+      "level": 2,
+      "text": "Sitting on a list you're not using?"
+    },
+    {
+      "level": 4,
+      "text": "Services"
+    },
+    {
+      "level": 4,
+      "text": "Company"
+    },
+    {
+      "level": 4,
+      "text": "Contact"
+    },
+    {
+      "level": 1,
+      "text": "NexFortis IT Solutions"
+    }
+  ],
+  "jsonld": [
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://nexfortis.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Services",
+          "item": "https://nexfortis.com/services"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Digital Marketing",
+          "item": "https://nexfortis.com/services/digital-marketing"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Email Marketing",
+          "item": "https://nexfortis.com/services/digital-marketing/email-marketing"
+        }
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is email marketing?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Email marketing is using email to build relationships and drive sales — newsletters, promotions, and automated sequences sent to people who've opted in to hear from you. Unlike social or ads, your list is an audience you own and can reach any time, which is a big part of why it consistently delivers one of the highest returns in marketing."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How effective is email marketing, really?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Very — it routinely returns far more per dollar than most channels because you're reaching people who already chose to hear from you. Industry studies put the average return around $36 for every $1 spent. Results depend on your list quality and how well the emails are done, which is exactly the part we handle."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which email platform should I use?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It depends on your needs — Mailchimp is fine for simple newsletters, Klaviyo is strong for ecommerce automation, and there are others in between. We work across the major platforms and will recommend the right fit, or work with whatever you already have rather than forcing a migration you don't need."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do you keep emails out of the spam folder?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Deliverability is part technical, part discipline. We set up proper authentication, keep your list clean, and follow sending best practices to protect your sender reputation — and we make sure your email complies with Canada's anti-spam law (CASL) and CAN-SPAM, which protects both your inbox placement and your business from penalties."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How soon will email marketing pay off?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Faster than most channels, because you're emailing people who already know you. A good welcome flow or a re-engagement campaign can produce results within the first few weeks, and the automations keep earning in the background after that. We report from the start so you can see the revenue building."
+          }
+        }
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "@id": "https://nexfortis.com/#localbusiness",
+      "name": "NexFortis IT Solutions",
+      "legalName": "17756968 Canada Inc.",
+      "url": "https://nexfortis.com",
+      "logo": "https://nexfortis.com/images/logo-512.png",
+      "image": "https://nexfortis.com/opengraph.png",
+      "description": "NexFortis delivers end-to-end IT solutions for Canadian businesses including managed IT, Microsoft 365, QuickBooks migration, digital marketing, and workflow automation.",
+      "email": "contact@nexfortis.com",
+      "telephone": "+1-416-317-0051",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "204 Hill Farm Rd",
+        "addressLocality": "Nobleton",
+        "addressRegion": "ON",
+        "postalCode": "L7B 0A1",
+        "addressCountry": "CA"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 43.9327,
+        "longitude": -79.6615
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "Canada"
+      },
+      "priceRange": "$$",
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday"
+        ],
+        "opens": "09:00",
+        "closes": "17:00"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/company/nexfortis"
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "@id": "https://nexfortis.com/#organization",
+      "name": "NexFortis IT Solutions",
+      "legalName": "17756968 Canada Inc.",
+      "url": "https://nexfortis.com",
+      "logo": "https://nexfortis.com/images/logo-512.png",
+      "image": "https://nexfortis.com/opengraph.png",
+      "description": "NexFortis delivers end-to-end IT solutions for Canadian businesses including managed IT, Microsoft 365, QuickBooks migration, digital marketing, and workflow automation.",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer service",
+        "email": "contact@nexfortis.com",
+        "telephone": "+1-416-317-0051",
+        "areaServed": "CA",
+        "availableLanguage": [
+          "English"
+        ]
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "204 Hill Farm Rd",
+        "addressLocality": "Nobleton",
+        "addressRegion": "ON",
+        "postalCode": "L7B 0A1",
+        "addressCountry": "CA"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/company/nexfortis"
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Hassan Sadiq",
+      "jobTitle": "Founder & CEO, NexFortis IT Solutions",
+      "url": "https://nexfortis.com/about",
+      "worksFor": {
+        "@id": "https://nexfortis.com/#organization"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "Email Marketing Services",
+      "description": "Email marketing for Canadian businesses — strategy, list growth, campaign design, automation and nurture flows, segmentation, deliverability, and reporting.",
+      "url": "https://nexfortis.com/services/digital-marketing/email-marketing",
+      "provider": {
+        "@type": "Organization",
+        "name": "NexFortis IT Solutions",
+        "url": "https://nexfortis.com"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "Canada"
+      },
+      "serviceType": "Email Marketing"
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "@id": "https://nexfortis.com/#website",
+      "name": "NexFortis IT Solutions",
+      "url": "https://nexfortis.com",
+      "inLanguage": "en-CA",
+      "publisher": {
+        "@id": "https://nexfortis.com/#organization"
+      }
+    }
+  ],
+  "anchors": [
+    {
+      "text": "Skip to main content",
+      "href": "#main-content"
+    },
+    {
+      "text": "",
+      "href": "/"
+    },
+    {
+      "text": "Home",
+      "href": "/"
+    },
+    {
+      "text": "Digital Marketing",
+      "href": "/services/digital-marketing"
+    },
+    {
+      "text": "SEO Services",
+      "href": "/services/digital-marketing/seo"
+    },
+    {
+      "text": "Local SEO",
+      "href": "/services/digital-marketing/local-seo"
+    },
+    {
+      "text": "GEO &amp; AI Search",
+      "href": "/services/digital-marketing/generative-engine-optimization"
+    },
+    {
+      "text": "Technical SEO",
+      "href": "/services/digital-marketing/technical-seo"
+    },
+    {
+      "text": "Google Business Profile",
+      "href": "/services/digital-marketing/google-business-profile"
+    },
+    {
+      "text": "Content Marketing",
+      "href": "/services/digital-marketing/content-marketing"
+    },
+    {
+      "text": "Link Building &amp; Digital PR",
+      "href": "/services/digital-marketing/link-building"
+    },
+    {
+      "text": "Google Ads Management",
+      "href": "/services/digital-marketing/google-ads"
+    },
+    {
+      "text": "Social Media Marketing",
+      "href": "/services/digital-marketing/social-media-marketing"
+    },
+    {
+      "text": "Web Design &amp; Development",
+      "href": "/services/digital-marketing/web-design"
+    },
+    {
+      "text": "Email Marketing",
+      "href": "/services/digital-marketing/email-marketing"
+    },
+    {
+      "text": "Conversion Rate Optimization",
+      "href": "/services/digital-marketing/conversion-rate-optimization"
+    },
+    {
+      "text": "Analytics &amp; Reporting",
+      "href": "/services/digital-marketing/analytics-reporting"
+    },
+    {
+      "text": "Microsoft 365 Solutions",
+      "href": "/services/microsoft-365"
+    },
+    {
+      "text": "QuickBooks Migration",
+      "href": "/services/quickbooks"
+    },
+    {
+      "text": "IT Consulting",
+      "href": "/services/it-consulting"
+    },
+    {
+      "text": "Workflow Automation",
+      "href": "/services/workflow-automation"
+    },
+    {
+      "text": "Browse our IT services",
+      "href": "/services"
+    },
+    {
+      "text": "About",
+      "href": "/about"
+    },
+    {
+      "text": "Blog",
+      "href": "/blog"
+    },
+    {
+      "text": "Contact",
+      "href": "/contact"
+    },
+    {
+      "text": "QB Portal",
+      "href": "https://qb.nexfortis.com"
+    },
+    {
+      "text": "Get a Free Quote",
+      "href": "/contact"
+    },
+    {
+      "text": "All Services",
+      "href": "/services"
+    },
+    {
+      "text": "Services",
+      "href": "/services"
+    },
+    {
+      "text": "content marketing",
+      "href": "/services/digital-marketing/content-marketing"
+    },
+    {
+      "text": "digital marketing services",
+      "href": "/services/digital-marketing"
+    },
+    {
+      "text": "Source: Litmus, Email Marketing ROI",
+      "href": "https://www.litmus.com/roi-calculator"
+    },
+    {
+      "text": "Source: EmailTooltester, Email Marketing ROI report",
+      "href": "https://www.emailtooltester.com/en/blog/email-marketing-roi/"
+    },
+    {
+      "text": "Source: Radicati Email Statistics Report",
+      "href": "https://radicati.com/wp/wp-content/uploads/2023/04/Email-Statistics-Report-2023-2027-Executive-Summary.pdf"
+    },
+    {
+      "text": "More about NexFortis",
+      "href": "/about"
+    },
+    {
+      "text": "About Us",
+      "href": "/about"
+    },
+    {
+      "text": "Privacy Policy",
+      "href": "/privacy"
+    },
+    {
+      "text": "Terms of Service",
+      "href": "/terms"
+    },
+    {
+      "text": "(416) 317-0051",
+      "href": "tel:+14163170051"
+    },
+    {
+      "text": "contact@nexfortis.com",
+      "href": "mailto:contact@nexfortis.com"
+    },
+    {
+      "text": "LinkedIn",
+      "href": "https://www.linkedin.com/company/nexfortis"
+    },
+    {
+      "text": "Privacy",
+      "href": "/privacy"
+    },
+    {
+      "text": "Terms",
+      "href": "/terms"
+    },
+    {
+      "text": "About NexFortis",
+      "href": "/about"
+    },
+    {
+      "text": "Our services",
+      "href": "/services"
+    },
+    {
+      "text": "Contact us",
+      "href": "/contact"
+    }
+  ],
+  "rootDivIsEmpty": false,
+  "hasNoindex": false
+}

@@ -1,0 +1,31 @@
+{
+  "_step": "3 — SERP analysis + content brief",
+  "_page": "seo (/services/digital-marketing/seo)",
+  "_primary_keyword": "seo services",
+  "_location": "Canada",
+  "_date": "2026-06-18",
+  "_ki_brief_status": "KI brief tool down -> SERP brief from live Semrush SERP + competitor word-count fetches.",
+  "serp_source": "Semrush phrase_organic (ca, 'seo services').",
+  "competitor_word_counts": {
+    "_method": "Fetched ranking service pages; <body> raw word count. Excluded directories (clutch, fiverr, yp.ca, trustpilot) + informational (wikipedia, searchengineland guide).",
+    "service_page_subset": [
+      {"url": "whitespark.ca/seo-services", "words_raw": 2796},
+      {"url": "edealer.ca/seo-services", "words_raw": 1903},
+      {"url": "remwebsolutions.com/seo", "words_raw": 1661},
+      {"url": "ubiweb.ca/seo-services", "words_raw": 733},
+      {"url": "firstrank.ca", "words_raw": 3361},
+      {"url": "stiganmedia.com/burnaby-seo", "words_raw": 2166},
+      {"url": "growmemarketing.ca/calgary-seo", "words_raw": 3933},
+      {"url": "seoservicesincanada.ca", "words_raw": 2712}
+    ],
+    "service_subset_stats": {"min_raw": 733, "median_raw": 2400, "max_raw": 3933, "main_content_estimate": "~1300-3400"},
+    "length_conclusion": "Comprehensive but focused SEO spoke. Beat thin pages (~700-1000 main), match the substantive median. Current page = 1455."
+  },
+  "questions": {
+    "_source": "Semrush phrase_questions (ca, 'seo services'), buyer-intent filtered (dropped agency-to-agency 'how to provide/sell' and local-seo Qs that belong to the local-seo spoke).",
+    "buyer_questions": ["What is / what are SEO services?", "What's included (on-page SEO services etc.)?", "Why do small businesses need SEO services?", "How long does SEO take / does it guarantee rankings?", "SEO vs local SEO?"]
+  },
+  "secondary_keywords": ["seo consultant", "seo agency near me", "affordable seo services", "seo services for small business"],
+  "serp_features": "Mixed SERP (service pages + directories + informational) with PAA -> strong FAQ + clear what's-included + honest timeline/guarantee answers.",
+  "_done_check": "PASS — competitor table + buyer questions + secondary kws (Canada)."
+}

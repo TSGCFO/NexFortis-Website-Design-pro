@@ -1,0 +1,25 @@
+{
+  "_step": "7 — On-page finalization + internal-link wiring",
+  "_page": "pillar (/services/digital-marketing)",
+  "_date": "2026-06-18",
+  "file": "artifacts/nexfortis/src/pages/services/digital-marketing.tsx (own page, not a DmSpokePageBody).",
+  "title": { "metaTitle": "Digital Marketing Services", "rendered_title": "Digital Marketing Services | NexFortis IT Solutions", "h1": "Digital Marketing Services for Canadian Businesses (50 chars)" },
+  "meta_description": "Digital marketing for Canadian businesses: SEO, local search, AI search (GEO), Google Ads, web design, and analytics — one connected strategy.",
+  "schema": {
+    "page_level": ["Service (Digital Marketing)", "BreadcrumbList", "FAQPage", "Person (Hassan Sadiq, Founder & CEO)"],
+    "global_from_layout": ["Organization", "LocalBusiness", "WebSite"],
+    "inv013_note": "No re-emit of global types on the page (INV-013 safe)."
+  },
+  "internal_links": {
+    "in_prose_InlineLinks": [
+      { "anchor": "SEO services", "href": "/services/digital-marketing/seo" },
+      { "anchor": "local SEO", "href": "/services/digital-marketing/local-seo" },
+      { "anchor": "Generative Engine Optimization", "href": "/services/digital-marketing/generative-engine-optimization" }
+    ],
+    "spoke_grid": "RelatedServices(getPublishedSpokes()) — currently empty (3 pilots unpublished pending regeneration); fills as spokes publish. FULL_MENU shows the remaining 13 as descriptive (non-linked) capability cards.",
+    "cluster_correct": true,
+    "anchor_note": "Anchor text matches internal-links.ts linkText/title; each text maps to one href (INV-015 safe)."
+  },
+  "nav": "Pillar is in the main nav Services dropdown; spokes hang off it via the mega-menu (built Phase 0; surfaces published spokes only).",
+  "_done_check": "PASS — title/meta/schema set; cluster-correct internal links wired; pillar live + routed; nav in place."
+}

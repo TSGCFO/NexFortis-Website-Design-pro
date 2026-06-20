@@ -1,0 +1,15 @@
+{
+  "_step": "3 — SERP analysis + content brief", "_page": "conversion-rate-optimization",
+  "_primary_keyword": "conversion rate optimization services", "_location": "Canada", "_date": "2026-06-18",
+  "_ki_brief_status": "KI brief tool down -> SERP brief from live Semrush SERP + competitor fetches.",
+  "serp_source": "Semrush phrase_organic (ca, 'conversion rate optimization services').",
+  "competitor_word_counts": {
+    "_method": "Fetched ranking service pages; <body> raw words. Excluded tools/glossary (optimizely, invesp, vwo), listicles (clutch, neilpatel, designrush), guide (hubspot).",
+    "service_page_subset": [{"url": "conversion.com/service/...", "words_raw": 1424}, {"url": "consultusdigital.com/conversion-rate-optimization", "words_raw": 4943}, {"url": "webfx.com/.../conversion-rate-optimization", "words_raw": 4135}, {"url": "conversionsciences.com", "words_raw": 6327}, {"url": "conversionrate.store", "words_raw": 1823}],
+    "service_subset_stats": {"min_raw": 1424, "median_raw": 4135, "max_raw": 6327, "main_content_estimate": "focused ~1100-1500 main (the lean pages); big agencies 4-6k"},
+    "length_conclusion": "Focused spoke ~1100-1900 main."
+  },
+  "questions": {"_source": "Semrush phrase_questions (ca, 'conversion rate optimization'), buyer/educational.", "buyer_questions": ["What is conversion rate optimization?", "How does CRO work / where to start?", "How much does CRO cost?", "Do I have enough traffic for CRO?", "How long until CRO shows results?"]},
+  "secondary_keywords": ["cro agency", "conversion rate optimization agency", "cro services", "conversion optimization services", "landing page optimization", "website conversion optimization", "ab testing services"],
+  "_done_check": "PASS — competitor table + buyer questions + secondary kws (Canada)."
+}

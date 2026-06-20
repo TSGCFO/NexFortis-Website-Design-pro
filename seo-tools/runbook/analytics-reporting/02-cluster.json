@@ -1,0 +1,23 @@
+{
+  "_step": "2 — Cluster + cannibalization (HARD GATE 1)", "_page": "analytics-reporting",
+  "_source": "KI clustering order 96b19961-c842-4163-8e5e-aa3b92b134a4 (2026-06-18, Canada).",
+  "cluster_evidence": {
+    "marketing analytics services": {"ki_cluster": "marketing analytics agency", "intent": "Commercial", "note": "PRIMARY (grouped with agency)."},
+    "marketing analytics agency": {"ki_cluster": "marketing analytics agency", "intent": "Other", "note": "PRIMARY."},
+    "ga4 services": {"intent": "Commercial", "note": "Secondary (GA4 setup)."},
+    "marketing reporting services": {"intent": "Commercial", "note": "Secondary (reporting)."},
+    "marketing dashboard services": {"intent": "Commercial", "note": "Secondary (dashboards)."},
+    "analytics consulting services": {"intent": "Other", "note": "Secondary."},
+    "conversion tracking services": {"intent": "Other", "note": "Secondary (tracking setup; CRO does not own this term)."},
+    "google analytics services": {"intent": "Informational", "note": "Secondary."},
+    "google analytics setup": {"intent": "Informational", "note": "Secondary."},
+    "data analytics services": {"intent": "Other", "note": "EXCLUDED — broad BI/IT 'data analytics', not marketing analytics/reporting. Not targeted."}
+  },
+  "assignment": {
+    "owns_primary": ["marketing analytics services", "marketing analytics agency"],
+    "owns_secondary": ["ga4 services", "marketing reporting services", "marketing dashboard services", "analytics consulting services", "conversion tracking services", "google analytics services", "google analytics setup"],
+    "excluded": {"data analytics services": "broad BI/IT intent (not targeted)"}
+  },
+  "fence_note": "Marketing-analytics/reporting intent. Very thin keyword niche but a legitimate spoke. Distinct from CRO (which owns ab-testing/CRO terms) and the rest.",
+  "_done_check": "PASS — one primary cluster; registry updated; check-cannibalization exit 0. FINAL spoke — full registry now confirmed for all 14 pages."
+}

@@ -2,12 +2,14 @@
 //
 // Reads the prerendered HTML in artifacts/nexfortis/dist/public/services/
 // digital-marketing/ — so it only runs after a FULL nexfortis build (vite +
-// prerender). Like the QB service-page content test, it is a local TDD /
-// regression gate, not a CI gate, but the prerendered pages it checks are the
-// same ones CI's snapshot/invariant suite validates.
+// prerender). Wired into `pnpm test:seo` via the `test:seo:content` script.
 //
-// Enforces, per page, the content-SEO + EEAT rules ported from S Care Companion:
-//   - word count (spoke ≥1200, pillar ≥2000)
+// Pages and their word-count targets are read from tests/seo/dm-word-targets.json,
+// which is populated per page in run-book Step 4 with a SERP-DERIVED range (the
+// old hard-coded 1,200/2,000-word floors are gone). Only pages that have been
+// taken through the run book appear there, so throwaway/unregenerated drafts are
+// not gated. The other content-SEO + EEAT rules below run on that same page set:
+//   - word count within the page's SERP-derived [min, max] range
 //   - zero banned marketing-jargon phrases  (mirror of src/lib/brand-voice.ts)
 //   - meta title ≤60 chars, meta description ≤160 chars
 //   - ≥3 internal links and ≥3 external sourced-stat citations in <main>
@@ -18,18 +20,19 @@
 import { test } from "node:test";
 import { strict as assert } from "node:assert";
 import { readFileSync, existsSync } from "node:fs";
-import { join } from "node:path";
+import { join, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
 import * as cheerio from "cheerio";
 
+const here = dirname(fileURLToPath(import.meta.url));
 const DIST = "artifacts/nexfortis/dist/public";
 
-// route path (under dist) -> { kind }
-const PAGES = [
-  { route: "services/digital-marketing", kind: "pillar" },
-  { route: "services/digital-marketing/seo", kind: "spoke" },
-  { route: "services/digital-marketing/local-seo", kind: "spoke" },
-  { route: "services/digital-marketing/generative-engine-optimization", kind: "spoke" },
-];
+// SERP-derived per-page targets (run-book Step 4). route -> { kind, min, max }.
+const targets = JSON.parse(
+  readFileSync(join(here, "dm-word-targets.json"), "utf8"),
+).pages;
+
+const PAGES = Object.entries(targets).map(([route, t]) => ({ route, ...t }));
 
 // Mirror of artifacts/nexfortis/src/lib/brand-voice.ts — keep in sync.
 const BANNED_PHRASES = [
@@ -45,8 +48,6 @@ const META_DESC_MAX = 160;
 const MIN_INTERNAL_LINKS = 3;
 const MIN_SOURCED_STATS = 3;
 const MIN_FAQ_ITEMS = 4;
-const MIN_SPOKE_WORDS = 1200;
-const MIN_PILLAR_WORDS = 2000;
 
 function load(route) {
   const file = join(DIST, route, "index.html");
@@ -74,12 +75,19 @@ function wordCount(text) {
   return text.split(/\s+/).filter(Boolean).length;
 }
 
-test("each DM page meets its word-count floor", () => {
-  for (const { route, kind } of PAGES) {
+test("each DM page is within its SERP-derived word-count range", () => {
+  if (PAGES.length === 0) return; // nothing regenerated through the run book yet
+  for (const { route, min, max } of PAGES) {
     const { mainText } = load(route);
     const words = wordCount(mainText);
-    const floor = kind === "pillar" ? MIN_PILLAR_WORDS : MIN_SPOKE_WORDS;
-    assert.ok(words >= floor, `${route}: ${words} words (need ≥${floor})`);
+    assert.ok(
+      typeof min === "number" && typeof max === "number" && min > 0 && max >= min,
+      `${route}: invalid target range in dm-word-targets.json (min=${min}, max=${max})`,
+    );
+    assert.ok(
+      words >= min && words <= max,
+      `${route}: ${words} words (SERP-derived target ${min}-${max})`,
+    );
   }
 });
 

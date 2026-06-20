@@ -1,0 +1,23 @@
+{
+  "_step": "2 — Cluster + cannibalization (HARD GATE 1)", "_page": "content-marketing",
+  "_source": "KI clustering order 206d4516-025b-40f2-96e7-817e22a0ba4f (2026-06-18, Canada).",
+  "cluster_evidence": {
+    "content marketing services": {"ki_cluster": "content marketing services", "intent": "Other/Commercial", "note": "PRIMARY (services/agency/company grouped)."},
+    "content marketing agency": {"ki_cluster": "content marketing services", "intent": "Commercial", "note": "PRIMARY."},
+    "content marketing company": {"ki_cluster": "content marketing services", "intent": "Commercial", "note": "PRIMARY."},
+    "content writing services": {"ki_cluster": "content writing services", "intent": "Other", "note": "Writing deliverable. Secondary."},
+    "content creation services": {"ki_cluster": "content creation services", "intent": "Commercial", "note": "Secondary."},
+    "content strategy services": {"ki_cluster": "content strategy services", "intent": "Other", "note": "Strategy deliverable. Secondary."},
+    "blog writing services": {"ki_cluster": "blog writing services", "intent": "Other", "note": "Secondary."},
+    "content marketing consultant": {"ki_cluster": "content marketing consultant", "intent": "Informational", "note": "Secondary (minor)."},
+    "b2b content marketing": {"ki_cluster": "b2b content marketing", "intent": "Informational", "note": "EXCLUDED — informational audience modifier (mentioned in prose, not targeted)."},
+    "seo content writing": {"ki_cluster": "seo content writing", "intent": "Informational", "note": "EXCLUDED — informational + overlaps the SEO spoke's content angle; not targeted here."}
+  },
+  "assignment": {
+    "owns_primary": ["content marketing services", "content marketing agency", "content marketing company"],
+    "owns_secondary": ["content writing services", "content creation services", "content strategy services", "blog writing services", "content marketing consultant"],
+    "excluded": {"b2b content marketing": "informational (not targeted)", "seo content writing": "informational + SEO-spoke overlap (not targeted)"}
+  },
+  "fence_note": "Content PRODUCTION intent — distinct from the SEO spoke (seo services) and link-building. The SEO/pillar pages reference content as a tactic but do not target content-marketing terms.",
+  "_done_check": "PASS — one primary cluster; registry updated; check-cannibalization exit 0."
+}

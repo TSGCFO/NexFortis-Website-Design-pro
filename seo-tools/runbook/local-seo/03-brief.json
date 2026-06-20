@@ -1,0 +1,42 @@
+{
+  "_step": "3 — SERP analysis + content brief (REAL Keyword Insights brief)",
+  "_page": "local-seo (/services/digital-marketing/local-seo)",
+  "_primary_keyword": "local seo services",
+  "_location": "Canada",
+  "_date": "2026-06-18",
+  "_provenance": "REGENERATED via the actual KI content-brief API — order 4980d254-3fff-4562-a21f-419ed1dbaa97, completed=true (16/17 jobs). Supersedes the earlier SERP-substituted brief. NOTE: KI's brief was not down during the original run — it completes asynchronously over a long window (this order took the full async cycle to finish). Lesson recorded: poll KI briefs over hours, do not conclude 'down' after ~25 min.",
+  "_ki_brief_raw": "seo-tools/tmp/brief-localseo-real.json",
+  "competitor_word_counts": {
+    "_source": "KI html_scraping job (the run book's intended Step-3 source), main-content words across the scraped service pages.",
+    "word_count_avg": 454,
+    "word_count_min": 431,
+    "word_count_max": 567,
+    "pages_scraped": 3,
+    "note": "KI counts MAIN-CONTENT words only. This is much lower than the raw-<body> counts I used in the substituted brief (which included nav/footer). The real SERP signal: ranking local-seo service pages carry ~430-570 words of core copy (consistent with the run book's stated 340-1650 service-page range for this term)."
+  },
+  "questions_real": {
+    "_source": "KI People-Also-Asked / Reddit / Quora jobs (buyer-intent selected).",
+    "buyer_questions": [
+      "How to improve local SEO for my business / in 2026?",
+      "What are the most important local SEO ranking factors?",
+      "What is a local search?",
+      "Local SEO for multiple locations",
+      "How do you get clients/customers to leave reviews?",
+      "How to rank a local business for another town/area?",
+      "What can a local citation service do for your business?",
+      "Why is blogging important for local SEO?"
+    ]
+  },
+  "ki_title_ideas": [
+    "What are local SEO services and why does your business need them",
+    "10 key benefits of local SEO services for small businesses",
+    "How local SEO services help you dominate Google Maps",
+    "Local SEO vs traditional SEO",
+    "How to choose the right local SEO services provider",
+    "Local SEO services checklist: what to expect",
+    "DIY vs professional local SEO services"
+  ],
+  "secondary_keywords_note": "The KI content-brief API does NOT return a discrete secondary-keyword list — its sections are SERP pages, PAA/Reddit/Quora questions, and AI title ideas. Secondary keywords come from the Step-2 KI CLUSTERING (keyword-ownership.json local-seo: local seo near me, local seo expert). So the brief governs LENGTH + QUESTIONS; clustering governs the keyword set.",
+  "secondary_keywords": ["local seo company", "local seo agency", "local seo near me", "local seo expert"],
+  "_done_check": "PASS — REAL KI brief retrieved (completed=true): word-count table (avg 454/min 431/max 567), buyer questions, title ideas. Location=Canada confirmed."
+}

@@ -102,7 +102,7 @@ export const DM_SPOKES: readonly DmSpoke[] = [
       "Core Web Vitals, crawlability, structured data, and rendering fixes that let Google index and rank every page.",
     icon: Gauge,
     category: "Technical SEO",
-    published: false,
+    published: true,
   },
   {
     slug: "google-business-profile",
@@ -113,7 +113,7 @@ export const DM_SPOKES: readonly DmSpoke[] = [
       "Claim, optimize, and actively manage your Google Business Profile to win the local pack and earn more calls.",
     icon: Building2,
     category: "Google Business Profile",
-    published: false,
+    published: true,
   },
   {
     slug: "content-marketing",
@@ -124,7 +124,7 @@ export const DM_SPOKES: readonly DmSpoke[] = [
       "Research-led articles, pillar pages, and topic clusters that build authority and capture demand at every stage.",
     icon: PenTool,
     category: "Content Production",
-    published: false,
+    published: true,
   },
   {
     slug: "link-building",
@@ -135,7 +135,7 @@ export const DM_SPOKES: readonly DmSpoke[] = [
       "Earn editorial backlinks from real publications to grow the authority that decides how high you can rank.",
     icon: Link2,
     category: "Link Building / Off-Page",
-    published: false,
+    published: true,
   },
   {
     slug: "google-ads",
@@ -146,7 +146,7 @@ export const DM_SPOKES: readonly DmSpoke[] = [
       "Profitable search, display, and remarketing campaigns with transparent reporting on every dollar of ad spend.",
     icon: Megaphone,
     category: "Paid Search",
-    published: false,
+    published: true,
   },
   {
     slug: "social-media-marketing",
@@ -157,7 +157,7 @@ export const DM_SPOKES: readonly DmSpoke[] = [
       "Organic social and Meta Ads that build brand surface area and feed your funnel on the platforms your buyers use.",
     icon: Share2,
     category: "Social / Paid Social",
-    published: false,
+    published: true,
   },
   {
     slug: "web-design",
@@ -168,7 +168,7 @@ export const DM_SPOKES: readonly DmSpoke[] = [
       "Fast, mobile-first, conversion-focused websites built on modern frameworks and engineered to rank from day one.",
     icon: LayoutTemplate,
     category: "Web Design / Dev",
-    published: false,
+    published: true,
   },
   {
     slug: "email-marketing",
@@ -179,7 +179,7 @@ export const DM_SPOKES: readonly DmSpoke[] = [
       "Newsletters, nurture sequences, and automations that turn your list into repeat revenue you actually own.",
     icon: Mail,
     category: "Email / Lifecycle",
-    published: false,
+    published: true,
   },
   {
     slug: "conversion-rate-optimization",
@@ -190,7 +190,7 @@ export const DM_SPOKES: readonly DmSpoke[] = [
       "Turn more of the traffic you already have into leads with behaviour analysis, testing, and landing-page fixes.",
     icon: MousePointerClick,
     category: "CRO",
-    published: false,
+    published: true,
   },
   {
     slug: "analytics-reporting",
@@ -201,7 +201,7 @@ export const DM_SPOKES: readonly DmSpoke[] = [
       "GA4, Search Console, and call tracking wired into clear monthly reports that tie marketing to real revenue.",
     icon: BarChart3,
     category: "Analytics / Reporting",
-    published: false,
+    published: true,
   },
 ];
 

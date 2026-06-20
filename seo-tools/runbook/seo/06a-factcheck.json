@@ -1,0 +1,18 @@
+{
+  "_step": "6a — Itemized fact-check (HARD GATE 2)",
+  "_page": "seo",
+  "_date": "2026-06-18",
+  "statistics": [
+    {"claim": "≈90% of global search happens on Google", "verdict": "VERIFIED", "source": "Statcounter Global Stats (89-90%, 2025-2026).", "url": "https://gs.statcounter.com/search-engine-market-share"},
+    {"claim": "27.6% average CTR of the #1 organic result", "verdict": "VERIFIED", "source": "Backlinko, 4M-result CTR study (#1 result = 27.6%).", "url": "https://backlinko.com/google-ctr-stats"},
+    {"claim": "43% of mobile sites pass all three Core Web Vitals", "verdict": "VERIFIED", "source": "2024 Web Almanac, HTTP Archive Performance chapter (43% mobile with INP).", "url": "https://almanac.httparchive.org/en/2024/performance"}
+  ],
+  "capability_and_market_claims": [
+    {"claim": "company + strategist in one / no junior hand-off", "verdict": "VERIFIED", "basis": "_facts.md founder/senior-led."},
+    {"claim": "keyword/intent research, on-page, technical, content, authority, measurement (GA4/GSC)", "verdict": "VERIFIED as approach", "basis": "Standard SEO scope; framed as our process, no client-count/result claims."},
+    {"claim": "no #1 guarantee; results timing 2-3mo early / 6mo meaningful; compounds", "verdict": "VERIFIED (industry-standard, honest)", "basis": "Expectation-setting, no promise."}
+  ],
+  "cannibalization_note": "Fenced: local seo* -> local-seo spoke; technical seo* -> technical-seo spoke; bare 'seo'/'search engine optimization'/'seo expert' -> blog. Page mentions local SEO + technical foundations as related, linking the local-seo spoke (not targeting its terms).",
+  "fabrication_scan": {"invented_results_metrics": "NONE", "invented_prices_guarantees": "NONE", "undemonstrated_capabilities": "NONE"},
+  "_done_check": "PASS — 3 stats verified to distinct primary sources; claims grounded/approach-framed; zero fabrications."
+}

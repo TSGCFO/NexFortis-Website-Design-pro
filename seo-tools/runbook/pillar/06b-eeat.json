@@ -1,0 +1,15 @@
+{
+  "_step": "6b — EEAT audit (inline CORE-EEAT checklist, §7)",
+  "_page": "pillar (/services/digital-marketing)",
+  "_date": "2026-06-18",
+  "_scale": "Each dimension 0-2; target >= 8/10.",
+  "scores": {
+    "experience": { "score": 1, "why": "Strong real-practitioner voice + Canadian/GTA/Nobleton specificity + founder-led delivery detail. Held at 1 (not 2) because there is NO real case study / client result yet (operator confirmed none citable) — the one genuine experience-proof gap.", "fix_applied": "Lead with concrete approach and Canadian-data specifics instead of generic claims; flagged case study as a future add when real data exists." },
+    "expertise": { "score": 2, "why": "Accurate, correctly-scoped, current terminology (map pack, AI Overviews, GEO, GA4/Search Console). Depth matches the SERP service-page winners; covers full service breadth as a hub.", "fix_applied": "Verified all 3 stats to primary sources; precise channel descriptions." },
+    "authoritativeness": { "score": 2, "why": "Three named primary-source citations (Statcounter, Semrush/SEL, BrightLocal) with live URLs; Service + global Organization/LocalBusiness + Person (Hassan Sadiq, Founder & CEO) schema; founder byline.", "fix_applied": "Author title aligned to Founder & CEO; PersonSchema present." },
+    "trust": { "score": 2, "why": "No fabrication; every claim literally true or framed as approach; honest pricing (transparent ranges, pricing after a free audit, no invented price); clear CTA + real NAP/contact in layout; one market claim softened.", "fix_applied": "Softened the GEO 'no competitor' claim; removed reliance on any unverifiable proof points." },
+    "veto_checks": { "score": 2, "passed": true, "checks": { "headline_matches_intent": "PASS (pillar H1 = transactional DM services for Canada)", "numbers_consistent": "PASS", "every_stat_has_real_source": "PASS (06a)", "no_undemonstrated_capability_claim": "PASS (approach-framed; no client-count/result claims)" } }
+  },
+  "total": "9/10 (>= 8 target met)",
+  "notes": "Largest upside is a real case study / client metric — blocked until the operator supplies citable results (tracked as a [CONFIRM]/future item, not a fabrication)."
+}

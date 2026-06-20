@@ -9,9 +9,9 @@
   "pages": {
     "/services/digital-marketing": {
       "name": "Digital Marketing (pillar)",
-      "status": "tentative",
-      "primary": ["digital marketing services", "digital marketing agency"],
-      "secondary": []
+      "status": "confirmed (KI cluster order 6b875c46, 2026-06-18)",
+      "primary": ["digital marketing services", "digital marketing agency", "digital marketing company"],
+      "secondary": ["digital marketing firm", "online marketing services", "internet marketing services", "digital marketing agency near me", "digital marketing services for small business"]
     },
     "/services/digital-marketing/local-seo": {
       "name": "Local SEO",
@@ -21,80 +21,80 @@
     },
     "/services/digital-marketing/seo": {
       "name": "SEO Services",
-      "status": "tentative",
+      "status": "confirmed (KI cluster order 362f44e6, 2026-06-18)",
       "primary": ["seo services", "seo company", "seo agency"],
-      "secondary": []
+      "secondary": ["seo consultant", "seo agency near me", "affordable seo services", "seo services for small business"]
     },
     "/services/digital-marketing/technical-seo": {
       "name": "Technical SEO",
-      "status": "tentative",
-      "primary": ["technical seo", "technical seo services", "technical seo audit"],
-      "secondary": []
+      "status": "confirmed (KI cluster order 4c38469c, 2026-06-18)",
+      "primary": ["technical seo services", "technical seo agency", "technical seo company", "technical seo consultant"],
+      "secondary": ["technical seo audit"]
     },
     "/services/digital-marketing/google-business-profile": {
       "name": "Google Business Profile",
-      "status": "confirmed-reserved (GBP terms fenced off Local SEO per KI intent)",
-      "primary": ["google business profile optimization", "gmb optimization", "google business profile management"],
-      "secondary": ["gmb"]
+      "status": "confirmed (KI cluster order 4bf86c20, 2026-06-18; GBP terms fenced off Local SEO)",
+      "primary": ["google business profile optimization", "google business profile management", "google business profile services"],
+      "secondary": ["gmb optimization", "google my business optimization", "gmb management", "google business profile setup", "google maps optimization", "local listing management", "gmb"]
     },
     "/services/digital-marketing/content-marketing": {
       "name": "Content Marketing",
-      "status": "tentative",
-      "primary": ["content marketing services", "content marketing agency"],
-      "secondary": []
+      "status": "confirmed (KI cluster order 206d4516, 2026-06-18)",
+      "primary": ["content marketing services", "content marketing agency", "content marketing company"],
+      "secondary": ["content writing services", "content creation services", "content strategy services", "blog writing services", "content marketing consultant"]
     },
     "/services/digital-marketing/link-building": {
       "name": "Link Building & Digital PR",
-      "status": "tentative",
-      "primary": ["link building services", "link building agency"],
-      "secondary": []
+      "status": "confirmed (KI cluster order d1e91f67, 2026-06-18)",
+      "primary": ["link building services", "link building agency", "link building company", "backlink services"],
+      "secondary": ["digital pr services", "guest posting services", "blogger outreach services", "off page seo services", "link building consultant", "white hat link building"]
     },
     "/services/digital-marketing/generative-engine-optimization": {
       "name": "GEO & AI Search",
-      "status": "tentative",
-      "primary": ["generative engine optimization", "answer engine optimization", "ai search optimization"],
-      "secondary": []
+      "status": "confirmed (KI cluster order bb789e7e, 2026-06-18)",
+      "primary": ["generative engine optimization", "generative engine optimization services"],
+      "secondary": ["answer engine optimization", "ai search optimization", "ai overview optimization", "chatgpt seo", "llm optimization"]
     },
     "/services/digital-marketing/google-ads": {
       "name": "Google Ads Management",
-      "status": "tentative",
-      "primary": ["google ads management", "ppc management", "google ads agency"],
-      "secondary": []
+      "status": "confirmed (KI cluster order b3cd3f2b, 2026-06-18)",
+      "primary": ["google ads management", "google ads agency", "ppc management", "ppc agency"],
+      "secondary": ["ppc services", "sem services", "google ads management services", "ppc management services", "paid search management", "google adwords management"]
     },
     "/services/digital-marketing/social-media-marketing": {
       "name": "Social Media Marketing",
-      "status": "tentative",
-      "primary": ["social media marketing services", "social media management"],
-      "secondary": []
+      "status": "confirmed (KI cluster order f62c5303, 2026-06-18)",
+      "primary": ["social media marketing services", "social media management", "social media marketing agency", "social media agency", "social media marketing company"],
+      "secondary": ["social media management services", "social media marketing for small business", "social media advertising", "facebook ads management", "meta ads management"]
     },
     "/services/digital-marketing/web-design": {
       "name": "Web Design & Development",
-      "status": "tentative",
-      "primary": ["web design services", "web design and development"],
-      "secondary": []
+      "status": "confirmed (KI cluster order df986641, 2026-06-18)",
+      "primary": ["web design services", "web design company", "web design agency", "website design services"],
+      "secondary": ["custom web design", "website development services", "ecommerce web design", "web design and development", "web design for small business"]
     },
     "/services/digital-marketing/email-marketing": {
       "name": "Email Marketing",
-      "status": "tentative",
-      "primary": ["email marketing services", "email marketing agency"],
-      "secondary": []
+      "status": "confirmed (KI cluster order 7ac6fe00, 2026-06-18)",
+      "primary": ["email marketing services", "email marketing agency", "email marketing company"],
+      "secondary": ["email automation services", "email marketing consultant", "email marketing management", "email campaign management", "email marketing for small business"]
     },
     "/services/digital-marketing/conversion-rate-optimization": {
       "name": "Conversion Rate Optimization",
-      "status": "tentative",
-      "primary": ["conversion rate optimization services", "cro services"],
-      "secondary": []
+      "status": "confirmed (KI cluster order 7c0b4a48, 2026-06-18)",
+      "primary": ["conversion rate optimization services", "cro agency", "conversion rate optimization agency"],
+      "secondary": ["cro services", "conversion optimization services", "landing page optimization", "website conversion optimization", "ab testing services", "cro consultant"]
     },
     "/services/digital-marketing/analytics-reporting": {
       "name": "Analytics & Reporting",
-      "status": "tentative",
-      "primary": ["marketing analytics services", "analytics and reporting"],
-      "secondary": []
+      "status": "confirmed (KI cluster order 96b19961, 2026-06-18)",
+      "primary": ["marketing analytics services", "marketing analytics agency"],
+      "secondary": ["ga4 services", "marketing reporting services", "marketing dashboard services", "analytics consulting services", "conversion tracking services", "google analytics services", "google analytics setup"]
     },
     "blog": {
       "name": "Informational blog/guide cluster (links UP to the service pages)",
       "status": "reserved",
-      "primary": ["local seo", "local seo for small business", "local search marketing"],
+      "primary": ["local seo", "local seo for small business", "local search marketing", "digital marketing", "seo", "search engine optimization", "seo expert", "technical seo", "website speed optimization", "responsive web design", "conversion rate optimization"],
       "secondary": []
     }
   }

@@ -1,0 +1,16 @@
+{
+  "_step": "6a — Itemized fact-check (HARD GATE 2)", "_page": "web-design", "_date": "2026-06-18",
+  "statistics": [
+    {"claim": "53% of mobile visits abandoned if load > 3 seconds", "verdict": "VERIFIED", "source": "Google, 'The Need for Mobile Speed' (2016).", "url": "https://blog.google/products/admanager/the-need-for-mobile-speed/"},
+    {"claim": "43% of mobile sites pass all three Core Web Vitals", "verdict": "VERIFIED", "source": "2024 Web Almanac, HTTP Archive Performance.", "url": "https://almanac.httparchive.org/en/2024/performance"},
+    {"claim": "≈90% of global search runs on Google", "verdict": "VERIFIED", "source": "Statcounter Global Stats.", "url": "https://gs.statcounter.com/search-engine-market-share"}
+  ],
+  "capability_and_market_claims": [
+    {"claim": "custom design, responsive/mobile-first, modern frameworks, SEO-ready, conversion UX, speed/CWV", "verdict": "VERIFIED as approach", "basis": "Standard web-design scope; process framing; no client portfolio/result claims."},
+    {"claim": "We are an IT/engineering firm; 'built to rank and convert'", "verdict": "VERIFIED", "basis": "_facts.md: NexFortis is an IT firm; this very site is prerendered and passes the SEO invariant suite — the approach is demonstrably real, not a slogan."},
+    {"claim": "scoped/transparent pricing; optional hosting/maintenance", "verdict": "VERIFIED as policy", "basis": "Transparent-pricing policy; no invented price."}
+  ],
+  "cannibalization_note": "Web build/design intent; links technical-seo for 'built to rank' without targeting its terms. 'responsive web design' (informational) excluded to blog.",
+  "fabrication_scan": {"invented_results_metrics": "NONE (no portfolio/conversion claims)", "invented_prices_guarantees": "NONE", "undemonstrated_capabilities": "NONE (IT/eng + prerendered site are real)"},
+  "_done_check": "PASS — 3 stats verified to distinct sources; claims grounded; zero fabrications."
+}

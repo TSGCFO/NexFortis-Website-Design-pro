@@ -1,0 +1,16 @@
+{
+  "_step": "6a — Itemized fact-check (HARD GATE 2)", "_page": "content-marketing", "_date": "2026-06-18",
+  "statistics": [
+    {"claim": "≈90% of global search runs on Google", "verdict": "VERIFIED", "source": "Statcounter Global Stats.", "url": "https://gs.statcounter.com/search-engine-market-share"},
+    {"claim": "27.6% average CTR of the #1 organic result", "verdict": "VERIFIED", "source": "Backlinko 4M-result CTR study.", "url": "https://backlinko.com/google-ctr-stats"},
+    {"claim": "≈16% of Google searches showed an AI Overview by late 2025", "verdict": "VERIFIED", "source": "Semrush AI Overviews study via Search Engine Land (15.69% Nov 2025).", "url": "https://searchengineland.com/google-ai-overviews-surge-pullback-data-466314"}
+  ],
+  "capability_and_market_claims": [
+    {"claim": "research-led content, not AI filler; we fact-check every claim; we use AI as a tool but don't ship spun copy", "verdict": "VERIFIED as approach/policy", "basis": "Genuine differentiator + matches this run's own no-fabrication method; framed as process, no client-count/result claims."},
+    {"claim": "content strategy, topic clusters, pillar pages, SEO/AI content, distribution", "verdict": "VERIFIED as approach", "basis": "Standard content-marketing scope; process framing."},
+    {"claim": "helpful-content system penalises thin AI filler", "verdict": "VERIFIED (Google Helpful Content guidance)", "basis": "Google's documented helpful-content stance."}
+  ],
+  "cannibalization_note": "Content PRODUCTION intent; fenced from SEO spoke (seo services) + link-building. Excluded informational 'b2b content marketing'/'seo content writing'.",
+  "fabrication_scan": {"invented_results_metrics": "NONE", "invented_prices_guarantees": "NONE", "undemonstrated_capabilities": "NONE"},
+  "_done_check": "PASS — 3 stats verified to distinct sources; claims grounded; zero fabrications."
+}

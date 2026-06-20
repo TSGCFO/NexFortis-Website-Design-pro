@@ -1,0 +1,10 @@
+{
+  "_step": "8 — Publish QA", "_page": "web-design", "_date": "2026-06-18",
+  "build": "nexfortis (27 routes) + qb-portal OK.",
+  "test_seo": "PASS — all suites green (after trimming meta desc 161->under 160). Site-wide nav anchor + new page snapshot + sitemap +1.",
+  "content_gate": "PASS — web-design 1420 words within 1100-1900; 3 distinct citations; FAQPage 5; Service+Person; author named; no banned jargon; no dup paragraphs.",
+  "cannibalization": "PASS (exit 0).", "publish_readiness": "PASS (exit 0) — 10 published pages with artifacts.",
+  "live_check": {"http_status": 200, "h1": "Web Design & Development That Converts", "distinct_external_citations": 3, "template": "DmSpokePageBody (visually verified on pillar)."},
+  "gate3": "Winston 0% (binding PASS); Undetectable advisory 83.4.",
+  "_done_check": "PASS."
+}

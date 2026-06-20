@@ -1,0 +1,23 @@
+{
+  "_step": "2 — Cluster + cannibalization (HARD GATE 1)", "_page": "web-design",
+  "_source": "KI clustering order df986641-cbbb-4417-8e15-ae4ff3ba93a1 (2026-06-18, Canada).",
+  "cluster_evidence": {
+    "web design services": {"ki_cluster": "web design company", "intent": "Commercial", "note": "PRIMARY (main commercial cluster)."},
+    "web design company": {"ki_cluster": "web design company", "intent": "Commercial", "note": "PRIMARY (brutal difficulty; cluster synonym)."},
+    "website design services": {"ki_cluster": "web design company", "intent": "Other", "note": "PRIMARY (same cluster)."},
+    "custom web design": {"ki_cluster": "web design company", "intent": "Transactional", "note": "Secondary (same cluster)."},
+    "web design agency": {"ki_cluster": "web design agency", "intent": "Commercial", "note": "PRIMARY."},
+    "website development services": {"ki_cluster": "website development services", "intent": "Commercial", "note": "Secondary (dev angle)."},
+    "ecommerce web design": {"ki_cluster": "ecommerce web design", "intent": "Other", "note": "Secondary (ecommerce niche)."},
+    "web design and development": {"ki_cluster": "web design and development", "intent": "Informational", "note": "Secondary (the page's design+dev framing)."},
+    "web design for small business": {"ki_cluster": "web design for small business", "intent": "Informational", "note": "Secondary (SMB)."},
+    "responsive web design": {"ki_cluster": "responsive web design", "intent": "Informational", "note": "EXCLUDED -> blog (definition/how-to). Covered as a feature."}
+  },
+  "assignment": {
+    "owns_primary": ["web design services", "web design company", "web design agency", "website design services"],
+    "owns_secondary": ["custom web design", "website development services", "ecommerce web design", "web design and development", "web design for small business"],
+    "excluded": {"responsive web design": "blog (informational); covered as a feature"}
+  },
+  "fence_note": "Web build/design intent — distinct from technical-seo (the page links technical-seo for 'built to rank'). Competitive difficulty band noted; the right terms regardless.",
+  "_done_check": "PASS — one primary cluster; registry updated; check-cannibalization exit 0."
+}

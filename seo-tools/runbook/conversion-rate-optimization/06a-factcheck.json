@@ -1,0 +1,17 @@
+{
+  "_step": "6a — Itemized fact-check (HARD GATE 2)", "_page": "conversion-rate-optimization", "_date": "2026-06-18",
+  "statistics": [
+    {"claim": "Average landing-page conversion rate 2.35%; top 25% convert at 5.31%+ (top quartile >2x the average)", "verdict": "VERIFIED (attributed + framed as the opportunity gap)", "source": "WordStream analysis of thousands of Google Ads accounts. Note: dated study; used to illustrate the average-vs-top-performer GAP (the durable insight), explicitly attributed to WordStream, not presented as a current universal benchmark.", "url": "https://www.wordstream.com/blog/ws/2014/03/17/what-is-a-good-conversion-rate"},
+    {"claim": "53% of mobile visits abandoned if load > 3 seconds", "verdict": "VERIFIED", "source": "Google, 'The Need for Mobile Speed'.", "url": "https://blog.google/products/admanager/the-need-for-mobile-speed/"},
+    {"claim": "≈90% of search runs on Google", "verdict": "VERIFIED", "source": "Statcounter Global Stats.", "url": "https://gs.statcounter.com/search-engine-market-share"}
+  ],
+  "note_on_excluded_stat": "Considered the famous Econsultancy '$92 acquire : $1 convert' stat but EXCLUDED it — sources confirm it is ~2012 and hard to source primarily today; using it as a current benchmark would overstate. The 'leaky bucket' point is made in prose without a stale number.",
+  "capability_and_market_claims": [
+    {"claim": "analytics review, behaviour analysis (heatmaps/recordings), A/B testing, landing-page/funnel optimization, UX fixes, iteration", "verdict": "VERIFIED as approach", "basis": "Standard CRO methodology; process framing; no client uplift-% result claims."},
+    {"claim": "data-driven/hypothesis-tested, not redesign-on-opinion", "verdict": "VERIFIED as method", "basis": "Sound CRO discipline; honest."},
+    {"claim": "CRO needs enough traffic for valid testing", "verdict": "VERIFIED (honest)", "basis": "Statistical reality of A/B testing; stated transparently."}
+  ],
+  "cannibalization_note": "CRO/optimization intent; links web-design (landing pages) + SEO without targeting their terms. Head 'conversion rate optimization' (informational) excluded to blog.",
+  "fabrication_scan": {"invented_results_metrics": "NONE (no NexFortis uplift %)", "invented_prices_guarantees": "NONE", "undemonstrated_capabilities": "NONE"},
+  "_done_check": "PASS — 3 stats verified to distinct sources (one framed carefully, one stale stat deliberately excluded); claims grounded; zero fabrications."
+}

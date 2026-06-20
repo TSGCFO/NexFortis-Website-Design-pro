@@ -1,0 +1,28 @@
+{
+  "_step": "6c Humanize + 6d AI-detection & plagiarism (HARD GATE 3)",
+  "_page": "local-seo",
+  "_date": "2026-06-18",
+  "humanize_6c": {
+    "tool": "Undetectable.ai Humanizer (humanize.undetectable.ai, model v11, 'More Human') via seo-tools/humanize.mjs",
+    "applied_to": "ALL flowing prose: intro (3 paragraphs), 5 FAQ answers, author note, and the 6 feature-card descriptions. NOT applied to: H1, meta title/description, section headings, feature TITLES, FAQ questions, comparison rows, pricing keyword line, schema — these are kept verbatim to protect keyword placement + structure.",
+    "per_piece_AI_before_after": {
+      "intro_p1": "100 -> 0.19", "intro_p2": "71 -> 0.01", "intro_p3": "100 -> 44.8",
+      "faq1": "100 -> 0", "faq2": "55 -> 0.02", "faq3": "4.5 -> 0", "faq4": "78 -> 23.7", "faq5": "100 -> 0.04",
+      "author": "99.8 -> 0", "features f1-f6": "f1 already 0.8 (kept original); f2 100->31, f3 99.9->0.1, f4 100->0.05, f5 100->0, f6 70->0",
+      "note": "Humanizer output was lightly proofread (fixed grammar slips, first-person 'I'->'we', a factual 'yellow pins', and re-inserted the 2 in-text links in intro). f1/f3 were hand-cleaned where the humanizer garbled them."
+    }
+  },
+  "ai_detection_undetectable": {
+    "tool": "Undetectable.ai xlm_ud_detector",
+    "prose_extract": {"score": 47.5, "verdict": "HUMAN (<50)", "before_humanize": 76.5, "note": "The run book's 'extract page prose to detect/<slug>.txt' check. PASSES after humanizing."},
+    "full_main": {"score": 66.1, "verdict": "still flagged", "note": "Full <main> includes structured UI (card titles, comparison cells, stat labels, breadcrumbs) the detector scores holistically as AI regardless of prose. Humanizing all 6 feature descriptions to ~0 moved full-main only 66.9->66.1, confirming the structured components — not the prose — drive the full-main score. Not meaningfully reducible without gutting the page's conversion structure."}
+  },
+  "plagiarism_winston": {"binding": true, "tool": "Winston AI v2", "score_percent": 0, "matched_sources": 0, "verdict": "PASS — original after humanizing (humanizer rephrasing did not introduce matches)."},
+  "keyword_retention_check": {
+    "_new_step": "Added per operator concern that humanizing could drop owned keywords.",
+    "primary_present": {"local seo services": true},
+    "secondary_present": {"local seo company": true, "local seo agency": true, "local seo near me": true, "local seo expert": true},
+    "note": "On first humanized build, the 4 secondary keywords were ABSENT (they were not verbatim on the page even pre-humanize). Backfilled naturally via a pricing-section sentence (a non-humanized, keyword-stable field). All owned keywords now present. Primary keyword also remains in H1/title/schema (never humanized)."
+  },
+  "_done_check": "Gate 3 satisfied: Winston plagiarism 0% (binding); prose AI-detection HUMAN (47.5) after the 6c humanize step. Full-main score documented as structurally driven. Keyword retention verified + backfilled."
+}

@@ -1,0 +1,10 @@
+{
+  "_step": "7 — On-page + internal links", "_page": "google-business-profile", "_date": "2026-06-18",
+  "files": "NEW: content entry + wrapper google-business-profile.tsx + App.tsx lazy import + Route. Published=true. Allowlist INV-001/INV-008 entries added.",
+  "title": {"metaTitle": "Google Business Profile", "rendered_title": "Google Business Profile | NexFortis IT Solutions", "h1": "Google Business Profile Management & Optimization"},
+  "meta_description": "Google Business Profile management for GTA businesses: optimization, posts, reviews, and listing consistency to win the Map Pack and earn more calls.",
+  "schema": {"page_level": ["Service (Google Business Profile Management)", "BreadcrumbList", "FAQPage", "Person"], "global_from_layout": ["Organization", "LocalBusiness", "WebSite"]},
+  "internal_links": {"in_prose": [{"anchor": "local SEO", "href": "/services/digital-marketing/local-seo"}, {"anchor": "digital marketing services", "href": "/services/digital-marketing"}], "related_services": "published siblings", "cluster_correct": true},
+  "nav": "Surfaced in Services mega-menu + footer.",
+  "_done_check": "PASS."
+}

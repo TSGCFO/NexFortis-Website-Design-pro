@@ -1,0 +1,509 @@
+{
+  "route": "/services/digital-marketing/technical-seo",
+  "title": "Technical SEO Services | NexFortis IT Solutions",
+  "description": "Technical SEO services for Canadian businesses: crawlability, indexation, Core Web Vitals, structured data, and rendering fixes that let Google rank you.",
+  "canonical": "https://nexfortis.com/services/digital-marketing/technical-seo",
+  "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
+  "og": {
+    "title": "Technical SEO Services | NexFortis IT Solutions",
+    "description": "Technical SEO services for Canadian businesses: crawlability, indexation, Core Web Vitals, structured data, and rendering fixes that let Google rank you.",
+    "url": "https://nexfortis.com/services/digital-marketing/technical-seo",
+    "image": "https://nexfortis.com/opengraph.png",
+    "type": "website"
+  },
+  "twitter": {
+    "card": "summary_large_image"
+  },
+  "headings": [
+    {
+      "level": 1,
+      "text": "Technical SEO Services That Unblock Rankings"
+    },
+    {
+      "level": 2,
+      "text": "The work that decides whether your other SEO pays off"
+    },
+    {
+      "level": 2,
+      "text": "What's included in our technical SEO services"
+    },
+    {
+      "level": 3,
+      "text": "Technical SEO audit"
+    },
+    {
+      "level": 3,
+      "text": "Crawlability &amp; indexation"
+    },
+    {
+      "level": 3,
+      "text": "Core Web Vitals &amp; speed"
+    },
+    {
+      "level": 3,
+      "text": "Structured data &amp; schema"
+    },
+    {
+      "level": 3,
+      "text": "Site architecture &amp; internal links"
+    },
+    {
+      "level": 3,
+      "text": "Rendering, JavaScript &amp; migrations"
+    },
+    {
+      "level": 2,
+      "text": "How we deliver technical SEO"
+    },
+    {
+      "level": 3,
+      "text": "Crawl &amp; audit"
+    },
+    {
+      "level": 3,
+      "text": "Fix the blockers"
+    },
+    {
+      "level": 3,
+      "text": "Validate &amp; monitor"
+    },
+    {
+      "level": 3,
+      "text": "Keep it healthy"
+    },
+    {
+      "level": 2,
+      "text": "NexFortis vs. a typical SEO provider"
+    },
+    {
+      "level": 2,
+      "text": "What technical SEO costs"
+    },
+    {
+      "level": 3,
+      "text": "Audit first, then scoped to what's broken"
+    },
+    {
+      "level": 2,
+      "text": "Related services"
+    },
+    {
+      "level": 3,
+      "text": "SEO Services"
+    },
+    {
+      "level": 3,
+      "text": "Local SEO"
+    },
+    {
+      "level": 3,
+      "text": "GEO &amp; AI Search"
+    },
+    {
+      "level": 2,
+      "text": "Frequently Asked Questions"
+    },
+    {
+      "level": 2,
+      "text": "Is something under the hood holding you back?"
+    },
+    {
+      "level": 4,
+      "text": "Services"
+    },
+    {
+      "level": 4,
+      "text": "Company"
+    },
+    {
+      "level": 4,
+      "text": "Contact"
+    },
+    {
+      "level": 1,
+      "text": "NexFortis IT Solutions"
+    }
+  ],
+  "jsonld": [
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://nexfortis.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Services",
+          "item": "https://nexfortis.com/services"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Digital Marketing",
+          "item": "https://nexfortis.com/services/digital-marketing"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Technical SEO",
+          "item": "https://nexfortis.com/services/digital-marketing/technical-seo"
+        }
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is technical SEO?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Technical SEO is the work that makes sure search engines can crawl, render, index, and trust your site. It covers things like site speed and Core Web Vitals, crawlability, indexation, structured data, site architecture, and JavaScript rendering. It's the layer underneath your content and links — when it's broken, the rest of your SEO underperforms no matter how good it is."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is a technical SEO audit?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It's a structured review of everything that affects how search engines access and understand your site. We crawl it the way Google does, pull data from Search Console and Core Web Vitals, and produce a prioritised list of issues with the highest-impact fixes first. It's the starting point for every technical engagement, because guessing at problems wastes money."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What's the difference between on-page and technical SEO?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "On-page SEO is about the content of a page — titles, headings, copy, and keywords. Technical SEO is about the plumbing that lets Google reach and process that page at all — speed, crawling, indexing, structured data, and rendering. You need both, and we handle them together as part of a full SEO engagement."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I know if I need technical SEO?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Common signs: pages that won't rank despite good content, traffic that dropped after a redesign or migration, slow load times, pages missing from Google, or a Search Console full of coverage and Core Web Vitals warnings. If any of those sound familiar, a technical audit will tell you what's wrong and what it's costing you."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Will you work with my existing developers?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. We can either implement fixes directly or hand your team clear, prioritised specifications they can ship — whatever fits how you work. Either way, nothing goes live without your sign-off, and we validate each change afterward so you know it actually worked."
+          }
+        }
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "@id": "https://nexfortis.com/#localbusiness",
+      "name": "NexFortis IT Solutions",
+      "legalName": "17756968 Canada Inc.",
+      "url": "https://nexfortis.com",
+      "logo": "https://nexfortis.com/images/logo-512.png",
+      "image": "https://nexfortis.com/opengraph.png",
+      "description": "NexFortis delivers end-to-end IT solutions for Canadian businesses including managed IT, Microsoft 365, QuickBooks migration, digital marketing, and workflow automation.",
+      "email": "contact@nexfortis.com",
+      "telephone": "+1-416-317-0051",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "204 Hill Farm Rd",
+        "addressLocality": "Nobleton",
+        "addressRegion": "ON",
+        "postalCode": "L7B 0A1",
+        "addressCountry": "CA"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 43.9327,
+        "longitude": -79.6615
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "Canada"
+      },
+      "priceRange": "$$",
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday"
+        ],
+        "opens": "09:00",
+        "closes": "17:00"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/company/nexfortis"
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "@id": "https://nexfortis.com/#organization",
+      "name": "NexFortis IT Solutions",
+      "legalName": "17756968 Canada Inc.",
+      "url": "https://nexfortis.com",
+      "logo": "https://nexfortis.com/images/logo-512.png",
+      "image": "https://nexfortis.com/opengraph.png",
+      "description": "NexFortis delivers end-to-end IT solutions for Canadian businesses including managed IT, Microsoft 365, QuickBooks migration, digital marketing, and workflow automation.",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer service",
+        "email": "contact@nexfortis.com",
+        "telephone": "+1-416-317-0051",
+        "areaServed": "CA",
+        "availableLanguage": [
+          "English"
+        ]
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "204 Hill Farm Rd",
+        "addressLocality": "Nobleton",
+        "addressRegion": "ON",
+        "postalCode": "L7B 0A1",
+        "addressCountry": "CA"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/company/nexfortis"
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Hassan Sadiq",
+      "jobTitle": "Founder & CEO, NexFortis IT Solutions",
+      "url": "https://nexfortis.com/about",
+      "worksFor": {
+        "@id": "https://nexfortis.com/#organization"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "Technical SEO Services",
+      "description": "Technical search engine optimization for Canadian businesses — site audits, crawlability and indexation, Core Web Vitals, structured data, and rendering fixes.",
+      "url": "https://nexfortis.com/services/digital-marketing/technical-seo",
+      "provider": {
+        "@type": "Organization",
+        "name": "NexFortis IT Solutions",
+        "url": "https://nexfortis.com"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "Canada"
+      },
+      "serviceType": "Technical SEO"
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "@id": "https://nexfortis.com/#website",
+      "name": "NexFortis IT Solutions",
+      "url": "https://nexfortis.com",
+      "inLanguage": "en-CA",
+      "publisher": {
+        "@id": "https://nexfortis.com/#organization"
+      }
+    }
+  ],
+  "anchors": [
+    {
+      "text": "Skip to main content",
+      "href": "#main-content"
+    },
+    {
+      "text": "",
+      "href": "/"
+    },
+    {
+      "text": "Home",
+      "href": "/"
+    },
+    {
+      "text": "Digital Marketing",
+      "href": "/services/digital-marketing"
+    },
+    {
+      "text": "SEO Services",
+      "href": "/services/digital-marketing/seo"
+    },
+    {
+      "text": "Local SEO",
+      "href": "/services/digital-marketing/local-seo"
+    },
+    {
+      "text": "GEO &amp; AI Search",
+      "href": "/services/digital-marketing/generative-engine-optimization"
+    },
+    {
+      "text": "Technical SEO",
+      "href": "/services/digital-marketing/technical-seo"
+    },
+    {
+      "text": "Google Business Profile",
+      "href": "/services/digital-marketing/google-business-profile"
+    },
+    {
+      "text": "Content Marketing",
+      "href": "/services/digital-marketing/content-marketing"
+    },
+    {
+      "text": "Link Building &amp; Digital PR",
+      "href": "/services/digital-marketing/link-building"
+    },
+    {
+      "text": "Google Ads Management",
+      "href": "/services/digital-marketing/google-ads"
+    },
+    {
+      "text": "Social Media Marketing",
+      "href": "/services/digital-marketing/social-media-marketing"
+    },
+    {
+      "text": "Web Design &amp; Development",
+      "href": "/services/digital-marketing/web-design"
+    },
+    {
+      "text": "Email Marketing",
+      "href": "/services/digital-marketing/email-marketing"
+    },
+    {
+      "text": "Conversion Rate Optimization",
+      "href": "/services/digital-marketing/conversion-rate-optimization"
+    },
+    {
+      "text": "Analytics &amp; Reporting",
+      "href": "/services/digital-marketing/analytics-reporting"
+    },
+    {
+      "text": "Microsoft 365 Solutions",
+      "href": "/services/microsoft-365"
+    },
+    {
+      "text": "QuickBooks Migration",
+      "href": "/services/quickbooks"
+    },
+    {
+      "text": "IT Consulting",
+      "href": "/services/it-consulting"
+    },
+    {
+      "text": "Workflow Automation",
+      "href": "/services/workflow-automation"
+    },
+    {
+      "text": "Browse our IT services",
+      "href": "/services"
+    },
+    {
+      "text": "About",
+      "href": "/about"
+    },
+    {
+      "text": "Blog",
+      "href": "/blog"
+    },
+    {
+      "text": "Contact",
+      "href": "/contact"
+    },
+    {
+      "text": "QB Portal",
+      "href": "https://qb.nexfortis.com"
+    },
+    {
+      "text": "Get a Free Quote",
+      "href": "/contact"
+    },
+    {
+      "text": "All Services",
+      "href": "/services"
+    },
+    {
+      "text": "Services",
+      "href": "/services"
+    },
+    {
+      "text": "SEO services",
+      "href": "/services/digital-marketing/seo"
+    },
+    {
+      "text": "digital marketing services",
+      "href": "/services/digital-marketing"
+    },
+    {
+      "text": "Source: Statcounter Global Stats",
+      "href": "https://gs.statcounter.com/search-engine-market-share"
+    },
+    {
+      "text": "Source: 2024 Web Almanac, HTTP Archive",
+      "href": "https://almanac.httparchive.org/en/2024/performance"
+    },
+    {
+      "text": "Source: Google, The Need for Mobile Speed",
+      "href": "https://blog.google/products/admanager/the-need-for-mobile-speed/"
+    },
+    {
+      "text": "More about NexFortis",
+      "href": "/about"
+    },
+    {
+      "text": "About Us",
+      "href": "/about"
+    },
+    {
+      "text": "Privacy Policy",
+      "href": "/privacy"
+    },
+    {
+      "text": "Terms of Service",
+      "href": "/terms"
+    },
+    {
+      "text": "(416) 317-0051",
+      "href": "tel:+14163170051"
+    },
+    {
+      "text": "contact@nexfortis.com",
+      "href": "mailto:contact@nexfortis.com"
+    },
+    {
+      "text": "LinkedIn",
+      "href": "https://www.linkedin.com/company/nexfortis"
+    },
+    {
+      "text": "Privacy",
+      "href": "/privacy"
+    },
+    {
+      "text": "Terms",
+      "href": "/terms"
+    },
+    {
+      "text": "About NexFortis",
+      "href": "/about"
+    },
+    {
+      "text": "Our services",
+      "href": "/services"
+    },
+    {
+      "text": "Contact us",
+      "href": "/contact"
+    }
+  ],
+  "rootDivIsEmpty": false,
+  "hasNoindex": false
+}

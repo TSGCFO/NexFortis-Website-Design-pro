@@ -40,10 +40,6 @@
       "text": "GEO &amp; AI Search"
     },
     {
-      "level": 2,
-      "text": "Also available across the cluster"
-    },
-    {
       "level": 3,
       "text": "Technical SEO"
     },
@@ -82,6 +78,10 @@
     {
       "level": 3,
       "text": "Analytics &amp; Reporting"
+    },
+    {
+      "level": 2,
+      "text": "Also available across the cluster"
     },
     {
       "level": 2,
@@ -178,7 +178,7 @@
           "name": "What does a digital marketing agency actually do?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "A good one grows the number of qualified customers finding and choosing your business online. That spans search engine optimization, local search, paid ads, content, web design, and analytics. At NexFortis we run these as one connected strategy rather than disconnected services, so every channel reinforces the others instead of competing for budget."
+            "text": "Strip away the jargon and the job is simple: get more of the right people to find you and choose you online. In practice that means SEO, local search, paid ads, content, your website, and the analytics that tell you what is working. The difference at NexFortis is that we run those as one plan, not five invoices from five teams who never talk to each other. When the channels point the same direction, your budget goes a lot further."
           }
         },
         {
@@ -186,7 +186,7 @@
           "name": "How much does digital marketing cost?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "It depends on your market and goals, which is why we price in transparent ranges rather than one-size packages. Most small and mid-sized Canadian businesses invest somewhere between a maintainer budget for steady local visibility and a growth budget for competitive markets. You get a fixed monthly scope, clear reporting, and no long-term lock-in, so you can scale up or down as results come in."
+            "text": "Honestly, it depends on your market and what you are trying to do, which is why we quote a real range instead of a one-price-fits-all package. A single-location business holding steady needs far less than a company fighting for competitive keywords. Whatever the number, you get a fixed monthly scope, plain-language reporting, and no long-term lock-in — so you can scale up when it is working or step back if your priorities change. We share specifics after a quick, free audit of your situation."
           }
         },
         {
@@ -194,7 +194,7 @@
           "name": "How is NexFortis different from a typical agency?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Three ways. You work directly with a senior consultant instead of being handed to a junior. Every plan is built on real Canadian search data, not a generic playbook. And we include AI search optimization — getting you cited by ChatGPT and Google's AI Overviews — which almost no local competitor offers yet."
+            "text": "Three things, mainly. You work with a senior person who knows your account, not a junior who churns through ten others. Your plan comes from real Canadian search data, not a recycled template. And we build in AI search — getting you cited by ChatGPT and Google's AI Overviews — which is still rare among local agencies."
           }
         },
         {
@@ -202,7 +202,7 @@
           "name": "Do I need SEO, ads, or both?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "It depends on your timeline and margins. Ads buy visibility immediately but stop the moment you stop paying. SEO and local search take a few months but compound into traffic you don't rent. Most businesses start with one and layer in the other; we'll recommend the mix that fits your goals rather than selling you everything at once."
+            "text": "It comes down to your timeline and your margins. Ads switch on visibility today, but the leads stop the day you stop paying. SEO and local search take a few months to build, then keep delivering traffic you are not renting. Plenty of clients start with ads for cash flow and let SEO compound underneath. We will tell you the mix that fits your goals rather than trying to sell you the whole menu on day one."
           }
         },
         {
@@ -210,7 +210,7 @@
           "name": "How quickly will I see results?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Paid ads and Google Business Profile improvements can drive enquiries within weeks. SEO and content typically show meaningful gains around the three-to-six-month mark and keep compounding from there. We set realistic expectations against your specific market up front, and we report progress every month so you're never guessing."
+            "text": "Some of it is fast. Paid ads and a tuned-up Google Business Profile can bring enquiries within a few weeks. SEO and content are the slower burn — usually three to six months before the gains are obvious, and then they keep building. We set honest expectations against your specific market up front, and we report every month so you are never left guessing."
           }
         },
         {
@@ -218,7 +218,7 @@
           "name": "Do you work with businesses outside the GTA?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes. We're based in Nobleton and know the Greater Toronto Area well, but search marketing works anywhere. We serve clients across Ontario and the rest of Canada, and our local SEO work simply targets whichever cities and service areas matter to you."
+            "text": "Yes. We are based in Nobleton and we know the Greater Toronto Area inside out, but search marketing is not bound by geography. We work with clients across Ontario and the rest of Canada, and the local SEO side simply targets whichever cities and service areas actually matter to your business."
           }
         },
         {
@@ -226,7 +226,7 @@
           "name": "What is GEO or AI search, and do I need it?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "GEO — Generative Engine Optimization — is the work that gets your brand cited by AI engines like ChatGPT, Google's AI Overviews, Perplexity, and Gemini, where a fast-growing share of buyers now start. If your customers are researching online, you'll want to be in those answers before your competitors are. It's a forward-looking add-on we build on top of solid SEO foundations."
+            "text": "GEO stands for Generative Engine Optimization — the work that gets your brand quoted by AI tools like ChatGPT, Google's AI Overviews, Perplexity, and Gemini. A growing slice of buyers now start their research there instead of on a search page. If that describes your customers, you want to be in those answers before your competitors figure it out. We build it on top of solid SEO rather than as a gimmick on its own."
           }
         },
         {
@@ -234,7 +234,7 @@
           "name": "Can you take over marketing we've already started?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes, and most of our clients come to us that way. We start by auditing what's already in place — your website, any past SEO work, ad accounts, and analytics — then keep what's working and fix or replace what isn't. You won't pay us to redo good work, and we'll be straight with you about what a previous provider got right and where the gaps are."
+            "text": "Almost everyone comes to us mid-stream, so yes. We start by looking at what you already have — the website, any past SEO, the ad accounts, the analytics — and we keep what is pulling its weight before changing anything. You will not pay us to redo good work, and we will be straight with you about what the last provider got right and where the gaps are."
           }
         }
       ]
@@ -321,7 +321,7 @@
       "@context": "https://schema.org",
       "@type": "Person",
       "name": "Hassan Sadiq",
-      "jobTitle": "Founder & Principal Consultant, NexFortis IT Solutions",
+      "jobTitle": "Founder & CEO, NexFortis IT Solutions",
       "url": "https://nexfortis.com/about",
       "worksFor": {
         "@id": "https://nexfortis.com/#organization"
@@ -372,6 +372,58 @@
     {
       "text": "Digital Marketing",
       "href": "/services/digital-marketing"
+    },
+    {
+      "text": "SEO Services",
+      "href": "/services/digital-marketing/seo"
+    },
+    {
+      "text": "Local SEO",
+      "href": "/services/digital-marketing/local-seo"
+    },
+    {
+      "text": "GEO &amp; AI Search",
+      "href": "/services/digital-marketing/generative-engine-optimization"
+    },
+    {
+      "text": "Technical SEO",
+      "href": "/services/digital-marketing/technical-seo"
+    },
+    {
+      "text": "Google Business Profile",
+      "href": "/services/digital-marketing/google-business-profile"
+    },
+    {
+      "text": "Content Marketing",
+      "href": "/services/digital-marketing/content-marketing"
+    },
+    {
+      "text": "Link Building &amp; Digital PR",
+      "href": "/services/digital-marketing/link-building"
+    },
+    {
+      "text": "Google Ads Management",
+      "href": "/services/digital-marketing/google-ads"
+    },
+    {
+      "text": "Social Media Marketing",
+      "href": "/services/digital-marketing/social-media-marketing"
+    },
+    {
+      "text": "Web Design &amp; Development",
+      "href": "/services/digital-marketing/web-design"
+    },
+    {
+      "text": "Email Marketing",
+      "href": "/services/digital-marketing/email-marketing"
+    },
+    {
+      "text": "Conversion Rate Optimization",
+      "href": "/services/digital-marketing/conversion-rate-optimization"
+    },
+    {
+      "text": "Analytics &amp; Reporting",
+      "href": "/services/digital-marketing/analytics-reporting"
     },
     {
       "text": "Microsoft 365 Solutions",
@@ -444,18 +496,6 @@
     {
       "text": "Source: BrightLocal Local Consumer Review Survey 2024",
       "href": "https://www.brightlocal.com/research/local-consumer-review-survey-2024/"
-    },
-    {
-      "text": "SEO Services",
-      "href": "/services/digital-marketing/seo"
-    },
-    {
-      "text": "Local SEO",
-      "href": "/services/digital-marketing/local-seo"
-    },
-    {
-      "text": "GEO &amp; AI Search",
-      "href": "/services/digital-marketing/generative-engine-optimization"
     },
     {
       "text": "More about NexFortis",

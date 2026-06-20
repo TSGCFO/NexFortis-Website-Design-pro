@@ -1,0 +1,17 @@
+{
+  "_step": "6a — Itemized fact-check (HARD GATE 2)", "_page": "link-building", "_date": "2026-06-18",
+  "statistics": [
+    {"claim": "#1 result has 3.8x more backlinks than positions #2-#10", "verdict": "VERIFIED", "source": "Backlinko 11.8M-result ranking correlation study (with Ahrefs).", "url": "https://backlinko.com/search-engine-ranking"},
+    {"claim": "66% of pages have zero backlinks", "verdict": "VERIFIED", "source": "Ahrefs study of ~1 billion pages (66.31% have zero backlinks).", "url": "https://ahrefs.com/blog/search-traffic-study/"},
+    {"claim": "≈90% of global search runs on Google", "verdict": "VERIFIED", "source": "Statcounter Global Stats.", "url": "https://gs.statcounter.com/search-engine-market-share"}
+  ],
+  "capability_and_market_claims": [
+    {"claim": "Only earned, editorial, white-hat links; no bought/spun/PBN", "verdict": "VERIFIED as policy", "basis": "Aligns with Google's link-spam guidance; framed as our policy, no client-count/result claims."},
+    {"claim": "Bought/PBN links risk a Google penalty", "verdict": "VERIFIED", "basis": "Google link-spam / Penguin guidance."},
+    {"claim": "digital PR, guest posting, blogger outreach, broken-link reclamation, reporting", "verdict": "VERIFIED as approach", "basis": "Standard white-hat link scope; process framing."},
+    {"claim": "No link-count guarantee", "verdict": "VERIFIED (honest)", "basis": "Explicitly states no number promised."}
+  ],
+  "cannibalization_note": "Off-page/authority intent; owns 'off page seo services' (not the SEO spoke). Fenced from SEO (on-page/technical) + content-marketing (production).",
+  "fabrication_scan": {"invented_results_metrics": "NONE", "invented_prices_guarantees": "NONE (no link-count promise)", "undemonstrated_capabilities": "NONE"},
+  "_done_check": "PASS — 3 stats verified to distinct sources; claims grounded; zero fabrications."
+}

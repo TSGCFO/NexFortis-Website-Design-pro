@@ -1,0 +1,22 @@
+{
+  "_step": "2 — Cluster + cannibalization (HARD GATE 1)", "_page": "google-ads",
+  "_source": "KI clustering order b3cd3f2b-b0e9-4223-ac3b-3638c4b7529a (2026-06-18, Canada). All commercial/other (buyer intent).",
+  "cluster_evidence": {
+    "google ads management": {"intent": "Commercial", "note": "PRIMARY."},
+    "google ads agency": {"intent": "Commercial", "note": "PRIMARY."},
+    "ppc management": {"intent": "Commercial", "note": "PRIMARY (PPC synonym)."},
+    "ppc agency": {"intent": "Commercial", "note": "PRIMARY (PPC synonym)."},
+    "ppc services": {"intent": "Other", "note": "Secondary."},
+    "sem services": {"intent": "Other", "note": "Secondary (paid-search umbrella)."},
+    "google ads management services": {"intent": "Commercial", "note": "Secondary."},
+    "ppc management services": {"intent": "Other", "note": "Secondary."},
+    "paid search management": {"intent": "Commercial", "note": "Secondary."},
+    "google adwords management": {"intent": "Informational", "note": "Secondary (legacy 'AdWords' name)."}
+  },
+  "assignment": {
+    "owns_primary": ["google ads management", "google ads agency", "ppc management", "ppc agency"],
+    "owns_secondary": ["ppc services", "sem services", "google ads management services", "ppc management services", "paid search management", "google adwords management"]
+  },
+  "fence_note": "Paid-search intent — distinct from the organic SEO/local/GEO spokes. Differentiator: NexFortis is a verified Google Partner (real fact).",
+  "_done_check": "PASS — one primary cluster; registry updated; check-cannibalization exit 0."
+}

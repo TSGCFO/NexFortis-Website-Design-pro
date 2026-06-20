@@ -1,0 +1,509 @@
+{
+  "route": "/services/digital-marketing/content-marketing",
+  "title": "Content Marketing Services | NexFortis IT Solutions",
+  "description": "Content marketing services for Canadian businesses: research-led articles, pillar pages, and topic clusters that rank, build authority, and get cited by AI.",
+  "canonical": "https://nexfortis.com/services/digital-marketing/content-marketing",
+  "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
+  "og": {
+    "title": "Content Marketing Services | NexFortis IT Solutions",
+    "description": "Content marketing services for Canadian businesses: research-led articles, pillar pages, and topic clusters that rank, build authority, and get cited by AI.",
+    "url": "https://nexfortis.com/services/digital-marketing/content-marketing",
+    "image": "https://nexfortis.com/opengraph.png",
+    "type": "website"
+  },
+  "twitter": {
+    "card": "summary_large_image"
+  },
+  "headings": [
+    {
+      "level": 1,
+      "text": "Content Marketing Services That Earn Demand"
+    },
+    {
+      "level": 2,
+      "text": "Content that does a job, not content for its own sake"
+    },
+    {
+      "level": 2,
+      "text": "What's included in our content marketing services"
+    },
+    {
+      "level": 3,
+      "text": "Content strategy &amp; topic clusters"
+    },
+    {
+      "level": 3,
+      "text": "SEO articles &amp; guides"
+    },
+    {
+      "level": 3,
+      "text": "Pillar pages"
+    },
+    {
+      "level": 3,
+      "text": "Blog &amp; ongoing writing"
+    },
+    {
+      "level": 3,
+      "text": "Content built for AI search"
+    },
+    {
+      "level": 3,
+      "text": "Distribution &amp; repurposing"
+    },
+    {
+      "level": 2,
+      "text": "How we deliver content marketing"
+    },
+    {
+      "level": 3,
+      "text": "Strategy &amp; research"
+    },
+    {
+      "level": 3,
+      "text": "Create"
+    },
+    {
+      "level": 3,
+      "text": "Optimize &amp; publish"
+    },
+    {
+      "level": 3,
+      "text": "Measure &amp; refresh"
+    },
+    {
+      "level": 2,
+      "text": "NexFortis vs. a typical content shop"
+    },
+    {
+      "level": 2,
+      "text": "What content marketing costs"
+    },
+    {
+      "level": 3,
+      "text": "Scaled to volume and depth"
+    },
+    {
+      "level": 2,
+      "text": "Related services"
+    },
+    {
+      "level": 3,
+      "text": "SEO Services"
+    },
+    {
+      "level": 3,
+      "text": "Local SEO"
+    },
+    {
+      "level": 3,
+      "text": "GEO &amp; AI Search"
+    },
+    {
+      "level": 2,
+      "text": "Frequently Asked Questions"
+    },
+    {
+      "level": 2,
+      "text": "Ready for content that actually earns its keep?"
+    },
+    {
+      "level": 4,
+      "text": "Services"
+    },
+    {
+      "level": 4,
+      "text": "Company"
+    },
+    {
+      "level": 4,
+      "text": "Contact"
+    },
+    {
+      "level": 1,
+      "text": "NexFortis IT Solutions"
+    }
+  ],
+  "jsonld": [
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://nexfortis.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Services",
+          "item": "https://nexfortis.com/services"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Digital Marketing",
+          "item": "https://nexfortis.com/services/digital-marketing"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Content Marketing",
+          "item": "https://nexfortis.com/services/digital-marketing/content-marketing"
+        }
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is content marketing?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Content marketing is the practice of earning customers by publishing genuinely useful content — articles, guides, pillar pages — instead of just buying their attention with ads. Done well, it ranks in search, builds trust over time, and increasingly gets cited by AI engines. It's a long-term asset: a good page keeps bringing in readers and leads for years."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why is content marketing important?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Because rankings need something worth ranking, and buyers research before they buy. Content is what answers their questions, earns their trust, and gives Google and AI engines a reason to point to you instead of a competitor. It also compounds — unlike ads, the work keeps paying off long after it's published."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does content marketing help my SEO and AI visibility?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Directly. Strong, well-structured content is the raw material SEO ranks and AI engines cite. We build content with both in mind — thorough enough to rank, and structured into clear passages with the right schema so AI tools can lift and quote it. It works hand in hand with our SEO and Generative Engine Optimization services."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you write the content yourselves?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. We research, draft, edit, and fact-check each piece, with your review before it publishes. We use AI as a tool where it helps, but we don't ship spun, unverified copy — every claim is checked against a real source or cut, because thin AI filler is exactly what Google's helpful-content system penalises."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long until content marketing works?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Like SEO, it's a compounding play rather than an instant one. Expect early traction on lower-competition topics within a few months and meaningful momentum around the six-month mark, building from there. We report rankings, traffic, and leads per piece so you can see it working along the way."
+          }
+        }
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "@id": "https://nexfortis.com/#localbusiness",
+      "name": "NexFortis IT Solutions",
+      "legalName": "17756968 Canada Inc.",
+      "url": "https://nexfortis.com",
+      "logo": "https://nexfortis.com/images/logo-512.png",
+      "image": "https://nexfortis.com/opengraph.png",
+      "description": "NexFortis delivers end-to-end IT solutions for Canadian businesses including managed IT, Microsoft 365, QuickBooks migration, digital marketing, and workflow automation.",
+      "email": "contact@nexfortis.com",
+      "telephone": "+1-416-317-0051",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "204 Hill Farm Rd",
+        "addressLocality": "Nobleton",
+        "addressRegion": "ON",
+        "postalCode": "L7B 0A1",
+        "addressCountry": "CA"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 43.9327,
+        "longitude": -79.6615
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "Canada"
+      },
+      "priceRange": "$$",
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday"
+        ],
+        "opens": "09:00",
+        "closes": "17:00"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/company/nexfortis"
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "@id": "https://nexfortis.com/#organization",
+      "name": "NexFortis IT Solutions",
+      "legalName": "17756968 Canada Inc.",
+      "url": "https://nexfortis.com",
+      "logo": "https://nexfortis.com/images/logo-512.png",
+      "image": "https://nexfortis.com/opengraph.png",
+      "description": "NexFortis delivers end-to-end IT solutions for Canadian businesses including managed IT, Microsoft 365, QuickBooks migration, digital marketing, and workflow automation.",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer service",
+        "email": "contact@nexfortis.com",
+        "telephone": "+1-416-317-0051",
+        "areaServed": "CA",
+        "availableLanguage": [
+          "English"
+        ]
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "204 Hill Farm Rd",
+        "addressLocality": "Nobleton",
+        "addressRegion": "ON",
+        "postalCode": "L7B 0A1",
+        "addressCountry": "CA"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/company/nexfortis"
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Hassan Sadiq",
+      "jobTitle": "Founder & CEO, NexFortis IT Solutions",
+      "url": "https://nexfortis.com/about",
+      "worksFor": {
+        "@id": "https://nexfortis.com/#organization"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "Content Marketing Services",
+      "description": "Content marketing for Canadian businesses — content strategy, SEO articles, pillar pages and topic clusters, and content built to rank and earn AI citations.",
+      "url": "https://nexfortis.com/services/digital-marketing/content-marketing",
+      "provider": {
+        "@type": "Organization",
+        "name": "NexFortis IT Solutions",
+        "url": "https://nexfortis.com"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "Canada"
+      },
+      "serviceType": "Content Marketing"
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "@id": "https://nexfortis.com/#website",
+      "name": "NexFortis IT Solutions",
+      "url": "https://nexfortis.com",
+      "inLanguage": "en-CA",
+      "publisher": {
+        "@id": "https://nexfortis.com/#organization"
+      }
+    }
+  ],
+  "anchors": [
+    {
+      "text": "Skip to main content",
+      "href": "#main-content"
+    },
+    {
+      "text": "",
+      "href": "/"
+    },
+    {
+      "text": "Home",
+      "href": "/"
+    },
+    {
+      "text": "Digital Marketing",
+      "href": "/services/digital-marketing"
+    },
+    {
+      "text": "SEO Services",
+      "href": "/services/digital-marketing/seo"
+    },
+    {
+      "text": "Local SEO",
+      "href": "/services/digital-marketing/local-seo"
+    },
+    {
+      "text": "GEO &amp; AI Search",
+      "href": "/services/digital-marketing/generative-engine-optimization"
+    },
+    {
+      "text": "Technical SEO",
+      "href": "/services/digital-marketing/technical-seo"
+    },
+    {
+      "text": "Google Business Profile",
+      "href": "/services/digital-marketing/google-business-profile"
+    },
+    {
+      "text": "Content Marketing",
+      "href": "/services/digital-marketing/content-marketing"
+    },
+    {
+      "text": "Link Building &amp; Digital PR",
+      "href": "/services/digital-marketing/link-building"
+    },
+    {
+      "text": "Google Ads Management",
+      "href": "/services/digital-marketing/google-ads"
+    },
+    {
+      "text": "Social Media Marketing",
+      "href": "/services/digital-marketing/social-media-marketing"
+    },
+    {
+      "text": "Web Design &amp; Development",
+      "href": "/services/digital-marketing/web-design"
+    },
+    {
+      "text": "Email Marketing",
+      "href": "/services/digital-marketing/email-marketing"
+    },
+    {
+      "text": "Conversion Rate Optimization",
+      "href": "/services/digital-marketing/conversion-rate-optimization"
+    },
+    {
+      "text": "Analytics &amp; Reporting",
+      "href": "/services/digital-marketing/analytics-reporting"
+    },
+    {
+      "text": "Microsoft 365 Solutions",
+      "href": "/services/microsoft-365"
+    },
+    {
+      "text": "QuickBooks Migration",
+      "href": "/services/quickbooks"
+    },
+    {
+      "text": "IT Consulting",
+      "href": "/services/it-consulting"
+    },
+    {
+      "text": "Workflow Automation",
+      "href": "/services/workflow-automation"
+    },
+    {
+      "text": "Browse our IT services",
+      "href": "/services"
+    },
+    {
+      "text": "About",
+      "href": "/about"
+    },
+    {
+      "text": "Blog",
+      "href": "/blog"
+    },
+    {
+      "text": "Contact",
+      "href": "/contact"
+    },
+    {
+      "text": "QB Portal",
+      "href": "https://qb.nexfortis.com"
+    },
+    {
+      "text": "Get a Free Quote",
+      "href": "/contact"
+    },
+    {
+      "text": "All Services",
+      "href": "/services"
+    },
+    {
+      "text": "Services",
+      "href": "/services"
+    },
+    {
+      "text": "SEO services",
+      "href": "/services/digital-marketing/seo"
+    },
+    {
+      "text": "digital marketing services",
+      "href": "/services/digital-marketing"
+    },
+    {
+      "text": "Source: Statcounter Global Stats",
+      "href": "https://gs.statcounter.com/search-engine-market-share"
+    },
+    {
+      "text": "Source: Backlinko, 4M-result CTR study",
+      "href": "https://backlinko.com/google-ctr-stats"
+    },
+    {
+      "text": "Source: Semrush study, via Search Engine Land",
+      "href": "https://searchengineland.com/google-ai-overviews-surge-pullback-data-466314"
+    },
+    {
+      "text": "More about NexFortis",
+      "href": "/about"
+    },
+    {
+      "text": "About Us",
+      "href": "/about"
+    },
+    {
+      "text": "Privacy Policy",
+      "href": "/privacy"
+    },
+    {
+      "text": "Terms of Service",
+      "href": "/terms"
+    },
+    {
+      "text": "(416) 317-0051",
+      "href": "tel:+14163170051"
+    },
+    {
+      "text": "contact@nexfortis.com",
+      "href": "mailto:contact@nexfortis.com"
+    },
+    {
+      "text": "LinkedIn",
+      "href": "https://www.linkedin.com/company/nexfortis"
+    },
+    {
+      "text": "Privacy",
+      "href": "/privacy"
+    },
+    {
+      "text": "Terms",
+      "href": "/terms"
+    },
+    {
+      "text": "About NexFortis",
+      "href": "/about"
+    },
+    {
+      "text": "Our services",
+      "href": "/services"
+    },
+    {
+      "text": "Contact us",
+      "href": "/contact"
+    }
+  ],
+  "rootDivIsEmpty": false,
+  "hasNoindex": false
+}

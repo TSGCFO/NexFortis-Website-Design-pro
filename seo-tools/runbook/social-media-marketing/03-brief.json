@@ -1,0 +1,15 @@
+{
+  "_step": "3 — SERP analysis + content brief", "_page": "social-media-marketing",
+  "_primary_keyword": "social media marketing services", "_location": "Canada", "_date": "2026-06-18",
+  "_ki_brief_status": "KI brief tool down -> SERP brief from live Semrush SERP + competitor fetches.",
+  "serp_source": "Semrush phrase_organic (ca, 'social media marketing services').",
+  "competitor_word_counts": {
+    "_method": "Fetched ranking service pages; <body> raw words. Excluded tools (hootsuite/later/feedbird/fiverr), directories (clutch/semrush/digitalagencynetwork), reddit, glossary (bdc).",
+    "service_page_subset": [{"url": "setsail.ca/services/social-media-marketing", "words_raw": 2194}, {"url": "madsocialagency.com", "words_raw": 1076}, {"url": "sparksocialagency.com", "words_raw": 1017}, {"url": "socialmedia55.com", "words_raw": 624}, {"url": "infrontmarketing.ca (blog)", "words_raw": 2135}],
+    "service_subset_stats": {"min_raw": 624, "median_raw": 1076, "max_raw": 2194, "main_content_estimate": "~400-1900 main"},
+    "length_conclusion": "Focused spoke ~1100-1900 main."
+  },
+  "questions": {"_source": "Semrush phrase_questions (ca, 'social media marketing'), buyer/educational.", "buyer_questions": ["What is social media marketing?", "Why is social media marketing important / benefits?", "How much does social media marketing cost?", "Should I outsource social media?", "How do you measure social media success?", "Which platforms should my business be on?"]},
+  "secondary_keywords": ["social media management", "social media marketing agency", "social media agency", "social media marketing company", "social media advertising", "facebook ads management", "meta ads management"],
+  "_done_check": "PASS — competitor table + buyer questions + secondary kws (Canada)."
+}

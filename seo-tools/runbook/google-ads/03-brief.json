@@ -1,0 +1,16 @@
+{
+  "_step": "3 — SERP analysis + content brief", "_page": "google-ads",
+  "_primary_keyword": "google ads management", "_location": "Canada", "_date": "2026-06-18",
+  "_ki_brief_status": "KI brief tool down -> SERP brief from live Semrush SERP + competitor fetches.",
+  "serp_source": "Semrush phrase_organic (ca, 'google ads management').",
+  "competitor_word_counts": {
+    "_method": "Fetched ranking service pages; <body> raw words. Excluded Google's own tools, reddit, guides.",
+    "service_page_subset": [{"url": "mediaforce.ca/google-ads", "words_raw": 7906}, {"url": "firstrank.ca/google-ads-management-services-canada", "words_raw": 2083}, {"url": "adventureppc.com/google-ads-management", "words_raw": 1824}, {"url": "consultusdigital.com/google-ads-management-toronto", "words_raw": 4606}, {"url": "gilmedia.com/google-ads-management", "words_raw": 1709}, {"url": "infrontmarketing.ca/services/google-ads", "words_raw": 913}],
+    "service_subset_stats": {"min_raw": 913, "median_raw": 1954, "max_raw": 7906, "main_content_estimate": "focused ~700-1800 main (excl. 7.9k/4.6k outliers)"},
+    "length_conclusion": "Focused spoke ~1100-1900 main."
+  },
+  "questions": {"_source": "Semrush phrase_questions returned mostly Google-Ads-Manager-tool-feature queries (not buyer intent); buyer FAQ derived from standard PPC-buyer questions (cost, what's included, management fee, in-house vs agency, results timing).", "buyer_questions": ["How much does Google Ads management cost / what's the fee?", "What does a Google Ads manager do / what's included?", "Is it worth hiring an agency vs doing it in-house?", "How much should I budget for ad spend?", "How soon will I see results from Google Ads?"]},
+  "secondary_keywords": ["google ads agency", "ppc management", "ppc agency", "ppc services", "sem services", "google ads management services"],
+  "differentiator": "NexFortis is a verified Google Partner (real fact) — directly relevant proof for this page.",
+  "_done_check": "PASS — competitor table + buyer questions + secondary kws (Canada)."
+}

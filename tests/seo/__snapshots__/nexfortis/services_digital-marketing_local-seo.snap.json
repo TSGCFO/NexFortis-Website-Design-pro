@@ -96,6 +96,10 @@
       "text": "GEO &amp; AI Search"
     },
     {
+      "level": 3,
+      "text": "Technical SEO"
+    },
+    {
       "level": 2,
       "text": "Frequently Asked Questions"
     },
@@ -160,7 +164,7 @@
           "name": "What is local SEO?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Local SEO is the work that gets your business shown to people searching nearby — in the Google map pack, on 'near me' queries, and on Google Maps. It's driven mostly by your Google Business Profile, consistent business information across the web, reviews, and location-relevant content."
+            "text": "For most businesses, local SEO is what gets them in front of customers searching nearby — the 'map pack', 'near me' searches, and Google Maps. Improving your visibility in those places comes down to four things: your Google Business Profile, consistent business details across the web, your reviews, and content that's relevant to the area you serve."
           }
         },
         {
@@ -168,7 +172,7 @@
           "name": "Do I need a storefront to do local SEO?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "No. Service-area businesses that travel to customers — IT support, trades, consultants, home services — can rank locally without a public address by setting a service area on the Google Business Profile. We configure it correctly so you appear for the areas you actually serve."
+            "text": "No — many of our clients are out of the office and travel to their customers instead: IT support, tradespeople, consultants, and plenty of home-services providers. Google lets you define a service area instead of a physical address, and as long as it's set up correctly you'll show up for the areas you actually cover. We make sure it's configured properly so you're not accidentally invisible — or, worse, ranking for places you don't serve."
           }
         },
         {
@@ -176,7 +180,7 @@
           "name": "How important are Google reviews?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Very. Reviews influence both your map-pack ranking and whether a searcher chooses you over the business listed next to you. Steady, genuine reviews and prompt responses are one of the highest-return activities in local SEO, so we build a simple system to earn them."
+            "text": "Reviews are a huge part of the local SEO work we do, on two fronts. They help decide where you land in the map pack, and they're usually the biggest factor when a searcher is choosing between you and the business right beside you. A steady stream of genuine reviews — and a reply to every one — is one of the highest-return things a local business can do, so we put a simple system in place to keep them coming."
           }
         },
         {
@@ -184,7 +188,7 @@
           "name": "How long does local SEO take?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Google Business Profile improvements can move the map pack within weeks, faster than standard SEO. Citations, reviews, and location pages compound over two to four months. Competitive urban areas take longer than quieter suburbs, and we set expectations against your specific market up front."
+            "text": "Some of it moves fast — getting your Google Business Profile sorted can move the map pack within a few weeks. The slower-burning pieces — citations, reviews, location pages — tend to build over two to four months. A busy downtown market with lots of competitors takes longer than a quieter suburb, and we'll tell you honestly which one you're in before we start."
           }
         },
         {
@@ -192,7 +196,7 @@
           "name": "Can you handle multiple locations?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes. We manage separate profiles, citations, and location pages for each branch or service area, keeping the business information consistent across all of them while tailoring the local content to each place you operate."
+            "text": "Yes. Each branch or service area gets its own profile, its own citations, and its own location page — all kept consistent with each other while the content stays specific to each place. We do this for businesses running anything from two locations to a dozen or more."
           }
         }
       ]
@@ -279,7 +283,7 @@
       "@context": "https://schema.org",
       "@type": "Person",
       "name": "Hassan Sadiq",
-      "jobTitle": "Founder & Principal Consultant, NexFortis IT Solutions",
+      "jobTitle": "Founder & CEO, NexFortis IT Solutions",
       "url": "https://nexfortis.com/about",
       "worksFor": {
         "@id": "https://nexfortis.com/#organization"
@@ -330,6 +334,58 @@
     {
       "text": "Digital Marketing",
       "href": "/services/digital-marketing"
+    },
+    {
+      "text": "SEO Services",
+      "href": "/services/digital-marketing/seo"
+    },
+    {
+      "text": "Local SEO",
+      "href": "/services/digital-marketing/local-seo"
+    },
+    {
+      "text": "GEO &amp; AI Search",
+      "href": "/services/digital-marketing/generative-engine-optimization"
+    },
+    {
+      "text": "Technical SEO",
+      "href": "/services/digital-marketing/technical-seo"
+    },
+    {
+      "text": "Google Business Profile",
+      "href": "/services/digital-marketing/google-business-profile"
+    },
+    {
+      "text": "Content Marketing",
+      "href": "/services/digital-marketing/content-marketing"
+    },
+    {
+      "text": "Link Building &amp; Digital PR",
+      "href": "/services/digital-marketing/link-building"
+    },
+    {
+      "text": "Google Ads Management",
+      "href": "/services/digital-marketing/google-ads"
+    },
+    {
+      "text": "Social Media Marketing",
+      "href": "/services/digital-marketing/social-media-marketing"
+    },
+    {
+      "text": "Web Design &amp; Development",
+      "href": "/services/digital-marketing/web-design"
+    },
+    {
+      "text": "Email Marketing",
+      "href": "/services/digital-marketing/email-marketing"
+    },
+    {
+      "text": "Conversion Rate Optimization",
+      "href": "/services/digital-marketing/conversion-rate-optimization"
+    },
+    {
+      "text": "Analytics &amp; Reporting",
+      "href": "/services/digital-marketing/analytics-reporting"
     },
     {
       "text": "Microsoft 365 Solutions",
@@ -392,20 +448,12 @@
       "href": "https://www.brightlocal.com/research/local-consumer-review-survey-2024/"
     },
     {
-      "text": "Source: BrightLocal Local SEO Statistics",
-      "href": "https://www.brightlocal.com/resources/local-seo-statistics/"
+      "text": "Source: BrightLocal Online Review Statistics",
+      "href": "https://www.brightlocal.com/resources/online-reviews-statistics/"
     },
     {
       "text": "Source: Statcounter Global Stats",
       "href": "https://gs.statcounter.com/search-engine-market-share"
-    },
-    {
-      "text": "SEO Services",
-      "href": "/services/digital-marketing/seo"
-    },
-    {
-      "text": "GEO &amp; AI Search",
-      "href": "/services/digital-marketing/generative-engine-optimization"
     },
     {
       "text": "More about NexFortis",

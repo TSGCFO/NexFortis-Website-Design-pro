@@ -1,0 +1,11 @@
+{
+  "_step": "6b — EEAT audit (§7)", "_page": "content-marketing", "_date": "2026-06-18", "_scale": "0-2; target >=8/10.",
+  "scores": {
+    "experience": {"score": 1, "why": "Strong practitioner POV (content-with-a-job, anti-filler) + honest AI-as-a-tool stance; held at 1 (no citable client case study)."},
+    "expertise": {"score": 2, "why": "Accurate content-marketing mechanics (topic clusters, pillar pages, content for AI/GEO, helpful-content); correct terminology."},
+    "authoritativeness": {"score": 2, "why": "3 distinct named sources (Statcounter, Backlinko, Semrush/SEL) w/ URLs; Service+Person+Breadcrumb schema; Hassan Founder & CEO byline."},
+    "trust": {"score": 2, "why": "Anti-filler/fact-check policy mirrors our own method; transparent pricing; clean cannibalization fencing; no fabrication."},
+    "veto_checks": {"score": 2, "passed": true}
+  },
+  "total": "9/10"
+}

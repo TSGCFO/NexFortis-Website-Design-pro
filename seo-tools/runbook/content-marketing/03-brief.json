@@ -1,0 +1,15 @@
+{
+  "_step": "3 — SERP analysis + content brief", "_page": "content-marketing",
+  "_primary_keyword": "content marketing services", "_location": "Canada", "_date": "2026-06-18",
+  "_ki_brief_status": "KI brief tool down -> SERP brief from live Semrush SERP + competitor fetches.",
+  "serp_source": "Semrush phrase_organic (ca, 'content marketing services').",
+  "competitor_word_counts": {
+    "_method": "Fetched ranking service pages; <body> raw words. Excluded directories (clutch, sortlist, digitalagencynetwork, agencies.semrush) + course (coursera).",
+    "service_page_subset": [{"url": "growmemarketing.ca/content-marketing", "words_raw": 1946}, {"url": "mawazo.ca/.../content-marketing-services", "words_raw": 2041}, {"url": "seoteamtoronto.ca/services/content-marketing", "words_raw": 947}, {"url": "brandspot.ca/content-marketing", "words_raw": 766}, {"url": "uniteinteractive.com/content-marketing", "words_raw": 1511}, {"url": "webfx.com/content-marketing/services", "words_raw": 4920}],
+    "service_subset_stats": {"min_raw": 766, "median_raw": 1730, "max_raw": 4920, "main_content_estimate": "~500-1700 main (excl. 4.9k outlier)"},
+    "length_conclusion": "Focused spoke ~1100-1900 main."
+  },
+  "questions": {"_source": "Semrush phrase_questions (ca, 'content marketing'), buyer/educational.", "buyer_questions": ["What is content marketing?", "Why is content marketing important?", "How does content marketing support digital marketing / SEO?", "Do agencies create the content themselves?", "How long until content marketing works?"]},
+  "secondary_keywords": ["content marketing agency", "content marketing company", "content writing services", "content creation services", "content strategy services", "blog writing services"],
+  "_done_check": "PASS — competitor table + buyer questions + secondary kws (Canada)."
+}

@@ -1,0 +1,15 @@
+{
+  "_step": "3 — SERP analysis + content brief", "_page": "web-design",
+  "_primary_keyword": "web design services", "_location": "Canada", "_date": "2026-06-18",
+  "_ki_brief_status": "KI brief tool down -> SERP brief from live Semrush SERP + competitor fetches.",
+  "serp_source": "Semrush phrase_organic (ca, 'web design services').",
+  "competitor_word_counts": {
+    "_method": "Fetched ranking agency pages; <body> raw words. Excluded builders (godaddy/wix/showit), directories (semrush/digitalagencynetwork).",
+    "service_page_subset": [{"url": "parachutedesign.ca", "words_raw": 5458}, {"url": "envisionup.com/services/web-design", "words_raw": 1174}, {"url": "webgamma.ca/...", "words_raw": 2489}, {"url": "bridgeweb.ca", "words_raw": 2526}, {"url": "kinexmedia.com", "words_raw": 5096}, {"url": "simplistics.ca", "words_raw": 730}, {"url": "affordablesites.ca", "words_raw": 1719}],
+    "service_subset_stats": {"min_raw": 730, "median_raw": 2104, "max_raw": 5458, "main_content_estimate": "focused ~500-2200 main (excl. 5k outliers)"},
+    "length_conclusion": "Focused spoke ~1100-1900 main."
+  },
+  "questions": {"_source": "Semrush phrase_questions (ca, 'web design'), buyer/educational.", "buyer_questions": ["What is web design?", "How does web design help my business?", "How much does a website cost?", "How long does a website take to build?", "Custom vs template/builder?", "Will my site be mobile-friendly and SEO-ready?"]},
+  "secondary_keywords": ["web design company", "web design agency", "website design services", "custom web design", "website development services", "ecommerce web design"],
+  "_done_check": "PASS — competitor table + buyer questions + secondary kws (Canada). Competitive difficulty band noted."
+}

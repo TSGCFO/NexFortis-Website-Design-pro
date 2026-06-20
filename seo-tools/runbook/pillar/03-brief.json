@@ -1,0 +1,51 @@
+{
+  "_step": "3 — SERP analysis + content brief",
+  "_page": "pillar (/services/digital-marketing)",
+  "_primary_keyword": "digital marketing services",
+  "_location": "Canada",
+  "_date": "2026-06-18",
+  "_ki_brief_status": {
+    "note": "KI content-brief tool STALLED this session: two orders (63ee711d-8523-43c3-8e28-2712a87d7b03 and b5fb9013-b2d4-4b28-ae92-d869bf5a0882) both stuck at 3/17 jobs for 25+ min — only people_also_asked / quora_questions / reddit_questions_scraping completed; html_scraping (competitor word counts) + SERP analysis never ran (raw[] empty, word_count_*=0). Location verified 'Canada' on both. Per the run book, Ahrefs/Semrush are wired alternatives; rather than block the page or invent data, the SERP word-count table + questions below are built from REAL primary sources (Semrush live SERP + direct fetch of the ranking pages).",
+    "operator_action": "If KI later completes either order, cross-check; not required — this brief is built from verifiable live data."
+  },
+  "serp_source": "Semrush execute_report phrase_organic (database=ca, 'digital marketing services'), 2026-06-18 — the live Canadian SERP.",
+  "competitor_word_counts": {
+    "_method": "Fetched each ranking URL (seo-tools/tmp/wc-competitors.py) and counted <body> words (raw HTML incl. nav/footer; subtract ~300-500 for main-content estimate). Isolated the SERVICE-PAGE/AGENCY subset (same transactional intent as our pillar); excluded directories (designrush, agencies.semrush.com), a video (youtube), and guide-length outliers.",
+    "service_page_subset": [
+      { "url": "noeticmarketer.com/toronto-digital-marketing-services", "words_raw": 2208 },
+      { "url": "maksoft.ca/digital-marketing-services", "words_raw": 1673 },
+      { "url": "wsiworld.com/country/canada-digital-marketing", "words_raw": 2704 },
+      { "url": "thinkfuel.ca/digital-marketing-agency-mississauga", "words_raw": 1889 },
+      { "url": "thriveagency.com/brampton-ca-digital-marketing-agency", "words_raw": 2583 },
+      { "url": "marketingblendz.com (home)", "words_raw": 3621 }
+    ],
+    "thin_homepages": [
+      { "url": "jellymarketing.ca", "words_raw": 809 },
+      { "url": "majortom.com", "words_raw": 547 },
+      { "url": "cleverdigitalmarketing.ca", "words_raw": 1023 }
+    ],
+    "excluded_outliers": [
+      { "url": "mediaforce.ca/vaughan/digital-marketing-agency-vaughan", "words_raw": 6300, "why": "very long, geo-page" },
+      { "url": "greenlotus.ca/small-business", "words_raw": 8941, "why": "guide-length, not a service page" },
+      { "url": "designrush.com/agency/digital-agencies/ca", "why": "directory" },
+      { "url": "agencies.semrush.com/list/toronto", "why": "directory" },
+      { "url": "youtube.com/watch", "why": "video" }
+    ],
+    "service_subset_stats": { "min_raw": 1673, "median_raw": 2400, "max_raw": 3621, "main_content_estimate": "~1400-3200" },
+    "length_conclusion": "Service-page subset clusters ~1,700-2,700 raw HTML (~1,400-2,400 main content); thin design-led homepages run 550-1,000. A pillar that is the hub for 13 spokes should beat the thin pages decisively and sit at the substantive end without ballooning to the 6k-9k guide outliers. -> Step 4 target derived from this."
+  },
+  "questions": {
+    "_source": "Semrush phrase_questions (database=ca, 'digital marketing services'), filtered to BUYER intent (dropped agency-to-agency 'how to sell/pitch/price' and spam 'ai-…' variants).",
+    "buyer_questions": [
+      "What are digital marketing services? / What is digital marketing services?",
+      "What is a full-service digital marketing agency?",
+      "What services do digital marketing agencies offer? / What services does a digital marketing agency provide?",
+      "Who needs digital marketing services?",
+      "How much do digital marketing services cost? (buyer-side of the high-volume 'how to price/charge' cluster)"
+    ],
+    "pricing_signal": "Strong pricing curiosity in the SERP ('how to price/charge/how much for digital marketing services') -> the pillar must address cost honestly (transparent ranges, pricing after a free audit; never invent a price)."
+  },
+  "secondary_keywords": ["digital marketing agency", "digital marketing company", "digital marketing firm", "online marketing services", "internet marketing services", "digital marketing agency near me", "digital marketing services for small business"],
+  "serp_features": "Live SERP shows local_pack, people_also_ask, ai_overview, and video for the head terms — reinforces: include FAQ (PAA), strong local/Canadian signals, and AI-friendly structure (helps GEO).",
+  "_done_check": "PASS: real competitor word-count table (service-page subset isolated) + buyer questions + secondary keywords, location=Canada. KI stall documented; data sourced from live Semrush SERP + direct page fetches (verifiable)."
+}

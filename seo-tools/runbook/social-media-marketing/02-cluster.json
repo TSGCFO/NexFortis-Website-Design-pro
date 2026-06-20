@@ -1,0 +1,22 @@
+{
+  "_step": "2 — Cluster + cannibalization (HARD GATE 1)", "_page": "social-media-marketing",
+  "_source": "KI clustering order f62c5303-547d-4005-9acb-cef6e6fe1fdb (2026-06-18, Canada).",
+  "cluster_evidence": {
+    "social media marketing services": {"intent": "Commercial", "note": "PRIMARY."},
+    "social media management": {"intent": "Commercial", "note": "PRIMARY (ongoing management)."},
+    "social media marketing agency": {"ki_cluster": "social media marketing agency", "intent": "Commercial", "note": "PRIMARY (groups agency/company/social media agency)."},
+    "social media agency": {"ki_cluster": "social media marketing agency", "intent": "Other", "note": "PRIMARY (same cluster)."},
+    "social media marketing company": {"ki_cluster": "social media marketing agency", "intent": "Commercial", "note": "PRIMARY (same cluster)."},
+    "social media management services": {"intent": "Commercial", "note": "Secondary."},
+    "social media marketing for small business": {"intent": "Informational", "note": "Secondary (SMB)."},
+    "social media advertising": {"intent": "Informational", "note": "Secondary — paid social."},
+    "facebook ads management": {"ki_cluster": "facebook ads management", "intent": "Informational", "note": "Secondary — paid social (Meta)."},
+    "meta ads management": {"ki_cluster": "facebook ads management", "intent": "Informational", "note": "Secondary — paid social (newer 'Meta' term)."}
+  },
+  "assignment": {
+    "owns_primary": ["social media marketing services", "social media management", "social media marketing agency", "social media agency", "social media marketing company"],
+    "owns_secondary": ["social media management services", "social media marketing for small business", "social media advertising", "facebook ads management", "meta ads management"]
+  },
+  "fence_note": "Organic + paid-SOCIAL intent. Distinct from google-ads (paid SEARCH) — this page owns Meta/Facebook ads; google-ads owns search/PPC. No overlap.",
+  "_done_check": "PASS — one primary cluster; registry updated; check-cannibalization exit 0."
+}

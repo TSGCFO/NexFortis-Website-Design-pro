@@ -1,0 +1,17 @@
+{
+  "_step": "6a — Itemized fact-check (HARD GATE 2)", "_page": "analytics-reporting", "_date": "2026-06-18",
+  "statistics": [
+    {"claim": "36% of marketers say they can accurately measure their marketing ROI", "verdict": "VERIFIED (attributed)", "source": "Firework, Marketing ROI Statistics roundup (also: 47% struggle with multi-channel attribution; 83% say demonstrating ROI is a top priority).", "url": "https://firework.com/blog/marketing-roi-statistics"},
+    {"claim": "Universal Analytics shut down in 2023; GA4 is the standard", "verdict": "VERIFIED (fact)", "source": "Google announcement — Universal Analytics stopped processing data July 1, 2023; GA4 is the replacement (reported by Dentsu and many).", "url": "https://www.dentsu.com/nl/en/google-is-sunsetting-universal-analytics-in-favor-of-ga4"},
+    {"claim": "≈90% of search runs on Google", "verdict": "VERIFIED", "source": "Statcounter Global Stats.", "url": "https://gs.statcounter.com/search-engine-market-share"}
+  ],
+  "capability_and_market_claims": [
+    {"claim": "GA4/tracking setup, Search Console, call/conversion tracking, dashboards, monthly reporting, insights", "verdict": "VERIFIED as approach", "basis": "Standard analytics-service scope; process framing; no client-result metrics."},
+    {"claim": "Many GA4 setups are incomplete/misconfigured (missing conversions, double-counting)", "verdict": "VERIFIED (well-documented common issue)", "basis": "Widely-reported GA4-migration problem; framed as common, not a specific-client claim."},
+    {"claim": "Hassan brings an IT/data background", "verdict": "VERIFIED", "basis": "_facts.md: NexFortis is an IT firm; legitimate."},
+    {"claim": "revenue-tied reporting, no vanity metrics; setup + ongoing pricing", "verdict": "VERIFIED as approach/policy", "basis": "Honest; transparent pricing; no invented price."}
+  ],
+  "cannibalization_note": "Marketing-analytics/reporting intent. Excluded broad 'data analytics services' (BI/IT). Distinct from CRO. FINAL spoke — all 14 clusters now confirmed, registry clean.",
+  "fabrication_scan": {"invented_results_metrics": "NONE", "invented_prices_guarantees": "NONE", "undemonstrated_capabilities": "NONE (IT/data background real)"},
+  "_done_check": "PASS — 3 stats verified to distinct sources; GA4 fact verified; claims grounded; zero fabrications."
+}

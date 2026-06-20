@@ -1,0 +1,15 @@
+{
+  "_step": "3 — SERP analysis + content brief", "_page": "link-building",
+  "_primary_keyword": "link building services", "_location": "Canada", "_date": "2026-06-18",
+  "_ki_brief_status": "KI brief tool down -> SERP brief from live Semrush SERP + competitor fetches.",
+  "serp_source": "Semrush phrase_organic (ca, 'link building services').",
+  "competitor_word_counts": {
+    "_method": "Fetched ranking service pages; <body> raw words. Excluded 'best agency' listicles (straight.com, aijourn), reddit, youtube, a PDF.",
+    "service_page_subset": [{"url": "backlinko.com/link-building-services", "words_raw": 3815}, {"url": "peakdemand.ca/link-building-services-canada", "words_raw": 2461}, {"url": "smartlinks.ca/.../link-building", "words_raw": 2418}, {"url": "calgaryseo.ai/services/link-building", "words_raw": 411}, {"url": "loganix.com", "words_raw": 860}],
+    "service_subset_stats": {"min_raw": 411, "median_raw": 2418, "max_raw": 3815, "main_content_estimate": "~300-2400 main"},
+    "length_conclusion": "Focused spoke ~1100-1900 main; beat thin pages, stay tighter than the 3.8k guide."
+  },
+  "questions": {"_source": "Semrush phrase_questions (ca, 'link building'; filtered 'chain link fence' noise).", "buyer_questions": ["What is link building?", "Why is link building important?", "What is link building in SEO?", "Is link building safe / white hat vs black hat?", "How is digital PR different from guest posting?"]},
+  "secondary_keywords": ["link building agency", "link building company", "backlink services", "digital pr services", "guest posting services", "blogger outreach services", "off page seo services"],
+  "_done_check": "PASS — competitor table + buyer questions + secondary kws (Canada)."
+}

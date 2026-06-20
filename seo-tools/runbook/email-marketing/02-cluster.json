@@ -1,0 +1,20 @@
+{
+  "_step": "2 — Cluster + cannibalization (HARD GATE 1)", "_page": "email-marketing",
+  "_source": "KI clustering order 7ac6fe00-f378-4e15-acf4-b2a1b0580fcf (2026-06-18, Canada).",
+  "cluster_evidence": {
+    "email marketing services": {"intent": "Commercial", "note": "PRIMARY."},
+    "email marketing agency": {"ki_cluster": "email marketing agency", "intent": "Commercial", "note": "PRIMARY (groups agency + company)."},
+    "email marketing company": {"ki_cluster": "email marketing agency", "intent": "Commercial", "note": "PRIMARY (same cluster)."},
+    "email automation services": {"intent": "Commercial", "note": "Secondary (automation/nurture)."},
+    "email marketing consultant": {"intent": "Other", "note": "Secondary."},
+    "email marketing management": {"intent": "Informational", "note": "Secondary."},
+    "email campaign management": {"intent": "Informational", "note": "Secondary."},
+    "email marketing for small business": {"intent": "Informational", "note": "Secondary (SMB)."}
+  },
+  "assignment": {
+    "owns_primary": ["email marketing services", "email marketing agency", "email marketing company"],
+    "owns_secondary": ["email automation services", "email marketing consultant", "email marketing management", "email campaign management", "email marketing for small business"]
+  },
+  "fence_note": "Email / lifecycle intent — distinct from all other spokes.",
+  "_done_check": "PASS — one primary cluster; registry updated; check-cannibalization exit 0."
+}

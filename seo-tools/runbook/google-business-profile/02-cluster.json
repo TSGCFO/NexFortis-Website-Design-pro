@@ -1,0 +1,22 @@
+{
+  "_step": "2 — Cluster + cannibalization (HARD GATE 1)", "_page": "google-business-profile",
+  "_source": "KI clustering order 4bf86c20-65ed-4773-99e9-b4693a8442a6 (2026-06-18, Canada).",
+  "cluster_evidence": {
+    "google business profile optimization": {"ki_cluster": "google business profile optimization", "intent": "Informational", "note": "PRIMARY. SERP leans informational (GBP is DIY-able) but a genuine managed service — educate + sell."},
+    "google my business optimization": {"ki_cluster": "google business profile optimization", "intent": "Informational", "note": "Grouped with the primary (legacy name). Secondary."},
+    "google business profile management": {"ki_cluster": "google business profile management", "intent": "Informational", "note": "PRIMARY (ongoing-management intent)."},
+    "google business profile services": {"ki_cluster": "google business profile services", "intent": "Other", "note": "PRIMARY — the commercial 'services' anchor."},
+    "gmb optimization": {"ki_cluster": "gmb optimization", "intent": "Informational", "note": "Legacy GMB synonym. Secondary."},
+    "gmb management": {"ki_cluster": "gmb management", "intent": "Other", "note": "Secondary."},
+    "google business profile setup": {"ki_cluster": "google business profile setup", "intent": "Informational", "note": "Setup intent. Secondary."},
+    "google maps optimization": {"ki_cluster": "google maps optimization", "intent": "Informational", "note": "Maps surface of GBP. Secondary."},
+    "local listing management": {"ki_cluster": "local listing management", "intent": "Informational", "note": "Citations/listings ecosystem around GBP. Secondary (local-seo does not target it)."}
+  },
+  "assignment": {
+    "owns_primary": ["google business profile optimization", "google business profile management", "google business profile services"],
+    "owns_secondary": ["gmb optimization", "google my business optimization", "gmb management", "google business profile setup", "google maps optimization", "local listing management", "gmb"],
+    "fence": "This spoke OWNS all GBP/GMB/maps/listing terms; the local-seo spoke must NOT target them (it covers GBP only as a tactic). Verified: local-seo owns only 'local seo *' terms."
+  },
+  "intent_note": "Like GEO, GBP SERPs lean informational because the task is DIY-able; the page educates AND sells a managed service, anchored by the commercial 'google business profile services' term.",
+  "_done_check": "PASS — one primary cluster; registry updated; check-cannibalization exit 0."
+}

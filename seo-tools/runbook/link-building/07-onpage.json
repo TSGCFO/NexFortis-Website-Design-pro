@@ -1,0 +1,10 @@
+{
+  "_step": "7 — On-page + internal links", "_page": "link-building", "_date": "2026-06-18",
+  "files": "NEW: content entry + wrapper link-building.tsx + App.tsx lazy import + Route. Published=true. Allowlist INV-001/INV-008 entries added.",
+  "title": {"metaTitle": "Link Building & Digital PR", "rendered_title": "Link Building & Digital PR | NexFortis IT Solutions", "h1": "Link Building & Digital PR Services"},
+  "meta_description": "White-hat link building and digital PR for Canadian businesses: earned editorial backlinks from real publications that build the authority behind your rankings.",
+  "schema": {"page_level": ["Service (Link Building)", "BreadcrumbList", "FAQPage", "Person"], "global_from_layout": ["Organization", "LocalBusiness", "WebSite"]},
+  "internal_links": {"in_prose": [{"anchor": "SEO services", "href": "/services/digital-marketing/seo"}, {"anchor": "digital marketing services", "href": "/services/digital-marketing"}], "related_services": "published siblings", "cluster_correct": true},
+  "nav": "Surfaced in Services mega-menu + footer.",
+  "_done_check": "PASS."
+}

@@ -1,0 +1,11 @@
+{
+  "_step": "7 — On-page + internal links", "_page": "conversion-rate-optimization", "_date": "2026-06-18",
+  "_note": "metaDescription trimmed to <=160 chars (was 161).",
+  "files": "NEW: content entry + wrapper conversion-rate-optimization.tsx + App.tsx lazy import + Route. Published=true. Allowlist INV-001/INV-008 entries added.",
+  "title": {"metaTitle": "Conversion Rate Optimization", "rendered_title": "Conversion Rate Optimization | NexFortis IT Solutions", "h1": "Conversion Rate Optimization That Lifts Revenue"},
+  "meta_description": "Conversion rate optimization for Canadian businesses: turn more of your traffic into leads with behaviour analysis, testing, and landing-page fixes.",
+  "schema": {"page_level": ["Service (Conversion Rate Optimization)", "BreadcrumbList", "FAQPage", "Person"], "global_from_layout": ["Organization", "LocalBusiness", "WebSite"]},
+  "internal_links": {"in_prose": [{"anchor": "SEO services", "href": "/services/digital-marketing/seo"}, {"anchor": "web design and development", "href": "/services/digital-marketing/web-design"}, {"anchor": "digital marketing services", "href": "/services/digital-marketing"}], "related_services": "published siblings", "cluster_correct": true},
+  "nav": "Surfaced in Services mega-menu + footer.",
+  "_done_check": "PASS."
+}
