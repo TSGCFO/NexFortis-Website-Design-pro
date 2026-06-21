@@ -1,12 +1,12 @@
 {
   "route": "/services/digital-marketing/seo",
   "title": "SEO Services in Canada | NexFortis IT Solutions",
-  "description": "SEO services for Canadian businesses: keyword strategy, on-page and technical optimization, and content that ranks for the searches that bring real buyers.",
+  "description": "Canadian SEO company: technical SEO, on-page, content, and link building. Founder-led, month-to-month, built to rank and convert. Free SEO audit.",
   "canonical": "https://nexfortis.com/services/digital-marketing/seo",
   "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
   "og": {
     "title": "SEO Services in Canada | NexFortis IT Solutions",
-    "description": "SEO services for Canadian businesses: keyword strategy, on-page and technical optimization, and content that ranks for the searches that bring real buyers.",
+    "description": "Canadian SEO company: technical SEO, on-page, content, and link building. Founder-led, month-to-month, built to rank and convert. Free SEO audit.",
     "url": "https://nexfortis.com/services/digital-marketing/seo",
     "image": "https://nexfortis.com/opengraph.png",
     "type": "website"
@@ -17,27 +17,27 @@
   "headings": [
     {
       "level": 1,
-      "text": "SEO Services That Rank Canadian Businesses"
+      "text": "SEO Services for Canadian Businesses"
     },
     {
       "level": 2,
-      "text": "Rankings that actually grow revenue"
+      "text": "What NexFortis SEO services include"
     },
     {
       "level": 2,
-      "text": "What's included in our SEO services"
+      "text": "Our SEO services"
     },
     {
       "level": 3,
-      "text": "Keyword &amp; intent research"
+      "text": "Keyword research &amp; strategy"
     },
     {
       "level": 3,
-      "text": "On-page optimization"
+      "text": "On-page SEO"
     },
     {
       "level": 3,
-      "text": "Technical foundations"
+      "text": "Technical SEO"
     },
     {
       "level": 3,
@@ -45,39 +45,39 @@
     },
     {
       "level": 3,
-      "text": "Authority building"
+      "text": "Link building &amp; off-page SEO"
     },
     {
       "level": 3,
-      "text": "Measurement &amp; reporting"
+      "text": "Ecommerce SEO"
     },
     {
       "level": 2,
-      "text": "How we deliver SEO"
+      "text": "Our SEO process"
     },
     {
       "level": 3,
-      "text": "Audit &amp; strategy"
+      "text": "Free SEO audit"
     },
     {
       "level": 3,
-      "text": "Fix &amp; optimize"
+      "text": "Strategy"
     },
     {
       "level": 3,
-      "text": "Build authority"
+      "text": "Execution"
     },
     {
       "level": 3,
-      "text": "Measure &amp; compound"
+      "text": "Reporting &amp; optimization"
     },
     {
       "level": 2,
-      "text": "NexFortis vs. a typical SEO agency"
+      "text": "Why choose NexFortis for SEO"
     },
     {
       "level": 2,
-      "text": "What SEO costs"
+      "text": "SEO pricing after a free audit"
     },
     {
       "level": 3,
@@ -161,50 +161,58 @@
       "mainEntity": [
         {
           "@type": "Question",
+          "name": "How much do SEO services cost in Canada?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "SEO pricing in Canada varies widely by competitiveness and scope, which is why we scope every engagement after a free audit rather than quoting a one-size-fits-all price. Like most providers, NexFortis works on a monthly retainer sized to your goals."
+          }
+        },
+        {
+          "@type": "Question",
           "name": "How long does SEO take to work?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "You will usually see the first movement on the easier, lower-competition terms inside two to three months, with traffic you can actually feel around the six-month mark. The reason SEO is worth the wait is that it compounds — what you publish in month one is still earning in month twelve, which is exactly how it overtakes paid ads over time. If someone promises you page one in 30 days, they are selling a shortcut that tends to end in a penalty."
+            "text": "SEO is a months-not-weeks discipline. Most sites see meaningful movement within the first several months, depending on competition, your starting technical health, and your backlink profile. We set realistic expectations up front rather than promising overnight results — anyone guaranteeing page one in 30 days is selling a shortcut that tends to end in a penalty."
           }
         },
         {
           "@type": "Question",
-          "name": "Do you guarantee #1 rankings?",
+          "name": "What is the difference between an SEO company and an SEO consultant?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "No, and be wary of anyone who does — Google's results hinge on things no agency controls. What we will guarantee is the work itself: the audit, the fixes, the content, the links, all reported openly. We aim at the rankings that bring revenue and at the leads those rankings actually produce, not a screenshot of position one for a term nobody searches."
+            "text": "An SEO company provides a full team across technical SEO, content, and link building; an SEO consultant typically advises on strategy. NexFortis offers both — a dedicated consultant backed by a senior execution team of SEO specialists."
           }
         },
         {
           "@type": "Question",
-          "name": "What is the difference between SEO and local SEO?",
+          "name": "Should I do SEO myself, or hire an SEO company?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Plain SEO is about ranking in the normal organic results for anyone, anywhere. Local SEO is the narrower game of winning the Google map pack and 'near me' searches when someone is looking for a business in a specific area. Most local businesses genuinely need both, so we run them together and let the map listing and the organic ranking back each other up."
+            "text": "AI tools and DIY guides can handle the basics, but competitive rankings still need experienced judgement across technical SEO, content, and links — plus the time to do the work consistently. As AI search grows, that strategy work matters more, not less."
           }
         },
         {
           "@type": "Question",
-          "name": "Will you need to change my website?",
+          "name": "What does the free SEO audit include?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Almost always a little. SEO touches page content, structure, internal links, and technical settings under the hood. We work with the site and the developers you already have wherever we can, and anything that needs a real build change gets flagged and explained before we touch it. Nothing ships without your sign-off."
+            "text": "Your technical SEO health, crawlability and indexing, on-page gaps, current keyword rankings, backlink profile, and a competitive overview of your search landscape."
           }
         },
         {
           "@type": "Question",
-          "name": "How do you report results?",
+          "name": "Can you help if a Google update hurt my rankings?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Once a month, in plain English: which keywords moved, what happened to organic traffic and leads, what we shipped, and what is next. We pull the numbers straight from GA4 and Google Search Console, so you are looking at Google's own data, not a figure we massaged in a dashboard."
+            "text": "Yes. Our audit identifies the likely cause of a drop — content quality, backlink issues, or technical SEO problems — and we build a recovery plan accordingly."
           }
         },
         {
           "@type": "Question",
-          "name": "Is SEO still worth it now that AI answers questions directly?",
+          "name": "Do you provide SEO services across Canada?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Arguably more than before. The same well-structured, genuinely useful content that ranks in Google is what ChatGPT and Google's AI Overviews reach for when they write an answer. We build for both at once, and our Generative Engine Optimization service adds the AI-specific layer on top of solid SEO foundations."
+            "text": "Yes — NexFortis works with businesses across Canada, from local service providers in a single city to national ecommerce brands. We are a Canadian SEO agency, and SEO Canada-wide is exactly what we do."
           }
         }
       ]
@@ -301,7 +309,7 @@
       "@context": "https://schema.org",
       "@type": "Service",
       "name": "SEO Services",
-      "description": "Search engine optimization for Canadian businesses — keyword strategy, on-page and technical SEO, content, and authority building.",
+      "description": "Search engine optimization for Canadian businesses — keyword research, technical SEO, on-page optimization, content, and link building, delivered as one founder-led campaign.",
       "url": "https://nexfortis.com/services/digital-marketing/seo",
       "provider": {
         "@type": "Organization",
@@ -444,6 +452,10 @@
       "href": "/services"
     },
     {
+      "text": "link building",
+      "href": "/services/digital-marketing/link-building"
+    },
+    {
       "text": "digital marketing services",
       "href": "/services/digital-marketing"
     },
@@ -452,16 +464,20 @@
       "href": "/services/digital-marketing/local-seo"
     },
     {
-      "text": "Source: Statcounter Global Stats",
-      "href": "https://gs.statcounter.com/search-engine-market-share"
+      "text": "Source: Statcounter Global Stats (Canada)",
+      "href": "https://gs.statcounter.com/search-engine-market-share/all/canada"
     },
     {
-      "text": "Source: Backlinko, 4M-result CTR study",
-      "href": "https://backlinko.com/google-ctr-stats"
+      "text": "Source: FirstPageSage, 2026 Google CTR study",
+      "href": "https://firstpagesage.com/reports/google-click-through-rates-ctrs-by-ranking-position/"
     },
     {
-      "text": "Source: 2024 Web Almanac, HTTP Archive",
-      "href": "https://almanac.httparchive.org/en/2024/performance"
+      "text": "Source: 2025 Web Almanac, HTTP Archive",
+      "href": "https://almanac.httparchive.org/en/2025/performance"
+    },
+    {
+      "text": "content marketing",
+      "href": "/services/digital-marketing/content-marketing"
     },
     {
       "text": "More about NexFortis",

@@ -85,7 +85,7 @@ export const DM_SPOKE_CONTENT: Partial<Record<DmSpokeSlug, DmSpokeContent>> = {
   seo: {
     metaTitle: "SEO Services in Canada",
     metaDescription:
-      "Canadian SEO company offering technical SEO, on-page, content, and link building — founder-led, month-to-month, built to rank and convert. Book a free SEO audit.",
+      "Canadian SEO company: technical SEO, on-page, content, and link building. Founder-led, month-to-month, built to rank and convert. Free SEO audit.",
     h1: "SEO Services for Canadian Businesses",
     heroSubtitle:
       "A Canadian SEO company that turns organic search into a dependable source of leads and revenue — technical SEO, on-page, content, and link building, run as one senior-led campaign.",
