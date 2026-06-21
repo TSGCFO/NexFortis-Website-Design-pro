@@ -1,0 +1,16 @@
+{
+  "_purpose": "KI content-brief order IDs per page, front-loaded 2026-06-21 while the KI API was healthy (Hassan's strategy: bank briefs+outlines when the API works, since it stalls intermittently). Poll with `node seo-tools/keyword-insights.mjs wait-brief <id>`. BEFORE grounding a page's outline, VERIFY its brief reached 16/17 jobs (only api_jobs skipped; optimizations_headings/topics/general DONE — these can lag after 'completed', so re-check via get-brief). Quality bar = the SEO brief e563a06d (16/17, 3 pages, 6 raw groups).",
+  "location": "Canada",
+  "orders": {
+    "local-seo": { "id": "09843ffb-46e6-4e75-9538-01a158ca3fb6", "keyword": "local seo services", "status": "DONE 16/17 (verified = SEO quality)" },
+    "web-design": { "id": "3edeefd2-ccfc-4d4d-b5d9-b09de8eb6ec2", "keyword": "web design services", "status": "firing" },
+    "google-ads-ppc": { "id": "6e0c39df-882c-4db0-a1c2-e42f256572ae", "keyword": "google ads management", "status": "firing" },
+    "social-media-marketing": { "id": "847095b5-b509-47b5-9a62-a099e3eaa48b", "keyword": "social media marketing services", "status": "firing" },
+    "content-marketing": { "id": "96cef129-5a17-4f5a-b3d1-4c079bd1d728", "keyword": "content marketing services", "status": "firing" },
+    "link-building": { "id": "3a687e1f-11fc-48fb-b566-d705bbcd646e", "keyword": "link building services", "status": "firing" },
+    "geo-ai-search": { "id": "d247be48-3b49-4b27-ad4f-e0caed797bd3", "keyword": "generative engine optimization", "status": "firing" },
+    "reputation-management": { "id": "ed254467-f5c4-429a-8cdb-51c6cc22a1b7", "keyword": "reputation management services", "status": "firing" },
+    "email-marketing": { "id": "b3cd1d44-ec94-4c0b-9d42-b625d6df7a46", "keyword": "email marketing services", "status": "firing" },
+    "conversion-rate-optimization": { "id": "36342f34-bd08-43e8-b7f6-057646d8cae1", "keyword": "conversion rate optimization services", "status": "firing" }
+  }
+}

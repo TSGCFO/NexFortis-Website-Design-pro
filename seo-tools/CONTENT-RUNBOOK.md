@@ -56,17 +56,23 @@ Every step below is judged against these, in this order.
   `secrets.local.json`) so briefs land in the right workspace.
 - **Output:** the structured brief = the research foundation for the page.
 
-## Step 4 — Brief/outline review + SERP-derived length  (Claude)
-- **Claude reviews and reshapes** the KI brief into a **service-page** (transactional)
-  structure — not the generic informational outline KI/SERP defaults to.
-- **Length is SERP-derived, NOT a fixed 1,200 words.** Read the competitor word counts in
-  the brief; identify the **service-page subset** (same transactional intent as ours);
-  target a length that **beats the thin pages without ballooning to guide/directory length**.
-  Present length as a gate-1/gate-2 **trade-off**, not an absolute.
-- **Re-confirm the cannibalization gate:** the outline must target only this page's cluster;
-  pull questions/secondary keywords that belong to this cluster, not a neighbouring page's.
-- **Output:** a cannibalization-safe, intent-correct, SERP-sized service-page outline +
-  the target word range.
+## Step 4 — KI outline generation + thorough review  (KI generates; Claude reviews/steers, NEVER hand-authors)
+- **KI generates the outline** from the brief: `keyword-insights.mjs outline <order_id> "<additional_context>"`
+  → `wait-outline <order_id> <auto_id>`. Steer via `additional_context` toward a **service-page**
+  (transactional) structure — not the generic informational outline KI/SERP defaults to.
+- **Both the brief (Step 3) and this outline are AI-generated in KI's backend and CAN hallucinate** —
+  each requires a thorough, comprehensive, **big-picture review**: the brief against the scraped
+  SERP/raw data, the outline against the brief.
+- **Claude NEVER hand-authors the brief or outline.** If a KI output is off — even completely
+  nonsensical — do NOT write it yourself. Diagnose WHY, then either fix it directly or **regenerate
+  through KI with adjusted levers** (`additional_context` for the outline; keyword/location for the
+  brief; clustering method/accuracy/hub) and re-review. (This is a HARD rule — authoring it myself is
+  the exact failure that invalidated the first local-seo build.)
+- **Length is SERP-derived, NOT a fixed 1,200 words.** Read the competitor word counts in the brief;
+  identify the **service-page subset**; beat the thin pages without ballooning to guide length.
+- **Re-confirm the cannibalization gate:** the outline targets only this page's cluster.
+- **Output:** a reviewed, cannibalization-safe, intent-correct outline locked to `<slug>/04-outline.json`
+  (reconciled to the app template's rendered headings) + the target word range.
 
 ## Step 5 — First-draft generation  →  Claude (PRIMARY writer)
 - **Claude writes the first draft.** This is a locked decision (see "Why Claude writes" below).
@@ -147,7 +153,8 @@ Every step below is judged against these, in this order.
 | Keyword research + volumes/difficulty | DataForSEO (`seo-tools/dataforseo.mjs`), Ahrefs MCP, Semrush MCP |
 | Clustering (cannibalization map) | Keyword Insights (`seo-tools/keyword-insights.mjs cluster`) |
 | SERP analysis + brief + questions + secondary kws | Keyword Insights brief (`keyword-insights.mjs brief`/`wait-brief`) |
-| Outline + first draft | **Claude** (primary) |
+| Outline | **KI generates** (`keyword-insights.mjs outline`/`wait-outline`, steered via `additional_context`) → **Claude reviews/steers vs the brief, NEVER hand-authors** |
+| First draft | **Claude** (primary) |
 | Optional second-opinion draft (validation-gated) | KI Writer Agent (`keyword-insights.mjs writer`); SEOwind (`seowind-service-page` skill) |
 | EEAT audit | aaron-seo-geo content-quality-auditor (80-item CORE-EEAT) |
 | Humanize | Claude-native; Undetectable AI / Originality |
