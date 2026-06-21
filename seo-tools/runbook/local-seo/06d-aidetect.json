@@ -1,8 +1,0 @@
-{
-  "_step": "6d — AI-detection + plagiarism (HARD GATE 3)",
-  "_page": "local-seo",
-  "_date": "2026-06-18",
-  "plagiarism_winston": { "binding": true, "tool": "Winston AI v2", "score_percent": 0, "matched_sources": 0, "words_scanned": 1506, "verdict": "PASS — original, no unattributed matches." },
-  "ai_detection_undetectable": { "binding": false, "policy": "ADVISORY (operator decision; detector mis-calibrated for business/SEO prose — see pillar/06d calibration: Wikipedia SEO=82, Austen=2.85). Binding integrity gates = Winston plagiarism + 06a fact-check.", "tool": "Undetectable.ai xlm_ud_detector", "ai_score": 76.5, "note": "Reflects detector topic bias, not fabrication/plagiarism (both clean)." },
-  "_done_check": "Gate 3 satisfied per policy: Winston PASS (binding); Undetectable advisory recorded."
-}
