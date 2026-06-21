@@ -1,16 +1,15 @@
 {
   "_slug": "seo",
-  "_purpose": "Locked outline headings for the keyword+outline coverage gate. The page content (draft, humanized, and rendered) MUST contain the H1 and every H2 verbatim, plus every owned keyword from keyword-ownership.json.",
-  "_source": "Step 4 grounded outline (04-outline.md); KI brief e563a06d.",
+  "_purpose": "Locked outline headings for the keyword+outline coverage gate, RECONCILED (Step 7) to the app template's ACTUAL rendered section headings. The rendered page MUST contain the H1 and every H2 verbatim, plus every owned keyword from keyword-ownership.json.",
+  "_source": "Step 4 outline + Step 7 template reconciliation: the DM template renders each SectionHeader title as an H2; 'Frequently Asked Questions' is the template's fixed FAQ heading; 'Who our SEO services are for' was folded into the intro callout (not a standalone heading).",
   "primary": "seo services",
-  "h1": "NexFortis SEO Services | Canadian SEO Company",
+  "h1": "SEO Services for Canadian Businesses",
   "h2": [
     "What NexFortis SEO services include",
     "Our SEO services",
-    "Who our SEO services are for",
     "Our SEO process",
     "Why choose NexFortis for SEO",
     "SEO pricing after a free audit",
-    "Frequently asked questions about our SEO services"
+    "Frequently Asked Questions"
   ]
 }

@@ -74,6 +74,8 @@ export type DmSpokeContent = {
 const localSeo = getDmSpoke("local-seo");
 const seo = getDmSpoke("seo");
 const geo = getDmSpoke("generative-engine-optimization");
+const linkBuilding = getDmSpoke("link-building");
+const contentMarketing = getDmSpoke("content-marketing");
 
 // Partial: only published spokes have content + a page yet. The template guards
 // against a missing entry, and getPublishedSpokes() keeps the cluster from ever
@@ -83,201 +85,232 @@ export const DM_SPOKE_CONTENT: Partial<Record<DmSpokeSlug, DmSpokeContent>> = {
   seo: {
     metaTitle: "SEO Services in Canada",
     metaDescription:
-      "SEO services for Canadian businesses: keyword strategy, on-page and technical optimization, and content that ranks for the searches that bring real buyers.",
-    h1: "SEO Services That Rank Canadian Businesses",
+      "Canadian SEO company offering technical SEO, on-page, content, and link building — founder-led, month-to-month, built to rank and convert. Book a free SEO audit.",
+    h1: "SEO Services for Canadian Businesses",
     heroSubtitle:
-      "We earn the rankings that send qualified buyers to your website — with keyword strategy, on-page and technical fixes, and content built to last.",
+      "A Canadian SEO company that turns organic search into a dependable source of leads and revenue — technical SEO, on-page, content, and link building, run as one senior-led campaign.",
     serviceType: "Search Engine Optimization",
     serviceSchemaName: "SEO Services",
     serviceSchemaDescription:
-      "Search engine optimization for Canadian businesses — keyword strategy, on-page and technical SEO, content, and authority building.",
-    introHeading: "Rankings that actually grow revenue",
+      "Search engine optimization for Canadian businesses — keyword research, technical SEO, on-page optimization, content, and link building, delivered as one founder-led campaign.",
+    introHeading: "What NexFortis SEO services include",
     intro: (
       <>
         <p>
-          Most of the Canadian businesses we talk to do not actually have a traffic problem. They
-          have a visibility problem. Their customers are out there searching every day; the site
-          just is not the one Google decides to show. SEO is how you close that gap &mdash; you line
-          your pages up with what people genuinely type, then earn the technical health and
-          authority that let Google trust those pages enough to rank them.
+          NexFortis is a Canadian <strong>SEO company</strong> that helps business owners turn
+          organic search into a dependable source of leads and revenue. Our SEO services cover the
+          full picture &mdash; technical SEO, on-page SEO, keyword research, content, and{" "}
+          <InlineLink href={linkBuilding.href}>{linkBuilding.linkText}</InlineLink> &mdash; run as one
+          ongoing campaign and the engine under our{" "}
+          <InlineLink href={DM_PILLAR_HREF}>{DM_PILLAR_LINK_TEXT}</InlineLink>, not a checklist of
+          one-off fixes.
         </p>
         <p>
-          At NexFortis this is the engine under our{" "}
-          <InlineLink href={DM_PILLAR_HREF}>{DM_PILLAR_LINK_TEXT}</InlineLink>. You get the company
-          and the strategist in one person, not a logo that quietly passes you to a junior the day
-          the contract is signed. We start from the searches that smell like money &mdash; someone
-          ready to buy, not just browsing &mdash; map each one to the page that should answer it, and
-          then do the on-page, technical, and content work it takes to win the spot. If you also
-          serve a defined area, we run{" "}
-          <InlineLink href={localSeo.href}>{localSeo.linkText}</InlineLink> alongside it so you take
+          Search engine optimization earns visibility in Google and Bing for the terms your customers
+          actually search, and ranking near the top is where the leads are. Professional SEO services
+          are not a one-off task: search results shift, competitors keep publishing, and Google keeps
+          refining how it ranks pages. As a full-service SEO agency, we run these components as one
+          connected SEO service so every part reinforces the others instead of working in isolation.
+        </p>
+        <p>
+          As a Canadian-based SEO company, we understand how Canadian buyers search, how the Greater
+          Toronto Area market behaves, and where the real competition sits in your industry. Every
+          engagement is led by a senior consultant &mdash; never handed off to a junior &mdash; and
+          judged on the metrics that move your business: organic traffic, conversions, and revenue,
+          not vanity numbers. If you also serve a defined area, we run{" "}
+          <InlineLink href={localSeo.href}>{localSeo.linkText}</InlineLink> alongside it so you win
           the map results too.
-        </p>
-        <p>
-          And every change we make has to earn its place against a number you actually care about:
-          qualified visits, leads, revenue. Ranking first for a phrase nobody buys from is a vanity
-          metric, and we are not interested in those.
         </p>
       </>
     ),
+    introCallout: (
+      <CalloutBox>
+        Our SEO services fit Canadian businesses ready to invest in sustainable organic growth
+        &mdash; small and mid-sized firms competing with larger brands, ecommerce retailers whose
+        revenue depends on organic traffic, service businesses that want to win local search, and
+        in-house teams that want an experienced SEO consultant to accelerate what they have started.
+      </CalloutBox>
+    ),
     stats: [
       {
-        value: "≈90%",
-        label: "of global search happens on Google — the board you have to win.",
-        sourceName: "Statcounter Global Stats",
-        sourceUrl: "https://gs.statcounter.com/search-engine-market-share",
+        value: "≈86%",
+        label: "of Canadian search happens on Google — the board you have to win.",
+        sourceName: "Statcounter Global Stats (Canada)",
+        sourceUrl: "https://gs.statcounter.com/search-engine-market-share/all/canada",
       },
       {
-        value: "27.6%",
-        label: "average click-through rate of the #1 organic result.",
-        sourceName: "Backlinko, 4M-result CTR study",
-        sourceUrl: "https://backlinko.com/google-ctr-stats",
+        value: "≈40%",
+        label: "of clicks go to the #1 organic result, dropping sharply down the page.",
+        sourceName: "FirstPageSage, 2026 Google CTR study",
+        sourceUrl:
+          "https://firstpagesage.com/reports/google-click-through-rates-ctrs-by-ranking-position/",
       },
       {
-        value: "43%",
+        value: "48%",
         label: "of mobile sites pass all three Core Web Vitals — so speed is still an edge.",
-        sourceName: "2024 Web Almanac, HTTP Archive",
-        sourceUrl: "https://almanac.httparchive.org/en/2024/performance",
+        sourceName: "2025 Web Almanac, HTTP Archive",
+        sourceUrl: "https://almanac.httparchive.org/en/2025/performance",
       },
     ],
-    featuresHeading: "What's included in our SEO services",
+    featuresHeading: "Our SEO services",
     featuresSubtitle:
-      "Every engagement covers the full picture — not just a handful of title tags.",
+      "We deliver the complete range of SEO services under one roof — not just a handful of title tags.",
     features: [
       {
         icon: Search,
-        title: "Keyword & intent research",
+        title: "Keyword research & strategy",
         description:
-          "We identify the exact searches your buyers use, map each to the right page, and prioritize the terms with real commercial intent — so effort goes where it converts, not just where volume looks big.",
+          "We identify the high-intent terms your customers use, map each to the right page, and prioritize the searches with real commercial intent — grounded in real Canadian search data, not guesswork.",
       },
       {
         icon: FileText,
-        title: "On-page optimization",
+        title: "On-page SEO",
         description:
-          "Titles, meta descriptions, headings, internal links, and body content optimized against what already ranks, so each page sends Google one clear, consistent signal about what it answers.",
+          "Titles, meta descriptions, heading structure, internal linking, and content optimized so each page sends Google one clear signal about what it answers — and reads well for people.",
       },
       {
         icon: Gauge,
-        title: "Technical foundations",
+        title: "Technical SEO",
         description:
-          "We fix the crawl, indexation, structured-data, and speed issues that quietly cap your rankings — including Core Web Vitals, where more than half of sites still fall short.",
+          "Our technical SEO services start with a thorough technical SEO audit — crawlability, indexing, site speed, schema, and mobile usability — then fix the foundational issues that cap rankings regardless of content quality.",
       },
       {
         icon: PenTool,
         title: "Content that earns rankings",
-        description:
-          "Research-led pages and articles that cover a topic thoroughly enough to outrank thinner competitors — and stay useful for years instead of months.",
+        description: (
+          <>
+            Search-driven{" "}
+            <InlineLink href={contentMarketing.href}>{contentMarketing.linkText}</InlineLink> that
+            targets buyer-intent topics and builds topical authority — and we revive existing pages
+            that have lost ground.
+          </>
+        ),
       },
       {
         icon: Link2,
-        title: "Authority building",
-        description:
-          "Earned links and brand mentions from real, relevant sources — the off-site signal that still decides how high you can realistically rank in a competitive market.",
+        title: "Link building & off-page SEO",
+        description: (
+          <>
+            White-hat{" "}
+            <InlineLink href={linkBuilding.href}>{linkBuilding.linkText}</InlineLink> that earns
+            quality, relevant backlinks and audits your profile to disavow toxic links — never bought
+            links or shortcuts that risk a penalty.
+          </>
+        ),
       },
       {
         icon: BarChart3,
-        title: "Measurement & reporting",
+        title: "Ecommerce SEO",
         description:
-          "GA4, Search Console, and rank tracking wired into a plain-language monthly report that ties movement to leads and revenue — not just positions on a screenshot.",
+          "As an ecommerce SEO agency, we optimize product pages, category architecture, and structured data so online retailers capture high-converting search traffic at scale.",
       },
     ],
-    processHeading: "How we deliver SEO",
+    processHeading: "Our SEO process",
     process: [
       {
         step: "01",
-        title: "Audit & strategy",
+        title: "Free SEO audit",
         description:
-          "We benchmark where you stand today — rankings, traffic, technical health, and competitors — and turn it into a prioritized 90-day plan you can see.",
+          "Every engagement begins with a no-obligation review of your rankings, technical SEO health, on-page gaps, backlink profile, and keyword positioning to set a clear baseline.",
       },
       {
         step: "02",
-        title: "Fix & optimize",
+        title: "Strategy",
         description:
-          "We work top-down by impact: technical blockers first, then on-page optimization for your money pages, then the content gaps your competitors are quietly winning.",
+          "The audit informs a custom strategy — target keywords, content priorities, technical fixes, and link opportunities — mapped to your business goals on a realistic roadmap.",
       },
       {
         step: "03",
-        title: "Build authority",
+        title: "Execution",
         description:
-          "We publish new pages against the keywords you can realistically win and earn the links and mentions that lift the authority of your whole domain.",
+          "We implement in priority order: on-page optimization, technical corrections, content, and link building — early wins first, durable authority over time.",
       },
       {
         step: "04",
-        title: "Measure & compound",
+        title: "Reporting & optimization",
         description:
-          "Each month we report what moved, refresh pages that are slipping, and reinvest in what's working — so results compound instead of plateauing.",
+          "Transparent monthly reporting on organic traffic, keyword movement, and conversions, with the plan adjusted as search results and algorithms change. The same senior team does the work end-to-end.",
       },
     ],
-    comparisonHeading: "NexFortis vs. a typical SEO agency",
+    comparisonHeading: "Why choose NexFortis for SEO",
     comparison: [
+      { feature: "Who does the work", us: "A senior SEO consultant, founder-led end-to-end", them: "A rotating junior account manager" },
       { feature: "Keyword targeting", us: "Mapped to buyer intent and revenue", them: "Chased by search volume alone" },
-      { feature: "Technical SEO", us: "Core Web Vitals and indexation fixed", them: "Frequently out of scope" },
-      { feature: "Content", us: "Research-led and genuinely comprehensive", them: "Thin, AI-spun filler" },
+      { feature: "Technical SEO", us: "Core Web Vitals and indexing fixed", them: "Frequently out of scope" },
+      { feature: "Content & links", us: "Research-led content and white-hat links", them: "Thin filler and risky link buys" },
       { feature: "Reporting", us: "Tied to leads and revenue", them: "Ranking screenshots" },
-      { feature: "Who does the work", us: "A senior consultant you can reach", them: "A rotating junior account manager" },
-      { feature: "Commitment", us: "Month-to-month — we earn the renewal", them: "Locked 6–12 month contracts" },
+      { feature: "Commitment", us: "Month-to-month — no lock-in", them: "Locked 6–12 month contracts" },
     ],
-    pricingHeading: "What SEO costs",
+    pricingHeading: "SEO pricing after a free audit",
     pricing: {
       fromLabel: "Retainers scaled to your market",
       note: (
         <>
           <p className="mb-4">
-            We price by how competitive your market is and how much ground there is to make up
-            &mdash; not by a rigid feature checklist. Most local and small-business campaigns sit
-            in the range that GTA agencies bracket as &ldquo;growth&rdquo; work, and we deliver
-            that tier with the efficiency of a lean, senior team rather than a layer of account
-            managers.
+            We don&rsquo;t publish fixed SEO prices, because no two websites or markets are the same.
+            After your free SEO audit we scope the work to your site &mdash; its current health, the
+            number and competitiveness of your target keywords, the technical work required, and the
+            volume of content and link building involved.
           </p>
           <p>
-            You get a fixed monthly scope, transparent reporting, and no long-term lock-in. Ask
-            for a quote and we&rsquo;ll give you a number tied to your actual market and goals.
+            Most SEO engagements run as a monthly retainer, reflecting the ongoing nature of search
+            engine optimization. You get a fixed monthly scope, transparent reporting, and no
+            long-term lock-in &mdash; and you&rsquo;ll know exactly what you&rsquo;re paying for, and
+            why, before you commit.
           </p>
         </>
       ),
     },
     faq: [
       {
+        question: "How much do SEO services cost in Canada?",
+        answer:
+          "SEO pricing in Canada varies widely by competitiveness and scope, which is why we scope every engagement after a free audit rather than quoting a one-size-fits-all price. Like most providers, NexFortis works on a monthly retainer sized to your goals.",
+      },
+      {
         question: "How long does SEO take to work?",
         answer:
-          "You will usually see the first movement on the easier, lower-competition terms inside two to three months, with traffic you can actually feel around the six-month mark. The reason SEO is worth the wait is that it compounds — what you publish in month one is still earning in month twelve, which is exactly how it overtakes paid ads over time. If someone promises you page one in 30 days, they are selling a shortcut that tends to end in a penalty.",
+          "SEO is a months-not-weeks discipline. Most sites see meaningful movement within the first several months, depending on competition, your starting technical health, and your backlink profile. We set realistic expectations up front rather than promising overnight results — anyone guaranteeing page one in 30 days is selling a shortcut that tends to end in a penalty.",
       },
       {
-        question: "Do you guarantee #1 rankings?",
+        question: "What is the difference between an SEO company and an SEO consultant?",
         answer:
-          "No, and be wary of anyone who does — Google's results hinge on things no agency controls. What we will guarantee is the work itself: the audit, the fixes, the content, the links, all reported openly. We aim at the rankings that bring revenue and at the leads those rankings actually produce, not a screenshot of position one for a term nobody searches.",
+          "An SEO company provides a full team across technical SEO, content, and link building; an SEO consultant typically advises on strategy. NexFortis offers both — a dedicated consultant backed by a senior execution team of SEO specialists.",
       },
       {
-        question: "What is the difference between SEO and local SEO?",
+        question: "Should I do SEO myself, or hire an SEO company?",
         answer:
-          "Plain SEO is about ranking in the normal organic results for anyone, anywhere. Local SEO is the narrower game of winning the Google map pack and 'near me' searches when someone is looking for a business in a specific area. Most local businesses genuinely need both, so we run them together and let the map listing and the organic ranking back each other up.",
+          "AI tools and DIY guides can handle the basics, but competitive rankings still need experienced judgement across technical SEO, content, and links — plus the time to do the work consistently. As AI search grows, that strategy work matters more, not less.",
       },
       {
-        question: "Will you need to change my website?",
+        question: "What does the free SEO audit include?",
         answer:
-          "Almost always a little. SEO touches page content, structure, internal links, and technical settings under the hood. We work with the site and the developers you already have wherever we can, and anything that needs a real build change gets flagged and explained before we touch it. Nothing ships without your sign-off.",
+          "Your technical SEO health, crawlability and indexing, on-page gaps, current keyword rankings, backlink profile, and a competitive overview of your search landscape.",
       },
       {
-        question: "How do you report results?",
+        question: "Can you help if a Google update hurt my rankings?",
         answer:
-          "Once a month, in plain English: which keywords moved, what happened to organic traffic and leads, what we shipped, and what is next. We pull the numbers straight from GA4 and Google Search Console, so you are looking at Google's own data, not a figure we massaged in a dashboard.",
+          "Yes. Our audit identifies the likely cause of a drop — content quality, backlink issues, or technical SEO problems — and we build a recovery plan accordingly.",
       },
       {
-        question: "Is SEO still worth it now that AI answers questions directly?",
+        question: "Do you provide SEO services across Canada?",
         answer:
-          "Arguably more than before. The same well-structured, genuinely useful content that ranks in Google is what ChatGPT and Google's AI Overviews reach for when they write an answer. We build for both at once, and our Generative Engine Optimization service adds the AI-specific layer on top of solid SEO foundations.",
+          "Yes — NexFortis works with businesses across Canada, from local service providers in a single city to national ecommerce brands. We are a Canadian SEO agency, and SEO Canada-wide is exactly what we do.",
       },
     ],
     authorNote: (
       <p>
-        Hassan leads SEO and digital strategy at NexFortis, where he has built the practice around a
-        simple idea: turn search into a lead source a business owner can actually count on. As
-        founder and CEO he stays on every engagement himself, so the person setting your strategy is
-        the same one who picks up when you call &mdash; no hand-off to a junior team.
+        Your SEO is led personally by Hassan Sadiq, NexFortis Founder and CEO &mdash; never handed
+        off to a junior or an offshore content mill. Hassan brings 15+ years in enterprise
+        technology, cloud, and digital transformation for Canadian organizations, and NexFortis is a
+        certified Microsoft Solutions Partner. A small senior team of SEO experts and specialists
+        owns your campaign end-to-end, so you get direct access to the people accountable for your
+        rankings &mdash; every month, with no layers in between.
       </p>
     ),
     ctaHeading: "Ready to rank for the searches that matter?",
     ctaSubtext:
-      "Get a free, no-obligation assessment of your site and your market — and a clear view of what it would take to win.",
+      "Book a free, no-obligation SEO audit — an honest look at where your site stands and what it will take to grow.",
   },
 
   // ---------------------------------------------------------- LOCAL SEO ----
