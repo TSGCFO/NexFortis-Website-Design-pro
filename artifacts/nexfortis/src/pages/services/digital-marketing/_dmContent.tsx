@@ -2063,151 +2063,175 @@ export const DM_SPOKE_CONTENT: Partial<Record<DmSpokeSlug, DmSpokeContent>> = {
       "Book a free, no-obligation email marketing audit — an honest assessment of where your email programme stands and what it will take to grow.",
   },
   "conversion-rate-optimization": {
-    metaTitle: "Conversion Rate Optimization",
+    metaTitle: "Conversion Rate Optimization Services",
     metaDescription:
-      "Conversion rate optimization for Canadian businesses: turn more of your traffic into leads with behaviour analysis, testing, and landing-page fixes.",
-    h1: "Conversion Rate Optimization That Lifts Revenue",
+      "Canadian CRO company — data analysis, A/B testing, and conversion-centred design that turn more of your traffic into leads and sales. Free conversion audit.",
+    h1: "Conversion Rate Optimization Services for Canadian Businesses",
     heroSubtitle:
-      "Turn more of the traffic you already have into leads — with behaviour analysis, testing, and landing-page fixes, not guesswork.",
+      "A Canadian conversion rate optimization company that gets more from the traffic you already have — data analysis, A/B testing, conversion-centred design, and user-behaviour insight, run as one disciplined, evidence-led programme.",
     serviceType: "Conversion Rate Optimization",
     serviceSchemaName: "Conversion Rate Optimization Services",
     serviceSchemaDescription:
-      "Conversion rate optimization for Canadian businesses — analytics review, user-behaviour analysis, A/B testing, and landing-page and funnel optimization.",
-    introHeading: "Get more from the traffic you already pay for",
+      "Conversion rate optimization for Canadian businesses — conversion audits and data analysis, A/B and multivariate testing, conversion-centred design, UX and funnel analysis, heatmaps, personalization, and eCommerce CRO, delivered as one founder-led programme.",
+    introHeading: "What NexFortis conversion rate optimization services include",
     intro: (
       <>
         <p>
-          Most businesses obsess over getting more traffic and ignore what happens once it arrives.
-          But if 100 visitors come and two become leads, getting to four leads doubles your results
-          without spending a cent more on traffic. That is the whole idea behind conversion rate
-          optimization: stop pouring water into a leaky bucket and fix the bucket.
+          NexFortis is a Canadian <strong>conversion rate optimization company</strong> that helps
+          businesses get more from the traffic they already have &mdash; turning visitors into leads,
+          calls, and sales instead of paying for more clicks to plug the same leaks. As a conversion rate
+          optimization agency, we combine data analysis, A/B testing, conversion-centred design, and
+          user-behaviour insight into one disciplined programme, led by a senior consultant rather than
+          handed off to a junior.
         </p>
         <p>
-          The key word is data. We don&rsquo;t redesign on a hunch &mdash; we look at what visitors
-          actually do, form a hypothesis, test it, and keep the version that wins. It makes every
-          other channel more profitable, because the same clicks from{" "}
-          <InlineLink href={seo.href}>{seo.linkText}</InlineLink> or ads suddenly produce more
-          enquiries, and it pairs naturally with our{" "}
+          Conversion rate optimization is a data-driven discipline, not a redesign on a hunch. Instead of
+          asking how to get more traffic, CRO asks a sharper question: of the people already arriving, why
+          aren&rsquo;t more of them converting? We study how real people move through your site, form clear
+          hypotheses about what is holding them back, test the changes, and keep what wins. Whether you
+          need a conversion rate optimization consultant to guide your in-house team or a full-service
+          partner end to end, we scope the work to where your funnel is actually losing people.
+        </p>
+        <p>
+          A complete conversion rate optimization service connects your analytics, user-behaviour data,
+          testing programme, and page design into one feedback loop. As a Canadian-based company that
+          knows the GTA, we tie CRO to the rest of your funnel &mdash; from the{" "}
+          <InlineLink href={seo.href}>{seo.linkText}</InlineLink> and{" "}
+          <InlineLink href={getDmSpoke("google-ads-ppc").href}>
+            {getDmSpoke("google-ads-ppc").linkText}
+          </InlineLink>{" "}
+          that bring visitors in to the{" "}
           <InlineLink href={getDmSpoke("web-design").href}>{getDmSpoke("web-design").linkText}</InlineLink>{" "}
-          work. It&rsquo;s part of the wider{" "}
+          that frames it &mdash; across your{" "}
           <InlineLink href={DM_PILLAR_HREF}>{DM_PILLAR_LINK_TEXT}</InlineLink>.
-        </p>
-        <p>
-          The opportunity is real: across thousands of accounts, the top quartile of landing pages
-          convert more than twice as well as the average. CRO is how you move toward that top group.
         </p>
       </>
     ),
+    introCallout: (
+      <CalloutBox>
+        Our conversion rate optimization services fit Canadian businesses that want more from the visitors
+        they already attract &mdash; businesses investing in SEO or paid ads that want to convert more of
+        that traffic; eCommerce stores losing sales to cart and checkout abandonment; lead-gen and service
+        businesses whose forms or booking flows underperform; B2B companies with longer funnels; and
+        businesses with enough traffic to test but no disciplined programme to act on it.
+      </CalloutBox>
+    ),
     stats: [
       {
-        value: "2.35%",
-        label: "average landing-page conversion rate — the top 25% convert at 5.31% or higher.",
-        sourceName: "WordStream conversion-rate analysis",
-        sourceUrl: "https://www.wordstream.com/blog/ws/2014/03/17/what-is-a-good-conversion-rate",
+        value: "6.6%",
+        label: "median landing-page conversion rate — most of the traffic you pay for never converts.",
+        sourceName: "Unbounce, Conversion Benchmark (Q4 2024)",
+        sourceUrl: "https://unbounce.com/average-conversion-rates-landing-pages/",
       },
       {
-        value: "53%",
-        label: "of mobile visits are abandoned if a page takes over 3 seconds to load.",
-        sourceName: "Google, The Need for Mobile Speed",
-        sourceUrl: "https://blog.google/products/admanager/the-need-for-mobile-speed/",
+        value: "67.6%",
+        label: "of all CRO experiments practitioners run are A/B tests — the workhorse of the discipline.",
+        sourceName: "Convert, 2026",
+        sourceUrl: "https://www.convert.com/blog/a-b-testing/ab-testing-stats/",
       },
       {
-        value: "≈90%",
-        label: "of search runs on Google — where most of the traffic you're optimizing begins.",
-        sourceName: "Statcounter Global Stats",
-        sourceUrl: "https://gs.statcounter.com/search-engine-market-share",
+        value: "70.22%",
+        label: "average online cart abandonment — recovering a fraction beats chasing new traffic.",
+        sourceName: "Baymard Institute",
+        sourceUrl: "https://baymard.com/lists/cart-abandonment-rate",
       },
     ],
-    featuresHeading: "What's included in our conversion rate optimization",
-    featuresSubtitle: "A data-driven program, not a one-time redesign on a hunch.",
+    featuresHeading: "Our conversion rate optimization services",
+    featuresSubtitle:
+      "The full range of conversion rate optimization services under one roof — evidence-led, not opinion-led.",
     features: [
       {
         icon: BarChart3,
-        title: "Data & analytics review",
+        title: "Conversion audit & data analysis",
         description:
-          "We start in your analytics — GA4, Search Console, and your funnels — to find where visitors drop off and where the biggest, most winnable opportunities actually are.",
-      },
-      {
-        icon: Search,
-        title: "User-behaviour analysis",
-        description:
-          "We use heatmaps, session recordings, and form analytics to see what people actually do on your pages — the friction, confusion, and dead ends that numbers alone don't explain.",
-      },
-      {
-        icon: Sparkles,
-        title: "A/B & multivariate testing",
-        description:
-          "We form clear hypotheses and test them properly, so changes are proven to lift conversions before they ship — no guessing, no redesigning on opinion.",
-      },
-      {
-        icon: FileText,
-        title: "Landing-page & funnel optimization",
-        description:
-          "We sharpen the pages and steps that matter most — headlines, layout, forms, and calls to action — to remove friction and guide more visitors to convert.",
-      },
-      {
-        icon: Users,
-        title: "UX & messaging fixes",
-        description:
-          "We align what your page says with what your visitor wants, clarify the offer, and build the trust signals that turn hesitation into action.",
+          "Every programme starts with the data. We dig into your analytics to find where visitors enter, stall, and abandon — quantifying the gap between the traffic you have and the conversions you are getting, so the work targets your biggest opportunities first.",
       },
       {
         icon: LineChart,
-        title: "Reporting & iteration",
+        title: "A/B & multivariate testing",
         description:
-          "We report each test's result in plain language — what we tried, what it did to conversions and leads — and keep iterating, because CRO compounds over time.",
+          "We design, run, and measure controlled experiments so changes are validated against real visitor behaviour rather than opinion. Winners get rolled out; losers inform the next test.",
+      },
+      {
+        icon: PenTool,
+        title: "Conversion-centred design",
+        description:
+          "We redesign pages, calls to action, and layouts around a single goal: making the next step obvious and frictionless. Every element earns its place by helping the visitor convert.",
+      },
+      {
+        icon: Gauge,
+        title: "UX & funnel analysis",
+        description:
+          "We map the full path from arrival to conversion, find the steps that lose the most people, and remove the friction — confusing navigation, unclear messaging, overlong forms, slow pages — that quietly costs you customers.",
+      },
+      {
+        icon: Search,
+        title: "Heatmaps & user-behaviour analytics",
+        description:
+          "Click maps, scroll maps, and session recordings show what visitors actually do — where they look, where they get stuck, and where they give up — turning guesses into evidence we can act on.",
+      },
+      {
+        icon: Users,
+        title: "Personalization",
+        description:
+          "Where the data supports it, we tailor messaging and offers to different audiences and intents, so more visitors see the version most likely to convert them.",
+      },
+      {
+        icon: Sparkles,
+        title: "eCommerce CRO",
+        description:
+          "For online stores, we optimize product pages, cart, and checkout to reduce abandonment and lift completed purchases — connecting the on-page experience to the rest of your store.",
       },
     ],
-    processHeading: "How we deliver CRO",
+    processHeading: "Our conversion rate optimization process",
     process: [
       {
         step: "01",
-        title: "Analyze",
+        title: "Free conversion rate optimization audit",
         description:
-          "We dig into your analytics and user behaviour to find where you're losing conversions and which fixes carry the most upside.",
+          "A no-obligation review of your analytics, funnel, key conversion paths, and current performance — an honest baseline that identifies where the biggest gains likely are before any investment.",
       },
       {
         step: "02",
-        title: "Hypothesize",
+        title: "Strategy",
         description:
-          "We turn findings into clear, testable hypotheses — specific changes with a reason to believe they'll lift conversions.",
+          "The audit informs a prioritized plan: the pages and steps to tackle first, the hypotheses worth testing, the metrics that define success, and a realistic view of what your traffic can validate.",
       },
       {
         step: "03",
-        title: "Test",
+        title: "Execution",
         description:
-          "We run controlled A/B tests so we only keep changes that actually win, and discard the ones that don't — evidence over opinion.",
+          "Our in-house team builds experiments, redesigns pages around conversion, fixes funnel friction, and instruments the tracking needed to measure it. No outsourcing.",
       },
       {
         step: "04",
-        title: "Implement & repeat",
+        title: "Monthly reporting & ongoing optimization",
         description:
-          "We ship the winners, measure the lift, and start the next test — a continuous cycle that keeps improving your conversion rate month over month.",
+          "Clear reporting on what we tested, what won, and what it meant for your conversion rate — then we feed those learnings into the next round, because CRO is a cycle, not a one-time project.",
       },
     ],
-    comparisonHeading: "NexFortis vs. a typical 'redesign' approach",
+    comparisonHeading: "Why choose NexFortis for conversion rate optimization",
     comparison: [
-      { feature: "Decisions", us: "Based on data and tests", them: "Based on opinion and trends" },
-      { feature: "Changes", us: "Proven before they ship", them: "Shipped and hoped for" },
-      { feature: "Focus", us: "Conversions and leads", them: "How it looks" },
-      { feature: "Method", us: "Continuous testing cycle", them: "One big redesign, then nothing" },
-      { feature: "Who does the work", us: "A senior consultant you can reach", them: "A rotating junior" },
-      { feature: "Commitment", us: "Month-to-month — we earn the renewal", them: "Locked contracts" },
+      { feature: "Who does the work", us: "A dedicated CRO consultant, founder-led end-to-end", them: "A rotating junior account manager" },
+      { feature: "Decisions", us: "Data and controlled testing — if it can't be measured, it doesn't ship", them: "Redesigns based on a hunch" },
+      { feature: "Honesty", us: "No invented uplift percentages or guaranteed rates", them: "Guaranteed-conversion claims" },
+      { feature: "Integration", us: "Tied to SEO, Google Ads, and web design", them: "An isolated testing tool" },
+      { feature: "Commitment", us: "Month-to-month — no lock-in", them: "Locked contracts" },
     ],
-    pricingHeading: "What CRO costs",
+    pricingHeading: "Conversion rate optimization pricing after a free audit",
     pricing: {
-      fromLabel: "Priced by traffic, testing volume, and scope",
+      fromLabel: "Scoped to your traffic",
       note: (
         <>
           <p className="mb-4">
-            CRO works best when you have enough traffic to run valid tests, so we scope it to your
-            volume and how much testing and implementation you need. A low-traffic site may get more
-            from a one-time conversion audit and fixes than an ongoing testing program.
+            We don&rsquo;t publish fixed conversion rate optimization prices, because effective CRO is
+            scoped to your traffic volume, the complexity of your funnel, the testing programme involved,
+            and your goals &mdash; which is why a meaningful audit comes first.
           </p>
           <p>
-            We&rsquo;ll be honest about which you need. Pricing is transparent with no long-term
-            lock-in &mdash; ask for a free conversion audit and we&rsquo;ll show you the biggest wins
-            and what they&rsquo;re worth.
+            After your free audit, we present clear options aligned to the scope of work, with no hidden
+            fees and no long-term lock-in &mdash; from a focused conversion audit to an ongoing monthly
+            testing programme.
           </p>
         </>
       ),
@@ -2216,42 +2240,47 @@ export const DM_SPOKE_CONTENT: Partial<Record<DmSpokeSlug, DmSpokeContent>> = {
       {
         question: "What is conversion rate optimization?",
         answer:
-          "CRO is the practice of increasing the percentage of your visitors who take a desired action — filling a form, calling, or buying — without needing more traffic. It combines analytics, user-behaviour research, and controlled testing to find and fix what's stopping people from converting, so you get more results from the visitors you already have.",
+          "Conversion rate optimization is the data-driven practice of increasing the percentage of your website visitors who complete a desired action — a purchase, a form submission, a call, or a sign-up. Rather than chasing more traffic, it improves how much of your existing traffic converts, using analytics, user-behaviour data, and controlled testing.",
       },
       {
-        question: "How does CRO actually work?",
+        question: "How much do conversion rate optimization services cost?",
         answer:
-          "It's a cycle: analyze the data to find where visitors drop off, form a hypothesis about why, test a change against the original, and keep whatever wins. Then repeat. The discipline is what makes it work — decisions come from evidence, not opinion, so you stop guessing and start compounding small, proven gains.",
+          "CRO pricing varies by your traffic volume, the complexity of your funnel, and the scope of testing involved, which is why we scope every engagement after a free audit rather than quoting a one-size-fits-all price. You can start with a focused audit or move into an ongoing monthly programme.",
       },
       {
-        question: "Do I have enough traffic for CRO?",
+        question: "What is A/B testing, and how does it work?",
         answer:
-          "A/B testing needs a reasonable volume of visitors and conversions to reach statistical confidence, so very low-traffic sites get less from formal testing. But CRO isn't only testing — a conversion audit, analytics review, and UX fixes deliver value at almost any traffic level. We'll tell you honestly which approach fits your situation.",
+          "A/B testing compares two versions of a page or element — an original and a variation — by splitting your traffic between them and measuring which drives more conversions. For example, you might test two headlines or call-to-action buttons; the version that converts more visitors wins, based on real behaviour rather than opinion.",
       },
       {
-        question: "How much does CRO cost?",
+        question: "Do I need a lot of traffic for CRO to work?",
         answer:
-          "It depends on your traffic, how much testing you want, and how much implementation we handle. A one-time conversion audit with prioritised fixes is very different from an ongoing testing program. We scope and price it transparently after a free audit, with no long-term lock-in.",
+          "CRO works best when there is enough traffic for tests to reach reliable results, but lower-traffic sites can still benefit from audit-driven fixes, funnel analysis, and qualitative tools like heatmaps and session recordings. Part of our job is being honest about what your current volume can prove and sequencing the work accordingly.",
       },
       {
-        question: "How long until I see results from CRO?",
+        question: "How long does conversion rate optimization take to show results?",
         answer:
-          "Some fixes — a clearer call to action, a faster page, a simpler form — can lift conversions almost immediately. Formal A/B tests need to run long enough to reach confidence, usually a few weeks each. CRO is a compounding program: individual wins add up, and the gains stick because they're tied to your real visitors.",
+          "CRO is an ongoing, months-not-weeks discipline. Some quick fixes can help early, but durable gains come from running a steady cycle of tests, so we set realistic expectations up front rather than promising a fixed result by a specific date.",
+      },
+      {
+        question: "How is a conversion rate optimization agency different from a web design agency?",
+        answer:
+          "A conversion rate optimization agency focuses on measuring and improving how well your existing pages convert, using analytics and testing to validate every change; a web design agency focuses on building the site. NexFortis does both and connects them, so your design decisions are backed by conversion data.",
       },
     ],
     authorNote: (
       <p>
-        Hassan leads conversion rate optimization at NexFortis, helping Canadian businesses turn more
-        of their existing traffic into leads through data and testing rather than guesswork. As
-        founder and CEO he stays hands-on with every engagement.
+        Your programme is guided personally by Hassan Sadiq, NexFortis Founder and CEO, with a small senior
+        team &mdash; a dedicated CRO consultant who stays with your account end to end. With 15+ years in
+        enterprise technology and as a certified Microsoft Solutions Partner, the analytics, testing, and
+        implementation side of CRO is handled with genuine technical depth. Decisions are made with
+        evidence, not opinion.
       </p>
     ),
-    ctaHeading: "Turning enough of your traffic into leads?",
+    ctaHeading: "Ready to convert more of the traffic you already have?",
     ctaSubtext:
-      "Get a free conversion audit — where you're losing visitors, the highest-impact fixes, and what lifting your conversion rate would be worth.",
+      "Book a free, no-obligation conversion rate optimization audit — an honest assessment of where your conversions stand and what it will take to grow them.",
   },
-
-  // -------------------------------------------- ANALYTICS & REPORTING ----
   "reputation-management": {
     metaTitle: "Reputation Management Services in Canada",
     metaDescription:
