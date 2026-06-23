@@ -522,207 +522,211 @@ export const DM_SPOKE_CONTENT: Partial<Record<DmSpokeSlug, DmSpokeContent>> = {
       "Book a free, no-obligation local SEO audit — an honest assessment of where your local presence stands and what it will take to grow.",
   },
   "geo-ai-search": {
-    metaTitle: "AI Search Optimization (GEO)",
+    metaTitle: "Generative Engine Optimization Services",
     metaDescription:
-      "Generative Engine Optimization (GEO): get cited by ChatGPT, Google AI Overviews, Perplexity, and Gemini — where a growing share of buyers now start.",
-    h1: "Generative Engine Optimization (GEO) Services",
+      "Canadian AI SEO agency for GEO and answer engine optimization — get cited by ChatGPT, Perplexity, Gemini, and Google AI Overviews. Founder-led. Free GEO audit.",
+    h1: "Generative Engine Optimization Services for Canadian Businesses",
     heroSubtitle:
-      "Get found when buyers ask ChatGPT, Google's AI Overviews, Perplexity, and Gemini — the new front page of search.",
+      "A Canadian AI SEO agency that gets your business cited inside the AI answers buyers now rely on — entity and schema work, AI-friendly content, and the technical foundations that make you quotable to ChatGPT, Perplexity, Gemini, and Google AI Overviews.",
     serviceType: "Generative Engine Optimization",
-    serviceSchemaName: "Generative Engine Optimization (GEO)",
+    serviceSchemaName: "Generative Engine Optimization Services",
     serviceSchemaDescription:
-      "AI search optimization for Canadian businesses — earning citations in ChatGPT, Google AI Overviews, Perplexity, and Gemini through structured content and brand signals.",
-    introHeading: "When AI answers the question, are you in it?",
+      "Generative engine optimization (GEO) and answer engine optimization (AEO) for Canadian businesses — entity and schema work, AI-friendly content structuring, and the technical foundations that earn citations in AI-generated answers, delivered as one founder-led campaign.",
+    introHeading: "What NexFortis generative engine optimization services include",
     intro: (
       <>
         <p>
-          Search is quietly splitting into two. There are still the familiar blue links, but next to
-          them a fast-growing slice of answers now comes straight from an AI &mdash; Google&rsquo;s
-          AI Overviews, ChatGPT, Perplexity, Gemini. These engines do not hand back ten options.
-          They write one answer and name a few sources. If your brand is not one of them, you are
-          simply not in the room at the moment someone is making up their mind.
+          NexFortis is a Canadian <strong>AI SEO agency</strong> that helps business owners get found
+          inside the AI answers their customers now rely on. When someone asks ChatGPT, Perplexity,
+          Gemini, or Google&rsquo;s AI Overviews to recommend a provider, those tools name a short list of
+          businesses &mdash; and generative engine optimization is the work of making sure yours is on it.
         </p>
         <p>
-          Generative Engine Optimization is how you get into that answer. It stands on the same
-          foundations as <InlineLink href={seo.href}>{seo.linkText}</InlineLink>, then adds the
-          structure, the sourcing, and the brand signals that language models actually reward. It is
-          the most forward-looking piece of our{" "}
-          <InlineLink href={DM_PILLAR_HREF}>{DM_PILLAR_LINK_TEXT}</InlineLink>, and it is still rare
-          among GTA agencies &mdash; which, frankly, is the whole opportunity. The brands that teach
-          these engines to trust them now will be the default answers later.
+          Generative engine optimization (often shortened to GEO) and the closely related discipline of
+          answer engine optimization (AEO) are an emerging field that most agencies still treat as an
+          afterthought to traditional search. We treat AI visibility as its own discipline, led by a
+          senior consultant rather than handed off to a junior or an offshore content mill. AI engines do
+          not simply rank pages; they read, interpret, and synthesize information, then decide which
+          sources are trustworthy enough to cite.
+        </p>
+        <p>
+          As a Canadian AI SEO agency, we combine entity and schema work, AI-friendly content structuring,
+          and the technical foundations that make your site quotable to large language models into one
+          connected campaign &mdash; run alongside your traditional{" "}
+          <InlineLink href={seo.href}>{seo.linkText}</InlineLink>,{" "}
+          <InlineLink href={contentMarketing.href}>{contentMarketing.linkText}</InlineLink>, and the rest
+          of your <InlineLink href={DM_PILLAR_HREF}>{DM_PILLAR_LINK_TEXT}</InlineLink>.
         </p>
       </>
     ),
     introCallout: (
-      <CalloutBox title="What is Generative Engine Optimization (GEO)?">
-        GEO &mdash; you will also hear it called AI search optimization or answer engine optimization
-        &mdash; is the work of structuring your content and building your brand so that generative AI
-        engines quote you in the answers they write. Put simply: SEO competes for a ranking, GEO
-        competes for a citation inside the answer itself.
+      <CalloutBox>
+        Our generative engine optimization services fit Canadian businesses whose buyers research with AI
+        before they buy &mdash; companies that rank in Google but never appear in AI Overviews or chat
+        recommendations; service providers and B2B firms whose customers ask AI tools for shortlists;
+        brands that want to protect visibility as search shifts from blue links to AI answers; and teams
+        with real expertise that is not yet structured in a way AI engines can recognize and cite.
       </CalloutBox>
     ),
     stats: [
       {
-        value: "≈16%",
-        label: "of Google searches showed an AI Overview by late 2025, up from about 6% in January.",
-        sourceName: "Semrush study, via Search Engine Land",
-        sourceUrl: "https://searchengineland.com/google-ai-overviews-surge-pullback-data-466314",
+        value: "800M+",
+        label: "weekly ChatGPT users — a discovery surface too large to ignore.",
+        sourceName: "OpenAI",
+        sourceUrl: "https://openai.com/index/the-state-of-enterprise-ai-2025-report/",
       },
       {
-        value: "58.5%",
-        label: "of US Google searches ended without a click to the open web in 2024.",
-        sourceName: "SparkToro 2024 Zero-Click Study",
-        sourceUrl:
-          "https://sparktoro.com/blog/2024-zero-click-search-study-for-every-1000-us-google-searches-only-374-clicks-go-to-the-open-web-in-the-eu-its-360/",
+        value: "25%",
+        label: "projected drop in traditional search volume by 2026 as buyers shift to AI chatbots.",
+        sourceName: "Gartner",
+        sourceUrl: "https://www.gartner.com/en/newsroom/press-releases/2024-02-19-gartner-predicts-search-engine-volume-will-drop-25-percent-by-2026-due-to-ai-chatbots-and-other-virtual-agents",
       },
       {
-        value: "47%",
-        label: "of Gen Z consumers discovered a new product or brand through ChatGPT.",
-        sourceName: "Adobe, 2025 consumer survey",
-        sourceUrl: "https://www.adobe.com/express/learn/blog/chatgpt-as-a-search-engine",
+        value: "8% vs 15%",
+        label: "click-through when an AI summary appears versus when it doesn't — visibility is moving into the answer.",
+        sourceName: "Pew Research Center",
+        sourceUrl: "https://www.pewresearch.org/short-reads/2025/07/22/google-users-are-less-likely-to-click-on-links-when-an-ai-summary-appears-in-the-results/",
       },
     ],
-    featuresHeading: "What's included in GEO",
-    featuresSubtitle: "The AI-search layer most agencies haven't built yet.",
+    featuresHeading: "Our generative engine optimization services",
+    featuresSubtitle:
+      "The full range of generative engine optimization services under one roof — GEO and AEO, run as one campaign.",
     features: [
       {
         icon: Sparkles,
-        title: "AI visibility audit",
+        title: "Generative engine optimization (GEO)",
         description:
-          "We test the prompts your buyers actually ask across ChatGPT, Google AI Overviews, Perplexity, and Gemini, and record who gets cited today — your baseline and your competitors' head start.",
-      },
-      {
-        icon: FileText,
-        title: "Passage-optimized content",
-        description:
-          "We restructure pages so each passage answers a question on its own — direct answers, clear definitions, and self-contained facts that retrieval-based AI can lift cleanly into a response.",
-      },
-      {
-        icon: FileCode,
-        title: "Schema & structured data for AI",
-        description:
-          "We implement the FAQ, How-To, Article, and entity schema that helps engines understand and trust your content — the infrastructure that increasingly decides who gets cited.",
-      },
-      {
-        icon: Share2,
-        title: "Brand surface area",
-        description:
-          "Language models weigh mentions across high-authority sources, so we build your presence on the sites they lean on — Reddit, LinkedIn, YouTube, and reputable industry listings and reviews.",
+          "The core discipline: making your brand and content the source AI engines pull from when they generate an answer. We identify the prompts your buyers ask, then structure your content, evidence, and entity signals so generative engines treat you as a credible, quotable source.",
       },
       {
         icon: Bot,
-        title: "AI crawler access & llms.txt",
+        title: "Answer engine optimization (AEO)",
         description:
-          "We make sure the major AI crawlers can reach your content and add an llms.txt file that points them at the pages you most want surfaced and cited.",
+          "Closely tied to GEO, answer engine optimization targets the direct-answer surfaces — AI Overviews, featured snippets, and conversational responses — by formatting your content as clear, self-contained answers engines can lift cleanly into a reply.",
+      },
+      {
+        icon: Search,
+        title: "Visibility across ChatGPT, Perplexity, Gemini & AI Overviews",
+        description:
+          "We work across the major AI engines rather than optimizing for one, assess how your brand surfaces in each, identify where competitors are cited instead, and build a plan to close the gap.",
+      },
+      {
+        icon: FileCode,
+        title: "Entity & schema optimization",
+        description:
+          "AI engines reason about entities — your business, your people, your services — not just keywords. We strengthen how your brand is defined and connected across the web, and implement structured data so engines can read and trust what you offer.",
+      },
+      {
+        icon: FileText,
+        title: "AI-friendly content structuring",
+        description:
+          "We restructure and create content AI models can parse and cite: clear question-and-answer formatting, definitive statements, logical hierarchy, and supporting evidence — the patterns generative engines reward when they choose what to quote.",
       },
       {
         icon: LineChart,
-        title: "Citation monitoring",
+        title: "AI SEO & ongoing optimization",
         description:
-          "We track how often each engine cites you for your target prompts over time, so GEO becomes a measured program with a clear trend — not a one-off experiment.",
+          "Generative engines change constantly, so our AI SEO services apply ai seo optimization as a continuous practice — monitoring how your visibility evolves across engines and refining entities, content, and structure as the models shift.",
       },
     ],
-    processHeading: "How we deliver GEO",
+    processHeading: "Our generative engine optimization process",
     process: [
       {
         step: "01",
-        title: "Baseline AI visibility",
+        title: "Free GEO audit",
         description:
-          "We run your priority prompts across the major AI engines and document exactly where you are — and aren't — cited today.",
+          "A no-obligation review of how your brand surfaces across ChatGPT, Perplexity, Gemini, and Google AI Overviews, how your entity and schema signals read, and where competitors are cited instead of you.",
       },
       {
         step: "02",
-        title: "Structure for retrieval",
+        title: "Strategy",
         description:
-          "We rework key pages into clear, self-contained passages and add the schema that helps AI engines understand and quote them.",
+          "The audit informs a prioritized plan: the buyer questions and prompts to target, the entity and schema work to do, the content to restructure or create, and the engines to focus on first.",
       },
       {
         step: "03",
-        title: "Build brand signals",
+        title: "Execution",
         description:
-          "We grow your mentions across the high-authority sources LLMs lean on, so the models see your brand as a credible answer to cite.",
+          "Our in-house team strengthens entity and schema signals, structures content for AI readability, and builds the evidence and answers generative engines reward. No outsourcing.",
       },
       {
         step: "04",
-        title: "Monitor & refine",
+        title: "Monthly reporting & optimization",
         description:
-          "We track citations across engines month over month and double down on the topics and formats that are winning you answers.",
+          "Clear, plain-language reporting on how your AI visibility is changing across engines, where you are being cited, and what we are optimizing next.",
       },
     ],
-    comparisonHeading: "GEO vs. SEO alone",
+    comparisonHeading: "Why choose NexFortis for generative engine optimization",
     comparison: [
-      { feature: "What you compete for", us: "Citations in AI answers", them: "Blue-link rankings only" },
-      { feature: "Content structure", us: "Self-contained, quotable passages", them: "Long pages built only for scanning" },
-      { feature: "Schema", us: "Entity and Q&A markup for AI", them: "Basic or none" },
-      { feature: "Brand signals", us: "Reddit, LinkedIn, YouTube, reviews", them: "Backlinks only" },
-      { feature: "Measurement", us: "Tracked AI citations by engine", them: "Rankings and traffic only" },
-      { feature: "Market timing", us: "Few GTA competitors offer it", them: "Crowded and commoditized" },
+      { feature: "Discipline", us: "GEO and AEO with their own strategy and reporting", them: "A line item bolted onto SEO" },
+      { feature: "Who does the work", us: "A senior consultant, founder-led end-to-end", them: "A rotating junior or a content mill" },
+      { feature: "Engines", us: "ChatGPT, Perplexity, Gemini, and AI Overviews", them: "Optimized for one, blind to the rest" },
+      { feature: "Foundations", us: "Entity, schema, and structured-data depth", them: "Keyword tweaks only" },
+      { feature: "Honesty", us: "No promise of a fixed spot in any AI answer", them: "Guaranteed-placement claims" },
     ],
-    pricingHeading: "What GEO costs",
+    pricingHeading: "Generative engine optimization pricing after a free audit",
     pricing: {
-      fromLabel: "A premium add-on while the window is open",
+      fromLabel: "Scoped to your AI visibility",
       note: (
         <>
           <p className="mb-4">
-            GEO works best layered on solid SEO foundations, so we usually run it as an add-on to a
-            search engagement rather than a standalone line item. Scope depends on how many prompts
-            and topics you want to win and how much brand-building the engines require in your
-            category.
+            We don&rsquo;t publish fixed generative engine optimization prices, because effective GEO is
+            scoped to your current visibility in AI answers, your market&rsquo;s competitiveness, the state
+            of your entity and schema signals, and your growth goals &mdash; which is why a meaningful
+            audit comes first.
           </p>
           <p>
-            Because few competitors offer this yet, early movers gain an advantage that&rsquo;s
-            hard to unwind later. Ask for a quote and we&rsquo;ll scope a program against your
-            market and your priority questions.
+            After your free GEO audit, we present clear options aligned to the scope of work, with no
+            hidden fees and no long-term lock-in &mdash; from a focused entity, schema, and
+            content-structuring project to ongoing monthly AI SEO optimization across engines.
           </p>
         </>
       ),
     },
     faq: [
       {
-        question: "What is Generative Engine Optimization (GEO)?",
+        question: "What is generative engine optimization?",
         answer:
-          "GEO is the work of optimizing your content and brand so that generative AI engines — ChatGPT, Google's AI Overviews, Perplexity, Gemini — cite you when they answer a buyer's question. You will also see it called AI search optimization or answer engine optimization. The simplest way to think about it: SEO is a fight for a ranking, GEO is a fight for a mention inside the answer the AI writes.",
+          "Generative engine optimization (GEO) is the practice of making your brand and content visible inside AI-generated answers — the responses from ChatGPT, Perplexity, Gemini, and Google's AI Overviews. Instead of competing only for a ranking position, GEO works to make your business the source those engines quote, summarize, and recommend.",
       },
       {
-        question: "Is GEO different from SEO?",
+        question: "How is generative engine optimization different from SEO?",
         answer:
-          "It grows out of SEO but it is not the same job. Strong, well-organised content helps with both, true, but GEO adds its own layer on top: passage-level structure an engine can lift cleanly, entity and Q&A schema, and brand mentions across the places these models learn to trust. So we run GEO on top of solid SEO, never instead of it.",
+          "Traditional SEO earns rankings in a list of links; generative engine optimization earns citations and recommendations inside AI answers. The two work best together, but AI engines read, interpret, and synthesize sources rather than just ranking pages — so GEO emphasizes entity clarity, structured data, and content written as clear, quotable answers.",
       },
       {
-        question: "Which AI engines do you optimize for?",
+        question: "What is answer engine optimization?",
         answer:
-          "Whichever ones your buyers are actually using — in practice that means Google's AI Overviews and AI Mode, ChatGPT, Perplexity, and Gemini. We run your priority prompts through each, see who is getting cited today, and put the effort where your audience and the opportunity line up.",
+          "Answer engine optimization (AEO) is a closely related discipline focused on the direct-answer surfaces — AI Overviews, featured snippets, and conversational replies. It formats your content as self-contained answers so engines can lift it cleanly into a response. We deliver GEO and AEO together as one campaign.",
       },
       {
-        question: "Can you guarantee my brand gets cited?",
+        question: "How much do generative engine optimization services cost?",
         answer:
-          "No, and the same caveat applies as with a Google ranking — the engine makes the call, not us. What we can genuinely do is move the odds: build the structure, schema, and brand signals these engines reward, then track your citations over time so you can watch the trend rather than take it on faith.",
+          "GEO pricing varies by your current AI visibility, market competitiveness, the state of your entity and schema signals, and scope — which is why we scope every engagement after a free audit rather than quoting a one-size-fits-all price, with month-to-month terms.",
       },
       {
-        question: "How do you measure GEO results?",
+        question: "How long does generative engine optimization take to show results?",
         answer:
-          "We run your target prompts across each engine on a regular schedule and record how often — and how prominently — your brand turns up. That gives you a month-over-month trend per engine instead of a single snapshot, so you can actually see whether the work is landing.",
+          "GEO is a months-not-weeks discipline. Timelines depend on your starting visibility, how well your content and entities are already structured, and how competitive your space is in AI answers, so we set realistic expectations rather than promising a fixed date or a guaranteed spot.",
       },
       {
-        question: "Is it too early to invest in GEO?",
+        question: "Do you offer AI SEO services as well as traditional SEO?",
         answer:
-          "Honestly, early is the whole point. AI answers already show up on a large share of searches and more buyers start with ChatGPT every month, yet hardly any local competitors are optimising for it. Earning these engines' trust now is far cheaper than trying to claw your way in once everyone else has noticed.",
+          "Yes. Our AI SEO services cover generative engine optimization and answer engine optimization, and they integrate with our traditional SEO so your visibility is strong across both AI answers and classic search results.",
       },
     ],
     authorNote: (
       <p>
-        Hassan leads NexFortis&rsquo;s work on AI search, helping Canadian businesses earn a place in
-        ChatGPT, Google&rsquo;s AI Overviews, and the other generative engines before their
-        competitors think to try. As founder and CEO he treats GEO as the firm&rsquo;s bet on where
-        search is heading &mdash; and works on it directly with every client.
+        Your campaign is led personally by Hassan Sadiq, NexFortis Founder and CEO &mdash; never handed
+        off to a junior. With 15+ years in enterprise technology and as a certified Microsoft Solutions
+        Partner, Hassan brings genuine technical depth to the schema, entity, and structured-data side of
+        GEO. A small senior team owns your AI-visibility campaign end-to-end.
       </p>
     ),
-    ctaHeading: "Want to be the answer AI gives?",
+    ctaHeading: "Want to be the answer AI engines recommend?",
     ctaSubtext:
-      "Get a free AI visibility check — see which engines cite you today, where your competitors lead, and the fastest way to close the gap.",
+      "Book a free, no-obligation generative engine optimization audit — an honest look at how AI engines see your business and what it will take to be cited.",
   },
-
-  // ------------------------------------------------ TECHNICAL SEO ----
   "content-marketing": {
     metaTitle: "Content Marketing Services",
     metaDescription:
