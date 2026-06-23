@@ -39,7 +39,11 @@ const raw = readFileSync(contentFile, "utf8");
 async function humanizeText(text) {
   const sub = await fetch("https://humanize.undetectable.ai/submit", {
     method: "POST", headers: { apikey: KEY, "Content-Type": "application/json" },
-    body: JSON.stringify({ content: text, readability: "University", purpose: "General Writing", strength: "Balanced", model: "v11" }),
+    // Gentle config (audited vs Undetectable Humanization API v2 docs 2026-06-23):
+    // v2 = medium humanization (least aggressive model), strength "Quality" = least aggressive,
+    // purpose "Business Material" = on-tone for service pages. Chosen to minimize the tool's
+    // tendency to paraphrase away facts/keywords. Output still requires strict manual verification.
+    body: JSON.stringify({ content: text, readability: "University", purpose: "Business Material", strength: "Quality", model: "v2" }),
   });
   const sj = await sub.json();
   if (!sj.id) throw new Error("submit: " + JSON.stringify(sj).slice(0, 150));
@@ -66,13 +70,19 @@ const restore = (text, map) => { let o = text; for (let i = 0; i < map.length; i
 
 const blocks = raw.split(/\n\n+/);
 const isHeading = (b) => /^\s{0,3}#{1,3}\s/.test(b);
+const isFaqHeading = (b) => /^\s{0,3}#{1,3}\s.*frequently asked questions/i.test(b);
 const isList = (b) => b.split("\n").filter((l) => l.trim()).every((l) => /^\s*([-*]|\d+\.)\s/.test(l));
+const hasLink = (b) => /\]\([^)]*\)/.test(b); // citations + internal links — never feed these to the humanizer
 const wc = (b) => b.split(/\s+/).filter(Boolean).length;
 
-let humanized = 0;
+// Only clean prose paragraphs are humanized. The FAQ section (from its heading onward),
+// headings, lists, and any block containing a citation or link are preserved VERBATIM —
+// the humanizer paraphrases facts, stats, questions, and citations, so it must never see them.
+let humanized = 0, inFaq = false;
 const outBlocks = [];
 for (const b of blocks) {
-  if (isHeading(b) || isList(b) || wc(b) < 50) { outBlocks.push(b); continue; }
+  if (isFaqHeading(b)) inFaq = true;
+  if (inFaq || isHeading(b) || isList(b) || hasLink(b) || wc(b) < 50) { outBlocks.push(b); continue; }
   const { out, map } = protect(b);
   try { outBlocks.push(restore(await humanizeText(out), map)); humanized++; }
   catch (e) { console.error("  block kept (humanize failed):", e.message); outBlocks.push(b); }
