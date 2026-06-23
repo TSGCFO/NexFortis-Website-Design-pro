@@ -2034,4 +2034,200 @@ export const DM_SPOKE_CONTENT: Partial<Record<DmSpokeSlug, DmSpokeContent>> = {
   },
 
   // -------------------------------------------- ANALYTICS & REPORTING ----
+  "reputation-management": {
+    metaTitle: "Reputation Management Services in Canada",
+    metaDescription:
+      "Canadian reputation management company: more genuine reviews, professional responses, and content that outranks unfair results. Founder-led. Free audit.",
+    h1: "Reputation Management Services for Canadian Businesses",
+    heroSubtitle:
+      "A Canadian reputation management company that turns reviews, search results, and brand mentions into an asset that earns trust — review generation, monitoring, and content that outranks unfair results, run as one senior-led program.",
+    serviceType: "Online Reputation Management",
+    serviceSchemaName: "Reputation Management Services",
+    serviceSchemaDescription:
+      "Reputation management for Canadian businesses — online reputation management, review generation and management, monitoring and response, content suppression, and brand reputation strategy, delivered as one founder-led program.",
+    introHeading: "What NexFortis reputation management services include",
+    intro: (
+      <>
+        <p>
+          NexFortis is a Canadian <strong>reputation management company</strong> that helps business
+          owners manage what customers find when they search their name. Our reputation management
+          services turn search results, reviews, and brand mentions into an asset that builds trust and
+          attracts customers, rather than driving them away.
+        </p>
+        <p>
+          As a reputation management agency, we combine online reputation management, review generation,
+          monitoring and response, content suppression, and brand reputation strategy into one connected
+          program, led by a senior consultant rather than handed off to a junior. Your online reputation
+          is the impression a prospective customer forms before they decide whether to call, buy, or move
+          on &mdash; and most of it is shaped by sources you do not control: Google reviews, the first
+          page of search results for your name, and third-party listings.
+        </p>
+        <p>
+          A complete reputation management service is far more than asking for a few good reviews. Google
+          weighs your review profile, your responses, and the content ranking for your brand together, so
+          we run them as one connected program. Whether you need an online reputation management agency to
+          handle everything end to end or focused help in one area, we scope the work to your situation
+          &mdash; and run it alongside your{" "}
+          <InlineLink href={localSeo.href}>{localSeo.linkText}</InlineLink> and the rest of your{" "}
+          <InlineLink href={DM_PILLAR_HREF}>{DM_PILLAR_LINK_TEXT}</InlineLink>.
+        </p>
+      </>
+    ),
+    introCallout: (
+      <CalloutBox>
+        Our reputation management services fit Canadian businesses whose customers research them before
+        they buy &mdash; local clinics, dental and law offices, restaurants and trades; professional and
+        service firms whose name is the product; businesses recovering from a negative review or a
+        damaging search result; and growing brands that want strong reviews and a clean first page before
+        a problem ever appears.
+      </CalloutBox>
+    ),
+    stats: [
+      {
+        value: "97%",
+        label: "of consumers read reviews online before they choose a business.",
+        sourceName: "BrightLocal Local Consumer Review Survey",
+        sourceUrl: "https://www.brightlocal.com/research/local-consumer-review-survey/",
+      },
+      {
+        value: "270%",
+        label: "higher purchase likelihood for a product with five reviews than with none.",
+        sourceName: "Spiegel Research Center, Northwestern",
+        sourceUrl: "https://spiegel.medill.northwestern.edu/how-online-reviews-influence-sales/",
+      },
+      {
+        value: "≈90%",
+        label: "of worldwide search runs on Google — so page one for your name is your reputation.",
+        sourceName: "Statcounter Global Stats",
+        sourceUrl: "https://gs.statcounter.com/search-engine-market-share",
+      },
+    ],
+    featuresHeading: "Our reputation management services",
+    featuresSubtitle:
+      "The full range of reputation management services under one roof — built to earn trust and protect it.",
+    features: [
+      {
+        icon: Search,
+        title: "Online reputation management (ORM)",
+        description:
+          "Our online reputation management services give you a single, coordinated view of how your business appears across reviews, search results, and social platforms — and a plan to improve it.",
+      },
+      {
+        icon: Star,
+        title: "Review generation & management",
+        description:
+          "We implement compliant, sustainable strategies to earn more genuine reviews from satisfied customers, and help you manage your review profile across the platforms that matter — including ongoing Google review building.",
+      },
+      {
+        icon: Users,
+        title: "Review monitoring & response",
+        description:
+          "We monitor new reviews and brand mentions as they appear and help you respond promptly and professionally — turning a critical review into a visible demonstration that you take customers seriously.",
+      },
+      {
+        icon: FileText,
+        title: "Suppression of negative or harmful content",
+        description:
+          "When unfair, outdated, or harmful content ranks for your name, we push it down with stronger, legitimate content that outranks it over time — an honest, durable approach, never tricks that do not last.",
+      },
+      {
+        icon: Building2,
+        title: "Brand reputation strategy",
+        description:
+          "Beyond fixing problems, we build a proactive brand reputation management plan: the owned profiles, content, and review momentum that make your brand resilient, so a single bad day does not define how you look online.",
+      },
+    ],
+    processHeading: "Our reputation management process",
+    process: [
+      {
+        step: "01",
+        title: "Free reputation management audit",
+        description:
+          "A no-obligation review of your reviews, your branded search results, your social mentions, and any negative or harmful content — an honest baseline before any investment.",
+      },
+      {
+        step: "02",
+        title: "Strategy",
+        description:
+          "The audit informs a prioritized plan: where to generate reviews, what to monitor, how to respond, which negative content to address, and the brand assets to build.",
+      },
+      {
+        step: "03",
+        title: "Execution",
+        description:
+          "Our in-house team launches your review strategy, sets up monitoring and response, and creates the positive content that improves how you appear. No outsourcing.",
+      },
+      {
+        step: "04",
+        title: "Monthly reporting",
+        description:
+          "Clear, plain-language reporting on review volume and ratings, branded search results, mentions handled, and content in progress, with continuous optimization.",
+      },
+    ],
+    comparisonHeading: "Why choose NexFortis for reputation management",
+    comparison: [
+      { feature: "Who does the work", us: "A senior consultant, founder-led end-to-end", them: "A rotating junior account manager" },
+      { feature: "Approach", us: "Genuine reviews and stronger content that lasts", them: "Fake reviews and short-lived tricks" },
+      { feature: "Honesty", us: "No promise to delete legitimate content", them: "'Guaranteed removal' claims" },
+      { feature: "Integration", us: "Tied to local SEO and your brand voice", them: "An isolated reviews tool" },
+      { feature: "Commitment", us: "Month-to-month — no lock-in", them: "Locked contracts" },
+    ],
+    pricingHeading: "Reputation management pricing after a free audit",
+    pricing: {
+      fromLabel: "Scoped to your starting point",
+      note: (
+        <>
+          <p className="mb-4">
+            We don&rsquo;t publish fixed reputation management prices, because what you need depends on
+            where you&rsquo;re starting from &mdash; the state of your reviews, what ranks for your name,
+            how much negative content exists, and how much you want to build proactively.
+          </p>
+          <p>
+            After your free audit we present clear options matched to the scope of work, with no hidden
+            fees and no long-term lock-in &mdash; from focused review generation to ongoing monthly online
+            reputation management.
+          </p>
+        </>
+      ),
+    },
+    faq: [
+      {
+        question: "What is a reputation management service?",
+        answer:
+          "A reputation management service monitors and improves how your business appears online — across reviews, search results, and brand mentions. At NexFortis it includes online reputation management, review generation and management, monitoring and response, suppression of negative or harmful content, and a proactive brand reputation strategy, backed by monthly reporting.",
+      },
+      {
+        question: "How much does reputation management cost?",
+        answer:
+          "Reputation management pricing varies with your starting point — the state of your reviews, what ranks for your name, and how much negative content exists — so we scope every engagement after a free audit rather than quoting a one-size-fits-all price.",
+      },
+      {
+        question: "How much does an ORM campaign typically cost?",
+        answer:
+          "Online reputation management (ORM) costs depend on scope. A focused review-generation program and a full ORM campaign that also addresses negative search results are very different in effort, so we quote ORM after the free audit shows what your situation requires.",
+      },
+      {
+        question: "How much do reputation management companies charge?",
+        answer:
+          "It varies widely by what is involved and by the company. Rather than a flat published rate, NexFortis scopes the work after a free audit — transparent pricing, a fixed monthly scope, and month-to-month terms — so you pay for the work your reputation actually needs.",
+      },
+      {
+        question: "Can you remove negative reviews or content?",
+        answer:
+          "We cannot promise to delete a legitimate review or remove content we do not control, and any company that guarantees it is not being honest. What we can do is respond professionally, earn more genuine positive reviews, and build stronger content that outranks unfair or outdated results over time.",
+      },
+    ],
+    authorNote: (
+      <p>
+        Your reputation program is led personally by Hassan Sadiq, NexFortis Founder and CEO &mdash;
+        never handed off to a junior. Hassan brings 15+ years in enterprise technology, and NexFortis is
+        a certified Microsoft Solutions Partner, so the search and content side of brand reputation
+        management is handled with genuine technical depth. A small senior team owns your program
+        end-to-end.
+      </p>
+    ),
+    ctaHeading: "Want to control what customers find when they search you?",
+    ctaSubtext:
+      "Book a free, no-obligation reputation management audit — an honest assessment of where your reputation stands and what it will take to strengthen it.",
+  },
 };

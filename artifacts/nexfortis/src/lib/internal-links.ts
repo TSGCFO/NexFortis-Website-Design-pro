@@ -19,6 +19,7 @@ import {
   LayoutTemplate,
   Mail,
   MousePointerClick,
+  ShieldCheck,
   type LucideIcon,
 } from "lucide-react";
 
@@ -35,7 +36,8 @@ export type DmSpokeSlug =
   | "social-media-marketing"
   | "web-design"
   | "email-marketing"
-  | "conversion-rate-optimization";
+  | "conversion-rate-optimization"
+  | "reputation-management";
 
 export type DmSpoke = {
   slug: DmSpokeSlug;
@@ -162,6 +164,17 @@ export const DM_SPOKES: readonly DmSpoke[] = [
       "Turn more of the traffic you already have into leads with behaviour analysis, testing, and landing-page fixes.",
     icon: MousePointerClick,
     category: "CRO",
+    published: true,
+  },
+  {
+    slug: "reputation-management",
+    href: `${DM_PILLAR_HREF}/reputation-management`,
+    title: "Reputation Management",
+    linkText: "reputation management",
+    blurb:
+      "Earn more genuine reviews, respond professionally, and push down unfair results so what buyers find builds trust.",
+    icon: ShieldCheck,
+    category: "Reputation / Reviews",
     published: true,
   },
 ];

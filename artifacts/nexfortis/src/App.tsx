@@ -24,6 +24,7 @@ const DmSocialMedia = lazy(() => import("@/pages/services/digital-marketing/soci
 const DmWebDesign = lazy(() => import("@/pages/services/digital-marketing/web-design"));
 const DmEmailMarketing = lazy(() => import("@/pages/services/digital-marketing/email-marketing"));
 const DmCro = lazy(() => import("@/pages/services/digital-marketing/conversion-rate-optimization"));
+const DmReputation = lazy(() => import("@/pages/services/digital-marketing/reputation-management"));
 const Contact = lazy(() => import("@/pages/contact"));
 const Blog = lazy(() => import("@/pages/blog"));
 const BlogPostPage = lazy(() => import("@/pages/blog-post"));
@@ -62,6 +63,7 @@ function Router() {
           <Route path="/services/digital-marketing/web-design" component={DmWebDesign} />
           <Route path="/services/digital-marketing/email-marketing" component={DmEmailMarketing} />
           <Route path="/services/digital-marketing/conversion-rate-optimization" component={DmCro} />
+          <Route path="/services/digital-marketing/reputation-management" component={DmReputation} />
           <Route path="/services/microsoft-365" component={Microsoft365} />
           <Route path="/services/quickbooks" component={QuickBooks} />
           <Route path="/services/it-consulting" component={ITConsulting} />
