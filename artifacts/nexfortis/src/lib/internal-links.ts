@@ -11,8 +11,6 @@
 import {
   Search,
   MapPin,
-  Gauge,
-  Building2,
   PenTool,
   Link2,
   Sparkles,
@@ -21,7 +19,6 @@ import {
   LayoutTemplate,
   Mail,
   MousePointerClick,
-  BarChart3,
   type LucideIcon,
 } from "lucide-react";
 
@@ -30,18 +27,15 @@ export const DM_PILLAR_LINK_TEXT = "digital marketing services";
 
 export type DmSpokeSlug =
   | "seo"
-  | "technical-seo"
   | "local-seo"
-  | "google-business-profile"
   | "content-marketing"
   | "link-building"
-  | "generative-engine-optimization"
-  | "google-ads"
+  | "geo-ai-search"
+  | "google-ads-ppc"
   | "social-media-marketing"
   | "web-design"
   | "email-marketing"
-  | "conversion-rate-optimization"
-  | "analytics-reporting";
+  | "conversion-rate-optimization";
 
 export type DmSpoke = {
   slug: DmSpokeSlug;
@@ -83,36 +77,14 @@ export const DM_SPOKES: readonly DmSpoke[] = [
     published: true,
   },
   {
-    slug: "generative-engine-optimization",
-    href: `${DM_PILLAR_HREF}/generative-engine-optimization`,
+    slug: "geo-ai-search",
+    href: `${DM_PILLAR_HREF}/geo-ai-search`,
     title: "GEO & AI Search",
     linkText: "Generative Engine Optimization",
     blurb:
       "Get cited by ChatGPT, Google AI Overviews, Perplexity, and Gemini — where a growing share of buyers now start.",
     icon: Sparkles,
     category: "GEO / AI Search",
-    published: true,
-  },
-  {
-    slug: "technical-seo",
-    href: `${DM_PILLAR_HREF}/technical-seo`,
-    title: "Technical SEO",
-    linkText: "technical SEO",
-    blurb:
-      "Core Web Vitals, crawlability, structured data, and rendering fixes that let Google index and rank every page.",
-    icon: Gauge,
-    category: "Technical SEO",
-    published: true,
-  },
-  {
-    slug: "google-business-profile",
-    href: `${DM_PILLAR_HREF}/google-business-profile`,
-    title: "Google Business Profile",
-    linkText: "Google Business Profile management",
-    blurb:
-      "Claim, optimize, and actively manage your Google Business Profile to win the local pack and earn more calls.",
-    icon: Building2,
-    category: "Google Business Profile",
     published: true,
   },
   {
@@ -138,8 +110,8 @@ export const DM_SPOKES: readonly DmSpoke[] = [
     published: true,
   },
   {
-    slug: "google-ads",
-    href: `${DM_PILLAR_HREF}/google-ads`,
+    slug: "google-ads-ppc",
+    href: `${DM_PILLAR_HREF}/google-ads-ppc`,
     title: "Google Ads Management",
     linkText: "Google Ads management",
     blurb:
@@ -190,17 +162,6 @@ export const DM_SPOKES: readonly DmSpoke[] = [
       "Turn more of the traffic you already have into leads with behaviour analysis, testing, and landing-page fixes.",
     icon: MousePointerClick,
     category: "CRO",
-    published: true,
-  },
-  {
-    slug: "analytics-reporting",
-    href: `${DM_PILLAR_HREF}/analytics-reporting`,
-    title: "Analytics & Reporting",
-    linkText: "analytics and reporting",
-    blurb:
-      "GA4, Search Console, and call tracking wired into clear monthly reports that tie marketing to real revenue.",
-    icon: BarChart3,
-    category: "Analytics / Reporting",
     published: true,
   },
 ];

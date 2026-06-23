@@ -16,17 +16,14 @@ const ITConsulting = lazy(() => import("@/pages/services/it-consulting"));
 const AutomationSoftware = lazy(() => import("@/pages/services/automation"));
 const DmSeo = lazy(() => import("@/pages/services/digital-marketing/seo"));
 const DmLocalSeo = lazy(() => import("@/pages/services/digital-marketing/local-seo"));
-const DmGeo = lazy(() => import("@/pages/services/digital-marketing/generative-engine-optimization"));
-const DmTechnicalSeo = lazy(() => import("@/pages/services/digital-marketing/technical-seo"));
-const DmGbp = lazy(() => import("@/pages/services/digital-marketing/google-business-profile"));
+const DmGeo = lazy(() => import("@/pages/services/digital-marketing/geo-ai-search"));
 const DmContentMarketing = lazy(() => import("@/pages/services/digital-marketing/content-marketing"));
 const DmLinkBuilding = lazy(() => import("@/pages/services/digital-marketing/link-building"));
-const DmGoogleAds = lazy(() => import("@/pages/services/digital-marketing/google-ads"));
+const DmGoogleAds = lazy(() => import("@/pages/services/digital-marketing/google-ads-ppc"));
 const DmSocialMedia = lazy(() => import("@/pages/services/digital-marketing/social-media-marketing"));
 const DmWebDesign = lazy(() => import("@/pages/services/digital-marketing/web-design"));
 const DmEmailMarketing = lazy(() => import("@/pages/services/digital-marketing/email-marketing"));
 const DmCro = lazy(() => import("@/pages/services/digital-marketing/conversion-rate-optimization"));
-const DmAnalytics = lazy(() => import("@/pages/services/digital-marketing/analytics-reporting"));
 const Contact = lazy(() => import("@/pages/contact"));
 const Blog = lazy(() => import("@/pages/blog"));
 const BlogPostPage = lazy(() => import("@/pages/blog-post"));
@@ -57,17 +54,14 @@ function Router() {
           <Route path="/services/digital-marketing" component={DigitalMarketing} />
           <Route path="/services/digital-marketing/seo" component={DmSeo} />
           <Route path="/services/digital-marketing/local-seo" component={DmLocalSeo} />
-          <Route path="/services/digital-marketing/generative-engine-optimization" component={DmGeo} />
-          <Route path="/services/digital-marketing/technical-seo" component={DmTechnicalSeo} />
-          <Route path="/services/digital-marketing/google-business-profile" component={DmGbp} />
+          <Route path="/services/digital-marketing/geo-ai-search" component={DmGeo} />
           <Route path="/services/digital-marketing/content-marketing" component={DmContentMarketing} />
           <Route path="/services/digital-marketing/link-building" component={DmLinkBuilding} />
-          <Route path="/services/digital-marketing/google-ads" component={DmGoogleAds} />
+          <Route path="/services/digital-marketing/google-ads-ppc" component={DmGoogleAds} />
           <Route path="/services/digital-marketing/social-media-marketing" component={DmSocialMedia} />
           <Route path="/services/digital-marketing/web-design" component={DmWebDesign} />
           <Route path="/services/digital-marketing/email-marketing" component={DmEmailMarketing} />
           <Route path="/services/digital-marketing/conversion-rate-optimization" component={DmCro} />
-          <Route path="/services/digital-marketing/analytics-reporting" component={DmAnalytics} />
           <Route path="/services/microsoft-365" component={Microsoft365} />
           <Route path="/services/quickbooks" component={QuickBooks} />
           <Route path="/services/it-consulting" component={ITConsulting} />

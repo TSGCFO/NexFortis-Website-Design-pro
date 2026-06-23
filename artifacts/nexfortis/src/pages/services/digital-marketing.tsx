@@ -32,7 +32,7 @@ import type { SourcedStat } from "@/components/content/types";
 
 const seo = getDmSpoke("seo");
 const localSeo = getDmSpoke("local-seo");
-const geo = getDmSpoke("generative-engine-optimization");
+const geo = getDmSpoke("geo-ai-search");
 
 // The remaining (not-yet-published) capabilities, rendered as descriptive
 // (non-linked) cards so the hub shows its full breadth without linking an
