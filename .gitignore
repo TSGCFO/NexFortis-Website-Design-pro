@@ -62,3 +62,6 @@ seo-tools/tmp/
 
 # Local agent/journal environment (not project source)
 .private-journal/
+
+# Local Claude Code settings (machine-specific; may contain tokens — never commit)
+.claude/settings.local.json
