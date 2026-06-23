@@ -728,195 +728,226 @@ export const DM_SPOKE_CONTENT: Partial<Record<DmSpokeSlug, DmSpokeContent>> = {
       "Book a free, no-obligation generative engine optimization audit — an honest look at how AI engines see your business and what it will take to be cited.",
   },
   "content-marketing": {
-    metaTitle: "Content Marketing Services",
+    metaTitle: "Content Marketing Services in Canada",
     metaDescription:
-      "Content marketing services for Canadian businesses: research-led articles, pillar pages, and topic clusters that rank, build authority, and get cited by AI.",
-    h1: "Content Marketing Services That Earn Demand",
+      "Canadian content marketing agency — strategy, SEO blog writing, web copy, video, and B2B content that builds authority and demand. Founder-led. Free consultation.",
+    h1: "Content Marketing Services for Canadian Businesses",
     heroSubtitle:
-      "Research-led content that ranks, builds authority, and gets cited — not filler churned out to hit a word count.",
+      "A Canadian content marketing agency that earns attention the honest way — strategy, SEO writing, web copy, video, and B2B content built around real keyword research and a clear commercial goal.",
     serviceType: "Content Marketing",
     serviceSchemaName: "Content Marketing Services",
     serviceSchemaDescription:
-      "Content marketing for Canadian businesses — content strategy, SEO articles, pillar pages and topic clusters, and content built to rank and earn AI citations.",
-    introHeading: "Content that does a job, not content for its own sake",
+      "Content marketing for Canadian businesses — content strategy, SEO blog and article writing, website and landing-page copy, video, distribution, and B2B content, delivered as one founder-led, research-led program.",
+    introHeading: "What NexFortis content marketing services include",
     intro: (
       <>
         <p>
-          Most content marketing fails for a boring reason: it is published to fill a calendar, not
-          to answer a real question a buyer is asking. The internet is already drowning in that
-          stuff, and AI can generate more of it by the second. What actually moves the needle is
-          content thorough and useful enough that Google ranks it, readers trust it, and &mdash;
-          increasingly &mdash; AI engines quote it.
+          NexFortis is a Canadian <strong>content marketing agency</strong> that helps businesses get
+          noticed the honest way &mdash; by creating content their customers actually search for, trust,
+          and act on. Our content marketing services focus on results that matter to a business: qualified
+          traffic, leads, and customers, not word counts or vanity page views.
         </p>
         <p>
-          That is what we build. We start from what your customers are searching and the questions
-          they ask before they buy, then produce the articles, pillar pages, and topic clusters that
-          own those topics. It is the engine that makes{" "}
-          <InlineLink href={seo.href}>{seo.linkText}</InlineLink> work &mdash; rankings need
-          something worth ranking &mdash; and a core part of our{" "}
-          <InlineLink href={DM_PILLAR_HREF}>{DM_PILLAR_LINK_TEXT}</InlineLink>.
+          Content marketing is the discipline of attracting and keeping customers by publishing genuinely
+          useful content &mdash; articles, guides, web copy, and video &mdash; instead of interrupting
+          people with ads. Done well, it compounds: a single strong page can earn search traffic, answer
+          buyer questions, and support your sales conversations for years. Content only works when it is
+          connected to strategy, so we run content strategy, creation, and distribution as one campaign,
+          led by a senior team rather than handed to a junior or an offshore content mill.
         </p>
         <p>
-          Every piece is tied to a goal: a keyword to win, a question to own, a stage of the buying
-          journey to support. We would rather publish one page that ranks and converts than ten that
-          quietly sink.
+          A complete content marketing service is far more than churning out blog posts: search relevance,
+          audience intent, your brand voice, and distribution all have to work together. This is where
+          content marketing and{" "}
+          <InlineLink href={seo.href}>{seo.linkText}</InlineLink> meet, and it is the engine under the
+          rest of your <InlineLink href={DM_PILLAR_HREF}>{DM_PILLAR_LINK_TEXT}</InlineLink>.
         </p>
       </>
     ),
+    introCallout: (
+      <CalloutBox>
+        Our content marketing services fit Canadian businesses that want to grow through genuine expertise
+        rather than ad spend alone &mdash; small and growing businesses without an in-house writing team;
+        B2B companies with considered, multi-stakeholder sales cycles; service businesses that want to be
+        the obvious expert in their field; and companies that have published before but seen little return
+        and want a strategy-led approach.
+      </CalloutBox>
+    ),
     stats: [
       {
-        value: "≈90%",
-        label: "of global search runs on Google — where good content gets found.",
-        sourceName: "Statcounter Global Stats",
-        sourceUrl: "https://gs.statcounter.com/search-engine-market-share",
+        value: "≈4.5x",
+        label: "more leads for businesses that publish 16+ blog posts a month vs. only a few.",
+        sourceName: "Semrush",
+        sourceUrl: "https://www.semrush.com/blog/content-marketing-statistics/",
       },
       {
-        value: "27.6%",
-        label: "average click-through rate of the #1 organic result — the prize for content that ranks.",
-        sourceName: "Backlinko, 4M-result CTR study",
-        sourceUrl: "https://backlinko.com/google-ctr-stats",
+        value: "Top 5",
+        label: "highest-ROI content formats in 2025 include blog posts, by marketer ranking.",
+        sourceName: "HubSpot",
+        sourceUrl: "https://www.hubspot.com/marketing-statistics",
       },
       {
-        value: "≈16%",
-        label: "of Google searches showed an AI Overview by late 2025 — and AI cites real content.",
-        sourceName: "Semrush study, via Search Engine Land",
-        sourceUrl: "https://searchengineland.com/google-ai-overviews-surge-pullback-data-466314",
+        value: "84%",
+        label: "of B2B marketers use paid channels to distribute content — publishing is not the finish line.",
+        sourceName: "Content Marketing Institute",
+        sourceUrl: "https://contentmarketinginstitute.com/content-marketing-strategy/content-marketing-statistics",
       },
     ],
-    featuresHeading: "What's included in our content marketing services",
-    featuresSubtitle: "Strategy, production, and distribution — built around what your buyers search.",
+    featuresHeading: "Our content marketing services",
+    featuresSubtitle:
+      "The full range of content marketing services under one roof — tied to real keyword research, not guesswork.",
     features: [
       {
-        icon: Search,
-        title: "Content strategy & topic clusters",
+        icon: LineChart,
+        title: "Content strategy & planning",
         description:
-          "We map the topics your buyers search, group them into pillar-and-cluster structures, and prioritise by what you can realistically win — so every piece has a job instead of guessing at ideas.",
+          "Strategy comes first. We research the keywords and questions your customers use, study what already ranks, and build a prioritized content plan and editorial calendar so every piece has a purpose before a word is written.",
       },
       {
         icon: FileText,
-        title: "SEO articles & guides",
-        description:
-          "We write research-led articles and guides that cover a topic thoroughly enough to outrank thinner competitors and stay useful for years, not weeks — the opposite of AI-spun filler.",
-      },
-      {
-        icon: FileCode,
-        title: "Pillar pages",
-        description:
-          "We build comprehensive pillar pages that establish your authority on a core topic and tie your cluster together with internal links — the structure Google and AI engines both reward.",
+        title: "SEO blog & article writing",
+        description: (
+          <>
+            Search-optimized blog posts, articles, and long-form guides that target real demand and read
+            like they were written by an expert &mdash; because they are reviewed by one. This is where
+            content marketing and{" "}
+            <InlineLink href={seo.href}>{seo.linkText}</InlineLink> meet, so your content earns rankings as
+            well as readers.
+          </>
+        ),
       },
       {
         icon: PenTool,
-        title: "Blog & ongoing writing",
+        title: "Website & landing-page copy",
         description:
-          "We keep a steady, planned cadence of posts going so your site keeps earning new rankings and gives returning visitors a reason to come back — consistency without the filler.",
+          "We write and refine the pages that carry your message and your conversions — service pages, homepages, and campaign landing pages — so visitors understand what you do and take the next step.",
       },
       {
-        icon: Bot,
-        title: "Content built for AI search",
+        icon: Sparkles,
+        title: "Video content marketing services",
         description:
-          "We structure content into clear, self-contained passages with the right schema, so it is easy for AI engines to lift and cite — the content layer beneath strong Generative Engine Optimization.",
+          "Buyers increasingly expect video, so our video content marketing services help you plan and script video content that explains, demonstrates, and builds trust, and that can be repurposed across your channels.",
       },
       {
         icon: Share2,
-        title: "Distribution & repurposing",
+        title: "Content distribution & promotion",
+        description: (
+          <>
+            Publishing is not the finish line. We help distribute and promote your content through your
+            owned channels, your{" "}
+            <InlineLink href={getDmSpoke("social-media-marketing").href}>
+              {getDmSpoke("social-media-marketing").linkText}
+            </InlineLink>, and supporting{" "}
+            <InlineLink href={linkBuilding.href}>{linkBuilding.linkText}</InlineLink>, so the right people
+            actually see it.
+          </>
+        ),
+      },
+      {
+        icon: Users,
+        title: "B2B content marketing",
         description:
-          "Good content is wasted if nobody sees it. We repurpose each piece across the channels your audience uses and feed it into email and social so one article works in several places.",
+          "As a B2B content marketing agency, we produce the in-depth, credibility-building content that longer B2B sales cycles demand — thought-leadership articles, case-style explainers, and resources that help prospects choose you with confidence.",
       },
     ],
-    processHeading: "How we deliver content marketing",
+    processHeading: "Our content marketing process",
     process: [
       {
         step: "01",
-        title: "Strategy & research",
+        title: "Free consultation",
         description:
-          "We research what your buyers search and ask, audit what you already have, and build a prioritised content plan mapped to real keywords and buying stages.",
+          "A no-obligation conversation about your goals, your audience, and your current content — plus an honest look at where the search opportunities are.",
       },
       {
         step: "02",
-        title: "Create",
+        title: "Strategy",
         description:
-          "We produce research-led, genuinely useful pieces — drafted, edited, and fact-checked — with your review before anything publishes. No filler, no spun AI copy.",
+          "We turn that into a prioritized content plan: target keywords and topics, the page and content types that fit, and an editorial calendar mapped to your goals.",
       },
       {
         step: "03",
-        title: "Optimize & publish",
+        title: "Execution",
         description:
-          "We optimize each piece for search and AI, wire up internal links, and publish on a cadence you can sustain, so the library compounds over time.",
+          "Our senior team researches, writes, and edits the content — grounded in real subject expertise and reviewed for accuracy — then prepares it for publishing and distribution. No outsourcing to anonymous freelancers.",
       },
       {
         step: "04",
-        title: "Measure & refresh",
+        title: "Monthly reporting & optimization",
         description:
-          "We track rankings, traffic, and leads per piece, refresh content that's slipping, and double down on the topics that are working.",
+          "Clear, plain-language reporting on what was published and how it is performing, with the plan refined as results develop.",
       },
     ],
-    comparisonHeading: "NexFortis vs. a typical content shop",
+    comparisonHeading: "Why choose NexFortis for content marketing",
     comparison: [
-      { feature: "Content", us: "Research-led and genuinely useful", them: "AI-spun filler to hit a quota" },
-      { feature: "Strategy", us: "Topic clusters mapped to keywords", them: "A random list of post ideas" },
-      { feature: "Built for", us: "Search and AI citation", them: "A word count" },
-      { feature: "Fact-checking", us: "Every claim verified or cut", them: "Whatever the AI wrote" },
-      { feature: "Who does the work", us: "A senior consultant you can reach", them: "A rotating junior or offshore mill" },
-      { feature: "Commitment", us: "Month-to-month — we earn the renewal", them: "Locked contracts" },
+      { feature: "Who does the work", us: "A senior team, founder-led — real expertise", them: "A rotating cast of junior writers" },
+      { feature: "Foundation", us: "Real Canadian search data and keyword research", them: "Guesswork and trending topics" },
+      { feature: "Quality", us: "Fact-checked, expert-reviewed writing", them: "Generic, unchecked AI output" },
+      { feature: "Integration", us: "Tied to SEO, social, and your website", them: "Disconnected one-off articles" },
+      { feature: "Commitment", us: "Month-to-month — no lock-in", them: "Locked contracts" },
     ],
-    pricingHeading: "What content marketing costs",
+    pricingHeading: "Content marketing pricing after a free consultation",
     pricing: {
-      fromLabel: "Scaled to volume and depth",
+      fromLabel: "Scoped to your goals",
       note: (
         <>
           <p className="mb-4">
-            Cost depends on how much you publish and how deep each piece needs to be &mdash; a
-            steady stream of focused articles is very different from a few comprehensive pillar
-            pages. We price by the program, not by a per-word rate that rewards padding.
+            We don&rsquo;t publish fixed content marketing prices, because effective content is scoped to
+            your goals, your market&rsquo;s competitiveness, how much you publish, and the depth each piece
+            requires &mdash; a steady stream of blog articles and a full B2B content programme are very
+            different.
           </p>
           <p>
-            You get a fixed monthly scope, transparent pricing, and no long-term lock-in. Ask for a
-            free content assessment and we&rsquo;ll recommend the cadence and depth that fit your
-            goals.
+            After your free consultation, we present clear options aligned to the scope of work, with no
+            hidden fees and no long-term lock-in &mdash; from project-based content to ongoing monthly
+            content programmes.
           </p>
         </>
       ),
     },
     faq: [
       {
-        question: "What is content marketing?",
+        question: "What is included in NexFortis's content marketing service?",
         answer:
-          "Content marketing is the practice of earning customers by publishing genuinely useful content — articles, guides, pillar pages — instead of just buying their attention with ads. Done well, it ranks in search, builds trust over time, and increasingly gets cited by AI engines. It's a long-term asset: a good page keeps bringing in readers and leads for years.",
+          "Our content marketing service includes content strategy and planning, SEO blog and article writing, website and landing-page copy, video content, content distribution, and B2B content — all tied to real keyword research and backed by monthly reporting.",
       },
       {
-        question: "Why is content marketing important?",
+        question: "How much do content marketing services cost?",
         answer:
-          "Because rankings need something worth ranking, and buyers research before they buy. Content is what answers their questions, earns their trust, and gives Google and AI engines a reason to point to you instead of a competitor. It also compounds — unlike ads, the work keeps paying off long after it's published.",
+          "The cost of content marketing varies with what you need — how often you publish, how detailed each piece is, and how competitive your market is — which is why we scope every engagement after a free consultation rather than quoting a one-size-fits-all price.",
       },
       {
-        question: "Does content marketing help my SEO and AI visibility?",
+        question: "Does content marketing help with SEO?",
         answer:
-          "Directly. Strong, well-structured content is the raw material SEO ranks and AI engines cite. We build content with both in mind — thorough enough to rank, and structured into clear passages with the right schema so AI tools can lift and quote it. It works hand in hand with our SEO and Generative Engine Optimization services.",
+          "Yes — closely. Search engines rank content that genuinely answers what people search for, so strategy-led content is one of the strongest foundations for organic visibility. We plan content and SEO together so they reinforce each other.",
       },
       {
-        question: "Do you write the content yourselves?",
+        question: "Do you write the content yourselves, or use AI?",
         answer:
-          "Yes. We research, draft, edit, and fact-check each piece, with your review before it publishes. We use AI as a tool where it helps, but we don't ship spun, unverified copy — every claim is checked against a real source or cut, because thin AI filler is exactly what Google's helpful-content system penalises.",
+          "Our content is written and reviewed by a senior team grounded in real subject expertise. We use modern tools to work efficiently, but we fact-check everything and never publish generic, unchecked AI output as your brand's voice.",
       },
       {
-        question: "How long until content marketing works?",
+        question: "How long does content marketing take to show results?",
         answer:
-          "Like SEO, it's a compounding play rather than an instant one. Expect early traction on lower-competition topics within a few months and meaningful momentum around the six-month mark, building from there. We report rankings, traffic, and leads per piece so you can see it working along the way.",
+          "Content marketing is a months-not-weeks discipline. Timelines depend on your starting point, your market's competitiveness, and how consistently you publish, so we set realistic expectations up front rather than promising a fixed date.",
+      },
+      {
+        question: "Do you offer content marketing for B2B companies?",
+        answer:
+          "Yes. As a B2B content marketing agency, we produce the in-depth, trust-building content that longer B2B sales cycles need, mapped to the questions buyers ask at each stage.",
       },
     ],
     authorNote: (
       <p>
-        Hassan leads content strategy at NexFortis, helping Canadian businesses turn research-led
-        content into rankings, trust, and leads. As founder and CEO he stays hands-on with every
-        engagement &mdash; no spun copy, no hand-off to a junior.
+        Your content is guided personally by Hassan Sadiq, NexFortis Founder and CEO &mdash; not a rotating
+        cast of junior writers. With 15+ years in enterprise technology and as a certified Microsoft
+        Solutions Partner, the search and publishing side is handled with genuine technical depth, and the
+        expertise behind your content is real. A small senior team owns your program end-to-end.
       </p>
     ),
-    ctaHeading: "Ready for content that actually earns its keep?",
+    ctaHeading: "Ready to grow through content people actually search for?",
     ctaSubtext:
-      "Get a free content assessment — what's worth keeping, the gaps your competitors are filling, and the topics you can own.",
+      "Book a free, no-obligation content marketing consultation — an honest assessment of where your content stands and what it will take to grow.",
   },
-
-  // ----------------------------------- LINK BUILDING & DIGITAL PR ----
   "link-building": {
     metaTitle: "Link Building & Digital PR",
     metaDescription:
