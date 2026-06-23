@@ -1107,193 +1107,239 @@ export const DM_SPOKE_CONTENT: Partial<Record<DmSpokeSlug, DmSpokeContent>> = {
 
   // ------------------------------------------- GOOGLE ADS / PPC ----
   "google-ads-ppc": {
-    metaTitle: "Google Ads Management",
+    metaTitle: "Google Ads & PPC Management in Canada",
     metaDescription:
-      "Google Ads & PPC management by a certified Google Partner: profitable search and remarketing campaigns with transparent reporting on every ad dollar.",
-    h1: "Google Ads Management That Pays for Itself",
+      "Canadian Google Ads agency and PPC management — search, Shopping, Performance Max, and Local Service Ads. Google Partner, founder-led, no lock-in. Free PPC audit.",
+    h1: "Google Ads and PPC Management for Canadian Businesses",
     heroSubtitle:
-      "Profitable search, shopping, and remarketing campaigns managed by a certified Google Partner — with transparent reporting on every dollar of ad spend.",
-    serviceType: "Google Ads Management",
-    serviceSchemaName: "Google Ads Management",
+      "A Canadian Google Ads agency that turns paid search into a predictable source of leads, calls, and sales — strategy, account structure, bids, ad copy, and conversion tracking, run as one accountable campaign by a Google Partner.",
+    serviceType: "Google Ads and PPC Management",
+    serviceSchemaName: "Google Ads and PPC Management",
     serviceSchemaDescription:
-      "Google Ads and PPC management for Canadian businesses — campaign strategy, keyword and audience targeting, bid management, conversion tracking, and transparent reporting.",
-    introHeading: "Visibility today — without lighting money on fire",
+      "Google Ads and PPC management for Canadian businesses — search, Shopping, Performance Max, and Local Service Ads, with account structure, bid management, ad copy, and conversion tracking, run as one founder-led campaign by a Google Partner.",
+    introHeading: "What NexFortis Google Ads and PPC services include",
     intro: (
       <>
         <p>
-          Done right, Google Ads is the fastest way to put your business in front of someone the
-          moment they search for what you sell. Done wrong, it is one of the easiest ways to burn a
-          budget &mdash; broad keywords, weak landing pages, and bids nobody is watching can drain a
-          month&rsquo;s spend with little to show for it. The difference is management, not the
-          platform.
+          NexFortis is a Canadian <strong>google ads agency</strong> that helps business owners turn paid
+          search into a predictable source of leads, calls, and sales &mdash; instead of a budget that
+          quietly disappears. Our google ads management is judged by the clicks that become customers, not
+          by impressions or vanity metrics. As a ppc agency, we pull campaign strategy, account structure,
+          keyword and bid management, ad copywriting, and conversion tracking into one accountable
+          campaign, run by a senior consultant rather than handed to a junior.
         </p>
         <p>
-          We are a certified <strong>Google Partner</strong>, and we run paid search the way we
-          would spend our own money: tight targeting, honest tracking, and a relentless focus on
-          cost per lead rather than clicks. It is the fast-results complement to{" "}
-          <InlineLink href={seo.href}>{seo.linkText}</InlineLink> &mdash; ads bring traffic today
-          while SEO compounds underneath &mdash; and part of our{" "}
+          Pay-per-click advertising puts your business in front of people at the exact moment they search
+          for what you sell, and you pay only when they click. That intent is why paid search converts.
+          Done poorly, though, it is one of the easiest ways to burn money, which is exactly why
+          professional ppc management exists. As a Google Partner, NexFortis runs campaigns to
+          Google&rsquo;s own performance and spend standards.
+        </p>
+        <p>
+          A complete Google Ads and PPC service is far more than launching a few ads: Google rewards
+          relevance across keywords, ad copy, bids, and the landing page each click arrives on, all tied
+          back to accurate conversion tracking. Our google ads services cover the full lifecycle &mdash;
+          strategy, build, launch, and optimization &mdash; run alongside the rest of your{" "}
           <InlineLink href={DM_PILLAR_HREF}>{DM_PILLAR_LINK_TEXT}</InlineLink>.
-        </p>
-        <p>
-          Every account starts with an audit. If you are already running ads, we will show you
-          exactly where the budget is leaking before you spend another dollar with us.
         </p>
       </>
     ),
+    introCallout: (
+      <CalloutBox>
+        Our Google Ads and PPC services fit Canadian businesses that need their ad spend to earn its keep
+        &mdash; small and growing businesses that want professional ppc services without enterprise agency
+        rates; local and service-area businesses that depend on high-intent search and Google Local
+        Service Ads; eCommerce and retail that need Shopping and Performance Max built to sell; and
+        businesses already running ads that want a ppc management services partner to fix the leaks.
+      </CalloutBox>
+    ),
     stats: [
       {
-        value: "$2",
-        label: "in revenue, on average, for every $1 spent on Google Ads (Google's own estimate).",
+        value: "65%",
+        label: "of clicks on commercial-intent searches go to paid ads rather than organic listings.",
+        sourceName: "WordStream",
+        sourceUrl: "https://www.wordstream.com/blog/ws/2023/02/24/digital-advertising",
+      },
+      {
+        value: "$2 per $1",
+        label: "average profit businesses earn for every dollar spent on Google Ads.",
         sourceName: "Google Economic Impact",
         sourceUrl: "https://economicimpact.google/methodology/",
       },
       {
-        value: "6.96%",
-        label: "average Google Ads conversion rate across industries in 2024.",
-        sourceName: "WordStream / LocaliQ Search Advertising Benchmarks 2024",
-        sourceUrl: "https://www.wordstream.com/wp-content/uploads/2024/05/ws-guide-google-ads-benchmarks-2024.pdf",
-      },
-      {
-        value: "≈90%",
-        label: "of global search runs on Google — the reach behind every search campaign.",
-        sourceName: "Statcounter Global Stats",
-        sourceUrl: "https://gs.statcounter.com/search-engine-market-share",
+        value: "6.64%",
+        label: "average Google search-ads click-through rate across industries — tested ads beat it.",
+        sourceName: "WordStream PPC benchmarks",
+        sourceUrl: "https://www.wordstream.com/ppc-benchmarks",
       },
     ],
-    featuresHeading: "What's included in our Google Ads management",
-    featuresSubtitle: "Strategy, build, and ongoing optimization — managed by a Google Partner.",
+    featuresHeading: "Our Google Ads and PPC services",
+    featuresSubtitle:
+      "The full range of google ads management services under one roof — from a single search campaign to a full multi-channel account.",
     features: [
       {
         icon: Search,
-        title: "Campaign strategy & setup",
+        title: "Google Ads search campaigns",
         description:
-          "We build your account structure around how people actually search and buy — campaigns, ad groups, and match types organised so budget flows to the terms that convert, not the ones that just spend.",
-      },
-      {
-        icon: Users,
-        title: "Keyword & audience targeting",
-        description:
-          "We target the high-intent searches and audiences worth paying for, and add the negative keywords that stop your budget bleeding into irrelevant clicks — the single biggest source of wasted spend.",
-      },
-      {
-        icon: FileText,
-        title: "Ad copy & creative",
-        description:
-          "We write and test ad copy and assets that earn the click and set the right expectation, so the traffic you pay for is traffic that's likely to convert once it lands.",
+          "The core of most accounts: text ads on Google's results that capture high-intent demand. We build and manage search campaigns around the terms your customers actually use, so your budget goes to clicks with real buying intent.",
       },
       {
         icon: Gauge,
-        title: "Bid & budget management",
+        title: "PPC management & optimization",
         description:
-          "We manage bids and budgets actively — guiding Google's automation rather than handing it a blank cheque — to keep your cost per lead down as competition and the auction shift.",
+          "Ongoing ppc management is where accounts win or lose. We continuously refine targeting, bids, ad copy, and negative keywords, cut wasted spend, and move budget to what converts.",
       },
       {
-        icon: LineChart,
-        title: "Conversion tracking & landing pages",
+        icon: Building2,
+        title: "Campaign setup & account structure",
         description:
-          "We set up proper conversion tracking so we optimise to real leads, not clicks, and flag the landing-page fixes that turn more of your paid traffic into enquiries.",
+          "A clean account structure is the foundation of performance. We set up campaigns, ad groups, and conversion tracking correctly from the start — or restructure a messy account that is fighting itself.",
       },
       {
         icon: BarChart3,
+        title: "Keyword & bid management",
+        description:
+          "We research and group the keywords worth bidding on, build negative-keyword lists to filter out waste, and manage bids and budgets so you compete where it pays and pull back where it does not.",
+      },
+      {
+        icon: PenTool,
+        title: "Ad copywriting & A/B testing",
+        description:
+          "Relevant, compelling ad copy lifts click-through rates and lowers costs. We write and continuously test headlines, descriptions, and assets so your best variations earn more of your spend.",
+      },
+      {
+        icon: MapPin,
+        title: "Google Local Service Ads",
+        description:
+          "For eligible service businesses, google local service ads put you at the top of results with a pay-per-lead model and a Google Guaranteed badge. We help you qualify for, set up, and manage google local service ads alongside your search campaigns.",
+      },
+      {
+        icon: Sparkles,
+        title: "Google Shopping & Performance Max",
+        description:
+          "For retailers and eCommerce, we set up and manage Shopping and Performance Max campaigns — feed, structure, and bidding — to put your products in front of ready-to-buy shoppers.",
+      },
+      {
+        icon: LineChart,
+        title: "Landing-page & conversion optimization",
+        description: (
+          <>
+            Clicks only pay off if the page converts. We make sure your traffic lands on pages built to
+            act, working alongside our{" "}
+            <InlineLink href={getDmSpoke("conversion-rate-optimization").href}>
+              {getDmSpoke("conversion-rate-optimization").linkText}
+            </InlineLink>{" "}
+            and{" "}
+            <InlineLink href={getDmSpoke("web-design").href}>{getDmSpoke("web-design").linkText}</InlineLink>{" "}
+            teams where needed.
+          </>
+        ),
+      },
+      {
+        icon: FileText,
         title: "Transparent reporting",
         description:
-          "You get a clear monthly report showing spend, leads, and cost per lead — what's working, what we changed, and what's next. Your ad account stays yours, always.",
+          "You see where every dollar goes — spend, clicks, conversions, cost per lead, and return — in clear, plain-language reporting, with no black-box dashboards.",
       },
     ],
-    processHeading: "How we manage your Google Ads",
+    processHeading: "Our Google Ads and PPC process",
     process: [
       {
         step: "01",
-        title: "Audit & plan",
+        title: "Free Google Ads & PPC audit",
         description:
-          "We review your account (or build from scratch), research the market and competitors, and set a plan with clear targets for cost per lead and return.",
+          "A no-obligation review of your current campaigns (or your opportunity, if you are starting fresh): account structure, keywords, ad copy, conversion tracking, wasted spend, and quick wins.",
       },
       {
         step: "02",
-        title: "Build & launch",
+        title: "Strategy",
         description:
-          "We structure campaigns, write the ads, set up conversion tracking, and launch — with negative keywords and budgets in place from day one so nothing leaks.",
+          "The audit informs a prioritized plan: the campaigns to run, the keywords and audiences to target, budget allocation, ad messaging, and the conversion tracking that proves what works.",
       },
       {
         step: "03",
-        title: "Optimize",
+        title: "Execution",
         description:
-          "We watch the data and tune continuously: pause what's not converting, scale what is, refine bids and copy, and tighten targeting week over week.",
+          "Our in-house team builds and launches the work — campaigns, ad groups, ad copy, negative keywords, bids, and tracking — connected to the right landing pages. No outsourcing.",
       },
       {
         step: "04",
-        title: "Report & scale",
+        title: "Monthly reporting & optimization",
         description:
-          "We report in plain language on spend and leads, then reinvest in the campaigns earning the best return so the account gets more efficient over time.",
+          "Clear reporting on spend, clicks, conversions, and cost per result, with continuous optimization — bid adjustments, copy tests, and budget shifts — as the data comes in.",
       },
     ],
-    comparisonHeading: "NexFortis vs. a typical PPC provider",
+    comparisonHeading: "Why choose NexFortis for Google Ads and PPC",
     comparison: [
-      { feature: "Certification", us: "Certified Google Partner", them: "Often uncertified" },
-      { feature: "Optimised for", us: "Cost per lead and revenue", them: "Clicks and impressions" },
-      { feature: "Ad spend", us: "Transparent — every dollar reported", them: "Opaque, bundled with fees" },
-      { feature: "Account ownership", us: "You own your account", them: "Held hostage by the agency" },
-      { feature: "Who does the work", us: "A senior consultant you can reach", them: "A rotating junior" },
-      { feature: "Commitment", us: "Month-to-month — we earn the renewal", them: "Locked contracts" },
+      { feature: "Who does the work", us: "A senior team, founder-led — a boutique ppc management company", them: "A rotating junior account manager" },
+      { feature: "Credentials", us: "Google Partner, run to Google's standards", them: "Unvetted, set-and-forget" },
+      { feature: "Accountability", us: "Tied to conversions and cost per lead", them: "Clicks and impressions for their own sake" },
+      { feature: "Spend transparency", us: "Every dollar reported; fee separate from ad spend", them: "Black-box dashboards" },
+      { feature: "Commitment", us: "Month-to-month — no lock-in", them: "Locked contracts" },
     ],
-    pricingHeading: "What Google Ads management costs",
+    pricingHeading: "Google Ads and PPC pricing after a free audit",
     pricing: {
-      fromLabel: "A management fee on top of your ad spend",
+      fromLabel: "Management fee separate from ad spend",
       note: (
         <>
           <p className="mb-4">
-            Two things to budget for: your ad spend (which goes to Google) and our management fee
-            (which is separate and fully transparent). We scale the fee to the size and complexity
-            of the account, never bundle it into your spend, and never mark up your media.
+            We don&rsquo;t publish fixed Google Ads and PPC prices, because effective paid search is scoped
+            to your market&rsquo;s competitiveness, your ad budget, the number of campaigns, your current
+            baseline, and your growth goals. Our management fee is separate from the ad spend you pay
+            Google.
           </p>
           <p>
-            You keep ownership of your account and there&rsquo;s no long-term lock-in. Ask for a free
-            ad-account audit and we&rsquo;ll recommend a realistic budget and what management it needs.
+            After your free audit we present clear options aligned to the scope of work, with no hidden
+            fees and no long-term lock-in &mdash; from a single search campaign to full-account ppc
+            management across search, Shopping, and Local Service Ads.
           </p>
         </>
       ),
     },
     faq: [
       {
-        question: "How much does Google Ads management cost?",
+        question: "How much does Google Ads cost in Canada?",
         answer:
-          "There are two parts: the ad spend that goes to Google, and a separate management fee for running the account. We scale the fee to the account's size and complexity and keep it fully transparent — we don't bundle it into your spend or mark up your media. You'll get a clear number after a free audit of your situation.",
+          "There are two costs: the ad spend you pay Google (which you set and control), and the management fee for running the account. Ad spend depends on your industry, your competition, and your keywords, so cost per click varies widely. We scope both after a free audit so your budget is matched to realistic results.",
       },
       {
-        question: "What does a Google Ads manager actually do?",
+        question: "How much should I pay someone to manage my Google Ads?",
         answer:
-          "A lot that isn't visible from the outside: structuring the account, choosing and refining keywords, writing and testing ads, adding negative keywords, managing bids and budgets, setting up conversion tracking, and optimizing continuously toward cost per lead. The platform makes it easy to spend money; management is what makes that money produce customers.",
+          "Management fees vary with the size and complexity of the account and how much ongoing optimization is involved. We scope a transparent management fee after a free audit — separate from your ad spend — so you know exactly what you are paying for, with no long-term lock-in.",
       },
       {
-        question: "Should I hire an agency or run ads in-house?",
+        question: "What is included in NexFortis's Google Ads and PPC service?",
         answer:
-          "If you have the time and expertise in-house, you can absolutely run your own ads. Most owners don't — and Google's auction punishes neglected accounts quickly. A good manager usually pays for itself by cutting wasted spend and improving conversion rates. We're happy to tell you honestly if your account is simple enough to run yourself.",
+          "Our google ads management services include campaign strategy and setup, account structure, keyword and bid management, ad copywriting and A/B testing, negative-keyword management, Google Local Service Ads, Shopping and Performance Max, landing-page and conversion optimization, and transparent monthly reporting.",
       },
       {
-        question: "How much should I budget for ad spend?",
+        question: "How is a PPC agency different from doing Google Ads myself?",
         answer:
-          "It depends on your industry's cost per click and how many leads you want. Some competitive categories cost several dollars per click; others are far cheaper. We'll model a realistic budget against your goals during the audit so you start with a number based on your market, not a guess — and scale it as the data comes in.",
+          "A ppc agency brings structure, ongoing optimization, and conversion tracking that most DIY accounts lack — and the difference usually shows up as wasted spend avoided and a lower cost per lead. We find the leaks, fix the foundations, and manage the account so your budget works harder.",
       },
       {
-        question: "How soon will I see results from Google Ads?",
+        question: "How long does it take to see results from PPC?",
         answer:
-          "Faster than SEO — ads can start driving clicks and enquiries within days of launch. The first few weeks are a learning period while we gather conversion data and optimize, so performance typically improves month over month as the account matures. We report from the start so you can see it developing.",
+          "Paid search can drive traffic almost immediately once campaigns are live, but a profitable account is a months-not-weeks discipline: it takes time to gather conversion data, cut what does not work, and scale what does. We set realistic expectations up front.",
+      },
+      {
+        question: "Do you manage both Google Ads and other PPC channels?",
+        answer:
+          "Yes. We focus on Google's ecosystem — search, Shopping, Performance Max, and google local service ads — and can coordinate paid search with the rest of your marketing so your channels reinforce each other instead of competing.",
       },
     ],
     authorNote: (
       <p>
-        Hassan leads paid search at NexFortis, a certified Google Partner, helping Canadian
-        businesses turn ad spend into measurable leads instead of wasted budget. As founder and CEO
-        he stays hands-on with every account.
+        Your account is managed personally by Hassan Sadiq, NexFortis Founder and CEO &mdash; never handed
+        to a junior. NexFortis is a Google Partner and a certified Microsoft Solutions Partner, with 15+
+        years in enterprise technology behind the tracking, integrations, and measurement that make paid
+        search accountable. A small senior team owns your account end-to-end.
       </p>
     ),
-    ctaHeading: "Want ads that bring leads, not just clicks?",
+    ctaHeading: "Ready to make every click earn its keep?",
     ctaSubtext:
-      "Get a free Google Ads account audit — we'll show you where the budget is leaking and what a profitable campaign would look like.",
+      "Book a free, no-obligation Google Ads and PPC audit — an honest assessment of where your account stands and what it will take to grow profitably.",
   },
-
-  // ----------------------------------------- SOCIAL MEDIA MARKETING ----
   "social-media-marketing": {
     metaTitle: "Social Media Marketing",
     metaDescription:
