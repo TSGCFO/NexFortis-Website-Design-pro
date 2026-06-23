@@ -1401,195 +1401,237 @@ export const DM_SPOKE_CONTENT: Partial<Record<DmSpokeSlug, DmSpokeContent>> = {
       "Book a free, no-obligation Google Ads and PPC audit — an honest assessment of where your account stands and what it will take to grow profitably.",
   },
   "social-media-marketing": {
-    metaTitle: "Social Media Marketing",
+    metaTitle: "Social Media Marketing Services in Canada",
     metaDescription:
-      "Social media marketing & management for Canadian businesses: organic social, content, and Meta Ads that build your brand and feed your funnel.",
-    h1: "Social Media Marketing That Builds Your Brand",
+      "Canadian social media marketing agency — strategy, content, community management, and paid social on Instagram, Facebook, LinkedIn & TikTok. Free consultation.",
+    h1: "Social Media Marketing Services for Canadian Businesses",
     heroSubtitle:
-      "Organic social and Meta Ads that put your brand where your buyers already spend hours every day — and turn that attention into customers.",
+      "A Canadian social media marketing company that turns your channels into real brand awareness, engagement, and leads — strategy, content, community management, and paid social, run as one senior-led campaign.",
     serviceType: "Social Media Marketing",
     serviceSchemaName: "Social Media Marketing Services",
     serviceSchemaDescription:
-      "Social media marketing and management for Canadian businesses — strategy, content creation, organic management, community engagement, and paid social (Meta Ads).",
-    introHeading: "Be where your customers already are",
+      "Social media marketing for Canadian businesses — strategy, content creation, community management, paid social advertising, platform management, and analytics, delivered as one founder-led campaign.",
+    introHeading: "What NexFortis social media marketing services include",
     intro: (
       <>
         <p>
-          Your customers spend a couple of hours a day on social platforms whether or not your
-          business shows up there. Social media marketing is how you make that time work for you
-          &mdash; staying visible, building trust, and feeding your funnel on the channels your
-          audience actually uses, instead of shouting into an empty feed or posting at random when
-          someone remembers to.
+          NexFortis is a Canadian <strong>social media marketing company</strong> that helps business
+          owners turn their social channels into a real source of brand awareness, engagement, and leads
+          &mdash; not just a feed that goes quiet for weeks at a time. Our social media marketing services
+          bring strategy, content, community management, and paid social advertising together into one
+          campaign, led by a senior consultant rather than handed off to a junior.
         </p>
         <p>
-          We run both sides of it: organic social that builds your brand over time, and paid social
-          (Meta Ads) that puts the right message in front of the right people fast. It pairs
-          naturally with our{" "}
-          <InlineLink href={getDmSpoke("content-marketing").href}>{getDmSpoke("content-marketing").linkText}</InlineLink>{" "}
-          and is part of the wider{" "}
+          The reach is enormous, and done well, social media marketing does two jobs at once: it keeps
+          your brand visible to people who are not ready to buy yet, and it drives action from those who
+          are. As a social media marketing agency, we focus on the platforms where your customers actually
+          spend their time and on outcomes that matter &mdash; followers who become enquiries, posts that
+          earn engagement, and ad spend that produces a return.
+        </p>
+        <p>
+          A complete social media marketing service is more than scheduling a few posts: it connects
+          strategy, a consistent content stream, active community management, and measurement that ties
+          activity back to results. As a Canadian-based company that knows the GTA and serves businesses
+          across Ontario and the rest of Canada, we understand how Canadian audiences engage &mdash; part
+          of why owners choose NexFortis over generic, far-removed social media marketing companies. It
+          runs alongside the rest of your{" "}
           <InlineLink href={DM_PILLAR_HREF}>{DM_PILLAR_LINK_TEXT}</InlineLink>.
-        </p>
-        <p>
-          And we are honest about it: not every platform is worth your time. We focus your effort on
-          the one or two channels where your buyers actually are, rather than spreading you thin
-          across all of them for the sake of looking busy.
         </p>
       </>
     ),
+    introCallout: (
+      <CalloutBox>
+        Our social media marketing services fit Canadian businesses that want their social channels to do
+        real work &mdash; small businesses that want professional management without a full in-house team;
+        B2B companies that need a credible, consistent presence (often on LinkedIn); local and service
+        businesses that want to stay visible in their community; eCommerce and consumer brands that need
+        content plus paid social; and businesses whose accounts have gone quiet and need a partner to bring
+        them back to life.
+      </CalloutBox>
+    ),
     stats: [
       {
-        value: "5.24B",
-        label: "active social media user identities worldwide in early 2025.",
-        sourceName: "DataReportal, Digital 2025",
-        sourceUrl: "https://datareportal.com/reports/digital-2025-sub-section-state-of-social",
+        value: "5.79B",
+        label: "social media user identities worldwide — more than two in three people on Earth.",
+        sourceName: "DataReportal / Kepios",
+        sourceUrl: "https://datareportal.com/social-media-users",
       },
       {
-        value: "2h 21m",
-        label: "the typical internet user spends on social media every day.",
-        sourceName: "Meltwater / We Are Social, Digital 2025",
-        sourceUrl: "https://www.meltwater.com/en/blog/digital-2025",
+        value: "18h 36m",
+        label: "the typical user spends on social media each week — your audience is already there.",
+        sourceName: "DataReportal, Digital 2026 Global Overview",
+        sourceUrl: "https://datareportal.com/reports/digital-2026-global-overview-report",
       },
       {
-        value: "$243B",
-        label: "spent on social media advertising in 2024 — up 15% year over year.",
-        sourceName: "Digital 2025 report (social ad spend)",
-        sourceUrl: "https://www.meltwater.com/en/about/press-releases/digital-2025-ai-accelerates-youtube-tops-user-charts-social-ad-spend-soars-and-more",
+        value: "29.7%",
+        label: "of internet users discover new brands and products through social media ads.",
+        sourceName: "DataReportal / GWI",
+        sourceUrl: "https://datareportal.com/reports/digital-2025-sub-section-brand-discovery",
       },
     ],
-    featuresHeading: "What's included in our social media marketing",
-    featuresSubtitle: "Strategy, content, community, and paid social — focused where it counts.",
+    featuresHeading: "Our social media marketing services",
+    featuresSubtitle:
+      "The full range of social media marketing services under one roof — strategy through paid social.",
     features: [
       {
-        icon: Search,
-        title: "Strategy & platform selection",
+        icon: Sparkles,
+        title: "Social media strategy",
         description:
-          "We figure out which one or two platforms your buyers actually use and build a strategy around them, instead of stretching your budget across every network for the sake of it.",
+          "Every engagement starts with a plan, not a posting schedule. We define your goals, audience, and positioning, choose the right platforms, and set the content themes and cadence that fit your customers — so the work has direction.",
       },
       {
         icon: PenTool,
         title: "Content creation",
-        description:
-          "We plan and produce the posts, graphics, and short-form video that fit each platform and actually get engagement — on a consistent schedule, not in random bursts.",
-      },
-      {
-        icon: Share2,
-        title: "Organic management & scheduling",
-        description:
-          "We manage your profiles end to end — calendar, scheduling, posting, and optimization — so your presence stays active and on-brand without eating up your week.",
+        description: (
+          <>
+            We plan, write, and design the posts, graphics, and short-form content that carry your brand —
+            built for each platform rather than copy-pasted across all of them. Strong social content also
+            feeds your{" "}
+            <InlineLink href={contentMarketing.href}>{contentMarketing.linkText}</InlineLink>.
+          </>
+        ),
       },
       {
         icon: Users,
-        title: "Community engagement",
-        description:
-          "We monitor and respond to comments and messages so followers feel heard and prospects get answers — the part most businesses neglect and the part that actually builds loyalty.",
-      },
-      {
-        icon: BarChart3,
-        title: "Paid social & Meta Ads",
-        description:
-          "We plan and run targeted Meta (Facebook and Instagram) ad campaigns to reach the right audiences fast, with transparent reporting on spend and results — organic builds trust, paid adds reach.",
+        title: "Account & community management",
+        description: (
+          <>
+            We manage your accounts day to day — publishing on schedule, responding to comments and
+            messages, and engaging your audience so your channels feel active and human. It is also where
+            brand reputation is built or lost, which connects to our{" "}
+            <InlineLink href={getDmSpoke("reputation-management").href}>
+              {getDmSpoke("reputation-management").linkText}
+            </InlineLink>{" "}
+            work.
+          </>
+        ),
       },
       {
         icon: LineChart,
+        title: "Paid social advertising",
+        description: (
+          <>
+            Organic reach only goes so far, so we plan and manage paid social advertising — targeting,
+            creative, and budget — to put your best content in front of the right people. If search ads are
+            also part of your mix, we run them through our{" "}
+            <InlineLink href={getDmSpoke("google-ads-ppc").href}>
+              {getDmSpoke("google-ads-ppc").linkText}
+            </InlineLink>{" "}
+            service.
+          </>
+        ),
+      },
+      {
+        icon: Share2,
+        title: "Platform management (Instagram, Facebook, LinkedIn, TikTok)",
+        description:
+          "We manage the platforms that fit your business — Instagram, Facebook, LinkedIn, and TikTok among them — and we are honest about which are worth your time. We would rather you do two platforms well than spread thin across six.",
+      },
+      {
+        icon: BarChart3,
         title: "Analytics & reporting",
         description:
-          "We track the metrics that tie social to your business — reach, engagement, traffic, and leads — and report in plain language, not a wall of vanity numbers.",
+          "We track the metrics that matter — reach, engagement, audience growth, and the actions that follow — and report them in plain language each month, so you always know what is working.",
       },
     ],
-    processHeading: "How we deliver social media marketing",
+    processHeading: "Our social media marketing process",
     process: [
       {
         step: "01",
-        title: "Audit & strategy",
+        title: "Free consultation",
         description:
-          "We review your current presence and competitors, pick the platforms worth your time, and set a content and (if it fits) paid-social plan with clear goals.",
+          "A no-obligation review of your channels, content, audience, and competitors — an honest baseline before any investment.",
       },
       {
         step: "02",
-        title: "Create & schedule",
+        title: "Strategy",
         description:
-          "We build a content calendar and produce posts and creative on a steady cadence, with your sign-off, so your feeds stay active and consistent.",
+          "The consultation informs a prioritized plan: the right platforms, content themes and cadence, community-management approach, and where (and whether) paid social fits your goals and budget.",
       },
       {
         step: "03",
-        title: "Engage & amplify",
+        title: "Execution",
         description:
-          "We manage community engagement and, where it makes sense, run Meta Ads to put your best content and offers in front of the right audiences.",
+          "Our in-house team creates content, publishes on schedule, manages your community, and runs any paid campaigns. No outsourcing, no hand-off.",
       },
       {
         step: "04",
-        title: "Measure & refine",
+        title: "Monthly reporting",
         description:
-          "We report on what's working — reach, engagement, traffic, leads — and double down on the content and campaigns that earn results.",
+          "Clear, plain-language reporting on reach, engagement, audience growth, and the actions that follow, with continuous optimization as results develop.",
       },
     ],
-    comparisonHeading: "NexFortis vs. a typical social media provider",
+    comparisonHeading: "Why choose NexFortis for social media marketing",
     comparison: [
-      { feature: "Strategy", us: "Focused on the platforms that matter", them: "Posting everywhere for the sake of it" },
-      { feature: "Content", us: "Planned, on-brand, consistent", them: "Random posts when someone remembers" },
-      { feature: "Paid social", us: "Targeted Meta Ads, transparent spend", them: "Boosted posts with no plan" },
-      { feature: "Reporting", us: "Tied to traffic and leads", them: "Follower and like counts" },
-      { feature: "Who does the work", us: "A senior consultant you can reach", them: "An intern or a rotating junior" },
-      { feature: "Commitment", us: "Month-to-month — we earn the renewal", them: "Locked contracts" },
+      { feature: "Who does the work", us: "A senior team, founder-led — real attention", them: "A rotating cast of generalists" },
+      { feature: "Approach", us: "Every channel on a plan tied to your goals", them: "Posting for its own sake" },
+      { feature: "Focus", us: "Two platforms done well", them: "Spread thin across six" },
+      { feature: "Integration", us: "Tied to content, ads, and reputation", them: "An isolated posting tool" },
+      { feature: "Commitment", us: "Month-to-month — no lock-in", them: "Locked contracts" },
     ],
-    pricingHeading: "What social media marketing costs",
+    pricingHeading: "Social media marketing pricing after a free consultation",
     pricing: {
-      fromLabel: "Scaled to platforms, posting volume, and paid spend",
+      fromLabel: "Scoped to your platforms",
       note: (
         <>
           <p className="mb-4">
-            Cost depends on how many platforms you run, how much content you publish, and whether you
-            add paid social. Managing one focused channel well is very different from running several
-            with an ad budget on top &mdash; so we price by the program, not a fixed package.
+            We don&rsquo;t publish fixed social media marketing prices, because effective social is scoped
+            to the platforms you need, the volume of content, whether paid social is involved, and your
+            growth goals &mdash; which is why a consultation comes first. Any paid social ad budget is
+            separate and goes directly to the platforms.
           </p>
           <p>
-            Paid-social ad spend is separate and goes to the platforms. You get a fixed monthly
-            scope, transparent reporting, and no long-term lock-in. Ask for a free social audit and
-            we&rsquo;ll recommend where to focus.
+            After your free consultation, we present clear options aligned to the scope of work, with no
+            hidden fees and no long-term lock-in &mdash; from organic-only content and community management
+            to full programs that add paid social advertising.
           </p>
         </>
       ),
     },
     faq: [
       {
-        question: "What is social media marketing?",
+        question: "What are social media marketing services?",
         answer:
-          "Social media marketing is using platforms like Instagram, Facebook, LinkedIn, and TikTok to build your brand, engage your audience, and drive traffic and leads — through a mix of organic content and paid ads. Done well it's a consistent, strategic presence on the channels your buyers use, not just posting whenever you have a spare moment.",
-      },
-      {
-        question: "Why is social media marketing important?",
-        answer:
-          "Because that's where attention is. Billions of people use social platforms for a couple of hours a day, and it's where a lot of discovery, research, and trust-building now happens before someone buys. If your business isn't visible and credible there, you're invisible at a moment that increasingly shapes the buying decision.",
+          "They cover the strategy, content creation, community management, paid social advertising, and analytics needed to build and run your presence on platforms like Instagram, Facebook, LinkedIn, and TikTok. NexFortis delivers all of it as one connected service, backed by monthly reporting.",
       },
       {
         question: "How much does social media marketing cost?",
         answer:
-          "It depends on how many platforms you run, how much content you publish, and whether you add paid social. Managing one channel well costs far less than running several with an ad budget on top. We price by the program and keep it transparent — and any paid-social ad spend is separate, going directly to the platforms. You'll get a clear number after a free audit.",
+          "Pricing varies by the number of platforms, the volume of content, whether paid social is involved, and your goals — which is why we scope every engagement after a free consultation rather than quoting a one-size-fits-all price. Any ad spend is separate and goes directly to the platforms.",
       },
       {
-        question: "Which platforms should my business be on?",
+        question: "Is it worth paying for social media marketing?",
         answer:
-          "Only the ones your buyers actually use — which is usually one or two, not all of them. A B2B firm might live on LinkedIn while a local retailer does better on Instagram and Facebook. We'll recommend where to focus based on your audience and goals rather than spreading you thin trying to be everywhere.",
+          "For most businesses, yes — when it is done with a strategy. Consistent, on-brand content and active community management build visibility and trust over time, and paid social can accelerate results — but only if the work is planned and measured rather than posted at random.",
       },
       {
-        question: "How do you measure social media success?",
+        question: "How is a social media marketing agency different from doing it in-house?",
         answer:
-          "By the metrics that connect to your business, not just likes. We track reach and engagement, but more importantly the traffic and leads social sends you, and report it in plain language each month. That way you can see whether the work is building real results, not just a follower count.",
+          "An agency brings strategy, consistent execution, and measurement an overstretched in-house team often cannot sustain. NexFortis can run your social entirely or support an existing team — and either way, a senior consultant stays on your account end to end.",
+      },
+      {
+        question: "Which social media platforms should my business be on?",
+        answer:
+          "It depends on where your customers are and what you sell. Rather than spreading you across every network, we focus on the platforms — Instagram, Facebook, LinkedIn, or TikTok — that fit your audience, then expand when it makes sense.",
+      },
+      {
+        question: "How long does social media marketing take to show results?",
+        answer:
+          "Social media marketing is a months-not-weeks discipline. Building an engaged audience takes consistency over time, so we set realistic expectations up front rather than promising a fixed number of followers or sales by a fixed date.",
       },
     ],
     authorNote: (
       <p>
-        Hassan leads social media strategy at NexFortis, helping Canadian businesses build a focused,
-        credible presence on the platforms that matter. As founder and CEO he stays hands-on with
-        every engagement &mdash; strategy first, never random posting.
+        Your campaign is guided personally by Hassan Sadiq, NexFortis Founder and CEO, with a small senior
+        team &mdash; the attention larger social media marketing companies rarely give a small or mid-sized
+        account. With 15+ years in enterprise technology and as a certified Microsoft Solutions Partner, the
+        measurement and tooling behind your campaigns is handled with genuine technical depth.
       </p>
     ),
-    ctaHeading: "Ready to make social media actually work?",
+    ctaHeading: "Ready for social channels that do real work?",
     ctaSubtext:
-      "Get a free social media audit — where your audience really is, what's working, and the fastest path to brand presence that drives leads.",
+      "Book a free, no-obligation social media marketing consultation — an honest assessment of where your social presence stands and what it will take to grow.",
   },
-
-  // -------------------------------------- WEB DESIGN & DEVELOPMENT ----
   "web-design": {
     metaTitle: "Web Design Services in Canada",
     metaDescription:
