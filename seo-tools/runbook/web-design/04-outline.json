@@ -1,0 +1,15 @@
+{
+  "_slug": "web-design",
+  "_purpose": "Locked outline headings for the keyword+outline coverage gate, RECONCILED to the app template's rendered section headings. Rendered page MUST contain H1 + every H2 verbatim, plus every owned keyword from keyword-ownership.json.",
+  "_source": "Step 4 KI auto-generate outline (brief 3edeefd2-ccfc-4d4d-b5d9-b09de8eb6ec2, auto_generate_order_id 83e23a8d-5ca0-40d0-bad9-c64da51fd18b) — REGENERATED with corrected steering: all 6 owned secondaries mandated, sub-services grounded in the brief's serp_page ranking themes (web development dominant). Reviewed vs the brief; reconciled to the DM template like the SEO page — Hero folds into heroSubtitle; 'Who our web design services are for' folds into the intro callout; 'Frequently Asked Questions' is the fixed FAQ heading. Secondaries appear as grouped sub-points under 'Our web design services' + provider-synonyms in intro/why-choose (Option B = SEO-page model). H1 re-verified at Step 7.",
+  "primary": "web design services",
+  "h1": "Web Design Services for Canadian Businesses",
+  "h2": [
+    "What NexFortis web design services include",
+    "Our web design services",
+    "Our web design process",
+    "Why choose NexFortis for web design",
+    "Web design pricing after a free consultation",
+    "Frequently Asked Questions"
+  ]
+}

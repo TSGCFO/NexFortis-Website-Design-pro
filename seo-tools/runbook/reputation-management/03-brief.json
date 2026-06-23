@@ -1,0 +1,82 @@
+{
+  "_step": "3 — SERP analysis + content brief (KI)",
+  "_page": "reputation-management (/services/digital-marketing/reputation-management)",
+  "_primary_keyword": [
+    "reputation management services"
+  ],
+  "_location": "Canada",
+  "_date": "2026-06-21",
+  "_ki_brief_status": "KI brief COMPLETE — order ed254467-f5c4-429a-8cdb-51c6cc22a1b7, 16/17 (html_scraping true, completed true), 3 pages. Raw: seo-tools/tmp/briefs/reputation-management.json (gitignored).",
+  "serp_source": "Keyword Insights content brief (live SERP, Canada, 'reputation management services').",
+  "competitor_word_counts": {
+    "_method": "KI serp_page list. Service-page subset = transactional agency pages; excluded software/tool listicles, 'best/top N' roundups, Wikipedia, Google's own product/help pages, YouTube, directories.",
+    "service_page_subset": [
+      {
+        "url": "https://www.reputationmanagement.net/",
+        "rank": 18,
+        "words": 2257
+      },
+      {
+        "url": "https://reputation.com/",
+        "rank": 17,
+        "words": 201
+      },
+      {
+        "url": "https://consultusdigital.com/reputation-advertising-toronto/",
+        "rank": 4,
+        "words": 200
+      },
+      {
+        "url": "https://www.reputation.ca/",
+        "rank": 1,
+        "words": 196
+      },
+      {
+        "url": "https://thriveagency.com/digital-marketing-services/online-reputation-management/",
+        "rank": 13,
+        "words": 181
+      },
+      {
+        "url": "https://northshore.digital/services/reputation-management/",
+        "rank": 10,
+        "words": 157
+      },
+      {
+        "url": "https://www.reservit.ca/en/online-review-management-and-monitoring/",
+        "rank": 6,
+        "words": 116
+      },
+      {
+        "url": "https://agencies.semrush.com/list/online-reputation-management/canada/",
+        "rank": 12,
+        "words": 72
+      }
+    ],
+    "service_subset_stats": {
+      "n": 8,
+      "min": 72,
+      "median": 188,
+      "max": 2257
+    },
+    "length_conclusion": "SERP-DERIVED target 1200-1600 words. Subset min 72 / median 188 / max 2257; beat thin pages, match the substantive service cluster, capped below guide/listicle/software outliers. Per locked rule 'length is SERP-derived per page' (NOT the stale Cursor-06-18 dm-word-targets.json)."
+  },
+  "questions": {
+    "_source": "KI people_also_asked + questions, buyer-intent filtered (dropped industry/forum noise).",
+    "buyer_questions": [
+      "What is a reputation management service?",
+      "How much does reputation management cost?",
+      "How much does an ORM typically cost?",
+      "How much does reputation management services cost?",
+      "Is it worth paying someone to do SEO?",
+      "How much do reputation management companies charge?"
+    ]
+  },
+  "secondary_keywords": [
+    "online reputation management services",
+    "online reputation management agency",
+    "reputation management company",
+    "reputation management agency",
+    "brand reputation management"
+  ],
+  "_done_check": "PASS — real KI brief 16/17 (html_scraping true); competitor subset + buyer questions + owned secondary keywords (Canada)."
+}

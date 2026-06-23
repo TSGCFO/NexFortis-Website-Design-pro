@@ -1,15 +1,118 @@
 {
-  "_step": "3 — SERP analysis + content brief", "_page": "web-design",
-  "_primary_keyword": "web design services", "_location": "Canada", "_date": "2026-06-18",
-  "_ki_brief_status": "KI brief tool down -> SERP brief from live Semrush SERP + competitor fetches.",
-  "serp_source": "Semrush phrase_organic (ca, 'web design services').",
+  "_step": "3 — SERP analysis + content brief (KI)",
+  "_page": "web-design (/services/digital-marketing/web-design)",
+  "_primary_keyword": [
+    "web design services"
+  ],
+  "_location": "Canada",
+  "_date": "2026-06-21",
+  "_ki_brief_status": "KI brief COMPLETE — order 3edeefd2-ccfc-4d4d-b5d9-b09de8eb6ec2, 16/17 (html_scraping true, completed true), 3 pages. Raw: seo-tools/tmp/briefs/web-design.json (gitignored).",
+  "serp_source": "Keyword Insights content brief (live SERP, Canada, 'web design services').",
   "competitor_word_counts": {
-    "_method": "Fetched ranking agency pages; <body> raw words. Excluded builders (godaddy/wix/showit), directories (semrush/digitalagencynetwork).",
-    "service_page_subset": [{"url": "parachutedesign.ca", "words_raw": 5458}, {"url": "envisionup.com/services/web-design", "words_raw": 1174}, {"url": "webgamma.ca/...", "words_raw": 2489}, {"url": "bridgeweb.ca", "words_raw": 2526}, {"url": "kinexmedia.com", "words_raw": 5096}, {"url": "simplistics.ca", "words_raw": 730}, {"url": "affordablesites.ca", "words_raw": 1719}],
-    "service_subset_stats": {"min_raw": 730, "median_raw": 2104, "max_raw": 5458, "main_content_estimate": "focused ~500-2200 main (excl. 5k outliers)"},
-    "length_conclusion": "Focused spoke ~1100-1900 main."
+    "_method": "KI serp_page list. Service-page subset = transactional agency pages; excluded software/tool listicles, 'best/top N' roundups, Wikipedia, Google's own product/help pages, YouTube, directories.",
+    "service_page_subset": [
+      {
+        "url": "https://parachutedesign.ca/",
+        "rank": 1,
+        "words": 410
+      },
+      {
+        "url": "https://vincentdesign.ca/service/winnipeg-web-design/",
+        "rank": 11,
+        "words": 390
+      },
+      {
+        "url": "https://www.setsail.ca/services/website-design-development",
+        "rank": 17,
+        "words": 296
+      },
+      {
+        "url": "https://shift8web.ca/web-design-canada/",
+        "rank": 6,
+        "words": 233
+      },
+      {
+        "url": "https://canadianwebdesigns.ca/",
+        "rank": 2,
+        "words": 208
+      },
+      {
+        "url": "https://pixelcarve.com/",
+        "rank": 5,
+        "words": 115
+      },
+      {
+        "url": "https://2marketing.com/services/web-design-toronto/",
+        "rank": 19,
+        "words": 105
+      },
+      {
+        "url": "https://www.godaddy.com/en-ca/websites/web-design",
+        "rank": 3,
+        "words": 77
+      },
+      {
+        "url": "https://giantcreative.ca/solutions/web-design/",
+        "rank": 20,
+        "words": 69
+      },
+      {
+        "url": "https://simplistics.ca/",
+        "rank": 14,
+        "words": 63
+      },
+      {
+        "url": "https://massivewebdesign.ca/",
+        "rank": 7,
+        "words": 56
+      },
+      {
+        "url": "https://www.bridgeweb.ca/",
+        "rank": 8,
+        "words": 56
+      },
+      {
+        "url": "https://webgamma.ca/web-design-agency-canada/website-design-in-vancouver/",
+        "rank": 13,
+        "words": 51
+      },
+      {
+        "url": "https://growmemarketing.ca/website-design-calgary/",
+        "rank": 16,
+        "words": 51
+      },
+      {
+        "url": "https://digitalagencynetwork.com/agencies/canada/web-design/",
+        "rank": 10,
+        "words": 34
+      }
+    ],
+    "service_subset_stats": {
+      "n": 15,
+      "min": 34,
+      "median": 77,
+      "max": 410
+    },
+    "length_conclusion": "SERP-DERIVED target 1100-1500 words. Subset min 34 / median 77 / max 410; beat thin pages, match the substantive service cluster, capped below guide/listicle/software outliers. Per locked rule 'length is SERP-derived per page' (NOT the stale Cursor-06-18 dm-word-targets.json)."
   },
-  "questions": {"_source": "Semrush phrase_questions (ca, 'web design'), buyer/educational.", "buyer_questions": ["What is web design?", "How does web design help my business?", "How much does a website cost?", "How long does a website take to build?", "Custom vs template/builder?", "Will my site be mobile-friendly and SEO-ready?"]},
-  "secondary_keywords": ["web design company", "web design agency", "website design services", "custom web design", "website development services", "ecommerce web design"],
-  "_done_check": "PASS — competitor table + buyer questions + secondary kws (Canada). Competitive difficulty band noted."
+  "questions": {
+    "_source": "KI people_also_asked + questions, buyer-intent filtered (dropped industry/forum noise).",
+    "buyer_questions": [
+      "How much does a website design service cost?",
+      "What are the 7 C's of a website?",
+      "How much should a web designer cost?",
+      "Is web design still worth it in 2026?",
+      "What are the five golden rules of a website?",
+      "What is the 3 3 3 rule in marketing?"
+    ]
+  },
+  "secondary_keywords": [
+    "web design company",
+    "web design agency",
+    "custom web design",
+    "best web design company",
+    "web design and development",
+    "website maintenance services"
+  ],
+  "_done_check": "PASS — real KI brief 16/17 (html_scraping true); competitor subset + buyer questions + owned secondary keywords (Canada)."
 }

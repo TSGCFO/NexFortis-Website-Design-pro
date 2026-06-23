@@ -1,15 +1,109 @@
 {
-  "_step": "3 — SERP analysis + content brief", "_page": "conversion-rate-optimization",
-  "_primary_keyword": "conversion rate optimization services", "_location": "Canada", "_date": "2026-06-18",
-  "_ki_brief_status": "KI brief tool down -> SERP brief from live Semrush SERP + competitor fetches.",
-  "serp_source": "Semrush phrase_organic (ca, 'conversion rate optimization services').",
+  "_step": "3 — SERP analysis + content brief (KI)",
+  "_page": "conversion-rate-optimization (/services/digital-marketing/conversion-rate-optimization)",
+  "_primary_keyword": [
+    "conversion rate optimization services"
+  ],
+  "_location": "Canada",
+  "_date": "2026-06-21",
+  "_ki_brief_status": "KI brief COMPLETE — order 36342f34-bd08-43e8-b7f6-057646d8cae1, 16/17 (html_scraping true, completed true), 3 pages. Raw: seo-tools/tmp/briefs/conversion-rate-optimization.json (gitignored).",
+  "serp_source": "Keyword Insights content brief (live SERP, Canada, 'conversion rate optimization services').",
   "competitor_word_counts": {
-    "_method": "Fetched ranking service pages; <body> raw words. Excluded tools/glossary (optimizely, invesp, vwo), listicles (clutch, neilpatel, designrush), guide (hubspot).",
-    "service_page_subset": [{"url": "conversion.com/service/...", "words_raw": 1424}, {"url": "consultusdigital.com/conversion-rate-optimization", "words_raw": 4943}, {"url": "webfx.com/.../conversion-rate-optimization", "words_raw": 4135}, {"url": "conversionsciences.com", "words_raw": 6327}, {"url": "conversionrate.store", "words_raw": 1823}],
-    "service_subset_stats": {"min_raw": 1424, "median_raw": 4135, "max_raw": 6327, "main_content_estimate": "focused ~1100-1500 main (the lean pages); big agencies 4-6k"},
-    "length_conclusion": "Focused spoke ~1100-1900 main."
+    "_method": "KI serp_page list. Service-page subset = transactional agency pages; excluded software/tool listicles, 'best/top N' roundups, Wikipedia, Google's own product/help pages, YouTube, directories.",
+    "service_page_subset": [
+      {
+        "url": "https://blog.hubspot.com/marketing/conversion-rate-optimization-guide",
+        "rank": 8,
+        "words": 4606
+      },
+      {
+        "url": "https://www.helloroketto.com/articles/conversion-rate-optimization-services",
+        "rank": 9,
+        "words": 2434
+      },
+      {
+        "url": "https://www.teamwork.com/blog/conversion-rate-optimization-agency/",
+        "rank": 15,
+        "words": 1863
+      },
+      {
+        "url": "https://www.uncommonlogic.com/conversion-rate-optimization-services/",
+        "rank": 17,
+        "words": 1047
+      },
+      {
+        "url": "https://2marketing.com/services/conversion-rate-optimization/",
+        "rank": 6,
+        "words": 410
+      },
+      {
+        "url": "https://www.designrush.com/agency/conversion-optimization/ca",
+        "rank": 14,
+        "words": 361
+      },
+      {
+        "url": "https://www.techwyse.com/services/creative-design-and-development/conversion-optimization",
+        "rank": 4,
+        "words": 348
+      },
+      {
+        "url": "https://clutch.co/ca/agencies/conversion-optimization",
+        "rank": 5,
+        "words": 239
+      },
+      {
+        "url": "https://consultusdigital.com/conversion-rate-optimization/",
+        "rank": 2,
+        "words": 201
+      },
+      {
+        "url": "https://conversion.com/",
+        "rank": 1,
+        "words": 197
+      },
+      {
+        "url": "https://www.topspot.com/digital-marketing-services/conversion-rate-optimization/",
+        "rank": 20,
+        "words": 160
+      },
+      {
+        "url": "https://www.invespcro.com/services/",
+        "rank": 3,
+        "words": 114
+      },
+      {
+        "url": "https://www.makeyourmarktoday.ca/conversion-rate-optimization-services/",
+        "rank": 13,
+        "words": 104
+      },
+      {
+        "url": "https://www.stikkymedia.com/services/conversion-rate-optimization/",
+        "rank": 19,
+        "words": 104
+      }
+    ],
+    "service_subset_stats": {
+      "n": 14,
+      "min": 104,
+      "median": 293,
+      "max": 4606
+    },
+    "length_conclusion": "SERP-DERIVED target 1300-1700 words. Subset min 104 / median 293 / max 4606; beat thin pages, match the substantive service cluster, capped below guide/listicle/software outliers. Per locked rule 'length is SERP-derived per page' (NOT the stale Cursor-06-18 dm-word-targets.json)."
   },
-  "questions": {"_source": "Semrush phrase_questions (ca, 'conversion rate optimization'), buyer/educational.", "buyer_questions": ["What is conversion rate optimization?", "How does CRO work / where to start?", "How much does CRO cost?", "Do I have enough traffic for CRO?", "How long until CRO shows results?"]},
-  "secondary_keywords": ["cro agency", "conversion rate optimization agency", "cro services", "conversion optimization services", "landing page optimization", "website conversion optimization", "ab testing services"],
-  "_done_check": "PASS — competitor table + buyer questions + secondary kws (Canada)."
+  "questions": {
+    "_source": "KI people_also_asked + questions, buyer-intent filtered (dropped industry/forum noise).",
+    "buyer_questions": [
+      "For a small business, what does a marketing agency do",
+      "What are the problems you guys still face in marketing?",
+      "What is the average conversion rate of newspaper inserts?",
+      "What is the best traffic to get good conversions?",
+      "What is A/B testing and do you have an example?"
+    ]
+  },
+  "secondary_keywords": [
+    "conversion rate optimization agency",
+    "conversion rate optimization company",
+    "conversion rate optimization consultant"
+  ],
+  "_done_check": "PASS — real KI brief 16/17 (html_scraping true); competitor subset + buyer questions + owned secondary keywords (Canada)."
 }

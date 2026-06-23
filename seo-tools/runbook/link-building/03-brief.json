@@ -1,15 +1,103 @@
 {
-  "_step": "3 — SERP analysis + content brief", "_page": "link-building",
-  "_primary_keyword": "link building services", "_location": "Canada", "_date": "2026-06-18",
-  "_ki_brief_status": "KI brief tool down -> SERP brief from live Semrush SERP + competitor fetches.",
-  "serp_source": "Semrush phrase_organic (ca, 'link building services').",
+  "_step": "3 — SERP analysis + content brief (KI)",
+  "_page": "link-building (/services/digital-marketing/link-building)",
+  "_primary_keyword": [
+    "link building services"
+  ],
+  "_location": "Canada",
+  "_date": "2026-06-21",
+  "_ki_brief_status": "KI brief COMPLETE — order 3a687e1f-11fc-48fb-b566-d705bbcd646e, 16/17 (html_scraping true, completed true), 3 pages. Raw: seo-tools/tmp/briefs/link-building.json (gitignored).",
+  "serp_source": "Keyword Insights content brief (live SERP, Canada, 'link building services').",
   "competitor_word_counts": {
-    "_method": "Fetched ranking service pages; <body> raw words. Excluded 'best agency' listicles (straight.com, aijourn), reddit, youtube, a PDF.",
-    "service_page_subset": [{"url": "backlinko.com/link-building-services", "words_raw": 3815}, {"url": "peakdemand.ca/link-building-services-canada", "words_raw": 2461}, {"url": "smartlinks.ca/.../link-building", "words_raw": 2418}, {"url": "calgaryseo.ai/services/link-building", "words_raw": 411}, {"url": "loganix.com", "words_raw": 860}],
-    "service_subset_stats": {"min_raw": 411, "median_raw": 2418, "max_raw": 3815, "main_content_estimate": "~300-2400 main"},
-    "length_conclusion": "Focused spoke ~1100-1900 main; beat thin pages, stay tighter than the 3.8k guide."
+    "_method": "KI serp_page list. Service-page subset = transactional agency pages; excluded software/tool listicles, 'best/top N' roundups, Wikipedia, Google's own product/help pages, YouTube, directories.",
+    "service_page_subset": [
+      {
+        "url": "https://www.searchnavigators.com/blog/link-building-services-canada/",
+        "rank": 15,
+        "words": 4671
+      },
+      {
+        "url": "https://backlinko.com/link-building-services",
+        "rank": 9,
+        "words": 2408
+      },
+      {
+        "url": "https://seoresellerscanada.ca/link-building-services-for-web-design-agencies/",
+        "rank": 6,
+        "words": 2134
+      },
+      {
+        "url": "https://seekmarketingpartners.com/digital-marketing-blog/link-building-services-explained/",
+        "rank": 5,
+        "words": 1929
+      },
+      {
+        "url": "https://searchengineland.com/top-link-building-services-to-scale-your-seo-efforts-459224",
+        "rank": 8,
+        "words": 1241
+      },
+      {
+        "url": "https://clutch.co/ca/seo-firms/link-building",
+        "rank": 7,
+        "words": 239
+      },
+      {
+        "url": "https://linkbuildingcanada.com/",
+        "rank": 10,
+        "words": 223
+      },
+      {
+        "url": "https://www.searchenginepeople.com/services/link-building",
+        "rank": 2,
+        "words": 143
+      },
+      {
+        "url": "https://articlehub.ca/link-building-services/",
+        "rank": 17,
+        "words": 88
+      },
+      {
+        "url": "https://northseo.ca/seo-services/link-building",
+        "rank": 18,
+        "words": 72
+      },
+      {
+        "url": "https://socialspike.ca/category/link-building/",
+        "rank": 12,
+        "words": 56
+      },
+      {
+        "url": "https://loganix.com/",
+        "rank": 1,
+        "words": 29
+      }
+    ],
+    "service_subset_stats": {
+      "n": 12,
+      "min": 29,
+      "median": 231,
+      "max": 4671
+    },
+    "length_conclusion": "SERP-DERIVED target 1400-1900 words. Subset min 29 / median 231 / max 4671; beat thin pages, match the substantive service cluster, capped below guide/listicle/software outliers. Per locked rule 'length is SERP-derived per page' (NOT the stale Cursor-06-18 dm-word-targets.json)."
   },
-  "questions": {"_source": "Semrush phrase_questions (ca, 'link building'; filtered 'chain link fence' noise).", "buyer_questions": ["What is link building?", "Why is link building important?", "What is link building in SEO?", "Is link building safe / white hat vs black hat?", "How is digital PR different from guest posting?"]},
-  "secondary_keywords": ["link building agency", "link building company", "backlink services", "digital pr services", "guest posting services", "blogger outreach services", "off page seo services"],
-  "_done_check": "PASS — competitor table + buyer questions + secondary kws (Canada)."
+  "questions": {
+    "_source": "KI people_also_asked + questions, buyer-intent filtered (dropped industry/forum noise).",
+    "buyer_questions": [
+      "What is a link building service?",
+      "How much does link building services cost?",
+      "What is the purpose of link building?",
+      "How much should I pay to have someone build me a website?",
+      "What makes Loganix different?",
+      "What is an SEO backlinks service that is worth buying?"
+    ]
+  },
+  "secondary_keywords": [
+    "link building service",
+    "seo link building services",
+    "best link building service",
+    "link building packages",
+    "seo link building company",
+    "link building outreach service"
+  ],
+  "_done_check": "PASS — real KI brief 16/17 (html_scraping true); competitor subset + buyer questions + owned secondary keywords (Canada)."
 }

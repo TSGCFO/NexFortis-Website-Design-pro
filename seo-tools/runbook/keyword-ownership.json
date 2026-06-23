@@ -6,51 +6,138 @@
     "digital-marketing": {
       "_role": "PILLAR (exists) — hub linking all spokes",
       "primary": ["digital marketing services"],
-      "secondary": ["digital marketing agency", "digital marketing company", "digital marketing firm", "online marketing services", "internet marketing services", "digital marketing agency near me", "digital marketing services for small business"]
+      "secondary": [
+        "digital marketing agency",
+        "digital marketing company",
+        "digital marketing firm",
+        "online marketing services",
+        "internet marketing services",
+        "digital marketing agency near me",
+        "digital marketing services for small business"
+      ]
     },
     "seo": {
       "primary": ["seo services"],
-      "secondary": ["seo company", "seo agency", "professional seo services", "seo service", "seo canada", "seo consultant", "seo specialist", "seo expert", "ecommerce seo agency", "technical seo services", "technical seo audit"]
+      "secondary": [
+        "seo company",
+        "seo agency",
+        "professional seo services",
+        "seo service",
+        "seo canada",
+        "seo consultant",
+        "seo specialist",
+        "seo expert",
+        "ecommerce seo agency",
+        "technical seo services",
+        "technical seo audit"
+      ]
     },
     "local-seo": {
       "primary": ["local seo services"],
-      "secondary": ["local seo company", "local seo agency", "local seo service", "local seo consultant", "local seo services for small business", "google business profile optimization", "google business profile management", "google business profile services"]
+      "secondary": [
+        "local seo company",
+        "local seo agency",
+        "local seo service",
+        "local seo consultant",
+        "local seo services for small business",
+        "google business profile optimization",
+        "google business profile management",
+        "google business profile services"
+      ]
     },
     "web-design": {
       "primary": ["web design services"],
-      "secondary": ["web design company", "web design agency", "custom web design", "best web design company", "web design and development", "website maintenance services"]
+      "secondary": [
+        "web design company",
+        "web design agency",
+        "custom web design",
+        "best web design company",
+        "web design and development",
+        "website maintenance services"
+      ]
     },
     "google-ads-ppc": {
       "primary": ["google ads management"],
-      "secondary": ["google ads agency", "google ads services", "google ads management services", "ppc agency", "ppc services", "ppc management", "ppc management services", "ppc management company", "ppc company", "ppc marketing agency", "ppc advertising agency", "google ppc services", "google local service ads"]
+      "secondary": [
+        "google ads agency",
+        "google ads services",
+        "google ads management services",
+        "ppc agency",
+        "ppc services",
+        "ppc management",
+        "ppc management services",
+        "ppc management company",
+        "ppc company",
+        "ppc marketing agency",
+        "ppc advertising agency",
+        "google ppc services",
+        "google local service ads"
+      ]
     },
     "social-media-marketing": {
       "primary": ["social media marketing services"],
-      "secondary": ["social media marketing agency", "social media marketing company", "social media marketing companies"]
+      "secondary": [
+        "social media marketing agency",
+        "social media marketing company",
+        "social media marketing companies"
+      ]
     },
     "content-marketing": {
       "primary": ["content marketing services"],
-      "secondary": ["content marketing agency", "content marketing service", "b2b content marketing agency", "video content marketing services"]
+      "secondary": [
+        "content marketing agency",
+        "content marketing service",
+        "b2b content marketing agency",
+        "video content marketing services"
+      ]
     },
     "link-building": {
       "primary": ["link building services"],
-      "secondary": ["link building service", "seo link building services", "best link building service", "link building packages", "seo link building company", "link building outreach service"]
+      "secondary": [
+        "link building service",
+        "seo link building services",
+        "best link building service",
+        "link building packages",
+        "seo link building company",
+        "link building outreach service"
+      ]
     },
     "geo-ai-search": {
       "primary": ["generative engine optimization"],
-      "secondary": ["answer engine optimization", "generative engine optimization services", "ai seo services", "ai seo agency", "ai seo optimization"]
+      "secondary": [
+        "answer engine optimization",
+        "generative engine optimization services",
+        "ai seo services",
+        "ai seo agency",
+        "ai seo optimization"
+      ]
     },
     "reputation-management": {
       "primary": ["reputation management services"],
-      "secondary": ["online reputation management services", "online reputation management agency", "reputation management company", "reputation management agency", "brand reputation management"]
+      "secondary": [
+        "online reputation management services",
+        "online reputation management agency",
+        "reputation management company",
+        "reputation management agency",
+        "brand reputation management"
+      ]
     },
     "email-marketing": {
       "primary": ["email marketing services"],
-      "secondary": ["email marketing agency", "email marketing company", "email marketing automation", "small business email marketing"]
+      "secondary": [
+        "email marketing agency",
+        "email marketing company",
+        "email marketing automation",
+        "small business email marketing"
+      ]
     },
     "conversion-rate-optimization": {
       "primary": ["conversion rate optimization services"],
-      "secondary": ["conversion rate optimization agency", "conversion rate optimization company", "conversion rate optimization consultant"]
+      "secondary": [
+        "conversion rate optimization agency",
+        "conversion rate optimization company",
+        "conversion rate optimization consultant"
+      ]
     }
   }
 }

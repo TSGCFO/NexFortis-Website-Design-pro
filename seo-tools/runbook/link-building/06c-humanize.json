@@ -1,0 +1,13 @@
+{
+  "slug": "link-building",
+  "contentFile": "seo-tools/runbook/link-building/05-draft.md",
+  "humanizedBlocks": 10,
+  "totalBlocks": 30,
+  "integrity": {
+    "coverageOk": true,
+    "linksOk": false,
+    "origLinks": 9,
+    "newLinks": 7
+  },
+  "ai_detection": "ADVISORY (run undetectable-detect.mjs; detector flags human prose, non-binding)"
+}

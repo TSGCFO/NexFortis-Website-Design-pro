@@ -1,0 +1,13 @@
+{
+  "slug": "google-ads-ppc",
+  "contentFile": "seo-tools/runbook/google-ads-ppc/05-draft.md",
+  "humanizedBlocks": 9,
+  "totalBlocks": 32,
+  "integrity": {
+    "coverageOk": true,
+    "linksOk": true,
+    "origLinks": 10,
+    "newLinks": 10
+  },
+  "ai_detection": "ADVISORY (run undetectable-detect.mjs; detector flags human prose, non-binding)"
+}

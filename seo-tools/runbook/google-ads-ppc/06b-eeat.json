@@ -1,0 +1,30 @@
+{
+  "_step": "6b — EEAT audit (CORE-EEAT 80-item via aaron-seo-geo:content-quality-auditor, run by an INDEPENDENT subagent — not self-graded)",
+  "_page": "google-ads-ppc (/services/digital-marketing/google-ads-ppc)",
+  "_content": "google-ads-ppc/05-draft.md",
+  "_content_type": "Landing Page (transactional service page)",
+  "_date": "2026-06-22",
+  "_scale": "0-100 per dimension; ratings: 90-100 Excellent / 75-89 Good / 60-74 Medium / 40-59 Low.",
+  "veto": "None. C01 (intent) — title 'Google Ads and PPC Management for Canadian Businesses' matches body exactly, no clickbait. T04 (disclosure) — no affiliate links; Google Partner + Microsoft Solutions Partner disclosed; 3 external stats named + linked. R10 (data consistency) — $2-per-$1, 65%, 6.64% each cited once with consistent figures; pricing/no-guarantee stance consistent throughout; no contradictions. cap_applied: false.",
+  "dimensions": {
+    "C_contextual_clarity": { "score": 93, "note": "Intent nailed (transactional Canadian Google Ads/PPC agency); PPC defined up front ('buying the right clicks'); full query coverage (search, PPC mgmt, account structure, keyword/bid, ad copy/A-B, Local Service Ads, Shopping/PMax, landing-page CRO, reporting, pricing, 'how much does Google Ads cost in Canada'); audience explicit ('Who our services are for'). Only gap: doesn't explicitly state out-of-scope." },
+    "O_organization": { "score": 57, "note": "Clean H2 hierarchy + numbered process + bulleted services, but no top summary/answer box, no comparison/what's-included table, FAQ is bold-paragraph not schema-friendly Q&A (auto-fixed by template FAQPage schema at Step 7). 1,956 words sits slightly above the SERP-derived 1300-1800 target." },
+    "R_referenceability": { "score": 72, "note": "3 named linkable sources (Google Economic Impact, WordStream digital-advertising, WordStream PPC benchmarks) with precise stats + clear claim mapping; 3 DISTINCT URLs; internal links solid. Missing: last-updated; citation density moderate." },
+    "E_exclusivity": { "score": 40, "note": "Category-standard service page; differentiators = one-connected-system / founder-senior-led / no-outsourcing / Google Partner + Microsoft Solutions Partner combo / free leak-finding audit. No original or proprietary data (expected for a service page)." },
+    "Exp_experience": { "score": 30, "note": "Capped BY DESIGN — process documented + limits honestly acknowledged ('we do not invent guarantees or promise a specific cost per lead by a fixed date'), but no client case work/metrics/testimonials (deliberate no-fabrication posture). Deferred: eeat-authority-circle-back." },
+    "Ept_expertise": { "score": 82, "note": "Named author (Hassan Sadiq, Founder & CEO), Google Partner + Microsoft Solutions Partner, accurate domain vocabulary (negative keywords, account structure, conversion tracking, Performance Max, Local Service Ads, Google Guaranteed badge, relevance/Quality Score signals), edge-case awareness (LSA eligibility for service businesses, Shopping/PMax for retailers, restructuring a messy account)." },
+    "A_authority": { "score": 66, "flag": "Insufficient Data", "note": "7/10 items site-level (backlinks/media/awards/KG) — excluded from weighted total, re-normalized. On-page: entity consistency PASS, Google Partner PASS, Microsoft Solutions Partner PASS, on-page social proof FAIL (none — by design)." },
+    "T_trust": { "score": 66, "note": "Honest posture (no guarantees, realistic months-not-weeks timelines), transparent CTA (free no-obligation audit), certifications disclosed, fee-vs-ad-spend transparency, month-to-month / no lock-in / no hidden fees. Gaps: no last-updated/correction policy, on-page contact surface (template/layout handles at Step 7)." }
+  },
+  "geo_score": 65,
+  "seo_score": 61,
+  "overall": 63,
+  "rating": "Medium (60-74)",
+  "verdict": "SHIP",
+  "cap_applied": false,
+  "experience_capped_by_design": true,
+  "raw_overall_score": 63,
+  "final_overall_score": 63,
+  "remaining_soft_spots": "Most are Step-7 template-auto (FAQPage + Service + Person schema auto-emitted by _DmSpokePageBody; contact surface via global layout/footer; last-updated). Optional content polish: a top answer/summary box (lifts O + GEO), a one-line out-of-scope sentence (C), a comparison/what's-included element (O), and trimming toward the 1300-1800 SERP target. NONE require inventing client proof.",
+  "_done_check": "PASS — overall 63/100 SHIP; no veto (C01/T04/R10 all clear); Referenceability 72 from the 3 verified cited stats added at 6a (3 distinct URLs, firecrawl-verified 2026-06-22); Experience capped 30 by the deliberate no-client-proof posture (deferred to eeat-authority-circle-back, never fabricate); Authority flagged Insufficient Data (site-level items excluded + re-normalized). Audited via the standardized 80-item rubric by an independent subagent, not a self-grade."
+}

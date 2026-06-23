@@ -1,6 +1,26 @@
 {
-  "_step": "6d — AI-detection + plagiarism (HARD GATE 3)", "_page": "conversion-rate-optimization", "_date": "2026-06-18",
-  "plagiarism_winston": {"binding": true, "tool": "Winston AI v2", "score_percent": 0, "matched_sources": 0, "words_scanned": 1391, "verdict": "PASS — original."},
-  "ai_detection_undetectable": {"binding": false, "policy": "ADVISORY (see pillar/06d). Binding = Winston + 06a.", "tool": "Undetectable xlm_ud_detector", "ai_score": 80.0},
-  "_done_check": "Gate 3 per policy: Winston PASS; Undetectable advisory recorded."
+  "_step": "6d — AI-detection + plagiarism (HARD GATE 3)",
+  "_page": "conversion-rate-optimization",
+  "_content": "conversion-rate-optimization/06c-humanized.md",
+  "_date": "2026-06-23",
+  "plagiarism_winston": {
+    "binding": true,
+    "tool": "Winston AI (seo-tools/plagiarism-check.mjs)",
+    "score_percent": 0,
+    "matched_sources": 0,
+    "verdict": "PASS — original content, no unattributed matches above the 15% threshold."
+  },
+  "ai_detection_undetectable": {
+    "binding": false,
+    "policy": "ADVISORY (operator decision; the detector over-flags professional human prose; binding gates = Winston plagiarism + keyword/heading coverage). Precedent: the SEO page shipped at AI 72, local-seo at 66.",
+    "tool": "Undetectable.ai detector (seo-tools/undetectable-detect.mjs, model xlm_ud_detector) — script audited against the live Detector API doc 2026-06-23 and confirmed correct.",
+    "ai_score": 21.7,
+    "human_percent": 100,
+    "threshold_reference": "<50 human / 50-60 possible / >60 AI",
+    "verdict": "HUMAN"
+  },
+  "humanizer_method": "Clean draft used as 06c — the draft already scored HUMAN (AI ~25 baseline), so no humanization was applied (operator direction).",
+  "humanizer_config_note": "Step-6c humanizer retuned 2026-06-23 to model v2 / strength Quality / purpose Business Material, and to humanize PROSE ONLY — the FAQ section and any block containing a citation or link are never sent to the paraphraser (operator fix; prevents dropped citations, altered stats, and mangled FAQ questions).",
+  "coverage_gate": "PASS (keywords + locked headings verified on 06c-humanized.md).",
+  "_done_check": "GATE 3 satisfied: Winston plagiarism 0% (binding PASS); AI-detection 21.7 recorded (advisory, HUMAN); coverage intact."
 }

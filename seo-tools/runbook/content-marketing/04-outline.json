@@ -1,0 +1,15 @@
+{
+  "_slug": "content-marketing",
+  "_purpose": "Locked outline headings for the keyword+outline coverage gate, RECONCILED to the app template's rendered section headings. Rendered page MUST contain H1 + every H2 verbatim, plus every owned keyword from keyword-ownership.json.",
+  "_source": "Step 4 KI auto-generate outline (brief 96cef129-5a17-4f5a-b3d1-4c079bd1d728, auto_generate_order_id 218e444d-9795-41ad-9199-59f2f0292600) -- REGENERATED with corrected steering: every owned secondary mandated (Option B = SEO-page model). Reviewed vs the brief; reconciled to the DM template. Coverage 5/5. H1 re-verified at Step 7.",
+  "primary": "content marketing services",
+  "h1": "Content Marketing Services for Canadian Businesses",
+  "h2": [
+    "What NexFortis content marketing services include",
+    "Our content marketing services",
+    "Our content marketing process",
+    "Why choose NexFortis for content marketing",
+    "Content Marketing pricing after a free consultation",
+    "Frequently Asked Questions"
+  ]
+}

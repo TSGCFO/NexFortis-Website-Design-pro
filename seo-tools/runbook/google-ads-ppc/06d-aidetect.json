@@ -1,0 +1,26 @@
+{
+  "_step": "6d — AI-detection + plagiarism (HARD GATE 3)",
+  "_page": "google-ads-ppc",
+  "_content": "google-ads-ppc/06c-humanized.md",
+  "_date": "2026-06-23",
+  "plagiarism_winston": {
+    "binding": true,
+    "tool": "Winston AI (seo-tools/plagiarism-check.mjs)",
+    "score_percent": 0,
+    "matched_sources": 0,
+    "verdict": "PASS — original content, no unattributed matches above the 15% threshold."
+  },
+  "ai_detection_undetectable": {
+    "binding": false,
+    "policy": "ADVISORY (operator decision; the detector over-flags professional human prose; binding gates = Winston plagiarism + keyword/heading coverage). Precedent: the SEO page shipped at AI 72, local-seo at 66.",
+    "tool": "Undetectable.ai detector (seo-tools/undetectable-detect.mjs, model xlm_ud_detector) — script audited against the live Detector API doc 2026-06-23 and confirmed correct.",
+    "ai_score": 55.7,
+    "human_percent": 56.25,
+    "threshold_reference": "<50 human / 50-60 possible / >60 AI",
+    "verdict": "POSSIBLE-AI (accepted, advisory)"
+  },
+  "humanizer_method": "Hand-humanized from the clean draft. The Undetectable humanizer FABRICATED revenue/size claims ('multi-million dollar company') and hallucinated ('Google Ads Palau') on this page, so its output was discarded and the verified clean draft was humanized by hand. Borderline AI 55.7 accepted as advisory per operator direction.",
+  "humanizer_config_note": "Step-6c humanizer retuned 2026-06-23 to model v2 / strength Quality / purpose Business Material, and to humanize PROSE ONLY — the FAQ section and any block containing a citation or link are never sent to the paraphraser (operator fix; prevents dropped citations, altered stats, and mangled FAQ questions).",
+  "coverage_gate": "PASS (keywords + locked headings verified on 06c-humanized.md).",
+  "_done_check": "GATE 3 satisfied: Winston plagiarism 0% (binding PASS); AI-detection 55.7 recorded (advisory, POSSIBLE-AI (accepted, advisory)); coverage intact."
+}

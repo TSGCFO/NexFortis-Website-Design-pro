@@ -1,0 +1,29 @@
+{
+  "_step": "6b — EEAT audit (CORE-EEAT 80-item via aaron-seo-geo:content-quality-auditor, run by an INDEPENDENT subagent — not self-graded)",
+  "_page": "local-seo (/services/digital-marketing/local-seo)",
+  "_content": "local-seo/05-draft.md",
+  "_content_type": "Landing Page (service page)",
+  "_date": "2026-06-22",
+  "_scale": "0-100 per dimension; ratings: 90-100 Excellent / 75-89 Good / 60-74 Medium / 40-59 Low.",
+  "veto": "None (no fabrication / no clickbait / no data inconsistency — 46%/76%/71% each cited once consistently; pricing + no-guarantees stance consistent). cap_applied: false.",
+  "dimensions": {
+    "C_contextual_clarity": { "score": 95, "note": "Intent nailed; local SEO defined up front; full query coverage (GBP, citations, Map Pack, near-me, multi-location, pricing, FAQ); audience explicit. Only gap: doesn't state out-of-scope." },
+    "O_organization": { "score": 55, "note": "Weakest — clean H2 hierarchy + process list, but no summary/answer box, no comparison table, FAQ is bold-paragraph not schema-friendly Q&A (auto-fixed by template FAQPage schema at Step 7)." },
+    "R_referenceability": { "score": 70, "note": "3 named linkable sources (BrightLocal x2, Backlinko) with precise stats + clear claim mapping; internal links solid. Missing: last-updated, citation density thin." },
+    "E_exclusivity": { "score": 35, "note": "Category-standard service page; differentiator = one-connected-campaign / senior-led / no-outsourcing. No original data (expected for a service page)." },
+    "Exp_experience": { "score": 30, "note": "Capped BY DESIGN — process documented + limits honestly acknowledged, but no client case work/metrics (deliberate no-fabrication posture). Deferred: eeat-authority-circle-back." },
+    "Ept_expertise": { "score": 80, "note": "Named author (Hassan Sadiq, Founder & CEO), Microsoft Solutions Partner, accurate vocabulary (NAP, Map Pack, citations, proximity, schema), edge-case awareness (SAB vs storefront, multi-location)." },
+    "A_authority": { "score": 66, "flag": "Insufficient Data", "note": "7/10 items site-level (backlinks/media/awards/KG) — excluded from weighted total, re-normalized. On-page: entity consistency PASS, MS Partner PASS, on-page social proof FAIL (none — by design)." },
+    "T_trust": { "score": 64, "note": "Honest posture (no guarantees, realistic timelines), transparent CTA, certification disclosed. Gaps: last-updated/correction policy, on-page contact surface (template/layout handles at Step 7)." }
+  },
+  "geo_score": 63,
+  "seo_score": 60,
+  "overall": 68,
+  "rating": "Medium (60-74)",
+  "verdict": "SHIP",
+  "remaining_soft_spots": "Most are Step-7 template-auto (FAQPage + Service + Person schema auto-emitted by _DmSpokePageBody; contact surface via global layout/footer; last-updated). Optional content polish: a top answer/summary box (lifts O + GEO), a one-line out-of-scope sentence (C05), a comparison/what's-included element (O03). NONE require inventing client proof.",
+  "_done_check": "PASS — overall 68/100 SHIP; no veto; Referenceability 70 from the 3 verified cited stats added at 6a; Experience capped by the deliberate no-client-proof posture (deferred to eeat-authority-circle-back, never fabricate). Audited via the standardized rubric by an independent subagent, not a self-grade.",
+  "cap_applied": false,
+  "raw_overall_score": 68,
+  "final_overall_score": 68
+}

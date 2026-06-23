@@ -1,11 +1,30 @@
 {
-  "_step": "6b — EEAT audit (§7)", "_page": "conversion-rate-optimization", "_date": "2026-06-18", "_scale": "0-2; target >=8/10.",
-  "scores": {
-    "experience": {"score": 1, "why": "Strong methodology POV (leaky-bucket, hypothesis-test cycle, traffic caveat); held at 1 (no citable client uplift case study)."},
-    "expertise": {"score": 2, "why": "Accurate CRO mechanics (analytics, heatmaps, A/B + multivariate, statistical confidence, funnel/UX); correct terminology."},
-    "authoritativeness": {"score": 2, "why": "3 distinct named sources (WordStream, Google, Statcounter) w/ URLs; Service+Person+Breadcrumb schema; Hassan Founder & CEO byline."},
-    "trust": {"score": 2, "why": "Honest 'need enough traffic', data-over-opinion, excluded a stale stat, no invented uplift; transparent pricing; no fabrication."},
-    "veto_checks": {"score": 2, "passed": true}
+  "_step": "6b — EEAT audit (CORE-EEAT 80-item via aaron-seo-geo:content-quality-auditor, run by an INDEPENDENT subagent — not self-graded)",
+  "_page": "conversion-rate-optimization (/services/digital-marketing/conversion-rate-optimization)",
+  "_content": "conversion-rate-optimization/05-draft.md",
+  "_content_type": "Landing Page (transactional service page)",
+  "_date": "2026-06-22",
+  "_scale": "0-100 per dimension; ratings: 90-100 Excellent / 75-89 Good / 60-74 Medium / 40-59 Low / 0-39 Poor.",
+  "veto": "None. T04 (affiliate disclosure) N/A — no affiliate links. C01 (intent/clickbait) PASS — title 'Conversion Rate Optimization Services for Canadian Businesses' matches body exactly (CRO service offer, Canadian focus). R10 (data inconsistency) PASS — 6.6% / 67.6% / 70.22% each cited once and used consistently; no-published-price + no-guaranteed-uplift stance consistent intro->FAQ. cap_applied: false.",
+  "dimensions": {
+    "C_contextual_clarity": { "score": 92, "note": "Intent nailed (transactional CRO buyer); CRO defined up front in 'What...include'; direct answers throughout; full query coverage (services, process, who-it's-for, pricing, A/B, traffic-needs, CRO-vs-web-design); audience explicit. Only gaps: no explicit out-of-scope sentence, no top answer/summary box." },
+    "O_organization": { "score": 58, "note": "Weakest. Clean H2 hierarchy + scannable bullet/numbered lists + 4-step process, but no top answer/summary box, no comparison/what's-included table, and FAQ is bold-paragraph Q&A in the .md rather than schema-friendly markup (auto-fixed by template FAQPage schema at Step 7)." },
+    "R_referenceability": { "score": 72, "note": "3 named, linkable, authoritative sources (Unbounce Q4 2024, Convert 2026, Baymard) with precise figures and clear claim-mapping; quotable CRO definition sentences; internal links solid. Missing: on-page last-updated stamp; citation density still modest (3 across ~1,850 words)." },
+    "E_exclusivity": { "score": 38, "note": "Category-standard CRO service page. Differentiators = founder/senior-led, no-outsourcing, Canadian/GTA market read, integrated-with-IT-stack, honest-about-outcomes. No original/proprietary data or unique research (expected for a service page; not penalized as a defect)." },
+    "Exp_experience": { "score": 32, "note": "Capped BY DESIGN. Strong methodology POV (leaky-bucket framing, hypothesis->test->keep-what-wins cycle, traffic-honesty caveat) but NO client case work, no uplift metrics, no first-person engagement narrative — deliberate operator no-fabrication posture (no citable client results/testimonials/portfolio exist yet). Deferred: eeat-authority-circle-back. NOT penalized beyond the structural cap." },
+    "Ept_expertise": { "score": 82, "note": "Named author (Hassan Sadiq, Founder & CEO), certified Microsoft Solutions Partner, accurate CRO vocabulary (A/B + multivariate testing, conversion-centred design, funnel/UX, click/scroll/session heatmaps, personalization, eCommerce cart/checkout), edge-case awareness (low-traffic limits, B2B longer funnels, qualitative tools when volume is thin)." },
+    "A_authority": { "score": 66, "flag": "Insufficient Data", "note": "Majority of items are site-level (backlinks/media mentions/awards/Knowledge Graph) — excluded from the dimension score and re-normalized. On-page observable: entity consistency PASS, Microsoft Solutions Partner PASS, founder byline PASS; on-page social proof FAIL (no testimonials/case studies — by design)." },
+    "T_trust": { "score": 66, "note": "Honest posture (explicitly does NOT invent uplift % or guarantee a conversion rate by a fixed date; realistic months-not-weeks timeline; 'honest about outcomes'), transparent CTA (free no-obligation audit), certification disclosed, transparent month-to-month pricing, zero fabrication. Gaps: no on-page last-updated/correction note; contact surface handled by global template/footer at Step 7." }
   },
-  "total": "9/10"
+  "geo_score": 65,
+  "seo_score": 61,
+  "overall": 63,
+  "rating": "Medium (60-74)",
+  "verdict": "SHIP",
+  "cap_applied": false,
+  "experience_capped_by_design": true,
+  "raw_overall_score": 63,
+  "final_overall_score": 63,
+  "remaining_soft_spots": "All non-blocking and mostly Step-7 template-auto: FAQPage + Service + Person schema auto-emitted by _DmSpokePageBody (lifts O + R machine-readability); contact surface via global layout/footer; on-page last-updated stamp. Optional content polish that needs NO invented proof: (1) a top answer/summary box (lifts O + GEO), (2) a one-line out-of-scope sentence (tightens C), (3) a comparison or 'what's included' table (lifts O). Experience and on-page social proof remain capped until real DM client results exist (eeat-authority-circle-back) — do not fabricate.",
+  "_done_check": "PASS — overall 63/100 SHIP; no veto (no fabrication / no clickbait / no data inconsistency); 3 cited stats (6.6% Unbounce, 67.6% Convert, 70.22% Baymard) independently re-verified live 2026-06-22 with exact figures, each cited once with clear claim-mapping; all NexFortis claims grounded in _facts.md (Hassan Sadiq Founder & CEO byline + Microsoft Solutions Partner = Expertise/Authority anchors). Experience capped by the deliberate no-client-proof posture (deferred, never fabricated), so the score is intentionally held in Medium, not inflated. Audited via the standardized 80-item rubric by an independent subagent, not a self-grade. NOTE: replaced a stale 2026-06-18 stub (old 0-2 scale citing WordStream/Google/Statcounter, which no longer match the current draft's Unbounce/Convert/Baymard sources)."
 }

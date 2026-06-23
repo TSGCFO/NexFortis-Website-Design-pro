@@ -1,27 +1,31 @@
-# Step 4 — Outline + length — Link Building (/services/digital-marketing/link-building)
+# Step 4 — Link Building page outline (LOCKED, grounded, Option B) — /services/digital-marketing/link-building
 
-## Target: 1,100–1,900 main words. (03-brief: focused CA service pages ~300–2,400 main.)
+**Primary:** `link building services` · **Date:** 2026-06-22 (Phase A — regenerated, Option B)
+**Source:** KI auto-generate outline — brief `3a687e1f-11fc-48fb-b566-d705bbcd646e`, `auto_generate_order_id` `3eb6e3ed-e619-457d-a3f9-0b650e6ec22a`; raw in `seo-tools/tmp/outline-3a687e1f-11fc-48fb-b566-d705bbcd646e.json`. Steering: `seo-tools/tmp/ctx/link-building.txt`. **KI-GENERATED with corrected steering (all owned secondaries mandated), then REVIEWED** vs the brief's `serp_page` ranking headings. Never hand-authored.
 
-## Intent & cluster: owns link building services/agency/company + backlink services (+ digital pr,
-guest posting, blogger outreach, off-page seo, consultant, white hat). Off-page/authority intent —
-fenced from SEO (on-page/technical) + content-marketing. Transactional; owner voice; outcome =
-authority that lifts rankings; emphasise WHITE-HAT/editorial (avoid spam); CTA free backlink/authority
-audit; price after audit.
+## Grounded-review result
+- **Keyword coverage: 7/7.** All owned keywords present in the regenerated outline.
+- **Secondaries (Option B = SEO-page model):** service-type terms appear as grouped bold sub-points under "Our link building services"; provider/agency synonyms are woven into the intro and "Why choose NexFortis". None omitted.
+- **SERP-grounded sub-services:** high-authority backlink acquisition · manual outreach · guest posting · digital PR · niche and editorial links · backlink audit and toxic-link disavow · link building packages · white-hat methods.
+- **Reconciliation:** "Who it's for" folds into the intro callout; "FAQ" -> "Frequently Asked Questions"; rendered spine = 6 H2.
+- **No fabrication:** pricing scoped after a free audit (no invented prices); honest framing only.
 
-## Outline (maps to questions)
-- H1 "Link Building & Digital PR Services" (35). metaTitle "Link Building & Digital PR".
-- Intro: links are still how Google decides authority; earned editorial links not spam; links SEO
-  spoke + pillar. StatBand (3 verified: #1 has 3.8x more backlinks Backlinko; 66.31% of pages have
-  zero backlinks Ahrefs; ≈90% Google Statcounter).
-- "What's included" (6: backlink audit & strategy, digital PR & editorial links, guest posting,
-  niche/blogger outreach, broken-link & reclamation, reporting on links + authority) → what-is /
-  digital-pr-vs-guest-posting.
-- "How we deliver" (4 steps).
-- "NexFortis vs typical" comparison (white-hat editorial vs spam/PBN).
-- "What link building costs" (ranges; after audit; no invented price).
-- FAQ (5): what is link building; why important; is it safe (white hat); digital PR vs guest posting;
-  how many links / how fast.
-- Author (Hassan, Founder & CEO) + CTA.
+## Locked outline (6-H2 spine; secondaries + SERP services as sub-points under "Our link building services")
+- **H1 (rendered, reconciled):** Link Building Services for Canadian Businesses
+- **H2 1. What NexFortis link building services include**
+- **H2 2. Our link building services** -- high-authority backlink acquisition · manual outreach · guest posting · digital PR · niche and editorial links · backlink audit and toxic-link disavow · link building packages · white-hat methods.
+- **H2 3. Our link building process** -- free audit -> strategy -> execution -> monthly reporting.
+- **H2 4. Why choose NexFortis for link building**
+- **H2 5. Link Building pricing after a free audit**
+- **H2 6. Frequently Asked Questions** -- incl. how much link building costs.
 
-## Guardrails: no invented stats/clients/prices; emphasise white-hat/no-PBN honestly; no link-count
-guarantees; humanize.
+## Owned secondary keywords (keyword-ownership.json -> link-building) -- every one MUST appear
+`link building service` · `seo link building services` · `best link building service` · `link building packages` · `seo link building company` · `link building outreach service`. (Primary: `link building services`.)
+
+## Draft directives (Step 5)
+- **SERP-derived length: 1400-1900 words.** Canadian English (-ize). Use "and" not "&" in headings.
+- **Ground strictly in `_facts.md`** -- NO invented stats, clients, results, prices, guarantees, or timelines.
+- **Every owned secondary keyword present** (coverage gate).
+- Internal links: `digital-marketing`, `seo`, `content-marketing` where referenced. (Geo `[city]` pages = Phase B.)
+- CTA: a free link building audit. Schema: Service + Person (Hassan Sadiq) + FAQPage.
+- **Meta targets (Step 7):** `metaTitle` <=60 chars ("Link Building Services in Canada"); `metaDescription` <=160 chars (SEO landed 144); `h1` = "Link Building Services for Canadian Businesses". EEAT: honest author box (Hassan Sadiq, Founder & CEO; 15+ yrs enterprise tech; Microsoft Solutions Partner) -- TRUE facts only; >=3 distinct cited stat URLs live-verified at Step 6a; EEAT via `aaron-seo-geo:content-quality-auditor` (never self-grade).

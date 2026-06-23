@@ -1,15 +1,105 @@
 {
-  "_step": "3 — SERP analysis + content brief", "_page": "social-media-marketing",
-  "_primary_keyword": "social media marketing services", "_location": "Canada", "_date": "2026-06-18",
-  "_ki_brief_status": "KI brief tool down -> SERP brief from live Semrush SERP + competitor fetches.",
-  "serp_source": "Semrush phrase_organic (ca, 'social media marketing services').",
+  "_step": "3 — SERP analysis + content brief (KI)",
+  "_page": "social-media-marketing (/services/digital-marketing/social-media-marketing)",
+  "_primary_keyword": [
+    "social media marketing services"
+  ],
+  "_location": "Canada",
+  "_date": "2026-06-21",
+  "_ki_brief_status": "KI brief COMPLETE — order 847095b5-b509-47b5-9a62-a099e3eaa48b, 16/17 (html_scraping true, completed true), 3 pages. Raw: seo-tools/tmp/briefs/social-media-marketing.json (gitignored).",
+  "serp_source": "Keyword Insights content brief (live SERP, Canada, 'social media marketing services').",
   "competitor_word_counts": {
-    "_method": "Fetched ranking service pages; <body> raw words. Excluded tools (hootsuite/later/feedbird/fiverr), directories (clutch/semrush/digitalagencynetwork), reddit, glossary (bdc).",
-    "service_page_subset": [{"url": "setsail.ca/services/social-media-marketing", "words_raw": 2194}, {"url": "madsocialagency.com", "words_raw": 1076}, {"url": "sparksocialagency.com", "words_raw": 1017}, {"url": "socialmedia55.com", "words_raw": 624}, {"url": "infrontmarketing.ca (blog)", "words_raw": 2135}],
-    "service_subset_stats": {"min_raw": 624, "median_raw": 1076, "max_raw": 2194, "main_content_estimate": "~400-1900 main"},
-    "length_conclusion": "Focused spoke ~1100-1900 main."
+    "_method": "KI serp_page list. Service-page subset = transactional agency pages; excluded software/tool listicles, 'best/top N' roundups, Wikipedia, Google's own product/help pages, YouTube, directories.",
+    "service_page_subset": [
+      {
+        "url": "https://www.bark.com/en/ca/social-media-marketing/",
+        "rank": 11,
+        "words": 298
+      },
+      {
+        "url": "https://www.setsail.ca/services/social-media-marketing",
+        "rank": 10,
+        "words": 296
+      },
+      {
+        "url": "https://www.lyfemarketing.com/",
+        "rank": 12,
+        "words": 266
+      },
+      {
+        "url": "https://socialmedia55.com/",
+        "rank": 16,
+        "words": 231
+      },
+      {
+        "url": "https://feedbird.com/",
+        "rank": 4,
+        "words": 205
+      },
+      {
+        "url": "https://momentum360.ca/social-media-marketing-services-london/",
+        "rank": 5,
+        "words": 199
+      },
+      {
+        "url": "https://theinfluenceagency.com/services/social-media-marketing",
+        "rank": 6,
+        "words": 162
+      },
+      {
+        "url": "https://nowspeed.com/social-media-marketing/",
+        "rank": 17,
+        "words": 134
+      },
+      {
+        "url": "https://mediaforce.ca/digital-marketing/social-media-marketing/",
+        "rank": 14,
+        "words": 127
+      },
+      {
+        "url": "https://www.godaddy.com/online-marketing/digital-marketing-services",
+        "rank": 15,
+        "words": 100
+      },
+      {
+        "url": "https://growmemarketing.ca/social-media-marketing-calgary/",
+        "rank": 19,
+        "words": 72
+      },
+      {
+        "url": "https://giantcreative.ca/solutions/social-media-marketing/",
+        "rank": 3,
+        "words": 69
+      },
+      {
+        "url": "https://www.fiverr.com/categories/online-marketing/social-marketing",
+        "rank": 1,
+        "words": 52
+      }
+    ],
+    "service_subset_stats": {
+      "n": 13,
+      "min": 52,
+      "median": 162,
+      "max": 298
+    },
+    "length_conclusion": "SERP-DERIVED target 1100-1500 words. Subset min 52 / median 162 / max 298; beat thin pages, match the substantive service cluster, capped below guide/listicle/software outliers. Per locked rule 'length is SERP-derived per page' (NOT the stale Cursor-06-18 dm-word-targets.json)."
   },
-  "questions": {"_source": "Semrush phrase_questions (ca, 'social media marketing'), buyer/educational.", "buyer_questions": ["What is social media marketing?", "Why is social media marketing important / benefits?", "How much does social media marketing cost?", "Should I outsource social media?", "How do you measure social media success?", "Which platforms should my business be on?"]},
-  "secondary_keywords": ["social media management", "social media marketing agency", "social media agency", "social media marketing company", "social media advertising", "facebook ads management", "meta ads management"],
-  "_done_check": "PASS — competitor table + buyer questions + secondary kws (Canada)."
+  "questions": {
+    "_source": "KI people_also_asked + questions, buyer-intent filtered (dropped industry/forum noise).",
+    "buyer_questions": [
+      "How much does social media marketing services cost?",
+      "What is the 3 3 3 rule for social media?",
+      "What are social media marketing services?",
+      "What is the 5 3 2 rule for social media?",
+      "Is it worth paying for social media marketing?",
+      "What is the 30 30 30 rule for social media?"
+    ]
+  },
+  "secondary_keywords": [
+    "social media marketing agency",
+    "social media marketing company",
+    "social media marketing companies"
+  ],
+  "_done_check": "PASS — real KI brief 16/17 (html_scraping true); competitor subset + buyer questions + owned secondary keywords (Canada)."
 }

@@ -1,0 +1,13 @@
+{
+  "slug": "web-design",
+  "contentFile": "seo-tools/runbook/web-design/05-draft.md",
+  "humanizedBlocks": 5,
+  "totalBlocks": 29,
+  "integrity": {
+    "coverageOk": true,
+    "linksOk": true,
+    "origLinks": 8,
+    "newLinks": 8
+  },
+  "ai_detection": "ADVISORY (run undetectable-detect.mjs; detector flags human prose, non-binding)"
+}

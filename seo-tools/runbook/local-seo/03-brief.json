@@ -1,0 +1,44 @@
+{
+  "_step": "3 — SERP analysis + content brief (KI)",
+  "_page": "local-seo (/services/digital-marketing/local-seo)",
+  "_primary_keyword": "local seo services",
+  "_location": "Canada",
+  "_date": "2026-06-21",
+  "_ki_brief_status": "KI brief COMPLETE — order 09843ffb-46e6-4e75-9538-01a158ca3fb6, 16/17 jobs (api_jobs skipped; html_scraping=true, completed=true), 3 pages parsed, 6 raw groups, headings_count 946. Verified SEO-quality. Raw: seo-tools/tmp/local-seo-brief-09843ffb.raw.json (gitignored).",
+  "serp_source": "Keyword Insights content brief (live SERP scrape, Canada, 'local seo services').",
+  "competitor_word_counts": {
+    "_method": "KI brief serp_page list (19 results). Service-page subset = transactional agency local-SEO pages; excluded 3 YouTube videos (#5/#8/#16), one support page (localseo.ca/support #18), the 'top 10 companies' listicle (pixelman #4), and the US 3,576w 'best + pricing' listicle (wilcowebservices #9 — different intent).",
+    "service_page_subset": [
+      {"url": "seodepot.ca/local-seo", "rank": 7, "words": 1430},
+      {"url": "localseosearch.ca", "rank": 1, "words": 623},
+      {"url": "clickmedialab.com/local-seo-agency", "rank": 19, "words": 609},
+      {"url": "localseomississauga.ca", "rank": 3, "words": 410},
+      {"url": "vancouverseoagency.ca/seo/local-seo-services", "rank": 10, "words": 228},
+      {"url": "gwebpro.com/services/local-seo", "rank": 15, "words": 190},
+      {"url": "webcie.ca/en/seo-services/local-seo-services", "rank": 12, "words": 160},
+      {"url": "seoresellerscanada.ca/local-seo", "rank": 2, "words": 149},
+      {"url": "trufla.com/services/seo/local-seo-services", "rank": 11, "words": 133},
+      {"url": "rablab.ca/en/local-seo", "rank": 6, "words": 129},
+      {"url": "ollometrics.com/local-seo-agency-in-vancouver-bc", "rank": 13, "words": 72},
+      {"url": "voltstudios.ca/services/local-seo", "rank": 17, "words": 57},
+      {"url": "vancouverlocalseo.ca", "rank": 14, "words": 48}
+    ],
+    "service_subset_stats": {"min": 48, "median": 160, "max": 1430, "robust_cluster": "410-1430 (seodepot 1430, localseosearch 623, clickmedialab 609, localseomississauga 410)"},
+    "length_conclusion": "SERP is THIN-dominated (median ~160w; most 48-230w) with a small robust service cluster (410-1430w). LOCKED content-gate band (tests/seo/dm-word-targets.json -> local-seo): 1,100-1,900 words. Target ~1,500-1,600 — beat the thin pages, match the substantive cluster, comprehensive-but-focused local-SEO service page. Mirrors how the SEO spoke targeted the substantive end of its band."
+  },
+  "questions": {
+    "_source": "KI brief people_also_asked (12) + consolidated questions (45). Buyer-intent filtered: dropped off-intent/industry noise ('is SEO dead in 2026' x3 dupes, 'can ChatGPT do SEO' x2, 'what's replacing SEO', '80/20 rule of SEO') and raw forum-thread titles.",
+    "buyer_questions": [
+      "What are local SEO services?",
+      "How much does local SEO cost (on average)?",
+      "Is it worth paying someone to do (local) SEO?",
+      "Can I do local SEO myself?",
+      "Local SEO for multiple locations?",
+      "How do you get customers to leave reviews?"
+    ],
+    "_gbp_signal": "‘Google Business Profile getting zero calls despite strong [presence]’ surfaced in questions — reinforces the GBP fold-in section."
+  },
+  "secondary_keywords": ["local seo company", "local seo agency", "local seo service", "local seo consultant", "local seo services for small business", "google business profile optimization", "google business profile management", "google business profile services"],
+  "serp_features": "Service-page-dominated SERP (agency local-SEO pages) + PAA + Reddit/Quora questions. GBP/Map-Pack/reviews/citations are the recurring ranking themes. No api_jobs title/desc suggestions (paid job skipped).",
+  "_done_check": "PASS — real KI brief 16/17 (html_scraping true), 6 raw groups, 3 pages, competitor subset + buyer questions + 8 owned secondary keywords (Canada)."
+}

@@ -1,0 +1,23 @@
+{
+  "_step": "6a — Itemized fact-check (HARD GATE 2)",
+  "_page": "local-seo (/services/digital-marketing/local-seo)",
+  "_content": "local-seo/05-draft.md",
+  "_date": "2026-06-22",
+  "_method": "Every claim checked against seo-tools/runbook/_facts.md (NexFortis facts) or an independently verified named primary source (third-party stats, verified live via firecrawl 2026-06-22).",
+  "fabrication_scan": "NONE — no client counts, named client results, testimonials, invented prices, guarantees, awards, or ranking-time promises. Local-SEO capabilities written as NexFortis's approach/process (the pillar already lists local SEO as a stated service), not as a track record.",
+  "claims": [
+    { "claim": "NexFortis is a Canadian local SEO company / agency serving the GTA, Ontario, and the rest of Canada", "verdict": "VERIFIED", "source": "_facts.md: Nobleton ON; knows the GTA; areaServed=Canada" },
+    { "claim": "Founder/senior-consultant-led; dedicated local SEO consultant; no hand-off to a junior; same small team end-to-end; in-house (no outsourcing)", "verdict": "VERIFIED", "source": "_facts.md (founder/senior-led delivery; same small team; no junior hand-off)" },
+    { "claim": "Hassan Sadiq = NexFortis Founder and CEO", "verdict": "VERIFIED", "source": "_facts.md (Person schema jobTitle 'Founder & CEO')" },
+    { "claim": "Certified Microsoft Solutions Partner; technical depth on on-page / schema", "verdict": "VERIFIED", "source": "_facts.md" },
+    { "claim": "Transparent pricing, fixed monthly scope, month-to-month, no long-term lock-in; free local SEO audit (no-obligation)", "verdict": "VERIFIED", "source": "_facts.md commercial facts (free 30-minute consultation framed as the audit; transparent/month-to-month)" },
+    { "claim": "Local SEO services offered: Google Business Profile optimization and management, local citations and NAP consistency, Google Map Pack strategy, reviews and reputation, near-me / local keyword optimization, multi-location", "verdict": "VERIFIED (stated services / approach)", "source": "_facts.md: the DM capabilities (incl. local SEO + GBP) are stated services; written as approach/process, no client results" },
+    { "claim": "Local SEO timing: months-not-weeks; depends on starting point, market competitiveness, review/citation profile; no fixed-date promise", "verdict": "VERIFIED (general, hedged)", "source": "Expectation-setting only, not a guarantee (per _facts.md no fabricated timelines)" }
+  ],
+  "third_party_stats": [
+    { "stat": "Roughly 46% of all Google searches have local intent", "figure": "46%", "source": "Google (2018, via Search Engine Roundtable), reported by BrightLocal", "url": "https://www.brightlocal.com/resources/local-seo-statistics/", "verdict": "VERIFIED (firecrawl 2026-06-22)", "note": "Enduring Google figure; attributed to BrightLocal's local-SEO statistics page." },
+    { "stat": "76% of people who search for something nearby visit a business within a day", "figure": "76%", "source": "Google / Think with Google, documented by Backlinko Local SEO Guide", "url": "https://backlinko.com/local-seo-guide", "verdict": "VERIFIED (firecrawl 2026-06-22)" },
+    { "stat": "71% of consumers use Google to read local business reviews", "figure": "71% (2026)", "source": "BrightLocal Local Consumer Review Survey 2026", "url": "https://www.brightlocal.com/research/local-consumer-review-survey/", "verdict": "VERIFIED (firecrawl 2026-06-22)" }
+  ],
+  "_done_check": "PASS — all NexFortis claims grounded in _facts.md; 3 third-party stats carry accurate figures + named sources, verified live; 3 distinct external citation URLs (meets the per-page requirement); zero fabrications. Coverage re-verified after insertion: 9/9 keywords, 7/7 headings; 1,602 words (in band)."
+}

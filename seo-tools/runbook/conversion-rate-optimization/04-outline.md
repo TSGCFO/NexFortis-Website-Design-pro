@@ -1,25 +1,31 @@
-# Step 4 — Outline + length — CRO (/services/digital-marketing/conversion-rate-optimization)
+# Step 4 — Conversion Rate Optimization page outline (LOCKED, grounded, Option B) — /services/digital-marketing/conversion-rate-optimization
 
-## Target: 1,100–1,900 main words. (03-brief: focused CA service pages ~1,100–1,500 main.)
+**Primary:** `conversion rate optimization services` · **Date:** 2026-06-22 (Phase A — regenerated, Option B)
+**Source:** KI auto-generate outline — brief `36342f34-bd08-43e8-b7f6-057646d8cae1`, `auto_generate_order_id` `c6af5f4b-49ab-4599-b302-7135ed5d705b`; raw in `seo-tools/tmp/outline-36342f34-bd08-43e8-b7f6-057646d8cae1.json`. Steering: `seo-tools/tmp/ctx/conversion-rate-optimization.txt`. **KI-GENERATED with corrected steering (all owned secondaries mandated), then REVIEWED** vs the brief's `serp_page` ranking headings. Never hand-authored.
 
-## Intent & cluster: owns conversion rate optimization services / cro agency / conversion rate
-optimization agency (+ cro services, conversion optimization services, landing page optimization,
-website conversion optimization, ab testing, cro consultant). Head 'conversion rate optimization'
-(informational) -> blog. CRO/optimization intent. Transactional; owner voice; outcome = more leads
-from the SAME traffic; CTA free conversion audit; price after audit.
+## Grounded-review result
+- **Keyword coverage: 4/4.** All owned keywords present in the regenerated outline.
+- **Secondaries (Option B = SEO-page model):** service-type terms appear as grouped bold sub-points under "Our conversion rate optimization services"; provider/agency synonyms are woven into the intro and "Why choose NexFortis". None omitted.
+- **SERP-grounded sub-services:** conversion audit and data analysis · A/B and multivariate testing · conversion-centered design · UX and funnel analysis · heatmaps and user-behaviour analytics · personalization · eCommerce CRO.
+- **Reconciliation:** SERP-grounded (testing, conversion-centered design, personalization, analytics). "Who it's for" folds into the intro callout; "FAQ" -> "Frequently Asked Questions"; rendered spine = 6 H2.
+- **No fabrication:** pricing scoped after a free audit (no invented prices); honest framing only.
 
-## Outline
-- H1 "Conversion Rate Optimization That Lifts Revenue" (~47). metaTitle "Conversion Rate Optimization".
-- Intro: you already paid for the traffic — CRO turns more of it into leads; data-driven, not guesses;
-  links web-design + pillar. StatBand (3 verified: WordStream 2.35% avg vs 5.31% top-25% landing-page
-  conversion = the opportunity gap; Google 53% mobile abandon >3s; ≈90% Google Statcounter).
-- "What's included" (6: data & analytics review, user-behaviour analysis (heatmaps/recordings),
-  A/B & multivariate testing, landing-page & funnel optimization, UX & messaging fixes, reporting).
-- "How we deliver" (4 steps, hypothesis-driven).
-- "NexFortis vs typical" comparison (data-driven testing vs redesign-on-a-hunch).
-- "What CRO costs" (ranges; after audit; needs enough traffic to test; no invented price).
-- FAQ (5): what is CRO; how it works; do I have enough traffic; how much; how long.
-- Author (Hassan, Founder & CEO) + CTA.
+## Locked outline (6-H2 spine; secondaries + SERP services as sub-points under "Our conversion rate optimization services")
+- **H1 (rendered, reconciled):** Conversion Rate Optimization Services for Canadian Businesses
+- **H2 1. What NexFortis conversion rate optimization services include**
+- **H2 2. Our conversion rate optimization services** -- conversion audit and data analysis · A/B and multivariate testing · conversion-centered design · UX and funnel analysis · heatmaps and user-behaviour analytics · personalization · eCommerce CRO.
+- **H2 3. Our conversion rate optimization process** -- free audit -> strategy -> execution -> monthly reporting.
+- **H2 4. Why choose NexFortis for conversion rate optimization**
+- **H2 5. Conversion Rate Optimization pricing after a free audit**
+- **H2 6. Frequently Asked Questions** -- incl. how much conversion rate optimization costs.
 
-## Guardrails: no invented uplift/% results for NexFortis; benchmark stats attributed + framed
-honestly (WordStream gap = opportunity, not a promise); humanize.
+## Owned secondary keywords (keyword-ownership.json -> conversion-rate-optimization) -- every one MUST appear
+`conversion rate optimization agency` · `conversion rate optimization company` · `conversion rate optimization consultant`. (Primary: `conversion rate optimization services`.)
+
+## Draft directives (Step 5)
+- **SERP-derived length: 1300-1700 words.** Canadian English (-ize). Use "and" not "&" in headings.
+- **Ground strictly in `_facts.md`** -- NO invented stats, clients, results, prices, guarantees, or timelines.
+- **Every owned secondary keyword present** (coverage gate).
+- Internal links: `digital-marketing`, `web-design`, `google-ads-ppc`, `seo` where referenced. (Geo `[city]` pages = Phase B.)
+- CTA: a free conversion rate optimization audit. Schema: Service + Person (Hassan Sadiq) + FAQPage.
+- **Meta targets (Step 7):** `metaTitle` <=60 chars ("Conversion Rate Optimization Services in Canada"); `metaDescription` <=160 chars (SEO landed 144); `h1` = "Conversion Rate Optimization Services for Canadian Businesses". EEAT: honest author box (Hassan Sadiq, Founder & CEO; 15+ yrs enterprise tech; Microsoft Solutions Partner) -- TRUE facts only; >=3 distinct cited stat URLs live-verified at Step 6a; EEAT via `aaron-seo-geo:content-quality-auditor` (never self-grade).
