@@ -1,18 +1,22 @@
 import { ReactNode, useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "wouter";
-import { Menu, X, ChevronDown, Monitor, Database, Cloud, Cog, LayoutDashboard, ArrowRight, Sun, Moon, MonitorSmartphone, ChevronUp, ExternalLink } from "lucide-react";
+import { Menu, X, ChevronDown, ChevronRight, Monitor, Database, Cloud, Cog, LayoutDashboard, ArrowRight, Sun, Moon, MonitorSmartphone, ChevronUp, ExternalLink, type LucideIcon } from "lucide-react";
 import { useTheme } from "@/hooks/use-theme";
 import { trackEvent } from "@/lib/analytics";
 import { OrganizationSchema, LocalBusinessSchema, WebSiteSchema } from "@/components/seo";
 import { getPublishedSpokes, DM_PILLAR_HREF } from "@/lib/internal-links";
 
-const services = [
-  { name: "Digital Marketing", href: "/services/digital-marketing", icon: Monitor },
-  { name: "Microsoft 365 Solutions", href: "/services/microsoft-365", icon: Cloud },
-  { name: "QuickBooks Migration", href: "/services/quickbooks", icon: Database },
-  { name: "IT Consulting", href: "/services/it-consulting", icon: Cog },
-  { name: "Workflow Automation", href: "/services/workflow-automation", icon: LayoutDashboard },
-];
+type ServiceItem = {
+  name: string;
+  href: string;
+  icon: LucideIcon;
+  /**
+   * Sub-services shown in a right-side flyout panel on desktop and an
+   * accordion on mobile. Add `subItems` to any service entry to enable nested
+   * nav without re-architecting the menu.
+   */
+  subItems?: ReadonlyArray<{ title: string; href: string }>;
+};
 
 // Digital-marketing spokes that are live (published) hang off the Digital
 // Marketing pillar as a mega-menu sub-menu + footer links (the on-page form of
@@ -22,6 +26,22 @@ const services = [
 // (INV-015). Rendered in the DOM even when the menu is visually closed, so
 // crawlers always see the links.
 const dmSpokes = getPublishedSpokes();
+
+const services: ServiceItem[] = [
+  {
+    name: "Digital Marketing",
+    href: DM_PILLAR_HREF,
+    icon: Monitor,
+    // subItems drives the right-side flyout and mobile accordion.
+    // Swap dmSpokes for any { title, href }[] on other services to give them
+    // a sub-panel with no changes to the menu architecture.
+    subItems: dmSpokes,
+  },
+  { name: "Microsoft 365 Solutions", href: "/services/microsoft-365", icon: Cloud },
+  { name: "QuickBooks Migration", href: "/services/quickbooks", icon: Database },
+  { name: "IT Consulting", href: "/services/it-consulting", icon: Cog },
+  { name: "Workflow Automation", href: "/services/workflow-automation", icon: LayoutDashboard },
+];
 
 function NavLink({ href, children, location }: { href: string; children: React.ReactNode; location: string }) {
   const isActive = location === href || (href !== "/" && location.startsWith(href));
@@ -105,9 +125,15 @@ export function Layout({ children }: { children: ReactNode }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
+  /** href of the service whose Level-2 sub-panel is currently shown, or null. */
+  const [activeSubMenu, setActiveSubMenu] = useState<string | null>(null);
+  /** href of the service whose sub-items are expanded in the mobile accordion, or null. */
+  const [mobileExpandedService, setMobileExpandedService] = useState<string | null>(null);
   const [location] = useLocation();
   const { resolvedTheme } = useTheme();
   const mobileMenuRef = useRef<HTMLDivElement>(null);
+  /** Ref assigned to whichever Level-2 sub-panel is currently visible. */
+  const subPanelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -118,6 +144,8 @@ export function Layout({ children }: { children: ReactNode }) {
   useEffect(() => {
     setMobileMenuOpen(false);
     setServicesDropdownOpen(false);
+    setActiveSubMenu(null);
+    setMobileExpandedService(null);
     window.scrollTo(0, 0);
   }, [location]);
 
@@ -174,25 +202,47 @@ export function Layout({ children }: { children: ReactNode }) {
           <nav className="hidden md:flex items-center gap-8" aria-label="Main navigation">
             <NavLink href="/" location={location}>Home</NavLink>
 
+            {/* ── Services two-level flyout ───────────────────────────────────── */}
             <div
               className="relative"
               onMouseEnter={() => setServicesDropdownOpen(true)}
-              onMouseLeave={() => setServicesDropdownOpen(false)}
+              onMouseLeave={() => { setServicesDropdownOpen(false); setActiveSubMenu(null); }}
               onBlur={(e) => {
                 if (!e.currentTarget.contains(e.relatedTarget as Node)) {
                   setServicesDropdownOpen(false);
+                  setActiveSubMenu(null);
                 }
               }}
               onKeyDown={(e) => {
                 if (e.key === "Escape") {
-                  setServicesDropdownOpen(false);
-                  (e.currentTarget.querySelector("button") as HTMLElement)?.focus();
+                  if (activeSubMenu) {
+                    // Close sub-panel first; return focus to the service item that opened it.
+                    const prev = activeSubMenu;
+                    setActiveSubMenu(null);
+                    requestAnimationFrame(() => {
+                      document.querySelector<HTMLElement>(`[data-service-href="${prev}"] a`)?.focus();
+                    });
+                  } else {
+                    setServicesDropdownOpen(false);
+                    (e.currentTarget.querySelector("button") as HTMLElement)?.focus();
+                  }
                 }
               }}
             >
               <button
                 type="button"
                 onClick={() => setServicesDropdownOpen((prev) => !prev)}
+                onKeyDown={(e) => {
+                  // Keyboard entry: open the menu and move focus onto the first
+                  // service so a keyboard user lands inside the (now non-inert) panel.
+                  if (e.key === "ArrowDown" || e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    setServicesDropdownOpen(true);
+                    requestAnimationFrame(() => {
+                      document.querySelector<HTMLElement>(`[data-service-href="${services[0].href}"] a`)?.focus();
+                    });
+                  }
+                }}
                 className={`text-sm font-display font-semibold transition-colors flex items-center gap-1 py-2 relative ${
                   isServicesActive ? "text-accent" : "text-foreground/80 hover:text-accent"
                 }`}
@@ -205,74 +255,146 @@ export function Layout({ children }: { children: ReactNode }) {
                 )}
               </button>
 
+              {/* Wrapper — establishes the positioning context for both panels.
+                  Level-2 sub-panels use `left-full` relative to this wrapper's
+                  width (= Level-1 panel width = w-64 = 256 px). */}
               <div
-                className={`absolute top-full left-1/2 -translate-x-1/2 w-64 bg-card rounded-xl shadow-xl border border-border/50 overflow-hidden py-2 transition-all duration-150 origin-top ${
+                inert={!servicesDropdownOpen}
+                className={`absolute top-full left-1/2 -translate-x-1/2 transition-all duration-150 origin-top ${
                   servicesDropdownOpen ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
                 }`}
-                role="list"
               >
-                {services.map((service) => {
-                  const Icon = service.icon;
-                  const isItemActive = location === service.href;
-                  const isDm = service.href === DM_PILLAR_HREF;
-                  return (
-                    <div key={service.href}>
-                      <Link
-                        href={service.href}
-                        className={`flex items-center gap-3 px-4 py-3 transition-colors group ${
-                          isItemActive ? "bg-accent/5" : "hover:bg-secondary"
-                        }`}
-                        role="listitem"
-                        aria-current={isItemActive ? "page" : undefined}
+                {/* ── Level 1: five main services ──────────────────────────── */}
+                <div
+                  className="w-64 bg-card rounded-xl shadow-xl border border-border/50 overflow-hidden py-2"
+                  role="list"
+                  aria-label="Services"
+                >
+                  {services.map((service) => {
+                    const Icon = service.icon;
+                    const isItemActive = location === service.href;
+                    const hasSubMenu = Boolean(service.subItems?.length);
+                    const isSubOpen = activeSubMenu === service.href;
+                    return (
+                      <div
+                        key={service.href}
+                        data-service-href={service.href}
+                        onMouseEnter={() => setActiveSubMenu(hasSubMenu ? service.href : null)}
                       >
-                        <div className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${
-                          isItemActive
-                            ? "bg-accent/10 text-accent"
-                            : "bg-secondary group-hover:bg-accent/10 text-primary group-hover:text-accent"
-                        }`}>
-                          <Icon className="w-4 h-4" />
-                        </div>
-                        <span className={`text-sm font-display font-medium transition-colors ${
-                          isItemActive ? "text-accent" : "text-foreground group-hover:text-accent"
-                        }`}>
-                          {service.name}
-                        </span>
-                      </Link>
-                      {/* Digital-marketing spokes mega-menu sub-list (published only). */}
-                      {isDm && dmSpokes.length > 0 && (
-                        <ul className="pl-12 pr-3 pb-2 space-y-0.5" aria-label="Digital marketing services">
-                          {dmSpokes.map((spoke) => {
-                            const isSpokeActive = location === spoke.href;
-                            return (
-                              <li key={spoke.href}>
-                                <Link
-                                  href={spoke.href}
-                                  className={`block py-1.5 text-[13px] font-display transition-colors ${
-                                    isSpokeActive ? "text-accent" : "text-muted-foreground hover:text-accent"
-                                  }`}
-                                  aria-current={isSpokeActive ? "page" : undefined}
-                                >
-                                  {spoke.title}
-                                </Link>
-                              </li>
-                            );
-                          })}
-                        </ul>
-                      )}
-                    </div>
-                  );
-                })}
-                <div className="border-t border-border/50 mt-2 pt-2">
-                  <Link
-                    href="/services"
-                    className="flex items-center gap-2 px-4 py-3 text-sm font-display font-semibold text-accent hover:bg-secondary transition-colors"
-                    role="listitem"
-                  >
-                    Browse our IT services <ArrowRight className="w-4 h-4" />
-                  </Link>
+                        <Link
+                          href={service.href}
+                          className={`flex items-center gap-3 px-4 py-3 transition-colors group ${
+                            isItemActive ? "bg-accent/5" : "hover:bg-secondary"
+                          }`}
+                          role="listitem"
+                          aria-current={isItemActive ? "page" : undefined}
+                          aria-haspopup={hasSubMenu ? "true" : undefined}
+                          aria-expanded={hasSubMenu ? isSubOpen : undefined}
+                          onFocus={() => {
+                            if (hasSubMenu) setActiveSubMenu(service.href);
+                            else setActiveSubMenu(null);
+                          }}
+                          onKeyDown={(e) => {
+                            if (hasSubMenu && (e.key === "ArrowRight" || e.key === " ")) {
+                              e.preventDefault();
+                              setActiveSubMenu(service.href);
+                              requestAnimationFrame(() =>
+                                subPanelRef.current?.querySelector<HTMLElement>("a")?.focus()
+                              );
+                            }
+                          }}
+                        >
+                          <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 transition-colors ${
+                            isItemActive
+                              ? "bg-accent/10 text-accent"
+                              : "bg-secondary group-hover:bg-accent/10 text-primary group-hover:text-accent"
+                          }`}>
+                            <Icon className="w-4 h-4" />
+                          </div>
+                          <span className={`text-sm font-display font-medium transition-colors flex-1 ${
+                            isItemActive ? "text-accent" : "text-foreground group-hover:text-accent"
+                          }`}>
+                            {service.name}
+                          </span>
+                          {hasSubMenu && (
+                            <ChevronRight className={`w-3.5 h-3.5 flex-shrink-0 transition-colors ${
+                              isSubOpen ? "text-accent" : "text-muted-foreground/40 group-hover:text-accent"
+                            }`} />
+                          )}
+                        </Link>
+                      </div>
+                    );
+                  })}
+                  <div className="border-t border-border/50 mt-2 pt-2">
+                    <Link
+                      href="/services"
+                      className="flex items-center gap-2 px-4 py-3 text-sm font-display font-semibold text-accent hover:bg-secondary transition-colors"
+                      role="listitem"
+                    >
+                      Browse our IT services <ArrowRight className="w-4 h-4" />
+                    </Link>
+                  </div>
                 </div>
+
+                {/* ── Level 2: sub-panels ───────────────────────────────────
+                    One panel per service that has subItems. Always in the DOM
+                    so crawlers see every link; hidden via opacity/scale/pointer-
+                    events until the matching service is hovered or focused.
+                    To add a sub-panel for another service later, just add a
+                    `subItems` array to its entry in the `services` const above. */}
+                {services.filter(s => s.subItems?.length).map(service => (
+                  <div
+                    key={`sub-${service.href}`}
+                    ref={activeSubMenu === service.href ? subPanelRef : undefined}
+                    className={`absolute top-0 left-full ml-1 w-56 bg-card rounded-xl shadow-xl border border-border/50 py-2 z-10 transition-all duration-150 origin-top-left ${
+                      activeSubMenu === service.href
+                        ? "opacity-100 scale-100"
+                        : "opacity-0 scale-95 pointer-events-none"
+                    }`}
+                    role="list"
+                    aria-label={`${service.name} services`}
+                    inert={activeSubMenu !== service.href}
+                    onKeyDown={(e) => {
+                      if (e.key === "ArrowLeft") {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setActiveSubMenu(null);
+                        requestAnimationFrame(() => {
+                          document.querySelector<HTMLElement>(
+                            `[data-service-href="${service.href}"] a`
+                          )?.focus();
+                        });
+                      }
+                    }}
+                  >
+                    <div className="px-4 py-2 mb-1 border-b border-border/50">
+                      <p className="text-xs font-display font-semibold text-muted-foreground uppercase tracking-wide">
+                        {service.name}
+                      </p>
+                    </div>
+                    {(service.subItems ?? []).map((item) => {
+                      const isSpokeActive = location === item.href;
+                      return (
+                        <Link
+                          key={item.href}
+                          href={item.href}
+                          className={`block px-4 py-2 text-[13px] font-display transition-colors ${
+                            isSpokeActive
+                              ? "text-accent bg-accent/5"
+                              : "text-muted-foreground hover:text-accent hover:bg-secondary"
+                          }`}
+                          role="listitem"
+                          aria-current={isSpokeActive ? "page" : undefined}
+                        >
+                          {item.title}
+                        </Link>
+                      );
+                    })}
+                  </div>
+                ))}
               </div>
             </div>
+            {/* ── /Services flyout ────────────────────────────────────────────── */}
 
             <NavLink href="/about" location={location}>About</NavLink>
             <NavLink href="/blog" location={location}>Blog</NavLink>
@@ -321,24 +443,55 @@ export function Layout({ children }: { children: ReactNode }) {
           <nav className="flex flex-col px-4 py-6 gap-4">
             <Link href="/" className={`text-lg font-display font-semibold min-h-[44px] flex items-center ${location === "/" ? "text-accent" : ""}`}>Home</Link>
             <Link href="/services" className={`text-lg font-display font-semibold min-h-[44px] flex items-center ${location === "/services" ? "text-accent" : ""}`}>All Services</Link>
+
+            {/* Service accordion — tap the name to navigate, tap the chevron to expand sub-services */}
             <div className="pl-4 flex flex-col gap-3 border-l-2 border-border ml-2">
-              {services.map((s) => (
-                <div key={s.href} className="flex flex-col gap-2">
-                  <Link href={s.href} className={`min-h-[44px] font-display flex items-center transition-colors ${location === s.href ? "text-accent font-medium" : "text-muted-foreground hover:text-accent"}`}>
-                    {s.name}
-                  </Link>
-                  {s.href === DM_PILLAR_HREF && dmSpokes.length > 0 && (
-                    <div className="pl-4 flex flex-col gap-1.5 border-l border-border/60">
-                      {dmSpokes.map((spoke) => (
-                        <Link key={spoke.href} href={spoke.href} className={`min-h-[36px] text-sm font-display flex items-center transition-colors ${location === spoke.href ? "text-accent" : "text-muted-foreground hover:text-accent"}`}>
-                          {spoke.title}
-                        </Link>
-                      ))}
+              {services.map((s) => {
+                const hasSubItems = Boolean(s.subItems?.length);
+                const isExpanded = mobileExpandedService === s.href;
+                return (
+                  <div key={s.href} className="flex flex-col gap-1">
+                    <div className="flex items-center gap-1">
+                      <Link
+                        href={s.href}
+                        className={`flex-1 min-h-[44px] font-display flex items-center transition-colors ${
+                          location === s.href ? "text-accent font-medium" : "text-muted-foreground hover:text-accent"
+                        }`}
+                      >
+                        {s.name}
+                      </Link>
+                      {hasSubItems && (
+                        <button
+                          type="button"
+                          onClick={() => setMobileExpandedService(isExpanded ? null : s.href)}
+                          aria-expanded={isExpanded}
+                          aria-label={`${isExpanded ? "Collapse" : "Expand"} ${s.name} services`}
+                          className="min-w-[44px] min-h-[44px] flex items-center justify-center text-muted-foreground hover:text-accent transition-colors rounded-lg hover:bg-secondary"
+                        >
+                          <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isExpanded ? "rotate-180" : ""}`} />
+                        </button>
+                      )}
                     </div>
-                  )}
-                </div>
-              ))}
+                    {hasSubItems && isExpanded && (
+                      <div className="pl-4 flex flex-col gap-1 border-l border-border/60 ml-2">
+                        {(s.subItems ?? []).map((item) => (
+                          <Link
+                            key={item.href}
+                            href={item.href}
+                            className={`min-h-[36px] text-sm font-display flex items-center transition-colors ${
+                              location === item.href ? "text-accent" : "text-muted-foreground hover:text-accent"
+                            }`}
+                          >
+                            {item.title}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
             </div>
+
             <Link href="/about" className={`text-lg font-display font-semibold min-h-[44px] flex items-center ${location === "/about" ? "text-accent" : ""}`}>About</Link>
             <Link href="/blog" className={`text-lg font-display font-semibold min-h-[44px] flex items-center ${location === "/blog" ? "text-accent" : ""}`}>Blog</Link>
             <Link href="/contact" className={`text-lg font-display font-semibold min-h-[44px] flex items-center ${location === "/contact" ? "text-accent" : ""}`}>Contact</Link>

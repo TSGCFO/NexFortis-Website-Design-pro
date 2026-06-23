@@ -1,0 +1,2 @@
+- [Git workflow (protected main)](git-workflow.md) — main is PR-only/protected; Replit pane's "pull first" error is generic; discard unpushed via user-run `git reset --hard origin/main`.
+- [pnpm version pin](pnpm-version.md) — package.json packageManager is source of truth; Nix pnpm self-manage SIGABRTs — match env via corepack shim, never downgrade package.json.
