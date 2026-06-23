@@ -1159,7 +1159,7 @@ export const DM_SPOKE_CONTENT: Partial<Record<DmSpokeSlug, DmSpokeContent>> = {
         Your campaign is led personally by Hassan Sadiq, NexFortis Founder and CEO &mdash; not an offshore
         order desk. With 15+ years in enterprise technology and as a certified Microsoft Solutions Partner,
         the audit and reporting side is handled with genuine technical depth, and you get real
-        accountability for every link. A small senior team owns your campaign end-to-end.
+        accountability for every link — the calibre you want from the best link building service. A small senior team owns your campaign end-to-end.
       </p>
     ),
     ctaHeading: "Ready to compete on authority?",
@@ -1210,7 +1210,7 @@ export const DM_SPOKE_CONTENT: Partial<Record<DmSpokeSlug, DmSpokeContent>> = {
         &mdash; small and growing businesses that want professional ppc services without enterprise agency
         rates; local and service-area businesses that depend on high-intent search and Google Local
         Service Ads; eCommerce and retail that need Shopping and Performance Max built to sell; and
-        businesses already running ads that want a ppc management services partner to fix the leaks.
+        businesses already running ads that want a ppc management services partner to fix the leaks, plus companies that want one accountable ppc company managing paid search.
       </CalloutBox>
     ),
     stats: [
@@ -1235,7 +1235,7 @@ export const DM_SPOKE_CONTENT: Partial<Record<DmSpokeSlug, DmSpokeContent>> = {
     ],
     featuresHeading: "Our Google Ads and PPC services",
     featuresSubtitle:
-      "The full range of google ads management services under one roof — from a single search campaign to a full multi-channel account.",
+      "The full range of google ads management services under one roof — these google ppc services scale from a single search campaign to a full multi-channel account.",
     features: [
       {
         icon: Search,
@@ -1332,8 +1332,8 @@ export const DM_SPOKE_CONTENT: Partial<Record<DmSpokeSlug, DmSpokeContent>> = {
     comparisonHeading: "Why choose NexFortis for Google Ads and PPC",
     comparison: [
       { feature: "Who does the work", us: "A senior team, founder-led — a boutique ppc management company", them: "A rotating junior account manager" },
-      { feature: "Credentials", us: "Google Partner, run to Google's standards", them: "Unvetted, set-and-forget" },
-      { feature: "Accountability", us: "Tied to conversions and cost per lead", them: "Clicks and impressions for their own sake" },
+      { feature: "Credentials", us: "Google Partner — a ppc advertising agency run to Google's standards", them: "Unvetted, set-and-forget" },
+      { feature: "Accountability", us: "A results-focused ppc marketing agency tied to conversions, not clicks", them: "Clicks and impressions for their own sake" },
       { feature: "Spend transparency", us: "Every dollar reported; fee separate from ad spend", them: "Black-box dashboards" },
       { feature: "Commitment", us: "Month-to-month — no lock-in", them: "Locked contracts" },
     ],
