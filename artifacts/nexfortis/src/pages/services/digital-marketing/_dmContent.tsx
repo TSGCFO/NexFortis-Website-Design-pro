@@ -315,198 +315,212 @@ export const DM_SPOKE_CONTENT: Partial<Record<DmSpokeSlug, DmSpokeContent>> = {
 
   // ---------------------------------------------------------- LOCAL SEO ----
   "local-seo": {
-    metaTitle: "Local SEO Services",
+    metaTitle: "Local SEO Services in Canada",
     metaDescription:
-      "Local SEO for GTA businesses: rank in the Google Map Pack and 'near me' searches, win your Google Business Profile, and turn nearby searches into calls.",
-    h1: "Local SEO That Puts You on the Map",
+      "Canadian local SEO company — Google Business Profile, the Map Pack, citations, and reviews. Founder-led, month-to-month. Free local SEO audit.",
+    h1: "Local SEO Services for Canadian Businesses",
     heroSubtitle:
-      "Show up when nearby customers search for what you do — in the Google map results, on 'near me' queries, and across the GTA.",
-    serviceType: "Local SEO",
+      "A Canadian local SEO company that gets you found by nearby customers searching right now — Google Business Profile, the Map Pack, citations, and reviews, run as one senior-led campaign.",
+    serviceType: "Local Search Engine Optimization",
     serviceSchemaName: "Local SEO Services",
     serviceSchemaDescription:
-      "Local search optimization for businesses across the Greater Toronto Area — Google Business Profile, citations, reviews, and location pages.",
-    introHeading: "Get found by customers down the street",
+      "Local SEO for Canadian businesses — Google Business Profile optimization and management, local citations, Map Pack strategy, reviews, and on-page local optimization, delivered as one founder-led campaign.",
+    introHeading: "What NexFortis local SEO services include",
     intro: (
       <>
         <p>
-          Picture someone in Vaughan whose server just died, thumbing &ldquo;IT support near
-          me&rdquo; into their phone. Google hands them a little map with three businesses pinned to
-          it, and almost nobody scrolls past those three. If your name is not one of them, that
-          customer never knows you exist &mdash; even if you are the better choice and half a
-          kilometre closer.
+          NexFortis is a Canadian <strong>local SEO company</strong> that helps local business owners
+          get found by the customers searching right now, in their city, for what they sell. Our local
+          SEO services are built around the outcomes that matter to a local business &mdash; more phone
+          calls, more direction requests, and more booked jobs, not vanity rankings.
         </p>
         <p>
-          Getting into that map pack is what local SEO is for. There is no single switch; it is the
-          sum of a properly built Google Business Profile, business details that match everywhere
-          they appear online, a steady trickle of real reviews, and pages that speak to the specific
-          places you serve. Together those tell Google you are a real, trusted option in the area.
-          It is one slice of our wider{" "}
-          <InlineLink href={DM_PILLAR_HREF}>{DM_PILLAR_LINK_TEXT}</InlineLink>, and it works hand in
-          glove with <InlineLink href={seo.href}>{seo.linkText}</InlineLink> when you want both the
-          map and the regular results working for you.
+          As a local SEO agency, we combine Google Business Profile optimization, local citations, Map
+          Pack strategy, reviews, and on-page local optimization into one campaign, run by a senior
+          consultant rather than handed off to a junior. Local SEO earns visibility in the searches that
+          carry local intent &mdash; &ldquo;near me&rdquo; queries, city-specific terms, and the Google
+          Map Pack that sits above the regular results.
         </p>
         <p>
-          The reason it is worth the effort is simple: people searching locally are usually ready to
-          act. They call, they ask for directions, they show up &mdash; and the businesses sitting
-          in the map pack get first crack at all of it.
+          A complete local SEO service is more than a one-off Google Business Profile tweak: Google
+          weighs your profile signals, citation consistency, reviews, and your site&rsquo;s local
+          relevance together, so we run them as one connected service. Whether you need a local SEO
+          consultant to guide your in-house team or a full-service local SEO agency end to end, we scope
+          the engagement to your market and goals &mdash; and run it alongside your broader{" "}
+          <InlineLink href={seo.href}>{seo.linkText}</InlineLink> and the rest of your{" "}
+          <InlineLink href={DM_PILLAR_HREF}>{DM_PILLAR_LINK_TEXT}</InlineLink>.
         </p>
       </>
     ),
+    introCallout: (
+      <CalloutBox>
+        Our local SEO services fit Canadian businesses that earn customers locally &mdash; small
+        businesses that want competitive local SEO services for small business budgets; brick-and-mortar
+        clinics, dental and law offices, restaurants, retailers, and trades; service-area businesses like
+        plumbers and electricians; and multi-location brands that need each location ranked and reported
+        on independently.
+      </CalloutBox>
+    ),
     stats: [
       {
-        value: "81%",
-        label: "of consumers used Google to evaluate local businesses in 2024.",
-        sourceName: "BrightLocal Local Consumer Review Survey 2024",
-        sourceUrl: "https://www.brightlocal.com/research/local-consumer-review-survey-2024/",
+        value: "≈46%",
+        label: "of all Google searches have local intent — the demand is already there.",
+        sourceName: "BrightLocal",
+        sourceUrl: "https://www.brightlocal.com/resources/local-seo-statistics/",
       },
       {
-        value: "98%",
-        label: "of consumers read online reviews for local businesses.",
-        sourceName: "BrightLocal Online Review Statistics",
-        sourceUrl: "https://www.brightlocal.com/resources/online-reviews-statistics/",
+        value: "76%",
+        label: "of people who search for something nearby visit a business within a day.",
+        sourceName: "Backlinko",
+        sourceUrl: "https://backlinko.com/local-seo-guide",
       },
       {
-        value: "≈90%",
-        label: "of search runs on Google — where the local map pack lives.",
-        sourceName: "Statcounter Global Stats",
-        sourceUrl: "https://gs.statcounter.com/search-engine-market-share",
+        value: "71%",
+        label: "of consumers use Google to read local business reviews.",
+        sourceName: "BrightLocal Local Consumer Review Survey",
+        sourceUrl: "https://www.brightlocal.com/research/local-consumer-review-survey/",
       },
     ],
-    featuresHeading: "What's included in local SEO",
-    featuresSubtitle: "Everything it takes to own your area in Google — not just one listing.",
+    featuresHeading: "Our local SEO services",
+    featuresSubtitle:
+      "The full range of local SEO services under one roof — built to win the Map Pack and the calls behind it.",
     features: [
       {
         icon: Building2,
-        title: "Google Business Profile optimization",
+        title: "Google Business Profile optimization & management",
         description:
-          "We claim and fully build out your profile — categories, services, hours, description, and photos — and keep it active with posts, because the profile is the single biggest lever on map-pack rankings.",
+          "Your Google Business Profile is the single most influential asset in local search. Our Google Business Profile services cover setup, category selection, and complete optimization — then ongoing Google Business Profile management so it stays accurate, active, and aligned with how Google ranks local results.",
       },
       {
         icon: MapPin,
-        title: "Citations & NAP consistency",
+        title: "Local citations & NAP consistency",
         description:
-          "We make sure your name, address, and phone number match exactly across Google, Bing, Apple Maps, and the directories that matter in Canada — inconsistencies quietly erode local trust.",
-      },
-      {
-        icon: Star,
-        title: "Review generation & response",
-        description:
-          "We set up a simple system to earn steady, genuine reviews and respond to every one — a ranking signal and the first thing a nearby buyer reads before they call.",
+          "We audit existing citations, correct inconsistent Name, Address, and Phone details across directories and data aggregators, and build authoritative new listings — reducing the conflicting-data issues that suppress rankings.",
       },
       {
         icon: Map,
-        title: "Location & service-area pages",
+        title: "Google Map Pack & local rankings",
         description:
-          "We build genuinely useful pages for the cities and neighbourhoods you serve — real local detail, not thin duplicates — so you rank for each area without tripping Google's doorway-page rules.",
+          "We build and execute strategies aimed squarely at the Map Pack — the top three local results — through profile signals, citation authority, review velocity, on-page local relevance, and proximity factors, and track your rankings across the areas you serve.",
       },
       {
-        icon: Users,
-        title: "Local content & link building",
-        description:
-          "We earn mentions and links from local publications, partners, and community sites — the regional signals that move the map pack more than national links ever will.",
+        icon: Star,
+        title: "Reviews & reputation building",
+        description: (
+          <>
+            Reviews are both a ranking signal and a conversion driver. We run compliant review-generation
+            strategies and help you monitor and respond, working alongside our{" "}
+            <InlineLink href={getDmSpoke("reputation-management").href}>
+              {getDmSpoke("reputation-management").linkText}
+            </InlineLink>{" "}
+            services where a deeper strategy is needed.
+          </>
+        ),
       },
       {
-        icon: LineChart,
-        title: "Local rank & call tracking",
+        icon: Search,
+        title: "Near-me & local keyword optimization",
         description:
-          "We track your position in the map pack by location and tie calls and direction requests back to the work, so you can see exactly what local SEO is returning.",
+          "We research the exact local terms your customers use, then optimize your service and location pages, metadata, schema, and internal linking so your site communicates clear geographic relevance — the on-page foundation behind strong local rankings.",
       },
     ],
-    processHeading: "How we deliver local SEO",
+    processHeading: "Our local SEO process",
     process: [
       {
         step: "01",
-        title: "Local audit",
+        title: "Free local SEO audit",
         description:
-          "We check your Google Business Profile, citations, reviews, and current map-pack rankings against the competitors already winning in your area.",
+          "A no-obligation review of your Google Business Profile, citation health, NAP consistency, current Map Pack rankings, on-page local optimization, and review profile — an honest baseline before any investment.",
       },
       {
         step: "02",
-        title: "Profile & citations",
+        title: "Strategy",
         description:
-          "We optimize your profile end to end and clean up every inconsistent listing so Google has one trusted record of your business.",
+          "The audit informs a prioritized plan: profile optimization, a citation plan, target local keywords, content for your service and location pages, and a review-generation framework mapped to your goals.",
       },
       {
         step: "03",
-        title: "Reviews & local pages",
+        title: "Execution",
         description:
-          "We turn on review generation and publish the location pages and local content that earn rankings for each area you serve.",
+          "Our in-house team optimizes your profile, corrects and builds citations, updates on-page elements and schema, and launches your review strategy. No outsourcing.",
       },
       {
         step: "04",
-        title: "Track & grow",
+        title: "Monthly reporting & ongoing management",
         description:
-          "We monitor map-pack positions by location, respond to reviews, and keep the profile active — then expand into new neighbourhoods as you win.",
+          "Clear, plain-language reporting on Map Pack movement, profile performance (calls, direction requests, website clicks), citation growth, reviews, and local keyword rankings, with continuous optimization.",
       },
     ],
-    comparisonHeading: "NexFortis vs. a typical local SEO provider",
+    comparisonHeading: "Why choose NexFortis for local SEO",
     comparison: [
-      { feature: "Google Business Profile", us: "Actively managed every month", them: "Set once and forgotten" },
-      { feature: "Citations", us: "Audited and corrected by hand", them: "Bulk-submitted and left alone" },
-      { feature: "Location pages", us: "Real local content, penalty-safe", them: "Thin city-name duplicates" },
-      { feature: "Reviews", us: "A system that earns and responds", them: "Left entirely to chance" },
-      { feature: "Reporting", us: "Map rank by location plus calls", them: "A generic traffic chart" },
-      { feature: "Commitment", us: "Month-to-month — we earn the renewal", them: "Locked annual contracts" },
+      { feature: "Who does the work", us: "A senior consultant, founder-led end-to-end", them: "A rotating junior account manager" },
+      { feature: "Scope", us: "GBP, citations, Map Pack, reviews, on-page as one campaign", them: "A GBP tweak in isolation" },
+      { feature: "Local expertise", us: "Canadian, GTA-savvy market knowledge", them: "A generic national playbook" },
+      { feature: "Outcomes", us: "Calls, direction requests, booked jobs", them: "Vanity ranking screenshots" },
+      { feature: "Commitment", us: "Month-to-month — no lock-in", them: "Locked 6–12 month contracts" },
     ],
-    pricingHeading: "What local SEO costs",
+    pricingHeading: "Local SEO pricing after a free audit",
     pricing: {
-      fromLabel: "Priced by area and competition",
+      fromLabel: "Scoped to your market",
       note: (
         <>
           <p className="mb-4">
-            A single-location service business in a quiet niche needs far less than a multi-area
-            firm fighting established competitors, so we price by how competitive your area is and
-            how many locations you serve &mdash; not a one-size checklist.
+            We don&rsquo;t publish fixed local SEO prices, because effective local SEO is scoped to your
+            market&rsquo;s competitiveness, your number of locations, your current baseline, and your
+            goals &mdash; which is why a free local SEO audit comes first.
           </p>
           <p>
-            Most local campaigns sit comfortably in the maintainer-to-growth range, with a fixed
-            monthly scope and no long-term lock-in. Ask for a quote tied to your city and your
-            competition.
+            After it, we present clear options matched to the scope of work, with no hidden fees and no
+            long-term lock-in &mdash; from project-based Google Business Profile optimization to ongoing
+            monthly local SEO management.
           </p>
         </>
       ),
     },
     faq: [
       {
-        question: "What is local SEO?",
+        question: "What is included in NexFortis's local SEO service?",
         answer:
-          "Local SEO is the work that puts your business in front of people searching nearby — the Google map pack, 'near me' searches, and Google Maps. Most of it comes down to four things: your Google Business Profile, business details that stay consistent everywhere online, your reviews, and content that actually speaks to the area you serve.",
+          "Our local SEO service includes Google Business Profile optimization and management, citation building and NAP consistency, Map Pack ranking strategy, review generation and reputation management, local keyword research, and on-page optimization for your service and location pages — all backed by monthly reporting.",
       },
       {
-        question: "Do I need a storefront to do local SEO?",
+        question: "How much do local SEO services cost?",
         answer:
-          "Not at all. Plenty of our clients go to the customer rather than the other way around — IT support, trades, consultants, home services. Google lets you set a service area instead of a public address, and as long as it is configured properly you show up for the places you actually cover. We set that up so you are not accidentally invisible or, worse, ranking for towns you don't serve.",
+          "Local SEO pricing varies by market competitiveness, number of locations, and scope, which is why we scope every engagement after a free audit rather than quoting a one-size-fits-all price. We structure plans to work for small businesses and scale to multi-location operations.",
       },
       {
-        question: "How important are Google reviews?",
+        question: "How is a local SEO agency different from a general SEO agency?",
         answer:
-          "Hugely, and on two fronts. Reviews feed into where you land in the map pack, and they are usually the deciding factor when a searcher is choosing between you and the business listed right beside you. A slow, steady stream of genuine reviews — and a reply to every one — is one of the highest-return things a local business can do, so we put a simple system in place to keep them coming.",
+          "A local SEO agency specializes in the ranking factors that drive local and map-based visibility — Google Business Profile signals, proximity, citations, and reviews — which differ from the factors behind broad organic rankings. NexFortis does both and connects the two.",
       },
       {
-        question: "How long does local SEO take?",
+        question: "How long does local SEO take to show results?",
         answer:
-          "Some of it moves quickly. Tidying up and optimising a Google Business Profile can shift the map pack within a few weeks. The slower-burning pieces — citations, reviews, location pages — tend to build over two to four months. A busy downtown market takes longer than a quieter suburb, and we will tell you honestly which one you are in before we start.",
+          "Local SEO is a months-not-weeks discipline. Timelines depend on your starting point, your market's competitiveness, and your review and citation profile, so we set realistic expectations up front rather than promising a fixed date.",
       },
       {
-        question: "Can you handle multiple locations?",
+        question: "Do you offer local SEO services for small businesses?",
         answer:
-          "Yes. Each branch or service area gets its own profile, its own citations, and its own location page, all kept consistent with each other while the content stays specific to each place. We do this for businesses running anything from two locations to a dozen.",
+          "Yes. We scope local SEO services for small business owners so the work — and the pricing — fits your specific situation, focusing first on the changes that move the needle fastest in your local market.",
+      },
+      {
+        question: "Can you manage local SEO for a business with multiple locations?",
+        answer:
+          "Yes. We manage multi-location local SEO, including individual Google Business Profile management, location-specific pages, and city-level targeting so each location earns and reports its own visibility.",
       },
     ],
     authorNote: (
       <p>
-        Hassan helps businesses across the GTA win the local search moments that actually turn into
-        calls &mdash; the map pack, the Google Business Profile, the &ldquo;near me&rdquo; searches.
-        As founder and CEO of NexFortis he stays hands-on with every engagement, so the person
-        planning your local strategy is the same one you can pick up the phone and reach.
+        Your local SEO is led personally by Hassan Sadiq, NexFortis Founder and CEO &mdash; never handed
+        off to a junior. Hassan brings 15+ years in enterprise technology, and NexFortis is a certified
+        Microsoft Solutions Partner, so the on-page and schema side of local SEO is handled with genuine
+        technical depth. A small senior team owns your campaign end-to-end.
       </p>
     ),
-    ctaHeading: "Want to own your local search results?",
+    ctaHeading: "Ready to win the Map Pack in your city?",
     ctaSubtext:
-      "Get a free local visibility check for your area — your map-pack standing, profile gaps, and the fastest path to more nearby calls.",
+      "Book a free, no-obligation local SEO audit — an honest assessment of where your local presence stands and what it will take to grow.",
   },
-
-  // -------------------------------------------- GENERATIVE ENGINE OPT ----
   "geo-ai-search": {
     metaTitle: "AI Search Optimization (GEO)",
     metaDescription:
