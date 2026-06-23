@@ -730,7 +730,7 @@ export const DM_SPOKE_CONTENT: Partial<Record<DmSpokeSlug, DmSpokeContent>> = {
   "content-marketing": {
     metaTitle: "Content Marketing Services in Canada",
     metaDescription:
-      "Canadian content marketing agency — strategy, SEO blog writing, web copy, video, and B2B content that builds authority and demand. Founder-led. Free consultation.",
+      "Canadian content marketing agency — strategy, SEO blog writing, web copy, video, and B2B content that builds authority. Founder-led. Free consultation.",
     h1: "Content Marketing Services for Canadian Businesses",
     heroSubtitle:
       "A Canadian content marketing agency that earns attention the honest way — strategy, SEO writing, web copy, video, and B2B content built around real keyword research and a clear commercial goal.",
@@ -1169,7 +1169,7 @@ export const DM_SPOKE_CONTENT: Partial<Record<DmSpokeSlug, DmSpokeContent>> = {
   "google-ads-ppc": {
     metaTitle: "Google Ads & PPC Management in Canada",
     metaDescription:
-      "Canadian Google Ads agency and PPC management — search, Shopping, Performance Max, and Local Service Ads. Google Partner, founder-led, no lock-in. Free PPC audit.",
+      "Canadian Google Ads agency and PPC management — search, Shopping, Performance Max, Local Service Ads. Google Partner, founder-led. Free PPC audit.",
     h1: "Google Ads and PPC Management for Canadian Businesses",
     heroSubtitle:
       "A Canadian Google Ads agency that turns paid search into a predictable source of leads, calls, and sales — strategy, account structure, bids, ad copy, and conversion tracking, run as one accountable campaign by a Google Partner.",
