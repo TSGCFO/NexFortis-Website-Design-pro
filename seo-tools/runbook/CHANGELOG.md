@@ -76,3 +76,7 @@ Also pending Step 7: `tests/seo/dm-word-targets.json` reconcile to the new slugs
 ## Current state (2026-06-23)
 - **Content (Steps 1–6): COMPLETE** for the pillar + all 11 spokes. seo also at Step 7.
 - **Next: Step 7 integration** (reconcile the app to the 12-map) + Step 8 QA. See `STATUS.md` for the exact next action.
+
+## Roadmap
+- **Phase A (current):** the 12 national service pages. Completed by Steps 7–8.
+- **Phase B (next):** the geo layer — Option D `[service]+[city]` pages for GTA municipalities + major Canadian metros. Full spec: `00-architecture.md` → "Geography (decided: option D)". Do NOT lose this.

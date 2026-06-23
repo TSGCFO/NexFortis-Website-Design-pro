@@ -8,6 +8,11 @@ Full reasoning + history: `seo-tools/runbook/CHANGELOG.md`. Process: `seo-tools/
 ## THE OBJECTIVE
 Market NexFortis's digital-marketing capabilities as strategically-grouped service subpages under `/services/digital-marketing`, built to rank AND sell, grounded in `seo-tools/Nexfortis-competitor-services.md` + `seo-tools/runbook/_facts.md`. Architecture = the **12-page map**: pillar `digital-marketing` + 11 spokes (seo, local-seo, web-design, google-ads-ppc, social-media-marketing, content-marketing, link-building, geo-ai-search, reputation-management, email-marketing, conversion-rate-optimization).
 
+## ROADMAP — two phases (do not lose Phase B)
+- **Phase A — national service pages (CURRENT).** The 12-page map (pillar + 11 spokes). **Completed by Steps 7–8.** ← we are here.
+- **Phase B — geo layer (NEXT, after Phase A).** Option D: `[service]+[city]` pages for **every GTA municipality + major Canadian metros**, at `/services/digital-marketing/<service>/<city>`, each with genuine local content (no thin doorway pages). **Full spec:** `seo-tools/runbook/00-architecture.md` → "Geography (decided: option D)". Same 8-step run book per page; expansion via Ahrefs matching-terms + Semrush.
+- **Future (beyond Phase B):** the other 4 main services (Microsoft 365, QuickBooks Migration, etc.) each gain their own sub-services under the same nested pattern.
+
 ## WHERE WE ARE — content COMPLETE
 Run-book Steps 1–6 are **complete for all 12 pages**:
 - **seo** — through Step 7 (already integrated into the app).
