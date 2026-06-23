@@ -1481,194 +1481,225 @@ export const DM_SPOKE_CONTENT: Partial<Record<DmSpokeSlug, DmSpokeContent>> = {
 
   // -------------------------------------- WEB DESIGN & DEVELOPMENT ----
   "web-design": {
-    metaTitle: "Web Design & Development",
+    metaTitle: "Web Design Services in Canada",
     metaDescription:
-      "Web design & development for Canadian businesses: fast, mobile-first websites built on modern frameworks and engineered to rank and convert.",
-    h1: "Web Design & Development That Converts",
+      "Canadian web design company — custom, responsive, conversion-focused websites and development built to rank and convert. Founder-led. Free design consultation.",
+    h1: "Web Design Services for Canadian Businesses",
     heroSubtitle:
-      "Fast, mobile-first websites built on modern frameworks — engineered to rank in search and turn visitors into customers, not just look good.",
+      "A Canadian web design company that builds websites to get results — clean, modern design paired with the development and search foundations that make a site actually perform, run by a senior team.",
     serviceType: "Web Design and Development",
-    serviceSchemaName: "Web Design & Development Services",
+    serviceSchemaName: "Web Design Services",
     serviceSchemaDescription:
-      "Web design and development for Canadian businesses — custom, responsive, conversion-focused websites built on modern frameworks and engineered to rank and perform.",
-    introHeading: "A website should earn its keep, not just look nice",
+      "Web design and development for Canadian businesses — custom UX/UI, responsive builds, eCommerce, CMS, redesigns, landing pages, and maintenance, delivered by a senior team and engineered to rank and convert.",
+    introHeading: "What NexFortis web design services include",
     intro: (
       <>
         <p>
-          A beautiful website that loads slowly, can&rsquo;t be found in Google, or doesn&rsquo;t
-          turn visitors into enquiries is an expensive brochure. Plenty of businesses pay for the
-          first part and quietly lose on the other three. We build sites that do all four: look the
-          part, load fast, rank, and convert.
+          NexFortis is a Canadian <strong>web design company</strong> that builds websites to get results
+          for your business &mdash; more leads, more phone calls, more customers. We pair clean, modern
+          design with the development and search foundations that make a site actually perform, not just
+          look good. As a web design agency, every project is led by a senior team, never handed to a
+          junior or an offshore template mill.
         </p>
         <p>
-          That comes from treating a website as engineering, not just decoration. We build on modern
-          frameworks, design mobile-first, and bake in the technical foundations search engines
-          reward &mdash; so your new site is set up to win from launch. It works hand in hand with
-          our <InlineLink href={getDmSpoke("seo").href}>{getDmSpoke("seo").linkText}</InlineLink>{" "}
-          work and is part of the wider{" "}
+          Good web design is where your brand, your message, and your conversion goals meet. Our web
+          design services cover the full build &mdash; strategy, user experience, visual design, and web
+          design and development &mdash; so the site that goes live is fast, accessible, search-ready, and
+          built around how your customers actually behave. We build for speed, mobile, and search from the
+          start, so your site supports your{" "}
+          <InlineLink href={seo.href}>{seo.linkText}</InlineLink> and{" "}
+          <InlineLink href={getDmSpoke("conversion-rate-optimization").href}>
+            {getDmSpoke("conversion-rate-optimization").linkText}
+          </InlineLink>{" "}
+          instead of working against them.
+        </p>
+        <p>
+          Because we are a Canadian-based company that knows the Greater Toronto Area and works with
+          businesses across Ontario and the rest of Canada, we design for Canadian audiences and the way
+          they buy &mdash; and connect your site to the rest of your{" "}
           <InlineLink href={DM_PILLAR_HREF}>{DM_PILLAR_LINK_TEXT}</InlineLink>.
-        </p>
-        <p>
-          We are an IT and engineering firm at heart, so &ldquo;built to rank and convert&rdquo;
-          isn&rsquo;t a slogan &mdash; it&rsquo;s how we approach every build, down to the speed and
-          structure most agencies leave as an afterthought.
         </p>
       </>
     ),
+    introCallout: (
+      <CalloutBox>
+        Our web design services fit Canadian businesses that need a site that works as hard as they do
+        &mdash; small businesses that need a professional, credible website without enterprise cost; B2B
+        and B2C companies that need their site to generate and qualify leads; eCommerce retailers that
+        need a store built to sell; and growing or multi-location businesses planning a redesign who want
+        to protect their search rankings through the move.
+      </CalloutBox>
+    ),
     stats: [
       {
+        value: "75%",
+        label: "of users judge a company's credibility on its website design.",
+        sourceName: "Stanford Web Credibility Research",
+        sourceUrl: "https://www.kinesisinc.com/the-truth-about-web-design/",
+      },
+      {
         value: "53%",
-        label: "of mobile visits are abandoned if a page takes over 3 seconds to load.",
-        sourceName: "Google, The Need for Mobile Speed",
-        sourceUrl: "https://blog.google/products/admanager/the-need-for-mobile-speed/",
+        label: "of mobile visits are abandoned when a page takes longer than three seconds to load.",
+        sourceName: "Google, 'The Need for Mobile Speed'",
+        sourceUrl: "https://www.marketingdive.com/news/google-53-of-mobile-users-abandon-sites-that-take-over-3-seconds-to-load/426070/",
       },
       {
-        value: "43%",
-        label: "of mobile sites pass all three Core Web Vitals — most don't.",
-        sourceName: "2024 Web Almanac, HTTP Archive",
-        sourceUrl: "https://almanac.httparchive.org/en/2024/performance",
-      },
-      {
-        value: "≈90%",
-        label: "of global search runs on Google — so a site has to be built to rank there.",
-        sourceName: "Statcounter Global Stats",
-        sourceUrl: "https://gs.statcounter.com/search-engine-market-share",
+        value: "<50%",
+        label: "of mobile sites pass all three Core Web Vitals — so a fast build is still an edge.",
+        sourceName: "2025 Web Almanac, HTTP Archive",
+        sourceUrl: "https://almanac.httparchive.org/en/2025/performance",
       },
     ],
-    featuresHeading: "What's included in our web design & development",
-    featuresSubtitle: "Design, build, and the engineering that makes a site fast and findable.",
+    featuresHeading: "Our web design services",
+    featuresSubtitle:
+      "The full range of web design services under one roof — from custom UX to ongoing maintenance.",
     features: [
       {
         icon: PenTool,
-        title: "Custom design",
+        title: "Custom web design & UX/UI",
         description:
-          "We design a site around your brand and your customers, not a recycled template — clean, modern, and built to guide visitors toward the action you want them to take.",
-      },
-      {
-        icon: Gauge,
-        title: "Responsive & mobile-first",
-        description:
-          "Most of your visitors are on a phone, so we design for that screen first and scale up — your site looks and works right on every device, not just a designer's desktop.",
+          "Every site is custom web design built around your brand and your audience — no recycled themes. We plan the user experience and interface so visitors find what they need and take action.",
       },
       {
         icon: FileCode,
-        title: "Built on modern frameworks",
+        title: "Web design and development",
         description:
-          "We build on current, well-supported frameworks, so your site is fast, secure, and maintainable — not a fragile pile of plugins that breaks the next time something updates.",
+          "Design and build run together: we turn the design into clean, fast, standards-based code, so the finished site performs as well as it looks.",
       },
       {
-        icon: Search,
-        title: "SEO-ready foundations",
+        icon: Gauge,
+        title: "Responsive, mobile-first design",
         description:
-          "We bake in the crawlability, structure, and metadata search engines need from day one, so your new site can rank instead of starting life invisible to Google.",
+          "Every page is built for phones first, then scaled up — because that is where most of your visitors are, and it is the experience Google evaluates first.",
       },
       {
-        icon: Users,
-        title: "Conversion-focused UX",
+        icon: BarChart3,
+        title: "eCommerce & Shopify builds",
         description:
-          "We design the layout, calls to action, and page flow around turning visitors into enquiries — because traffic that doesn't convert is just a number on a chart.",
+          "We design and build online stores — product pages, category structure, and checkout — built to convert browsers into buyers.",
+      },
+      {
+        icon: FileText,
+        title: "WordPress & CMS development",
+        description:
+          "We build on WordPress and other content systems so your team can update the site easily after launch.",
+      },
+      {
+        icon: Sparkles,
+        title: "Website redesign",
+        description:
+          "If your current site is dated, slow, or underperforming, we redesign it without throwing away the search equity you have already earned.",
       },
       {
         icon: LineChart,
-        title: "Speed & Core Web Vitals",
+        title: "Conversion-focused landing pages",
         description:
-          "We optimise load time and Core Web Vitals as we build, not as a bolt-on later — because speed affects both your rankings and whether a visitor sticks around at all.",
+          "Campaign and service landing pages designed around a single action, so you get more from your marketing.",
+      },
+      {
+        icon: Bot,
+        title: "Website maintenance services",
+        description:
+          "After launch, our website maintenance services keep your site secure, updated, and fast — so it keeps performing.",
       },
     ],
-    processHeading: "How we design & build your site",
+    processHeading: "Our web design process",
     process: [
       {
         step: "01",
-        title: "Discover & plan",
+        title: "Free consultation & quote",
         description:
-          "We learn your business, your customers, and your goals, map the pages and content you need, and plan a site structured to rank and convert.",
+          "A no-obligation conversation about your goals, your audience, and your current site, then a clear scope and quote.",
       },
       {
         step: "02",
-        title: "Design",
+        title: "Discovery & strategy",
         description:
-          "We design the look and feel and the page layouts, mobile-first, and refine with you until it represents your brand and guides visitors to act.",
+          "We map your content, structure, and conversion goals so the design is built on a plan, not a guess.",
       },
       {
         step: "03",
-        title: "Build & optimize",
+        title: "Design",
         description:
-          "We develop the site on a modern framework with SEO foundations, speed, and accessibility built in — then test it across devices before anything goes live.",
+          "We design the interface and key pages for your review, refining until the look and feel is right.",
       },
       {
         step: "04",
-        title: "Launch & support",
+        title: "Development, launch & support",
         description:
-          "We launch carefully (protecting any existing rankings), confirm everything works, and can keep the site updated, secure, and fast afterward.",
+          "We build the site — responsive, fast, and search-ready — test it thoroughly, and launch; then we stay on with website maintenance and ongoing improvements. The same senior team does the work end-to-end.",
       },
     ],
-    comparisonHeading: "NexFortis vs. a typical web shop",
+    comparisonHeading: "Why choose NexFortis for web design",
     comparison: [
-      { feature: "Built for", us: "Speed, search, and conversion", them: "Looks alone" },
-      { feature: "Foundation", us: "Modern framework, maintainable", them: "Plugin-heavy and fragile" },
-      { feature: "SEO", us: "Baked in from day one", them: "An afterthought or upsell" },
-      { feature: "Mobile", us: "Designed mobile-first", them: "Desktop design squeezed down" },
-      { feature: "Who does the work", us: "A senior consultant you can reach", them: "A rotating junior" },
-      { feature: "After launch", us: "Support and optimization available", them: "Handed over and gone" },
+      { feature: "Who does the work", us: "A senior team, founder-led end-to-end", them: "A junior or an offshore template mill" },
+      { feature: "Build quality", us: "Custom design, fast, accessible, search-ready", them: "A recycled template, slow on mobile" },
+      { feature: "Performance", us: "Built for Core Web Vitals and conversion", them: "Pretty but fragile" },
+      { feature: "After launch", us: "Maintenance and ongoing improvements", them: "Handed over and gone" },
+      { feature: "Commitment", us: "Honest pricing, month-to-month — no lock-in", them: "Locked contracts" },
     ],
-    pricingHeading: "What a website costs",
+    pricingHeading: "Web design pricing after a free consultation",
     pricing: {
-      fromLabel: "Scoped to pages, features, and complexity",
+      fromLabel: "Scoped to your build",
       note: (
         <>
           <p className="mb-4">
-            A simple, polished brochure site is a very different project from a large or
-            e-commerce build, so we scope and quote each one rather than quoting a flat package
-            blind. You&rsquo;ll know exactly what&rsquo;s included before any work starts.
+            We don&rsquo;t publish fixed web design prices, because the right scope depends on your goals,
+            the number of pages, the functionality you need &mdash; a brochure site and an eCommerce build
+            are very different &mdash; and whether you are starting fresh or redesigning.
           </p>
           <p>
-            Pricing is transparent, with no surprise add-ons, and we can bundle ongoing support if
-            you want it. Ask for a free website review and we&rsquo;ll recommend the right scope for
-            your goals and budget.
+            After your free consultation, we give you a clear quote tied to the work involved, with no
+            hidden fees. Ongoing work like website maintenance is offered month-to-month, so you are never
+            locked in.
           </p>
         </>
       ),
     },
     faq: [
       {
-        question: "How much does a website cost?",
+        question: "How much does a website design service cost?",
         answer:
-          "It depends on the scope — number of pages, features, and whether you need e-commerce or custom functionality. A clean brochure site is far less than a large or transactional build, so we scope and quote each project rather than quoting blind. Whatever the number, you'll know exactly what's included before we start, with no surprise add-ons.",
+          "It depends on scope — the number of pages, whether you need eCommerce or custom functionality, and whether it is a new build or a redesign. Rather than a one-size-fits-all price, we quote each project after a free consultation so you only pay for what your site actually needs.",
       },
       {
         question: "How long does it take to build a website?",
         answer:
-          "Most small-business sites take a few weeks from kickoff to launch; larger or e-commerce builds take longer. The biggest variable is usually how quickly content and feedback come back from your side. We'll give you a realistic timeline up front and keep the project moving against it.",
+          "Most business websites take from a few weeks to a couple of months, depending on size, functionality, and how quickly content and feedback come together. We set a realistic timeline up front rather than promising an unrealistic launch date.",
       },
       {
-        question: "Custom design or a template/builder?",
+        question: "Do you build custom sites, or use WordPress?",
         answer:
-          "Builders like Wix or Squarespace can work for a very simple site, but they trade away speed, flexibility, and SEO control as you grow. We build custom on modern frameworks so your site is faster, more maintainable, and genuinely yours — without the limits and bloat that hold template sites back. We'll be honest if a simple builder is genuinely all you need.",
+          "Both. We do custom web design and also build on WordPress and other content systems when that is the best fit for your team — the goal is a site you can actually run, not one you are locked out of.",
       },
       {
-        question: "Will my site be mobile-friendly and SEO-ready?",
+        question: "Will my website work on mobile?",
         answer:
-          "Always. We design mobile-first because that's where most of your visitors are, and we build in the crawlability, structure, speed, and metadata search engines need from day one. The goal is a site that can rank from launch instead of needing an SEO rescue six months later.",
+          "Yes. Every site we build is responsive and mobile-first, because most visitors arrive on a phone and Google evaluates the mobile experience first.",
       },
       {
-        question: "Do you handle hosting and maintenance?",
+        question: "Can you redesign my existing website?",
         answer:
-          "We can. A website isn't finished at launch — it needs updates, security, backups, and the occasional fix. We offer ongoing support and maintenance so your site stays fast, secure, and current, or we can hand it over cleanly if you'd rather manage it yourself.",
+          "Yes. We redesign dated or underperforming sites and protect the search equity you have already built, so a new look does not cost you rankings.",
+      },
+      {
+        question: "Do you offer website maintenance after launch?",
+        answer:
+          "Yes. Our website maintenance services keep your site secure, updated, and fast after launch, on month-to-month terms.",
       },
     ],
     authorNote: (
       <p>
-        Hassan leads web design and development at NexFortis, bringing an IT and engineering
-        background to sites built for speed, search, and conversion. As founder and CEO he stays
-        hands-on with every build.
+        Your project is guided personally by Hassan Sadiq, NexFortis Founder and CEO &mdash; the calibre
+        you would want from the best web design company, without the agency overhead. Hassan brings 15+
+        years in enterprise technology, and NexFortis is a certified Microsoft Solutions Partner, so the
+        build is handled with genuine technical depth. A small senior team owns your project end-to-end.
       </p>
     ),
-    ctaHeading: "Want a website that works as hard as you do?",
+    ctaHeading: "Ready for a website that works as hard as you do?",
     ctaSubtext:
-      "Get a free website review — what's helping, what's holding you back, and what a fast, ranking, converting site would look like for your business.",
+      "Book a free, no-obligation website design consultation and quote — we'll show you exactly what your site needs to perform.",
   },
-
-  // ----------------------------------------------- EMAIL MARKETING ----
   "email-marketing": {
     metaTitle: "Email Marketing",
     metaDescription:
