@@ -281,15 +281,7 @@
     },
     {
       "text": "GEO &amp; AI Search",
-      "href": "/services/digital-marketing/generative-engine-optimization"
-    },
-    {
-      "text": "Technical SEO",
-      "href": "/services/digital-marketing/technical-seo"
-    },
-    {
-      "text": "Google Business Profile",
-      "href": "/services/digital-marketing/google-business-profile"
+      "href": "/services/digital-marketing/geo-ai-search"
     },
     {
       "text": "Content Marketing",
@@ -301,7 +293,7 @@
     },
     {
       "text": "Google Ads Management",
-      "href": "/services/digital-marketing/google-ads"
+      "href": "/services/digital-marketing/google-ads-ppc"
     },
     {
       "text": "Social Media Marketing",
@@ -320,8 +312,8 @@
       "href": "/services/digital-marketing/conversion-rate-optimization"
     },
     {
-      "text": "Analytics &amp; Reporting",
-      "href": "/services/digital-marketing/analytics-reporting"
+      "text": "Reputation Management",
+      "href": "/services/digital-marketing/reputation-management"
     },
     {
       "text": "Microsoft 365 Solutions",
@@ -376,12 +368,12 @@
       "href": "/contact"
     },
     {
-      "text": "About Us",
-      "href": "/about"
-    },
-    {
       "text": "Privacy Policy",
       "href": "/privacy"
+    },
+    {
+      "text": "About Us",
+      "href": "/about"
     },
     {
       "text": "Terms of Service",

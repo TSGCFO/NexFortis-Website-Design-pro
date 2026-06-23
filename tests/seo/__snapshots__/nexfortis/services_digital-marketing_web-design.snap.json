@@ -1,12 +1,12 @@
 {
   "route": "/services/digital-marketing/web-design",
-  "title": "Web Design &amp; Development | NexFortis IT Solutions",
-  "description": "Web design &amp; development for Canadian businesses: fast, mobile-first websites built on modern frameworks and engineered to rank and convert.",
+  "title": "Web Design Services in Canada | NexFortis IT Solutions",
+  "description": "Canadian web design company — custom, responsive, conversion-focused websites and development built to rank and convert. Founder-led. Free design consultation.",
   "canonical": "https://nexfortis.com/services/digital-marketing/web-design",
   "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
   "og": {
-    "title": "Web Design &amp; Development | NexFortis IT Solutions",
-    "description": "Web design &amp; development for Canadian businesses: fast, mobile-first websites built on modern frameworks and engineered to rank and convert.",
+    "title": "Web Design Services in Canada | NexFortis IT Solutions",
+    "description": "Canadian web design company — custom, responsive, conversion-focused websites and development built to rank and convert. Founder-led. Free design consultation.",
     "url": "https://nexfortis.com/services/digital-marketing/web-design",
     "image": "https://nexfortis.com/opengraph.png",
     "type": "website"
@@ -17,47 +17,59 @@
   "headings": [
     {
       "level": 1,
-      "text": "Web Design &amp; Development That Converts"
+      "text": "Web Design Services for Canadian Businesses"
     },
     {
       "level": 2,
-      "text": "A website should earn its keep, not just look nice"
+      "text": "What NexFortis web design services include"
     },
     {
       "level": 2,
-      "text": "What's included in our web design &amp; development"
+      "text": "Our web design services"
     },
     {
       "level": 3,
-      "text": "Custom design"
+      "text": "Custom web design &amp; UX/UI"
     },
     {
       "level": 3,
-      "text": "Responsive &amp; mobile-first"
+      "text": "Web design and development"
     },
     {
       "level": 3,
-      "text": "Built on modern frameworks"
+      "text": "Responsive, mobile-first design"
     },
     {
       "level": 3,
-      "text": "SEO-ready foundations"
+      "text": "eCommerce &amp; Shopify builds"
     },
     {
       "level": 3,
-      "text": "Conversion-focused UX"
+      "text": "WordPress &amp; CMS development"
     },
     {
       "level": 3,
-      "text": "Speed &amp; Core Web Vitals"
+      "text": "Website redesign"
+    },
+    {
+      "level": 3,
+      "text": "Conversion-focused landing pages"
+    },
+    {
+      "level": 3,
+      "text": "Website maintenance services"
     },
     {
       "level": 2,
-      "text": "How we design &amp; build your site"
+      "text": "Our web design process"
     },
     {
       "level": 3,
-      "text": "Discover &amp; plan"
+      "text": "Free consultation &amp; quote"
+    },
+    {
+      "level": 3,
+      "text": "Discovery &amp; strategy"
     },
     {
       "level": 3,
@@ -65,23 +77,19 @@
     },
     {
       "level": 3,
-      "text": "Build &amp; optimize"
-    },
-    {
-      "level": 3,
-      "text": "Launch &amp; support"
+      "text": "Development, launch &amp; support"
     },
     {
       "level": 2,
-      "text": "NexFortis vs. a typical web shop"
+      "text": "Why choose NexFortis for web design"
     },
     {
       "level": 2,
-      "text": "What a website costs"
+      "text": "Web design pricing after a free consultation"
     },
     {
       "level": 3,
-      "text": "Scoped to pages, features, and complexity"
+      "text": "Scoped to your build"
     },
     {
       "level": 2,
@@ -105,7 +113,7 @@
     },
     {
       "level": 2,
-      "text": "Want a website that works as hard as you do?"
+      "text": "Ready for a website that works as hard as you do?"
     },
     {
       "level": 4,
@@ -161,10 +169,10 @@
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "How much does a website cost?",
+          "name": "How much does a website design service cost?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "It depends on the scope — number of pages, features, and whether you need e-commerce or custom functionality. A clean brochure site is far less than a large or transactional build, so we scope and quote each project rather than quoting blind. Whatever the number, you'll know exactly what's included before we start, with no surprise add-ons."
+            "text": "It depends on scope — the number of pages, whether you need eCommerce or custom functionality, and whether it is a new build or a redesign. Rather than a one-size-fits-all price, we quote each project after a free consultation so you only pay for what your site actually needs."
           }
         },
         {
@@ -172,31 +180,39 @@
           "name": "How long does it take to build a website?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Most small-business sites take a few weeks from kickoff to launch; larger or e-commerce builds take longer. The biggest variable is usually how quickly content and feedback come back from your side. We'll give you a realistic timeline up front and keep the project moving against it."
+            "text": "Most business websites take from a few weeks to a couple of months, depending on size, functionality, and how quickly content and feedback come together. We set a realistic timeline up front rather than promising an unrealistic launch date."
           }
         },
         {
           "@type": "Question",
-          "name": "Custom design or a template/builder?",
+          "name": "Do you build custom sites, or use WordPress?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Builders like Wix or Squarespace can work for a very simple site, but they trade away speed, flexibility, and SEO control as you grow. We build custom on modern frameworks so your site is faster, more maintainable, and genuinely yours — without the limits and bloat that hold template sites back. We'll be honest if a simple builder is genuinely all you need."
+            "text": "Both. We do custom web design and also build on WordPress and other content systems when that is the best fit for your team — the goal is a site you can actually run, not one you are locked out of."
           }
         },
         {
           "@type": "Question",
-          "name": "Will my site be mobile-friendly and SEO-ready?",
+          "name": "Will my website work on mobile?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Always. We design mobile-first because that's where most of your visitors are, and we build in the crawlability, structure, speed, and metadata search engines need from day one. The goal is a site that can rank from launch instead of needing an SEO rescue six months later."
+            "text": "Yes. Every site we build is responsive and mobile-first, because most visitors arrive on a phone and Google evaluates the mobile experience first."
           }
         },
         {
           "@type": "Question",
-          "name": "Do you handle hosting and maintenance?",
+          "name": "Can you redesign my existing website?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "We can. A website isn't finished at launch — it needs updates, security, backups, and the occasional fix. We offer ongoing support and maintenance so your site stays fast, secure, and current, or we can hand it over cleanly if you'd rather manage it yourself."
+            "text": "Yes. We redesign dated or underperforming sites and protect the search equity you have already built, so a new look does not cost you rankings."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you offer website maintenance after launch?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Our website maintenance services keep your site secure, updated, and fast after launch, on month-to-month terms."
           }
         }
       ]
@@ -292,8 +308,8 @@
     {
       "@context": "https://schema.org",
       "@type": "Service",
-      "name": "Web Design & Development Services",
-      "description": "Web design and development for Canadian businesses — custom, responsive, conversion-focused websites built on modern frameworks and engineered to rank and perform.",
+      "name": "Web Design Services",
+      "description": "Web design and development for Canadian businesses — custom UX/UI, responsive builds, eCommerce, CMS, redesigns, landing pages, and maintenance, delivered by a senior team and engineered to rank and convert.",
       "url": "https://nexfortis.com/services/digital-marketing/web-design",
       "provider": {
         "@type": "Organization",
@@ -345,15 +361,7 @@
     },
     {
       "text": "GEO &amp; AI Search",
-      "href": "/services/digital-marketing/generative-engine-optimization"
-    },
-    {
-      "text": "Technical SEO",
-      "href": "/services/digital-marketing/technical-seo"
-    },
-    {
-      "text": "Google Business Profile",
-      "href": "/services/digital-marketing/google-business-profile"
+      "href": "/services/digital-marketing/geo-ai-search"
     },
     {
       "text": "Content Marketing",
@@ -365,7 +373,7 @@
     },
     {
       "text": "Google Ads Management",
-      "href": "/services/digital-marketing/google-ads"
+      "href": "/services/digital-marketing/google-ads-ppc"
     },
     {
       "text": "Social Media Marketing",
@@ -384,8 +392,8 @@
       "href": "/services/digital-marketing/conversion-rate-optimization"
     },
     {
-      "text": "Analytics &amp; Reporting",
-      "href": "/services/digital-marketing/analytics-reporting"
+      "text": "Reputation Management",
+      "href": "/services/digital-marketing/reputation-management"
     },
     {
       "text": "Microsoft 365 Solutions",
@@ -436,36 +444,40 @@
       "href": "/services"
     },
     {
-      "text": "technical SEO",
-      "href": "/services/digital-marketing/technical-seo"
+      "text": "SEO services",
+      "href": "/services/digital-marketing/seo"
+    },
+    {
+      "text": "conversion rate optimization",
+      "href": "/services/digital-marketing/conversion-rate-optimization"
     },
     {
       "text": "digital marketing services",
       "href": "/services/digital-marketing"
     },
     {
-      "text": "Source: Google, The Need for Mobile Speed",
-      "href": "https://blog.google/products/admanager/the-need-for-mobile-speed/"
+      "text": "Source: Stanford Web Credibility Research",
+      "href": "https://www.kinesisinc.com/the-truth-about-web-design/"
     },
     {
-      "text": "Source: 2024 Web Almanac, HTTP Archive",
-      "href": "https://almanac.httparchive.org/en/2024/performance"
+      "text": "Source: Google, 'The Need for Mobile Speed'",
+      "href": "https://www.marketingdive.com/news/google-53-of-mobile-users-abandon-sites-that-take-over-3-seconds-to-load/426070/"
     },
     {
-      "text": "Source: Statcounter Global Stats",
-      "href": "https://gs.statcounter.com/search-engine-market-share"
+      "text": "Source: 2025 Web Almanac, HTTP Archive",
+      "href": "https://almanac.httparchive.org/en/2025/performance"
     },
     {
       "text": "More about NexFortis",
       "href": "/about"
     },
     {
-      "text": "About Us",
-      "href": "/about"
-    },
-    {
       "text": "Privacy Policy",
       "href": "/privacy"
+    },
+    {
+      "text": "About Us",
+      "href": "/about"
     },
     {
       "text": "Terms of Service",

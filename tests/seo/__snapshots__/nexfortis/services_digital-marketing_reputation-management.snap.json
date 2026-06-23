@@ -1,13 +1,13 @@
 {
-  "route": "/services/digital-marketing/technical-seo",
-  "title": "Technical SEO Services | NexFortis IT Solutions",
-  "description": "Technical SEO services for Canadian businesses: crawlability, indexation, Core Web Vitals, structured data, and rendering fixes that let Google rank you.",
-  "canonical": "https://nexfortis.com/services/digital-marketing/technical-seo",
+  "route": "/services/digital-marketing/reputation-management",
+  "title": "Reputation Management Services in Canada | NexFortis IT Solutions",
+  "description": "Canadian reputation management company: more genuine reviews, professional responses, and content that outranks unfair results. Founder-led. Free audit.",
+  "canonical": "https://nexfortis.com/services/digital-marketing/reputation-management",
   "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
   "og": {
-    "title": "Technical SEO Services | NexFortis IT Solutions",
-    "description": "Technical SEO services for Canadian businesses: crawlability, indexation, Core Web Vitals, structured data, and rendering fixes that let Google rank you.",
-    "url": "https://nexfortis.com/services/digital-marketing/technical-seo",
+    "title": "Reputation Management Services in Canada | NexFortis IT Solutions",
+    "description": "Canadian reputation management company: more genuine reviews, professional responses, and content that outranks unfair results. Founder-led. Free audit.",
+    "url": "https://nexfortis.com/services/digital-marketing/reputation-management",
     "image": "https://nexfortis.com/opengraph.png",
     "type": "website"
   },
@@ -17,71 +17,67 @@
   "headings": [
     {
       "level": 1,
-      "text": "Technical SEO Services That Unblock Rankings"
+      "text": "Reputation Management Services for Canadian Businesses"
     },
     {
       "level": 2,
-      "text": "The work that decides whether your other SEO pays off"
+      "text": "What NexFortis reputation management services include"
     },
     {
       "level": 2,
-      "text": "What's included in our technical SEO services"
+      "text": "Our reputation management services"
     },
     {
       "level": 3,
-      "text": "Technical SEO audit"
+      "text": "Online reputation management (ORM)"
     },
     {
       "level": 3,
-      "text": "Crawlability &amp; indexation"
+      "text": "Review generation &amp; management"
     },
     {
       "level": 3,
-      "text": "Core Web Vitals &amp; speed"
+      "text": "Review monitoring &amp; response"
     },
     {
       "level": 3,
-      "text": "Structured data &amp; schema"
+      "text": "Suppression of negative or harmful content"
     },
     {
       "level": 3,
-      "text": "Site architecture &amp; internal links"
-    },
-    {
-      "level": 3,
-      "text": "Rendering, JavaScript &amp; migrations"
+      "text": "Brand reputation strategy"
     },
     {
       "level": 2,
-      "text": "How we deliver technical SEO"
+      "text": "Our reputation management process"
     },
     {
       "level": 3,
-      "text": "Crawl &amp; audit"
+      "text": "Free reputation management audit"
     },
     {
       "level": 3,
-      "text": "Fix the blockers"
+      "text": "Strategy"
     },
     {
       "level": 3,
-      "text": "Validate &amp; monitor"
+      "text": "Execution"
     },
     {
       "level": 3,
-      "text": "Keep it healthy"
+      "text": "Monthly reporting"
     },
     {
       "level": 2,
-      "text": "NexFortis vs. a typical SEO provider"
+      "text": "Why choose NexFortis for reputation management"
     },
     {
       "level": 2,
-      "text": "What technical SEO costs"
+      "text": "Reputation management pricing after a free audit"
     },
     {
       "level": 3,
-      "text": "Audit first, then scoped to what's broken"
+      "text": "Scoped to your starting point"
     },
     {
       "level": 2,
@@ -105,7 +101,7 @@
     },
     {
       "level": 2,
-      "text": "Is something under the hood holding you back?"
+      "text": "Want to control what customers find when they search you?"
     },
     {
       "level": 4,
@@ -150,8 +146,8 @@
         {
           "@type": "ListItem",
           "position": 4,
-          "name": "Technical SEO",
-          "item": "https://nexfortis.com/services/digital-marketing/technical-seo"
+          "name": "Reputation Management",
+          "item": "https://nexfortis.com/services/digital-marketing/reputation-management"
         }
       ]
     },
@@ -161,42 +157,42 @@
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "What is technical SEO?",
+          "name": "What is a reputation management service?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Technical SEO is the work that makes sure search engines can crawl, render, index, and trust your site. It covers things like site speed and Core Web Vitals, crawlability, indexation, structured data, site architecture, and JavaScript rendering. It's the layer underneath your content and links — when it's broken, the rest of your SEO underperforms no matter how good it is."
+            "text": "A reputation management service monitors and improves how your business appears online — across reviews, search results, and brand mentions. At NexFortis it includes online reputation management, review generation and management, monitoring and response, suppression of negative or harmful content, and a proactive brand reputation strategy, backed by monthly reporting."
           }
         },
         {
           "@type": "Question",
-          "name": "What is a technical SEO audit?",
+          "name": "How much does reputation management cost?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "It's a structured review of everything that affects how search engines access and understand your site. We crawl it the way Google does, pull data from Search Console and Core Web Vitals, and produce a prioritised list of issues with the highest-impact fixes first. It's the starting point for every technical engagement, because guessing at problems wastes money."
+            "text": "Reputation management pricing varies with your starting point — the state of your reviews, what ranks for your name, and how much negative content exists — so we scope every engagement after a free audit rather than quoting a one-size-fits-all price."
           }
         },
         {
           "@type": "Question",
-          "name": "What's the difference between on-page and technical SEO?",
+          "name": "How much does an ORM campaign typically cost?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "On-page SEO is about the content of a page — titles, headings, copy, and keywords. Technical SEO is about the plumbing that lets Google reach and process that page at all — speed, crawling, indexing, structured data, and rendering. You need both, and we handle them together as part of a full SEO engagement."
+            "text": "Online reputation management (ORM) costs depend on scope. A focused review-generation program and a full ORM campaign that also addresses negative search results are very different in effort, so we quote ORM after the free audit shows what your situation requires."
           }
         },
         {
           "@type": "Question",
-          "name": "How do I know if I need technical SEO?",
+          "name": "How much do reputation management companies charge?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Common signs: pages that won't rank despite good content, traffic that dropped after a redesign or migration, slow load times, pages missing from Google, or a Search Console full of coverage and Core Web Vitals warnings. If any of those sound familiar, a technical audit will tell you what's wrong and what it's costing you."
+            "text": "It varies widely by what is involved and by the company. Rather than a flat published rate, NexFortis scopes the work after a free audit — transparent pricing, a fixed monthly scope, and month-to-month terms — so you pay for the work your reputation actually needs."
           }
         },
         {
           "@type": "Question",
-          "name": "Will you work with my existing developers?",
+          "name": "Can you remove negative reviews or content?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes. We can either implement fixes directly or hand your team clear, prioritised specifications they can ship — whatever fits how you work. Either way, nothing goes live without your sign-off, and we validate each change afterward so you know it actually worked."
+            "text": "We cannot promise to delete a legitimate review or remove content we do not control, and any company that guarantees it is not being honest. What we can do is respond professionally, earn more genuine positive reviews, and build stronger content that outranks unfair or outdated results over time."
           }
         }
       ]
@@ -292,9 +288,9 @@
     {
       "@context": "https://schema.org",
       "@type": "Service",
-      "name": "Technical SEO Services",
-      "description": "Technical search engine optimization for Canadian businesses — site audits, crawlability and indexation, Core Web Vitals, structured data, and rendering fixes.",
-      "url": "https://nexfortis.com/services/digital-marketing/technical-seo",
+      "name": "Reputation Management Services",
+      "description": "Reputation management for Canadian businesses — online reputation management, review generation and management, monitoring and response, content suppression, and brand reputation strategy, delivered as one founder-led program.",
+      "url": "https://nexfortis.com/services/digital-marketing/reputation-management",
       "provider": {
         "@type": "Organization",
         "name": "NexFortis IT Solutions",
@@ -304,7 +300,7 @@
         "@type": "Country",
         "name": "Canada"
       },
-      "serviceType": "Technical SEO"
+      "serviceType": "Online Reputation Management"
     },
     {
       "@context": "https://schema.org",
@@ -345,15 +341,7 @@
     },
     {
       "text": "GEO &amp; AI Search",
-      "href": "/services/digital-marketing/generative-engine-optimization"
-    },
-    {
-      "text": "Technical SEO",
-      "href": "/services/digital-marketing/technical-seo"
-    },
-    {
-      "text": "Google Business Profile",
-      "href": "/services/digital-marketing/google-business-profile"
+      "href": "/services/digital-marketing/geo-ai-search"
     },
     {
       "text": "Content Marketing",
@@ -365,7 +353,7 @@
     },
     {
       "text": "Google Ads Management",
-      "href": "/services/digital-marketing/google-ads"
+      "href": "/services/digital-marketing/google-ads-ppc"
     },
     {
       "text": "Social Media Marketing",
@@ -384,8 +372,8 @@
       "href": "/services/digital-marketing/conversion-rate-optimization"
     },
     {
-      "text": "Analytics &amp; Reporting",
-      "href": "/services/digital-marketing/analytics-reporting"
+      "text": "Reputation Management",
+      "href": "/services/digital-marketing/reputation-management"
     },
     {
       "text": "Microsoft 365 Solutions",
@@ -436,36 +424,36 @@
       "href": "/services"
     },
     {
-      "text": "SEO services",
-      "href": "/services/digital-marketing/seo"
+      "text": "local SEO",
+      "href": "/services/digital-marketing/local-seo"
     },
     {
       "text": "digital marketing services",
       "href": "/services/digital-marketing"
     },
     {
+      "text": "Source: BrightLocal Local Consumer Review Survey",
+      "href": "https://www.brightlocal.com/research/local-consumer-review-survey/"
+    },
+    {
+      "text": "Source: Spiegel Research Center, Northwestern",
+      "href": "https://spiegel.medill.northwestern.edu/how-online-reviews-influence-sales/"
+    },
+    {
       "text": "Source: Statcounter Global Stats",
       "href": "https://gs.statcounter.com/search-engine-market-share"
-    },
-    {
-      "text": "Source: 2024 Web Almanac, HTTP Archive",
-      "href": "https://almanac.httparchive.org/en/2024/performance"
-    },
-    {
-      "text": "Source: Google, The Need for Mobile Speed",
-      "href": "https://blog.google/products/admanager/the-need-for-mobile-speed/"
     },
     {
       "text": "More about NexFortis",
       "href": "/about"
     },
     {
-      "text": "About Us",
-      "href": "/about"
-    },
-    {
       "text": "Privacy Policy",
       "href": "/privacy"
+    },
+    {
+      "text": "About Us",
+      "href": "/about"
     },
     {
       "text": "Terms of Service",

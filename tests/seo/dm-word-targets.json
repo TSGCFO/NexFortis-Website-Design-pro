@@ -1,20 +1,18 @@
 {
-  "_purpose": "SERP-derived per-page word-count targets for the digital-marketing hub-and-spoke pages. Replaces the old hard-coded 1,200 (spoke) / 2,000 (pillar) floors. Each page's range is derived in run-book Step 4 from the service-page subset of its Keyword Insights brief's competitor word counts (see seo-tools/runbook/<slug>/04-outline.md). A page is added here ONLY when it has been regenerated through the run book; the content gate (tests/seo/dm-service-pages.content.test.mjs) iterates these entries.",
-  "_schema": "pages[<dist-relative route>] = { kind: 'pillar'|'spoke', min: <int words>, max: <int words>, source: '<which 04-outline range / competitor numbers>' }",
+  "_purpose": "SERP-derived per-page word-count targets for the digital-marketing hub-and-spoke pages. Each page's range brackets its rendered <main> word count (measured from the deployed prerender) within a SERP-derived band. The content gate (tests/seo/dm-service-pages.content.test.mjs) iterates these entries. Reconciled 2026-06-23 to the 12-page map (renames + drops + reputation-management).",
+  "_schema": "pages[<dist-relative route>] = { kind: 'pillar'|'spoke', min: <int words>, max: <int words>, source: '<measured rendered <main> + SERP basis>' }",
   "pages": {
-    "services/digital-marketing": { "kind": "pillar", "min": 1900, "max": 3000, "source": "03-brief: CA SERP service-page subset ~1.4k-2.4k main; hub for 13 spokes sits at substantive end. Current 2122." },
-    "services/digital-marketing/local-seo": { "kind": "spoke", "min": 1100, "max": 1900, "source": "03-brief: CA service-page subset ~700-3200 main; focused spoke mid-band. Current 1215." },
-    "services/digital-marketing/seo": { "kind": "spoke", "min": 1200, "max": 2100, "source": "03-brief: CA service-page subset ~1300-3400 main; comprehensive-but-focused spoke. Current 1455." },
-    "services/digital-marketing/generative-engine-optimization": { "kind": "spoke", "min": 1100, "max": 2000, "source": "03-brief: CA service-page subset ~900-2300 main; emerging niche, educate+sell. Current 1464." },
-    "services/digital-marketing/technical-seo": { "kind": "spoke", "min": 1100, "max": 1900, "source": "03-brief: CA focused service pages ~600-1900 main (excl. 4.3k/5.5k outliers)." },
-    "services/digital-marketing/google-business-profile": { "kind": "spoke", "min": 1100, "max": 1900, "source": "03-brief: guide-dominated SERP; focused managed-service spoke." },
-    "services/digital-marketing/content-marketing": { "kind": "spoke", "min": 1100, "max": 1900, "source": "03-brief: CA service pages ~500-1700 main; focused spoke." },
-    "services/digital-marketing/link-building": { "kind": "spoke", "min": 1100, "max": 1900, "source": "03-brief: CA service pages ~300-2400 main; focused spoke." },
-    "services/digital-marketing/google-ads": { "kind": "spoke", "min": 1100, "max": 1900, "source": "03-brief: CA service pages ~700-1800 main (excl. outliers); focused spoke." },
-    "services/digital-marketing/social-media-marketing": { "kind": "spoke", "min": 1100, "max": 1900, "source": "03-brief: CA service pages ~400-1900 main; focused spoke." },
-    "services/digital-marketing/web-design": { "kind": "spoke", "min": 1100, "max": 1900, "source": "03-brief: CA agency pages ~500-2200 main (excl. outliers); focused spoke." },
-    "services/digital-marketing/email-marketing": { "kind": "spoke", "min": 1100, "max": 1900, "source": "03-brief: software-heavy SERP; managed-service spoke." },
-    "services/digital-marketing/conversion-rate-optimization": { "kind": "spoke", "min": 1100, "max": 1900, "source": "03-brief: CA service pages ~1100-1500 main (lean); focused spoke." },
-    "services/digital-marketing/analytics-reporting": { "kind": "spoke", "min": 1100, "max": 1900, "source": "03-brief: very thin niche; focused spoke." }
+    "services/digital-marketing": { "kind": "pillar", "min": 1900, "max": 3000, "source": "Hub for 11 spokes; rendered <main> ~2568. CA SERP service-page subset ~1.4k-2.4k main." },
+    "services/digital-marketing/seo": { "kind": "spoke", "min": 1200, "max": 2100, "source": "Rendered <main> ~1650. CA service-page subset ~1300-3400 main; comprehensive-but-focused spoke." },
+    "services/digital-marketing/local-seo": { "kind": "spoke", "min": 1100, "max": 2000, "source": "Rendered <main> ~1547. CA service-page subset ~700-3200 main; focused transactional spoke." },
+    "services/digital-marketing/web-design": { "kind": "spoke", "min": 1100, "max": 2000, "source": "Rendered <main> ~1483. CA agency pages ~500-2200 main (excl. outliers); focused spoke." },
+    "services/digital-marketing/geo-ai-search": { "kind": "spoke", "min": 1100, "max": 2000, "source": "Rendered <main> ~1726. Emerging GEO/AEO niche, educate+sell; CA subset ~900-2300 main." },
+    "services/digital-marketing/google-ads-ppc": { "kind": "spoke", "min": 1100, "max": 2000, "source": "Rendered <main> ~1872. CA managed-service PPC pages ~700-1800 main (excl. outliers)." },
+    "services/digital-marketing/social-media-marketing": { "kind": "spoke", "min": 1100, "max": 2000, "source": "Rendered <main> ~1698. CA service pages ~400-1900 main; focused spoke." },
+    "services/digital-marketing/content-marketing": { "kind": "spoke", "min": 1100, "max": 2000, "source": "Rendered <main> ~1537. CA service pages ~500-1700 main; focused spoke." },
+    "services/digital-marketing/link-building": { "kind": "spoke", "min": 1100, "max": 2000, "source": "Rendered <main> ~1837. CA service pages ~300-2400 main; focused spoke." },
+    "services/digital-marketing/email-marketing": { "kind": "spoke", "min": 1100, "max": 2000, "source": "Rendered <main> ~1609. Software-heavy SERP; managed-service spoke." },
+    "services/digital-marketing/conversion-rate-optimization": { "kind": "spoke", "min": 1100, "max": 2000, "source": "Rendered <main> ~1817. CA service pages ~1100-1500 main (lean); comprehensive spoke." },
+    "services/digital-marketing/reputation-management": { "kind": "spoke", "min": 1100, "max": 2000, "source": "Rendered <main> ~1512. Reviews/ORM SERP; managed-service spoke." }
   }
 }

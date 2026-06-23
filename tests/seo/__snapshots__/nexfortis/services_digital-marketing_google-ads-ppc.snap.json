@@ -1,13 +1,13 @@
 {
-  "route": "/services/digital-marketing/google-ads",
-  "title": "Google Ads Management | NexFortis IT Solutions",
-  "description": "Google Ads &amp; PPC management by a certified Google Partner: profitable search and remarketing campaigns with transparent reporting on every ad dollar.",
-  "canonical": "https://nexfortis.com/services/digital-marketing/google-ads",
+  "route": "/services/digital-marketing/google-ads-ppc",
+  "title": "Google Ads &amp; PPC Management in Canada | NexFortis IT Solutions",
+  "description": "Canadian Google Ads agency and PPC management — search, Shopping, Performance Max, Local Service Ads. Google Partner, founder-led. Free PPC audit.",
+  "canonical": "https://nexfortis.com/services/digital-marketing/google-ads-ppc",
   "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
   "og": {
-    "title": "Google Ads Management | NexFortis IT Solutions",
-    "description": "Google Ads &amp; PPC management by a certified Google Partner: profitable search and remarketing campaigns with transparent reporting on every ad dollar.",
-    "url": "https://nexfortis.com/services/digital-marketing/google-ads",
+    "title": "Google Ads &amp; PPC Management in Canada | NexFortis IT Solutions",
+    "description": "Canadian Google Ads agency and PPC management — search, Shopping, Performance Max, Local Service Ads. Google Partner, founder-led. Free PPC audit.",
+    "url": "https://nexfortis.com/services/digital-marketing/google-ads-ppc",
     "image": "https://nexfortis.com/opengraph.png",
     "type": "website"
   },
@@ -17,35 +17,47 @@
   "headings": [
     {
       "level": 1,
-      "text": "Google Ads Management That Pays for Itself"
+      "text": "Google Ads and PPC Management for Canadian Businesses"
     },
     {
       "level": 2,
-      "text": "Visibility today — without lighting money on fire"
+      "text": "What NexFortis Google Ads and PPC services include"
     },
     {
       "level": 2,
-      "text": "What's included in our Google Ads management"
+      "text": "Our Google Ads and PPC services"
     },
     {
       "level": 3,
-      "text": "Campaign strategy &amp; setup"
+      "text": "Google Ads search campaigns"
     },
     {
       "level": 3,
-      "text": "Keyword &amp; audience targeting"
+      "text": "PPC management &amp; optimization"
     },
     {
       "level": 3,
-      "text": "Ad copy &amp; creative"
+      "text": "Campaign setup &amp; account structure"
     },
     {
       "level": 3,
-      "text": "Bid &amp; budget management"
+      "text": "Keyword &amp; bid management"
     },
     {
       "level": 3,
-      "text": "Conversion tracking &amp; landing pages"
+      "text": "Ad copywriting &amp; A/B testing"
+    },
+    {
+      "level": 3,
+      "text": "Google Local Service Ads"
+    },
+    {
+      "level": 3,
+      "text": "Google Shopping &amp; Performance Max"
+    },
+    {
+      "level": 3,
+      "text": "Landing-page &amp; conversion optimization"
     },
     {
       "level": 3,
@@ -53,35 +65,35 @@
     },
     {
       "level": 2,
-      "text": "How we manage your Google Ads"
+      "text": "Our Google Ads and PPC process"
     },
     {
       "level": 3,
-      "text": "Audit &amp; plan"
+      "text": "Free Google Ads &amp; PPC audit"
     },
     {
       "level": 3,
-      "text": "Build &amp; launch"
+      "text": "Strategy"
     },
     {
       "level": 3,
-      "text": "Optimize"
+      "text": "Execution"
     },
     {
       "level": 3,
-      "text": "Report &amp; scale"
+      "text": "Monthly reporting &amp; optimization"
     },
     {
       "level": 2,
-      "text": "NexFortis vs. a typical PPC provider"
+      "text": "Why choose NexFortis for Google Ads and PPC"
     },
     {
       "level": 2,
-      "text": "What Google Ads management costs"
+      "text": "Google Ads and PPC pricing after a free audit"
     },
     {
       "level": 3,
-      "text": "A management fee on top of your ad spend"
+      "text": "Management fee separate from ad spend"
     },
     {
       "level": 2,
@@ -105,7 +117,7 @@
     },
     {
       "level": 2,
-      "text": "Want ads that bring leads, not just clicks?"
+      "text": "Ready to make every click earn its keep?"
     },
     {
       "level": 4,
@@ -151,7 +163,7 @@
           "@type": "ListItem",
           "position": 4,
           "name": "Google Ads Management",
-          "item": "https://nexfortis.com/services/digital-marketing/google-ads"
+          "item": "https://nexfortis.com/services/digital-marketing/google-ads-ppc"
         }
       ]
     },
@@ -161,42 +173,50 @@
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "How much does Google Ads management cost?",
+          "name": "How much does Google Ads cost in Canada?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "There are two parts: the ad spend that goes to Google, and a separate management fee for running the account. We scale the fee to the account's size and complexity and keep it fully transparent — we don't bundle it into your spend or mark up your media. You'll get a clear number after a free audit of your situation."
+            "text": "There are two costs: the ad spend you pay Google (which you set and control), and the management fee for running the account. Ad spend depends on your industry, your competition, and your keywords, so cost per click varies widely. We scope both after a free audit so your budget is matched to realistic results."
           }
         },
         {
           "@type": "Question",
-          "name": "What does a Google Ads manager actually do?",
+          "name": "How much should I pay someone to manage my Google Ads?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "A lot that isn't visible from the outside: structuring the account, choosing and refining keywords, writing and testing ads, adding negative keywords, managing bids and budgets, setting up conversion tracking, and optimizing continuously toward cost per lead. The platform makes it easy to spend money; management is what makes that money produce customers."
+            "text": "Management fees vary with the size and complexity of the account and how much ongoing optimization is involved. We scope a transparent management fee after a free audit — separate from your ad spend — so you know exactly what you are paying for, with no long-term lock-in."
           }
         },
         {
           "@type": "Question",
-          "name": "Should I hire an agency or run ads in-house?",
+          "name": "What is included in NexFortis's Google Ads and PPC service?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "If you have the time and expertise in-house, you can absolutely run your own ads. Most owners don't — and Google's auction punishes neglected accounts quickly. A good manager usually pays for itself by cutting wasted spend and improving conversion rates. We're happy to tell you honestly if your account is simple enough to run yourself."
+            "text": "Our google ads management services include campaign strategy and setup, account structure, keyword and bid management, ad copywriting and A/B testing, negative-keyword management, Google Local Service Ads, Shopping and Performance Max, landing-page and conversion optimization, and transparent monthly reporting."
           }
         },
         {
           "@type": "Question",
-          "name": "How much should I budget for ad spend?",
+          "name": "How is a PPC agency different from doing Google Ads myself?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "It depends on your industry's cost per click and how many leads you want. Some competitive categories cost several dollars per click; others are far cheaper. We'll model a realistic budget against your goals during the audit so you start with a number based on your market, not a guess — and scale it as the data comes in."
+            "text": "A ppc agency brings structure, ongoing optimization, and conversion tracking that most DIY accounts lack — and the difference usually shows up as wasted spend avoided and a lower cost per lead. We find the leaks, fix the foundations, and manage the account so your budget works harder."
           }
         },
         {
           "@type": "Question",
-          "name": "How soon will I see results from Google Ads?",
+          "name": "How long does it take to see results from PPC?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Faster than SEO — ads can start driving clicks and enquiries within days of launch. The first few weeks are a learning period while we gather conversion data and optimize, so performance typically improves month over month as the account matures. We report from the start so you can see it developing."
+            "text": "Paid search can drive traffic almost immediately once campaigns are live, but a profitable account is a months-not-weeks discipline: it takes time to gather conversion data, cut what does not work, and scale what does. We set realistic expectations up front."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you manage both Google Ads and other PPC channels?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. We focus on Google's ecosystem — search, Shopping, Performance Max, and google local service ads — and can coordinate paid search with the rest of your marketing so your channels reinforce each other instead of competing."
           }
         }
       ]
@@ -292,9 +312,9 @@
     {
       "@context": "https://schema.org",
       "@type": "Service",
-      "name": "Google Ads Management",
-      "description": "Google Ads and PPC management for Canadian businesses — campaign strategy, keyword and audience targeting, bid management, conversion tracking, and transparent reporting.",
-      "url": "https://nexfortis.com/services/digital-marketing/google-ads",
+      "name": "Google Ads and PPC Management",
+      "description": "Google Ads and PPC management for Canadian businesses — search, Shopping, Performance Max, and Local Service Ads, with account structure, bid management, ad copy, and conversion tracking, run as one founder-led campaign by a Google Partner.",
+      "url": "https://nexfortis.com/services/digital-marketing/google-ads-ppc",
       "provider": {
         "@type": "Organization",
         "name": "NexFortis IT Solutions",
@@ -304,7 +324,7 @@
         "@type": "Country",
         "name": "Canada"
       },
-      "serviceType": "Google Ads Management"
+      "serviceType": "Google Ads and PPC Management"
     },
     {
       "@context": "https://schema.org",
@@ -345,15 +365,7 @@
     },
     {
       "text": "GEO &amp; AI Search",
-      "href": "/services/digital-marketing/generative-engine-optimization"
-    },
-    {
-      "text": "Technical SEO",
-      "href": "/services/digital-marketing/technical-seo"
-    },
-    {
-      "text": "Google Business Profile",
-      "href": "/services/digital-marketing/google-business-profile"
+      "href": "/services/digital-marketing/geo-ai-search"
     },
     {
       "text": "Content Marketing",
@@ -365,7 +377,7 @@
     },
     {
       "text": "Google Ads Management",
-      "href": "/services/digital-marketing/google-ads"
+      "href": "/services/digital-marketing/google-ads-ppc"
     },
     {
       "text": "Social Media Marketing",
@@ -384,8 +396,8 @@
       "href": "/services/digital-marketing/conversion-rate-optimization"
     },
     {
-      "text": "Analytics &amp; Reporting",
-      "href": "/services/digital-marketing/analytics-reporting"
+      "text": "Reputation Management",
+      "href": "/services/digital-marketing/reputation-management"
     },
     {
       "text": "Microsoft 365 Solutions",
@@ -436,36 +448,40 @@
       "href": "/services"
     },
     {
-      "text": "SEO services",
-      "href": "/services/digital-marketing/seo"
-    },
-    {
       "text": "digital marketing services",
       "href": "/services/digital-marketing"
+    },
+    {
+      "text": "Source: WordStream",
+      "href": "https://www.wordstream.com/blog/ws/2023/02/24/digital-advertising"
     },
     {
       "text": "Source: Google Economic Impact",
       "href": "https://economicimpact.google/methodology/"
     },
     {
-      "text": "Source: WordStream / LocaliQ Search Advertising Benchmarks 2024",
-      "href": "https://www.wordstream.com/wp-content/uploads/2024/05/ws-guide-google-ads-benchmarks-2024.pdf"
+      "text": "Source: WordStream PPC benchmarks",
+      "href": "https://www.wordstream.com/ppc-benchmarks"
     },
     {
-      "text": "Source: Statcounter Global Stats",
-      "href": "https://gs.statcounter.com/search-engine-market-share"
+      "text": "conversion rate optimization",
+      "href": "/services/digital-marketing/conversion-rate-optimization"
+    },
+    {
+      "text": "web design and development",
+      "href": "/services/digital-marketing/web-design"
     },
     {
       "text": "More about NexFortis",
       "href": "/about"
     },
     {
-      "text": "About Us",
-      "href": "/about"
-    },
-    {
       "text": "Privacy Policy",
       "href": "/privacy"
+    },
+    {
+      "text": "About Us",
+      "href": "/about"
     },
     {
       "text": "Terms of Service",

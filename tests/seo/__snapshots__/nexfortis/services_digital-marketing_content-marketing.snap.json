@@ -1,12 +1,12 @@
 {
   "route": "/services/digital-marketing/content-marketing",
-  "title": "Content Marketing Services | NexFortis IT Solutions",
-  "description": "Content marketing services for Canadian businesses: research-led articles, pillar pages, and topic clusters that rank, build authority, and get cited by AI.",
+  "title": "Content Marketing Services in Canada | NexFortis IT Solutions",
+  "description": "Canadian content marketing agency — strategy, SEO blog writing, web copy, video, and B2B content that builds authority. Founder-led. Free consultation.",
   "canonical": "https://nexfortis.com/services/digital-marketing/content-marketing",
   "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
   "og": {
-    "title": "Content Marketing Services | NexFortis IT Solutions",
-    "description": "Content marketing services for Canadian businesses: research-led articles, pillar pages, and topic clusters that rank, build authority, and get cited by AI.",
+    "title": "Content Marketing Services in Canada | NexFortis IT Solutions",
+    "description": "Canadian content marketing agency — strategy, SEO blog writing, web copy, video, and B2B content that builds authority. Founder-led. Free consultation.",
     "url": "https://nexfortis.com/services/digital-marketing/content-marketing",
     "image": "https://nexfortis.com/opengraph.png",
     "type": "website"
@@ -17,71 +17,71 @@
   "headings": [
     {
       "level": 1,
-      "text": "Content Marketing Services That Earn Demand"
+      "text": "Content Marketing Services for Canadian Businesses"
     },
     {
       "level": 2,
-      "text": "Content that does a job, not content for its own sake"
+      "text": "What NexFortis content marketing services include"
     },
     {
       "level": 2,
-      "text": "What's included in our content marketing services"
+      "text": "Our content marketing services"
     },
     {
       "level": 3,
-      "text": "Content strategy &amp; topic clusters"
+      "text": "Content strategy &amp; planning"
     },
     {
       "level": 3,
-      "text": "SEO articles &amp; guides"
+      "text": "SEO blog &amp; article writing"
     },
     {
       "level": 3,
-      "text": "Pillar pages"
+      "text": "Website &amp; landing-page copy"
     },
     {
       "level": 3,
-      "text": "Blog &amp; ongoing writing"
+      "text": "Video content marketing services"
     },
     {
       "level": 3,
-      "text": "Content built for AI search"
+      "text": "Content distribution &amp; promotion"
     },
     {
       "level": 3,
-      "text": "Distribution &amp; repurposing"
+      "text": "B2B content marketing"
     },
     {
       "level": 2,
-      "text": "How we deliver content marketing"
+      "text": "Our content marketing process"
     },
     {
       "level": 3,
-      "text": "Strategy &amp; research"
+      "text": "Free consultation"
     },
     {
       "level": 3,
-      "text": "Create"
+      "text": "Strategy"
     },
     {
       "level": 3,
-      "text": "Optimize &amp; publish"
+      "text": "Execution"
     },
     {
       "level": 3,
-      "text": "Measure &amp; refresh"
+      "text": "Monthly reporting &amp; optimization"
     },
     {
       "level": 2,
-      "text": "NexFortis vs. a typical content shop"
+      "text": "Why choose NexFortis for content marketing"
     },
     {
       "level": 2,
-      "text": "What content marketing costs"
+      "text": "Content marketing pricing after a free consultation"
     },
     {
       "level": 3,
-      "text": "Scaled to volume and depth"
+      "text": "Scoped to your goals"
     },
     {
       "level": 2,
@@ -105,7 +105,7 @@
     },
     {
       "level": 2,
-      "text": "Ready for content that actually earns its keep?"
+      "text": "Ready to grow through content people actually search for?"
     },
     {
       "level": 4,
@@ -161,42 +161,50 @@
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "What is content marketing?",
+          "name": "What is included in NexFortis's content marketing service?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Content marketing is the practice of earning customers by publishing genuinely useful content — articles, guides, pillar pages — instead of just buying their attention with ads. Done well, it ranks in search, builds trust over time, and increasingly gets cited by AI engines. It's a long-term asset: a good page keeps bringing in readers and leads for years."
+            "text": "Our content marketing service includes content strategy and planning, SEO blog and article writing, website and landing-page copy, video content, content distribution, and B2B content — all tied to real keyword research and backed by monthly reporting."
           }
         },
         {
           "@type": "Question",
-          "name": "Why is content marketing important?",
+          "name": "How much do content marketing services cost?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Because rankings need something worth ranking, and buyers research before they buy. Content is what answers their questions, earns their trust, and gives Google and AI engines a reason to point to you instead of a competitor. It also compounds — unlike ads, the work keeps paying off long after it's published."
+            "text": "The cost of content marketing varies with what you need — how often you publish, how detailed each piece is, and how competitive your market is — which is why we scope every engagement after a free consultation rather than quoting a one-size-fits-all price."
           }
         },
         {
           "@type": "Question",
-          "name": "Does content marketing help my SEO and AI visibility?",
+          "name": "Does content marketing help with SEO?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Directly. Strong, well-structured content is the raw material SEO ranks and AI engines cite. We build content with both in mind — thorough enough to rank, and structured into clear passages with the right schema so AI tools can lift and quote it. It works hand in hand with our SEO and Generative Engine Optimization services."
+            "text": "Yes — closely. Search engines rank content that genuinely answers what people search for, so strategy-led content is one of the strongest foundations for organic visibility. We plan content and SEO together so they reinforce each other."
           }
         },
         {
           "@type": "Question",
-          "name": "Do you write the content yourselves?",
+          "name": "Do you write the content yourselves, or use AI?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes. We research, draft, edit, and fact-check each piece, with your review before it publishes. We use AI as a tool where it helps, but we don't ship spun, unverified copy — every claim is checked against a real source or cut, because thin AI filler is exactly what Google's helpful-content system penalises."
+            "text": "Our content is written and reviewed by a senior team grounded in real subject expertise. We use modern tools to work efficiently, but we fact-check everything and never publish generic, unchecked AI output as your brand's voice."
           }
         },
         {
           "@type": "Question",
-          "name": "How long until content marketing works?",
+          "name": "How long does content marketing take to show results?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Like SEO, it's a compounding play rather than an instant one. Expect early traction on lower-competition topics within a few months and meaningful momentum around the six-month mark, building from there. We report rankings, traffic, and leads per piece so you can see it working along the way."
+            "text": "Content marketing is a months-not-weeks discipline. Timelines depend on your starting point, your market's competitiveness, and how consistently you publish, so we set realistic expectations up front rather than promising a fixed date."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you offer content marketing for B2B companies?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. As a B2B content marketing agency, we produce the in-depth, trust-building content that longer B2B sales cycles need, mapped to the questions buyers ask at each stage."
           }
         }
       ]
@@ -293,7 +301,7 @@
       "@context": "https://schema.org",
       "@type": "Service",
       "name": "Content Marketing Services",
-      "description": "Content marketing for Canadian businesses — content strategy, SEO articles, pillar pages and topic clusters, and content built to rank and earn AI citations.",
+      "description": "Content marketing for Canadian businesses — content strategy, SEO blog and article writing, website and landing-page copy, video, distribution, and B2B content, delivered as one founder-led, research-led program.",
       "url": "https://nexfortis.com/services/digital-marketing/content-marketing",
       "provider": {
         "@type": "Organization",
@@ -345,15 +353,7 @@
     },
     {
       "text": "GEO &amp; AI Search",
-      "href": "/services/digital-marketing/generative-engine-optimization"
-    },
-    {
-      "text": "Technical SEO",
-      "href": "/services/digital-marketing/technical-seo"
-    },
-    {
-      "text": "Google Business Profile",
-      "href": "/services/digital-marketing/google-business-profile"
+      "href": "/services/digital-marketing/geo-ai-search"
     },
     {
       "text": "Content Marketing",
@@ -365,7 +365,7 @@
     },
     {
       "text": "Google Ads Management",
-      "href": "/services/digital-marketing/google-ads"
+      "href": "/services/digital-marketing/google-ads-ppc"
     },
     {
       "text": "Social Media Marketing",
@@ -384,8 +384,8 @@
       "href": "/services/digital-marketing/conversion-rate-optimization"
     },
     {
-      "text": "Analytics &amp; Reporting",
-      "href": "/services/digital-marketing/analytics-reporting"
+      "text": "Reputation Management",
+      "href": "/services/digital-marketing/reputation-management"
     },
     {
       "text": "Microsoft 365 Solutions",
@@ -444,28 +444,36 @@
       "href": "/services/digital-marketing"
     },
     {
-      "text": "Source: Statcounter Global Stats",
-      "href": "https://gs.statcounter.com/search-engine-market-share"
+      "text": "Source: Semrush",
+      "href": "https://www.semrush.com/blog/content-marketing-statistics/"
     },
     {
-      "text": "Source: Backlinko, 4M-result CTR study",
-      "href": "https://backlinko.com/google-ctr-stats"
+      "text": "Source: HubSpot",
+      "href": "https://www.hubspot.com/marketing-statistics"
     },
     {
-      "text": "Source: Semrush study, via Search Engine Land",
-      "href": "https://searchengineland.com/google-ai-overviews-surge-pullback-data-466314"
+      "text": "Source: Content Marketing Institute",
+      "href": "https://contentmarketinginstitute.com/content-marketing-strategy/content-marketing-statistics"
+    },
+    {
+      "text": "social media marketing",
+      "href": "/services/digital-marketing/social-media-marketing"
+    },
+    {
+      "text": "link building",
+      "href": "/services/digital-marketing/link-building"
     },
     {
       "text": "More about NexFortis",
       "href": "/about"
     },
     {
-      "text": "About Us",
-      "href": "/about"
-    },
-    {
       "text": "Privacy Policy",
       "href": "/privacy"
+    },
+    {
+      "text": "About Us",
+      "href": "/about"
     },
     {
       "text": "Terms of Service",

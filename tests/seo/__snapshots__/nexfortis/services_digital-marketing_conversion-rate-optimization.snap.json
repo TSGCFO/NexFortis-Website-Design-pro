@@ -1,12 +1,12 @@
 {
   "route": "/services/digital-marketing/conversion-rate-optimization",
-  "title": "Conversion Rate Optimization | NexFortis IT Solutions",
-  "description": "Conversion rate optimization for Canadian businesses: turn more of your traffic into leads with behaviour analysis, testing, and landing-page fixes.",
+  "title": "Conversion Rate Optimization Services | NexFortis IT Solutions",
+  "description": "Canadian CRO company — data analysis, A/B testing, and conversion-centred design that turn more of your traffic into leads and sales. Free conversion audit.",
   "canonical": "https://nexfortis.com/services/digital-marketing/conversion-rate-optimization",
   "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
   "og": {
-    "title": "Conversion Rate Optimization | NexFortis IT Solutions",
-    "description": "Conversion rate optimization for Canadian businesses: turn more of your traffic into leads with behaviour analysis, testing, and landing-page fixes.",
+    "title": "Conversion Rate Optimization Services | NexFortis IT Solutions",
+    "description": "Canadian CRO company — data analysis, A/B testing, and conversion-centred design that turn more of your traffic into leads and sales. Free conversion audit.",
     "url": "https://nexfortis.com/services/digital-marketing/conversion-rate-optimization",
     "image": "https://nexfortis.com/opengraph.png",
     "type": "website"
@@ -17,23 +17,19 @@
   "headings": [
     {
       "level": 1,
-      "text": "Conversion Rate Optimization That Lifts Revenue"
+      "text": "Conversion Rate Optimization Services for Canadian Businesses"
     },
     {
       "level": 2,
-      "text": "Get more from the traffic you already pay for"
+      "text": "What NexFortis conversion rate optimization services include"
     },
     {
       "level": 2,
-      "text": "What's included in our conversion rate optimization"
+      "text": "Our conversion rate optimization services"
     },
     {
       "level": 3,
-      "text": "Data &amp; analytics review"
-    },
-    {
-      "level": 3,
-      "text": "User-behaviour analysis"
+      "text": "Conversion audit &amp; data analysis"
     },
     {
       "level": 3,
@@ -41,47 +37,55 @@
     },
     {
       "level": 3,
-      "text": "Landing-page &amp; funnel optimization"
+      "text": "Conversion-centred design"
     },
     {
       "level": 3,
-      "text": "UX &amp; messaging fixes"
+      "text": "UX &amp; funnel analysis"
     },
     {
       "level": 3,
-      "text": "Reporting &amp; iteration"
+      "text": "Heatmaps &amp; user-behaviour analytics"
+    },
+    {
+      "level": 3,
+      "text": "Personalization"
+    },
+    {
+      "level": 3,
+      "text": "eCommerce CRO"
     },
     {
       "level": 2,
-      "text": "How we deliver CRO"
+      "text": "Our conversion rate optimization process"
     },
     {
       "level": 3,
-      "text": "Analyze"
+      "text": "Free conversion rate optimization audit"
     },
     {
       "level": 3,
-      "text": "Hypothesize"
+      "text": "Strategy"
     },
     {
       "level": 3,
-      "text": "Test"
+      "text": "Execution"
     },
     {
       "level": 3,
-      "text": "Implement &amp; repeat"
+      "text": "Monthly reporting &amp; ongoing optimization"
     },
     {
       "level": 2,
-      "text": "NexFortis vs. a typical 'redesign' approach"
+      "text": "Why choose NexFortis for conversion rate optimization"
     },
     {
       "level": 2,
-      "text": "What CRO costs"
+      "text": "Conversion rate optimization pricing after a free audit"
     },
     {
       "level": 3,
-      "text": "Priced by traffic, testing volume, and scope"
+      "text": "Scoped to your traffic"
     },
     {
       "level": 2,
@@ -105,7 +109,7 @@
     },
     {
       "level": 2,
-      "text": "Turning enough of your traffic into leads?"
+      "text": "Ready to convert more of the traffic you already have?"
     },
     {
       "level": 4,
@@ -164,39 +168,47 @@
           "name": "What is conversion rate optimization?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "CRO is the practice of increasing the percentage of your visitors who take a desired action — filling a form, calling, or buying — without needing more traffic. It combines analytics, user-behaviour research, and controlled testing to find and fix what's stopping people from converting, so you get more results from the visitors you already have."
+            "text": "Conversion rate optimization is the data-driven practice of increasing the percentage of your website visitors who complete a desired action — a purchase, a form submission, a call, or a sign-up. Rather than chasing more traffic, it improves how much of your existing traffic converts, using analytics, user-behaviour data, and controlled testing."
           }
         },
         {
           "@type": "Question",
-          "name": "How does CRO actually work?",
+          "name": "How much do conversion rate optimization services cost?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "It's a cycle: analyze the data to find where visitors drop off, form a hypothesis about why, test a change against the original, and keep whatever wins. Then repeat. The discipline is what makes it work — decisions come from evidence, not opinion, so you stop guessing and start compounding small, proven gains."
+            "text": "CRO pricing varies by your traffic volume, the complexity of your funnel, and the scope of testing involved, which is why we scope every engagement after a free audit rather than quoting a one-size-fits-all price. You can start with a focused audit or move into an ongoing monthly programme."
           }
         },
         {
           "@type": "Question",
-          "name": "Do I have enough traffic for CRO?",
+          "name": "What is A/B testing, and how does it work?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "A/B testing needs a reasonable volume of visitors and conversions to reach statistical confidence, so very low-traffic sites get less from formal testing. But CRO isn't only testing — a conversion audit, analytics review, and UX fixes deliver value at almost any traffic level. We'll tell you honestly which approach fits your situation."
+            "text": "A/B testing compares two versions of a page or element — an original and a variation — by splitting your traffic between them and measuring which drives more conversions. For example, you might test two headlines or call-to-action buttons; the version that converts more visitors wins, based on real behaviour rather than opinion."
           }
         },
         {
           "@type": "Question",
-          "name": "How much does CRO cost?",
+          "name": "Do I need a lot of traffic for CRO to work?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "It depends on your traffic, how much testing you want, and how much implementation we handle. A one-time conversion audit with prioritised fixes is very different from an ongoing testing program. We scope and price it transparently after a free audit, with no long-term lock-in."
+            "text": "CRO works best when there is enough traffic for tests to reach reliable results, but lower-traffic sites can still benefit from audit-driven fixes, funnel analysis, and qualitative tools like heatmaps and session recordings. Part of our job is being honest about what your current volume can prove and sequencing the work accordingly."
           }
         },
         {
           "@type": "Question",
-          "name": "How long until I see results from CRO?",
+          "name": "How long does conversion rate optimization take to show results?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Some fixes — a clearer call to action, a faster page, a simpler form — can lift conversions almost immediately. Formal A/B tests need to run long enough to reach confidence, usually a few weeks each. CRO is a compounding program: individual wins add up, and the gains stick because they're tied to your real visitors."
+            "text": "CRO is an ongoing, months-not-weeks discipline. Some quick fixes can help early, but durable gains come from running a steady cycle of tests, so we set realistic expectations up front rather than promising a fixed result by a specific date."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How is a conversion rate optimization agency different from a web design agency?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A conversion rate optimization agency focuses on measuring and improving how well your existing pages convert, using analytics and testing to validate every change; a web design agency focuses on building the site. NexFortis does both and connects them, so your design decisions are backed by conversion data."
           }
         }
       ]
@@ -293,7 +305,7 @@
       "@context": "https://schema.org",
       "@type": "Service",
       "name": "Conversion Rate Optimization Services",
-      "description": "Conversion rate optimization for Canadian businesses — analytics review, user-behaviour analysis, A/B testing, and landing-page and funnel optimization.",
+      "description": "Conversion rate optimization for Canadian businesses — conversion audits and data analysis, A/B and multivariate testing, conversion-centred design, UX and funnel analysis, heatmaps, personalization, and eCommerce CRO, delivered as one founder-led programme.",
       "url": "https://nexfortis.com/services/digital-marketing/conversion-rate-optimization",
       "provider": {
         "@type": "Organization",
@@ -345,15 +357,7 @@
     },
     {
       "text": "GEO &amp; AI Search",
-      "href": "/services/digital-marketing/generative-engine-optimization"
-    },
-    {
-      "text": "Technical SEO",
-      "href": "/services/digital-marketing/technical-seo"
-    },
-    {
-      "text": "Google Business Profile",
-      "href": "/services/digital-marketing/google-business-profile"
+      "href": "/services/digital-marketing/geo-ai-search"
     },
     {
       "text": "Content Marketing",
@@ -365,7 +369,7 @@
     },
     {
       "text": "Google Ads Management",
-      "href": "/services/digital-marketing/google-ads"
+      "href": "/services/digital-marketing/google-ads-ppc"
     },
     {
       "text": "Social Media Marketing",
@@ -384,8 +388,8 @@
       "href": "/services/digital-marketing/conversion-rate-optimization"
     },
     {
-      "text": "Analytics &amp; Reporting",
-      "href": "/services/digital-marketing/analytics-reporting"
+      "text": "Reputation Management",
+      "href": "/services/digital-marketing/reputation-management"
     },
     {
       "text": "Microsoft 365 Solutions",
@@ -440,6 +444,10 @@
       "href": "/services/digital-marketing/seo"
     },
     {
+      "text": "Google Ads management",
+      "href": "/services/digital-marketing/google-ads-ppc"
+    },
+    {
       "text": "web design and development",
       "href": "/services/digital-marketing/web-design"
     },
@@ -448,28 +456,28 @@
       "href": "/services/digital-marketing"
     },
     {
-      "text": "Source: WordStream conversion-rate analysis",
-      "href": "https://www.wordstream.com/blog/ws/2014/03/17/what-is-a-good-conversion-rate"
+      "text": "Source: Unbounce, Conversion Benchmark (Q4 2024)",
+      "href": "https://unbounce.com/average-conversion-rates-landing-pages/"
     },
     {
-      "text": "Source: Google, The Need for Mobile Speed",
-      "href": "https://blog.google/products/admanager/the-need-for-mobile-speed/"
+      "text": "Source: Convert, 2026",
+      "href": "https://www.convert.com/blog/a-b-testing/ab-testing-stats/"
     },
     {
-      "text": "Source: Statcounter Global Stats",
-      "href": "https://gs.statcounter.com/search-engine-market-share"
+      "text": "Source: Baymard Institute",
+      "href": "https://baymard.com/lists/cart-abandonment-rate"
     },
     {
       "text": "More about NexFortis",
       "href": "/about"
     },
     {
-      "text": "About Us",
-      "href": "/about"
-    },
-    {
       "text": "Privacy Policy",
       "href": "/privacy"
+    },
+    {
+      "text": "About Us",
+      "href": "/about"
     },
     {
       "text": "Terms of Service",

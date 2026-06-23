@@ -1,12 +1,12 @@
 {
   "route": "/services/digital-marketing/link-building",
-  "title": "Link Building &amp; Digital PR | NexFortis IT Solutions",
-  "description": "White-hat link building and digital PR for Canadian businesses: earned editorial backlinks from real publications that build the authority behind your rankings.",
+  "title": "Link Building Services in Canada | NexFortis IT Solutions",
+  "description": "Canadian SEO link building company — white-hat outreach, guest posting, digital PR, and backlink audits that earn durable authority. Founder-led. Free audit.",
   "canonical": "https://nexfortis.com/services/digital-marketing/link-building",
   "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
   "og": {
-    "title": "Link Building &amp; Digital PR | NexFortis IT Solutions",
-    "description": "White-hat link building and digital PR for Canadian businesses: earned editorial backlinks from real publications that build the authority behind your rankings.",
+    "title": "Link Building Services in Canada | NexFortis IT Solutions",
+    "description": "Canadian SEO link building company — white-hat outreach, guest posting, digital PR, and backlink audits that earn durable authority. Founder-led. Free audit.",
     "url": "https://nexfortis.com/services/digital-marketing/link-building",
     "image": "https://nexfortis.com/opengraph.png",
     "type": "website"
@@ -17,71 +17,79 @@
   "headings": [
     {
       "level": 1,
-      "text": "Link Building &amp; Digital PR Services"
+      "text": "Link Building Services for Canadian Businesses"
     },
     {
       "level": 2,
-      "text": "Authority is still earned through links"
+      "text": "What NexFortis link building services include"
     },
     {
       "level": 2,
-      "text": "What's included in our link building &amp; digital PR"
+      "text": "Our link building services"
     },
     {
       "level": 3,
-      "text": "Backlink audit &amp; strategy"
+      "text": "High-authority backlink acquisition"
     },
     {
       "level": 3,
-      "text": "Digital PR &amp; editorial links"
+      "text": "Manual outreach"
     },
     {
       "level": 3,
-      "text": "Guest posting on relevant sites"
+      "text": "Guest posting"
     },
     {
       "level": 3,
-      "text": "Niche &amp; blogger outreach"
+      "text": "Digital PR"
     },
     {
       "level": 3,
-      "text": "Broken-link &amp; reclamation"
+      "text": "Niche &amp; editorial links"
     },
     {
       "level": 3,
-      "text": "Reporting on links &amp; authority"
+      "text": "Backlink audit &amp; toxic-link disavow"
+    },
+    {
+      "level": 3,
+      "text": "Link building packages"
+    },
+    {
+      "level": 3,
+      "text": "White-hat methods"
     },
     {
       "level": 2,
-      "text": "How we deliver link building"
+      "text": "Our link building process"
     },
     {
       "level": 3,
-      "text": "Audit &amp; target"
+      "text": "Free link building audit"
     },
     {
       "level": 3,
-      "text": "Create link-worthy assets"
+      "text": "Strategy"
     },
     {
       "level": 3,
-      "text": "Outreach &amp; earn"
+      "text": "Execution"
     },
     {
       "level": 3,
-      "text": "Report &amp; build"
+      "text": "Monthly reporting"
     },
     {
       "level": 2,
-      "text": "NexFortis vs. a typical link vendor"
+      "text": "Why choose NexFortis for link building"
     },
     {
       "level": 2,
-      "text": "What link building costs"
+      "text": "Link building pricing after a free audit"
     },
     {
       "level": 3,
-      "text": "Priced by authority and competition"
+      "text": "Scoped to your competition"
     },
     {
       "level": 2,
@@ -105,7 +113,7 @@
     },
     {
       "level": 2,
-      "text": "Want the authority to finally rank?"
+      "text": "Ready to compete on authority?"
     },
     {
       "level": 4,
@@ -161,42 +169,50 @@
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "What is link building?",
+          "name": "What is a link building service?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Link building is the work of earning links from other websites to yours. Search engines treat those links as votes of confidence, so a strong, relevant backlink profile is one of the biggest factors in how high you can rank. The key word is earned — links have to come from real, relevant sites to help rather than hurt."
+            "text": "A link building service is a managed effort to earn links from other reputable websites back to yours, because those links are a key factor search engines use to decide how to rank pages. Ours combines a backlink audit, manual outreach, guest posting, and digital PR to earn relevant, high-authority links in a way that is safe and follows Google's guidelines."
           }
         },
         {
           "@type": "Question",
-          "name": "Why is link building important?",
+          "name": "How much do link building services cost?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Because authority is still largely decided by links. Top-ranking pages consistently have more and better backlinks than the pages below them, yet most pages on the web have none at all. If your content is good but isn't ranking, a weak link profile is usually the reason — and it's the gap link building closes."
+            "text": "The cost varies with how competitive your market is, the authority you need to build, and your existing backlink profile — which is why we run a free audit first rather than quoting a standard price. After it, we provide clear link building packages so you can see exactly what each campaign includes."
           }
         },
         {
           "@type": "Question",
-          "name": "Is link building safe? What about Google penalties?",
+          "name": "What is the purpose of link building?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "It's safe when it's done right and risky when it isn't. Bought links, spun content, and private blog networks can trigger a Google penalty that's expensive to recover from. We only build white-hat, editorial links from real, relevant sites — the kind Google wants you to earn — so you get the ranking benefit without the risk."
+            "text": "The purpose of link building is to earn authority — the trusted, relevant links that help your pages rank and bring in qualified visitors. Links from credible sites signal to search engines that your content is worth surfacing, and that authority compounds over time, making it one of the most durable investments in SEO."
           }
         },
         {
           "@type": "Question",
-          "name": "What's the difference between digital PR and guest posting?",
+          "name": "What makes a backlink service worth buying?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Digital PR earns links by pitching genuinely newsworthy stories, data, or commentary to journalists and publications — high-authority, editorial links you can't buy. Guest posting places a useful article you've written on a relevant site. Both are legitimate when done with real sites; we use the mix that fits your industry and goals."
+            "text": "A backlink service is worth your money when the links are editorial, relevant, and earned through genuine outreach and digital PR — not bought, automated, or placed on private blog networks. Cheap link packages often do more harm than good; white-hat methods protect your site while building authority that lasts."
           }
         },
         {
           "@type": "Question",
-          "name": "How many links will I get, and how fast?",
+          "name": "Are your link building methods safe for my site?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "We don't promise a number, because earned links depend on outreach and what's link-worthy — and anyone guaranteeing X links a month is usually selling the risky kind. We focus on quality and relevance over volume, report every placement, and build steadily. A few strong editorial links beat dozens of junk ones every time."
+            "text": "Yes. We use only white-hat methods — genuine outreach, high-quality guest posts, and digital PR — and we audit and disavow harmful links rather than adding to the problem. We never buy links or use tactics that break Google's guidelines and could hurt your rankings."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long does link building take to show results?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Link building is a months-not-weeks discipline. Earning quality links takes real outreach and relationship-building, and their impact on rankings builds over time, so we set realistic expectations up front rather than promising a fixed date or a guaranteed number of links."
           }
         }
       ]
@@ -292,8 +308,8 @@
     {
       "@context": "https://schema.org",
       "@type": "Service",
-      "name": "Link Building & Digital PR Services",
-      "description": "White-hat link building and digital PR for Canadian businesses — backlink audits, editorial outreach, guest posting, and authority building that lifts rankings.",
+      "name": "Link Building Services",
+      "description": "Link building for Canadian businesses — high-authority backlink acquisition, manual outreach, guest posting, digital PR, niche and editorial links, and backlink audits, delivered as one founder-led, white-hat campaign.",
       "url": "https://nexfortis.com/services/digital-marketing/link-building",
       "provider": {
         "@type": "Organization",
@@ -345,15 +361,7 @@
     },
     {
       "text": "GEO &amp; AI Search",
-      "href": "/services/digital-marketing/generative-engine-optimization"
-    },
-    {
-      "text": "Technical SEO",
-      "href": "/services/digital-marketing/technical-seo"
-    },
-    {
-      "text": "Google Business Profile",
-      "href": "/services/digital-marketing/google-business-profile"
+      "href": "/services/digital-marketing/geo-ai-search"
     },
     {
       "text": "Content Marketing",
@@ -365,7 +373,7 @@
     },
     {
       "text": "Google Ads Management",
-      "href": "/services/digital-marketing/google-ads"
+      "href": "/services/digital-marketing/google-ads-ppc"
     },
     {
       "text": "Social Media Marketing",
@@ -384,8 +392,8 @@
       "href": "/services/digital-marketing/conversion-rate-optimization"
     },
     {
-      "text": "Analytics &amp; Reporting",
-      "href": "/services/digital-marketing/analytics-reporting"
+      "text": "Reputation Management",
+      "href": "/services/digital-marketing/reputation-management"
     },
     {
       "text": "Microsoft 365 Solutions",
@@ -440,32 +448,36 @@
       "href": "/services/digital-marketing/seo"
     },
     {
+      "text": "content marketing",
+      "href": "/services/digital-marketing/content-marketing"
+    },
+    {
       "text": "digital marketing services",
       "href": "/services/digital-marketing"
     },
     {
-      "text": "Source: Backlinko, 11.8M-result ranking study",
+      "text": "Source: Backlinko",
       "href": "https://backlinko.com/search-engine-ranking"
     },
     {
-      "text": "Source: Ahrefs, 1-billion-page study",
-      "href": "https://ahrefs.com/blog/search-traffic-study/"
+      "text": "Source: Search Engine Roundtable (Ahrefs study)",
+      "href": "https://www.seroundtable.com/over-65-of-web-pages-have-no-links-31134.html"
     },
     {
-      "text": "Source: Statcounter Global Stats",
-      "href": "https://gs.statcounter.com/search-engine-market-share"
+      "text": "Source: Aira, State of Link Building Report",
+      "href": "https://aira.net/state-of-link-building/"
     },
     {
       "text": "More about NexFortis",
       "href": "/about"
     },
     {
-      "text": "About Us",
-      "href": "/about"
-    },
-    {
       "text": "Privacy Policy",
       "href": "/privacy"
+    },
+    {
+      "text": "About Us",
+      "href": "/about"
     },
     {
       "text": "Terms of Service",

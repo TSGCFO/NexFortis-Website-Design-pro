@@ -1,13 +1,13 @@
 {
-  "route": "/services/digital-marketing/generative-engine-optimization",
-  "title": "AI Search Optimization (GEO) | NexFortis IT Solutions",
-  "description": "Generative Engine Optimization (GEO): get cited by ChatGPT, Google AI Overviews, Perplexity, and Gemini — where a growing share of buyers now start.",
-  "canonical": "https://nexfortis.com/services/digital-marketing/generative-engine-optimization",
+  "route": "/services/digital-marketing/geo-ai-search",
+  "title": "Generative Engine Optimization Services | NexFortis IT Solutions",
+  "description": "Canadian AI SEO agency for GEO and answer engine optimization — get cited by ChatGPT, Perplexity, Gemini, and Google AI Overviews. Founder-led. Free GEO audit.",
+  "canonical": "https://nexfortis.com/services/digital-marketing/geo-ai-search",
   "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
   "og": {
-    "title": "AI Search Optimization (GEO) | NexFortis IT Solutions",
-    "description": "Generative Engine Optimization (GEO): get cited by ChatGPT, Google AI Overviews, Perplexity, and Gemini — where a growing share of buyers now start.",
-    "url": "https://nexfortis.com/services/digital-marketing/generative-engine-optimization",
+    "title": "Generative Engine Optimization Services | NexFortis IT Solutions",
+    "description": "Canadian AI SEO agency for GEO and answer engine optimization — get cited by ChatGPT, Perplexity, Gemini, and Google AI Overviews. Founder-led. Free GEO audit.",
+    "url": "https://nexfortis.com/services/digital-marketing/geo-ai-search",
     "image": "https://nexfortis.com/opengraph.png",
     "type": "website"
   },
@@ -17,71 +17,71 @@
   "headings": [
     {
       "level": 1,
-      "text": "Generative Engine Optimization (GEO) Services"
+      "text": "Generative Engine Optimization Services for Canadian Businesses"
     },
     {
       "level": 2,
-      "text": "When AI answers the question, are you in it?"
+      "text": "What NexFortis generative engine optimization services include"
     },
     {
       "level": 2,
-      "text": "What's included in GEO"
+      "text": "Our generative engine optimization services"
     },
     {
       "level": 3,
-      "text": "AI visibility audit"
+      "text": "Generative engine optimization (GEO)"
     },
     {
       "level": 3,
-      "text": "Passage-optimized content"
+      "text": "Answer engine optimization (AEO)"
     },
     {
       "level": 3,
-      "text": "Schema &amp; structured data for AI"
+      "text": "Visibility across ChatGPT, Perplexity, Gemini &amp; AI Overviews"
     },
     {
       "level": 3,
-      "text": "Brand surface area"
+      "text": "Entity &amp; schema optimization"
     },
     {
       "level": 3,
-      "text": "AI crawler access &amp; llms.txt"
+      "text": "AI-friendly content structuring"
     },
     {
       "level": 3,
-      "text": "Citation monitoring"
+      "text": "AI SEO &amp; ongoing optimization"
     },
     {
       "level": 2,
-      "text": "How we deliver GEO"
+      "text": "Our generative engine optimization process"
     },
     {
       "level": 3,
-      "text": "Baseline AI visibility"
+      "text": "Free GEO audit"
     },
     {
       "level": 3,
-      "text": "Structure for retrieval"
+      "text": "Strategy"
     },
     {
       "level": 3,
-      "text": "Build brand signals"
+      "text": "Execution"
     },
     {
       "level": 3,
-      "text": "Monitor &amp; refine"
+      "text": "Monthly reporting &amp; optimization"
     },
     {
       "level": 2,
-      "text": "GEO vs. SEO alone"
+      "text": "Why choose NexFortis for generative engine optimization"
     },
     {
       "level": 2,
-      "text": "What GEO costs"
+      "text": "Generative engine optimization pricing after a free audit"
     },
     {
       "level": 3,
-      "text": "A premium add-on while the window is open"
+      "text": "Scoped to your AI visibility"
     },
     {
       "level": 2,
@@ -97,7 +97,7 @@
     },
     {
       "level": 3,
-      "text": "Technical SEO"
+      "text": "Content Marketing"
     },
     {
       "level": 2,
@@ -105,7 +105,7 @@
     },
     {
       "level": 2,
-      "text": "Want to be the answer AI gives?"
+      "text": "Want to be the answer AI engines recommend?"
     },
     {
       "level": 4,
@@ -151,7 +151,7 @@
           "@type": "ListItem",
           "position": 4,
           "name": "GEO & AI Search",
-          "item": "https://nexfortis.com/services/digital-marketing/generative-engine-optimization"
+          "item": "https://nexfortis.com/services/digital-marketing/geo-ai-search"
         }
       ]
     },
@@ -161,50 +161,50 @@
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "What is Generative Engine Optimization (GEO)?",
+          "name": "What is generative engine optimization?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "GEO is the work of optimizing your content and brand so that generative AI engines — ChatGPT, Google's AI Overviews, Perplexity, Gemini — cite you when they answer a buyer's question. You will also see it called AI search optimization or answer engine optimization. The simplest way to think about it: SEO is a fight for a ranking, GEO is a fight for a mention inside the answer the AI writes."
+            "text": "Generative engine optimization (GEO) is the practice of making your brand and content visible inside AI-generated answers — the responses from ChatGPT, Perplexity, Gemini, and Google's AI Overviews. Instead of competing only for a ranking position, GEO works to make your business the source those engines quote, summarize, and recommend."
           }
         },
         {
           "@type": "Question",
-          "name": "Is GEO different from SEO?",
+          "name": "How is generative engine optimization different from SEO?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "It grows out of SEO but it is not the same job. Strong, well-organised content helps with both, true, but GEO adds its own layer on top: passage-level structure an engine can lift cleanly, entity and Q&A schema, and brand mentions across the places these models learn to trust. So we run GEO on top of solid SEO, never instead of it."
+            "text": "Traditional SEO earns rankings in a list of links; generative engine optimization earns citations and recommendations inside AI answers. The two work best together, but AI engines read, interpret, and synthesize sources rather than just ranking pages — so GEO emphasizes entity clarity, structured data, and content written as clear, quotable answers."
           }
         },
         {
           "@type": "Question",
-          "name": "Which AI engines do you optimize for?",
+          "name": "What is answer engine optimization?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Whichever ones your buyers are actually using — in practice that means Google's AI Overviews and AI Mode, ChatGPT, Perplexity, and Gemini. We run your priority prompts through each, see who is getting cited today, and put the effort where your audience and the opportunity line up."
+            "text": "Answer engine optimization (AEO) is a closely related discipline focused on the direct-answer surfaces — AI Overviews, featured snippets, and conversational replies. It formats your content as self-contained answers so engines can lift it cleanly into a response. We deliver GEO and AEO together as one campaign."
           }
         },
         {
           "@type": "Question",
-          "name": "Can you guarantee my brand gets cited?",
+          "name": "How much do generative engine optimization services cost?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "No, and the same caveat applies as with a Google ranking — the engine makes the call, not us. What we can genuinely do is move the odds: build the structure, schema, and brand signals these engines reward, then track your citations over time so you can watch the trend rather than take it on faith."
+            "text": "GEO pricing varies by your current AI visibility, market competitiveness, the state of your entity and schema signals, and scope — which is why we scope every engagement after a free audit rather than quoting a one-size-fits-all price, with month-to-month terms."
           }
         },
         {
           "@type": "Question",
-          "name": "How do you measure GEO results?",
+          "name": "How long does generative engine optimization take to show results?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "We run your target prompts across each engine on a regular schedule and record how often — and how prominently — your brand turns up. That gives you a month-over-month trend per engine instead of a single snapshot, so you can actually see whether the work is landing."
+            "text": "GEO is a months-not-weeks discipline. Timelines depend on your starting visibility, how well your content and entities are already structured, and how competitive your space is in AI answers, so we set realistic expectations rather than promising a fixed date or a guaranteed spot."
           }
         },
         {
           "@type": "Question",
-          "name": "Is it too early to invest in GEO?",
+          "name": "Do you offer AI SEO services as well as traditional SEO?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Honestly, early is the whole point. AI answers already show up on a large share of searches and more buyers start with ChatGPT every month, yet hardly any local competitors are optimising for it. Earning these engines' trust now is far cheaper than trying to claw your way in once everyone else has noticed."
+            "text": "Yes. Our AI SEO services cover generative engine optimization and answer engine optimization, and they integrate with our traditional SEO so your visibility is strong across both AI answers and classic search results."
           }
         }
       ]
@@ -300,9 +300,9 @@
     {
       "@context": "https://schema.org",
       "@type": "Service",
-      "name": "Generative Engine Optimization (GEO)",
-      "description": "AI search optimization for Canadian businesses — earning citations in ChatGPT, Google AI Overviews, Perplexity, and Gemini through structured content and brand signals.",
-      "url": "https://nexfortis.com/services/digital-marketing/generative-engine-optimization",
+      "name": "Generative Engine Optimization Services",
+      "description": "Generative engine optimization (GEO) and answer engine optimization (AEO) for Canadian businesses — entity and schema work, AI-friendly content structuring, and the technical foundations that earn citations in AI-generated answers, delivered as one founder-led campaign.",
+      "url": "https://nexfortis.com/services/digital-marketing/geo-ai-search",
       "provider": {
         "@type": "Organization",
         "name": "NexFortis IT Solutions",
@@ -353,15 +353,7 @@
     },
     {
       "text": "GEO &amp; AI Search",
-      "href": "/services/digital-marketing/generative-engine-optimization"
-    },
-    {
-      "text": "Technical SEO",
-      "href": "/services/digital-marketing/technical-seo"
-    },
-    {
-      "text": "Google Business Profile",
-      "href": "/services/digital-marketing/google-business-profile"
+      "href": "/services/digital-marketing/geo-ai-search"
     },
     {
       "text": "Content Marketing",
@@ -373,7 +365,7 @@
     },
     {
       "text": "Google Ads Management",
-      "href": "/services/digital-marketing/google-ads"
+      "href": "/services/digital-marketing/google-ads-ppc"
     },
     {
       "text": "Social Media Marketing",
@@ -392,8 +384,8 @@
       "href": "/services/digital-marketing/conversion-rate-optimization"
     },
     {
-      "text": "Analytics &amp; Reporting",
-      "href": "/services/digital-marketing/analytics-reporting"
+      "text": "Reputation Management",
+      "href": "/services/digital-marketing/reputation-management"
     },
     {
       "text": "Microsoft 365 Solutions",
@@ -448,32 +440,36 @@
       "href": "/services/digital-marketing/seo"
     },
     {
+      "text": "content marketing",
+      "href": "/services/digital-marketing/content-marketing"
+    },
+    {
       "text": "digital marketing services",
       "href": "/services/digital-marketing"
     },
     {
-      "text": "Source: Semrush study, via Search Engine Land",
-      "href": "https://searchengineland.com/google-ai-overviews-surge-pullback-data-466314"
+      "text": "Source: OpenAI",
+      "href": "https://openai.com/index/the-state-of-enterprise-ai-2025-report/"
     },
     {
-      "text": "Source: SparkToro 2024 Zero-Click Study",
-      "href": "https://sparktoro.com/blog/2024-zero-click-search-study-for-every-1000-us-google-searches-only-374-clicks-go-to-the-open-web-in-the-eu-its-360/"
+      "text": "Source: Gartner",
+      "href": "https://www.gartner.com/en/newsroom/press-releases/2024-02-19-gartner-predicts-search-engine-volume-will-drop-25-percent-by-2026-due-to-ai-chatbots-and-other-virtual-agents"
     },
     {
-      "text": "Source: Adobe, 2025 consumer survey",
-      "href": "https://www.adobe.com/express/learn/blog/chatgpt-as-a-search-engine"
+      "text": "Source: Pew Research Center",
+      "href": "https://www.pewresearch.org/short-reads/2025/07/22/google-users-are-less-likely-to-click-on-links-when-an-ai-summary-appears-in-the-results/"
     },
     {
       "text": "More about NexFortis",
       "href": "/about"
     },
     {
-      "text": "About Us",
-      "href": "/about"
-    },
-    {
       "text": "Privacy Policy",
       "href": "/privacy"
+    },
+    {
+      "text": "About Us",
+      "href": "/about"
     },
     {
       "text": "Terms of Service",

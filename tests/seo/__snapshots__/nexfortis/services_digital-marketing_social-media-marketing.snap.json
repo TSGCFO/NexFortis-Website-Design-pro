@@ -1,12 +1,12 @@
 {
   "route": "/services/digital-marketing/social-media-marketing",
-  "title": "Social Media Marketing | NexFortis IT Solutions",
-  "description": "Social media marketing &amp; management for Canadian businesses: organic social, content, and Meta Ads that build your brand and feed your funnel.",
+  "title": "Social Media Marketing Services in Canada | NexFortis IT Solutions",
+  "description": "Canadian social media marketing agency — strategy, content, community management, and paid social on Instagram, Facebook, LinkedIn &amp; TikTok. Free consultation.",
   "canonical": "https://nexfortis.com/services/digital-marketing/social-media-marketing",
   "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
   "og": {
-    "title": "Social Media Marketing | NexFortis IT Solutions",
-    "description": "Social media marketing &amp; management for Canadian businesses: organic social, content, and Meta Ads that build your brand and feed your funnel.",
+    "title": "Social Media Marketing Services in Canada | NexFortis IT Solutions",
+    "description": "Canadian social media marketing agency — strategy, content, community management, and paid social on Instagram, Facebook, LinkedIn &amp; TikTok. Free consultation.",
     "url": "https://nexfortis.com/services/digital-marketing/social-media-marketing",
     "image": "https://nexfortis.com/opengraph.png",
     "type": "website"
@@ -17,19 +17,19 @@
   "headings": [
     {
       "level": 1,
-      "text": "Social Media Marketing That Builds Your Brand"
+      "text": "Social Media Marketing Services for Canadian Businesses"
     },
     {
       "level": 2,
-      "text": "Be where your customers already are"
+      "text": "What NexFortis social media marketing services include"
     },
     {
       "level": 2,
-      "text": "What's included in our social media marketing"
+      "text": "Our social media marketing services"
     },
     {
       "level": 3,
-      "text": "Strategy &amp; platform selection"
+      "text": "Social media strategy"
     },
     {
       "level": 3,
@@ -37,15 +37,15 @@
     },
     {
       "level": 3,
-      "text": "Organic management &amp; scheduling"
+      "text": "Account &amp; community management"
     },
     {
       "level": 3,
-      "text": "Community engagement"
+      "text": "Paid social advertising"
     },
     {
       "level": 3,
-      "text": "Paid social &amp; Meta Ads"
+      "text": "Platform management (Instagram, Facebook, LinkedIn, TikTok)"
     },
     {
       "level": 3,
@@ -53,35 +53,35 @@
     },
     {
       "level": 2,
-      "text": "How we deliver social media marketing"
+      "text": "Our social media marketing process"
     },
     {
       "level": 3,
-      "text": "Audit &amp; strategy"
+      "text": "Free consultation"
     },
     {
       "level": 3,
-      "text": "Create &amp; schedule"
+      "text": "Strategy"
     },
     {
       "level": 3,
-      "text": "Engage &amp; amplify"
+      "text": "Execution"
     },
     {
       "level": 3,
-      "text": "Measure &amp; refine"
+      "text": "Monthly reporting"
     },
     {
       "level": 2,
-      "text": "NexFortis vs. a typical social media provider"
+      "text": "Why choose NexFortis for social media marketing"
     },
     {
       "level": 2,
-      "text": "What social media marketing costs"
+      "text": "Social media marketing pricing after a free consultation"
     },
     {
       "level": 3,
-      "text": "Scaled to platforms, posting volume, and paid spend"
+      "text": "Scoped to your platforms"
     },
     {
       "level": 2,
@@ -105,7 +105,7 @@
     },
     {
       "level": 2,
-      "text": "Ready to make social media actually work?"
+      "text": "Ready for social channels that do real work?"
     },
     {
       "level": 4,
@@ -161,18 +161,10 @@
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "What is social media marketing?",
+          "name": "What are social media marketing services?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Social media marketing is using platforms like Instagram, Facebook, LinkedIn, and TikTok to build your brand, engage your audience, and drive traffic and leads — through a mix of organic content and paid ads. Done well it's a consistent, strategic presence on the channels your buyers use, not just posting whenever you have a spare moment."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Why is social media marketing important?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Because that's where attention is. Billions of people use social platforms for a couple of hours a day, and it's where a lot of discovery, research, and trust-building now happens before someone buys. If your business isn't visible and credible there, you're invisible at a moment that increasingly shapes the buying decision."
+            "text": "They cover the strategy, content creation, community management, paid social advertising, and analytics needed to build and run your presence on platforms like Instagram, Facebook, LinkedIn, and TikTok. NexFortis delivers all of it as one connected service, backed by monthly reporting."
           }
         },
         {
@@ -180,23 +172,39 @@
           "name": "How much does social media marketing cost?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "It depends on how many platforms you run, how much content you publish, and whether you add paid social. Managing one channel well costs far less than running several with an ad budget on top. We price by the program and keep it transparent — and any paid-social ad spend is separate, going directly to the platforms. You'll get a clear number after a free audit."
+            "text": "Pricing varies by the number of platforms, the volume of content, whether paid social is involved, and your goals — which is why we scope every engagement after a free consultation rather than quoting a one-size-fits-all price. Any ad spend is separate and goes directly to the platforms."
           }
         },
         {
           "@type": "Question",
-          "name": "Which platforms should my business be on?",
+          "name": "Is it worth paying for social media marketing?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Only the ones your buyers actually use — which is usually one or two, not all of them. A B2B firm might live on LinkedIn while a local retailer does better on Instagram and Facebook. We'll recommend where to focus based on your audience and goals rather than spreading you thin trying to be everywhere."
+            "text": "For most businesses, yes — when it is done with a strategy. Consistent, on-brand content and active community management build visibility and trust over time, and paid social can accelerate results — but only if the work is planned and measured rather than posted at random."
           }
         },
         {
           "@type": "Question",
-          "name": "How do you measure social media success?",
+          "name": "How is a social media marketing agency different from doing it in-house?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "By the metrics that connect to your business, not just likes. We track reach and engagement, but more importantly the traffic and leads social sends you, and report it in plain language each month. That way you can see whether the work is building real results, not just a follower count."
+            "text": "An agency brings strategy, consistent execution, and measurement an overstretched in-house team often cannot sustain. NexFortis can run your social entirely or support an existing team — and either way, a senior consultant stays on your account end to end."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which social media platforms should my business be on?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It depends on where your customers are and what you sell. Rather than spreading you across every network, we focus on the platforms — Instagram, Facebook, LinkedIn, or TikTok — that fit your audience, then expand when it makes sense."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long does social media marketing take to show results?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Social media marketing is a months-not-weeks discipline. Building an engaged audience takes consistency over time, so we set realistic expectations up front rather than promising a fixed number of followers or sales by a fixed date."
           }
         }
       ]
@@ -293,7 +301,7 @@
       "@context": "https://schema.org",
       "@type": "Service",
       "name": "Social Media Marketing Services",
-      "description": "Social media marketing and management for Canadian businesses — strategy, content creation, organic management, community engagement, and paid social (Meta Ads).",
+      "description": "Social media marketing for Canadian businesses — strategy, content creation, community management, paid social advertising, platform management, and analytics, delivered as one founder-led campaign.",
       "url": "https://nexfortis.com/services/digital-marketing/social-media-marketing",
       "provider": {
         "@type": "Organization",
@@ -345,15 +353,7 @@
     },
     {
       "text": "GEO &amp; AI Search",
-      "href": "/services/digital-marketing/generative-engine-optimization"
-    },
-    {
-      "text": "Technical SEO",
-      "href": "/services/digital-marketing/technical-seo"
-    },
-    {
-      "text": "Google Business Profile",
-      "href": "/services/digital-marketing/google-business-profile"
+      "href": "/services/digital-marketing/geo-ai-search"
     },
     {
       "text": "Content Marketing",
@@ -365,7 +365,7 @@
     },
     {
       "text": "Google Ads Management",
-      "href": "/services/digital-marketing/google-ads"
+      "href": "/services/digital-marketing/google-ads-ppc"
     },
     {
       "text": "Social Media Marketing",
@@ -384,8 +384,8 @@
       "href": "/services/digital-marketing/conversion-rate-optimization"
     },
     {
-      "text": "Analytics &amp; Reporting",
-      "href": "/services/digital-marketing/analytics-reporting"
+      "text": "Reputation Management",
+      "href": "/services/digital-marketing/reputation-management"
     },
     {
       "text": "Microsoft 365 Solutions",
@@ -436,36 +436,44 @@
       "href": "/services"
     },
     {
-      "text": "content marketing",
-      "href": "/services/digital-marketing/content-marketing"
-    },
-    {
       "text": "digital marketing services",
       "href": "/services/digital-marketing"
     },
     {
-      "text": "Source: DataReportal, Digital 2025",
-      "href": "https://datareportal.com/reports/digital-2025-sub-section-state-of-social"
+      "text": "Source: DataReportal / Kepios",
+      "href": "https://datareportal.com/social-media-users"
     },
     {
-      "text": "Source: Meltwater / We Are Social, Digital 2025",
-      "href": "https://www.meltwater.com/en/blog/digital-2025"
+      "text": "Source: DataReportal, Digital 2026 Global Overview",
+      "href": "https://datareportal.com/reports/digital-2026-global-overview-report"
     },
     {
-      "text": "Source: Digital 2025 report (social ad spend)",
-      "href": "https://www.meltwater.com/en/about/press-releases/digital-2025-ai-accelerates-youtube-tops-user-charts-social-ad-spend-soars-and-more"
+      "text": "Source: DataReportal / GWI",
+      "href": "https://datareportal.com/reports/digital-2025-sub-section-brand-discovery"
+    },
+    {
+      "text": "content marketing",
+      "href": "/services/digital-marketing/content-marketing"
+    },
+    {
+      "text": "reputation management",
+      "href": "/services/digital-marketing/reputation-management"
+    },
+    {
+      "text": "Google Ads management",
+      "href": "/services/digital-marketing/google-ads-ppc"
     },
     {
       "text": "More about NexFortis",
       "href": "/about"
     },
     {
-      "text": "About Us",
-      "href": "/about"
-    },
-    {
       "text": "Privacy Policy",
       "href": "/privacy"
+    },
+    {
+      "text": "About Us",
+      "href": "/about"
     },
     {
       "text": "Terms of Service",

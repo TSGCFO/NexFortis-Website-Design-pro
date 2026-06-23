@@ -1,12 +1,12 @@
 {
   "route": "/services/digital-marketing/email-marketing",
-  "title": "Email Marketing | NexFortis IT Solutions",
-  "description": "Email marketing for Canadian businesses: newsletters, nurture flows, and automations that turn your list into repeat revenue you actually own.",
+  "title": "Email Marketing Services in Canada | NexFortis IT Solutions",
+  "description": "Canadian email marketing company — campaigns, automation, list growth, and deliverability that turn your list into revenue. Founder-led. Free email audit.",
   "canonical": "https://nexfortis.com/services/digital-marketing/email-marketing",
   "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
   "og": {
-    "title": "Email Marketing | NexFortis IT Solutions",
-    "description": "Email marketing for Canadian businesses: newsletters, nurture flows, and automations that turn your list into repeat revenue you actually own.",
+    "title": "Email Marketing Services in Canada | NexFortis IT Solutions",
+    "description": "Canadian email marketing company — campaigns, automation, list growth, and deliverability that turn your list into revenue. Founder-led. Free email audit.",
     "url": "https://nexfortis.com/services/digital-marketing/email-marketing",
     "image": "https://nexfortis.com/opengraph.png",
     "type": "website"
@@ -17,71 +17,71 @@
   "headings": [
     {
       "level": 1,
-      "text": "Email Marketing That Turns Lists Into Revenue"
+      "text": "Email Marketing Services for Canadian Businesses"
     },
     {
       "level": 2,
-      "text": "The one audience you actually own"
+      "text": "What NexFortis email marketing services include"
     },
     {
       "level": 2,
-      "text": "What's included in our email marketing services"
+      "text": "Our email marketing services"
     },
     {
       "level": 3,
-      "text": "Strategy &amp; list growth"
+      "text": "Email campaign management"
     },
     {
       "level": 3,
-      "text": "Campaign design &amp; copy"
+      "text": "Email marketing automation &amp; lifecycle flows"
     },
     {
       "level": 3,
-      "text": "Automation &amp; nurture flows"
+      "text": "List building &amp; segmentation"
     },
     {
       "level": 3,
-      "text": "Segmentation &amp; personalization"
+      "text": "Newsletters &amp; broadcasts"
     },
     {
       "level": 3,
-      "text": "Deliverability &amp; compliance"
+      "text": "Deliverability optimization"
     },
     {
       "level": 3,
-      "text": "Reporting &amp; optimization"
+      "text": "eCommerce email"
     },
     {
       "level": 2,
-      "text": "How we deliver email marketing"
+      "text": "Our email marketing process"
     },
     {
       "level": 3,
-      "text": "Audit &amp; strategy"
+      "text": "Free email marketing audit"
     },
     {
       "level": 3,
-      "text": "Build &amp; automate"
+      "text": "Strategy"
     },
     {
       "level": 3,
-      "text": "Send &amp; nurture"
+      "text": "Execution"
     },
     {
       "level": 3,
-      "text": "Measure &amp; improve"
+      "text": "Monthly reporting &amp; optimization"
     },
     {
       "level": 2,
-      "text": "NexFortis vs. a typical email provider"
+      "text": "Why choose NexFortis for email marketing"
     },
     {
       "level": 2,
-      "text": "What email marketing costs"
+      "text": "Email marketing pricing after a free audit"
     },
     {
       "level": 3,
-      "text": "Scaled to volume and automation"
+      "text": "Scoped to your list"
     },
     {
       "level": 2,
@@ -105,7 +105,7 @@
     },
     {
       "level": 2,
-      "text": "Sitting on a list you're not using?"
+      "text": "Ready to make your list pull its weight?"
     },
     {
       "level": 4,
@@ -161,42 +161,50 @@
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "What is email marketing?",
+          "name": "How much do email marketing services cost?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Email marketing is using email to build relationships and drive sales — newsletters, promotions, and automated sequences sent to people who've opted in to hear from you. Unlike social or ads, your list is an audience you own and can reach any time, which is a big part of why it consistently delivers one of the highest returns in marketing."
+            "text": "Email marketing pricing varies by list size, the number of automation flows and campaigns, your platform, and scope — which is why we scope every engagement after a free audit rather than quoting a one-size-fits-all price. We structure plans to be accessible for small businesses and scalable as your list grows."
           }
         },
         {
           "@type": "Question",
-          "name": "How effective is email marketing, really?",
+          "name": "What is the best email marketing service?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Very — it routinely returns far more per dollar than most channels because you're reaching people who already chose to hear from you. Industry studies put the average return around $36 for every $1 spent. Results depend on your list quality and how well the emails are done, which is exactly the part we handle."
+            "text": "The best service for your business depends on your list size, your goals, and whether you sell online or generate leads — there is no single right answer for everyone. We are platform-agnostic: in the free audit we assess what you use today and recommend the right fit."
           }
         },
         {
           "@type": "Question",
-          "name": "Which email platform should I use?",
+          "name": "How much does it cost to send 10,000 emails?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "It depends on your needs — Mailchimp is fine for simple newsletters, Klaviyo is strong for ecommerce automation, and there are others in between. We work across the major platforms and will recommend the right fit, or work with whatever you already have rather than forcing a migration you don't need."
+            "text": "Sending cost depends almost entirely on your email platform's pricing, which is usually tied to your number of subscribers rather than charged per send. The bigger driver of value is not the cost to send but the quality of the list, the segmentation, and the automation behind each send."
           }
         },
         {
           "@type": "Question",
-          "name": "How do you keep emails out of the spam folder?",
+          "name": "How much is a 1,000-person email list worth?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Deliverability is part technical, part discipline. We set up proper authentication, keep your list clean, and follow sending best practices to protect your sender reputation — and we make sure your email complies with Canada's anti-spam law (CASL) and CAN-SPAM, which protects both your inbox placement and your business from penalties."
+            "text": "A list's value is not fixed — it depends on how engaged, well-segmented, and deliverable it is, and on how well your campaigns convert it. A small, engaged list of buyers can outperform a large, neglected one, which is what list building and segmentation improve."
           }
         },
         {
           "@type": "Question",
-          "name": "How soon will email marketing pay off?",
+          "name": "What is the 80/20 rule in email marketing?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Faster than most channels, because you're emailing people who already know you. A good welcome flow or a re-engagement campaign can produce results within the first few weeks, and the automations keep earning in the background after that. We report from the start so you can see the revenue building."
+            "text": "A common guideline is to keep roughly 80% of your email genuinely useful to the reader — helpful content and relevant offers — and reserve about 20% for direct selling. We build campaign calendars around that balance so your audience stays engaged."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you offer email marketing for small businesses?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. We scope small business email marketing so the work — and the pricing — fits a smaller list and budget, focusing first on the automation and clean-up that deliver the fastest return."
           }
         }
       ]
@@ -293,7 +301,7 @@
       "@context": "https://schema.org",
       "@type": "Service",
       "name": "Email Marketing Services",
-      "description": "Email marketing for Canadian businesses — strategy, list growth, campaign design, automation and nurture flows, segmentation, deliverability, and reporting.",
+      "description": "Email marketing for Canadian businesses — campaign management, automation and lifecycle flows, list building and segmentation, deliverability, and eCommerce email, delivered as one founder-led programme.",
       "url": "https://nexfortis.com/services/digital-marketing/email-marketing",
       "provider": {
         "@type": "Organization",
@@ -345,15 +353,7 @@
     },
     {
       "text": "GEO &amp; AI Search",
-      "href": "/services/digital-marketing/generative-engine-optimization"
-    },
-    {
-      "text": "Technical SEO",
-      "href": "/services/digital-marketing/technical-seo"
-    },
-    {
-      "text": "Google Business Profile",
-      "href": "/services/digital-marketing/google-business-profile"
+      "href": "/services/digital-marketing/geo-ai-search"
     },
     {
       "text": "Content Marketing",
@@ -365,7 +365,7 @@
     },
     {
       "text": "Google Ads Management",
-      "href": "/services/digital-marketing/google-ads"
+      "href": "/services/digital-marketing/google-ads-ppc"
     },
     {
       "text": "Social Media Marketing",
@@ -384,8 +384,8 @@
       "href": "/services/digital-marketing/conversion-rate-optimization"
     },
     {
-      "text": "Analytics &amp; Reporting",
-      "href": "/services/digital-marketing/analytics-reporting"
+      "text": "Reputation Management",
+      "href": "/services/digital-marketing/reputation-management"
     },
     {
       "text": "Microsoft 365 Solutions",
@@ -436,36 +436,36 @@
       "href": "/services"
     },
     {
-      "text": "content marketing",
-      "href": "/services/digital-marketing/content-marketing"
-    },
-    {
       "text": "digital marketing services",
       "href": "/services/digital-marketing"
     },
     {
-      "text": "Source: Litmus, Email Marketing ROI",
-      "href": "https://www.litmus.com/roi-calculator"
+      "text": "Source: Litmus",
+      "href": "https://www.litmus.com/resources/email-marketing-roi"
     },
     {
-      "text": "Source: EmailTooltester, Email Marketing ROI report",
+      "text": "Source: Statista",
+      "href": "https://www.statista.com/topics/1446/e-mail-marketing/"
+    },
+    {
+      "text": "Source: EmailTooltester",
       "href": "https://www.emailtooltester.com/en/blog/email-marketing-roi/"
     },
     {
-      "text": "Source: Radicati Email Statistics Report",
-      "href": "https://radicati.com/wp/wp-content/uploads/2023/04/Email-Statistics-Report-2023-2027-Executive-Summary.pdf"
+      "text": "content marketing",
+      "href": "/services/digital-marketing/content-marketing"
     },
     {
       "text": "More about NexFortis",
       "href": "/about"
     },
     {
-      "text": "About Us",
-      "href": "/about"
-    },
-    {
       "text": "Privacy Policy",
       "href": "/privacy"
+    },
+    {
+      "text": "About Us",
+      "href": "/about"
     },
     {
       "text": "Terms of Service",
