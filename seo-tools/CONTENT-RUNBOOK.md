@@ -2,8 +2,8 @@
 
 The validated, repeatable pipeline for producing a ranking, converting page for the
 NexFortis marketing site. Built and stress-tested across the SEOwind + Keyword Insights
-evaluation. This is the process every page goes through — the pillar, the 13 service
-spokes, and later the geo/industry landing pages.
+evaluation. This is the process every page goes through — the pillar, the 11 service
+spokes (the 12-page map), the Phase B geo `[service]+[city]` pages, and later industry pages.
 
 ## The two gates (govern every decision in this run book)
 1. **SEO / Google ranking first.** If a choice doesn't help the page rank, it loses.
@@ -37,7 +37,7 @@ Every step below is judged against these, in this order.
   "same intent," which is exactly what Google cannibalizes on.
 - **Rule: one page = one cluster.** Assign each cluster to exactly one page:
   - The **pillar** owns the head-term cluster.
-  - Each of the **13 spokes** owns a distinct sub-intent cluster.
+  - Each of the **11 spokes** (the 12-page map) owns a distinct sub-intent cluster.
   - **No keyword appears on two pages. No cluster is split across pages.**
 - **Gate (NOT automated yet — build it):** there is currently **no keyword-ownership registry and
   no cannibalization test** in the repo, and `pnpm test:seo` does **not** catch overlap. As a
@@ -45,7 +45,7 @@ Every step below is judged against these, in this order.
   (page → owned cluster/keywords, seeded with the pillar head term + each existing spoke's cluster)
   and (b) run a manual or scripted overlap check before producing any page. No page proceeds until
   it owns a clean, non-overlapping cluster.
-- Why this is a hard gate: with 1 pillar + 13 near-topic spokes, cannibalization is the
+- Why this is a hard gate: with 1 pillar + 11 near-topic spokes (+ Phase B geo pages), cannibalization is the
   default failure mode — two pages competing for the same query split authority and both lose.
 
 ## Step 3 — SERP analysis + content brief (per page)
@@ -130,6 +130,22 @@ Every step below is judged against these, in this order.
   authoritative over this doc on test wiring/floors.)
 - On the PR, **open the deployed Render preview URL in a browser and check the live page**
   (not just local) before merge.
+
+---
+
+## Geo `[service]+[city]` pages — per-page adaptation (Phase B)
+
+Geo city pages run the SAME 8 steps, with these adaptations. Architecture: `runbook/geo/04-architecture-design.md`. Scope/waves: `runbook/geo/03-build-waves.md`. Demand data already collected (3-tool consensus): `runbook/geo/demand-raw.json`.
+
+- **Scope (locked):** ONLY the **5 geo services** (seo, local-seo, web-design, google-ads-ppc, social-media-marketing) get city pages — the other 6 spokes have near-zero `[service]+[city]` demand (national hubs only). All 25 GTA municipalities ship regardless of demand; metros are demand-gated. Build in ROI waves; the near-zero GTA exurbs are **Phase C** (deferred).
+- **Step 1 (keywords):** do NOT re-research — pull the page's `bestQuery` + variants + volume/KD from `geo/demand-raw.json`.
+- **Step 2 (cannibalization):** add the city cluster to `keyword-ownership.json` keyed `"<service>/<city>"`: primary = `"<service> <city>"`, secondaries = **city-qualified variants ONLY** (never the national head — the spoke owns `"<service> services"`). Run `check-cannibalization.mjs` → exit 0.
+- **Step 3 (brief):** geo-intent KI brief; emphasize local entities/competitors to cover.
+- **Step 4 (length + outline):** geo SERPs are leaner than national — target ~**700–1500** `<main>` words (tighten per measured SERP). Outline = the spoke skeleton + the REQUIRED local sections: `localContext`, `serviceAreas` (≥6), `localProof` (≥2), nearby-cities, ≥1 city-specific FAQ.
+- **Step 5 (draft) — the ANTI-DOORWAY core:** author CITY-UNIQUE prose — real neighbourhoods/districts/landmarks/market context (public + verifiable; no fabrication). **Local proof = a real NexFortis result where the operator has one, otherwise a CITED market stat — NEVER an invented testimonial** (`_facts.md`). No `localContext`/`intro`/FAQ paragraph may repeat across two city pages (the cross-page paragraph-dedup test is the doorway guard).
+- **Step 6 (gates):** same stack; the paragraph-dedup check is the doorway gate.
+- **Step 7 (integrate):** content → `_geoContent.tsx` (`GeoPageContent`); add the entry to `geo-links.ts` + flip `published:true`; regen routes (`scripts/gen-geo-routes.mjs`). Links: UP to the national spoke, ACROSS to sibling city pages (same service), DOWN from the spoke's "Areas we serve". Geo lives in `geo-links.ts` (NOT `DM_SPOKES`) so it can never flood the mega-menu.
+- **Step 8 (QA):** the geo page emits `geo.region=CA-<region>`, `geo.placename=<city>`, and `ServiceSchema.areaServed=City` (via the new `seo.tsx` props); the build prerenders the route (wave-gate the build — one bad page fails the whole deploy); add `dm-word-targets.json` + snapshot + known-issues entries per route; `check-cannibalization.mjs` runs in `test:seo`.
 
 ---
 

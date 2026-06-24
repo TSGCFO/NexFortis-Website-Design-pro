@@ -40,9 +40,28 @@ Mirror any completed spoke's folder (e.g. `link-building/`) and follow `CONTENT-
 
 **AI-detection = ADVISORY (non-binding).** `undetectable-detect.mjs` over-flags professional human prose. Binding gates = Winston plagiarism + keyword/heading coverage. Precedent: SEO page shipped at AI 72, local-seo at 66 — a page in the 60s is acceptable; never degrade facts/keywords chasing <50.
 
+**Phase B (geo `[service]+[city]`) — decisions (durable; full detail in `geo/01`…`geo/04`).**
+- **5 geo services ONLY** (data-confirmed, 3-tool): seo, local-seo, web-design, google-ads-ppc, social-media-marketing. The other 6 spokes have near-zero `[service]+[city]` demand → national hubs only, NO city pages.
+- **Cities:** ALL 25 GTA municipalities ship for the 5 services regardless of demand (operator rule; demand sets BUILD ORDER only). Metros demand-gated. Lead demand = Toronto + the major metros (Calgary/Edmonton/Vancouver), NOT GTA suburbs (a corrected assumption). Contamination to watch: Uxbridge-UK, Halifax-UK, "london ontario" (not London UK), Surrey-UK.
+- **Waves, not all-at-once:** Phase B = **79** demand-backed pages in 4 ROI waves; the **~88** near-zero GTA exurb pages DEFERRED to a possible **Phase C**; 43 weak metros dropped; Burnaby folded into Vancouver. (`geo/03-build-waves.md`)
+- **Anti-doorway (HARD rule):** every city page must be GENUINELY local (real neighbourhoods, districts, market context, local proof) — never a templated city-name swap, or Google penalizes the whole cluster. Encoded as REQUIRED `GeoPageContent` fields (`localContext`, `serviceAreas`≥6, `localProof`≥2, ≥1 city-specific FAQ). Local proof = real result where available, else a CITED market stat — **NEVER an invented testimonial** (`_facts.md`).
+- **Architecture:** geo pages live in a separate `geo-links.ts` registry (so they can NEVER flood the mega-menu/footer — those read `getPublishedSpokes()`); routes are codegen'd as literal `<Route>` from that registry (param routes are excluded from prerender discovery); new `_GeoServicePageBody`; `seo.tsx` made `geo.region`/`placename` + `ServiceSchema.areaServed` per-page props (all were hardcoded — verified). Cannibalization: national spoke owns the unqualified head ("local seo services"), each city page owns ONLY city-qualified strings ("local seo toronto"). (`geo/04-architecture-design.md`)
+
 ---
 
 ## Build history (newest first)
+
+### 2026-06-24 — Phase B kickoff: geo demand scoping + wave plan + architecture + foundation (IN PROGRESS)
+- **Demand scoping (3-tool consensus, LOCKED):** workflow `geo-demand-crosscheck` ran Ahrefs + DataForSEO + Semrush across the spokes × all GTA municipalities + Canadian metros. → `geo/02-demand-matrix.md` (locked), `geo/demand-raw.json` (raw per-city numbers), `geo/01-demand-discovery.md` (Ahrefs-only first pass). Confirmed the 5 geo services + the metros-not-suburbs lead; caught place-name contamination.
+- **Wave plan (`geo/03-build-waves.md`):** 79 demand-backed Phase B pages in 4 ROI waves (W1 15 · W2 19 · W3 27 · W4 18); 88 near-zero GTA → Phase C; 43 weak metros dropped.
+- **Architecture (DESIGNED + APPROVED, `geo/04-architecture-design.md`):** workflow `geo-architecture-design` mapped the real spoke arch (5 readers) + a Plan-agent synthesized it; hand-verified the load-bearing `seo.tsx` hardcoding. Operator decisions: **A = codegen literal routes**, **B = mix** (real local proof where available, cited market-stats fallback — never invented).
+- **Foundation IMPLEMENTED (typecheck green, commit `79151fd`):** `geo-links.ts` (registry + helpers, Wave-1 seeded w/ Local SEO Toronto `published:false`); `_geoContent.tsx` (`GeoPageContent` type w/ required local fields); `seo.tsx` (backward-compatible geo props). **REMAINING:** `_GeoServicePageBody` + 3 local UI blocks + `gen-geo-routes.mjs` codegen + App.tsx wiring + drift test + spoke "Areas we serve" DOWN-link + cannibalization in `test:seo`; then page #1 (Local SEO Toronto) via the run book.
+
+### 2026-06-23/24 — Phase A COMPLETED (Steps 7–8 + mega-menu)
+- **Step 7 (integration), commits `297d6d9`…`8b7f6b5`:** 7A reconciled the app to the 12-map (renamed geo/google-ads, dropped technical-seo/analytics, folded GBP→local-seo, added reputation-management); 7B integrated all 11 spokes as typed `DM_SPOKE_CONTENT`. typecheck + build green; metas ≤160; keyword coverage 100%/page.
+- **Step 8 (QA), through `a3aea86`:** verified on the **Render PR-108 preview** (build passed; all 12 pages prerendered w/ title/meta/body/Service+FAQ+Person JSON-LD; sitemap = the 12 new routes). Cannibalization clean (87 kw). SEO test fixtures reconciled — snapshots regenerated from the deployed prerender, `dm-word-targets.json` + `__known-issues__.json` updated to the 12-map.
+- **Services mega-menu restructure**, commits `926c389`, `b7c768a` (built via the Replit connector, reviewed + synced over SSH): two-level nested flyout — 5 mains; hovering Digital Marketing opens a right-side panel of the DM spokes (data-driven from `getPublishedSpokes()`); two-column + viewport-bound scroll-cap; keyboard-accessible.
+- **Deferred to-dos logged in-repo:** nav hover-intent UX (inline `TODO(nav-hover-intent)` in `layout.tsx`); site-wide visual redesign (`docs/TODO-visual-redesign.md`).
 
 ### 2026-06-23 — Steps 5–6 for the 8 remaining spokes (+ humanizer hardening)
 - Built + fully gated: google-ads-ppc, social-media-marketing, content-marketing, link-building, geo-ai-search, reputation-management, email-marketing, conversion-rate-optimization.
@@ -60,23 +79,26 @@ Mirror any completed spoke's folder (e.g. `link-building/`) and follow `CONTENT-
 
 ---
 
-## Supersession status (READ before any cleanup)
+## Supersession status (cleanup now SAFE — deferred)
 
-The live app (`internal-links.ts`, `App.tsx`, `_dmContent.tsx`, `pages/services/digital-marketing/*.tsx`) still serves the OLD slugs. These runbook folders back **currently-live pages** — **pending Step 7, NOT stale; do not delete until the app no longer references them:**
-- `generative-engine-optimization/` → becomes `geo-ai-search`
-- `google-ads/` → becomes `google-ads-ppc`
-- `google-business-profile/` → folds into `local-seo` (GBP section)
-- `technical-seo/` → folded / dropped
-- `analytics-reporting/` → dropped from the map
+Step 7A (commit `297d6d9`) reconciled the live app to the 12-map — the app NO LONGER references the old slugs, and `tests/seo/dm-word-targets.json` was reconciled at Step 8 (commit `a3aea86`). The old-slug runbook folders are therefore **safe to delete** (deferred — not yet removed):
+- `generative-engine-optimization/` → became `geo-ai-search`
+- `google-ads/` → became `google-ads-ppc`
+- `google-business-profile/` → folded into `local-seo` (GBP section)
+- `technical-seo/` → dropped
+- `analytics-reporting/` → dropped
 
-Also pending Step 7: `tests/seo/dm-word-targets.json` reconcile to the new slugs/targets.
+(Trace provenance + show the list before deleting, per protocol. The old DM URLs currently return a 200 SPA-fallback shell, not 404/301 — out of scope per operator.)
 
 ---
 
-## Current state (2026-06-23)
-- **Content (Steps 1–6): COMPLETE** for the pillar + all 11 spokes. seo also at Step 7.
-- **Next: Step 7 integration** (reconcile the app to the 12-map) + Step 8 QA. See `STATUS.md` for the exact next action.
+## Current state (2026-06-24)
+- **Phase A: ✅ COMPLETE** (on PR #108, unmerged) — Steps 1–8 for the pillar + 11 spokes + the services mega-menu restructure; verified on the Render PR-108 preview.
+- **Phase B: IN PROGRESS** — geo demand scoping LOCKED, wave plan set (79 pages / 4 waves; 88 deferred to Phase C), architecture DESIGNED + APPROVED, foundation IMPLEMENTED (`geo-links.ts` + `_geoContent.tsx` + `seo.tsx`). **Next:** finish the architecture wiring (`_GeoServicePageBody` + UI blocks + `gen-geo-routes.mjs` + App.tsx + drift test + spoke DOWN-link + cannibalization-in-`test:seo`), then the per-page run book on Wave 1 starting Local SEO Toronto. See `STATUS.md` + `geo/01`…`geo/04`.
+- **PR #108 → main → production:** needs explicit operator authorization — do NOT merge without it.
 
 ## Roadmap
-- **Phase A (current):** the 12 national service pages. Completed by Steps 7–8.
-- **Phase B (next):** the geo layer — Option D `[service]+[city]` pages for GTA municipalities + major Canadian metros. Full spec: `00-architecture.md` → "Geography (decided: option D)". Do NOT lose this.
+- **Phase A: ✅ DONE** — the 12 national service pages (Steps 1–8) + the mega-menu.
+- **Phase B: CURRENT** — geo `[service]+[city]` layer: 5 services × demand-backed cities, in ROI waves. Build now = 79 pages; ~88 near-zero GTA exurbs deferred to Phase C. Specs: `geo/02-demand-matrix.md`, `geo/03-build-waves.md`, `geo/04-architecture-design.md` (option D origin: `00-architecture.md`).
+- **Phase C (deferred):** the near-zero-demand GTA exurb pages (all-GTA coverage, no SEO ROI) — genuine-local or noindex when greenlit.
+- **Future:** the other 4 main services each gain their own sub-services under the same nested pattern.
