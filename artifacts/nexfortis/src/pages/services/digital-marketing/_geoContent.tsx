@@ -73,7 +73,7 @@ export const GEO_PAGE_CONTENT: Partial<Record<string, GeoPageContent>> = {
     serviceType: "Local SEO",
     metaTitle: "Local SEO Toronto",
     metaDescription:
-      "Local SEO for Toronto businesses — Google Business Profile, citations, reviews, and Google Map Pack rankings across every Toronto neighbourhood. Free local SEO audit.",
+      "Local SEO for Toronto businesses — Google Business Profile, citations, reviews, and Map Pack rankings across Toronto neighbourhoods. Free local SEO audit.",
     h1: "Local SEO Services in Toronto",
     heroSubtitle:
       "Get found by Toronto customers searching for what you offer — senior-led local SEO that wins the Google Map Pack across the city's neighbourhoods.",
