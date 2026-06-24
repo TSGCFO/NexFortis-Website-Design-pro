@@ -1277,4 +1277,175 @@ export const GEO_PAGE_CONTENT: Partial<Record<string, GeoPageContent>> = {
     ctaSubtext:
       "Book a free, no-obligation consultation — we will review your current site, your goals, and exactly what a fast, modern London, Ontario website would take.",
   },
+  "seo/brampton": {
+    parentSlug: "seo",
+    citySlug: "brampton",
+    cityName: "Brampton",
+    region: "ON",
+    serviceType: "SEO",
+    metaTitle: "SEO Company Brampton",
+    metaDescription:
+      "SEO services for Brampton businesses — technical SEO, on-page, content, and link building to grow your organic rankings across the GTA. Free SEO audit.",
+    h1: "SEO Services in Brampton",
+    heroSubtitle:
+      "Help Brampton customers find your business in Google's organic results — senior-led SEO that builds durable rankings, not quick tricks.",
+    serviceSchemaName: "SEO — Brampton",
+    serviceSchemaDescription:
+      "SEO services for Brampton businesses — technical SEO, on-page optimization, content, link building, and analytics to grow organic search visibility, delivered by a senior-led Canadian team.",
+    introHeading: "SEO services for Brampton businesses",
+    intro: (
+      <>
+        <p>
+          NexFortis helps Brampton businesses earn the organic Google rankings that bring in steady,
+          qualified traffic &mdash; the searches happening across the GTA right now for what you sell. As an{" "}
+          <strong>SEO company Brampton</strong> businesses can rely on, we treat SEO as the compounding work
+          of making your site technically sound, genuinely useful, and trusted, so you climb past competitors
+          and stay there.
+        </p>
+        <p>
+          <strong>SEO Brampton</strong> businesses invest in is the most durable channel they have: unlike
+          paid ads, the visibility keeps working after the budget stops.
+        </p>
+      </>
+    ),
+    localContextHeading: "Competing for organic visibility in Brampton",
+    localContext: (
+      <>
+        <p>
+          Brampton is one of Canada&rsquo;s fastest-growing cities &mdash; a young, diverse market spanning
+          Downtown Brampton, Bramalea, Heart Lake, Springdale, Mount Pleasant, Castlemore, and Fletcher&rsquo;s
+          Meadow, with a fast-expanding base of trades, logistics, healthcare, and professional services.
+          Ranking organically here means earning relevance and authority for the terms your Brampton customers
+          actually use.
+        </p>
+        <p>
+          You are also up against Toronto and GTA-wide agencies chasing the same organic real estate, so a
+          generic, templated approach does not cut through. Winning here takes the SEO services Brampton
+          businesses rely on &mdash; <strong>Brampton SEO</strong> built on technical excellence, local
+          relevance, and content that answers real buyer questions, as part of your wider{" "}
+          <InlineLink href={DM_PILLAR_HREF}>digital marketing</InlineLink> and complemented by dedicated{" "}
+          <InlineLink href={getDmSpoke("local-seo").href}>local SEO</InlineLink> when the Map Pack matters.
+        </p>
+      </>
+    ),
+    serviceAreas: [
+      { name: "Downtown Brampton" },
+      { name: "Bramalea" },
+      { name: "Heart Lake" },
+      { name: "Springdale" },
+      { name: "Mount Pleasant" },
+      { name: "Castlemore" },
+      { name: "Sandalwood" },
+      { name: "Fletcher's Meadow" },
+      { name: "Gore Meadows" },
+      { name: "Churchville" },
+      { name: "Snelgrove" },
+      { name: "Credit Valley" },
+    ],
+    stats: [
+      {
+        value: "≈86%",
+        label: "of all searches in Canada run on Google.",
+        sourceName: "Statcounter Global Stats (Canada)",
+        sourceUrl: "https://gs.statcounter.com/search-engine-market-share/all/canada",
+      },
+      {
+        value: "≈40%",
+        label: "of clicks go to the #1 organic result.",
+        sourceName: "FirstPageSage, 2026 Google CTR study",
+        sourceUrl: "https://firstpagesage.com/reports/google-click-through-rates-ctrs-by-ranking-position/",
+      },
+      {
+        value: "48%",
+        label: "of mobile sites pass all three Core Web Vitals — so speed is still an edge.",
+        sourceName: "2025 Web Almanac, HTTP Archive",
+        sourceUrl: "https://almanac.httparchive.org/en/2025/performance",
+      },
+    ],
+    features: [
+      {
+        icon: Code2,
+        title: "Technical SEO",
+        description:
+          "Site speed, crawlability, indexation, structured data, and Core Web Vitals — so Google can find, understand, and trust your Brampton site.",
+      },
+      {
+        icon: FileText,
+        title: "On-page optimisation",
+        description:
+          "Titles, headings, content, and internal links tuned to the keywords your Brampton customers actually search.",
+      },
+      {
+        icon: PenTool,
+        title: "Content",
+        description:
+          "Pages and articles built around real buyer intent and local relevance — not keyword stuffing.",
+      },
+      {
+        icon: Link2,
+        title: "Link building",
+        description:
+          "Earning relevant, authoritative links that build the domain authority organic rankings depend on.",
+      },
+      {
+        icon: MapPin,
+        title: "Local SEO",
+        description:
+          "Google Business Profile and local signals as one component of a full SEO program — for a dedicated local and Map-Pack focus, see our local SEO page.",
+      },
+      {
+        icon: BarChart3,
+        title: "Analytics and reporting",
+        description:
+          "Transparent tracking of rankings, traffic, and the leads that actually matter, so you can see the ROI.",
+      },
+    ],
+    localProof: [
+      {
+        label: "Organic is where the demand is",
+        detail:
+          "Google handles roughly 86% of all searches in Canada (Statcounter), and the #1 organic result earns about 40% of the clicks (FirstPageSage) — durable rankings, not ads alone, compound into real growth.",
+      },
+      {
+        label: "Most sites leave technical wins on the table",
+        detail:
+          "Only 48% of mobile sites pass all three Core Web Vitals (Web Almanac) — the technical fixes that move rankings are exactly where a senior-led audit starts.",
+      },
+    ],
+    faq: [
+      {
+        question: "How much does an SEO company in Brampton cost?",
+        answer:
+          "It depends on your competition, your starting point, and the scope of work — which is why we scope every engagement after a free audit rather than quoting a one-size-fits-all price. Transparent pricing, no hidden fees, no lock-in.",
+      },
+      {
+        question: "How long does SEO take for a Brampton business?",
+        answer:
+          "Most businesses begin seeing measurable movement within a few months, with competitive terms taking longer. SEO compounds, so the gains build over time. These are general expectations, not guarantees.",
+      },
+      {
+        question: "Is SEO worth it for a Brampton business?",
+        answer:
+          "For most Brampton and GTA-serving businesses, yes — organic search is the most cost-effective long-term channel, because the visibility keeps working after the spend stops, unlike paid ads.",
+      },
+      {
+        question: "Which industries does NexFortis serve in Brampton?",
+        answer:
+          "Any Brampton business that relies on being found in Google — trades and home services, logistics, healthcare, professional services, real estate, and retail among them.",
+      },
+    ],
+    authorNote: (
+      <p>
+        NexFortis is the SEO company Brampton businesses turn to for senior attention &mdash; your campaign is
+        led personally by Hassan Sadiq, NexFortis Founder and CEO, with a small senior team, and as an SEO
+        agency Brampton owners can rely on, the same people stay on your account end to end. With 15+ years in
+        enterprise technology and as a certified Microsoft Solutions Partner, the technical side of SEO &mdash;
+        site architecture, Core Web Vitals, and schema &mdash; is handled with genuine depth, in Canada, month
+        to month with no lock-in.
+      </p>
+    ),
+    ctaHeading: "Ready to grow your organic search in Brampton?",
+    ctaSubtext:
+      "Book a free, no-obligation SEO audit — an honest look at your technical health, on-page gaps, backlink profile, and the keyword opportunities specific to your Brampton business.",
+  },
 };
