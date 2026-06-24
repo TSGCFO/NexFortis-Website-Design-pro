@@ -346,13 +346,11 @@ export function Layout({ children }: { children: ReactNode }) {
                   <div
                     key={`sub-${service.href}`}
                     ref={activeSubMenu === service.href ? subPanelRef : undefined}
-                    className={`absolute top-0 left-full ml-1 w-56 bg-card rounded-xl shadow-xl border border-border/50 py-2 z-10 transition-all duration-150 origin-top-left ${
+                    className={`absolute top-0 left-full ml-1 w-56 lg:w-[22rem] bg-card rounded-xl shadow-xl border border-border/50 overflow-hidden flex flex-col z-10 transition-all duration-150 origin-top-left ${
                       activeSubMenu === service.href
                         ? "opacity-100 scale-100"
                         : "opacity-0 scale-95 pointer-events-none"
                     }`}
-                    role="list"
-                    aria-label={`${service.name} services`}
                     inert={activeSubMenu !== service.href}
                     onKeyDown={(e) => {
                       if (e.key === "ArrowLeft") {
@@ -367,29 +365,44 @@ export function Layout({ children }: { children: ReactNode }) {
                       }
                     }}
                   >
-                    <div className="px-4 py-2 mb-1 border-b border-border/50">
+                    {/* Label — pinned at top so it stays visible when items scroll */}
+                    <div className="px-4 py-2 border-b border-border/50 flex-none">
                       <p className="text-xs font-display font-semibold text-muted-foreground uppercase tracking-wide">
                         {service.name}
                       </p>
                     </div>
-                    {(service.subItems ?? []).map((item) => {
-                      const isSpokeActive = location === item.href;
-                      return (
-                        <Link
-                          key={item.href}
-                          href={item.href}
-                          className={`block px-4 py-2 text-[13px] font-display transition-colors ${
-                            isSpokeActive
-                              ? "text-accent bg-accent/5"
-                              : "text-muted-foreground hover:text-accent hover:bg-secondary"
-                          }`}
-                          role="listitem"
-                          aria-current={isSpokeActive ? "page" : undefined}
-                        >
-                          {item.title}
-                        </Link>
-                      );
-                    })}
+                    {/* Scrollable items list — two columns at lg+, single column at md.
+                        max-height keeps the panel within the viewport no matter how
+                        many sub-services exist; overflow-y-auto scrolls internally. */}
+                    <div
+                      className="overflow-y-auto flex-1 py-1"
+                      style={{ maxHeight: "min(22rem, calc(100dvh - 8rem))" }}
+                    >
+                      <div
+                        role="list"
+                        aria-label={`${service.name} services`}
+                        className="grid grid-cols-1 lg:grid-cols-2"
+                      >
+                        {(service.subItems ?? []).map((item) => {
+                          const isSpokeActive = location === item.href;
+                          return (
+                            <Link
+                              key={item.href}
+                              href={item.href}
+                              className={`block px-4 py-2 text-[13px] font-display transition-colors ${
+                                isSpokeActive
+                                  ? "text-accent bg-accent/5"
+                                  : "text-muted-foreground hover:text-accent hover:bg-secondary"
+                              }`}
+                              role="listitem"
+                              aria-current={isSpokeActive ? "page" : undefined}
+                            >
+                              {item.title}
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    </div>
                   </div>
                 ))}
               </div>
