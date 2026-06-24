@@ -15,6 +15,8 @@
     "services/digital-marketing/conversion-rate-optimization": { "kind": "spoke", "min": 1100, "max": 2000, "source": "Rendered <main> ~1817. CA service pages ~1100-1500 main (lean); comprehensive spoke." },
     "services/digital-marketing/reputation-management": { "kind": "spoke", "min": 1100, "max": 2000, "source": "Rendered <main> ~1512. Reviews/ORM SERP; managed-service spoke." },
     "services/digital-marketing/local-seo/toronto": { "kind": "geo", "min": 850, "max": 1400, "source": "Phase B geo [service]+[city]; rendered <main> ~1087. 'local seo toronto' SERP is thin (ranking pages ~250-640 prose) so the body is leaner than national spokes by design; band brackets the template chrome + local body." },
-    "services/digital-marketing/seo/mississauga": { "kind": "geo", "min": 750, "max": 1300, "source": "Phase B geo [service]+[city]; rendered <main> ~970. 'seo services mississauga' SERP very thin (ranking pages 364-480 prose); general-SEO geo page (distinct from local-seo/mississauga), leaner body + template chrome." }
+    "services/digital-marketing/seo/mississauga": { "kind": "geo", "min": 750, "max": 1300, "source": "Phase B geo [service]+[city]; rendered <main> ~970. 'seo services mississauga' SERP very thin (ranking pages 364-480 prose); general-SEO geo page (distinct from local-seo/mississauga), leaner body + template chrome." },
+    "services/digital-marketing/seo/markham": { "kind": "geo", "min": 800, "max": 1300, "source": "Phase B geo; rendered <main> ~983. 'seo company markham' SERP moderate (572-753 prose); general-SEO geo page." },
+    "services/digital-marketing/local-seo/edmonton": { "kind": "geo", "min": 850, "max": 1400, "source": "Phase B geo; rendered <main> ~1079. 'local seo edmonton' SERP 651-857 prose; local-SEO geo page (Alberta, region AB)." }
   }
 }

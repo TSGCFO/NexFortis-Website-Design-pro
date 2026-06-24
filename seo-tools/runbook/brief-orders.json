@@ -14,7 +14,8 @@
     "conversion-rate-optimization": { "id": "36342f34-bd08-43e8-b7f6-057646d8cae1", "keyword": "conversion rate optimization services", "status": "firing" },
     "local-seo/toronto": { "id": "9e87fdda-2b76-45e1-ba8d-f3896c24b289", "keyword": "local seo toronto", "status": "DONE — Phase B Wave-1 page #1 (geo)" },
     "seo/mississauga": { "id": "3fe7438f-3e88-41a3-ae53-3245d19cea52", "keyword": "seo services mississauga", "status": "DONE — Phase B Wave-1 page #2 (geo)" },
-    "seo/markham": { "id": "a4c04cff-1b98-4b08-bcf1-baa82c4287e1", "keyword": "seo company markham", "status": "firing — Phase B Wave-1 page #3 (geo)" },
-    "local-seo/edmonton": { "id": "c275b8df-7073-4dd6-865d-5607aff10860", "keyword": "local seo edmonton", "status": "firing — Phase B Wave-1 page #4 (geo)" }
+    "seo/markham": { "id": "a4c04cff-1b98-4b08-bcf1-baa82c4287e1", "keyword": "seo company markham", "status": "DONE — Phase B Wave-1 page #3 (geo)" },
+    "local-seo/edmonton": { "id": "c275b8df-7073-4dd6-865d-5607aff10860", "keyword": "local seo edmonton", "status": "DONE — Phase B Wave-1 page #4 (geo)" },
+    "web-design/hamilton": { "id": "dec01ff9-cdf7-4ea8-b1e2-1a18857f988f", "keyword": "web design hamilton", "status": "firing — Phase B Wave-1 page #5 (geo)" }
   }
 }
