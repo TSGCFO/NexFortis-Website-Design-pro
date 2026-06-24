@@ -18,6 +18,8 @@
     "local-seo/edmonton": { "id": "c275b8df-7073-4dd6-865d-5607aff10860", "keyword": "local seo edmonton", "status": "DONE — Phase B Wave-1 page #4 (geo)" },
     "web-design/hamilton": { "id": "dec01ff9-cdf7-4ea8-b1e2-1a18857f988f", "keyword": "web design hamilton", "status": "DONE — Phase B Wave-1 page #5 (geo)" },
     "local-seo/calgary": { "id": "3673912b-1c3f-40bd-a094-9e6d60f8f186", "keyword": "local seo calgary", "status": "DONE — Phase B Wave-1 page #6 (geo)" },
-    "seo/brampton": { "id": "60985e9f-ea6d-485a-9fa8-7b6a3b7fb53f", "keyword": "seo company brampton", "status": "firing — Phase B Wave-1 page #7 (geo)" }
+    "seo/brampton": { "id": "60985e9f-ea6d-485a-9fa8-7b6a3b7fb53f", "keyword": "seo company brampton", "status": "DONE — Phase B Wave-1 page #7 (geo)" },
+    "web-design/london-ontario": { "id": "8d231968-1bfe-4987-beb5-d3dda3165329", "keyword": "web design london ontario", "status": "DONE — Phase B Wave-1 page #8 (geo)" },
+    "seo/calgary": { "id": "b8c3cd3c-772b-4ab0-b1c2-b80e825a87a0", "keyword": "seo services calgary", "status": "firing — Phase B Wave-1 page #9 (geo)" }
   }
 }

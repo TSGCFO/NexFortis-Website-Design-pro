@@ -1,13 +1,13 @@
 {
-  "route": "/services/digital-marketing/local-seo/edmonton",
-  "title": "Local SEO Edmonton | NexFortis IT Solutions",
-  "description": "Local SEO for Edmonton businesses — Google Business Profile, citations, reviews, and Map Pack rankings across Edmonton's neighbourhoods. Free local SEO audit.",
-  "canonical": "https://nexfortis.com/services/digital-marketing/local-seo/edmonton",
+  "route": "/services/digital-marketing/web-design/london-ontario",
+  "title": "Web Design London Ontario | NexFortis IT Solutions",
+  "description": "Web design for London, Ontario businesses — custom, responsive, fast websites on WordPress or Shopify, including eCommerce. Free consultation.",
+  "canonical": "https://nexfortis.com/services/digital-marketing/web-design/london-ontario",
   "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
   "og": {
-    "title": "Local SEO Edmonton | NexFortis IT Solutions",
-    "description": "Local SEO for Edmonton businesses — Google Business Profile, citations, reviews, and Map Pack rankings across Edmonton's neighbourhoods. Free local SEO audit.",
-    "url": "https://nexfortis.com/services/digital-marketing/local-seo/edmonton",
+    "title": "Web Design London Ontario | NexFortis IT Solutions",
+    "description": "Web design for London, Ontario businesses — custom, responsive, fast websites on WordPress or Shopify, including eCommerce. Free consultation.",
+    "url": "https://nexfortis.com/services/digital-marketing/web-design/london-ontario",
     "image": "https://nexfortis.com/opengraph.png",
     "type": "website"
   },
@@ -17,55 +17,55 @@
   "headings": [
     {
       "level": 1,
-      "text": "Local SEO Services in Edmonton"
+      "text": "Web Design Services in London, Ontario"
     },
     {
       "level": 2,
-      "text": "Local SEO for Edmonton businesses"
+      "text": "Web design for London, Ontario businesses"
     },
     {
       "level": 2,
-      "text": "Edmonton's local search landscape"
+      "text": "Designing for London, Ontario's market"
     },
     {
       "level": 3,
-      "text": "Neighbourhoods and areas we serve in Edmonton"
+      "text": "Neighbourhoods and areas we serve in London"
     },
     {
       "level": 2,
-      "text": "Our Local SEO work in Edmonton"
+      "text": "What our London, Ontario web design includes"
     },
     {
       "level": 3,
-      "text": "Google Business Profile optimisation"
+      "text": "Custom website design"
     },
     {
       "level": 3,
-      "text": "Local citations and NAP consistency"
+      "text": "Responsive, mobile-first design"
     },
     {
       "level": 3,
-      "text": "Localised content"
+      "text": "Web development"
     },
     {
       "level": 3,
-      "text": "Review generation and reputation management"
+      "text": "eCommerce"
     },
     {
       "level": 3,
-      "text": "Local link building"
+      "text": "WordPress and CMS"
     },
     {
       "level": 3,
-      "text": "Map Pack ranking strategy"
+      "text": "SEO-ready, performance-optimised"
     },
     {
       "level": 2,
-      "text": "Why Edmonton businesses choose NexFortis"
+      "text": "Why London businesses choose NexFortis"
     },
     {
       "level": 2,
-      "text": "local SEO in nearby cities"
+      "text": "web design and development in nearby cities"
     },
     {
       "level": 2,
@@ -73,7 +73,7 @@
     },
     {
       "level": 2,
-      "text": "Ready to win local search in Edmonton?"
+      "text": "Ready for a website that works as hard as you do?"
     },
     {
       "level": 4,
@@ -118,14 +118,14 @@
         {
           "@type": "ListItem",
           "position": 4,
-          "name": "Local SEO",
-          "item": "https://nexfortis.com/services/digital-marketing/local-seo"
+          "name": "Web Design & Development",
+          "item": "https://nexfortis.com/services/digital-marketing/web-design"
         },
         {
           "@type": "ListItem",
           "position": 5,
-          "name": "Edmonton",
-          "item": "https://nexfortis.com/services/digital-marketing/local-seo/edmonton"
+          "name": "London",
+          "item": "https://nexfortis.com/services/digital-marketing/web-design/london-ontario"
         }
       ]
     },
@@ -135,34 +135,34 @@
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "How long does local SEO take in Edmonton?",
+          "name": "How much does web design cost in London, Ontario?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Most Edmonton businesses begin seeing measurable movement in local rankings within a few months; competitive categories take longer. Google Business Profile work often delivers the earliest wins. These are general expectations, not guarantees."
+            "text": "It depends on the size, the features, and whether you need eCommerce — which is why we scope every project after a free consultation rather than quoting a one-size-fits-all price. Transparent pricing, no hidden fees."
           }
         },
         {
           "@type": "Question",
-          "name": "What does local SEO cost in Edmonton?",
+          "name": "How long does a web design project take in London, Ontario?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "It depends on your competition, the number of neighbourhoods you target, and the scope of work — which is why we scope every engagement after a free audit rather than quoting a one-size-fits-all price. Transparent pricing, no hidden fees, no lock-in."
+            "text": "Most business sites take a few weeks depending on scope and how ready your content is; eCommerce and custom builds take longer. We give you a clear timeline up front. These are general expectations, not guarantees."
           }
         },
         {
           "@type": "Question",
-          "name": "What is the Map Pack and why does it matter?",
+          "name": "Should my London, Ontario business use WordPress or Shopify?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "The Map Pack is the block of three local business listings Google shows at the top of local searches, alongside a map. It captures the majority of clicks for near-me and location-based queries, so ranking there is the primary goal of a local SEO campaign."
+            "text": "It depends on what you sell and how you work — we build on WordPress, Shopify, WooCommerce, or a headless/custom stack, and recommend the right fit after understanding your goals."
           }
         },
         {
           "@type": "Question",
-          "name": "Which Edmonton industries does NexFortis serve?",
+          "name": "Do you build eCommerce websites for London, Ontario businesses?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Any Edmonton business that relies on local customers finding it through Google — home services and trades, legal, dental and medical, real estate, professional services, and retail among them."
+            "text": "Yes — Shopify and WooCommerce stores with secure checkout, product management, and a design built to convert browsers into buyers."
           }
         }
       ]
@@ -258,9 +258,9 @@
     {
       "@context": "https://schema.org",
       "@type": "Service",
-      "name": "Local SEO — Edmonton",
-      "description": "Local SEO for Edmonton businesses — Google Business Profile optimization, local citations and NAP consistency, localized content, review generation, local link building, and Google Map Pack strategy, delivered by a senior-led Canadian team.",
-      "url": "https://nexfortis.com/services/digital-marketing/local-seo/edmonton",
+      "name": "Web Design — London, Ontario",
+      "description": "Web design and development for London, Ontario businesses — custom responsive websites, eCommerce, WordPress and CMS builds, and performance optimisation, delivered by a senior-led Canadian team.",
+      "url": "https://nexfortis.com/services/digital-marketing/web-design/london-ontario",
       "provider": {
         "@type": "Organization",
         "name": "NexFortis IT Solutions",
@@ -268,13 +268,13 @@
       },
       "areaServed": {
         "@type": "City",
-        "name": "Edmonton",
+        "name": "London",
         "containedInPlace": {
           "@type": "AdministrativeArea",
-          "name": "AB"
+          "name": "ON"
         }
       },
-      "serviceType": "Local SEO"
+      "serviceType": "Web Design"
     },
     {
       "@context": "https://schema.org",
@@ -398,32 +398,32 @@
       "href": "/services"
     },
     {
-      "text": "local SEO",
-      "href": "/services/digital-marketing/local-seo"
+      "text": "web design and development",
+      "href": "/services/digital-marketing/web-design"
     },
     {
-      "text": "Source: BrightLocal",
-      "href": "https://www.brightlocal.com/resources/local-seo-statistics/"
+      "text": "Source: Stanford Web Credibility Research",
+      "href": "https://www.kinesisinc.com/the-truth-about-web-design/"
     },
     {
-      "text": "Source: Backlinko",
-      "href": "https://backlinko.com/local-seo-guide"
+      "text": "Source: Google, \"The Need for Mobile Speed\"",
+      "href": "https://www.marketingdive.com/news/google-53-of-mobile-users-abandon-sites-that-take-over-3-seconds-to-load/426070/"
     },
     {
-      "text": "Source: BrightLocal Local Consumer Review Survey (2026)",
-      "href": "https://www.brightlocal.com/research/local-consumer-review-survey/"
+      "text": "Source: 2025 Web Almanac, HTTP Archive",
+      "href": "https://almanac.httparchive.org/en/2025/performance"
     },
     {
       "text": "digital marketing",
       "href": "/services/digital-marketing"
     },
     {
-      "text": "local SEO Toronto",
-      "href": "/services/digital-marketing/local-seo/toronto"
+      "text": "SEO",
+      "href": "/services/digital-marketing/seo"
     },
     {
-      "text": "local SEO Calgary",
-      "href": "/services/digital-marketing/local-seo/calgary"
+      "text": "web design and development Hamilton",
+      "href": "/services/digital-marketing/web-design/hamilton"
     },
     {
       "text": "More about NexFortis",

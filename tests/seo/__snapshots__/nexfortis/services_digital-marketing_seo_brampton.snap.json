@@ -1,13 +1,13 @@
 {
-  "route": "/services/digital-marketing/local-seo/edmonton",
-  "title": "Local SEO Edmonton | NexFortis IT Solutions",
-  "description": "Local SEO for Edmonton businesses — Google Business Profile, citations, reviews, and Map Pack rankings across Edmonton's neighbourhoods. Free local SEO audit.",
-  "canonical": "https://nexfortis.com/services/digital-marketing/local-seo/edmonton",
+  "route": "/services/digital-marketing/seo/brampton",
+  "title": "SEO Company Brampton | NexFortis IT Solutions",
+  "description": "SEO services for Brampton businesses — technical SEO, on-page, content, and link building to grow your organic rankings across the GTA. Free SEO audit.",
+  "canonical": "https://nexfortis.com/services/digital-marketing/seo/brampton",
   "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
   "og": {
-    "title": "Local SEO Edmonton | NexFortis IT Solutions",
-    "description": "Local SEO for Edmonton businesses — Google Business Profile, citations, reviews, and Map Pack rankings across Edmonton's neighbourhoods. Free local SEO audit.",
-    "url": "https://nexfortis.com/services/digital-marketing/local-seo/edmonton",
+    "title": "SEO Company Brampton | NexFortis IT Solutions",
+    "description": "SEO services for Brampton businesses — technical SEO, on-page, content, and link building to grow your organic rankings across the GTA. Free SEO audit.",
+    "url": "https://nexfortis.com/services/digital-marketing/seo/brampton",
     "image": "https://nexfortis.com/opengraph.png",
     "type": "website"
   },
@@ -17,55 +17,55 @@
   "headings": [
     {
       "level": 1,
-      "text": "Local SEO Services in Edmonton"
+      "text": "SEO Services in Brampton"
     },
     {
       "level": 2,
-      "text": "Local SEO for Edmonton businesses"
+      "text": "SEO services for Brampton businesses"
     },
     {
       "level": 2,
-      "text": "Edmonton's local search landscape"
+      "text": "Competing for organic visibility in Brampton"
     },
     {
       "level": 3,
-      "text": "Neighbourhoods and areas we serve in Edmonton"
+      "text": "Neighbourhoods and areas we serve in Brampton"
     },
     {
       "level": 2,
-      "text": "Our Local SEO work in Edmonton"
+      "text": "Our SEO work in Brampton"
     },
     {
       "level": 3,
-      "text": "Google Business Profile optimisation"
+      "text": "Technical SEO"
     },
     {
       "level": 3,
-      "text": "Local citations and NAP consistency"
+      "text": "On-page optimisation"
     },
     {
       "level": 3,
-      "text": "Localised content"
+      "text": "Content"
     },
     {
       "level": 3,
-      "text": "Review generation and reputation management"
+      "text": "Link building"
     },
     {
       "level": 3,
-      "text": "Local link building"
+      "text": "Local SEO"
     },
     {
       "level": 3,
-      "text": "Map Pack ranking strategy"
+      "text": "Analytics and reporting"
     },
     {
       "level": 2,
-      "text": "Why Edmonton businesses choose NexFortis"
+      "text": "Why Brampton businesses choose NexFortis"
     },
     {
       "level": 2,
-      "text": "local SEO in nearby cities"
+      "text": "SEO services in nearby cities"
     },
     {
       "level": 2,
@@ -73,7 +73,7 @@
     },
     {
       "level": 2,
-      "text": "Ready to win local search in Edmonton?"
+      "text": "Ready to grow your organic search in Brampton?"
     },
     {
       "level": 4,
@@ -118,14 +118,14 @@
         {
           "@type": "ListItem",
           "position": 4,
-          "name": "Local SEO",
-          "item": "https://nexfortis.com/services/digital-marketing/local-seo"
+          "name": "SEO Services",
+          "item": "https://nexfortis.com/services/digital-marketing/seo"
         },
         {
           "@type": "ListItem",
           "position": 5,
-          "name": "Edmonton",
-          "item": "https://nexfortis.com/services/digital-marketing/local-seo/edmonton"
+          "name": "Brampton",
+          "item": "https://nexfortis.com/services/digital-marketing/seo/brampton"
         }
       ]
     },
@@ -135,34 +135,34 @@
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "How long does local SEO take in Edmonton?",
+          "name": "How much does an SEO company in Brampton cost?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Most Edmonton businesses begin seeing measurable movement in local rankings within a few months; competitive categories take longer. Google Business Profile work often delivers the earliest wins. These are general expectations, not guarantees."
+            "text": "It depends on your competition, your starting point, and the scope of work — which is why we scope every engagement after a free audit rather than quoting a one-size-fits-all price. Transparent pricing, no hidden fees, no lock-in."
           }
         },
         {
           "@type": "Question",
-          "name": "What does local SEO cost in Edmonton?",
+          "name": "How long does SEO take for a Brampton business?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "It depends on your competition, the number of neighbourhoods you target, and the scope of work — which is why we scope every engagement after a free audit rather than quoting a one-size-fits-all price. Transparent pricing, no hidden fees, no lock-in."
+            "text": "Most businesses begin seeing measurable movement within a few months, with competitive terms taking longer. SEO compounds, so the gains build over time. These are general expectations, not guarantees."
           }
         },
         {
           "@type": "Question",
-          "name": "What is the Map Pack and why does it matter?",
+          "name": "Is SEO worth it for a Brampton business?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "The Map Pack is the block of three local business listings Google shows at the top of local searches, alongside a map. It captures the majority of clicks for near-me and location-based queries, so ranking there is the primary goal of a local SEO campaign."
+            "text": "For most Brampton and GTA-serving businesses, yes — organic search is the most cost-effective long-term channel, because the visibility keeps working after the spend stops, unlike paid ads."
           }
         },
         {
           "@type": "Question",
-          "name": "Which Edmonton industries does NexFortis serve?",
+          "name": "Which industries does NexFortis serve in Brampton?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Any Edmonton business that relies on local customers finding it through Google — home services and trades, legal, dental and medical, real estate, professional services, and retail among them."
+            "text": "Any Brampton business that relies on being found in Google — trades and home services, logistics, healthcare, professional services, real estate, and retail among them."
           }
         }
       ]
@@ -258,9 +258,9 @@
     {
       "@context": "https://schema.org",
       "@type": "Service",
-      "name": "Local SEO — Edmonton",
-      "description": "Local SEO for Edmonton businesses — Google Business Profile optimization, local citations and NAP consistency, localized content, review generation, local link building, and Google Map Pack strategy, delivered by a senior-led Canadian team.",
-      "url": "https://nexfortis.com/services/digital-marketing/local-seo/edmonton",
+      "name": "SEO — Brampton",
+      "description": "SEO services for Brampton businesses — technical SEO, on-page optimization, content, link building, and analytics to grow organic search visibility, delivered by a senior-led Canadian team.",
+      "url": "https://nexfortis.com/services/digital-marketing/seo/brampton",
       "provider": {
         "@type": "Organization",
         "name": "NexFortis IT Solutions",
@@ -268,13 +268,13 @@
       },
       "areaServed": {
         "@type": "City",
-        "name": "Edmonton",
+        "name": "Brampton",
         "containedInPlace": {
           "@type": "AdministrativeArea",
-          "name": "AB"
+          "name": "ON"
         }
       },
-      "serviceType": "Local SEO"
+      "serviceType": "SEO"
     },
     {
       "@context": "https://schema.org",
@@ -398,32 +398,36 @@
       "href": "/services"
     },
     {
-      "text": "local SEO",
-      "href": "/services/digital-marketing/local-seo"
+      "text": "SEO services",
+      "href": "/services/digital-marketing/seo"
     },
     {
-      "text": "Source: BrightLocal",
-      "href": "https://www.brightlocal.com/resources/local-seo-statistics/"
+      "text": "Source: Statcounter Global Stats (Canada)",
+      "href": "https://gs.statcounter.com/search-engine-market-share/all/canada"
     },
     {
-      "text": "Source: Backlinko",
-      "href": "https://backlinko.com/local-seo-guide"
+      "text": "Source: FirstPageSage, 2026 Google CTR study",
+      "href": "https://firstpagesage.com/reports/google-click-through-rates-ctrs-by-ranking-position/"
     },
     {
-      "text": "Source: BrightLocal Local Consumer Review Survey (2026)",
-      "href": "https://www.brightlocal.com/research/local-consumer-review-survey/"
+      "text": "Source: 2025 Web Almanac, HTTP Archive",
+      "href": "https://almanac.httparchive.org/en/2025/performance"
     },
     {
       "text": "digital marketing",
       "href": "/services/digital-marketing"
     },
     {
-      "text": "local SEO Toronto",
-      "href": "/services/digital-marketing/local-seo/toronto"
+      "text": "local SEO",
+      "href": "/services/digital-marketing/local-seo"
     },
     {
-      "text": "local SEO Calgary",
-      "href": "/services/digital-marketing/local-seo/calgary"
+      "text": "SEO services Mississauga",
+      "href": "/services/digital-marketing/seo/mississauga"
+    },
+    {
+      "text": "SEO services Markham",
+      "href": "/services/digital-marketing/seo/markham"
     },
     {
       "text": "More about NexFortis",

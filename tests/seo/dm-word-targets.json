@@ -19,6 +19,8 @@
     "services/digital-marketing/seo/markham": { "kind": "geo", "min": 800, "max": 1300, "source": "Phase B geo; rendered <main> ~983. 'seo company markham' SERP moderate (572-753 prose); general-SEO geo page." },
     "services/digital-marketing/local-seo/edmonton": { "kind": "geo", "min": 850, "max": 1400, "source": "Phase B geo; rendered <main> ~1079. 'local seo edmonton' SERP 651-857 prose; local-SEO geo page (Alberta, region AB)." },
     "services/digital-marketing/web-design/hamilton": { "kind": "geo", "min": 750, "max": 1250, "source": "Phase B geo; rendered <main> ~930. 'web design hamilton' SERP very thin (306-403 prose); web-design geo page." },
-    "services/digital-marketing/local-seo/calgary": { "kind": "geo", "min": 950, "max": 1500, "source": "Phase B geo; rendered <main> ~1209. FULLER — Calgary local-SEO SERP service-tier substantive (avg 1459 incl. excluded outliers); Alberta (region AB)." }
+    "services/digital-marketing/local-seo/calgary": { "kind": "geo", "min": 950, "max": 1500, "source": "Phase B geo; rendered <main> ~1209. FULLER — Calgary local-SEO SERP service-tier substantive (avg 1459 incl. excluded outliers); Alberta (region AB)." },
+    "services/digital-marketing/seo/brampton": { "kind": "geo", "min": 800, "max": 1250, "source": "Phase B geo; rendered <main> ~977. 'seo company brampton' SERP very thin (207-272 prose); general-SEO geo page (lean)." },
+    "services/digital-marketing/web-design/london-ontario": { "kind": "geo", "min": 800, "max": 1250, "source": "Phase B geo; rendered <main> ~982. 'web design london ontario' SERP thin (369-486 prose); web-design geo page (London, ON)." }
   }
 }
