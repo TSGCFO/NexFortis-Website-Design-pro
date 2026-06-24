@@ -6,7 +6,7 @@
 //
 // Authored per page via the run book (Step 5), keyed "<parentSlug>/<citySlug>".
 import type { ReactNode } from "react";
-import { MapPin, FileText, PenTool, Star, Link2, Map, Code2, BarChart3, Palette, Smartphone, ShoppingCart, LayoutGrid, Gauge, Target, Megaphone, MousePointerClick, SlidersHorizontal } from "lucide-react";
+import { MapPin, FileText, PenTool, Star, Link2, Map, Code2, BarChart3, Palette, Smartphone, ShoppingCart, LayoutGrid, Gauge, Target, Megaphone, MousePointerClick, SlidersHorizontal, Share2, MessageCircle } from "lucide-react";
 import type { SourcedStat, FeatureItem, FaqItem, TestimonialData } from "@/components/content/types";
 import { InlineLink } from "@/components/content/InlineLink";
 import { getDmSpoke, DM_PILLAR_HREF, type DmSpokeSlug } from "@/lib/internal-links";
@@ -1960,5 +1960,168 @@ export const GEO_PAGE_CONTENT: Partial<Record<string, GeoPageContent>> = {
     ctaHeading: "Ready to stop wasting ad spend in Toronto?",
     ctaSubtext:
       "Book a free, no-obligation PPC audit — an honest look at your Google Ads account, wasted spend, conversion tracking, and the quickest wins for your Toronto business.",
+  },
+  "social-media-marketing/calgary": {
+    parentSlug: "social-media-marketing",
+    citySlug: "calgary",
+    cityName: "Calgary",
+    region: "AB",
+    serviceType: "Social Media Marketing",
+    metaTitle: "Social Media Marketing Calgary",
+    metaDescription:
+      "Managed social media marketing for Calgary businesses — strategy, content, community management, and paid social, run by a senior-led Canadian team. Free audit.",
+    h1: "Social Media Marketing in Calgary",
+    heroSubtitle:
+      "Show up consistently where your Calgary customers already spend their time — managed social media strategy, content, and community management from a senior-led Canadian team.",
+    serviceSchemaName: "Social Media Marketing — Calgary",
+    serviceSchemaDescription:
+      "Managed social media marketing for Calgary businesses — strategy, content creation, community management, paid social advertising, and analytics across Facebook, Instagram, LinkedIn, and TikTok, delivered by a senior-led Canadian team.",
+    introHeading: "Managed social media marketing for Calgary businesses",
+    intro: (
+      <>
+        <p>
+          NexFortis is the social media agency Calgary businesses trust to run their social properly &mdash;
+          strategy, content, and community management handled end to end, so you are not scrambling for a post
+          at 9pm. <strong>Social media marketing Calgary</strong> companies can rely on is not random posting;
+          it is a consistent, on-brand presence that builds trust and keeps you front of mind when a local
+          customer is ready to buy.
+        </p>
+        <p>We manage the channels, you run the business.</p>
+      </>
+    ),
+    localContextHeading: "Earning attention in Calgary's market",
+    localContext: (
+      <>
+        <p>
+          Calgary is a competitive local market &mdash; from Downtown and the Beltline to Kensington,
+          Inglewood, and the wider metro, local brands, restaurants, trades, and professional firms are all
+          competing for the same feeds. <strong>Calgary social media marketing</strong> that works is locally
+          relevant: content that speaks to Calgarians, posted consistently, on the platforms your customers
+          actually use.
+        </p>
+        <p>
+          And Calgary&rsquo;s calendar matters &mdash; from Stampede season to the rhythms of the city&rsquo;s
+          energy, trades, and hospitality sectors, the brands that win plan content around what their audience
+          cares about, when they care about it. Sporadic posting and stock captions get scrolled past; a clear
+          strategy and a steady, genuine presence is what turns followers into customers &mdash; and what
+          amplifies the rest of your{" "}
+          <InlineLink href={DM_PILLAR_HREF}>digital marketing</InlineLink>, from{" "}
+          <InlineLink href={getDmSpoke("google-ads-ppc").href}>paid ads</InlineLink> to your website.
+        </p>
+      </>
+    ),
+    serviceAreas: [
+      { name: "Downtown" },
+      { name: "Beltline" },
+      { name: "Kensington" },
+      { name: "Inglewood" },
+      { name: "Mission" },
+      { name: "Marda Loop" },
+      { name: "Bridgeland" },
+      { name: "Bowness" },
+      { name: "NW Calgary" },
+      { name: "NE Calgary" },
+      { name: "SW Calgary" },
+      { name: "SE Calgary" },
+    ],
+    stats: [
+      {
+        value: "79.4%",
+        label: "of Canada's population are active social media users — that's where attention starts.",
+        sourceName: "DataReportal, Digital 2025: Canada",
+        sourceUrl: "https://datareportal.com/reports/digital-2025-canada",
+      },
+      {
+        value: "2h 21m",
+        label: "the typical internet user spends on social media every single day.",
+        sourceName: "DataReportal / GWI, Digital 2025",
+        sourceUrl: "https://datareportal.com/reports/digital-2025-sub-section-state-of-social",
+      },
+    ],
+    featuresHeading: "What our Calgary social media management includes",
+    features: [
+      {
+        icon: Share2,
+        title: "Social media strategy",
+        description:
+          "A clear plan for which platforms, what to post, and how it ties to real business goals.",
+      },
+      {
+        icon: PenTool,
+        title: "Content creation",
+        description:
+          "On-brand posts, graphics, and captions written for your audience — not recycled templates.",
+      },
+      {
+        icon: MessageCircle,
+        title: "Community management & engagement",
+        description:
+          "Replying, monitoring, and engaging so your social feels human and responsive.",
+      },
+      {
+        icon: Megaphone,
+        title: "Paid social advertising",
+        description:
+          "Targeted Meta, Instagram, and LinkedIn campaigns to put the right content in front of the right Calgarians.",
+      },
+      {
+        icon: BarChart3,
+        title: "Analytics & reporting",
+        description:
+          "Clear reporting on what is working and what is not, so the strategy keeps improving.",
+      },
+      {
+        icon: LayoutGrid,
+        title: "Platform management",
+        description:
+          "Facebook, Instagram, LinkedIn, and TikTok handled by one team, consistently.",
+      },
+    ],
+    localProof: [
+      {
+        label: "Your customers are already there",
+        detail:
+          "79.4% of Canada's population are active social media users (DataReportal) — for most Calgary businesses, that is where attention starts.",
+      },
+      {
+        label: "Attention is the scarce resource",
+        detail:
+          "The typical user spends 2 hours 21 minutes a day on social (DataReportal) — showing up consistently, with content worth the scroll, is how you earn a share of it.",
+      },
+    ],
+    faq: [
+      {
+        question: "How much does social media marketing cost in Calgary?",
+        answer:
+          "It depends on how many platforms, how much content, and whether you run paid ads — so we scope it after a free audit rather than quoting a one-size-fits-all price. Where you run paid social, that ad spend is separate from our management fee. Transparent pricing, no hidden fees, no long-term lock-in.",
+      },
+      {
+        question: "Which social media platforms should my Calgary business be on?",
+        answer:
+          "Not all of them — only the ones your customers actually use. We recommend the right mix (often Instagram, Facebook, and LinkedIn, sometimes TikTok) based on your audience and goals, rather than spreading you thin.",
+      },
+      {
+        question: "How soon will I see results from social media management?",
+        answer:
+          "Social compounds: consistency builds audience and trust over months, while paid social can drive traffic and leads sooner. We focus on real business outcomes, not vanity metrics. These are general expectations, not guarantees.",
+      },
+      {
+        question: "Do you create all the content for my Calgary business?",
+        answer:
+          "Yes — strategy, copy, and graphics are handled by our team, with your input and approval. You stay in control of the brand without doing the day-to-day work.",
+      },
+    ],
+    authorNote: (
+      <p>
+        NexFortis is the social media marketing agency Calgary owners turn to for senior attention &mdash;
+        your social is handled by an experienced team, not a junior intern or an offshore content mill. Social
+        media management Calgary businesses can rely on is led personally by Hassan Sadiq, NexFortis Founder
+        and CEO, with a small senior team; we work transparently, in Canada, month to month with no lock-in
+        &mdash; and we never invent results or buy followers.
+      </p>
+    ),
+    ctaHeading: "Ready to make your Calgary social actually work?",
+    ctaSubtext:
+      "Book a free, no-obligation social media audit — an honest look at your current channels, your competitors, and the quickest wins for your Calgary business.",
   },
 };

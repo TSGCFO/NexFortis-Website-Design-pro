@@ -77,6 +77,7 @@ function Router() {
           <Route path="/services/digital-marketing/seo/hamilton">{() => <GeoServicePage service="seo" city="hamilton" />}</Route>
           <Route path="/services/digital-marketing/seo/markham">{() => <GeoServicePage service="seo" city="markham" />}</Route>
           <Route path="/services/digital-marketing/seo/mississauga">{() => <GeoServicePage service="seo" city="mississauga" />}</Route>
+          <Route path="/services/digital-marketing/social-media-marketing/calgary">{() => <GeoServicePage service="social-media-marketing" city="calgary" />}</Route>
           <Route path="/services/digital-marketing/web-design/hamilton">{() => <GeoServicePage service="web-design" city="hamilton" />}</Route>
           <Route path="/services/digital-marketing/web-design/london-ontario">{() => <GeoServicePage service="web-design" city="london-ontario" />}</Route>
           {/* GEO-ROUTES-END */}

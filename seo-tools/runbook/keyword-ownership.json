@@ -248,6 +248,26 @@
         "google ads management toronto",
         "ppc toronto"
       ]
+    },
+    "social-media-marketing/calgary": {
+      "_role": "GEO (Phase B, Wave 1) — city page under social-media-marketing; CITY-QUALIFIED terms ONLY. Calgary = Alberta (region AB). Strongest SMM metro outside Toronto. Primary 'social media marketing calgary' (400/260, KD1, the demand bestQuery). NEW service template (managed social service, NOT a guide). Distinct from local-seo/calgary (#6) and seo/calgary (#9) — social-media qualified.",
+      "primary": ["social media marketing calgary"],
+      "secondary": [
+        "calgary social media marketing",
+        "social media agency calgary",
+        "social media management calgary",
+        "social media marketing agency calgary"
+      ]
+    },
+    "seo/toronto": {
+      "_role": "GEO (Phase B, Wave 1) — city page under seo; CITY-QUALIFIED terms ONLY. Toronto (ON). FLAGSHIP — highest-demand, highest-KD SEO metro (KD 35-44). Primary 'seo services toronto' (1700/2400, service-intent; 'seo agency toronto' is the demand bestQuery and 'seo company toronto' 1800 — all strong). Excludes 'local seo ... toronto' (-> local-seo/toronto #1) and 'ppc / google ads ... toronto' (-> google-ads-ppc/toronto #11).",
+      "primary": ["seo services toronto"],
+      "secondary": [
+        "seo company toronto",
+        "seo agency toronto",
+        "seo toronto",
+        "toronto seo"
+      ]
     }
   }
 }
