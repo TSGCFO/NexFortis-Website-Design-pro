@@ -22,6 +22,7 @@
     "web-design/london-ontario": { "id": "8d231968-1bfe-4987-beb5-d3dda3165329", "keyword": "web design london ontario", "status": "DONE — Phase B Wave-1 page #8 (geo)" },
     "seo/calgary": { "id": "b8c3cd3c-772b-4ab0-b1c2-b80e825a87a0", "keyword": "seo services calgary", "status": "DONE — Phase B Wave-1 page #9 (geo)" },
     "seo/hamilton": { "id": "08d8f650-698e-4f69-9f65-948d414a415e", "keyword": "seo services hamilton", "status": "DONE — Phase B Wave-1 page #10 (geo)" },
-    "google-ads-ppc/toronto": { "id": "97ba25a0-5c1e-4b42-8dbd-58bc3291b5e7", "keyword": "ppc agency toronto", "status": "firing — Phase B Wave-1 page #11 (geo, NEW service)" }
+    "google-ads-ppc/toronto": { "id": "97ba25a0-5c1e-4b42-8dbd-58bc3291b5e7", "keyword": "ppc agency toronto", "status": "DONE — Phase B Wave-1 page #11 (geo, NEW service)" },
+    "social-media-marketing/calgary": { "id": "da67aba7-936e-48f8-85c7-ac0dfbdc0517", "keyword": "social media marketing calgary", "status": "firing — Phase B Wave-1 page #12 (geo, NEW service)" }
   }
 }
