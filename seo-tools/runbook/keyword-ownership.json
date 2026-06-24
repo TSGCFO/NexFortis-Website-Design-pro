@@ -268,6 +268,26 @@
         "seo toronto",
         "toronto seo"
       ]
+    },
+    "web-design/brampton": {
+      "_role": "GEO (Phase B, Wave 1) — city page under web-design; CITY-QUALIFIED terms ONLY. Brampton (ON). Primary 'web design brampton' (390/200, KD0-1, the demand bestQuery — easy win). Distinct from seo/brampton (#7) — web design qualified.",
+      "primary": ["web design brampton"],
+      "secondary": [
+        "web design company brampton",
+        "brampton web design",
+        "website design brampton",
+        "web design agency brampton"
+      ]
+    },
+    "seo/ottawa": {
+      "_role": "GEO (Phase B, Wave 1) — city page under seo; CITY-QUALIFIED terms ONLY. Ottawa (ON). Primary 'seo company ottawa' (590/400, KD3 Ahrefs — the demand bestQuery + lowest KD). Heads 'seo ottawa'/'ottawa seo' higher vol (1300) but KD24+. Excludes 'local seo ... ottawa' (-> future local-seo/ottawa).",
+      "primary": ["seo company ottawa"],
+      "secondary": [
+        "seo services ottawa",
+        "seo ottawa",
+        "ottawa seo",
+        "seo agency ottawa"
+      ]
     }
   }
 }

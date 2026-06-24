@@ -2299,4 +2299,347 @@ export const GEO_PAGE_CONTENT: Partial<Record<string, GeoPageContent>> = {
     ctaSubtext:
       "Book a free, no-obligation SEO audit — an honest look at your technical health, on-page gaps, backlink profile, and the keyword opportunities specific to your Toronto business.",
   },
+  "seo/ottawa": {
+    parentSlug: "seo",
+    citySlug: "ottawa",
+    cityName: "Ottawa",
+    region: "ON",
+    serviceType: "SEO",
+    metaTitle: "SEO Company Ottawa",
+    metaDescription:
+      "SEO services for Ottawa businesses — technical SEO, on-page, content, and link building to grow your organic rankings. Free SEO audit.",
+    h1: "SEO Services in Ottawa",
+    heroSubtitle:
+      "Help Ottawa customers find your business in Google's organic results — senior-led SEO that builds durable rankings, not quick tricks.",
+    serviceSchemaName: "SEO — Ottawa",
+    serviceSchemaDescription:
+      "SEO services for Ottawa businesses — technical SEO, on-page optimization, content, link building, and analytics to grow organic search visibility, delivered by a senior-led Canadian team.",
+    introHeading: "SEO services for Ottawa businesses",
+    intro: (
+      <>
+        <p>
+          NexFortis helps Ottawa businesses earn the organic Google rankings that bring in steady, qualified
+          traffic. As an <strong>SEO company Ottawa</strong> businesses can rely on, we treat SEO as the
+          compounding work of making your site technically sound, genuinely useful, and trusted, so you climb
+          past competitors and stay there.
+        </p>
+        <p>
+          <strong>SEO Ottawa</strong> businesses invest in is the most durable channel they have: unlike paid
+          ads, the visibility keeps working after the budget stops.
+        </p>
+      </>
+    ),
+    localContextHeading: "Competing for organic visibility in Ottawa",
+    localContext: (
+      <>
+        <p>
+          Ottawa is a distinctive market &mdash; a capital city whose economy runs on the federal government,
+          a strong technology sector anchored in Kanata (&ldquo;Silicon Valley North&rdquo;), and a deep base
+          of professional services. It is also officially bilingual, so many Ottawa businesses need to be
+          found in both English and French &mdash; which shapes keyword research and content from the start.
+          From Centretown and the ByWard Market to Kanata, Nepean, Orleans, Barrhaven, and Westboro, ranking
+          organically here means earning relevance and authority for the terms your Ottawa customers actually
+          use.
+        </p>
+        <p>
+          That mix of government, tech, and B2B buyers makes intent and credibility matter more than tricks.
+          Winning here takes the SEO services Ottawa businesses rely on &mdash; <strong>Ottawa SEO</strong>{" "}
+          built on technical excellence, local relevance, and content that answers real buyer questions, as
+          part of your wider <InlineLink href={DM_PILLAR_HREF}>digital marketing</InlineLink> and complemented
+          by dedicated <InlineLink href={getDmSpoke("local-seo").href}>local SEO</InlineLink> when the Map Pack
+          matters.
+        </p>
+      </>
+    ),
+    serviceAreas: [
+      { name: "Downtown / Centretown" },
+      { name: "ByWard Market" },
+      { name: "Kanata" },
+      { name: "Nepean" },
+      { name: "Orleans" },
+      { name: "Barrhaven" },
+      { name: "Westboro" },
+      { name: "The Glebe" },
+      { name: "Gloucester" },
+      { name: "Vanier" },
+      { name: "Stittsville" },
+      { name: "Riverside South" },
+    ],
+    stats: [
+      {
+        value: "≈86%",
+        label: "of all searches in Canada run on Google.",
+        sourceName: "Statcounter Global Stats (Canada)",
+        sourceUrl: "https://gs.statcounter.com/search-engine-market-share/all/canada",
+      },
+      {
+        value: "≈40%",
+        label: "of clicks go to the #1 organic result.",
+        sourceName: "FirstPageSage, 2026 Google CTR study",
+        sourceUrl: "https://firstpagesage.com/reports/google-click-through-rates-ctrs-by-ranking-position/",
+      },
+      {
+        value: "48%",
+        label: "of mobile sites pass all three Core Web Vitals — so speed is still an edge.",
+        sourceName: "2025 Web Almanac, HTTP Archive",
+        sourceUrl: "https://almanac.httparchive.org/en/2025/performance",
+      },
+    ],
+    features: [
+      {
+        icon: Code2,
+        title: "Technical SEO",
+        description:
+          "Site speed, crawlability, indexation, structured data, and Core Web Vitals — so Google can find, understand, and trust your Ottawa site.",
+      },
+      {
+        icon: FileText,
+        title: "On-page optimisation",
+        description:
+          "Titles, headings, content, and internal links tuned to the keywords your Ottawa customers actually search — in English and French where it counts.",
+      },
+      {
+        icon: PenTool,
+        title: "Content",
+        description:
+          "Pages and articles built around real buyer intent and local relevance — not keyword stuffing.",
+      },
+      {
+        icon: Link2,
+        title: "Link building",
+        description:
+          "Earning relevant, authoritative links that build the domain authority organic rankings depend on.",
+      },
+      {
+        icon: MapPin,
+        title: "Local SEO",
+        description:
+          "Google Business Profile and local signals as one component of a full SEO program — for a dedicated local and Map-Pack focus, see our local SEO page.",
+      },
+      {
+        icon: BarChart3,
+        title: "Analytics and reporting",
+        description:
+          "Transparent tracking of rankings, traffic, and the leads that actually matter, so you can see the ROI.",
+      },
+    ],
+    localProof: [
+      {
+        label: "Organic is where the demand is",
+        detail:
+          "Google handles roughly 86% of all searches in Canada (Statcounter), and the #1 organic result earns about 40% of the clicks (FirstPageSage) — durable rankings, not ads alone, compound into real growth.",
+      },
+      {
+        label: "Most sites leave technical wins on the table",
+        detail:
+          "Only 48% of mobile sites pass all three Core Web Vitals (Web Almanac) — the technical fixes that move rankings are exactly where a senior-led audit starts.",
+      },
+    ],
+    faq: [
+      {
+        question: "How much does an SEO company in Ottawa cost?",
+        answer:
+          "It depends on your competition, your starting point, and the scope of work — which is why we scope every engagement after a free audit rather than quoting a one-size-fits-all price. Transparent pricing, no hidden fees, no lock-in.",
+      },
+      {
+        question: "How long does SEO take to show results in Ottawa?",
+        answer:
+          "Most businesses begin seeing measurable movement within a few months, with competitive terms taking longer. SEO compounds, so the gains build over time. These are general expectations, not guarantees.",
+      },
+      {
+        question: "Is SEO worth it for an Ottawa business?",
+        answer:
+          "For most Ottawa businesses, yes — organic search is the most cost-effective long-term channel, because the visibility keeps working after the spend stops, unlike paid ads.",
+      },
+      {
+        question: "Which industries does NexFortis serve in Ottawa?",
+        answer:
+          "Any Ottawa business that relies on being found in Google — technology and SaaS, professional services, government-adjacent B2B, healthcare, real estate, trades, and retail among them.",
+      },
+    ],
+    authorNote: (
+      <p>
+        Your campaign is led personally by Hassan Sadiq, NexFortis Founder and CEO, with a small senior team.
+        With 15+ years in enterprise technology and as a certified Microsoft Solutions Partner, the technical
+        side of SEO &mdash; site architecture, Core Web Vitals, and schema &mdash; is handled with genuine
+        depth. As the SEO company Ottawa businesses turn to for senior attention &mdash; and an SEO agency
+        Ottawa owners can rely on &mdash; your account stays with the same senior team in Canada, month to
+        month with no lock-in.
+      </p>
+    ),
+    ctaHeading: "Ready to grow your organic search in Ottawa?",
+    ctaSubtext:
+      "Book a free, no-obligation SEO audit — an honest look at your technical health, on-page gaps, backlink profile, and the keyword opportunities specific to your Ottawa business.",
+  },
+  "web-design/brampton": {
+    parentSlug: "web-design",
+    citySlug: "brampton",
+    cityName: "Brampton",
+    region: "ON",
+    serviceType: "Web Design",
+    metaTitle: "Web Design Brampton",
+    metaDescription:
+      "Web design for Brampton businesses — custom, responsive, fast websites on WordPress or Shopify, including eCommerce. Free consultation.",
+    h1: "Web Design Services in Brampton",
+    heroSubtitle:
+      "Custom, fast, mobile-first websites for Brampton businesses — designed to build trust and turn visitors into customers.",
+    serviceSchemaName: "Web Design — Brampton",
+    serviceSchemaDescription:
+      "Web design and development for Brampton businesses — custom responsive websites, eCommerce, WordPress and CMS builds, and performance optimisation, delivered by a senior-led Canadian team.",
+    introHeading: "Web design for Brampton businesses",
+    intro: (
+      <>
+        <p>
+          NexFortis designs and builds custom websites for Brampton businesses &mdash; fast, mobile-first, and
+          built to convert visitors into customers. <strong>Web design Brampton</strong> companies can rely on
+          is not a template you outgrow in a year; it is a site engineered to load quickly, look credible, and
+          earn trust the moment someone lands on it.
+        </p>
+        <p>
+          Your website is often the first impression a Brampton customer gets &mdash; and design drives most
+          of that judgement.
+        </p>
+      </>
+    ),
+    localContextHeading: "Designing for Brampton's market",
+    localContext: (
+      <>
+        <p>
+          Brampton is one of Canada&rsquo;s youngest and fastest-growing cities &mdash; a diverse,
+          entrepreneurial market spanning Downtown Brampton, Bramalea, Heart Lake, Springdale, Mount Pleasant,
+          and Castlemore, with a fast-expanding base of trades, retail, logistics, and professional services.
+          Standing out here means a website that loads fast on mobile, looks credible, and turns local
+          interest into enquiries.
+        </p>
+        <p>
+          You are also competing with Toronto and GTA-wide agencies, so an off-the-shelf, slow template does
+          not cut it. Winning here takes <strong>Brampton web design</strong> built for performance and
+          conversion &mdash; <strong>website design Brampton</strong> businesses can actually grow with, as
+          part of your wider <InlineLink href={DM_PILLAR_HREF}>digital marketing</InlineLink> and built to
+          support your <InlineLink href={getDmSpoke("seo").href}>SEO</InlineLink>.
+        </p>
+      </>
+    ),
+    serviceAreas: [
+      { name: "Downtown Brampton" },
+      { name: "Bramalea" },
+      { name: "Heart Lake" },
+      { name: "Springdale" },
+      { name: "Mount Pleasant" },
+      { name: "Castlemore" },
+      { name: "Sandalwood" },
+      { name: "Fletcher's Meadow" },
+      { name: "Gore Meadows" },
+      { name: "Churchville" },
+      { name: "Snelgrove" },
+      { name: "Credit Valley" },
+    ],
+    stats: [
+      {
+        value: "75%",
+        label: "of users judge a business's credibility on its web design.",
+        sourceName: "Stanford Web Credibility Research",
+        sourceUrl: "https://www.kinesisinc.com/the-truth-about-web-design/",
+      },
+      {
+        value: "53%",
+        label: "of mobile visitors abandon a site that takes over 3 seconds to load.",
+        sourceName: 'Google, "The Need for Mobile Speed"',
+        sourceUrl: "https://www.marketingdive.com/news/google-53-of-mobile-users-abandon-sites-that-take-over-3-seconds-to-load/426070/",
+      },
+      {
+        value: "<50%",
+        label: "of mobile sites pass all three Core Web Vitals — so speed is an edge.",
+        sourceName: "2025 Web Almanac, HTTP Archive",
+        sourceUrl: "https://almanac.httparchive.org/en/2025/performance",
+      },
+    ],
+    featuresHeading: "What our Brampton web design includes",
+    features: [
+      {
+        icon: Palette,
+        title: "Custom website design",
+        description:
+          "Designed around your brand and your Brampton customers — not a recycled template.",
+      },
+      {
+        icon: Smartphone,
+        title: "Responsive, mobile-first design",
+        description:
+          "Built to look and work perfectly on the phones most of your traffic actually uses.",
+      },
+      {
+        icon: Code2,
+        title: "Web development",
+        description:
+          "Clean, fast, maintainable builds — including redesigns and migrations from an ageing site.",
+      },
+      {
+        icon: ShoppingCart,
+        title: "eCommerce",
+        description:
+          "Shopify and WooCommerce stores built to sell, with secure checkout and easy product management.",
+      },
+      {
+        icon: LayoutGrid,
+        title: "WordPress and CMS",
+        description:
+          "Sites your team can update without a developer — on WordPress or a headless CMS.",
+      },
+      {
+        icon: Gauge,
+        title: "SEO-ready, performance-optimised",
+        description:
+          "Core Web Vitals, clean markup, and structure so the site can rank, not just look good.",
+      },
+    ],
+    localProof: [
+      {
+        label: "First impressions are visual",
+        detail:
+          "75% of users judge a business's credibility on its web design (Stanford) — a dated or slow site quietly costs you customers before they read a word.",
+      },
+      {
+        label: "Speed is conversion",
+        detail:
+          "53% of mobile visitors abandon a site that takes more than three seconds to load (Google) — which is why every build we ship is performance-first.",
+      },
+    ],
+    faq: [
+      {
+        question: "How much does web design cost in Brampton?",
+        answer:
+          "It depends on the size, the features, and whether you need eCommerce — which is why we scope every project after a free consultation rather than quoting a one-size-fits-all price. Transparent pricing, no hidden fees.",
+      },
+      {
+        question: "How long does a web design project take in Brampton?",
+        answer:
+          "Most business sites take a few weeks depending on scope and how ready your content is; eCommerce and custom builds take longer. We give you a clear timeline up front. These are general expectations, not guarantees.",
+      },
+      {
+        question: "Should my Brampton business use WordPress or Shopify?",
+        answer:
+          "It depends on what you sell and how you work — we build on WordPress, Shopify, WooCommerce, or a headless/custom stack, and recommend the right fit after understanding your goals.",
+      },
+      {
+        question: "Do you build eCommerce websites for Brampton businesses?",
+        answer:
+          "Yes — Shopify and WooCommerce stores with secure checkout, product management, and a design built to convert browsers into buyers.",
+      },
+    ],
+    authorNote: (
+      <p>
+        NexFortis is the web design company Brampton businesses turn to for senior attention &mdash; your site
+        is built by an experienced team, not a junior or an offshore template shop, and as a web design agency
+        Brampton owners can rely on, the same people who design your site build and support it. Your project
+        is led personally by Hassan Sadiq, NexFortis Founder and CEO; with 15+ years in enterprise technology
+        and as a certified Microsoft Solutions Partner, the technical side &mdash; performance, security, Core
+        Web Vitals, and clean code &mdash; is handled with genuine depth, and your account stays with the same
+        senior team in Canada, month to month with no lock-in.
+      </p>
+    ),
+    ctaHeading: "Ready for a website that works as hard as you do?",
+    ctaSubtext:
+      "Book a free, no-obligation consultation — we will review your current site, your goals, and exactly what a fast, modern Brampton website would take.",
+  },
 };
