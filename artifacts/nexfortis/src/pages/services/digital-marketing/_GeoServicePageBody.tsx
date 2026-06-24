@@ -102,7 +102,7 @@ export function GeoServicePageBody({ service, city }: { service: DmSpokeSlug; ci
 
       {/* Features (city-flavoured) */}
       <Section bg="white">
-        <SectionHeader title={`Our ${serviceLabel.toLowerCase()} work in ${c.cityName}`} centered />
+        <SectionHeader title={c.featuresHeading ?? `Our ${serviceLabel.toLowerCase()} work in ${c.cityName}`} centered />
         <div className="mt-12">
           <FeatureGrid items={[...c.features]} />
         </div>

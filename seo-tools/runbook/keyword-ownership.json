@@ -178,6 +178,26 @@
         "local seo company edmonton",
         "local seo agency edmonton"
       ]
+    },
+    "web-design/hamilton": {
+      "_role": "GEO (Phase B, Wave 1) — city page under web-design; CITY-QUALIFIED terms ONLY. Primary 'web design hamilton' (Ahrefs 500/KD1, DFS 590 — DFS KD73 inflated by US/NZ Hamilton; Ahrefs ca KD1 is the real difficulty). 'web design services hamilton' is weak (30/10).",
+      "primary": ["web design hamilton"],
+      "secondary": [
+        "hamilton web design",
+        "web design company hamilton",
+        "web design agency hamilton",
+        "website design hamilton"
+      ]
+    },
+    "local-seo/calgary": {
+      "_role": "GEO (Phase B, Wave 1) — city page under local-seo; CITY-QUALIFIED terms ONLY. Calgary = Alberta (region AB). Primary 'local seo calgary' (Ahrefs 600/KD0, DFS 320 — demand bestQuery, bare head strong).",
+      "primary": ["local seo calgary"],
+      "secondary": [
+        "local seo services calgary",
+        "calgary local seo",
+        "local seo company calgary",
+        "local seo agency calgary"
+      ]
     }
   }
 }

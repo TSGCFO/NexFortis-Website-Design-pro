@@ -6,7 +6,7 @@
 //
 // Authored per page via the run book (Step 5), keyed "<parentSlug>/<citySlug>".
 import type { ReactNode } from "react";
-import { MapPin, FileText, PenTool, Star, Link2, Map, Code2, BarChart3 } from "lucide-react";
+import { MapPin, FileText, PenTool, Star, Link2, Map, Code2, BarChart3, Palette, Smartphone, ShoppingCart, LayoutGrid, Gauge } from "lucide-react";
 import type { SourcedStat, FeatureItem, FaqItem, TestimonialData } from "@/components/content/types";
 import { InlineLink } from "@/components/content/InlineLink";
 import { getDmSpoke, DM_PILLAR_HREF, type DmSpokeSlug } from "@/lib/internal-links";
@@ -46,6 +46,9 @@ export type GeoPageContent = {
   localProof: readonly LocalProofPoint[]; // REQUIRED >=2 (real result or cited market stat — never invented)
   stats: readonly SourcedStat[]; // >=3 external sourced citations (content gate)
   features: readonly FeatureItem[]; // service-in-this-city specifics
+  /** Override for the features-section heading (default "Our <service> work in <city>"). Use on
+   *  web-design etc. where "work" wrongly implies a delivered portfolio we cannot show. */
+  featuresHeading?: string;
 
   // ---- cross-link copy ----
   nearbyHeading?: string;
@@ -751,5 +754,176 @@ export const GEO_PAGE_CONTENT: Partial<Record<string, GeoPageContent>> = {
     ctaHeading: "Ready to win local search in Edmonton?",
     ctaSubtext:
       "Book a free, no-obligation local SEO audit — an honest look at your Google Business Profile, citations, reviews, and Map Pack position, and exactly where the gaps are.",
+  },
+  "web-design/hamilton": {
+    parentSlug: "web-design",
+    citySlug: "hamilton",
+    cityName: "Hamilton",
+    region: "ON",
+    serviceType: "Web Design",
+    metaTitle: "Web Design Hamilton",
+    metaDescription:
+      "Web design for Hamilton businesses — custom, responsive, fast websites on WordPress or Shopify, including eCommerce. Senior-led, Canadian. Free consultation.",
+    h1: "Web Design Services in Hamilton",
+    heroSubtitle:
+      "Custom, fast, mobile-first websites for Hamilton businesses — designed to build trust and turn visitors into customers.",
+    serviceSchemaName: "Web Design — Hamilton",
+    serviceSchemaDescription:
+      "Web design and development for Hamilton businesses — custom responsive websites, eCommerce, WordPress and CMS builds, and performance optimisation, delivered by a senior-led Canadian team.",
+    introHeading: "Web design for Hamilton businesses",
+    intro: (
+      <>
+        <p>
+          NexFortis designs and builds custom websites for Hamilton businesses &mdash; fast, mobile-first,
+          and built to convert visitors into customers. <strong>Web design Hamilton</strong> companies can
+          rely on is not a template you outgrow in a year; it is a site engineered to load quickly, look
+          credible, and earn trust the moment someone lands on it.
+        </p>
+        <p>
+          Your website is often the first impression a Hamilton customer gets &mdash; and design drives most
+          of that judgement.
+        </p>
+      </>
+    ),
+    localContextHeading: "Designing for Hamilton's market",
+    localContext: (
+      <>
+        <p>
+          Hamilton is one of Ontario&rsquo;s fastest-changing business markets &mdash; a growing, diverse
+          economy spanning Downtown, Westdale, Dundas, Ancaster, Stoney Creek, and Waterdown, from
+          independent shops on James Street North to professional firms and trades across the Mountain.
+          Standing out here means a website that loads fast on mobile, looks credible, and turns local
+          interest into enquiries.
+        </p>
+        <p>
+          You are also competing with Toronto and GTA-wide agencies, so an off-the-shelf, slow template does
+          not cut it. Winning here takes <strong>Hamilton web design</strong> built for performance and
+          conversion &mdash; <strong>website design Hamilton</strong> businesses can actually grow with, as
+          part of your wider <InlineLink href={DM_PILLAR_HREF}>digital marketing</InlineLink> and built to
+          support your <InlineLink href={getDmSpoke("seo").href}>SEO</InlineLink>.
+        </p>
+      </>
+    ),
+    serviceAreas: [
+      { name: "Downtown" },
+      { name: "Westdale" },
+      { name: "Dundas" },
+      { name: "Ancaster" },
+      { name: "Stoney Creek" },
+      { name: "Waterdown" },
+      { name: "Hamilton Mountain" },
+      { name: "James Street North" },
+      { name: "Locke Street" },
+      { name: "Concession Street" },
+      { name: "Binbrook" },
+      { name: "Glanbrook" },
+    ],
+    stats: [
+      {
+        value: "75%",
+        label: "of users judge a business's credibility on its web design.",
+        sourceName: "Stanford Web Credibility Research",
+        sourceUrl: "https://www.kinesisinc.com/the-truth-about-web-design/",
+      },
+      {
+        value: "53%",
+        label: "of mobile visitors abandon a site that takes over 3 seconds to load.",
+        sourceName: 'Google, "The Need for Mobile Speed"',
+        sourceUrl: "https://www.marketingdive.com/news/google-53-of-mobile-users-abandon-sites-that-take-over-3-seconds-to-load/426070/",
+      },
+      {
+        value: "<50%",
+        label: "of mobile sites pass all three Core Web Vitals — so speed is an edge.",
+        sourceName: "2025 Web Almanac, HTTP Archive",
+        sourceUrl: "https://almanac.httparchive.org/en/2025/performance",
+      },
+    ],
+    featuresHeading: "What our Hamilton web design includes",
+    features: [
+      {
+        icon: Palette,
+        title: "Custom website design",
+        description:
+          "Designed around your brand and your Hamilton customers — not a recycled template.",
+      },
+      {
+        icon: Smartphone,
+        title: "Responsive, mobile-first design",
+        description:
+          "Built to look and work perfectly on the phones most of your traffic actually uses.",
+      },
+      {
+        icon: Code2,
+        title: "Web development",
+        description:
+          "Clean, fast, maintainable builds — including redesigns and migrations from an ageing site.",
+      },
+      {
+        icon: ShoppingCart,
+        title: "eCommerce",
+        description:
+          "Shopify and WooCommerce stores built to sell, with secure checkout and easy product management.",
+      },
+      {
+        icon: LayoutGrid,
+        title: "WordPress and CMS",
+        description:
+          "Sites your team can update without a developer — on WordPress or a headless CMS.",
+      },
+      {
+        icon: Gauge,
+        title: "SEO-ready, performance-optimised",
+        description:
+          "Core Web Vitals, clean markup, and structure so the site can rank, not just look good.",
+      },
+    ],
+    localProof: [
+      {
+        label: "First impressions are visual",
+        detail:
+          "75% of users judge a business's credibility on its web design (Stanford) — a dated or slow site quietly costs you customers before they read a word.",
+      },
+      {
+        label: "Speed is conversion",
+        detail:
+          "53% of mobile visitors abandon a site that takes more than three seconds to load (Google) — which is why every build we ship is performance-first.",
+      },
+    ],
+    faq: [
+      {
+        question: "How much does a website cost in Hamilton?",
+        answer:
+          "It depends on the size, the features, and whether you need eCommerce — which is why we scope every project after a free consultation rather than quoting a one-size-fits-all price. Transparent pricing, no hidden fees.",
+      },
+      {
+        question: "How long does it take to build a website in Hamilton?",
+        answer:
+          "Most business sites take a few weeks depending on scope and how ready your content is; eCommerce and custom builds take longer. We give you a clear timeline up front. These are general expectations, not guarantees.",
+      },
+      {
+        question: "Do you build on WordPress or Shopify?",
+        answer:
+          "Both — we build on WordPress, Shopify, WooCommerce, or a headless/custom stack, whatever fits how your Hamilton business needs to run and update the site.",
+      },
+      {
+        question: "Do you build eCommerce websites for Hamilton businesses?",
+        answer:
+          "Yes — Shopify and WooCommerce stores with secure checkout, product management, and a design built to convert browsers into buyers.",
+      },
+    ],
+    authorNote: (
+      <p>
+        NexFortis is the web design company Hamilton businesses turn to for senior attention &mdash; your
+        site is built by an experienced team, not a junior or an offshore template shop, and as a web design
+        agency Hamilton owners can rely on, the same people who design your site build and support it. Your
+        project is led personally by Hassan Sadiq, NexFortis Founder and CEO; with 15+ years in enterprise
+        technology and as a certified Microsoft Solutions Partner, the technical side &mdash; performance,
+        security, Core Web Vitals, and clean code &mdash; is handled with genuine depth. We work
+        transparently, month to month with no lock-in.
+      </p>
+    ),
+    ctaHeading: "Ready for a website that works as hard as you do?",
+    ctaSubtext:
+      "Book a free, no-obligation consultation — we will review your current site, your goals, and exactly what a fast, modern Hamilton website would take.",
   },
 };
