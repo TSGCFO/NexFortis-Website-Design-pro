@@ -14,6 +14,7 @@
     "services/digital-marketing/email-marketing": { "kind": "spoke", "min": 1100, "max": 2000, "source": "Rendered <main> ~1609. Software-heavy SERP; managed-service spoke." },
     "services/digital-marketing/conversion-rate-optimization": { "kind": "spoke", "min": 1100, "max": 2000, "source": "Rendered <main> ~1817. CA service pages ~1100-1500 main (lean); comprehensive spoke." },
     "services/digital-marketing/reputation-management": { "kind": "spoke", "min": 1100, "max": 2000, "source": "Rendered <main> ~1512. Reviews/ORM SERP; managed-service spoke." },
-    "services/digital-marketing/local-seo/toronto": { "kind": "geo", "min": 850, "max": 1400, "source": "Phase B geo [service]+[city]; rendered <main> ~1087. 'local seo toronto' SERP is thin (ranking pages ~250-640 prose) so the body is leaner than national spokes by design; band brackets the template chrome + local body." }
+    "services/digital-marketing/local-seo/toronto": { "kind": "geo", "min": 850, "max": 1400, "source": "Phase B geo [service]+[city]; rendered <main> ~1087. 'local seo toronto' SERP is thin (ranking pages ~250-640 prose) so the body is leaner than national spokes by design; band brackets the template chrome + local body." },
+    "services/digital-marketing/seo/mississauga": { "kind": "geo", "min": 750, "max": 1300, "source": "Phase B geo [service]+[city]; rendered <main> ~970. 'seo services mississauga' SERP very thin (ranking pages 364-480 prose); general-SEO geo page (distinct from local-seo/mississauga), leaner body + template chrome." }
   }
 }
