@@ -198,6 +198,26 @@
         "local seo company calgary",
         "local seo agency calgary"
       ]
+    },
+    "seo/brampton": {
+      "_role": "GEO (Phase B, Wave 1) — city page under seo; CITY-QUALIFIED terms ONLY. Data-grounded primary 'seo company brampton' (390/350, KD0, demand bestQuery — 'seo services brampton' weaker at 170/150). Excludes 'local seo ... brampton' (-> local-seo/brampton, Wave 3).",
+      "primary": ["seo company brampton"],
+      "secondary": [
+        "seo brampton",
+        "brampton seo",
+        "seo agency brampton",
+        "seo services brampton"
+      ]
+    },
+    "web-design/london-ontario": {
+      "_role": "GEO (Phase B, Wave 1) — city page under web-design; CITY-QUALIFIED terms ONLY. London, Ontario (citySlug london-ontario, cityName London, region ON). Primary 'web design london ontario' (390/200, KD0 — the 'ontario' qualifier disambiguates from London UK). company/agency variants weak (~40).",
+      "primary": ["web design london ontario"],
+      "secondary": [
+        "london ontario web design",
+        "website design london ontario",
+        "web design company london ontario",
+        "web design agency london ontario"
+      ]
     }
   }
 }

@@ -74,6 +74,7 @@ function Router() {
           <Route path="/services/digital-marketing/seo/markham">{() => <GeoServicePage service="seo" city="markham" />}</Route>
           <Route path="/services/digital-marketing/seo/mississauga">{() => <GeoServicePage service="seo" city="mississauga" />}</Route>
           <Route path="/services/digital-marketing/web-design/hamilton">{() => <GeoServicePage service="web-design" city="hamilton" />}</Route>
+          <Route path="/services/digital-marketing/web-design/london-ontario">{() => <GeoServicePage service="web-design" city="london-ontario" />}</Route>
           {/* GEO-ROUTES-END */}
           <Route path="/services/microsoft-365" component={Microsoft365} />
           <Route path="/services/quickbooks" component={QuickBooks} />
