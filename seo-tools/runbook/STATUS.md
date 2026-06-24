@@ -28,9 +28,9 @@ Market NexFortis's digital-marketing capabilities as strategically-grouped servi
   - **Content model = tiered:** demand-backed pages get full deep local content (full run book); Phase C exurbs deferred (genuine-local or noindex when greenlit) to avoid the doorway penalty.
 
 ### EXACT NEXT STEP — Phase B Wave 1
-1. Design the **geo route + page template + local-content model** (`/services/digital-marketing/<service>/<city>`) — the reusable architecture for all geo pages.
-2. Run the per-page run book on **Wave 1** (15 pages, ROI-ordered), starting with **#1 Local SEO Toronto** (vol 1000, KD 3) to validate the model end-to-end before scaling to Waves 2-4.
-3. Wave 1 list + all 4 waves: `geo/03-build-waves.md`.
+1. **Geo architecture DESIGNED** (workflow-mapped + hand-verified): `geo/04-architecture-design.md`. Codegen literal routes from a `geo-links.ts` registry; typed `GeoPageContent` with required local fields (anti-doorway); new `_GeoServicePageBody`; 2 backward-compatible `seo.tsx` prop changes (geo region/placename + `ServiceSchema.areaServed=City` — both hardcoded today, VERIFIED); cannibalization via city-qualified-only ownership. **Awaiting operator sign-off on 7 open decisions** (A route mechanism, B local-proof sourcing, C word band, D link graph, E areaServed depth, F wave-gating, G cannibalization-in-CI).
+2. On sign-off: implement the architecture + run the per-page run book on **Wave 1** (15 pages), starting **#1 Local SEO Toronto** (vol 1000, KD 3) to validate end-to-end before Waves 2-4.
+3. Wave 1 list + all 4 waves: `geo/03-build-waves.md`. Locked matrix: `geo/02-demand-matrix.md`.
 
 ## DEFERRED nav / UX to-dos (raised 2026-06-24, after the menu work)
 1. **Hover-intent / forgiveness** (smaller, near-term): the level-2 flyout collapses on imprecise mouse movement, and the corridor back to the level-1 list is too narrow (stray onto a sub-menu-less main service → everything collapses). Fix = hover-intent open/close delays + a "safe-triangle"/bridge so it isn't pixel-precise; keep keyboard/focus intact. Tracked **inline** at `artifacts/nexfortis/src/components/layout.tsx` (`TODO(nav-hover-intent)`).
