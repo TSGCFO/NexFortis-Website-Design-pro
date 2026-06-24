@@ -2124,4 +2124,179 @@ export const GEO_PAGE_CONTENT: Partial<Record<string, GeoPageContent>> = {
     ctaSubtext:
       "Book a free, no-obligation social media audit — an honest look at your current channels, your competitors, and the quickest wins for your Calgary business.",
   },
+  "seo/toronto": {
+    parentSlug: "seo",
+    citySlug: "toronto",
+    cityName: "Toronto",
+    region: "ON",
+    serviceType: "SEO",
+    metaTitle: "SEO Services Toronto",
+    metaDescription:
+      "SEO services for Toronto businesses — technical SEO, on-page, content, and link building to grow your organic rankings. Free SEO audit.",
+    h1: "SEO Services in Toronto",
+    heroSubtitle:
+      "Win organic rankings in Canada's most competitive market — senior-led SEO that builds durable visibility for Toronto businesses, not quick tricks.",
+    serviceSchemaName: "SEO — Toronto",
+    serviceSchemaDescription:
+      "SEO services for Toronto businesses — technical SEO, on-page optimization, content, link building, and analytics to grow organic search visibility in Canada's most competitive market, delivered by a senior-led Canadian team.",
+    introHeading: "SEO services for Toronto businesses",
+    intro: (
+      <>
+        <p>
+          NexFortis helps Toronto businesses earn the organic Google rankings that bring in steady, qualified
+          traffic &mdash; in the most competitive search market in Canada. The <strong>SEO services Toronto</strong>{" "}
+          companies can rely on are not a one-time fix; they are the compounding work of making your site
+          technically sound, genuinely useful, and trusted, so you climb past competitors and stay there.
+        </p>
+        <p>
+          <strong>SEO Toronto</strong> businesses invest in is the most durable channel they have: unlike paid
+          ads, the visibility keeps working after the budget stops.
+        </p>
+      </>
+    ),
+    localContextHeading: "Competing for organic visibility in Toronto",
+    localContext: (
+      <>
+        <p>
+          Toronto is Canada&rsquo;s largest and most competitive business market &mdash; and its search
+          results show it. From Downtown and the Financial District to North York, Scarborough, Etobicoke, and
+          East York, established agencies, national brands, and in-house teams all fight for the same first
+          page. Ranking organically here means earning genuine relevance and authority for the terms your
+          Toronto customers actually use &mdash; there are no shortcuts to the top in this market.
+        </p>
+        <p>
+          That intensity is exactly why a generic, templated approach fails. Winning here takes{" "}
+          <strong>Toronto SEO</strong> built on technical excellence, real content, and the kind of authority
+          that takes deliberate work &mdash; not the &ldquo;guaranteed&nbsp;#1&rdquo; promises the market is
+          full of. It is one pillar of your wider{" "}
+          <InlineLink href={DM_PILLAR_HREF}>digital marketing</InlineLink>, complemented by dedicated{" "}
+          <InlineLink href={getDmSpoke("local-seo").href}>local SEO</InlineLink> when the Map Pack matters.
+        </p>
+        <p>
+          In sectors from professional services and finance to retail, real estate, and home services, the
+          businesses that own organic search capture demand their competitors are paying dearly for. In
+          Toronto, standing still means falling behind.
+        </p>
+      </>
+    ),
+    serviceAreas: [
+      { name: "Downtown" },
+      { name: "Financial District" },
+      { name: "North York" },
+      { name: "Scarborough" },
+      { name: "Etobicoke" },
+      { name: "East York" },
+      { name: "York" },
+      { name: "Midtown" },
+      { name: "Yorkville" },
+      { name: "Liberty Village" },
+      { name: "The Beaches" },
+      { name: "North Toronto" },
+    ],
+    stats: [
+      {
+        value: "≈86%",
+        label: "of all searches in Canada run on Google.",
+        sourceName: "Statcounter Global Stats (Canada)",
+        sourceUrl: "https://gs.statcounter.com/search-engine-market-share/all/canada",
+      },
+      {
+        value: "≈40%",
+        label: "of clicks go to the #1 organic result.",
+        sourceName: "FirstPageSage, 2026 Google CTR study",
+        sourceUrl: "https://firstpagesage.com/reports/google-click-through-rates-ctrs-by-ranking-position/",
+      },
+      {
+        value: "48%",
+        label: "of mobile sites pass all three Core Web Vitals — so speed is still an edge.",
+        sourceName: "2025 Web Almanac, HTTP Archive",
+        sourceUrl: "https://almanac.httparchive.org/en/2025/performance",
+      },
+    ],
+    features: [
+      {
+        icon: Code2,
+        title: "Technical SEO",
+        description:
+          "Site speed, crawlability, indexation, structured data, and Core Web Vitals — so Google can find, understand, and trust your Toronto site.",
+      },
+      {
+        icon: FileText,
+        title: "On-page optimisation",
+        description:
+          "Titles, headings, content, and internal links tuned to the keywords your Toronto customers actually search.",
+      },
+      {
+        icon: PenTool,
+        title: "Content",
+        description:
+          "Pages and articles built around real buyer intent and local relevance — not keyword stuffing.",
+      },
+      {
+        icon: Link2,
+        title: "Link building",
+        description:
+          "Earning the relevant, authoritative links that build the domain authority a competitive market like Toronto demands.",
+      },
+      {
+        icon: MapPin,
+        title: "Local SEO",
+        description:
+          "Google Business Profile and local signals as one component of a full SEO program — for a dedicated local and Map-Pack focus, see our local SEO page.",
+      },
+      {
+        icon: BarChart3,
+        title: "Analytics and reporting",
+        description:
+          "Transparent tracking of rankings, traffic, and the leads that actually matter, so you can see the ROI.",
+      },
+    ],
+    localProof: [
+      {
+        label: "Organic is where the demand is",
+        detail:
+          "Google handles roughly 86% of all searches in Canada (Statcounter), and the #1 organic result earns about 40% of the clicks (FirstPageSage) — durable rankings, not ads alone, compound into real growth.",
+      },
+      {
+        label: "Most sites leave technical wins on the table",
+        detail:
+          "Only 48% of mobile sites pass all three Core Web Vitals (Web Almanac) — the technical fixes that move rankings are exactly where a senior-led audit starts.",
+      },
+    ],
+    faq: [
+      {
+        question: "How much do SEO services cost in Toronto?",
+        answer:
+          "It depends on your competition, your starting point, and the scope of work — and Toronto is competitive, so it pays to scope properly. We quote every engagement after a free audit rather than a one-size-fits-all price. Transparent pricing, no hidden fees, no lock-in.",
+      },
+      {
+        question: "How long does SEO take to show results in Toronto?",
+        answer:
+          "Most businesses begin seeing measurable movement within a few months, with competitive Toronto terms taking longer. SEO compounds, so the gains build over time. These are general expectations, not guarantees — and anyone promising guaranteed #1 rankings is selling you something.",
+      },
+      {
+        question: "Why is Toronto SEO so competitive?",
+        answer:
+          "It is Canada's largest market, so more businesses chase the same high-value keywords, and the established players have spent years building authority. That is exactly why technical excellence and genuine content matter more here than anywhere else in the country.",
+      },
+      {
+        question: "Which industries does NexFortis serve in Toronto?",
+        answer:
+          "Any Toronto business that relies on being found in Google — professional services and finance, real estate, home services and trades, healthcare, B2B, and retail among them.",
+      },
+    ],
+    authorNote: (
+      <p>
+        Your campaign is led personally by Hassan Sadiq, NexFortis Founder and CEO, with a small senior team.
+        With 15+ years in enterprise technology and as a certified Microsoft Solutions Partner, the technical
+        side of SEO &mdash; site architecture, Core Web Vitals, and schema &mdash; is handled with genuine
+        depth. As the SEO company Toronto businesses turn to for senior attention &mdash; and an SEO agency
+        Toronto owners can rely on &mdash; your account stays with the same senior team in Canada, month to
+        month with no lock-in.
+      </p>
+    ),
+    ctaHeading: "Ready to compete for organic search in Toronto?",
+    ctaSubtext:
+      "Book a free, no-obligation SEO audit — an honest look at your technical health, on-page gaps, backlink profile, and the keyword opportunities specific to your Toronto business.",
+  },
 };
