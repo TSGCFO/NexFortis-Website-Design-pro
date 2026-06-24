@@ -24,6 +24,7 @@
     "services/digital-marketing/web-design/london-ontario": { "kind": "geo", "min": 800, "max": 1250, "source": "Phase B geo; rendered <main> ~982. 'web design london ontario' SERP thin (369-486 prose); web-design geo page (London, ON)." },
     "services/digital-marketing/seo/calgary": { "kind": "geo", "min": 850, "max": 1350, "source": "Phase B geo; rendered <main> ~1027. FULLER — 'seo services calgary' SERP service-tier substantive (770-1013); general-SEO metro (Alberta, AB)." },
     "services/digital-marketing/seo/hamilton": { "kind": "geo", "min": 800, "max": 1250, "source": "Phase B geo; rendered <main> ~994. 'seo services hamilton' SERP very thin (308-406 prose); general-SEO geo page (distinct from web-design/hamilton)." },
-    "services/digital-marketing/google-ads-ppc/toronto": { "kind": "geo", "min": 800, "max": 1250, "source": "Phase B geo; rendered <main> ~993. NEW PPC template; 'ppc agency toronto' SERP thin (404-532 prose); managed Google Ads/PPC geo page (Toronto, ON)." }
+    "services/digital-marketing/google-ads-ppc/toronto": { "kind": "geo", "min": 800, "max": 1250, "source": "Phase B geo; rendered <main> ~993. NEW PPC template; 'ppc agency toronto' SERP thin (404-532 prose); managed Google Ads/PPC geo page (Toronto, ON)." },
+    "services/digital-marketing/social-media-marketing/calgary": { "kind": "geo", "min": 800, "max": 1250, "source": "Phase B geo; rendered <main> ~1006. NEW social template; 'social media marketing calgary' SERP extremely thin (144-190 prose, agency homepages); managed social geo page (Calgary, AB)." }
   }
 }
