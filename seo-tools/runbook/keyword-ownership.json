@@ -148,6 +148,16 @@
         "local seo agency toronto",
         "toronto local seo"
       ]
+    },
+    "seo/mississauga": {
+      "_role": "GEO (Phase B, Wave 1) — city page under seo (SEO services); CITY-QUALIFIED terms ONLY (the national seo spoke owns the unqualified heads). Excludes 'local seo mississauga' (-> local-seo/mississauga geo page) and 'dental seo mississauga' (distinct industry intent).",
+      "primary": ["seo services mississauga"],
+      "secondary": [
+        "seo company mississauga",
+        "seo agency mississauga",
+        "seo mississauga",
+        "mississauga seo"
+      ]
     }
   }
 }

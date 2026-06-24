@@ -1,0 +1,9 @@
+# seo/mississauga — Step 6 gate record
+
+- **6a fact-check: PASS.** Brand claims grounded in `_facts.md` (senior-led Canadian, Hassan Sadiq Founder & CEO, Microsoft Solutions Partner, month-to-month/no-lock-in, free audit). 3 third-party stats reused from the shipped national-seo 06a (Statcounter 86% Google-CA share, FirstPageSage ~40% #1 CTR, Web Almanac 48% mobile sites pass CWV — all firecrawl-verified 2026-06-20). Fixed the 48% label to "mobile sites pass all three Core Web Vitals". Guardrails clean: NO Google-Partner (Ads-only cert), NO fabricated "proven results / 10+ years / case studies" (the SERP's competitor brag was NOT echoed). No client results.
+- **6b EEAT: SHIP — 84/100** (independent `aaron-seo-geo:content-quality-auditor`; never self-graded). 0 veto failures (intent / data-consistency / disclosure all PASS). Confirmed genuinely local + doorway-safe AND clearly differentiated from a local-SEO/GBP page (Local SEO scoped as ONE component, explicit pointer to the local-seo page) — won't cannibalize local-seo/mississauga. Fix applied: city-rank → "Ontario's third-largest city" (match the brief).
+- **6c humanize: not run (accepted advisory).** AI-detect 75.5 (advisory, flagged). Draft is grounded + EEAT-SHIP; did NOT run the fabrication-prone humanizer on a grounded draft (operator rule: AI advisory, don't degrade chasing <50). Highest of the geo pages so far; binding gates carry publication.
+- **6d plagiarism: PASS — Winston 0%, 0 sources** (binding).
+- **coverage: PASS — 5/5 owned keywords** (binding): seo services mississauga, seo company mississauga, seo agency mississauga, seo mississauga, mississauga seo. meta 154 (<=160).
+
+**Verdict: gate-complete.** Both binding gates PASS; EEAT SHIP 84; AI-detect advisory (accepted). Ready for Step 7 (integrate) -> Step 8 (QA).

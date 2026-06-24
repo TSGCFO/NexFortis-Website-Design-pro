@@ -11,6 +11,8 @@
     "geo-ai-search": { "id": "d247be48-3b49-4b27-ad4f-e0caed797bd3", "keyword": "generative engine optimization", "status": "firing" },
     "reputation-management": { "id": "ed254467-f5c4-429a-8cdb-51c6cc22a1b7", "keyword": "reputation management services", "status": "firing" },
     "email-marketing": { "id": "b3cd1d44-ec94-4c0b-9d42-b625d6df7a46", "keyword": "email marketing services", "status": "firing" },
-    "conversion-rate-optimization": { "id": "36342f34-bd08-43e8-b7f6-057646d8cae1", "keyword": "conversion rate optimization services", "status": "firing" }
+    "conversion-rate-optimization": { "id": "36342f34-bd08-43e8-b7f6-057646d8cae1", "keyword": "conversion rate optimization services", "status": "firing" },
+    "local-seo/toronto": { "id": "9e87fdda-2b76-45e1-ba8d-f3896c24b289", "keyword": "local seo toronto", "status": "DONE — Phase B Wave-1 page #1 (geo)" },
+    "seo/mississauga": { "id": "3fe7438f-3e88-41a3-ae53-3245d19cea52", "keyword": "seo services mississauga", "status": "firing — Phase B Wave-1 page #2 (geo)" }
   }
 }
