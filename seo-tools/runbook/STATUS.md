@@ -19,8 +19,17 @@ Market NexFortis's digital-marketing capabilities as strategically-grouped servi
 - **Step 8 (QA): DONE** (through `a3aea86`). Verified against the **Render PR-108 preview** (`nexfortis-marketing-pr-108.onrender.com`): build passed; all 12 pages prerendered (title/meta/body/Service+FAQ+Person JSON-LD); sitemap = the 12 new routes, zero old slugs. Cannibalization clean (87 kw / 12 pages). SEO test fixtures reconciled to the 12-map — snapshots regenerated from the deployed prerender, `dm-word-targets.json` + `__known-issues__.json` updated.
 - **Services mega-menu restructure: DONE** (commits `926c389`, `b7c768a`; built via the Replit connector, reviewed + synced over SSH). Two-level nested flyout — Services dropdown shows the 5 mains; hovering Digital Marketing opens a right-side panel of the DM spokes, **data-driven** from `getPublishedSpokes()`. Two-column + viewport-bound scroll-cap (`maxHeight: min(22rem, calc(100dvh - 8rem))` + `overflow-y-auto`), keyboard-accessible, reusable `subItems` pattern for the other mains later.
 
-## EXACT NEXT STEP — Phase B (geo `[service]+[city]` layer)
-Begin the geo build per `seo-tools/runbook/00-architecture.md` (option D): `[service]+[city]` pages with genuine local content, same 8-step run book per page, geo expansion via Ahrefs matching-terms + Semrush. (Kicking off 2026-06-24.)
+## PHASE B — IN PROGRESS (geo `[service]+[city]` layer)
+- **Demand scoping: DONE + LOCKED (2026-06-24).** 3-tool consensus (Ahrefs + DataForSEO + Semrush, via workflow `geo-demand-crosscheck`). Matrix: `seo-tools/runbook/geo/02-demand-matrix.md` (first pass `01-demand-discovery.md`).
+  - **5 geo services** (data-confirmed): seo, local-seo, web-design, google-ads/ppc, social-media-marketing. NOT geo (national hubs only): link-building, CRO, email, reputation, geo-ai.
+  - **188 pages implied** = 125 mandatory GTA (25 municipalities × 5 services, operator rule — all ship regardless of demand) + 63 demand-gated metro pages.
+  - **Lead cities are metros + Toronto** (Calgary/Edmonton/Vancouver rank with Toronto), NOT GTA suburbs. ~50-60 GTA exurb pages are near-zero demand (ship for coverage; **doorway-penalty risk → need genuine local content**).
+  - First-15 build order locked; led by Local SEO Toronto (1000, KD 3), SEO Mississauga (1000, KD 5), Web Design Brampton (390, KD 1).
+
+### EXACT NEXT STEP — Phase B build
+1. **Decide the content model per demand tier** (esp. the zero-demand GTA tier — genuine-local vs lighter, to dodge the doorway penalty). ← awaiting operator.
+2. Design the **geo route + page template + local content model** (`/services/digital-marketing/<service>/<city>`).
+3. Run the per-page run book starting with the #1 ROI page (Local SEO Toronto).
 
 ## DEFERRED nav / UX to-dos (raised 2026-06-24, after the menu work)
 1. **Hover-intent / forgiveness** (smaller, near-term): the level-2 flyout collapses on imprecise mouse movement, and the corridor back to the level-1 list is too narrow (stray onto a sub-menu-less main service → everything collapses). Fix = hover-intent open/close delays + a "safe-triangle"/bridge so it isn't pixel-precise; keep keyboard/focus intact. Tracked **inline** at `artifacts/nexfortis/src/components/layout.tsx` (`TODO(nav-hover-intent)`).
