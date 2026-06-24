@@ -29,6 +29,8 @@ import {
   type DmSpokeSlug,
 } from "@/lib/internal-links";
 import { DM_SPOKE_CONTENT, DM_AUTHOR } from "./_dmContent";
+import { getGeoPagesForSpoke, geoHref } from "@/lib/geo-links";
+import { GeoLinkList } from "@/components/content/GeoLinkList";
 
 // Shared template for every digital-marketing spoke page. Reads typed content
 // from _dmContent.tsx and the link metadata from internal-links.ts, then
@@ -45,6 +47,7 @@ export function DmSpokePageBody({ slug }: { slug: DmSpokeSlug }) {
     throw new Error(`No content defined for digital-marketing spoke: ${slug}`);
   }
   const related = getRelatedSpokes(slug, 3);
+  const geoPages = getGeoPagesForSpoke(slug);
   const url = spoke.href;
 
   return (
@@ -152,6 +155,14 @@ export function DmSpokePageBody({ slug }: { slug: DmSpokeSlug }) {
           </div>
         </Section>
       )}
+
+      {/* Areas we serve — DOWN links to this spoke's published city pages (renders only when cities exist) */}
+      <GeoLinkList
+        title={`${spoke.title} — areas we serve`}
+        subtitle={`Local ${spoke.linkText.toLowerCase()} for businesses across the GTA and major Canadian cities.`}
+        bg="white"
+        links={geoPages.map((p) => ({ href: geoHref(p), label: `${spoke.linkText} ${p.cityName}` }))}
+      />
 
       {/* FAQ */}
       <Section bg="white">
