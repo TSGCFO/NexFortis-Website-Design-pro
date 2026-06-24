@@ -1625,4 +1625,173 @@ export const GEO_PAGE_CONTENT: Partial<Record<string, GeoPageContent>> = {
     ctaSubtext:
       "Book a free, no-obligation SEO audit — an honest look at your technical health, on-page gaps, backlink profile, and the keyword opportunities specific to your Calgary business.",
   },
+  "seo/hamilton": {
+    parentSlug: "seo",
+    citySlug: "hamilton",
+    cityName: "Hamilton",
+    region: "ON",
+    serviceType: "SEO",
+    metaTitle: "SEO Services Hamilton",
+    metaDescription:
+      "SEO services for Hamilton businesses — technical SEO, on-page, content, and link building to grow your organic rankings across the GTA. Free SEO audit.",
+    h1: "SEO Services in Hamilton",
+    heroSubtitle:
+      "Help Hamilton customers find your business in Google's organic results — senior-led SEO that builds durable rankings, not quick tricks.",
+    serviceSchemaName: "SEO — Hamilton",
+    serviceSchemaDescription:
+      "SEO services for Hamilton businesses — technical SEO, on-page optimization, content, link building, and analytics to grow organic search visibility, delivered by a senior-led Canadian team.",
+    introHeading: "SEO services for Hamilton businesses",
+    intro: (
+      <>
+        <p>
+          NexFortis helps Hamilton businesses earn the organic Google rankings that bring in steady,
+          qualified traffic &mdash; the searches happening across the GTA right now for what you sell. The{" "}
+          <strong>SEO services Hamilton</strong> companies can rely on are not a one-time fix; they are the
+          compounding work of making your site technically sound, genuinely useful, and trusted, so you climb
+          past competitors and stay there.
+        </p>
+        <p>
+          <strong>SEO Hamilton</strong> businesses invest in is the most durable channel they have: unlike
+          paid ads, the visibility keeps working after the budget stops.
+        </p>
+      </>
+    ),
+    localContextHeading: "Competing for organic visibility in Hamilton",
+    localContext: (
+      <>
+        <p>
+          Hamilton is a fast-growing, GTA-adjacent business market &mdash; from Downtown and Westdale to
+          Dundas, Ancaster, Stoney Creek, and Waterdown &mdash; where ranking organically means earning
+          relevance and authority for the terms your Hamilton customers actually use. As Toronto&rsquo;s
+          growth spills west, competition for the same first-page results keeps rising.
+        </p>
+        <p>
+          That means a generic, templated approach does not cut through. Winning here takes the SEO services
+          Hamilton businesses rely on &mdash; <strong>Hamilton SEO</strong> built on technical excellence,
+          local relevance, and content that answers real buyer questions, as part of your wider{" "}
+          <InlineLink href={DM_PILLAR_HREF}>digital marketing</InlineLink> and complemented by dedicated{" "}
+          <InlineLink href={getDmSpoke("local-seo").href}>local SEO</InlineLink> when the Map Pack matters.
+        </p>
+      </>
+    ),
+    serviceAreas: [
+      { name: "Downtown" },
+      { name: "Westdale" },
+      { name: "Dundas" },
+      { name: "Ancaster" },
+      { name: "Stoney Creek" },
+      { name: "Waterdown" },
+      { name: "Hamilton Mountain" },
+      { name: "James Street North" },
+      { name: "Locke Street" },
+      { name: "Concession Street" },
+      { name: "Binbrook" },
+      { name: "Glanbrook" },
+    ],
+    stats: [
+      {
+        value: "≈86%",
+        label: "of all searches in Canada run on Google.",
+        sourceName: "Statcounter Global Stats (Canada)",
+        sourceUrl: "https://gs.statcounter.com/search-engine-market-share/all/canada",
+      },
+      {
+        value: "≈40%",
+        label: "of clicks go to the #1 organic result.",
+        sourceName: "FirstPageSage, 2026 Google CTR study",
+        sourceUrl: "https://firstpagesage.com/reports/google-click-through-rates-ctrs-by-ranking-position/",
+      },
+      {
+        value: "48%",
+        label: "of mobile sites pass all three Core Web Vitals — so speed is still an edge.",
+        sourceName: "2025 Web Almanac, HTTP Archive",
+        sourceUrl: "https://almanac.httparchive.org/en/2025/performance",
+      },
+    ],
+    features: [
+      {
+        icon: Code2,
+        title: "Technical SEO",
+        description:
+          "Site speed, crawlability, indexation, structured data, and Core Web Vitals — so Google can find, understand, and trust your Hamilton site.",
+      },
+      {
+        icon: FileText,
+        title: "On-page optimisation",
+        description:
+          "Titles, headings, content, and internal links tuned to the keywords your Hamilton customers actually search.",
+      },
+      {
+        icon: PenTool,
+        title: "Content",
+        description:
+          "Pages and articles built around real buyer intent and local relevance — not keyword stuffing.",
+      },
+      {
+        icon: Link2,
+        title: "Link building",
+        description:
+          "Earning relevant, authoritative links that build the domain authority organic rankings depend on.",
+      },
+      {
+        icon: MapPin,
+        title: "Local SEO",
+        description:
+          "Google Business Profile and local signals as one component of a full SEO program — for a dedicated local and Map-Pack focus, see our local SEO page.",
+      },
+      {
+        icon: BarChart3,
+        title: "Analytics and reporting",
+        description:
+          "Transparent tracking of rankings, traffic, and the leads that actually matter, so you can see the ROI.",
+      },
+    ],
+    localProof: [
+      {
+        label: "Organic is where the demand is",
+        detail:
+          "Google handles roughly 86% of all searches in Canada (Statcounter), and the #1 organic result earns about 40% of the clicks (FirstPageSage) — durable rankings, not ads alone, compound into real growth.",
+      },
+      {
+        label: "Most sites leave technical wins on the table",
+        detail:
+          "Only 48% of mobile sites pass all three Core Web Vitals (Web Almanac) — the technical fixes that move rankings are exactly where a senior-led audit starts.",
+      },
+    ],
+    faq: [
+      {
+        question: "How much do SEO services cost in Hamilton?",
+        answer:
+          "It depends on your competition, your starting point, and the scope of work — so we scope every engagement after a free audit rather than quoting a one-size-fits-all price. Most engagements are monthly retainers sized to your competition and goals; transparent pricing, no hidden fees, no lock-in.",
+      },
+      {
+        question: "How long does SEO take to show results in Hamilton?",
+        answer:
+          "Most businesses begin seeing measurable movement within a few months, with competitive terms taking longer. SEO compounds, so the gains build over time. These are general expectations, not guarantees.",
+      },
+      {
+        question: "Is SEO worth it for a Hamilton business?",
+        answer:
+          "For most Hamilton and GTA-serving businesses, yes — organic search is the most cost-effective long-term channel, because the visibility keeps working after the spend stops, unlike paid ads.",
+      },
+      {
+        question: "What industries does NexFortis serve in Hamilton?",
+        answer:
+          "Any Hamilton business that relies on being found in Google — home services and trades, manufacturing and industrial, healthcare, professional services, real estate, and retail among them.",
+      },
+    ],
+    authorNote: (
+      <p>
+        Your campaign is led personally by Hassan Sadiq, NexFortis Founder and CEO, with a small senior team.
+        With 15+ years in enterprise technology and as a certified Microsoft Solutions Partner, the technical
+        side of SEO &mdash; site architecture, Core Web Vitals, and schema &mdash; is handled with genuine
+        depth. As the SEO company Hamilton businesses turn to for senior attention &mdash; and an SEO agency
+        Hamilton owners can rely on &mdash; your account stays with the same senior team in Canada, month to
+        month with no lock-in.
+      </p>
+    ),
+    ctaHeading: "Ready to grow your organic search in Hamilton?",
+    ctaSubtext:
+      "Book a free, no-obligation SEO audit — an honest look at your technical health, on-page gaps, backlink profile, and the keyword opportunities specific to your Hamilton business.",
+  },
 };
