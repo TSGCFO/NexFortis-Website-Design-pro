@@ -33,7 +33,7 @@ const SAFE_SLUG = /^[a-z0-9][a-z0-9-]*[a-z0-9]$/;
 // (vol 1000, KD 3 — the best demand-to-difficulty page in Phase B). published:false until its
 // content passes the gates.
 export const GEO_PAGES: readonly GeoPage[] = [
-  { parentSlug: "local-seo", citySlug: "toronto", cityName: "Toronto", region: "ON", wave: 1, published: false },
+  { parentSlug: "local-seo", citySlug: "toronto", cityName: "Toronto", region: "ON", wave: 1, published: true },
 ];
 
 export function geoHref(p: Pick<GeoPage, "parentSlug" | "citySlug">): string {

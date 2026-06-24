@@ -165,3 +165,6 @@ export function GeoServicePageBody({ service, city }: { service: DmSpokeSlug; ci
     </div>
   );
 }
+
+// Default export so the codegen can lazy-load it as a single shared geo page component.
+export default GeoServicePageBody;
