@@ -6,7 +6,7 @@
 //
 // Authored per page via the run book (Step 5), keyed "<parentSlug>/<citySlug>".
 import type { ReactNode } from "react";
-import { MapPin, FileText, PenTool, Star, Link2, Map } from "lucide-react";
+import { MapPin, FileText, PenTool, Star, Link2, Map, Code2, BarChart3 } from "lucide-react";
 import type { SourcedStat, FeatureItem, FaqItem, TestimonialData } from "@/components/content/types";
 import { InlineLink } from "@/components/content/InlineLink";
 import { getDmSpoke, DM_PILLAR_HREF, type DmSpokeSlug } from "@/lib/internal-links";
@@ -238,5 +238,176 @@ export const GEO_PAGE_CONTENT: Partial<Record<string, GeoPageContent>> = {
     ctaHeading: "Ready to win local search in Toronto?",
     ctaSubtext:
       "Book a free, no-obligation local SEO audit — an honest look at your Google Business Profile, citations, reviews, and Map Pack position, and exactly where the gaps are.",
+  },
+  "seo/mississauga": {
+    parentSlug: "seo",
+    citySlug: "mississauga",
+    cityName: "Mississauga",
+    region: "ON",
+    serviceType: "SEO",
+    metaTitle: "SEO Services Mississauga",
+    metaDescription:
+      "SEO services for Mississauga businesses — technical SEO, on-page, content, and link building to grow your organic rankings across the GTA. Free SEO audit.",
+    h1: "SEO Services in Mississauga",
+    heroSubtitle:
+      "Help Mississauga customers find your business in Google's organic results — senior-led SEO that builds durable rankings, not quick tricks.",
+    serviceSchemaName: "SEO — Mississauga",
+    serviceSchemaDescription:
+      "SEO services for Mississauga businesses — technical SEO, on-page optimization, content, link building, and analytics to grow organic search visibility, delivered by a senior-led Canadian team.",
+    introHeading: "SEO services for Mississauga businesses",
+    intro: (
+      <>
+        <p>
+          NexFortis helps Mississauga businesses earn the organic Google rankings that bring in steady,
+          qualified traffic &mdash; the searches happening across the GTA right now for what you sell. The{" "}
+          <strong>SEO services Mississauga</strong> companies can rely on are not a one-time fix; they are
+          the compounding work of making your site technically sound, genuinely useful, and trusted, so you
+          climb past competitors and stay there.
+        </p>
+        <p>
+          <strong>SEO Mississauga</strong> businesses invest in is the most durable channel they have:
+          unlike paid ads, the visibility keeps working after the budget stops.
+        </p>
+      </>
+    ),
+    localContextHeading: "Competing for organic visibility in Mississauga",
+    localContext: (
+      <>
+        <p>
+          Mississauga is Ontario&rsquo;s third-largest city and one of the most competitive business
+          markets in the GTA. Search behaviour differs across its districts &mdash; a contractor in
+          Streetsville, a clinic near Square One, and a manufacturer in Malton each compete for different
+          queries &mdash; and ranking organically means earning relevance and authority for the terms your
+          Mississauga customers actually use.
+        </p>
+        <p>
+          You are also up against Toronto and GTA-wide agencies chasing the same organic real estate, so a
+          generic, templated approach does not cut through. Winning here takes{" "}
+          <strong>Mississauga SEO</strong> built on technical excellence, local relevance, and content that
+          answers real buyer questions &mdash; part of your wider{" "}
+          <InlineLink href={DM_PILLAR_HREF}>digital marketing</InlineLink>, and complemented by dedicated{" "}
+          <InlineLink href={getDmSpoke("local-seo").href}>local SEO</InlineLink> when the Map Pack matters.
+        </p>
+      </>
+    ),
+    serviceAreas: [
+      { name: "City Centre (Square One)" },
+      { name: "Port Credit" },
+      { name: "Streetsville" },
+      { name: "Meadowvale" },
+      { name: "Erin Mills" },
+      { name: "Cooksville" },
+      { name: "Malton" },
+      { name: "Clarkson" },
+      { name: "Lakeview" },
+      { name: "Lorne Park" },
+      { name: "Mississauga Valley" },
+      { name: "Hurontario" },
+    ],
+    stats: [
+      {
+        value: "≈86%",
+        label: "of all searches in Canada run on Google.",
+        sourceName: "Statcounter Global Stats (Canada)",
+        sourceUrl: "https://gs.statcounter.com/search-engine-market-share/all/canada",
+      },
+      {
+        value: "≈40%",
+        label: "of clicks go to the #1 organic result.",
+        sourceName: "FirstPageSage, 2026 Google CTR study",
+        sourceUrl: "https://firstpagesage.com/reports/google-click-through-rates-ctrs-by-ranking-position/",
+      },
+      {
+        value: "48%",
+        label: "of mobile sites pass all three Core Web Vitals — so speed is still an edge.",
+        sourceName: "2025 Web Almanac, HTTP Archive",
+        sourceUrl: "https://almanac.httparchive.org/en/2025/performance",
+      },
+    ],
+    features: [
+      {
+        icon: Code2,
+        title: "Technical SEO",
+        description:
+          "Site speed, crawlability, indexation, structured data, and Core Web Vitals — so Google can find, understand, and trust your Mississauga site.",
+      },
+      {
+        icon: FileText,
+        title: "On-page optimisation",
+        description:
+          "Titles, headings, content, and internal links tuned to the keywords your Mississauga customers actually search.",
+      },
+      {
+        icon: PenTool,
+        title: "Content",
+        description:
+          "Pages and articles built around real buyer intent and local relevance — not keyword stuffing.",
+      },
+      {
+        icon: Link2,
+        title: "Link building",
+        description:
+          "Earning relevant, authoritative links that build the domain authority organic rankings depend on.",
+      },
+      {
+        icon: MapPin,
+        title: "Local SEO",
+        description:
+          "Google Business Profile and local signals as one component of a full SEO program — for a dedicated local and Map-Pack focus, see our local SEO page.",
+      },
+      {
+        icon: BarChart3,
+        title: "Analytics and reporting",
+        description:
+          "Transparent tracking of rankings, traffic, and the leads that actually matter, so you can see the ROI.",
+      },
+    ],
+    localProof: [
+      {
+        label: "Organic is where the demand is",
+        detail:
+          "Google handles roughly 86% of all searches in Canada (Statcounter), and the #1 organic result earns about 40% of the clicks (FirstPageSage) — durable rankings, not ads alone, compound into real growth.",
+      },
+      {
+        label: "Most sites leave technical wins on the table",
+        detail:
+          "Only 48% of mobile sites pass all three Core Web Vitals (Web Almanac) — the technical fixes that move rankings are exactly where a senior-led audit starts.",
+      },
+    ],
+    faq: [
+      {
+        question: "How much do SEO services cost in Mississauga?",
+        answer:
+          "It depends on your competition, your starting point, and the scope of work — which is why we scope every engagement after a free audit rather than quoting a one-size-fits-all price. Transparent pricing, no hidden fees, no lock-in.",
+      },
+      {
+        question: "How long does SEO take to show results in Mississauga?",
+        answer:
+          "Most businesses begin seeing measurable movement within a few months, with competitive terms taking longer. SEO compounds, so the gains build over time. These are general expectations, not guarantees.",
+      },
+      {
+        question: "Is SEO worth it for Mississauga businesses?",
+        answer:
+          "For most local and GTA-serving businesses, yes — organic search is the most cost-effective long-term channel, because the visibility keeps working after the spend stops, unlike paid ads.",
+      },
+      {
+        question: "What industries does NexFortis serve in Mississauga?",
+        answer:
+          "Any Mississauga business that relies on being found in Google — professional services, home services, healthcare, trades, retail, and B2B among them.",
+      },
+    ],
+    authorNote: (
+      <p>
+        NexFortis is the SEO company Mississauga businesses turn to for senior attention &mdash; your
+        campaign is led personally by Hassan Sadiq, NexFortis Founder and CEO, with a small senior team, and
+        as an SEO agency Mississauga owners can rely on, the same people stay on your account end to end.
+        With 15+ years in enterprise technology and as a certified Microsoft Solutions Partner, the technical
+        side of SEO &mdash; site architecture, Core Web Vitals, and schema &mdash; is handled with genuine
+        depth. We work month to month with no lock-in: no junior hand-offs, no offshore execution.
+      </p>
+    ),
+    ctaHeading: "Ready to grow your organic search in Mississauga?",
+    ctaSubtext:
+      "Book a free, no-obligation SEO audit — an honest look at your technical health, on-page gaps, backlink profile, and the keyword opportunities specific to your Mississauga business.",
   },
 };
