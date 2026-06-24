@@ -218,6 +218,26 @@
         "web design company london ontario",
         "web design agency london ontario"
       ]
+    },
+    "seo/calgary": {
+      "_role": "GEO (Phase B, Wave 1) — city page under seo; CITY-QUALIFIED terms ONLY. Calgary = Alberta (region AB). Top SEO metro after Toronto — here the service term IS strong: primary 'seo services calgary' (1500/1300, KD20, the demand bestQuery; KD higher 15-36 than GTA suburbs). Excludes 'local seo ... calgary' (-> local-seo/calgary, page #6).",
+      "primary": ["seo services calgary"],
+      "secondary": [
+        "seo calgary",
+        "calgary seo",
+        "seo company calgary",
+        "seo agency calgary"
+      ]
+    },
+    "seo/hamilton": {
+      "_role": "GEO (Phase B, Wave 1) — city page under seo; CITY-QUALIFIED terms ONLY. Hamilton ON (region ON). Primary 'seo services hamilton' (320/350, KD0, the demand bestQuery; decent service-intent here). Distinct from web-design/hamilton (#5) — seo vs web design qualified.",
+      "primary": ["seo services hamilton"],
+      "secondary": [
+        "seo company hamilton",
+        "seo hamilton",
+        "hamilton seo",
+        "seo agency hamilton"
+      ]
     }
   }
 }

@@ -41,6 +41,7 @@ export const GEO_PAGES: readonly GeoPage[] = [
   { parentSlug: "local-seo", citySlug: "calgary", cityName: "Calgary", region: "AB", wave: 1, published: true },
   { parentSlug: "web-design", citySlug: "london-ontario", cityName: "London", region: "ON", wave: 1, published: true },
   { parentSlug: "seo", citySlug: "brampton", cityName: "Brampton", region: "ON", wave: 1, published: true },
+  { parentSlug: "seo", citySlug: "calgary", cityName: "Calgary", region: "AB", wave: 1, published: true },
 ];
 
 export function geoHref(p: Pick<GeoPage, "parentSlug" | "citySlug">): string {
