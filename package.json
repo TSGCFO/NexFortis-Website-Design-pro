@@ -20,7 +20,7 @@
     "test:seo:components": "vitest run --config vitest.config.ts",
     "test:seo:update": "UPDATE_SNAPSHOTS=1 node --test 'tests/seo/snapshots.test.mjs'",
     "test:seo:cannibalization": "node seo-tools/runbook/check-cannibalization.mjs",
-    "test:seo:geo-routes": "node --test 'tests/seo/geo-routes-drift.test.mjs'"
+    "test:seo:geo-routes": "node --test tests/seo/geo-routes-drift.test.mjs"
   },
   "private": true,
   "packageManager": "pnpm@10.33.2",
