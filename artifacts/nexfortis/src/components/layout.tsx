@@ -203,6 +203,16 @@ export function Layout({ children }: { children: ReactNode }) {
             <NavLink href="/" location={location}>Home</NavLink>
 
             {/* ── Services two-level flyout ───────────────────────────────────── */}
+            {/*
+              TODO(nav-hover-intent): the flyout is unforgiving with the mouse. onMouseLeave
+              below closes the whole dropdown instantly (no close delay), and moving the cursor
+              from the level-2 sub-panel back toward the level-1 list forces a narrow diagonal
+              corridor — stray onto a main service that has no sub-menu and setActiveSubMenu(null)
+              collapses everything, so you have to re-open Services. Fix: add hover-intent (a short
+              open/close timeout) + a "safe-triangle"/invisible bridge between the trigger and the
+              sub-panel so it isn't pixel-precise. UX hardening only — keep the keyboard/focus and
+              Escape behaviour intact. Tracked in seo-tools/runbook/STATUS.md (Deferred nav/UX to-dos).
+            */}
             <div
               className="relative"
               onMouseEnter={() => setServicesDropdownOpen(true)}
