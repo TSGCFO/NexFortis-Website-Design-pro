@@ -6,7 +6,7 @@
 //
 // Authored per page via the run book (Step 5), keyed "<parentSlug>/<citySlug>".
 import type { ReactNode } from "react";
-import { MapPin, FileText, PenTool, Star, Link2, Map, Code2, BarChart3, Palette, Smartphone, ShoppingCart, LayoutGrid, Gauge } from "lucide-react";
+import { MapPin, FileText, PenTool, Star, Link2, Map, Code2, BarChart3, Palette, Smartphone, ShoppingCart, LayoutGrid, Gauge, Target, Megaphone, MousePointerClick, SlidersHorizontal } from "lucide-react";
 import type { SourcedStat, FeatureItem, FaqItem, TestimonialData } from "@/components/content/types";
 import { InlineLink } from "@/components/content/InlineLink";
 import { getDmSpoke, DM_PILLAR_HREF, type DmSpokeSlug } from "@/lib/internal-links";
@@ -1793,5 +1793,172 @@ export const GEO_PAGE_CONTENT: Partial<Record<string, GeoPageContent>> = {
     ctaHeading: "Ready to grow your organic search in Hamilton?",
     ctaSubtext:
       "Book a free, no-obligation SEO audit — an honest look at your technical health, on-page gaps, backlink profile, and the keyword opportunities specific to your Hamilton business.",
+  },
+  "google-ads-ppc/toronto": {
+    parentSlug: "google-ads-ppc",
+    citySlug: "toronto",
+    cityName: "Toronto",
+    region: "ON",
+    serviceType: "PPC",
+    metaTitle: "PPC Agency Toronto",
+    metaDescription:
+      "Managed Google Ads and PPC for Toronto businesses — search, shopping, and remarketing campaigns run by a certified Google Partner. Free PPC audit.",
+    h1: "PPC & Google Ads Management in Toronto",
+    heroSubtitle:
+      "Turn paid search into qualified leads, not wasted ad spend — managed Google Ads campaigns from a certified Google Partner, built for Toronto's competitive market.",
+    serviceSchemaName: "PPC & Google Ads Management — Toronto",
+    serviceSchemaDescription:
+      "Managed PPC and Google Ads for Toronto businesses — Google Search Ads, Shopping and Performance Max, display and remarketing, landing-page and conversion optimisation, delivered by a certified Google Partner and senior-led Canadian team.",
+    introHeading: "Managed Google Ads & PPC for Toronto businesses",
+    intro: (
+      <>
+        <p>
+          NexFortis is the PPC agency Toronto businesses trust to turn paid search into qualified leads
+          &mdash; not wasted spend. As a certified Google Partner, we build and manage the Google Ads and PPC
+          campaigns that put you at the top of the results the moment a Toronto customer is ready to buy.
+        </p>
+        <p>
+          Unlike SEO, which compounds over months, <strong>PPC Toronto</strong> businesses invest in delivers
+          high-intent traffic from day one &mdash; when it is managed properly.
+        </p>
+      </>
+    ),
+    localContextHeading: "Why PPC in Toronto needs a steady hand",
+    localContext: (
+      <>
+        <p>
+          Toronto is one of Canada&rsquo;s most competitive and most expensive PPC markets. Across Downtown,
+          North York, Scarborough, Etobicoke, and the wider GTA, cost-per-click is high and the auction is
+          crowded, so every dollar of wasted spend hurts. <strong>PPC management Toronto</strong> businesses
+          can rely on is about spending smart: the right keywords, tight targeting, and landing pages that
+          actually convert.
+        </p>
+        <p>
+          Get it wrong and you fund clicks that never become customers. Get it right and paid search becomes
+          your most predictable growth channel &mdash; a fast complement to your wider{" "}
+          <InlineLink href={DM_PILLAR_HREF}>digital marketing</InlineLink> and the durable traffic of{" "}
+          <InlineLink href={getDmSpoke("seo").href}>SEO</InlineLink>.
+        </p>
+      </>
+    ),
+    serviceAreas: [
+      { name: "Downtown" },
+      { name: "Financial District" },
+      { name: "North York" },
+      { name: "Scarborough" },
+      { name: "Etobicoke" },
+      { name: "East York" },
+      { name: "York" },
+      { name: "Midtown" },
+      { name: "Yorkville" },
+      { name: "North Toronto" },
+      { name: "Greater Toronto Area" },
+    ],
+    stats: [
+      {
+        value: "≈86%",
+        label: "of all searches in Canada run on Google — where your buyers are.",
+        sourceName: "Statcounter Global Stats (Canada)",
+        sourceUrl: "https://gs.statcounter.com/search-engine-market-share/all/canada",
+      },
+      {
+        value: "7.52%",
+        label: "average Google Ads conversion rate across all industries.",
+        sourceName: "WordStream, Conversion Rate Benchmarks (2025)",
+        sourceUrl: "https://www.wordstream.com/blog/conversion-rate-benchmarks",
+      },
+      {
+        value: "53%",
+        label: "of mobile visitors abandon a site that takes over 3 seconds to load.",
+        sourceName: 'Google, "The Need for Mobile Speed"',
+        sourceUrl: "https://www.marketingdive.com/news/google-53-of-mobile-users-abandon-sites-that-take-over-3-seconds-to-load/426070/",
+      },
+    ],
+    featuresHeading: "What our Toronto PPC management includes",
+    features: [
+      {
+        icon: Target,
+        title: "Google Search Ads",
+        description:
+          "High-intent keyword campaigns that capture buyers at the exact moment they search.",
+      },
+      {
+        icon: ShoppingCart,
+        title: "Google Shopping & Performance Max",
+        description:
+          "Product and full-funnel campaigns for eCommerce and lead-gen across Google's network.",
+      },
+      {
+        icon: Megaphone,
+        title: "Display & remarketing",
+        description:
+          "Banner and remarketing campaigns that bring back visitors who did not convert the first time.",
+      },
+      {
+        icon: MousePointerClick,
+        title: "Landing page & conversion optimisation",
+        description:
+          "The click is only half the job — we tune the page that turns clicks into leads.",
+      },
+      {
+        icon: BarChart3,
+        title: "Conversion tracking & analytics",
+        description:
+          "Proper tracking so every dollar is measured against real leads and sales, not vanity clicks.",
+      },
+      {
+        icon: SlidersHorizontal,
+        title: "Campaign management & bid optimisation",
+        description:
+          "Ongoing keyword, bid, and budget management to cut wasted spend and compound what works.",
+      },
+    ],
+    localProof: [
+      {
+        label: "Paid search converts — with management",
+        detail:
+          "The average Google Ads conversion rate across industries is 7.52% (WordStream) — but only with the right keywords, targeting, and landing pages behind the click.",
+      },
+      {
+        label: "Your landing page is your ad's ROI",
+        detail:
+          "53% of mobile visitors abandon a site that takes more than three seconds to load (Google) — so we optimise the page, not just the click.",
+      },
+    ],
+    faq: [
+      {
+        question: "How much does PPC management cost in Toronto?",
+        answer:
+          "There are two parts: your ad spend (paid to Google) and our management fee — and we scope both after a free audit rather than quoting a one-size-fits-all price. Transparent pricing, no hidden fees, no long-term lock-in.",
+      },
+      {
+        question: "How soon will I see results from Google Ads in Toronto?",
+        answer:
+          "Paid ads can start driving traffic within days of launch — that is PPC's advantage over SEO. Turning that traffic into profitable, efficient conversions takes a few weeks of optimisation. These are general expectations, not guarantees.",
+      },
+      {
+        question: "Do I own my Google Ads account?",
+        answer:
+          "Yes — always. We build campaigns in your own Google Ads account, so your data, history, and account stay with you if we ever part ways. No hostage-taking.",
+      },
+      {
+        question: "Google Ads or SEO — which should my Toronto business choose?",
+        answer:
+          "They do different jobs: PPC buys you immediate visibility and fast testing, while SEO compounds into durable, lower-cost traffic over time. Most businesses are best served by both, and we can advise on the right mix.",
+      },
+    ],
+    authorNote: (
+      <p>
+        NexFortis is a certified Google Partner, and the Google Ads agency Toronto businesses turn to for
+        senior attention &mdash; your campaigns are managed by an experienced specialist, not a junior or an
+        offshore team. Google Ads management Toronto owners can rely on is led personally by Hassan Sadiq,
+        NexFortis Founder and CEO; with 15+ years in enterprise technology and as a certified Microsoft
+        Solutions Partner, the technical side &mdash; conversion tracking, analytics, and landing-page
+        performance &mdash; is handled with genuine depth, in Canada, with no long-term lock-in.
+      </p>
+    ),
+    ctaHeading: "Ready to stop wasting ad spend in Toronto?",
+    ctaSubtext:
+      "Book a free, no-obligation PPC audit — an honest look at your Google Ads account, wasted spend, conversion tracking, and the quickest wins for your Toronto business.",
   },
 };
