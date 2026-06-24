@@ -453,8 +453,9 @@ export const GEO_PAGE_CONTENT: Partial<Record<string, GeoPageContent>> = {
         </p>
         <p>
           You are also up against Toronto and GTA-wide agencies chasing the same organic real estate, so a
-          generic, templated approach does not cut through. Winning here takes <strong>Markham SEO</strong>{" "}
-          built on technical excellence, local relevance, and content that answers real buyer questions
+          generic, templated approach does not cut through. Winning here takes the SEO services Markham
+          businesses rely on &mdash; <strong>Markham SEO</strong> built on technical excellence, local
+          relevance, and content that answers real buyer questions
           &mdash; part of your wider <InlineLink href={DM_PILLAR_HREF}>digital marketing</InlineLink>, and
           complemented by dedicated <InlineLink href={getDmSpoke("local-seo").href}>local SEO</InlineLink>{" "}
           when the Map Pack matters.
@@ -580,5 +581,175 @@ export const GEO_PAGE_CONTENT: Partial<Record<string, GeoPageContent>> = {
     ctaHeading: "Ready to grow your organic search in Markham?",
     ctaSubtext:
       "Book a free, no-obligation SEO audit — an honest look at your technical health, on-page gaps, backlink profile, and the keyword opportunities specific to your Markham business.",
+  },
+  "local-seo/edmonton": {
+    parentSlug: "local-seo",
+    citySlug: "edmonton",
+    cityName: "Edmonton",
+    region: "AB",
+    serviceType: "Local SEO",
+    metaTitle: "Local SEO Edmonton",
+    metaDescription:
+      "Local SEO for Edmonton businesses — Google Business Profile, citations, reviews, and Map Pack rankings across Edmonton's neighbourhoods. Free local SEO audit.",
+    h1: "Local SEO Services in Edmonton",
+    heroSubtitle:
+      "Get found by Edmonton customers searching for what you offer — senior-led local SEO that wins the Google Map Pack across the city's neighbourhoods.",
+    serviceSchemaName: "Local SEO — Edmonton",
+    serviceSchemaDescription:
+      "Local SEO for Edmonton businesses — Google Business Profile optimization, local citations and NAP consistency, localized content, review generation, local link building, and Google Map Pack strategy, delivered by a senior-led Canadian team.",
+    introHeading: "Local SEO for Edmonton businesses",
+    intro: (
+      <>
+        <p>
+          NexFortis helps Edmonton businesses get found by the customers searching for their services right
+          now &mdash; in the Google Map Pack (the top three local listings Google shows with a map), the
+          local results, and the &ldquo;near me&rdquo; searches that turn into real calls and visits.
+        </p>
+        <p>
+          <strong>Local SEO Edmonton</strong> is how an Edmonton plumber, dental clinic, or law firm shows up
+          the moment someone nearby searches, and in a competitive market it is the most cost-effective way
+          to capture demand you are otherwise losing to the business down the street.
+        </p>
+      </>
+    ),
+    localContextHeading: "Edmonton's local search landscape",
+    localContext: (
+      <>
+        <p>
+          Edmonton is Alberta&rsquo;s capital and one of Canada&rsquo;s largest cities &mdash; a spread-out
+          market where search behaviour shifts from Downtown to Old Strathcona to Windermere to Mill Woods,
+          and Google&rsquo;s proximity signals mean your visibility changes neighbourhood by neighbourhood.
+          People here search with location qualifiers &mdash; &ldquo;plumber Old Strathcona,&rdquo;
+          &ldquo;dentist Windermere,&rdquo; &ldquo;accountant Mill Woods&rdquo; &mdash; so a generic, national{" "}
+          <InlineLink href={DM_PILLAR_HREF}>digital marketing</InlineLink> approach that ignores
+          district-level intent simply does not rank.
+        </p>
+        <p>
+          Edmonton is also a genuinely competitive local market: in home services, legal, dental, and the
+          trades you are up against established local competitors investing in their Google Business Profiles,
+          citations, and reviews. Winning here takes the local SEO services Edmonton businesses rely on
+          &mdash; <strong>Edmonton local SEO</strong> built around the specific neighbourhoods you serve.
+        </p>
+      </>
+    ),
+    serviceAreas: [
+      { name: "Downtown" },
+      { name: "Old Strathcona (Whyte Avenue)" },
+      { name: "Oliver" },
+      { name: "Windermere" },
+      { name: "West Edmonton" },
+      { name: "South Edmonton Common" },
+      { name: "Jasper Avenue" },
+      { name: "124 Street" },
+      { name: "Mill Woods" },
+      { name: "Ellerslie" },
+      { name: "Summerside" },
+      { name: "Terwillegar" },
+    ],
+    stats: [
+      {
+        value: "≈46%",
+        label: "of all Google searches have local intent.",
+        sourceName: "BrightLocal",
+        sourceUrl: "https://www.brightlocal.com/resources/local-seo-statistics/",
+      },
+      {
+        value: "76%",
+        label: "of people who search for something nearby visit a related business within a day.",
+        sourceName: "Backlinko",
+        sourceUrl: "https://backlinko.com/local-seo-guide",
+      },
+      {
+        value: "71%",
+        label: "of consumers use Google to read local business reviews.",
+        sourceName: "BrightLocal Local Consumer Review Survey (2026)",
+        sourceUrl: "https://www.brightlocal.com/research/local-consumer-review-survey/",
+      },
+    ],
+    features: [
+      {
+        icon: MapPin,
+        title: "Google Business Profile optimisation",
+        description:
+          "Complete setup, verification, category selection, accurate NAP, posts, and photos, with service-area configuration tuned to the Edmonton neighbourhoods you serve.",
+      },
+      {
+        icon: FileText,
+        title: "Local citations and NAP consistency",
+        description:
+          "Listings across Yelp Canada, Yellow Pages Canada, and Edmonton-specific and industry directories, plus an audit and clean-up of the inconsistent NAP data that quietly suppresses local rankings.",
+      },
+      {
+        icon: PenTool,
+        title: "Localised content",
+        description:
+          "Pages and on-page content built around Edmonton neighbourhoods, landmarks, and real local search intent — not generic national topics.",
+      },
+      {
+        icon: Star,
+        title: "Review generation and reputation management",
+        description:
+          "A systematic process for earning authentic Google reviews from your Edmonton customers, plus a response strategy that signals trust to both Google and prospects.",
+      },
+      {
+        icon: Link2,
+        title: "Local link building",
+        description:
+          "Outreach to Edmonton websites, business associations, local media, and community organisations for relevant, authoritative local links — relevance over volume.",
+      },
+      {
+        icon: Map,
+        title: "Map Pack ranking strategy",
+        description:
+          "Targeting the top three local results by optimising the three signals Google weighs: relevance, proximity, and prominence.",
+      },
+    ],
+    localProof: [
+      {
+        label: "The demand is already local",
+        detail:
+          "Roughly 46% of Google searches carry local intent (BrightLocal), and the businesses that win the Map Pack capture the bulk of those high-intent clicks before anyone scrolls to the organic results.",
+      },
+      {
+        label: "Reviews decide the click",
+        detail:
+          "71% of consumers use Google to read local business reviews (BrightLocal) — which is why review generation is built into every Edmonton local SEO campaign, not bolted on.",
+      },
+    ],
+    faq: [
+      {
+        question: "How long does local SEO take in Edmonton?",
+        answer:
+          "Most Edmonton businesses begin seeing measurable movement in local rankings within a few months; competitive categories take longer. Google Business Profile work often delivers the earliest wins. These are general expectations, not guarantees.",
+      },
+      {
+        question: "What does local SEO cost in Edmonton?",
+        answer:
+          "It depends on your competition, the number of neighbourhoods you target, and the scope of work — which is why we scope every engagement after a free audit rather than quoting a one-size-fits-all price. Transparent pricing, no hidden fees, no lock-in.",
+      },
+      {
+        question: "What is the Map Pack and why does it matter?",
+        answer:
+          "The Map Pack is the block of three local business listings Google shows at the top of local searches, alongside a map. It captures the majority of clicks for near-me and location-based queries, so ranking there is the primary goal of a local SEO campaign.",
+      },
+      {
+        question: "Which Edmonton industries does NexFortis serve?",
+        answer:
+          "Any Edmonton business that relies on local customers finding it through Google — home services and trades, legal, dental and medical, real estate, professional services, and retail among them.",
+      },
+    ],
+    authorNote: (
+      <p>
+        Your campaign is led personally by Hassan Sadiq, NexFortis Founder and CEO, with a small senior team.
+        With 15+ years in enterprise technology and as a certified Microsoft Solutions Partner, the technical
+        side of local SEO &mdash; Google Business Profile, citations, and local schema &mdash; is handled with
+        genuine depth. As a local SEO company Edmonton businesses can rely on &mdash; and a local SEO agency
+        Edmonton owners can trust for the long haul &mdash; we keep the same small senior team on your account
+        end to end: no junior hand-offs, no offshore execution, month to month with no lock-in.
+      </p>
+    ),
+    ctaHeading: "Ready to win local search in Edmonton?",
+    ctaSubtext:
+      "Book a free, no-obligation local SEO audit — an honest look at your Google Business Profile, citations, reviews, and Map Pack position, and exactly where the gaps are.",
   },
 };
