@@ -22,14 +22,15 @@ Market NexFortis's digital-marketing capabilities as strategically-grouped servi
 ## PHASE B — IN PROGRESS (geo `[service]+[city]` layer)
 - **Demand scoping: DONE + LOCKED (2026-06-24).** 3-tool consensus (Ahrefs + DataForSEO + Semrush, via workflow `geo-demand-crosscheck`). Matrix: `seo-tools/runbook/geo/02-demand-matrix.md` (first pass `01-demand-discovery.md`).
   - **5 geo services** (data-confirmed): seo, local-seo, web-design, google-ads/ppc, social-media-marketing. NOT geo (national hubs only): link-building, CRO, email, reputation, geo-ai.
-  - **188 pages implied** = 125 mandatory GTA (25 municipalities × 5 services, operator rule — all ship regardless of demand) + 63 demand-gated metro pages.
-  - **Lead cities are metros + Toronto** (Calgary/Edmonton/Vancouver rank with Toronto), NOT GTA suburbs. ~50-60 GTA exurb pages are near-zero demand (ship for coverage; **doorway-penalty risk → need genuine local content**).
-  - First-15 build order locked; led by Local SEO Toronto (1000, KD 3), SEO Mississauga (1000, KD 5), Web Design Brampton (390, KD 1).
+  - **Full universe = 188** (125 GTA × 5 + 63 metros). **Operator decision (2026-06-24): build the demand-backed "good ones" first in ROI waves; DEFER the near-zero GTA exurbs to a possible Phase C.** Wave plan: `geo/03-build-waves.md`.
+  - **Phase B (build now) = 79 pages** in 4 ROI waves (W1 15 · W2 19 · W3 27 · W4 18). **Phase C (deferred) = 88 near-zero GTA exurb pages.** 43 weak metros dropped; Burnaby folded into Vancouver.
+  - **Lead cities are metros + Toronto** (Calgary/Edmonton/Vancouver rank with Toronto), NOT GTA suburbs.
+  - **Content model = tiered:** demand-backed pages get full deep local content (full run book); Phase C exurbs deferred (genuine-local or noindex when greenlit) to avoid the doorway penalty.
 
-### EXACT NEXT STEP — Phase B build
-1. **Decide the content model per demand tier** (esp. the zero-demand GTA tier — genuine-local vs lighter, to dodge the doorway penalty). ← awaiting operator.
-2. Design the **geo route + page template + local content model** (`/services/digital-marketing/<service>/<city>`).
-3. Run the per-page run book starting with the #1 ROI page (Local SEO Toronto).
+### EXACT NEXT STEP — Phase B Wave 1
+1. Design the **geo route + page template + local-content model** (`/services/digital-marketing/<service>/<city>`) — the reusable architecture for all geo pages.
+2. Run the per-page run book on **Wave 1** (15 pages, ROI-ordered), starting with **#1 Local SEO Toronto** (vol 1000, KD 3) to validate the model end-to-end before scaling to Waves 2-4.
+3. Wave 1 list + all 4 waves: `geo/03-build-waves.md`.
 
 ## DEFERRED nav / UX to-dos (raised 2026-06-24, after the menu work)
 1. **Hover-intent / forgiveness** (smaller, near-term): the level-2 flyout collapses on imprecise mouse movement, and the corridor back to the level-1 list is too narrow (stray onto a sub-menu-less main service → everything collapses). Fix = hover-intent open/close delays + a "safe-triangle"/bridge so it isn't pixel-precise; keep keyboard/focus intact. Tracked **inline** at `artifacts/nexfortis/src/components/layout.tsx` (`TODO(nav-hover-intent)`).
