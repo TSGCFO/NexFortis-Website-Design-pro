@@ -21,6 +21,8 @@
     "services/digital-marketing/web-design/hamilton": { "kind": "geo", "min": 750, "max": 1250, "source": "Phase B geo; rendered <main> ~930. 'web design hamilton' SERP very thin (306-403 prose); web-design geo page." },
     "services/digital-marketing/local-seo/calgary": { "kind": "geo", "min": 950, "max": 1500, "source": "Phase B geo; rendered <main> ~1209. FULLER — Calgary local-SEO SERP service-tier substantive (avg 1459 incl. excluded outliers); Alberta (region AB)." },
     "services/digital-marketing/seo/brampton": { "kind": "geo", "min": 800, "max": 1250, "source": "Phase B geo; rendered <main> ~977. 'seo company brampton' SERP very thin (207-272 prose); general-SEO geo page (lean)." },
-    "services/digital-marketing/web-design/london-ontario": { "kind": "geo", "min": 800, "max": 1250, "source": "Phase B geo; rendered <main> ~982. 'web design london ontario' SERP thin (369-486 prose); web-design geo page (London, ON)." }
+    "services/digital-marketing/web-design/london-ontario": { "kind": "geo", "min": 800, "max": 1250, "source": "Phase B geo; rendered <main> ~982. 'web design london ontario' SERP thin (369-486 prose); web-design geo page (London, ON)." },
+    "services/digital-marketing/seo/calgary": { "kind": "geo", "min": 850, "max": 1350, "source": "Phase B geo; rendered <main> ~1027. FULLER — 'seo services calgary' SERP service-tier substantive (770-1013); general-SEO metro (Alberta, AB)." },
+    "services/digital-marketing/seo/hamilton": { "kind": "geo", "min": 800, "max": 1250, "source": "Phase B geo; rendered <main> ~994. 'seo services hamilton' SERP very thin (308-406 prose); general-SEO geo page (distinct from web-design/hamilton)." }
   }
 }
