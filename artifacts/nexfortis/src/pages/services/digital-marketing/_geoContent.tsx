@@ -926,4 +926,185 @@ export const GEO_PAGE_CONTENT: Partial<Record<string, GeoPageContent>> = {
     ctaSubtext:
       "Book a free, no-obligation consultation — we will review your current site, your goals, and exactly what a fast, modern Hamilton website would take.",
   },
+  "local-seo/calgary": {
+    parentSlug: "local-seo",
+    citySlug: "calgary",
+    cityName: "Calgary",
+    region: "AB",
+    serviceType: "Local SEO",
+    metaTitle: "Local SEO Calgary",
+    metaDescription:
+      "Local SEO for Calgary businesses — Google Business Profile, citations, reviews, and Map Pack rankings across Calgary's neighbourhoods. Free local SEO audit.",
+    h1: "Local SEO Services in Calgary",
+    heroSubtitle:
+      "Get found by Calgary customers searching for what you offer — senior-led local SEO that wins the Google Map Pack across the city's neighbourhoods.",
+    serviceSchemaName: "Local SEO — Calgary",
+    serviceSchemaDescription:
+      "Local SEO for Calgary businesses — Google Business Profile optimization, local citations and NAP consistency, localized content, review generation, local link building, and Google Map Pack strategy, delivered by a senior-led Canadian team.",
+    introHeading: "Local SEO for Calgary businesses",
+    intro: (
+      <>
+        <p>
+          NexFortis helps Calgary businesses get found by the customers searching for their services right
+          now &mdash; in the Google Map Pack (the top three local listings Google shows with a map), the
+          local results, and the &ldquo;near me&rdquo; searches that turn into real calls and visits.
+        </p>
+        <p>
+          <strong>Local SEO Calgary</strong> is how a Calgary plumber, dental clinic, or law firm shows up
+          the moment someone nearby searches, and in a city this large and competitive it is the most
+          cost-effective way to capture demand you are otherwise losing to the business down the street.
+        </p>
+      </>
+    ),
+    localContextHeading: "Calgary's local search landscape",
+    localContext: (
+      <>
+        <p>
+          Calgary is Alberta&rsquo;s largest city and one of Canada&rsquo;s biggest business markets &mdash;
+          a sprawling, quadrant-divided metro where a customer in the Beltline, a contractor in the NW, and a
+          clinic in McKenzie Towne each search and convert differently. Google&rsquo;s proximity signals mean
+          your visibility shifts neighbourhood by neighbourhood, so ranking in Calgary is really about
+          ranking in the specific areas you serve, from Kensington and Inglewood to Bowness.
+        </p>
+        <p>
+          People here search with location qualifiers &mdash; &ldquo;plumber Kensington,&rdquo; &ldquo;dentist
+          Mission,&rdquo; &ldquo;accountant Bridgeland&rdquo; &mdash; and a generic, national{" "}
+          <InlineLink href={DM_PILLAR_HREF}>digital marketing</InlineLink> approach that ignores
+          Calgary&rsquo;s districts and quadrants simply does not rank. Winning here takes the local SEO
+          services Calgary businesses rely on &mdash; <strong>Calgary local SEO</strong> built around the
+          specific neighbourhoods and quadrants you serve, not a one-size-fits-all package.
+        </p>
+        <p>
+          Calgary is also a genuinely competitive local market: in home services, energy services, legal,
+          dental, and the trades, you are up against established local competitors and agencies investing
+          heavily in their Google Business Profiles, citations, and reviews.
+        </p>
+      </>
+    ),
+    serviceAreas: [
+      { name: "Downtown" },
+      { name: "Beltline" },
+      { name: "Kensington" },
+      { name: "Inglewood" },
+      { name: "Bridgeland" },
+      { name: "Mission" },
+      { name: "Marda Loop" },
+      { name: "Bowness" },
+      { name: "McKenzie Towne" },
+      { name: "NW Calgary" },
+      { name: "NE Calgary" },
+      { name: "SW Calgary" },
+      { name: "SE Calgary" },
+    ],
+    stats: [
+      {
+        value: "≈46%",
+        label: "of all Google searches have local intent.",
+        sourceName: "BrightLocal",
+        sourceUrl: "https://www.brightlocal.com/resources/local-seo-statistics/",
+      },
+      {
+        value: "76%",
+        label: "of people who search for something nearby visit a related business within a day.",
+        sourceName: "Backlinko",
+        sourceUrl: "https://backlinko.com/local-seo-guide",
+      },
+      {
+        value: "71%",
+        label: "of consumers use Google to read local business reviews.",
+        sourceName: "BrightLocal Local Consumer Review Survey (2026)",
+        sourceUrl: "https://www.brightlocal.com/research/local-consumer-review-survey/",
+      },
+    ],
+    features: [
+      {
+        icon: MapPin,
+        title: "Google Business Profile optimisation",
+        description:
+          "Complete setup, verification, category selection, accurate NAP, posts, and photos, with service-area configuration tuned to the Calgary neighbourhoods and quadrants you serve.",
+      },
+      {
+        icon: FileText,
+        title: "Local citations and NAP consistency",
+        description:
+          "Listings across Yelp Canada, Yellow Pages Canada, and Calgary-specific and industry directories, plus an audit and clean-up of the inconsistent NAP data that quietly suppresses local rankings.",
+      },
+      {
+        icon: PenTool,
+        title: "Localised content",
+        description:
+          "Pages and on-page content built around Calgary neighbourhoods, quadrants, landmarks, and real local search intent — not generic national topics.",
+      },
+      {
+        icon: Star,
+        title: "Review generation and reputation management",
+        description:
+          "A systematic process for earning authentic Google reviews from your Calgary customers, plus a response strategy that signals trust to both Google and prospects.",
+      },
+      {
+        icon: Link2,
+        title: "Local link building",
+        description:
+          "Outreach to Calgary websites, business associations, local media, and community organisations for relevant, authoritative local links — relevance over volume.",
+      },
+      {
+        icon: Map,
+        title: "Map Pack ranking strategy",
+        description:
+          "Targeting the top three local results by optimising the three signals Google weighs: relevance, proximity, and prominence.",
+      },
+    ],
+    localProof: [
+      {
+        label: "The demand is already local",
+        detail:
+          "Roughly 46% of Google searches carry local intent (BrightLocal), and the businesses that win the Map Pack capture the bulk of those high-intent clicks before anyone scrolls to the organic results.",
+      },
+      {
+        label: "Reviews decide the click",
+        detail:
+          "71% of consumers use Google to read local business reviews (BrightLocal) — which is why review generation is built into every Calgary local SEO campaign, not bolted on.",
+      },
+    ],
+    faq: [
+      {
+        question: "How long does local SEO take in Calgary?",
+        answer:
+          "Most Calgary businesses begin seeing measurable movement in local rankings within a few months; competitive categories and dense districts take longer. Google Business Profile work often delivers the earliest wins. These are general expectations, not guarantees.",
+      },
+      {
+        question: "What does local SEO cost in Calgary?",
+        answer:
+          "It depends on your competition, the number of neighbourhoods and quadrants you target, and the scope of work — which is why we scope every engagement after a free audit rather than quoting a one-size-fits-all price. Transparent pricing, no hidden fees, no lock-in.",
+      },
+      {
+        question: "What is the Map Pack and why does it matter?",
+        answer:
+          "The Map Pack is the block of three local business listings Google shows at the top of local searches, alongside a map. It captures the majority of clicks for near-me and location-based queries, so ranking there is the primary goal of a local SEO campaign.",
+      },
+      {
+        question: "Which Calgary industries benefit most from local SEO?",
+        answer:
+          "Any Calgary business that relies on local customers finding it through Google — home services and trades, legal, dental and medical, real estate, professional and energy services, and retail among them.",
+      },
+      {
+        question: "Is local SEO worth it for Calgary businesses?",
+        answer:
+          "For most local and Alberta-serving businesses, yes — local search is the most cost-effective long-term channel, because the visibility compounds and keeps working after the spend stops, unlike paid ads.",
+      },
+    ],
+    authorNote: (
+      <p>
+        Your campaign is led personally by Hassan Sadiq, NexFortis Founder and CEO, with a small senior team.
+        With 15+ years in enterprise technology and as a certified Microsoft Solutions Partner, the technical
+        side of local SEO &mdash; Google Business Profile, citations, and local schema &mdash; is handled with
+        genuine depth. As a local SEO company Calgary businesses can rely on &mdash; and a local SEO agency
+        Calgary owners can trust for the long haul &mdash; the same small senior team stays on your account
+        end to end, in Canada, month to month with no lock-in.
+      </p>
+    ),
+    ctaHeading: "Ready to win local search in Calgary?",
+    ctaSubtext:
+      "Book a free, no-obligation local SEO audit — an honest look at your Google Business Profile, citations, reviews, and Map Pack position, and exactly where the gaps are.",
+  },
 };
