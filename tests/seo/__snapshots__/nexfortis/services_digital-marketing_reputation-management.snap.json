@@ -1,11 +1,11 @@
 {
   "route": "/services/digital-marketing/reputation-management",
-  "title": "Reputation Management Services in Canada | NexFortis IT Solutions",
+  "title": "Reputation Management Services | NexFortis IT Solutions",
   "description": "Canadian reputation management company: more genuine reviews, professional responses, and content that outranks unfair results. Founder-led. Free audit.",
   "canonical": "https://nexfortis.com/services/digital-marketing/reputation-management",
   "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
   "og": {
-    "title": "Reputation Management Services in Canada | NexFortis IT Solutions",
+    "title": "Reputation Management Services | NexFortis IT Solutions",
     "description": "Canadian reputation management company: more genuine reviews, professional responses, and content that outranks unfair results. Founder-led. Free audit.",
     "url": "https://nexfortis.com/services/digital-marketing/reputation-management",
     "image": "https://nexfortis.com/opengraph.png",
@@ -332,6 +332,26 @@
       "href": "/services/digital-marketing"
     },
     {
+      "text": "Microsoft 365 Solutions",
+      "href": "/services/microsoft-365"
+    },
+    {
+      "text": "QuickBooks Migration",
+      "href": "/services/quickbooks"
+    },
+    {
+      "text": "IT Consulting",
+      "href": "/services/it-consulting"
+    },
+    {
+      "text": "Workflow Automation",
+      "href": "/services/workflow-automation"
+    },
+    {
+      "text": "Browse our IT services",
+      "href": "/services"
+    },
+    {
       "text": "SEO Services",
       "href": "/services/digital-marketing/seo"
     },
@@ -374,26 +394,6 @@
     {
       "text": "Reputation Management",
       "href": "/services/digital-marketing/reputation-management"
-    },
-    {
-      "text": "Microsoft 365 Solutions",
-      "href": "/services/microsoft-365"
-    },
-    {
-      "text": "QuickBooks Migration",
-      "href": "/services/quickbooks"
-    },
-    {
-      "text": "IT Consulting",
-      "href": "/services/it-consulting"
-    },
-    {
-      "text": "Workflow Automation",
-      "href": "/services/workflow-automation"
-    },
-    {
-      "text": "Browse our IT services",
-      "href": "/services"
     },
     {
       "text": "About",
@@ -448,12 +448,12 @@
       "href": "/about"
     },
     {
-      "text": "Privacy Policy",
-      "href": "/privacy"
-    },
-    {
       "text": "About Us",
       "href": "/about"
+    },
+    {
+      "text": "Privacy Policy",
+      "href": "/privacy"
     },
     {
       "text": "Terms of Service",

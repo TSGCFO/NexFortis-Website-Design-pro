@@ -101,6 +101,10 @@
     },
     {
       "level": 2,
+      "text": "SEO Services — areas we serve"
+    },
+    {
+      "level": 2,
       "text": "Frequently Asked Questions"
     },
     {
@@ -352,6 +356,26 @@
       "href": "/services/digital-marketing"
     },
     {
+      "text": "Microsoft 365 Solutions",
+      "href": "/services/microsoft-365"
+    },
+    {
+      "text": "QuickBooks Migration",
+      "href": "/services/quickbooks"
+    },
+    {
+      "text": "IT Consulting",
+      "href": "/services/it-consulting"
+    },
+    {
+      "text": "Workflow Automation",
+      "href": "/services/workflow-automation"
+    },
+    {
+      "text": "Browse our IT services",
+      "href": "/services"
+    },
+    {
       "text": "SEO Services",
       "href": "/services/digital-marketing/seo"
     },
@@ -394,26 +418,6 @@
     {
       "text": "Reputation Management",
       "href": "/services/digital-marketing/reputation-management"
-    },
-    {
-      "text": "Microsoft 365 Solutions",
-      "href": "/services/microsoft-365"
-    },
-    {
-      "text": "QuickBooks Migration",
-      "href": "/services/quickbooks"
-    },
-    {
-      "text": "IT Consulting",
-      "href": "/services/it-consulting"
-    },
-    {
-      "text": "Workflow Automation",
-      "href": "/services/workflow-automation"
-    },
-    {
-      "text": "Browse our IT services",
-      "href": "/services"
     },
     {
       "text": "About",
@@ -472,16 +476,44 @@
       "href": "/services/digital-marketing/content-marketing"
     },
     {
+      "text": "SEO services Mississauga",
+      "href": "/services/digital-marketing/seo/mississauga"
+    },
+    {
+      "text": "SEO services Markham",
+      "href": "/services/digital-marketing/seo/markham"
+    },
+    {
+      "text": "SEO services Brampton",
+      "href": "/services/digital-marketing/seo/brampton"
+    },
+    {
+      "text": "SEO services Calgary",
+      "href": "/services/digital-marketing/seo/calgary"
+    },
+    {
+      "text": "SEO services Hamilton",
+      "href": "/services/digital-marketing/seo/hamilton"
+    },
+    {
+      "text": "SEO services Toronto",
+      "href": "/services/digital-marketing/seo/toronto"
+    },
+    {
+      "text": "SEO services Ottawa",
+      "href": "/services/digital-marketing/seo/ottawa"
+    },
+    {
       "text": "More about NexFortis",
+      "href": "/about"
+    },
+    {
+      "text": "About Us",
       "href": "/about"
     },
     {
       "text": "Privacy Policy",
       "href": "/privacy"
-    },
-    {
-      "text": "About Us",
-      "href": "/about"
     },
     {
       "text": "Terms of Service",

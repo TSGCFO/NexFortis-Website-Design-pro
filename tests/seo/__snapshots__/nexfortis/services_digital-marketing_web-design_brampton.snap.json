@@ -1,13 +1,13 @@
 {
-  "route": "/contact",
-  "title": "Contact NexFortis — Free IT Consultation",
-  "description": "Get in touch with NexFortis IT Solutions in Nobleton, Ontario. Request a quote, schedule a free consultation, or ask about our managed IT services today.",
-  "canonical": "https://nexfortis.com/contact",
+  "route": "/services/digital-marketing/web-design/brampton",
+  "title": "Web Design Brampton | NexFortis IT Solutions",
+  "description": "Web design for Brampton businesses — custom, responsive, fast websites on WordPress or Shopify, including eCommerce. Free consultation.",
+  "canonical": "https://nexfortis.com/services/digital-marketing/web-design/brampton",
   "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
   "og": {
-    "title": "Contact NexFortis — Free IT Consultation",
-    "description": "Get in touch with NexFortis IT Solutions in Nobleton, Ontario. Request a quote, schedule a free consultation, or ask about our managed IT services today.",
-    "url": "https://nexfortis.com/contact",
+    "title": "Web Design Brampton | NexFortis IT Solutions",
+    "description": "Web design for Brampton businesses — custom, responsive, fast websites on WordPress or Shopify, including eCommerce. Free consultation.",
+    "url": "https://nexfortis.com/services/digital-marketing/web-design/brampton",
     "image": "https://nexfortis.com/opengraph.png",
     "type": "website"
   },
@@ -17,31 +17,67 @@
   "headings": [
     {
       "level": 1,
-      "text": "Contact us"
+      "text": "Web Design Services in Brampton"
     },
     {
       "level": 2,
-      "text": "Get In Touch"
+      "text": "Web design for Brampton businesses"
+    },
+    {
+      "level": 2,
+      "text": "Designing for Brampton's market"
     },
     {
       "level": 3,
-      "text": "Headquarters"
+      "text": "Neighbourhoods and areas we serve in Brampton"
+    },
+    {
+      "level": 2,
+      "text": "What our Brampton web design includes"
     },
     {
       "level": 3,
-      "text": "Phone"
+      "text": "Custom website design"
     },
     {
       "level": 3,
-      "text": "Email"
+      "text": "Responsive, mobile-first design"
     },
     {
       "level": 3,
-      "text": "Business Hours"
+      "text": "Web development"
     },
     {
       "level": 3,
-      "text": "LinkedIn"
+      "text": "eCommerce"
+    },
+    {
+      "level": 3,
+      "text": "WordPress and CMS"
+    },
+    {
+      "level": 3,
+      "text": "SEO-ready, performance-optimised"
+    },
+    {
+      "level": 2,
+      "text": "Why Brampton businesses choose NexFortis"
+    },
+    {
+      "level": 2,
+      "text": "web design and development in nearby cities"
+    },
+    {
+      "level": 2,
+      "text": "Other digital marketing services in Brampton"
+    },
+    {
+      "level": 2,
+      "text": "Frequently Asked Questions"
+    },
+    {
+      "level": 2,
+      "text": "Ready for a website that works as hard as you do?"
     },
     {
       "level": 4,
@@ -74,8 +110,64 @@
         {
           "@type": "ListItem",
           "position": 2,
-          "name": "Contact us",
-          "item": "https://nexfortis.com/contact"
+          "name": "Services",
+          "item": "https://nexfortis.com/services"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Digital Marketing",
+          "item": "https://nexfortis.com/services/digital-marketing"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Web Design & Development",
+          "item": "https://nexfortis.com/services/digital-marketing/web-design"
+        },
+        {
+          "@type": "ListItem",
+          "position": 5,
+          "name": "Brampton",
+          "item": "https://nexfortis.com/services/digital-marketing/web-design/brampton"
+        }
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How much does web design cost in Brampton?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It depends on the size, the features, and whether you need eCommerce — which is why we scope every Brampton project after a free consultation rather than quoting a one-size-fits-all price. Transparent pricing, no hidden fees."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long does a web design project take in Brampton?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Most Brampton business sites take a few weeks depending on scope and how ready your content is; eCommerce and custom builds take longer. We give you a clear timeline up front. These are general expectations, not guarantees."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should my Brampton business use WordPress or Shopify?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It depends on what you sell and how you work — we build on WordPress, Shopify, WooCommerce, or a headless/custom stack, and recommend the right fit for your Brampton business after understanding your goals."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you build eCommerce websites for Brampton businesses?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes — for Brampton businesses we build Shopify and WooCommerce stores with secure checkout, product management, and a design built to convert browsers into buyers."
+          }
         }
       ]
     },
@@ -156,6 +248,37 @@
       "sameAs": [
         "https://www.linkedin.com/company/nexfortis"
       ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Hassan Sadiq",
+      "jobTitle": "Founder & CEO, NexFortis IT Solutions",
+      "url": "https://nexfortis.com/about",
+      "worksFor": {
+        "@id": "https://nexfortis.com/#organization"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "Web Design — Brampton",
+      "description": "Web design and development for Brampton businesses — custom responsive websites, eCommerce, WordPress and CMS builds, and performance optimisation, delivered by a senior-led Canadian team.",
+      "url": "https://nexfortis.com/services/digital-marketing/web-design/brampton",
+      "provider": {
+        "@type": "Organization",
+        "name": "NexFortis IT Solutions",
+        "url": "https://nexfortis.com"
+      },
+      "areaServed": {
+        "@type": "City",
+        "name": "Brampton",
+        "containedInPlace": {
+          "@type": "AdministrativeArea",
+          "name": "ON"
+        }
+      },
+      "serviceType": "Web Design"
     },
     {
       "@context": "https://schema.org",
@@ -275,16 +398,48 @@
       "href": "/services"
     },
     {
-      "text": "(416) 317-0051",
-      "href": "tel:+14163170051"
+      "text": "Services",
+      "href": "/services"
     },
     {
-      "text": "contact@nexfortis.com",
-      "href": "mailto:contact@nexfortis.com"
+      "text": "web design and development",
+      "href": "/services/digital-marketing/web-design"
     },
     {
-      "text": "Follow us on LinkedIn",
-      "href": "https://www.linkedin.com/company/nexfortis"
+      "text": "Source: Stanford Web Credibility Research",
+      "href": "https://www.kinesisinc.com/the-truth-about-web-design/"
+    },
+    {
+      "text": "Source: Google, \"The Need for Mobile Speed\"",
+      "href": "https://www.marketingdive.com/news/google-53-of-mobile-users-abandon-sites-that-take-over-3-seconds-to-load/426070/"
+    },
+    {
+      "text": "Source: 2025 Web Almanac, HTTP Archive",
+      "href": "https://almanac.httparchive.org/en/2025/performance"
+    },
+    {
+      "text": "digital marketing",
+      "href": "/services/digital-marketing"
+    },
+    {
+      "text": "SEO",
+      "href": "/services/digital-marketing/seo"
+    },
+    {
+      "text": "web design and development Hamilton",
+      "href": "/services/digital-marketing/web-design/hamilton"
+    },
+    {
+      "text": "web design and development London",
+      "href": "/services/digital-marketing/web-design/london-ontario"
+    },
+    {
+      "text": "SEO services Brampton",
+      "href": "/services/digital-marketing/seo/brampton"
+    },
+    {
+      "text": "More about NexFortis",
+      "href": "/about"
     },
     {
       "text": "About Us",
@@ -297,6 +452,14 @@
     {
       "text": "Terms of Service",
       "href": "/terms"
+    },
+    {
+      "text": "(416) 317-0051",
+      "href": "tel:+14163170051"
+    },
+    {
+      "text": "contact@nexfortis.com",
+      "href": "mailto:contact@nexfortis.com"
     },
     {
       "text": "LinkedIn",

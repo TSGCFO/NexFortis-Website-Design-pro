@@ -215,6 +215,26 @@
       "href": "/services/digital-marketing"
     },
     {
+      "text": "Microsoft 365 Solutions",
+      "href": "/services/microsoft-365"
+    },
+    {
+      "text": "QuickBooks Migration",
+      "href": "/services/quickbooks"
+    },
+    {
+      "text": "IT Consulting",
+      "href": "/services/it-consulting"
+    },
+    {
+      "text": "Workflow Automation",
+      "href": "/services/workflow-automation"
+    },
+    {
+      "text": "Browse our IT services",
+      "href": "/services"
+    },
+    {
       "text": "SEO Services",
       "href": "/services/digital-marketing/seo"
     },
@@ -259,26 +279,6 @@
       "href": "/services/digital-marketing/reputation-management"
     },
     {
-      "text": "Microsoft 365 Solutions",
-      "href": "/services/microsoft-365"
-    },
-    {
-      "text": "QuickBooks Migration",
-      "href": "/services/quickbooks"
-    },
-    {
-      "text": "IT Consulting",
-      "href": "/services/it-consulting"
-    },
-    {
-      "text": "Workflow Automation",
-      "href": "/services/workflow-automation"
-    },
-    {
-      "text": "Browse our IT services",
-      "href": "/services"
-    },
-    {
       "text": "About",
       "href": "/about"
     },
@@ -315,12 +315,12 @@
       "href": "mailto:contact@nexfortis.com"
     },
     {
-      "text": "Privacy Policy",
-      "href": "/privacy"
-    },
-    {
       "text": "About Us",
       "href": "/about"
+    },
+    {
+      "text": "Privacy Policy",
+      "href": "/privacy"
     },
     {
       "text": "Terms of Service",

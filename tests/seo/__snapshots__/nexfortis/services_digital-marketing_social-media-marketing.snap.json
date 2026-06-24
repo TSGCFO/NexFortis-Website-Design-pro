@@ -1,11 +1,11 @@
 {
   "route": "/services/digital-marketing/social-media-marketing",
-  "title": "Social Media Marketing Services in Canada | NexFortis IT Solutions",
+  "title": "Social Media Marketing Services | NexFortis IT Solutions",
   "description": "Canadian social media marketing agency — strategy, content, community management, and paid social on Instagram, Facebook, LinkedIn &amp; TikTok. Free consultation.",
   "canonical": "https://nexfortis.com/services/digital-marketing/social-media-marketing",
   "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
   "og": {
-    "title": "Social Media Marketing Services in Canada | NexFortis IT Solutions",
+    "title": "Social Media Marketing Services | NexFortis IT Solutions",
     "description": "Canadian social media marketing agency — strategy, content, community management, and paid social on Instagram, Facebook, LinkedIn &amp; TikTok. Free consultation.",
     "url": "https://nexfortis.com/services/digital-marketing/social-media-marketing",
     "image": "https://nexfortis.com/opengraph.png",
@@ -98,6 +98,10 @@
     {
       "level": 3,
       "text": "GEO &amp; AI Search"
+    },
+    {
+      "level": 2,
+      "text": "Social Media Marketing — areas we serve"
     },
     {
       "level": 2,
@@ -344,6 +348,26 @@
       "href": "/services/digital-marketing"
     },
     {
+      "text": "Microsoft 365 Solutions",
+      "href": "/services/microsoft-365"
+    },
+    {
+      "text": "QuickBooks Migration",
+      "href": "/services/quickbooks"
+    },
+    {
+      "text": "IT Consulting",
+      "href": "/services/it-consulting"
+    },
+    {
+      "text": "Workflow Automation",
+      "href": "/services/workflow-automation"
+    },
+    {
+      "text": "Browse our IT services",
+      "href": "/services"
+    },
+    {
       "text": "SEO Services",
       "href": "/services/digital-marketing/seo"
     },
@@ -386,26 +410,6 @@
     {
       "text": "Reputation Management",
       "href": "/services/digital-marketing/reputation-management"
-    },
-    {
-      "text": "Microsoft 365 Solutions",
-      "href": "/services/microsoft-365"
-    },
-    {
-      "text": "QuickBooks Migration",
-      "href": "/services/quickbooks"
-    },
-    {
-      "text": "IT Consulting",
-      "href": "/services/it-consulting"
-    },
-    {
-      "text": "Workflow Automation",
-      "href": "/services/workflow-automation"
-    },
-    {
-      "text": "Browse our IT services",
-      "href": "/services"
     },
     {
       "text": "About",
@@ -464,16 +468,20 @@
       "href": "/services/digital-marketing/google-ads-ppc"
     },
     {
+      "text": "social media marketing Calgary",
+      "href": "/services/digital-marketing/social-media-marketing/calgary"
+    },
+    {
       "text": "More about NexFortis",
+      "href": "/about"
+    },
+    {
+      "text": "About Us",
       "href": "/about"
     },
     {
       "text": "Privacy Policy",
       "href": "/privacy"
-    },
-    {
-      "text": "About Us",
-      "href": "/about"
     },
     {
       "text": "Terms of Service",

@@ -150,7 +150,7 @@
           "name": "How long does SEO take to show results in Hamilton?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Most businesses begin seeing measurable movement within a few months, with competitive terms taking longer. SEO compounds, so the gains build over time. These are general expectations, not guarantees."
+            "text": "Most businesses begin seeing measurable movement within a few months, with competitive Hamilton terms taking longer. SEO compounds, so the gains build over time. These are general expectations, not guarantees."
           }
         },
         {
@@ -442,6 +442,14 @@
       "href": "/services/digital-marketing/seo/calgary"
     },
     {
+      "text": "SEO services Toronto",
+      "href": "/services/digital-marketing/seo/toronto"
+    },
+    {
+      "text": "SEO services Ottawa",
+      "href": "/services/digital-marketing/seo/ottawa"
+    },
+    {
       "text": "web design and development Hamilton",
       "href": "/services/digital-marketing/web-design/hamilton"
     },
@@ -450,12 +458,12 @@
       "href": "/about"
     },
     {
-      "text": "Privacy Policy",
-      "href": "/privacy"
-    },
-    {
       "text": "About Us",
       "href": "/about"
+    },
+    {
+      "text": "Privacy Policy",
+      "href": "/privacy"
     },
     {
       "text": "Terms of Service",

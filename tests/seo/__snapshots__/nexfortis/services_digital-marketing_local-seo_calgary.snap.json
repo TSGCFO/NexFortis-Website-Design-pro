@@ -69,6 +69,10 @@
     },
     {
       "level": 2,
+      "text": "Other digital marketing services in Calgary"
+    },
+    {
+      "level": 2,
       "text": "Frequently Asked Questions"
     },
     {
@@ -154,7 +158,7 @@
           "name": "What is the Map Pack and why does it matter?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "The Map Pack is the block of three local business listings Google shows at the top of local searches, alongside a map. It captures the majority of clicks for near-me and location-based queries, so ranking there is the primary goal of a local SEO campaign."
+            "text": "The Map Pack is the block of three local business listings Google shows at the top of local searches, alongside a map. It captures the majority of clicks for near-me and location-based queries in Calgary, so ranking there is the primary goal of a local SEO campaign."
           }
         },
         {
@@ -434,16 +438,24 @@
       "href": "/services/digital-marketing/local-seo/edmonton"
     },
     {
+      "text": "SEO services Calgary",
+      "href": "/services/digital-marketing/seo/calgary"
+    },
+    {
+      "text": "social media marketing Calgary",
+      "href": "/services/digital-marketing/social-media-marketing/calgary"
+    },
+    {
       "text": "More about NexFortis",
+      "href": "/about"
+    },
+    {
+      "text": "About Us",
       "href": "/about"
     },
     {
       "text": "Privacy Policy",
       "href": "/privacy"
-    },
-    {
-      "text": "About Us",
-      "href": "/about"
     },
     {
       "text": "Terms of Service",

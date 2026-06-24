@@ -146,7 +146,7 @@
           "name": "What does local SEO cost in Edmonton?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "It depends on your competition, the number of neighbourhoods you target, and the scope of work — which is why we scope every engagement after a free audit rather than quoting a one-size-fits-all price. Transparent pricing, no hidden fees, no lock-in."
+            "text": "It depends on your competition, the number of Edmonton neighbourhoods you target, and the scope of work — which is why we scope every engagement after a free audit rather than quoting a one-size-fits-all price. Transparent pricing, no hidden fees, no lock-in."
           }
         },
         {
@@ -154,7 +154,7 @@
           "name": "What is the Map Pack and why does it matter?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "The Map Pack is the block of three local business listings Google shows at the top of local searches, alongside a map. It captures the majority of clicks for near-me and location-based queries, so ranking there is the primary goal of a local SEO campaign."
+            "text": "The Map Pack is the block of three local business listings Google shows at the top of local searches, alongside a map. It captures the majority of clicks for near-me and location-based queries in Edmonton, so ranking there is the primary goal of a local SEO campaign."
           }
         },
         {
@@ -430,12 +430,12 @@
       "href": "/about"
     },
     {
-      "text": "Privacy Policy",
-      "href": "/privacy"
-    },
-    {
       "text": "About Us",
       "href": "/about"
+    },
+    {
+      "text": "Privacy Policy",
+      "href": "/privacy"
     },
     {
       "text": "Terms of Service",

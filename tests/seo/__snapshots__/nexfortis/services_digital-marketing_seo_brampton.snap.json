@@ -69,6 +69,10 @@
     },
     {
       "level": 2,
+      "text": "Other digital marketing services in Brampton"
+    },
+    {
+      "level": 2,
       "text": "Frequently Asked Questions"
     },
     {
@@ -138,7 +142,7 @@
           "name": "How much does an SEO company in Brampton cost?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "It depends on your competition, your starting point, and the scope of work — which is why we scope every engagement after a free audit rather than quoting a one-size-fits-all price. Transparent pricing, no hidden fees, no lock-in."
+            "text": "It depends on your competition, your starting point, and the scope of work — which is why we scope every Brampton engagement after a free audit rather than quoting a one-size-fits-all price. Transparent pricing, no hidden fees, no lock-in."
           }
         },
         {
@@ -146,7 +150,7 @@
           "name": "How long does SEO take for a Brampton business?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Most businesses begin seeing measurable movement within a few months, with competitive terms taking longer. SEO compounds, so the gains build over time. These are general expectations, not guarantees."
+            "text": "Most businesses begin seeing measurable movement within a few months, with competitive Brampton terms taking longer. SEO compounds, so the gains build over time. These are general expectations, not guarantees."
           }
         },
         {
@@ -430,16 +434,36 @@
       "href": "/services/digital-marketing/seo/markham"
     },
     {
+      "text": "SEO services Calgary",
+      "href": "/services/digital-marketing/seo/calgary"
+    },
+    {
+      "text": "SEO services Hamilton",
+      "href": "/services/digital-marketing/seo/hamilton"
+    },
+    {
+      "text": "SEO services Toronto",
+      "href": "/services/digital-marketing/seo/toronto"
+    },
+    {
+      "text": "SEO services Ottawa",
+      "href": "/services/digital-marketing/seo/ottawa"
+    },
+    {
+      "text": "web design and development Brampton",
+      "href": "/services/digital-marketing/web-design/brampton"
+    },
+    {
       "text": "More about NexFortis",
+      "href": "/about"
+    },
+    {
+      "text": "About Us",
       "href": "/about"
     },
     {
       "text": "Privacy Policy",
       "href": "/privacy"
-    },
-    {
-      "text": "About Us",
-      "href": "/about"
     },
     {
       "text": "Terms of Service",

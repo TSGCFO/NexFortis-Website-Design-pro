@@ -97,6 +97,10 @@
     },
     {
       "level": 2,
+      "text": "Local SEO — areas we serve"
+    },
+    {
+      "level": 2,
       "text": "Frequently Asked Questions"
     },
     {
@@ -192,7 +196,7 @@
           "name": "Do you offer local SEO services for small businesses?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes. We scope local SEO services for small business owners so the work — and the pricing — fits your specific situation, focusing first on the changes that move the needle fastest in your local market."
+            "text": "Yes. We scope local SEO services for small business owners so the work — and the pricing — fits your specific situation, focusing first on the changes that drive the fastest results in your local market."
           }
         },
         {
@@ -340,6 +344,26 @@
       "href": "/services/digital-marketing"
     },
     {
+      "text": "Microsoft 365 Solutions",
+      "href": "/services/microsoft-365"
+    },
+    {
+      "text": "QuickBooks Migration",
+      "href": "/services/quickbooks"
+    },
+    {
+      "text": "IT Consulting",
+      "href": "/services/it-consulting"
+    },
+    {
+      "text": "Workflow Automation",
+      "href": "/services/workflow-automation"
+    },
+    {
+      "text": "Browse our IT services",
+      "href": "/services"
+    },
+    {
       "text": "SEO Services",
       "href": "/services/digital-marketing/seo"
     },
@@ -382,26 +406,6 @@
     {
       "text": "Reputation Management",
       "href": "/services/digital-marketing/reputation-management"
-    },
-    {
-      "text": "Microsoft 365 Solutions",
-      "href": "/services/microsoft-365"
-    },
-    {
-      "text": "QuickBooks Migration",
-      "href": "/services/quickbooks"
-    },
-    {
-      "text": "IT Consulting",
-      "href": "/services/it-consulting"
-    },
-    {
-      "text": "Workflow Automation",
-      "href": "/services/workflow-automation"
-    },
-    {
-      "text": "Browse our IT services",
-      "href": "/services"
     },
     {
       "text": "About",
@@ -456,16 +460,28 @@
       "href": "/services/digital-marketing/reputation-management"
     },
     {
+      "text": "local SEO Toronto",
+      "href": "/services/digital-marketing/local-seo/toronto"
+    },
+    {
+      "text": "local SEO Edmonton",
+      "href": "/services/digital-marketing/local-seo/edmonton"
+    },
+    {
+      "text": "local SEO Calgary",
+      "href": "/services/digital-marketing/local-seo/calgary"
+    },
+    {
       "text": "More about NexFortis",
+      "href": "/about"
+    },
+    {
+      "text": "About Us",
       "href": "/about"
     },
     {
       "text": "Privacy Policy",
       "href": "/privacy"
-    },
-    {
-      "text": "About Us",
-      "href": "/about"
     },
     {
       "text": "Terms of Service",

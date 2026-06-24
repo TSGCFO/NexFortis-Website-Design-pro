@@ -69,6 +69,10 @@
     },
     {
       "level": 2,
+      "text": "Other digital marketing services in Hamilton"
+    },
+    {
+      "level": 2,
       "text": "Frequently Asked Questions"
     },
     {
@@ -138,7 +142,7 @@
           "name": "How much does a website cost in Hamilton?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "It depends on the size, the features, and whether you need eCommerce — which is why we scope every project after a free consultation rather than quoting a one-size-fits-all price. Transparent pricing, no hidden fees."
+            "text": "It depends on the size, the features, and whether you need eCommerce — which is why we scope every Hamilton project after a free consultation rather than quoting a one-size-fits-all price. Transparent pricing, no hidden fees."
           }
         },
         {
@@ -146,7 +150,7 @@
           "name": "How long does it take to build a website in Hamilton?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Most business sites take a few weeks depending on scope and how ready your content is; eCommerce and custom builds take longer. We give you a clear timeline up front. These are general expectations, not guarantees."
+            "text": "Most Hamilton business sites take a few weeks depending on scope and how ready your content is; eCommerce and custom builds take longer. We give you a clear timeline up front. These are general expectations, not guarantees."
           }
         },
         {
@@ -162,7 +166,7 @@
           "name": "Do you build eCommerce websites for Hamilton businesses?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes — Shopify and WooCommerce stores with secure checkout, product management, and a design built to convert browsers into buyers."
+            "text": "Yes — for Hamilton businesses we build Shopify and WooCommerce stores with secure checkout, product management, and a design built to convert browsers into buyers."
           }
         }
       ]
@@ -426,16 +430,24 @@
       "href": "/services/digital-marketing/web-design/london-ontario"
     },
     {
+      "text": "web design and development Brampton",
+      "href": "/services/digital-marketing/web-design/brampton"
+    },
+    {
+      "text": "SEO services Hamilton",
+      "href": "/services/digital-marketing/seo/hamilton"
+    },
+    {
       "text": "More about NexFortis",
+      "href": "/about"
+    },
+    {
+      "text": "About Us",
       "href": "/about"
     },
     {
       "text": "Privacy Policy",
       "href": "/privacy"
-    },
-    {
-      "text": "About Us",
-      "href": "/about"
     },
     {
       "text": "Terms of Service",

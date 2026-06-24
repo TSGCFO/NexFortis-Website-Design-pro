@@ -410,6 +410,10 @@
       "href": "https://datareportal.com/reports/digital-2025-sub-section-state-of-social"
     },
     {
+      "text": "Source: DataReportal, Digital 2025: Brand Discovery",
+      "href": "https://datareportal.com/reports/digital-2025-sub-section-brand-discovery"
+    },
+    {
       "text": "digital marketing",
       "href": "/services/digital-marketing"
     },
@@ -430,12 +434,12 @@
       "href": "/about"
     },
     {
-      "text": "Privacy Policy",
-      "href": "/privacy"
-    },
-    {
       "text": "About Us",
       "href": "/about"
+    },
+    {
+      "text": "Privacy Policy",
+      "href": "/privacy"
     },
     {
       "text": "Terms of Service",

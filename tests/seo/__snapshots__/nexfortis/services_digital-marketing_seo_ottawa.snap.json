@@ -1,13 +1,13 @@
 {
-  "route": "/contact",
-  "title": "Contact NexFortis — Free IT Consultation",
-  "description": "Get in touch with NexFortis IT Solutions in Nobleton, Ontario. Request a quote, schedule a free consultation, or ask about our managed IT services today.",
-  "canonical": "https://nexfortis.com/contact",
+  "route": "/services/digital-marketing/seo/ottawa",
+  "title": "SEO Company Ottawa | NexFortis IT Solutions",
+  "description": "SEO services for Ottawa businesses — technical SEO, on-page, content, and link building to grow your organic rankings. Free SEO audit.",
+  "canonical": "https://nexfortis.com/services/digital-marketing/seo/ottawa",
   "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
   "og": {
-    "title": "Contact NexFortis — Free IT Consultation",
-    "description": "Get in touch with NexFortis IT Solutions in Nobleton, Ontario. Request a quote, schedule a free consultation, or ask about our managed IT services today.",
-    "url": "https://nexfortis.com/contact",
+    "title": "SEO Company Ottawa | NexFortis IT Solutions",
+    "description": "SEO services for Ottawa businesses — technical SEO, on-page, content, and link building to grow your organic rankings. Free SEO audit.",
+    "url": "https://nexfortis.com/services/digital-marketing/seo/ottawa",
     "image": "https://nexfortis.com/opengraph.png",
     "type": "website"
   },
@@ -17,31 +17,63 @@
   "headings": [
     {
       "level": 1,
-      "text": "Contact us"
+      "text": "SEO Services in Ottawa"
     },
     {
       "level": 2,
-      "text": "Get In Touch"
+      "text": "SEO services for Ottawa businesses"
+    },
+    {
+      "level": 2,
+      "text": "Competing for organic visibility in Ottawa"
     },
     {
       "level": 3,
-      "text": "Headquarters"
+      "text": "Neighbourhoods and areas we serve in Ottawa"
+    },
+    {
+      "level": 2,
+      "text": "Our SEO work in Ottawa"
     },
     {
       "level": 3,
-      "text": "Phone"
+      "text": "Technical SEO"
     },
     {
       "level": 3,
-      "text": "Email"
+      "text": "On-page optimisation"
     },
     {
       "level": 3,
-      "text": "Business Hours"
+      "text": "Content"
     },
     {
       "level": 3,
-      "text": "LinkedIn"
+      "text": "Link building"
+    },
+    {
+      "level": 3,
+      "text": "Local SEO"
+    },
+    {
+      "level": 3,
+      "text": "Analytics and reporting"
+    },
+    {
+      "level": 2,
+      "text": "Why Ottawa businesses choose NexFortis"
+    },
+    {
+      "level": 2,
+      "text": "SEO services in nearby cities"
+    },
+    {
+      "level": 2,
+      "text": "Frequently Asked Questions"
+    },
+    {
+      "level": 2,
+      "text": "Ready to grow your organic search in Ottawa?"
     },
     {
       "level": 4,
@@ -74,8 +106,64 @@
         {
           "@type": "ListItem",
           "position": 2,
-          "name": "Contact us",
-          "item": "https://nexfortis.com/contact"
+          "name": "Services",
+          "item": "https://nexfortis.com/services"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Digital Marketing",
+          "item": "https://nexfortis.com/services/digital-marketing"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "SEO Services",
+          "item": "https://nexfortis.com/services/digital-marketing/seo"
+        },
+        {
+          "@type": "ListItem",
+          "position": 5,
+          "name": "Ottawa",
+          "item": "https://nexfortis.com/services/digital-marketing/seo/ottawa"
+        }
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How much does an SEO company in Ottawa cost?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It depends on your competition, your starting point, and the scope of work — which is why we scope every Ottawa engagement after a free audit rather than quoting a one-size-fits-all price. Transparent pricing, no hidden fees, no lock-in."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long does SEO take to show results in Ottawa?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Most businesses begin seeing measurable movement within a few months, with competitive Ottawa terms taking longer. SEO compounds, so the gains build over time. These are general expectations, not guarantees."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is SEO worth it for an Ottawa business?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For most Ottawa businesses, yes — organic search is the most cost-effective long-term channel, because the visibility keeps working after the spend stops, unlike paid ads."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which industries does NexFortis serve in Ottawa?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Any Ottawa business that relies on being found in Google — technology and SaaS, professional services, government-adjacent B2B, healthcare, real estate, trades, and retail among them."
+          }
         }
       ]
     },
@@ -156,6 +244,37 @@
       "sameAs": [
         "https://www.linkedin.com/company/nexfortis"
       ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Hassan Sadiq",
+      "jobTitle": "Founder & CEO, NexFortis IT Solutions",
+      "url": "https://nexfortis.com/about",
+      "worksFor": {
+        "@id": "https://nexfortis.com/#organization"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "SEO — Ottawa",
+      "description": "SEO services for Ottawa businesses — technical SEO, on-page optimization, content, link building, and analytics to grow organic search visibility, delivered by a senior-led Canadian team.",
+      "url": "https://nexfortis.com/services/digital-marketing/seo/ottawa",
+      "provider": {
+        "@type": "Organization",
+        "name": "NexFortis IT Solutions",
+        "url": "https://nexfortis.com"
+      },
+      "areaServed": {
+        "@type": "City",
+        "name": "Ottawa",
+        "containedInPlace": {
+          "@type": "AdministrativeArea",
+          "name": "ON"
+        }
+      },
+      "serviceType": "SEO"
     },
     {
       "@context": "https://schema.org",
@@ -275,16 +394,60 @@
       "href": "/services"
     },
     {
-      "text": "(416) 317-0051",
-      "href": "tel:+14163170051"
+      "text": "Services",
+      "href": "/services"
     },
     {
-      "text": "contact@nexfortis.com",
-      "href": "mailto:contact@nexfortis.com"
+      "text": "SEO services",
+      "href": "/services/digital-marketing/seo"
     },
     {
-      "text": "Follow us on LinkedIn",
-      "href": "https://www.linkedin.com/company/nexfortis"
+      "text": "Source: Statcounter Global Stats (Canada)",
+      "href": "https://gs.statcounter.com/search-engine-market-share/all/canada"
+    },
+    {
+      "text": "Source: FirstPageSage, 2026 Google CTR study",
+      "href": "https://firstpagesage.com/reports/google-click-through-rates-ctrs-by-ranking-position/"
+    },
+    {
+      "text": "Source: 2025 Web Almanac, HTTP Archive",
+      "href": "https://almanac.httparchive.org/en/2025/performance"
+    },
+    {
+      "text": "digital marketing",
+      "href": "/services/digital-marketing"
+    },
+    {
+      "text": "local SEO",
+      "href": "/services/digital-marketing/local-seo"
+    },
+    {
+      "text": "SEO services Mississauga",
+      "href": "/services/digital-marketing/seo/mississauga"
+    },
+    {
+      "text": "SEO services Markham",
+      "href": "/services/digital-marketing/seo/markham"
+    },
+    {
+      "text": "SEO services Brampton",
+      "href": "/services/digital-marketing/seo/brampton"
+    },
+    {
+      "text": "SEO services Calgary",
+      "href": "/services/digital-marketing/seo/calgary"
+    },
+    {
+      "text": "SEO services Hamilton",
+      "href": "/services/digital-marketing/seo/hamilton"
+    },
+    {
+      "text": "SEO services Toronto",
+      "href": "/services/digital-marketing/seo/toronto"
+    },
+    {
+      "text": "More about NexFortis",
+      "href": "/about"
     },
     {
       "text": "About Us",
@@ -297,6 +460,14 @@
     {
       "text": "Terms of Service",
       "href": "/terms"
+    },
+    {
+      "text": "(416) 317-0051",
+      "href": "tel:+14163170051"
+    },
+    {
+      "text": "contact@nexfortis.com",
+      "href": "mailto:contact@nexfortis.com"
     },
     {
       "text": "LinkedIn",

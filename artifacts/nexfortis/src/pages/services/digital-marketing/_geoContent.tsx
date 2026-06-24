@@ -214,12 +214,12 @@ export const GEO_PAGE_CONTENT: Partial<Record<string, GeoPageContent>> = {
       {
         question: "What does local SEO cost in Toronto?",
         answer:
-          "It depends on your competition, the number of neighbourhoods you target, and the scope of work — which is why we scope every engagement after a free audit rather than quoting a one-size-fits-all price. Transparent pricing, no hidden fees, no lock-in.",
+          "It depends on your competition, the number of Toronto neighbourhoods you target, and the scope of work — which is why we scope every engagement after a free audit rather than quoting a one-size-fits-all price. Transparent pricing, no hidden fees, no lock-in.",
       },
       {
         question: "What is the Map Pack and why does it matter?",
         answer:
-          "The Map Pack is the block of three local business listings Google shows at the top of local searches, alongside a map. It captures the majority of clicks for near-me and location-based queries, so ranking there is the primary goal of a local SEO campaign.",
+          "The Map Pack is the block of three local business listings Google shows at the top of local searches, alongside a map. It captures the majority of clicks for near-me and location-based queries in Toronto, so ranking there is the primary goal of a local SEO campaign.",
       },
       {
         question: "Which Toronto industries does NexFortis serve?",
@@ -240,7 +240,7 @@ export const GEO_PAGE_CONTENT: Partial<Record<string, GeoPageContent>> = {
     ),
     ctaHeading: "Ready to win local search in Toronto?",
     ctaSubtext:
-      "Book a free, no-obligation local SEO audit — an honest look at your Google Business Profile, citations, reviews, and Map Pack position, and exactly where the gaps are.",
+      "Book a free, no-obligation local SEO audit — an honest look at your Google Business Profile, citations, reviews, and Map Pack position across Toronto, and exactly where the gaps are.",
   },
   "seo/mississauga": {
     parentSlug: "seo",
@@ -381,12 +381,12 @@ export const GEO_PAGE_CONTENT: Partial<Record<string, GeoPageContent>> = {
       {
         question: "How much do SEO services cost in Mississauga?",
         answer:
-          "It depends on your competition, your starting point, and the scope of work — which is why we scope every engagement after a free audit rather than quoting a one-size-fits-all price. Transparent pricing, no hidden fees, no lock-in.",
+          "It depends on your competition, your starting point, and the scope of work — which is why we scope every Mississauga engagement after a free audit rather than quoting a one-size-fits-all price. Transparent pricing, no hidden fees, no lock-in.",
       },
       {
         question: "How long does SEO take to show results in Mississauga?",
         answer:
-          "Most businesses begin seeing measurable movement within a few months, with competitive terms taking longer. SEO compounds, so the gains build over time. These are general expectations, not guarantees.",
+          "Most businesses begin seeing measurable movement within a few months, with competitive Mississauga terms taking longer. SEO compounds, so the gains build over time. These are general expectations, not guarantees.",
       },
       {
         question: "Is SEO worth it for Mississauga businesses?",
@@ -553,12 +553,12 @@ export const GEO_PAGE_CONTENT: Partial<Record<string, GeoPageContent>> = {
       {
         question: "How much does an SEO company in Markham cost?",
         answer:
-          "It depends on your competition, your starting point, and the scope of work — which is why we scope every engagement after a free audit rather than quoting a one-size-fits-all price. Transparent pricing, no hidden fees, no lock-in.",
+          "It depends on your competition, your starting point, and the scope of work — which is why we scope every Markham engagement after a free audit rather than quoting a one-size-fits-all price. Transparent pricing, no hidden fees, no lock-in.",
       },
       {
         question: "How long does SEO take for a Markham business?",
         answer:
-          "Most businesses begin seeing measurable movement within a few months, with competitive terms taking longer. SEO compounds, so the gains build over time. These are general expectations, not guarantees.",
+          "Most businesses begin seeing measurable movement within a few months, with competitive Markham terms taking longer. SEO compounds, so the gains build over time. These are general expectations, not guarantees.",
       },
       {
         question: "Is SEO worth it for a Markham business?",
@@ -728,12 +728,12 @@ export const GEO_PAGE_CONTENT: Partial<Record<string, GeoPageContent>> = {
       {
         question: "What does local SEO cost in Edmonton?",
         answer:
-          "It depends on your competition, the number of neighbourhoods you target, and the scope of work — which is why we scope every engagement after a free audit rather than quoting a one-size-fits-all price. Transparent pricing, no hidden fees, no lock-in.",
+          "It depends on your competition, the number of Edmonton neighbourhoods you target, and the scope of work — which is why we scope every engagement after a free audit rather than quoting a one-size-fits-all price. Transparent pricing, no hidden fees, no lock-in.",
       },
       {
         question: "What is the Map Pack and why does it matter?",
         answer:
-          "The Map Pack is the block of three local business listings Google shows at the top of local searches, alongside a map. It captures the majority of clicks for near-me and location-based queries, so ranking there is the primary goal of a local SEO campaign.",
+          "The Map Pack is the block of three local business listings Google shows at the top of local searches, alongside a map. It captures the majority of clicks for near-me and location-based queries in Edmonton, so ranking there is the primary goal of a local SEO campaign.",
       },
       {
         question: "Which Edmonton industries does NexFortis serve?",
@@ -753,7 +753,7 @@ export const GEO_PAGE_CONTENT: Partial<Record<string, GeoPageContent>> = {
     ),
     ctaHeading: "Ready to win local search in Edmonton?",
     ctaSubtext:
-      "Book a free, no-obligation local SEO audit — an honest look at your Google Business Profile, citations, reviews, and Map Pack position, and exactly where the gaps are.",
+      "Book a free, no-obligation local SEO audit — an honest look at your Google Business Profile, citations, reviews, and Map Pack position across Edmonton, and exactly where the gaps are.",
   },
   "web-design/hamilton": {
     parentSlug: "web-design",
@@ -893,12 +893,12 @@ export const GEO_PAGE_CONTENT: Partial<Record<string, GeoPageContent>> = {
       {
         question: "How much does a website cost in Hamilton?",
         answer:
-          "It depends on the size, the features, and whether you need eCommerce — which is why we scope every project after a free consultation rather than quoting a one-size-fits-all price. Transparent pricing, no hidden fees.",
+          "It depends on the size, the features, and whether you need eCommerce — which is why we scope every Hamilton project after a free consultation rather than quoting a one-size-fits-all price. Transparent pricing, no hidden fees.",
       },
       {
         question: "How long does it take to build a website in Hamilton?",
         answer:
-          "Most business sites take a few weeks depending on scope and how ready your content is; eCommerce and custom builds take longer. We give you a clear timeline up front. These are general expectations, not guarantees.",
+          "Most Hamilton business sites take a few weeks depending on scope and how ready your content is; eCommerce and custom builds take longer. We give you a clear timeline up front. These are general expectations, not guarantees.",
       },
       {
         question: "Do you build on WordPress or Shopify?",
@@ -908,7 +908,7 @@ export const GEO_PAGE_CONTENT: Partial<Record<string, GeoPageContent>> = {
       {
         question: "Do you build eCommerce websites for Hamilton businesses?",
         answer:
-          "Yes — Shopify and WooCommerce stores with secure checkout, product management, and a design built to convert browsers into buyers.",
+          "Yes — for Hamilton businesses we build Shopify and WooCommerce stores with secure checkout, product management, and a design built to convert browsers into buyers.",
       },
     ],
     authorNote: (
@@ -1080,7 +1080,7 @@ export const GEO_PAGE_CONTENT: Partial<Record<string, GeoPageContent>> = {
       {
         question: "What is the Map Pack and why does it matter?",
         answer:
-          "The Map Pack is the block of three local business listings Google shows at the top of local searches, alongside a map. It captures the majority of clicks for near-me and location-based queries, so ranking there is the primary goal of a local SEO campaign.",
+          "The Map Pack is the block of three local business listings Google shows at the top of local searches, alongside a map. It captures the majority of clicks for near-me and location-based queries in Calgary, so ranking there is the primary goal of a local SEO campaign.",
       },
       {
         question: "Which Calgary industries benefit most from local SEO?",
@@ -1105,7 +1105,7 @@ export const GEO_PAGE_CONTENT: Partial<Record<string, GeoPageContent>> = {
     ),
     ctaHeading: "Ready to win local search in Calgary?",
     ctaSubtext:
-      "Book a free, no-obligation local SEO audit — an honest look at your Google Business Profile, citations, reviews, and Map Pack position, and exactly where the gaps are.",
+      "Book a free, no-obligation local SEO audit — an honest look at your Google Business Profile, citations, reviews, and Map Pack position across Calgary, and exactly where the gaps are.",
   },
   "web-design/london-ontario": {
     parentSlug: "web-design",
@@ -1244,22 +1244,22 @@ export const GEO_PAGE_CONTENT: Partial<Record<string, GeoPageContent>> = {
       {
         question: "How much does web design cost in London, Ontario?",
         answer:
-          "It depends on the size, the features, and whether you need eCommerce — which is why we scope every project after a free consultation rather than quoting a one-size-fits-all price. Transparent pricing, no hidden fees.",
+          "It depends on the size, the features, and whether you need eCommerce — which is why we scope every London, Ontario project after a free consultation rather than quoting a one-size-fits-all price. Transparent pricing, no hidden fees.",
       },
       {
         question: "How long does a web design project take in London, Ontario?",
         answer:
-          "Most business sites take a few weeks depending on scope and how ready your content is; eCommerce and custom builds take longer. We give you a clear timeline up front. These are general expectations, not guarantees.",
+          "Most London, Ontario business sites take a few weeks depending on scope and how ready your content is; eCommerce and custom builds take longer. We give you a clear timeline up front. These are general expectations, not guarantees.",
       },
       {
         question: "Should my London, Ontario business use WordPress or Shopify?",
         answer:
-          "It depends on what you sell and how you work — we build on WordPress, Shopify, WooCommerce, or a headless/custom stack, and recommend the right fit after understanding your goals.",
+          "It depends on what you sell and how you work — we build on WordPress, Shopify, WooCommerce, or a headless/custom stack, and recommend the right fit for your London, Ontario business after understanding your goals.",
       },
       {
         question: "Do you build eCommerce websites for London, Ontario businesses?",
         answer:
-          "Yes — Shopify and WooCommerce stores with secure checkout, product management, and a design built to convert browsers into buyers.",
+          "Yes — for London, Ontario businesses we build Shopify and WooCommerce stores with secure checkout, product management, and a design built to convert browsers into buyers.",
       },
     ],
     authorNote: (
@@ -1416,12 +1416,12 @@ export const GEO_PAGE_CONTENT: Partial<Record<string, GeoPageContent>> = {
       {
         question: "How much does an SEO company in Brampton cost?",
         answer:
-          "It depends on your competition, your starting point, and the scope of work — which is why we scope every engagement after a free audit rather than quoting a one-size-fits-all price. Transparent pricing, no hidden fees, no lock-in.",
+          "It depends on your competition, your starting point, and the scope of work — which is why we scope every Brampton engagement after a free audit rather than quoting a one-size-fits-all price. Transparent pricing, no hidden fees, no lock-in.",
       },
       {
         question: "How long does SEO take for a Brampton business?",
         answer:
-          "Most businesses begin seeing measurable movement within a few months, with competitive terms taking longer. SEO compounds, so the gains build over time. These are general expectations, not guarantees.",
+          "Most businesses begin seeing measurable movement within a few months, with competitive Brampton terms taking longer. SEO compounds, so the gains build over time. These are general expectations, not guarantees.",
       },
       {
         question: "Is SEO worth it for a Brampton business?",
@@ -1593,12 +1593,12 @@ export const GEO_PAGE_CONTENT: Partial<Record<string, GeoPageContent>> = {
       {
         question: "How much do SEO services cost in Calgary?",
         answer:
-          "It depends on your competition, your starting point, and the scope of work — which is why we scope every engagement after a free audit rather than quoting a one-size-fits-all price. Transparent pricing, no hidden fees, no lock-in.",
+          "It depends on your competition, your starting point, and the scope of work — which is why we scope every Calgary engagement after a free audit rather than quoting a one-size-fits-all price. Transparent pricing, no hidden fees, no lock-in.",
       },
       {
         question: "How long does SEO take to show results in Calgary?",
         answer:
-          "Most businesses begin seeing measurable movement within a few months, with competitive terms taking longer. SEO compounds, so the gains build over time. These are general expectations, not guarantees.",
+          "Most businesses begin seeing measurable movement within a few months, with competitive Calgary terms taking longer. SEO compounds, so the gains build over time. These are general expectations, not guarantees.",
       },
       {
         question: "Is SEO worth it for a Calgary business?",
@@ -1767,7 +1767,7 @@ export const GEO_PAGE_CONTENT: Partial<Record<string, GeoPageContent>> = {
       {
         question: "How long does SEO take to show results in Hamilton?",
         answer:
-          "Most businesses begin seeing measurable movement within a few months, with competitive terms taking longer. SEO compounds, so the gains build over time. These are general expectations, not guarantees.",
+          "Most businesses begin seeing measurable movement within a few months, with competitive Hamilton terms taking longer. SEO compounds, so the gains build over time. These are general expectations, not guarantees.",
       },
       {
         question: "Is SEO worth it for a Hamilton business?",
@@ -2036,6 +2036,12 @@ export const GEO_PAGE_CONTENT: Partial<Record<string, GeoPageContent>> = {
         label: "the typical internet user spends on social media every single day.",
         sourceName: "DataReportal / GWI, Digital 2025",
         sourceUrl: "https://datareportal.com/reports/digital-2025-sub-section-state-of-social",
+      },
+      {
+        value: "29.7%",
+        label: "of people discover new brands and products through social media ads.",
+        sourceName: "DataReportal, Digital 2025: Brand Discovery",
+        sourceUrl: "https://datareportal.com/reports/digital-2025-sub-section-brand-discovery",
       },
     ],
     featuresHeading: "What our Calgary social media management includes",
@@ -2439,12 +2445,12 @@ export const GEO_PAGE_CONTENT: Partial<Record<string, GeoPageContent>> = {
       {
         question: "How much does an SEO company in Ottawa cost?",
         answer:
-          "It depends on your competition, your starting point, and the scope of work — which is why we scope every engagement after a free audit rather than quoting a one-size-fits-all price. Transparent pricing, no hidden fees, no lock-in.",
+          "It depends on your competition, your starting point, and the scope of work — which is why we scope every Ottawa engagement after a free audit rather than quoting a one-size-fits-all price. Transparent pricing, no hidden fees, no lock-in.",
       },
       {
         question: "How long does SEO take to show results in Ottawa?",
         answer:
-          "Most businesses begin seeing measurable movement within a few months, with competitive terms taking longer. SEO compounds, so the gains build over time. These are general expectations, not guarantees.",
+          "Most businesses begin seeing measurable movement within a few months, with competitive Ottawa terms taking longer. SEO compounds, so the gains build over time. These are general expectations, not guarantees.",
       },
       {
         question: "Is SEO worth it for an Ottawa business?",
@@ -2609,22 +2615,22 @@ export const GEO_PAGE_CONTENT: Partial<Record<string, GeoPageContent>> = {
       {
         question: "How much does web design cost in Brampton?",
         answer:
-          "It depends on the size, the features, and whether you need eCommerce — which is why we scope every project after a free consultation rather than quoting a one-size-fits-all price. Transparent pricing, no hidden fees.",
+          "It depends on the size, the features, and whether you need eCommerce — which is why we scope every Brampton project after a free consultation rather than quoting a one-size-fits-all price. Transparent pricing, no hidden fees.",
       },
       {
         question: "How long does a web design project take in Brampton?",
         answer:
-          "Most business sites take a few weeks depending on scope and how ready your content is; eCommerce and custom builds take longer. We give you a clear timeline up front. These are general expectations, not guarantees.",
+          "Most Brampton business sites take a few weeks depending on scope and how ready your content is; eCommerce and custom builds take longer. We give you a clear timeline up front. These are general expectations, not guarantees.",
       },
       {
         question: "Should my Brampton business use WordPress or Shopify?",
         answer:
-          "It depends on what you sell and how you work — we build on WordPress, Shopify, WooCommerce, or a headless/custom stack, and recommend the right fit after understanding your goals.",
+          "It depends on what you sell and how you work — we build on WordPress, Shopify, WooCommerce, or a headless/custom stack, and recommend the right fit for your Brampton business after understanding your goals.",
       },
       {
         question: "Do you build eCommerce websites for Brampton businesses?",
         answer:
-          "Yes — Shopify and WooCommerce stores with secure checkout, product management, and a design built to convert browsers into buyers.",
+          "Yes — for Brampton businesses we build Shopify and WooCommerce stores with secure checkout, product management, and a design built to convert browsers into buyers.",
       },
     ],
     authorNote: (

@@ -501,7 +501,7 @@ export const DM_SPOKE_CONTENT: Partial<Record<DmSpokeSlug, DmSpokeContent>> = {
       {
         question: "Do you offer local SEO services for small businesses?",
         answer:
-          "Yes. We scope local SEO services for small business owners so the work — and the pricing — fits your specific situation, focusing first on the changes that move the needle fastest in your local market.",
+          "Yes. We scope local SEO services for small business owners so the work — and the pricing — fits your specific situation, focusing first on the changes that drive the fastest results in your local market.",
       },
       {
         question: "Can you manage local SEO for a business with multiple locations?",
@@ -522,7 +522,7 @@ export const DM_SPOKE_CONTENT: Partial<Record<DmSpokeSlug, DmSpokeContent>> = {
       "Book a free, no-obligation local SEO audit — an honest assessment of where your local presence stands and what it will take to grow.",
   },
   "geo-ai-search": {
-    metaTitle: "Generative Engine Optimization Services",
+    metaTitle: "Generative Engine Optimization",
     metaDescription:
       "Canadian AI SEO agency for GEO and answer engine optimization — get cited by ChatGPT, Perplexity, Gemini, and Google AI Overviews. Founder-led. Free GEO audit.",
     h1: "Generative Engine Optimization Services for Canadian Businesses",
@@ -728,7 +728,7 @@ export const DM_SPOKE_CONTENT: Partial<Record<DmSpokeSlug, DmSpokeContent>> = {
       "Book a free, no-obligation generative engine optimization audit — an honest look at how AI engines see your business and what it will take to be cited.",
   },
   "content-marketing": {
-    metaTitle: "Content Marketing Services in Canada",
+    metaTitle: "Content Marketing Services",
     metaDescription:
       "Canadian content marketing agency — strategy, SEO blog writing, web copy, video, and B2B content that builds authority. Founder-led. Free consultation.",
     h1: "Content Marketing Services for Canadian Businesses",
@@ -1167,7 +1167,7 @@ export const DM_SPOKE_CONTENT: Partial<Record<DmSpokeSlug, DmSpokeContent>> = {
       "Book a free, no-obligation link building audit — an honest assessment of where your authority stands and what it will take to grow.",
   },
   "google-ads-ppc": {
-    metaTitle: "Google Ads & PPC Management in Canada",
+    metaTitle: "Google Ads & PPC Management",
     metaDescription:
       "Canadian Google Ads agency and PPC management — search, Shopping, Performance Max, Local Service Ads. Google Partner, founder-led. Free PPC audit.",
     h1: "Google Ads and PPC Management for Canadian Businesses",
@@ -1401,7 +1401,7 @@ export const DM_SPOKE_CONTENT: Partial<Record<DmSpokeSlug, DmSpokeContent>> = {
       "Book a free, no-obligation Google Ads and PPC audit — an honest assessment of where your account stands and what it will take to grow profitably.",
   },
   "social-media-marketing": {
-    metaTitle: "Social Media Marketing Services in Canada",
+    metaTitle: "Social Media Marketing Services",
     metaDescription:
       "Canadian social media marketing agency — strategy, content, community management, and paid social on Instagram, Facebook, LinkedIn & TikTok. Free consultation.",
     h1: "Social Media Marketing Services for Canadian Businesses",
@@ -2063,7 +2063,7 @@ export const DM_SPOKE_CONTENT: Partial<Record<DmSpokeSlug, DmSpokeContent>> = {
       "Book a free, no-obligation email marketing audit — an honest assessment of where your email programme stands and what it will take to grow.",
   },
   "conversion-rate-optimization": {
-    metaTitle: "Conversion Rate Optimization Services",
+    metaTitle: "Conversion Rate Optimization",
     metaDescription:
       "Canadian CRO company — data analysis, A/B testing, and conversion-centred design that turn more of your traffic into leads and sales. Free conversion audit.",
     h1: "Conversion Rate Optimization Services for Canadian Businesses",
@@ -2282,7 +2282,7 @@ export const DM_SPOKE_CONTENT: Partial<Record<DmSpokeSlug, DmSpokeContent>> = {
       "Book a free, no-obligation conversion rate optimization audit — an honest assessment of where your conversions stand and what it will take to grow them.",
   },
   "reputation-management": {
-    metaTitle: "Reputation Management Services in Canada",
+    metaTitle: "Reputation Management Services",
     metaDescription:
       "Canadian reputation management company: more genuine reviews, professional responses, and content that outranks unfair results. Founder-led. Free audit.",
     h1: "Reputation Management Services for Canadian Businesses",

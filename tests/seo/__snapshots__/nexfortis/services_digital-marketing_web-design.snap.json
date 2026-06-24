@@ -109,6 +109,10 @@
     },
     {
       "level": 2,
+      "text": "Web Design &amp; Development — areas we serve"
+    },
+    {
+      "level": 2,
       "text": "Frequently Asked Questions"
     },
     {
@@ -352,6 +356,26 @@
       "href": "/services/digital-marketing"
     },
     {
+      "text": "Microsoft 365 Solutions",
+      "href": "/services/microsoft-365"
+    },
+    {
+      "text": "QuickBooks Migration",
+      "href": "/services/quickbooks"
+    },
+    {
+      "text": "IT Consulting",
+      "href": "/services/it-consulting"
+    },
+    {
+      "text": "Workflow Automation",
+      "href": "/services/workflow-automation"
+    },
+    {
+      "text": "Browse our IT services",
+      "href": "/services"
+    },
+    {
       "text": "SEO Services",
       "href": "/services/digital-marketing/seo"
     },
@@ -394,26 +418,6 @@
     {
       "text": "Reputation Management",
       "href": "/services/digital-marketing/reputation-management"
-    },
-    {
-      "text": "Microsoft 365 Solutions",
-      "href": "/services/microsoft-365"
-    },
-    {
-      "text": "QuickBooks Migration",
-      "href": "/services/quickbooks"
-    },
-    {
-      "text": "IT Consulting",
-      "href": "/services/it-consulting"
-    },
-    {
-      "text": "Workflow Automation",
-      "href": "/services/workflow-automation"
-    },
-    {
-      "text": "Browse our IT services",
-      "href": "/services"
     },
     {
       "text": "About",
@@ -468,16 +472,28 @@
       "href": "https://almanac.httparchive.org/en/2025/performance"
     },
     {
+      "text": "web design and development Hamilton",
+      "href": "/services/digital-marketing/web-design/hamilton"
+    },
+    {
+      "text": "web design and development London",
+      "href": "/services/digital-marketing/web-design/london-ontario"
+    },
+    {
+      "text": "web design and development Brampton",
+      "href": "/services/digital-marketing/web-design/brampton"
+    },
+    {
       "text": "More about NexFortis",
+      "href": "/about"
+    },
+    {
+      "text": "About Us",
       "href": "/about"
     },
     {
       "text": "Privacy Policy",
       "href": "/privacy"
-    },
-    {
-      "text": "About Us",
-      "href": "/about"
     },
     {
       "text": "Terms of Service",
