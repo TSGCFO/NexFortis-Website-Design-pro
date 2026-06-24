@@ -158,6 +158,26 @@
         "seo mississauga",
         "mississauga seo"
       ]
+    },
+    "seo/markham": {
+      "_role": "GEO (Phase B, Wave 1) — city page under seo; CITY-QUALIFIED terms ONLY. DATA-GROUNDED primary: 'seo services markham' is weak here (DFS 50 / Ahrefs 100) so primary = 'seo company markham' (480/500, KD0, the demand bestQuery), NOT templated. Excludes 'local seo markham' / 'local seo company markham' (-> local-seo/markham).",
+      "primary": ["seo company markham"],
+      "secondary": [
+        "seo markham",
+        "markham seo",
+        "seo agency markham",
+        "seo services markham"
+      ]
+    },
+    "local-seo/edmonton": {
+      "_role": "GEO (Phase B, Wave 1) — city page under local-seo; CITY-QUALIFIED terms ONLY. Edmonton = Alberta (region AB, geo.region CA-AB). Primary 'local seo edmonton' (480/500, KD0, demand bestQuery — the bare head is strong here).",
+      "primary": ["local seo edmonton"],
+      "secondary": [
+        "local seo services edmonton",
+        "edmonton local seo",
+        "local seo company edmonton",
+        "local seo agency edmonton"
+      ]
     }
   }
 }
