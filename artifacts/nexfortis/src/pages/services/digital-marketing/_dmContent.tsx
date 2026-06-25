@@ -524,7 +524,7 @@ export const DM_SPOKE_CONTENT: Partial<Record<DmSpokeSlug, DmSpokeContent>> = {
   "geo-ai-search": {
     metaTitle: "Generative Engine Optimization",
     metaDescription:
-      "Canadian AI SEO agency for GEO and answer engine optimization — get cited by ChatGPT, Perplexity, Gemini, and Google AI Overviews. Founder-led. Free GEO audit.",
+      "Canadian AI SEO agency for GEO and answer engine optimization — get cited by ChatGPT, Perplexity, Gemini, and AI Overviews. Free GEO audit.",
     h1: "Generative Engine Optimization Services for Canadian Businesses",
     heroSubtitle:
       "A Canadian AI SEO agency that gets your business cited inside the AI answers buyers now rely on — entity and schema work, AI-friendly content, and the technical foundations that make you quotable to ChatGPT, Perplexity, Gemini, and Google AI Overviews.",
@@ -1000,7 +1000,7 @@ export const DM_SPOKE_CONTENT: Partial<Record<DmSpokeSlug, DmSpokeContent>> = {
       {
         value: "3.8x",
         label: "more backlinks for the #1 Google result than pages ranking #2–10, in an analysis of 11.8M results.",
-        sourceName: "Backlinko",
+        sourceName: "Backlinko backlinks study",
         sourceUrl: "https://backlinko.com/search-engine-ranking",
       },
       {
@@ -1403,7 +1403,7 @@ export const DM_SPOKE_CONTENT: Partial<Record<DmSpokeSlug, DmSpokeContent>> = {
   "social-media-marketing": {
     metaTitle: "Social Media Marketing Services",
     metaDescription:
-      "Canadian social media marketing agency — strategy, content, community management, and paid social on Instagram, Facebook, LinkedIn & TikTok. Free consultation.",
+      "Canadian social media marketing — strategy, content, community management, and paid social on Instagram, Facebook, and LinkedIn. Free consultation.",
     h1: "Social Media Marketing Services for Canadian Businesses",
     heroSubtitle:
       "A Canadian social media marketing company that turns your channels into real brand awareness, engagement, and leads — strategy, content, community management, and paid social, run as one senior-led campaign.",
@@ -1635,7 +1635,7 @@ export const DM_SPOKE_CONTENT: Partial<Record<DmSpokeSlug, DmSpokeContent>> = {
   "web-design": {
     metaTitle: "Web Design Services in Canada",
     metaDescription:
-      "Canadian web design company — custom, responsive, conversion-focused websites and development built to rank and convert. Founder-led. Free design consultation.",
+      "Canadian web design company — custom, responsive, conversion-focused websites and development built to rank and convert. Free consultation.",
     h1: "Web Design Services for Canadian Businesses",
     heroSubtitle:
       "A Canadian web design company that builds websites to get results — clean, modern design paired with the development and search foundations that make a site actually perform, run by a senior team.",

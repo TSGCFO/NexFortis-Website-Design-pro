@@ -1,12 +1,12 @@
 {
   "route": "/services/digital-marketing/local-seo/edmonton",
   "title": "Local SEO Edmonton | NexFortis IT Solutions",
-  "description": "Local SEO for Edmonton businesses — Google Business Profile, citations, reviews, and Map Pack rankings across Edmonton's neighbourhoods. Free local SEO audit.",
+  "description": "Local SEO for Edmonton businesses — Google Business Profile, citations, reviews, and Map Pack rankings. Free local SEO audit.",
   "canonical": "https://nexfortis.com/services/digital-marketing/local-seo/edmonton",
   "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
   "og": {
     "title": "Local SEO Edmonton | NexFortis IT Solutions",
-    "description": "Local SEO for Edmonton businesses — Google Business Profile, citations, reviews, and Map Pack rankings across Edmonton's neighbourhoods. Free local SEO audit.",
+    "description": "Local SEO for Edmonton businesses — Google Business Profile, citations, reviews, and Map Pack rankings. Free local SEO audit.",
     "url": "https://nexfortis.com/services/digital-marketing/local-seo/edmonton",
     "image": "https://nexfortis.com/opengraph.png",
     "type": "website"
@@ -86,10 +86,6 @@
     {
       "level": 4,
       "text": "Contact"
-    },
-    {
-      "level": 1,
-      "text": "NexFortis IT Solutions"
     }
   ],
   "jsonld": [

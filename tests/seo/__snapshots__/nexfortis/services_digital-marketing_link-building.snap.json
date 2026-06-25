@@ -126,10 +126,6 @@
     {
       "level": 4,
       "text": "Contact"
-    },
-    {
-      "level": 1,
-      "text": "NexFortis IT Solutions"
     }
   ],
   "jsonld": [
@@ -456,7 +452,7 @@
       "href": "/services/digital-marketing"
     },
     {
-      "text": "Source: Backlinko",
+      "text": "Source: Backlinko backlinks study",
       "href": "https://backlinko.com/search-engine-ranking"
     },
     {

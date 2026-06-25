@@ -593,7 +593,7 @@ export const GEO_PAGE_CONTENT: Partial<Record<string, GeoPageContent>> = {
     serviceType: "Local SEO",
     metaTitle: "Local SEO Edmonton",
     metaDescription:
-      "Local SEO for Edmonton businesses — Google Business Profile, citations, reviews, and Map Pack rankings across Edmonton's neighbourhoods. Free local SEO audit.",
+      "Local SEO for Edmonton businesses — Google Business Profile, citations, reviews, and Map Pack rankings. Free local SEO audit.",
     h1: "Local SEO Services in Edmonton",
     heroSubtitle:
       "Get found by Edmonton customers searching for what you offer — senior-led local SEO that wins the Google Map Pack across the city's neighbourhoods.",
@@ -763,7 +763,7 @@ export const GEO_PAGE_CONTENT: Partial<Record<string, GeoPageContent>> = {
     serviceType: "Web Design",
     metaTitle: "Web Design Hamilton",
     metaDescription:
-      "Web design for Hamilton businesses — custom, responsive, fast websites on WordPress or Shopify, including eCommerce. Senior-led, Canadian. Free consultation.",
+      "Web design for Hamilton businesses — custom, responsive, fast websites on WordPress or Shopify, including eCommerce. Free consultation.",
     h1: "Web Design Services in Hamilton",
     heroSubtitle:
       "Custom, fast, mobile-first websites for Hamilton businesses — designed to build trust and turn visitors into customers.",
@@ -1969,7 +1969,7 @@ export const GEO_PAGE_CONTENT: Partial<Record<string, GeoPageContent>> = {
     serviceType: "Social Media Marketing",
     metaTitle: "Social Media Marketing Calgary",
     metaDescription:
-      "Managed social media marketing for Calgary businesses — strategy, content, community management, and paid social, run by a senior-led Canadian team. Free audit.",
+      "Managed social media marketing for Calgary businesses — strategy, content, community management, and paid social. Free social media audit.",
     h1: "Social Media Marketing in Calgary",
     heroSubtitle:
       "Show up consistently where your Calgary customers already spend their time — managed social media strategy, content, and community management from a senior-led Canadian team.",

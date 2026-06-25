@@ -1,12 +1,12 @@
 {
   "route": "/services/digital-marketing/geo-ai-search",
   "title": "Generative Engine Optimization | NexFortis IT Solutions",
-  "description": "Canadian AI SEO agency for GEO and answer engine optimization — get cited by ChatGPT, Perplexity, Gemini, and Google AI Overviews. Founder-led. Free GEO audit.",
+  "description": "Canadian AI SEO agency for GEO and answer engine optimization — get cited by ChatGPT, Perplexity, Gemini, and AI Overviews. Free GEO audit.",
   "canonical": "https://nexfortis.com/services/digital-marketing/geo-ai-search",
   "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
   "og": {
     "title": "Generative Engine Optimization | NexFortis IT Solutions",
-    "description": "Canadian AI SEO agency for GEO and answer engine optimization — get cited by ChatGPT, Perplexity, Gemini, and Google AI Overviews. Founder-led. Free GEO audit.",
+    "description": "Canadian AI SEO agency for GEO and answer engine optimization — get cited by ChatGPT, Perplexity, Gemini, and AI Overviews. Free GEO audit.",
     "url": "https://nexfortis.com/services/digital-marketing/geo-ai-search",
     "image": "https://nexfortis.com/opengraph.png",
     "type": "website"
@@ -118,10 +118,6 @@
     {
       "level": 4,
       "text": "Contact"
-    },
-    {
-      "level": 1,
-      "text": "NexFortis IT Solutions"
     }
   ],
   "jsonld": [

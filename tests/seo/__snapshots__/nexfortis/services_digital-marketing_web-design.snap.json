@@ -1,12 +1,12 @@
 {
   "route": "/services/digital-marketing/web-design",
   "title": "Web Design Services in Canada | NexFortis IT Solutions",
-  "description": "Canadian web design company — custom, responsive, conversion-focused websites and development built to rank and convert. Founder-led. Free design consultation.",
+  "description": "Canadian web design company — custom, responsive, conversion-focused websites and development built to rank and convert. Free consultation.",
   "canonical": "https://nexfortis.com/services/digital-marketing/web-design",
   "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
   "og": {
     "title": "Web Design Services in Canada | NexFortis IT Solutions",
-    "description": "Canadian web design company — custom, responsive, conversion-focused websites and development built to rank and convert. Founder-led. Free design consultation.",
+    "description": "Canadian web design company — custom, responsive, conversion-focused websites and development built to rank and convert. Free consultation.",
     "url": "https://nexfortis.com/services/digital-marketing/web-design",
     "image": "https://nexfortis.com/opengraph.png",
     "type": "website"
@@ -130,10 +130,6 @@
     {
       "level": 4,
       "text": "Contact"
-    },
-    {
-      "level": 1,
-      "text": "NexFortis IT Solutions"
     }
   ],
   "jsonld": [

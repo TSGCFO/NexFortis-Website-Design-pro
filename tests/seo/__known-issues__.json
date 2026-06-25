@@ -1,232 +1,7 @@
 {
   "_doc": "Allowlist of pre-existing audit findings. Each Phase 2 fix removes its entry. When all rule arrays are empty, all invariants are enforced strictly.",
   "_seeded_from": "2026-04-25 Seobility audit + nexfortis-codebase-analysis.md",
-  "INV-001": [
-    {
-      "site": "nexfortis",
-      "route": "/about",
-      "current": "2 <h1>",
-      "expected": "1 <h1>",
-      "issue": "M1",
-      "note": "Second H1 is in <noscript> fallback block — pre-existing pattern on all nexfortis pages"
-    },
-    {
-      "site": "nexfortis",
-      "route": "/blog/5-signs-your-business-needs-an-it-audit",
-      "current": "2 <h1>",
-      "expected": "1 <h1>",
-      "issue": "M1",
-      "note": "Second H1 is in <noscript> fallback block"
-    },
-    {
-      "site": "nexfortis",
-      "route": "/blog",
-      "current": "2 <h1>",
-      "expected": "1 <h1>",
-      "issue": "M1",
-      "note": "Second H1 is in <noscript> fallback block"
-    },
-    {
-      "site": "nexfortis",
-      "route": "/blog/microsoft-365-migration-checklist-canadian-smbs",
-      "current": "2 <h1>",
-      "expected": "1 <h1>",
-      "issue": "M1",
-      "note": "Second H1 is in <noscript> fallback block"
-    },
-    {
-      "site": "nexfortis",
-      "route": "/blog/quickbooks-desktop-vs-online",
-      "current": "2 <h1>",
-      "expected": "1 <h1>",
-      "issue": "M1",
-      "note": "Second H1 is in <noscript> fallback block"
-    },
-    {
-      "site": "nexfortis",
-      "route": "/blog/top-5-workflow-automation-wins-small-businesses",
-      "current": "2 <h1>",
-      "expected": "1 <h1>",
-      "issue": "M1",
-      "note": "Second H1 is in <noscript> fallback block"
-    },
-    {
-      "site": "nexfortis",
-      "route": "/blog/what-is-pipeda-why-it-matters",
-      "current": "2 <h1>",
-      "expected": "1 <h1>",
-      "issue": "M1",
-      "note": "Second H1 is in <noscript> fallback block"
-    },
-    {
-      "site": "nexfortis",
-      "route": "/contact",
-      "current": "2 <h1>",
-      "expected": "1 <h1>",
-      "issue": "M1",
-      "note": "Second H1 is in <noscript> fallback block"
-    },
-    {
-      "site": "nexfortis",
-      "route": "/",
-      "current": "2 <h1>",
-      "expected": "1 <h1>",
-      "issue": "M1",
-      "note": "Second H1 is in <noscript> fallback block"
-    },
-    {
-      "site": "nexfortis",
-      "route": "/privacy",
-      "current": "2 <h1>",
-      "expected": "1 <h1>",
-      "issue": "M1",
-      "note": "Second H1 is in <noscript> fallback block"
-    },
-    {
-      "site": "nexfortis",
-      "route": "/services/digital-marketing",
-      "current": "2 <h1>",
-      "expected": "1 <h1>",
-      "issue": "M1",
-      "note": "Second H1 is in <noscript> fallback block"
-    },
-    {
-      "site": "nexfortis",
-      "route": "/services",
-      "current": "2 <h1>",
-      "expected": "1 <h1>",
-      "issue": "M1",
-      "note": "Second H1 is in <noscript> fallback block"
-    },
-    {
-      "site": "nexfortis",
-      "route": "/services/it-consulting",
-      "current": "2 <h1>",
-      "expected": "1 <h1>",
-      "issue": "M1",
-      "note": "Second H1 is in <noscript> fallback block"
-    },
-    {
-      "site": "nexfortis",
-      "route": "/services/microsoft-365",
-      "current": "2 <h1>",
-      "expected": "1 <h1>",
-      "issue": "M1",
-      "note": "Second H1 is in <noscript> fallback block"
-    },
-    {
-      "site": "nexfortis",
-      "route": "/services/quickbooks",
-      "current": "2 <h1>",
-      "expected": "1 <h1>",
-      "issue": "M1",
-      "note": "Second H1 is in <noscript> fallback block"
-    },
-    {
-      "site": "nexfortis",
-      "route": "/services/workflow-automation",
-      "current": "2 <h1>",
-      "expected": "1 <h1>",
-      "issue": "M1",
-      "note": "Second H1 is in <noscript> fallback block"
-    },
-    {
-      "site": "nexfortis",
-      "route": "/terms",
-      "current": "2 <h1>",
-      "expected": "1 <h1>",
-      "issue": "M1",
-      "note": "Second H1 is in <noscript> fallback block"
-    },
-    {
-      "site": "nexfortis",
-      "route": "/services/digital-marketing/seo",
-      "current": "2 <h1>",
-      "expected": "1 <h1>",
-      "issue": "M1",
-      "note": "Second H1 is in <noscript> fallback block — pre-existing global pattern on all nexfortis pages"
-    },
-    {
-      "site": "nexfortis",
-      "route": "/services/digital-marketing/local-seo",
-      "current": "2 <h1>",
-      "expected": "1 <h1>",
-      "issue": "M1",
-      "note": "Second H1 is in <noscript> fallback block — pre-existing global pattern on all nexfortis pages"
-    },
-    {
-      "site": "nexfortis",
-      "route": "/services/digital-marketing/web-design",
-      "current": "2 <h1>",
-      "expected": "1 <h1>",
-      "issue": "M1",
-      "note": "Second H1 is in <noscript> fallback block — pre-existing global pattern on all nexfortis pages"
-    },
-    {
-      "site": "nexfortis",
-      "route": "/services/digital-marketing/google-ads-ppc",
-      "current": "2 <h1>",
-      "expected": "1 <h1>",
-      "issue": "M1",
-      "note": "Second H1 is in <noscript> fallback block — pre-existing global pattern on all nexfortis pages"
-    },
-    {
-      "site": "nexfortis",
-      "route": "/services/digital-marketing/social-media-marketing",
-      "current": "2 <h1>",
-      "expected": "1 <h1>",
-      "issue": "M1",
-      "note": "Second H1 is in <noscript> fallback block — pre-existing global pattern on all nexfortis pages"
-    },
-    {
-      "site": "nexfortis",
-      "route": "/services/digital-marketing/content-marketing",
-      "current": "2 <h1>",
-      "expected": "1 <h1>",
-      "issue": "M1",
-      "note": "Second H1 is in <noscript> fallback block — pre-existing global pattern on all nexfortis pages"
-    },
-    {
-      "site": "nexfortis",
-      "route": "/services/digital-marketing/link-building",
-      "current": "2 <h1>",
-      "expected": "1 <h1>",
-      "issue": "M1",
-      "note": "Second H1 is in <noscript> fallback block — pre-existing global pattern on all nexfortis pages"
-    },
-    {
-      "site": "nexfortis",
-      "route": "/services/digital-marketing/geo-ai-search",
-      "current": "2 <h1>",
-      "expected": "1 <h1>",
-      "issue": "M1",
-      "note": "Second H1 is in <noscript> fallback block — pre-existing global pattern on all nexfortis pages"
-    },
-    {
-      "site": "nexfortis",
-      "route": "/services/digital-marketing/reputation-management",
-      "current": "2 <h1>",
-      "expected": "1 <h1>",
-      "issue": "M1",
-      "note": "Second H1 is in <noscript> fallback block — pre-existing global pattern on all nexfortis pages"
-    },
-    {
-      "site": "nexfortis",
-      "route": "/services/digital-marketing/email-marketing",
-      "current": "2 <h1>",
-      "expected": "1 <h1>",
-      "issue": "M1",
-      "note": "Second H1 is in <noscript> fallback block — pre-existing global pattern on all nexfortis pages"
-    },
-    {
-      "site": "nexfortis",
-      "route": "/services/digital-marketing/conversion-rate-optimization",
-      "current": "2 <h1>",
-      "expected": "1 <h1>",
-      "issue": "M1",
-      "note": "Second H1 is in <noscript> fallback block — pre-existing global pattern on all nexfortis pages"
-    }
-  ],
+  "INV-001": [],
   "INV-002": [
     {
       "site": "nexfortis",
@@ -327,6 +102,54 @@
       "expected": "25-70 chars",
       "issue": "I1",
       "note": "H1 'Terms of Service' too short — Seobility flagged"
+    },
+    {
+      "site": "nexfortis",
+      "route": "/services/digital-marketing/seo/brampton",
+      "current": "H1 22-24 chars",
+      "expected": "25-70",
+      "issue": "keyword-primary-h1",
+      "note": "Intentional: \"SEO Services in <City>\" is the researched primary-keyword H1, kept aligned with the page content/keyword strategy. Short only because the city name is short — do NOT lengthen (would drift the H1 from the targeted keyword)."
+    },
+    {
+      "site": "nexfortis",
+      "route": "/services/digital-marketing/seo/calgary",
+      "current": "H1 22-24 chars",
+      "expected": "25-70",
+      "issue": "keyword-primary-h1",
+      "note": "Intentional: \"SEO Services in <City>\" is the researched primary-keyword H1, kept aligned with the page content/keyword strategy. Short only because the city name is short — do NOT lengthen (would drift the H1 from the targeted keyword)."
+    },
+    {
+      "site": "nexfortis",
+      "route": "/services/digital-marketing/seo/hamilton",
+      "current": "H1 22-24 chars",
+      "expected": "25-70",
+      "issue": "keyword-primary-h1",
+      "note": "Intentional: \"SEO Services in <City>\" is the researched primary-keyword H1, kept aligned with the page content/keyword strategy. Short only because the city name is short — do NOT lengthen (would drift the H1 from the targeted keyword)."
+    },
+    {
+      "site": "nexfortis",
+      "route": "/services/digital-marketing/seo/markham",
+      "current": "H1 22-24 chars",
+      "expected": "25-70",
+      "issue": "keyword-primary-h1",
+      "note": "Intentional: \"SEO Services in <City>\" is the researched primary-keyword H1, kept aligned with the page content/keyword strategy. Short only because the city name is short — do NOT lengthen (would drift the H1 from the targeted keyword)."
+    },
+    {
+      "site": "nexfortis",
+      "route": "/services/digital-marketing/seo/ottawa",
+      "current": "H1 22-24 chars",
+      "expected": "25-70",
+      "issue": "keyword-primary-h1",
+      "note": "Intentional: \"SEO Services in <City>\" is the researched primary-keyword H1, kept aligned with the page content/keyword strategy. Short only because the city name is short — do NOT lengthen (would drift the H1 from the targeted keyword)."
+    },
+    {
+      "site": "nexfortis",
+      "route": "/services/digital-marketing/seo/toronto",
+      "current": "H1 22-24 chars",
+      "expected": "25-70",
+      "issue": "keyword-primary-h1",
+      "note": "Intentional: \"SEO Services in <City>\" is the researched primary-keyword H1, kept aligned with the page content/keyword strategy. Short only because the city name is short — do NOT lengthen (would drift the H1 from the targeted keyword)."
     }
   ],
   "INV-005": [
@@ -559,6 +382,126 @@
       "expected": "no level skipped",
       "issue": "I6",
       "note": "Footer H2→H4 + noscript H1 — pre-existing global pattern on all nexfortis pages"
+    },
+    {
+      "site": "nexfortis",
+      "route": "/services/digital-marketing/seo/mississauga",
+      "current": "jumped H2→H4",
+      "expected": "no skip",
+      "issue": "footer-h4",
+      "note": "Footer column headings (Services/Company/Contact) are H4 after the body H2 — shared Layout pattern; same exemption as the 25 pre-existing nexfortis pages. Fix globally by changing footer headings, then remove."
+    },
+    {
+      "site": "nexfortis",
+      "route": "/services/digital-marketing/seo/markham",
+      "current": "jumped H2→H4",
+      "expected": "no skip",
+      "issue": "footer-h4",
+      "note": "Footer column headings (Services/Company/Contact) are H4 after the body H2 — shared Layout pattern; same exemption as the 25 pre-existing nexfortis pages. Fix globally by changing footer headings, then remove."
+    },
+    {
+      "site": "nexfortis",
+      "route": "/services/digital-marketing/seo/brampton",
+      "current": "jumped H2→H4",
+      "expected": "no skip",
+      "issue": "footer-h4",
+      "note": "Footer column headings (Services/Company/Contact) are H4 after the body H2 — shared Layout pattern; same exemption as the 25 pre-existing nexfortis pages. Fix globally by changing footer headings, then remove."
+    },
+    {
+      "site": "nexfortis",
+      "route": "/services/digital-marketing/seo/calgary",
+      "current": "jumped H2→H4",
+      "expected": "no skip",
+      "issue": "footer-h4",
+      "note": "Footer column headings (Services/Company/Contact) are H4 after the body H2 — shared Layout pattern; same exemption as the 25 pre-existing nexfortis pages. Fix globally by changing footer headings, then remove."
+    },
+    {
+      "site": "nexfortis",
+      "route": "/services/digital-marketing/seo/hamilton",
+      "current": "jumped H2→H4",
+      "expected": "no skip",
+      "issue": "footer-h4",
+      "note": "Footer column headings (Services/Company/Contact) are H4 after the body H2 — shared Layout pattern; same exemption as the 25 pre-existing nexfortis pages. Fix globally by changing footer headings, then remove."
+    },
+    {
+      "site": "nexfortis",
+      "route": "/services/digital-marketing/seo/toronto",
+      "current": "jumped H2→H4",
+      "expected": "no skip",
+      "issue": "footer-h4",
+      "note": "Footer column headings (Services/Company/Contact) are H4 after the body H2 — shared Layout pattern; same exemption as the 25 pre-existing nexfortis pages. Fix globally by changing footer headings, then remove."
+    },
+    {
+      "site": "nexfortis",
+      "route": "/services/digital-marketing/seo/ottawa",
+      "current": "jumped H2→H4",
+      "expected": "no skip",
+      "issue": "footer-h4",
+      "note": "Footer column headings (Services/Company/Contact) are H4 after the body H2 — shared Layout pattern; same exemption as the 25 pre-existing nexfortis pages. Fix globally by changing footer headings, then remove."
+    },
+    {
+      "site": "nexfortis",
+      "route": "/services/digital-marketing/local-seo/toronto",
+      "current": "jumped H2→H4",
+      "expected": "no skip",
+      "issue": "footer-h4",
+      "note": "Footer column headings (Services/Company/Contact) are H4 after the body H2 — shared Layout pattern; same exemption as the 25 pre-existing nexfortis pages. Fix globally by changing footer headings, then remove."
+    },
+    {
+      "site": "nexfortis",
+      "route": "/services/digital-marketing/local-seo/edmonton",
+      "current": "jumped H2→H4",
+      "expected": "no skip",
+      "issue": "footer-h4",
+      "note": "Footer column headings (Services/Company/Contact) are H4 after the body H2 — shared Layout pattern; same exemption as the 25 pre-existing nexfortis pages. Fix globally by changing footer headings, then remove."
+    },
+    {
+      "site": "nexfortis",
+      "route": "/services/digital-marketing/local-seo/calgary",
+      "current": "jumped H2→H4",
+      "expected": "no skip",
+      "issue": "footer-h4",
+      "note": "Footer column headings (Services/Company/Contact) are H4 after the body H2 — shared Layout pattern; same exemption as the 25 pre-existing nexfortis pages. Fix globally by changing footer headings, then remove."
+    },
+    {
+      "site": "nexfortis",
+      "route": "/services/digital-marketing/web-design/hamilton",
+      "current": "jumped H2→H4",
+      "expected": "no skip",
+      "issue": "footer-h4",
+      "note": "Footer column headings (Services/Company/Contact) are H4 after the body H2 — shared Layout pattern; same exemption as the 25 pre-existing nexfortis pages. Fix globally by changing footer headings, then remove."
+    },
+    {
+      "site": "nexfortis",
+      "route": "/services/digital-marketing/web-design/london-ontario",
+      "current": "jumped H2→H4",
+      "expected": "no skip",
+      "issue": "footer-h4",
+      "note": "Footer column headings (Services/Company/Contact) are H4 after the body H2 — shared Layout pattern; same exemption as the 25 pre-existing nexfortis pages. Fix globally by changing footer headings, then remove."
+    },
+    {
+      "site": "nexfortis",
+      "route": "/services/digital-marketing/web-design/brampton",
+      "current": "jumped H2→H4",
+      "expected": "no skip",
+      "issue": "footer-h4",
+      "note": "Footer column headings (Services/Company/Contact) are H4 after the body H2 — shared Layout pattern; same exemption as the 25 pre-existing nexfortis pages. Fix globally by changing footer headings, then remove."
+    },
+    {
+      "site": "nexfortis",
+      "route": "/services/digital-marketing/google-ads-ppc/toronto",
+      "current": "jumped H2→H4",
+      "expected": "no skip",
+      "issue": "footer-h4",
+      "note": "Footer column headings (Services/Company/Contact) are H4 after the body H2 — shared Layout pattern; same exemption as the 25 pre-existing nexfortis pages. Fix globally by changing footer headings, then remove."
+    },
+    {
+      "site": "nexfortis",
+      "route": "/services/digital-marketing/social-media-marketing/calgary",
+      "current": "jumped H2→H4",
+      "expected": "no skip",
+      "issue": "footer-h4",
+      "note": "Footer column headings (Services/Company/Contact) are H4 after the body H2 — shared Layout pattern; same exemption as the 25 pre-existing nexfortis pages. Fix globally by changing footer headings, then remove."
     }
   ],
   "INV-009": [

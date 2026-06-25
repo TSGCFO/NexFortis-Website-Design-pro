@@ -1,12 +1,12 @@
 {
   "route": "/services/digital-marketing/social-media-marketing/calgary",
   "title": "Social Media Marketing Calgary | NexFortis IT Solutions",
-  "description": "Managed social media marketing for Calgary businesses — strategy, content, community management, and paid social, run by a senior-led Canadian team. Free audit.",
+  "description": "Managed social media marketing for Calgary businesses — strategy, content, community management, and paid social. Free social media audit.",
   "canonical": "https://nexfortis.com/services/digital-marketing/social-media-marketing/calgary",
   "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
   "og": {
     "title": "Social Media Marketing Calgary | NexFortis IT Solutions",
-    "description": "Managed social media marketing for Calgary businesses — strategy, content, community management, and paid social, run by a senior-led Canadian team. Free audit.",
+    "description": "Managed social media marketing for Calgary businesses — strategy, content, community management, and paid social. Free social media audit.",
     "url": "https://nexfortis.com/services/digital-marketing/social-media-marketing/calgary",
     "image": "https://nexfortis.com/opengraph.png",
     "type": "website"
@@ -86,10 +86,6 @@
     {
       "level": 4,
       "text": "Contact"
-    },
-    {
-      "level": 1,
-      "text": "NexFortis IT Solutions"
     }
   ],
   "jsonld": [

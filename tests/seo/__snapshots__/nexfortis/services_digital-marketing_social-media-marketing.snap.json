@@ -1,12 +1,12 @@
 {
   "route": "/services/digital-marketing/social-media-marketing",
   "title": "Social Media Marketing Services | NexFortis IT Solutions",
-  "description": "Canadian social media marketing agency — strategy, content, community management, and paid social on Instagram, Facebook, LinkedIn &amp; TikTok. Free consultation.",
+  "description": "Canadian social media marketing — strategy, content, community management, and paid social on Instagram, Facebook, and LinkedIn. Free consultation.",
   "canonical": "https://nexfortis.com/services/digital-marketing/social-media-marketing",
   "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
   "og": {
     "title": "Social Media Marketing Services | NexFortis IT Solutions",
-    "description": "Canadian social media marketing agency — strategy, content, community management, and paid social on Instagram, Facebook, LinkedIn &amp; TikTok. Free consultation.",
+    "description": "Canadian social media marketing — strategy, content, community management, and paid social on Instagram, Facebook, and LinkedIn. Free consultation.",
     "url": "https://nexfortis.com/services/digital-marketing/social-media-marketing",
     "image": "https://nexfortis.com/opengraph.png",
     "type": "website"
@@ -122,10 +122,6 @@
     {
       "level": 4,
       "text": "Contact"
-    },
-    {
-      "level": 1,
-      "text": "NexFortis IT Solutions"
     }
   ],
   "jsonld": [

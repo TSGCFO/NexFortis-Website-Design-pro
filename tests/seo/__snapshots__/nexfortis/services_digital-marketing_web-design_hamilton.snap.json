@@ -1,12 +1,12 @@
 {
   "route": "/services/digital-marketing/web-design/hamilton",
   "title": "Web Design Hamilton | NexFortis IT Solutions",
-  "description": "Web design for Hamilton businesses — custom, responsive, fast websites on WordPress or Shopify, including eCommerce. Senior-led, Canadian. Free consultation.",
+  "description": "Web design for Hamilton businesses — custom, responsive, fast websites on WordPress or Shopify, including eCommerce. Free consultation.",
   "canonical": "https://nexfortis.com/services/digital-marketing/web-design/hamilton",
   "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
   "og": {
     "title": "Web Design Hamilton | NexFortis IT Solutions",
-    "description": "Web design for Hamilton businesses — custom, responsive, fast websites on WordPress or Shopify, including eCommerce. Senior-led, Canadian. Free consultation.",
+    "description": "Web design for Hamilton businesses — custom, responsive, fast websites on WordPress or Shopify, including eCommerce. Free consultation.",
     "url": "https://nexfortis.com/services/digital-marketing/web-design/hamilton",
     "image": "https://nexfortis.com/opengraph.png",
     "type": "website"
@@ -90,10 +90,6 @@
     {
       "level": 4,
       "text": "Contact"
-    },
-    {
-      "level": 1,
-      "text": "NexFortis IT Solutions"
     }
   ],
   "jsonld": [
