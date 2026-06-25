@@ -11,8 +11,6 @@
 import {
   Search,
   MapPin,
-  Gauge,
-  Building2,
   PenTool,
   Link2,
   Sparkles,
@@ -21,7 +19,7 @@ import {
   LayoutTemplate,
   Mail,
   MousePointerClick,
-  BarChart3,
+  ShieldCheck,
   type LucideIcon,
 } from "lucide-react";
 
@@ -30,18 +28,16 @@ export const DM_PILLAR_LINK_TEXT = "digital marketing services";
 
 export type DmSpokeSlug =
   | "seo"
-  | "technical-seo"
   | "local-seo"
-  | "google-business-profile"
   | "content-marketing"
   | "link-building"
-  | "generative-engine-optimization"
-  | "google-ads"
+  | "geo-ai-search"
+  | "google-ads-ppc"
   | "social-media-marketing"
   | "web-design"
   | "email-marketing"
   | "conversion-rate-optimization"
-  | "analytics-reporting";
+  | "reputation-management";
 
 export type DmSpoke = {
   slug: DmSpokeSlug;
@@ -83,8 +79,8 @@ export const DM_SPOKES: readonly DmSpoke[] = [
     published: true,
   },
   {
-    slug: "generative-engine-optimization",
-    href: `${DM_PILLAR_HREF}/generative-engine-optimization`,
+    slug: "geo-ai-search",
+    href: `${DM_PILLAR_HREF}/geo-ai-search`,
     title: "GEO & AI Search",
     linkText: "Generative Engine Optimization",
     blurb:
@@ -92,28 +88,6 @@ export const DM_SPOKES: readonly DmSpoke[] = [
     icon: Sparkles,
     category: "GEO / AI Search",
     published: true,
-  },
-  {
-    slug: "technical-seo",
-    href: `${DM_PILLAR_HREF}/technical-seo`,
-    title: "Technical SEO",
-    linkText: "technical SEO",
-    blurb:
-      "Core Web Vitals, crawlability, structured data, and rendering fixes that let Google index and rank every page.",
-    icon: Gauge,
-    category: "Technical SEO",
-    published: false,
-  },
-  {
-    slug: "google-business-profile",
-    href: `${DM_PILLAR_HREF}/google-business-profile`,
-    title: "Google Business Profile",
-    linkText: "Google Business Profile management",
-    blurb:
-      "Claim, optimize, and actively manage your Google Business Profile to win the local pack and earn more calls.",
-    icon: Building2,
-    category: "Google Business Profile",
-    published: false,
   },
   {
     slug: "content-marketing",
@@ -124,7 +98,7 @@ export const DM_SPOKES: readonly DmSpoke[] = [
       "Research-led articles, pillar pages, and topic clusters that build authority and capture demand at every stage.",
     icon: PenTool,
     category: "Content Production",
-    published: false,
+    published: true,
   },
   {
     slug: "link-building",
@@ -135,18 +109,18 @@ export const DM_SPOKES: readonly DmSpoke[] = [
       "Earn editorial backlinks from real publications to grow the authority that decides how high you can rank.",
     icon: Link2,
     category: "Link Building / Off-Page",
-    published: false,
+    published: true,
   },
   {
-    slug: "google-ads",
-    href: `${DM_PILLAR_HREF}/google-ads`,
+    slug: "google-ads-ppc",
+    href: `${DM_PILLAR_HREF}/google-ads-ppc`,
     title: "Google Ads Management",
     linkText: "Google Ads management",
     blurb:
       "Profitable search, display, and remarketing campaigns with transparent reporting on every dollar of ad spend.",
     icon: Megaphone,
     category: "Paid Search",
-    published: false,
+    published: true,
   },
   {
     slug: "social-media-marketing",
@@ -157,7 +131,7 @@ export const DM_SPOKES: readonly DmSpoke[] = [
       "Organic social and Meta Ads that build brand surface area and feed your funnel on the platforms your buyers use.",
     icon: Share2,
     category: "Social / Paid Social",
-    published: false,
+    published: true,
   },
   {
     slug: "web-design",
@@ -168,7 +142,7 @@ export const DM_SPOKES: readonly DmSpoke[] = [
       "Fast, mobile-first, conversion-focused websites built on modern frameworks and engineered to rank from day one.",
     icon: LayoutTemplate,
     category: "Web Design / Dev",
-    published: false,
+    published: true,
   },
   {
     slug: "email-marketing",
@@ -179,7 +153,7 @@ export const DM_SPOKES: readonly DmSpoke[] = [
       "Newsletters, nurture sequences, and automations that turn your list into repeat revenue you actually own.",
     icon: Mail,
     category: "Email / Lifecycle",
-    published: false,
+    published: true,
   },
   {
     slug: "conversion-rate-optimization",
@@ -190,18 +164,18 @@ export const DM_SPOKES: readonly DmSpoke[] = [
       "Turn more of the traffic you already have into leads with behaviour analysis, testing, and landing-page fixes.",
     icon: MousePointerClick,
     category: "CRO",
-    published: false,
+    published: true,
   },
   {
-    slug: "analytics-reporting",
-    href: `${DM_PILLAR_HREF}/analytics-reporting`,
-    title: "Analytics & Reporting",
-    linkText: "analytics and reporting",
+    slug: "reputation-management",
+    href: `${DM_PILLAR_HREF}/reputation-management`,
+    title: "Reputation Management",
+    linkText: "reputation management",
     blurb:
-      "GA4, Search Console, and call tracking wired into clear monthly reports that tie marketing to real revenue.",
-    icon: BarChart3,
-    category: "Analytics / Reporting",
-    published: false,
+      "Earn more genuine reviews, respond professionally, and push down unfair results so what buyers find builds trust.",
+    icon: ShieldCheck,
+    category: "Reputation / Reviews",
+    published: true,
   },
 ];
 

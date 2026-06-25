@@ -1,0 +1,529 @@
+{
+  "route": "/services/digital-marketing/google-ads-ppc",
+  "title": "Google Ads &amp; PPC Management | NexFortis IT Solutions",
+  "description": "Canadian Google Ads agency and PPC management — search, Shopping, Performance Max, Local Service Ads. Google Partner, founder-led. Free PPC audit.",
+  "canonical": "https://nexfortis.com/services/digital-marketing/google-ads-ppc",
+  "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
+  "og": {
+    "title": "Google Ads &amp; PPC Management | NexFortis IT Solutions",
+    "description": "Canadian Google Ads agency and PPC management — search, Shopping, Performance Max, Local Service Ads. Google Partner, founder-led. Free PPC audit.",
+    "url": "https://nexfortis.com/services/digital-marketing/google-ads-ppc",
+    "image": "https://nexfortis.com/opengraph.png",
+    "type": "website"
+  },
+  "twitter": {
+    "card": "summary_large_image"
+  },
+  "headings": [
+    {
+      "level": 1,
+      "text": "Google Ads and PPC Management for Canadian Businesses"
+    },
+    {
+      "level": 2,
+      "text": "What NexFortis Google Ads and PPC services include"
+    },
+    {
+      "level": 2,
+      "text": "Our Google Ads and PPC services"
+    },
+    {
+      "level": 3,
+      "text": "Google Ads search campaigns"
+    },
+    {
+      "level": 3,
+      "text": "PPC management &amp; optimization"
+    },
+    {
+      "level": 3,
+      "text": "Campaign setup &amp; account structure"
+    },
+    {
+      "level": 3,
+      "text": "Keyword &amp; bid management"
+    },
+    {
+      "level": 3,
+      "text": "Ad copywriting &amp; A/B testing"
+    },
+    {
+      "level": 3,
+      "text": "Google Local Service Ads"
+    },
+    {
+      "level": 3,
+      "text": "Google Shopping &amp; Performance Max"
+    },
+    {
+      "level": 3,
+      "text": "Landing-page &amp; conversion optimization"
+    },
+    {
+      "level": 3,
+      "text": "Transparent reporting"
+    },
+    {
+      "level": 2,
+      "text": "Our Google Ads and PPC process"
+    },
+    {
+      "level": 3,
+      "text": "Free Google Ads &amp; PPC audit"
+    },
+    {
+      "level": 3,
+      "text": "Strategy"
+    },
+    {
+      "level": 3,
+      "text": "Execution"
+    },
+    {
+      "level": 3,
+      "text": "Monthly reporting &amp; optimization"
+    },
+    {
+      "level": 2,
+      "text": "Why choose NexFortis for Google Ads and PPC"
+    },
+    {
+      "level": 2,
+      "text": "Google Ads and PPC pricing after a free audit"
+    },
+    {
+      "level": 3,
+      "text": "Management fee separate from ad spend"
+    },
+    {
+      "level": 2,
+      "text": "Related services"
+    },
+    {
+      "level": 3,
+      "text": "SEO Services"
+    },
+    {
+      "level": 3,
+      "text": "Local SEO"
+    },
+    {
+      "level": 3,
+      "text": "GEO &amp; AI Search"
+    },
+    {
+      "level": 2,
+      "text": "Google Ads Management — areas we serve"
+    },
+    {
+      "level": 2,
+      "text": "Frequently Asked Questions"
+    },
+    {
+      "level": 2,
+      "text": "Ready to make every click earn its keep?"
+    },
+    {
+      "level": 4,
+      "text": "Services"
+    },
+    {
+      "level": 4,
+      "text": "Company"
+    },
+    {
+      "level": 4,
+      "text": "Contact"
+    }
+  ],
+  "jsonld": [
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://nexfortis.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Services",
+          "item": "https://nexfortis.com/services"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Digital Marketing",
+          "item": "https://nexfortis.com/services/digital-marketing"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Google Ads Management",
+          "item": "https://nexfortis.com/services/digital-marketing/google-ads-ppc"
+        }
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How much does Google Ads cost in Canada?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "There are two costs: the ad spend you pay Google (which you set and control), and the management fee for running the account. Ad spend depends on your industry, your competition, and your keywords, so cost per click varies widely. We scope both after a free audit so your budget is matched to realistic results."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much should I pay someone to manage my Google Ads?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Management fees vary with the size and complexity of the account and how much ongoing optimization is involved. We scope a transparent management fee after a free audit — separate from your ad spend — so you know exactly what you are paying for, with no long-term lock-in."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is included in NexFortis's Google Ads and PPC service?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Our google ads management services include campaign strategy and setup, account structure, keyword and bid management, ad copywriting and A/B testing, negative-keyword management, Google Local Service Ads, Shopping and Performance Max, landing-page and conversion optimization, and transparent monthly reporting."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How is a PPC agency different from doing Google Ads myself?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A ppc agency brings structure, ongoing optimization, and conversion tracking that most DIY accounts lack — and the difference usually shows up as wasted spend avoided and a lower cost per lead. We find the leaks, fix the foundations, and manage the account so your budget works harder."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long does it take to see results from PPC?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Paid search can drive traffic almost immediately once campaigns are live, but a profitable account is a months-not-weeks discipline: it takes time to gather conversion data, cut what does not work, and scale what does. We set realistic expectations up front."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you manage both Google Ads and other PPC channels?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. We focus on Google's ecosystem — search, Shopping, Performance Max, and google local service ads — and can coordinate paid search with the rest of your marketing so your channels reinforce each other instead of competing."
+          }
+        }
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "@id": "https://nexfortis.com/#localbusiness",
+      "name": "NexFortis IT Solutions",
+      "legalName": "17756968 Canada Inc.",
+      "url": "https://nexfortis.com",
+      "logo": "https://nexfortis.com/images/logo-512.png",
+      "image": "https://nexfortis.com/opengraph.png",
+      "description": "NexFortis delivers end-to-end IT solutions for Canadian businesses including managed IT, Microsoft 365, QuickBooks migration, digital marketing, and workflow automation.",
+      "email": "contact@nexfortis.com",
+      "telephone": "+1-416-317-0051",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "204 Hill Farm Rd",
+        "addressLocality": "Nobleton",
+        "addressRegion": "ON",
+        "postalCode": "L7B 0A1",
+        "addressCountry": "CA"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 43.9327,
+        "longitude": -79.6615
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "Canada"
+      },
+      "priceRange": "$$",
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday"
+        ],
+        "opens": "09:00",
+        "closes": "17:00"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/company/nexfortis"
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "@id": "https://nexfortis.com/#organization",
+      "name": "NexFortis IT Solutions",
+      "legalName": "17756968 Canada Inc.",
+      "url": "https://nexfortis.com",
+      "logo": "https://nexfortis.com/images/logo-512.png",
+      "image": "https://nexfortis.com/opengraph.png",
+      "description": "NexFortis delivers end-to-end IT solutions for Canadian businesses including managed IT, Microsoft 365, QuickBooks migration, digital marketing, and workflow automation.",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer service",
+        "email": "contact@nexfortis.com",
+        "telephone": "+1-416-317-0051",
+        "areaServed": "CA",
+        "availableLanguage": [
+          "English"
+        ]
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "204 Hill Farm Rd",
+        "addressLocality": "Nobleton",
+        "addressRegion": "ON",
+        "postalCode": "L7B 0A1",
+        "addressCountry": "CA"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/company/nexfortis"
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Hassan Sadiq",
+      "jobTitle": "Founder & CEO, NexFortis IT Solutions",
+      "url": "https://nexfortis.com/about",
+      "worksFor": {
+        "@id": "https://nexfortis.com/#organization"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "Google Ads and PPC Management",
+      "description": "Google Ads and PPC management for Canadian businesses — search, Shopping, Performance Max, and Local Service Ads, with account structure, bid management, ad copy, and conversion tracking, run as one founder-led campaign by a Google Partner.",
+      "url": "https://nexfortis.com/services/digital-marketing/google-ads-ppc",
+      "provider": {
+        "@type": "Organization",
+        "name": "NexFortis IT Solutions",
+        "url": "https://nexfortis.com"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "Canada"
+      },
+      "serviceType": "Google Ads and PPC Management"
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "@id": "https://nexfortis.com/#website",
+      "name": "NexFortis IT Solutions",
+      "url": "https://nexfortis.com",
+      "inLanguage": "en-CA",
+      "publisher": {
+        "@id": "https://nexfortis.com/#organization"
+      }
+    }
+  ],
+  "anchors": [
+    {
+      "text": "Skip to main content",
+      "href": "#main-content"
+    },
+    {
+      "text": "",
+      "href": "/"
+    },
+    {
+      "text": "Home",
+      "href": "/"
+    },
+    {
+      "text": "Digital Marketing",
+      "href": "/services/digital-marketing"
+    },
+    {
+      "text": "Microsoft 365 Solutions",
+      "href": "/services/microsoft-365"
+    },
+    {
+      "text": "QuickBooks Migration",
+      "href": "/services/quickbooks"
+    },
+    {
+      "text": "IT Consulting",
+      "href": "/services/it-consulting"
+    },
+    {
+      "text": "Workflow Automation",
+      "href": "/services/workflow-automation"
+    },
+    {
+      "text": "Browse our IT services",
+      "href": "/services"
+    },
+    {
+      "text": "SEO Services",
+      "href": "/services/digital-marketing/seo"
+    },
+    {
+      "text": "Local SEO",
+      "href": "/services/digital-marketing/local-seo"
+    },
+    {
+      "text": "GEO &amp; AI Search",
+      "href": "/services/digital-marketing/geo-ai-search"
+    },
+    {
+      "text": "Content Marketing",
+      "href": "/services/digital-marketing/content-marketing"
+    },
+    {
+      "text": "Link Building &amp; Digital PR",
+      "href": "/services/digital-marketing/link-building"
+    },
+    {
+      "text": "Google Ads Management",
+      "href": "/services/digital-marketing/google-ads-ppc"
+    },
+    {
+      "text": "Social Media Marketing",
+      "href": "/services/digital-marketing/social-media-marketing"
+    },
+    {
+      "text": "Web Design &amp; Development",
+      "href": "/services/digital-marketing/web-design"
+    },
+    {
+      "text": "Email Marketing",
+      "href": "/services/digital-marketing/email-marketing"
+    },
+    {
+      "text": "Conversion Rate Optimization",
+      "href": "/services/digital-marketing/conversion-rate-optimization"
+    },
+    {
+      "text": "Reputation Management",
+      "href": "/services/digital-marketing/reputation-management"
+    },
+    {
+      "text": "About",
+      "href": "/about"
+    },
+    {
+      "text": "Blog",
+      "href": "/blog"
+    },
+    {
+      "text": "Contact",
+      "href": "/contact"
+    },
+    {
+      "text": "QB Portal",
+      "href": "https://qb.nexfortis.com"
+    },
+    {
+      "text": "Get a Free Quote",
+      "href": "/contact"
+    },
+    {
+      "text": "All Services",
+      "href": "/services"
+    },
+    {
+      "text": "Services",
+      "href": "/services"
+    },
+    {
+      "text": "digital marketing services",
+      "href": "/services/digital-marketing"
+    },
+    {
+      "text": "Source: WordStream",
+      "href": "https://www.wordstream.com/blog/ws/2023/02/24/digital-advertising"
+    },
+    {
+      "text": "Source: Google Economic Impact",
+      "href": "https://economicimpact.google/methodology/"
+    },
+    {
+      "text": "Source: WordStream PPC benchmarks",
+      "href": "https://www.wordstream.com/ppc-benchmarks"
+    },
+    {
+      "text": "conversion rate optimization",
+      "href": "/services/digital-marketing/conversion-rate-optimization"
+    },
+    {
+      "text": "web design and development",
+      "href": "/services/digital-marketing/web-design"
+    },
+    {
+      "text": "Google Ads management Toronto",
+      "href": "/services/digital-marketing/google-ads-ppc/toronto"
+    },
+    {
+      "text": "More about NexFortis",
+      "href": "/about"
+    },
+    {
+      "text": "About Us",
+      "href": "/about"
+    },
+    {
+      "text": "Privacy Policy",
+      "href": "/privacy"
+    },
+    {
+      "text": "Terms of Service",
+      "href": "/terms"
+    },
+    {
+      "text": "(416) 317-0051",
+      "href": "tel:+14163170051"
+    },
+    {
+      "text": "contact@nexfortis.com",
+      "href": "mailto:contact@nexfortis.com"
+    },
+    {
+      "text": "LinkedIn",
+      "href": "https://www.linkedin.com/company/nexfortis"
+    },
+    {
+      "text": "Privacy",
+      "href": "/privacy"
+    },
+    {
+      "text": "Terms",
+      "href": "/terms"
+    },
+    {
+      "text": "About NexFortis",
+      "href": "/about"
+    },
+    {
+      "text": "Our services",
+      "href": "/services"
+    },
+    {
+      "text": "Contact us",
+      "href": "/contact"
+    }
+  ],
+  "rootDivIsEmpty": false,
+  "hasNoindex": false
+}

@@ -1,0 +1,23 @@
+{
+  "_step": "2 — Cluster + cannibalization (HARD GATE 1)",
+  "_page": "seo (/services/digital-marketing/seo)",
+  "_source": "KI clustering order 362f44e6-5702-4e1f-98b6-358610278b7f (2026-06-18, Canada).",
+  "cluster_evidence": {
+    "seo services": {"ki_cluster": "seo services", "intent": "Transactional"},
+    "seo company": {"ki_cluster": "seo company", "intent": "Commercial"},
+    "seo agency": {"ki_cluster": "seo agency", "intent": "Commercial"},
+    "seo consultant": {"ki_cluster": "seo consultant", "intent": "Commercial", "note": "Commercial service-hire intent (unlike pillar's 'digital marketing consultant' which was a jobs SERP). Fold as secondary."},
+    "seo agency near me": {"ki_cluster": "seo agency near me", "intent": "Commercial", "note": "Hiring an SEO agency; NOT local-seo. Secondary."},
+    "affordable seo services": {"ki_cluster": "affordable seo services", "intent": "Commercial", "note": "Secondary."},
+    "seo services for small business": {"ki_cluster": "seo services for small business", "intent": "Commercial", "note": "Secondary, SMB."},
+    "seo expert": {"ki_cluster": "seo expert", "intent": "Informational", "note": "EXCLUDED — KI marks informational (how-to-become / definitions). Not targeted on the service page."},
+    "seo": {"ki_cluster": "seo", "intent": "Informational", "note": "EXCLUDED to blog (head, brutal)."},
+    "search engine optimization": {"ki_cluster": "seo", "intent": "Informational", "note": "Grouped with 'seo' -> blog."}
+  },
+  "assignment": {
+    "owns_primary": ["seo services", "seo company", "seo agency"],
+    "owns_secondary": ["seo consultant", "seo agency near me", "affordable seo services", "seo services for small business"],
+    "excluded": {"seo": "blog", "search engine optimization": "blog", "seo expert": "not targeted (informational)", "local seo *": "local-seo spoke", "technical seo *": "technical-seo spoke"}
+  },
+  "_done_check": "PASS — one primary cluster; registry updated; check-cannibalization exit 0."
+}

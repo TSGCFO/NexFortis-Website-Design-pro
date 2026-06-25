@@ -1,0 +1,20 @@
+{
+  "_step": "3 — SERP analysis + content brief", "_page": "generative-engine-optimization",
+  "_primary_keyword": "generative engine optimization (+ services)", "_location": "Canada", "_date": "2026-06-18",
+  "_ki_brief_status": "KI brief tool down -> SERP brief from live Semrush SERP + competitor fetches.",
+  "serp_source": "Semrush phrase_organic (ca, 'generative engine optimization services').",
+  "competitor_word_counts": {
+    "_method": "Fetched ranking service/agency pages; <body> raw words. Excluded 'best GEO agencies' listicles, guides (wikipedia/semrush blog/seoresellers guide), fiverr, youtube.",
+    "service_page_subset": [{"url": "growmemarketing.ca/generative-engine-optimization", "words_raw": 1584}, {"url": "firstrank.ca/generative-engine-optimization", "words_raw": 2745}, {"url": "geo-toronto.com", "words_raw": 1273}, {"url": "geoseoservices.ca", "words_raw": 1370}],
+    "blocked_bot": ["telusdigital.com (403)"],
+    "service_subset_stats": {"min_raw": 1273, "median_raw": 1480, "max_raw": 2745, "main_content_estimate": "~900-2300"},
+    "length_conclusion": "Emerging niche; service pages ~1300-2700 raw. Educate + sell. Current page = 1464."
+  },
+  "questions": {
+    "_source": "Semrush phrase_questions (ca, 'generative engine optimization'), buyer/educational.",
+    "buyer_questions": ["What is generative engine optimization (GEO)?", "How does GEO work?", "Why is GEO important?", "How do you do / implement / improve GEO?", "Is GEO different from SEO?", "Can you guarantee an AI citation?"]
+  },
+  "secondary_keywords": ["answer engine optimization", "ai search optimization", "ai overview optimization", "chatgpt seo", "llm optimization"],
+  "serp_features": "Emerging-category SERP: mix of agency pages, 'best agency' listicles, and definition guides + heavy PAA. -> include a clear 'What is GEO?' definition/callout + strong FAQ + the AI-citation honesty answer.",
+  "_done_check": "PASS — competitor table + buyer/educational questions + secondary kws (Canada)."
+}

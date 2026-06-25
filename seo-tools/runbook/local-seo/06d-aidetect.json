@@ -1,0 +1,26 @@
+{
+  "_step": "6d — AI-detection + plagiarism (HARD GATE 3)",
+  "_page": "local-seo (/services/digital-marketing/local-seo)",
+  "_content": "local-seo/06c-humanized.md (humanized + proofread + coverage-verified)",
+  "_date": "2026-06-22",
+  "plagiarism_winston": {
+    "binding": true,
+    "tool": "Winston AI (seo-tools/plagiarism-check.mjs)",
+    "score_percent": 0,
+    "matched_sources": 0,
+    "words_scanned": 1515,
+    "verdict": "PASS — original content, no unattributed matches."
+  },
+  "ai_detection_undetectable": {
+    "binding": false,
+    "policy": "ADVISORY (operator decision, PR #107 governance). The Undetectable detector over-flags professional human business/SEO prose (calibration: Wikipedia 'Search engine optimization' AI=82; casual human SMB sample AI=100). Binding integrity gates for this run = Winston plagiarism (above) + the keyword/outline coverage gate (06c).",
+    "tool": "Undetectable.ai detector (seo-tools/undetectable-detect.mjs)",
+    "ai_score": 66.0,
+    "human_percent": 37.5,
+    "threshold_reference": "<50 = 'human' on this tool",
+    "note": "Same human-business-prose band as the SEO page (AI 72 advisory). The 6c humanizer touched only prose blocks; lists, headings, FAQ, keywords, links, and citations were preserved for coverage safety. Pushing under 50 would require humanizing the lists/FAQ too, risking keyword/link drops — not done."
+  },
+  "humanizer_note": "The Undetectable HUMANIZE pass (6c) returned rough output this run — it dropped the keyword 'local seo agency' and left mangled sentinels ({@P0}/{@P3}, and P0/P1 in the FAQ). The humanizer's binding integrity gate correctly FAILED and left 05-draft.md untouched (06c-humanized.attempt.md); the keyword + sentinels were restored and the prose proofread by hand, then coverage re-verified (9/9 keywords, 7/7 headings, 0 leftover sentinels). Flag for run-book hardening: the humanizer's sentinel restoration is fragile.",
+  "coverage_gate": "PASS (06c re-verify: 9/9 keywords, 7/7 headings, 3 distinct cited URLs, 1,598 words).",
+  "_done_check": "GATE 3 satisfied: Winston plagiarism 0% (binding PASS); AI-detection recorded advisory; coverage intact."
+}

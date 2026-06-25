@@ -1,0 +1,111 @@
+{
+  "_step": "3 — SERP analysis + content brief (KI)",
+  "_page": "content-marketing (/services/digital-marketing/content-marketing)",
+  "_primary_keyword": [
+    "content marketing services"
+  ],
+  "_location": "Canada",
+  "_date": "2026-06-21",
+  "_ki_brief_status": "KI brief COMPLETE — order 96cef129-5a17-4f5a-b3d1-4c079bd1d728, 16/17 (html_scraping true, completed true), 3 pages. Raw: seo-tools/tmp/briefs/content-marketing.json (gitignored).",
+  "serp_source": "Keyword Insights content brief (live SERP, Canada, 'content marketing services').",
+  "competitor_word_counts": {
+    "_method": "KI serp_page list. Service-page subset = transactional agency pages; excluded software/tool listicles, 'best/top N' roundups, Wikipedia, Google's own product/help pages, YouTube, directories.",
+    "service_page_subset": [
+      {
+        "url": "https://www.mawazo.ca/digital-marketing-services/content-marketing-services",
+        "rank": 16,
+        "words": 1865
+      },
+      {
+        "url": "https://seoresellerscanada.ca/quality-content-marketing/",
+        "rank": 1,
+        "words": 1415
+      },
+      {
+        "url": "https://www.webfx.com/content-marketing/services/",
+        "rank": 2,
+        "words": 286
+      },
+      {
+        "url": "https://www.designrush.com/agency/content-marketing/ca/toronto",
+        "rank": 10,
+        "words": 198
+      },
+      {
+        "url": "https://www.uniteinteractive.com/content-marketing",
+        "rank": 15,
+        "words": 148
+      },
+      {
+        "url": "https://agencies.semrush.com/list/content-marketing/canada/",
+        "rank": 3,
+        "words": 144
+      },
+      {
+        "url": "https://consultusdigital.com/content-marketing-toronto/",
+        "rank": 4,
+        "words": 135
+      },
+      {
+        "url": "https://goodmanlantern.com/canada-content-marketing-agency/",
+        "rank": 6,
+        "words": 118
+      },
+      {
+        "url": "https://conqueri.ca/services/seo/content-marketing",
+        "rank": 20,
+        "words": 116
+      },
+      {
+        "url": "https://www.techwyse.com/services/traffic-building/content-marketing",
+        "rank": 17,
+        "words": 113
+      },
+      {
+        "url": "https://giantcreative.ca/solutions/content-marketing/",
+        "rank": 5,
+        "words": 55
+      },
+      {
+        "url": "https://www.seoteamtoronto.ca/services/content-marketing",
+        "rank": 11,
+        "words": 53
+      },
+      {
+        "url": "https://growmemarketing.ca/content-marketing/",
+        "rank": 9,
+        "words": 49
+      },
+      {
+        "url": "https://brandspot.ca/content-marketing",
+        "rank": 13,
+        "words": 31
+      }
+    ],
+    "service_subset_stats": {
+      "n": 14,
+      "min": 31,
+      "median": 126,
+      "max": 1865
+    },
+    "length_conclusion": "SERP-DERIVED target 1200-1600 words. Subset min 31 / median 126 / max 1865; beat thin pages, match the substantive service cluster, capped below guide/listicle/software outliers. Per locked rule 'length is SERP-derived per page' (NOT the stale Cursor-06-18 dm-word-targets.json)."
+  },
+  "questions": {
+    "_source": "KI people_also_asked + questions, buyer-intent filtered (dropped industry/forum noise).",
+    "buyer_questions": [
+      "For a small business, what does a marketing agency do",
+      "Cold calling vs. content marketing: Which side are you on,",
+      "What are the problems you guys still face in marketing?",
+      "What are the differences between CONTENT WRITER and",
+      "What are the best tools to use for content marketing?",
+      "What is the best content marketing agency in London, UK?"
+    ]
+  },
+  "secondary_keywords": [
+    "content marketing agency",
+    "content marketing service",
+    "b2b content marketing agency",
+    "video content marketing services"
+  ],
+  "_done_check": "PASS — real KI brief 16/17 (html_scraping true); competitor subset + buyer questions + owned secondary keywords (Canada)."
+}

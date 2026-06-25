@@ -1,0 +1,6 @@
+{
+  "_step": "6d — AI-detection + plagiarism (HARD GATE 3)", "_page": "analytics-reporting", "_date": "2026-06-18",
+  "plagiarism_winston": {"binding": true, "tool": "Winston AI v2", "score_percent": 0, "matched_sources": 0, "words_scanned": 1428, "verdict": "PASS — original."},
+  "ai_detection_undetectable": {"binding": false, "policy": "ADVISORY (see pillar/06d). Binding = Winston + 06a.", "tool": "Undetectable xlm_ud_detector", "ai_score": 85.0},
+  "_done_check": "Gate 3 per policy: Winston PASS; Undetectable advisory recorded."
+}

@@ -1,0 +1,225 @@
+{
+  "_step": "1 — Keyword research & generation (service-architecture seeds)",
+  "_scope": "Validate the candidate service lines (00-architecture.md) against real national-Canada demand + intent, 3-tool.",
+  "_date": "2026-06-20",
+  "_location": "Canada (DataForSEO 2124 / Semrush db=ca / Ahrefs country=ca)",
+  "_tools": "DataForSEO (seo-tools/dataforseo.mjs), Semrush MCP phrase_these (db=ca), Ahrefs MCP keywords-explorer-overview (ca, intents). Ahrefs CPC converted cents->USD.",
+  "_intent_rule": "Ahrefs intents.commercial = the buyer-vs-researcher discriminator. commercial:false (informational/branded only) => NOT a buyer service page.",
+  "seeds": [
+    {
+      "kw": "seo services",
+      "dfs": { "vol": 5400, "kd": 27 },
+      "semrush_vol": 5400,
+      "ahrefs": { "vol": 4300, "kd": 31, "cpc": 4.5 },
+      "intent": ["commercial"],
+      "verdict": "SEO head"
+    },
+    {
+      "kw": "seo company",
+      "dfs": { "vol": 3600, "kd": 14 },
+      "semrush_vol": 4400,
+      "ahrefs": { "vol": 3800, "kd": 9, "cpc": 4.5 },
+      "intent": ["commercial"],
+      "verdict": "SEO head — lowest KD (9-14), strong CPC; candidate primary"
+    },
+    {
+      "kw": "seo agency",
+      "dfs": { "vol": 2900, "kd": 35 },
+      "semrush_vol": 5400,
+      "ahrefs": { "vol": 4400, "kd": 50, "cpc": 3.5 },
+      "intent": ["commercial"],
+      "verdict": "SEO secondary"
+    },
+    {
+      "kw": "local seo services",
+      "dfs": { "vol": 880, "kd": 8 },
+      "semrush_vol": 2400,
+      "ahrefs": { "vol": 3300, "kd": 6, "cpc": 5.0 },
+      "intent": ["commercial", "local"],
+      "verdict": "Local SEO head — strong + local => Layer-2 city candidate"
+    },
+    {
+      "kw": "local seo company",
+      "dfs": { "vol": 1300, "kd": 11 },
+      "semrush_vol": 1900,
+      "ahrefs": { "vol": 1800, "kd": 9, "cpc": 8.0 },
+      "intent": ["commercial", "local"],
+      "verdict": "Local SEO secondary"
+    },
+    {
+      "kw": "google business profile optimization",
+      "dfs": { "vol": 210, "kd": 26 },
+      "semrush_vol": 140,
+      "ahrefs": { "vol": 200, "kd": 19, "cpc": 4.0 },
+      "intent": ["informational", "branded"],
+      "verdict": "CORRECTION: not commercial; FOLD as section under Local SEO"
+    },
+    {
+      "kw": "technical seo services",
+      "dfs": { "vol": 260, "kd": 0 },
+      "semrush_vol": 320,
+      "ahrefs": { "vol": 450, "kd": 6, "cpc": 5.0 },
+      "intent": ["commercial"],
+      "verdict": "Technical SEO — low vol, very easy (KD 6); page or strong section of SEO"
+    },
+    {
+      "kw": "content marketing services",
+      "dfs": { "vol": 260, "kd": 0 },
+      "semrush_vol": 880,
+      "ahrefs": { "vol": 800, "kd": 3, "cpc": 2.5 },
+      "intent": ["commercial"],
+      "verdict": "Content Marketing — easy (KD 3)"
+    },
+    {
+      "kw": "link building services",
+      "dfs": { "vol": 880, "kd": 47 },
+      "semrush_vol": 590,
+      "ahrefs": { "vol": 900, "kd": 26, "cpc": 4.5 },
+      "intent": ["commercial"],
+      "verdict": "Link Building"
+    },
+    {
+      "kw": "generative engine optimization",
+      "dfs": { "vol": 720, "kd": 50 },
+      "semrush_vol": 720,
+      "ahrefs": { "vol": 1000, "kd": null, "cpc": null },
+      "intent": [],
+      "verdict": "GEO/AI head — too new for intent data; the 2026 differentiator"
+    },
+    {
+      "kw": "answer engine optimization",
+      "dfs": { "vol": 260, "kd": 44 },
+      "semrush_vol": 260,
+      "ahrefs": { "vol": 600, "kd": null, "cpc": null },
+      "intent": [],
+      "verdict": "GEO/AI secondary"
+    },
+    {
+      "kw": "ai seo services",
+      "dfs": { "vol": 140, "kd": 18 },
+      "semrush_vol": 170,
+      "ahrefs": { "vol": 450, "kd": 8, "cpc": null },
+      "intent": [],
+      "verdict": "GEO/AI secondary"
+    },
+    {
+      "kw": "google ads management",
+      "dfs": { "vol": 210, "kd": 32 },
+      "semrush_vol": 720,
+      "ahrefs": { "vol": 1800, "kd": 43, "cpc": 7.0 },
+      "intent": ["commercial", "navigational", "branded"],
+      "verdict": "Google Ads/PPC head — high CPC buyer intent"
+    },
+    {
+      "kw": "ppc services",
+      "dfs": { "vol": 260, "kd": 9 },
+      "semrush_vol": 590,
+      "ahrefs": { "vol": 600, "kd": 2, "cpc": 4.0 },
+      "intent": ["commercial"],
+      "verdict": "PPC secondary"
+    },
+    {
+      "kw": "social media marketing services",
+      "dfs": { "vol": 720, "kd": 21 },
+      "semrush_vol": 1000,
+      "ahrefs": { "vol": 1200, "kd": 2, "cpc": 1.9 },
+      "intent": ["commercial"],
+      "verdict": "Social head — name it MARKETING (commercial)"
+    },
+    {
+      "kw": "social media management",
+      "dfs": { "vol": 880, "kd": 25 },
+      "semrush_vol": 1900,
+      "ahrefs": { "vol": 1400, "kd": 23, "cpc": 2.0 },
+      "intent": ["informational"],
+      "verdict": "CORRECTION: informational only — NOT the buyer term; do not name the page this"
+    },
+    {
+      "kw": "facebook ads management",
+      "dfs": { "vol": 9900, "kd": 64 },
+      "semrush_vol": 110,
+      "ahrefs": { "vol": 50, "kd": 77, "cpc": 9.0 },
+      "intent": ["branded", "informational"],
+      "verdict": "CORRECTION: DfS 9900 = mirage (Sem 110 / Ahrefs 50); DROP as page; paid-social = section under Social Media"
+    },
+    {
+      "kw": "web design services",
+      "dfs": { "vol": 720, "kd": 36 },
+      "semrush_vol": 1300,
+      "ahrefs": { "vol": 1600, "kd": 57, "cpc": 2.5 },
+      "intent": ["commercial"],
+      "verdict": "Web Design — high demand, high KD"
+    },
+    {
+      "kw": "web design company",
+      "dfs": { "vol": 2400, "kd": 95 },
+      "semrush_vol": 2900,
+      "ahrefs": { "vol": 2400, "kd": 60, "cpc": 3.5 },
+      "intent": ["commercial"],
+      "verdict": "Web Design head — brutal KD (60-95)"
+    },
+    {
+      "kw": "email marketing services",
+      "dfs": { "vol": 320, "kd": 44 },
+      "semrush_vol": 480,
+      "ahrefs": { "vol": 300, "kd": 53, "cpc": 4.0 },
+      "intent": ["commercial"],
+      "verdict": "Email Marketing"
+    },
+    {
+      "kw": "conversion rate optimization services",
+      "dfs": { "vol": 50, "kd": 0 },
+      "semrush_vol": 260,
+      "ahrefs": { "vol": 150, "kd": 1, "cpc": 6.0 },
+      "intent": ["commercial"],
+      "verdict": "CRO — low vol, very easy, high CPC"
+    },
+    {
+      "kw": "reputation management services",
+      "dfs": { "vol": 880, "kd": 29 },
+      "semrush_vol": 320,
+      "ahrefs": { "vol": 450, "kd": 6, "cpc": 8.0 },
+      "intent": ["commercial"],
+      "verdict": "CORRECTION: data promotes from 'auxiliary section' to its own page"
+    },
+    {
+      "kw": "seo audit",
+      "dfs": { "vol": 590, "kd": 72 },
+      "semrush_vol": 1300,
+      "ahrefs": { "vol": 1200, "kd": 84, "cpc": 4.0 },
+      "intent": ["informational"],
+      "verdict": "CORRECTION: informational + brutal KD; lead-magnet/tool, NOT a ranking service page"
+    },
+    {
+      "kw": "website maintenance services",
+      "dfs": { "vol": 320, "kd": 0 },
+      "semrush_vol": 1000,
+      "ahrefs": { "vol": 600, "kd": 13, "cpc": 2.0 },
+      "intent": ["commercial"],
+      "verdict": "Website Care Plans"
+    }
+  ],
+  "architecture_corrections": [
+    "DROP facebook/meta ads as a page (mirage + branded/info intent); paid social = section under Social Media.",
+    "FOLD Google Business Profile into Local SEO as a section (GBP term is informational+branded, low vol).",
+    "Name the social line 'Social Media Marketing' (commercial), not 'Management' (informational).",
+    "Demote SEO Audit from page to lead-magnet/tool (informational + KD 72-84)."
+  ],
+  "confirmed_commercial_lines": [
+    "SEO (head: seo company/seo services)",
+    "Local SEO (+GBP section)",
+    "Web Design & Development",
+    "Google Ads / PPC",
+    "Social Media Marketing",
+    "Content Marketing",
+    "Link Building",
+    "GEO / AI Search",
+    "Technical SEO",
+    "Reputation Management",
+    "Email Marketing",
+    "Conversion Rate Optimization",
+    "Website Maintenance"
+  ],
+  "_next": "KI /api/keyword-discovery/ to expand each confirmed line into its full long-tail universe (terms not yet seeded), then Step 2 KI clustering (deliberate levers) to lock the page map + cannibalization fence.",
+  "_tool_disagreement_note": "Volumes diverge 2-4x across tools; facebook ads diverged ~90x. Treat volume as a band; use intent (commercial flag) + KD as the deciding signals, never one tool."
+}

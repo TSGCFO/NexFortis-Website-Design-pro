@@ -1,0 +1,28 @@
+{
+  "_step": "2 — Cluster into pages + lock the cannibalization map (HARD GATE 1)",
+  "_page": "pillar (/services/digital-marketing)",
+  "_source": "Keyword Insights clustering order 6b875c46-3f47-4ce3-8e49-f00820d51d1c (2026-06-18, location=Canada confirmed). Clusters = live SERP overlap = data-driven 'same intent'.",
+  "_reproduce": "node seo-tools/keyword-insights.mjs cluster seo-tools/tmp/pillar-cluster-payload.json -> cluster-status <id> -> download-xlsx <id> seo-tools/tmp/pillar-cluster.xlsx -> unzip -> node seo-tools/read-xlsx.mjs seo-tools/tmp/pillar-cluster-x 1",
+  "cluster_evidence": {
+    "digital marketing services": { "ki_cluster": "digital marketing services", "dominant_intent": "Commercial", "journey": "MOFU", "difficulty": 37, "serp": "Agency directories/comparisons + agency service pages." },
+    "digital marketing agency": { "ki_cluster": "digital marketing agency", "dominant_intent": "Commercial", "journey": "MOFU", "difficulty": 67, "serp": "Agency pages + directories listing agencies." },
+    "digital marketing company": { "ki_cluster": "digital marketing company", "dominant_intent": "Commercial", "journey": "MOFU", "difficulty": 73, "serp": "Agency directories/comparison + provider pages." },
+    "digital marketing firm": { "ki_cluster": "digital marketing agency", "dominant_intent": "Commercial", "journey": "MOFU", "difficulty": 23, "note": "GROUPED by KI into the 'digital marketing agency' cluster — same SERP/intent. Fold as secondary." },
+    "internet marketing services": { "ki_cluster": "digital marketing services", "dominant_intent": "Other/Commercial", "journey": "MOFU", "difficulty": 41, "note": "GROUPED by KI into the 'digital marketing services' cluster — synonym. Fold as secondary." },
+    "online marketing services": { "ki_cluster": "online marketing services", "dominant_intent": "Commercial", "journey": "MOFU", "difficulty": 23, "note": "Own micro-cluster, same hire-a-provider intent. Fold as secondary." },
+    "digital marketing services for small business": { "ki_cluster": "digital marketing services for small business", "dominant_intent": "Commercial", "journey": "MOFU", "difficulty": 2, "note": "Own micro-cluster, same intent + our SMB audience. Fold as secondary." },
+    "digital marketing agency near me": { "ki_cluster": "digital marketing agency near me", "dominant_intent": "Transactional", "journey": "BOFU", "difficulty": 11, "note": "Own micro-cluster, highest purchase intent (8/10 transactional URLs). Fold as secondary on the pillar (the agency head term + near-me, NOT the local-seo spoke which owns 'local seo' service terms)." },
+    "digital marketing consultant": { "ki_cluster": "digital marketing consultant", "dominant_intent": "Other", "journey": "MOFU", "difficulty": 2, "note": "EXCLUDED: live SERP is dominated by JOB listings / recruitment / career pages (6/10 'other', 4/10 informational) — job-seeker intent, NOT a business hiring a provider. Targeting it would not convert and is off-intent." },
+    "digital marketing": { "ki_cluster": "digital marketing", "dominant_intent": "Informational", "journey": "TOFU", "difficulty": 62, "note": "EXCLUDED to blog: definitions/guides SERP (10/10 informational) + brutal difficulty." }
+  },
+  "assignment": {
+    "owns_primary": ["digital marketing services", "digital marketing agency", "digital marketing company"],
+    "owns_secondary": ["digital marketing firm", "online marketing services", "internet marketing services", "digital marketing agency near me", "digital marketing services for small business"],
+    "excluded": {
+      "digital marketing": "blog (informational/TOFU, brutal difficulty)",
+      "digital marketing consultant": "not targeted (live SERP = job/career listings, off-intent)"
+    }
+  },
+  "decision": "Pillar owns ONE primary cluster = the full-service-provider head terms (services/agency/company). KI split synonyms into micro-clusters but all share MOFU/BOFU buyer intent (hire a full-service digital marketing provider); they are too thin for their own pages and splitting would cannibalize the pillar, so firm/online/internet/near-me/small-business fold in as SECONDARY. Service-specific intents (seo, local seo, ppc, etc.) are owned by the spokes — not the pillar.",
+  "_done_check": "PASS: pillar owns exactly one primary cluster; keyword-ownership.json updated; check-cannibalization.mjs exits 0."
+}

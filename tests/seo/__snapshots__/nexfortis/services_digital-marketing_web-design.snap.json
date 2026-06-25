@@ -1,0 +1,533 @@
+{
+  "route": "/services/digital-marketing/web-design",
+  "title": "Web Design Services in Canada | NexFortis IT Solutions",
+  "description": "Canadian web design company — custom, responsive, conversion-focused websites and development built to rank and convert. Free consultation.",
+  "canonical": "https://nexfortis.com/services/digital-marketing/web-design",
+  "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
+  "og": {
+    "title": "Web Design Services in Canada | NexFortis IT Solutions",
+    "description": "Canadian web design company — custom, responsive, conversion-focused websites and development built to rank and convert. Free consultation.",
+    "url": "https://nexfortis.com/services/digital-marketing/web-design",
+    "image": "https://nexfortis.com/opengraph.png",
+    "type": "website"
+  },
+  "twitter": {
+    "card": "summary_large_image"
+  },
+  "headings": [
+    {
+      "level": 1,
+      "text": "Web Design Services for Canadian Businesses"
+    },
+    {
+      "level": 2,
+      "text": "What NexFortis web design services include"
+    },
+    {
+      "level": 2,
+      "text": "Our web design services"
+    },
+    {
+      "level": 3,
+      "text": "Custom web design &amp; UX/UI"
+    },
+    {
+      "level": 3,
+      "text": "Web design and development"
+    },
+    {
+      "level": 3,
+      "text": "Responsive, mobile-first design"
+    },
+    {
+      "level": 3,
+      "text": "eCommerce &amp; Shopify builds"
+    },
+    {
+      "level": 3,
+      "text": "WordPress &amp; CMS development"
+    },
+    {
+      "level": 3,
+      "text": "Website redesign"
+    },
+    {
+      "level": 3,
+      "text": "Conversion-focused landing pages"
+    },
+    {
+      "level": 3,
+      "text": "Website maintenance services"
+    },
+    {
+      "level": 2,
+      "text": "Our web design process"
+    },
+    {
+      "level": 3,
+      "text": "Free consultation &amp; quote"
+    },
+    {
+      "level": 3,
+      "text": "Discovery &amp; strategy"
+    },
+    {
+      "level": 3,
+      "text": "Design"
+    },
+    {
+      "level": 3,
+      "text": "Development, launch &amp; support"
+    },
+    {
+      "level": 2,
+      "text": "Why choose NexFortis for web design"
+    },
+    {
+      "level": 2,
+      "text": "Web design pricing after a free consultation"
+    },
+    {
+      "level": 3,
+      "text": "Scoped to your build"
+    },
+    {
+      "level": 2,
+      "text": "Related services"
+    },
+    {
+      "level": 3,
+      "text": "SEO Services"
+    },
+    {
+      "level": 3,
+      "text": "Local SEO"
+    },
+    {
+      "level": 3,
+      "text": "GEO &amp; AI Search"
+    },
+    {
+      "level": 2,
+      "text": "Web Design &amp; Development — areas we serve"
+    },
+    {
+      "level": 2,
+      "text": "Frequently Asked Questions"
+    },
+    {
+      "level": 2,
+      "text": "Ready for a website that works as hard as you do?"
+    },
+    {
+      "level": 4,
+      "text": "Services"
+    },
+    {
+      "level": 4,
+      "text": "Company"
+    },
+    {
+      "level": 4,
+      "text": "Contact"
+    }
+  ],
+  "jsonld": [
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://nexfortis.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Services",
+          "item": "https://nexfortis.com/services"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Digital Marketing",
+          "item": "https://nexfortis.com/services/digital-marketing"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Web Design & Development",
+          "item": "https://nexfortis.com/services/digital-marketing/web-design"
+        }
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How much does a website design service cost?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It depends on scope — the number of pages, whether you need eCommerce or custom functionality, and whether it is a new build or a redesign. Rather than a one-size-fits-all price, we quote each project after a free consultation so you only pay for what your site actually needs."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long does it take to build a website?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Most business websites take from a few weeks to a couple of months, depending on size, functionality, and how quickly content and feedback come together. We set a realistic timeline up front rather than promising an unrealistic launch date."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you build custom sites, or use WordPress?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Both. We do custom web design and also build on WordPress and other content systems when that is the best fit for your team — the goal is a site you can actually run, not one you are locked out of."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Will my website work on mobile?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Every site we build is responsive and mobile-first, because most visitors arrive on a phone and Google evaluates the mobile experience first."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can you redesign my existing website?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. We redesign dated or underperforming sites and protect the search equity you have already built, so a new look does not cost you rankings."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you offer website maintenance after launch?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Our website maintenance services keep your site secure, updated, and fast after launch, on month-to-month terms."
+          }
+        }
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "@id": "https://nexfortis.com/#localbusiness",
+      "name": "NexFortis IT Solutions",
+      "legalName": "17756968 Canada Inc.",
+      "url": "https://nexfortis.com",
+      "logo": "https://nexfortis.com/images/logo-512.png",
+      "image": "https://nexfortis.com/opengraph.png",
+      "description": "NexFortis delivers end-to-end IT solutions for Canadian businesses including managed IT, Microsoft 365, QuickBooks migration, digital marketing, and workflow automation.",
+      "email": "contact@nexfortis.com",
+      "telephone": "+1-416-317-0051",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "204 Hill Farm Rd",
+        "addressLocality": "Nobleton",
+        "addressRegion": "ON",
+        "postalCode": "L7B 0A1",
+        "addressCountry": "CA"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 43.9327,
+        "longitude": -79.6615
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "Canada"
+      },
+      "priceRange": "$$",
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday"
+        ],
+        "opens": "09:00",
+        "closes": "17:00"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/company/nexfortis"
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "@id": "https://nexfortis.com/#organization",
+      "name": "NexFortis IT Solutions",
+      "legalName": "17756968 Canada Inc.",
+      "url": "https://nexfortis.com",
+      "logo": "https://nexfortis.com/images/logo-512.png",
+      "image": "https://nexfortis.com/opengraph.png",
+      "description": "NexFortis delivers end-to-end IT solutions for Canadian businesses including managed IT, Microsoft 365, QuickBooks migration, digital marketing, and workflow automation.",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer service",
+        "email": "contact@nexfortis.com",
+        "telephone": "+1-416-317-0051",
+        "areaServed": "CA",
+        "availableLanguage": [
+          "English"
+        ]
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "204 Hill Farm Rd",
+        "addressLocality": "Nobleton",
+        "addressRegion": "ON",
+        "postalCode": "L7B 0A1",
+        "addressCountry": "CA"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/company/nexfortis"
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Hassan Sadiq",
+      "jobTitle": "Founder & CEO, NexFortis IT Solutions",
+      "url": "https://nexfortis.com/about",
+      "worksFor": {
+        "@id": "https://nexfortis.com/#organization"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "Web Design Services",
+      "description": "Web design and development for Canadian businesses — custom UX/UI, responsive builds, eCommerce, CMS, redesigns, landing pages, and maintenance, delivered by a senior team and engineered to rank and convert.",
+      "url": "https://nexfortis.com/services/digital-marketing/web-design",
+      "provider": {
+        "@type": "Organization",
+        "name": "NexFortis IT Solutions",
+        "url": "https://nexfortis.com"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "Canada"
+      },
+      "serviceType": "Web Design and Development"
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "@id": "https://nexfortis.com/#website",
+      "name": "NexFortis IT Solutions",
+      "url": "https://nexfortis.com",
+      "inLanguage": "en-CA",
+      "publisher": {
+        "@id": "https://nexfortis.com/#organization"
+      }
+    }
+  ],
+  "anchors": [
+    {
+      "text": "Skip to main content",
+      "href": "#main-content"
+    },
+    {
+      "text": "",
+      "href": "/"
+    },
+    {
+      "text": "Home",
+      "href": "/"
+    },
+    {
+      "text": "Digital Marketing",
+      "href": "/services/digital-marketing"
+    },
+    {
+      "text": "Microsoft 365 Solutions",
+      "href": "/services/microsoft-365"
+    },
+    {
+      "text": "QuickBooks Migration",
+      "href": "/services/quickbooks"
+    },
+    {
+      "text": "IT Consulting",
+      "href": "/services/it-consulting"
+    },
+    {
+      "text": "Workflow Automation",
+      "href": "/services/workflow-automation"
+    },
+    {
+      "text": "Browse our IT services",
+      "href": "/services"
+    },
+    {
+      "text": "SEO Services",
+      "href": "/services/digital-marketing/seo"
+    },
+    {
+      "text": "Local SEO",
+      "href": "/services/digital-marketing/local-seo"
+    },
+    {
+      "text": "GEO &amp; AI Search",
+      "href": "/services/digital-marketing/geo-ai-search"
+    },
+    {
+      "text": "Content Marketing",
+      "href": "/services/digital-marketing/content-marketing"
+    },
+    {
+      "text": "Link Building &amp; Digital PR",
+      "href": "/services/digital-marketing/link-building"
+    },
+    {
+      "text": "Google Ads Management",
+      "href": "/services/digital-marketing/google-ads-ppc"
+    },
+    {
+      "text": "Social Media Marketing",
+      "href": "/services/digital-marketing/social-media-marketing"
+    },
+    {
+      "text": "Web Design &amp; Development",
+      "href": "/services/digital-marketing/web-design"
+    },
+    {
+      "text": "Email Marketing",
+      "href": "/services/digital-marketing/email-marketing"
+    },
+    {
+      "text": "Conversion Rate Optimization",
+      "href": "/services/digital-marketing/conversion-rate-optimization"
+    },
+    {
+      "text": "Reputation Management",
+      "href": "/services/digital-marketing/reputation-management"
+    },
+    {
+      "text": "About",
+      "href": "/about"
+    },
+    {
+      "text": "Blog",
+      "href": "/blog"
+    },
+    {
+      "text": "Contact",
+      "href": "/contact"
+    },
+    {
+      "text": "QB Portal",
+      "href": "https://qb.nexfortis.com"
+    },
+    {
+      "text": "Get a Free Quote",
+      "href": "/contact"
+    },
+    {
+      "text": "All Services",
+      "href": "/services"
+    },
+    {
+      "text": "Services",
+      "href": "/services"
+    },
+    {
+      "text": "SEO services",
+      "href": "/services/digital-marketing/seo"
+    },
+    {
+      "text": "conversion rate optimization",
+      "href": "/services/digital-marketing/conversion-rate-optimization"
+    },
+    {
+      "text": "digital marketing services",
+      "href": "/services/digital-marketing"
+    },
+    {
+      "text": "Source: Stanford Web Credibility Research",
+      "href": "https://www.kinesisinc.com/the-truth-about-web-design/"
+    },
+    {
+      "text": "Source: Google, 'The Need for Mobile Speed'",
+      "href": "https://www.marketingdive.com/news/google-53-of-mobile-users-abandon-sites-that-take-over-3-seconds-to-load/426070/"
+    },
+    {
+      "text": "Source: 2025 Web Almanac, HTTP Archive",
+      "href": "https://almanac.httparchive.org/en/2025/performance"
+    },
+    {
+      "text": "web design and development Hamilton",
+      "href": "/services/digital-marketing/web-design/hamilton"
+    },
+    {
+      "text": "web design and development London",
+      "href": "/services/digital-marketing/web-design/london-ontario"
+    },
+    {
+      "text": "web design and development Brampton",
+      "href": "/services/digital-marketing/web-design/brampton"
+    },
+    {
+      "text": "More about NexFortis",
+      "href": "/about"
+    },
+    {
+      "text": "About Us",
+      "href": "/about"
+    },
+    {
+      "text": "Privacy Policy",
+      "href": "/privacy"
+    },
+    {
+      "text": "Terms of Service",
+      "href": "/terms"
+    },
+    {
+      "text": "(416) 317-0051",
+      "href": "tel:+14163170051"
+    },
+    {
+      "text": "contact@nexfortis.com",
+      "href": "mailto:contact@nexfortis.com"
+    },
+    {
+      "text": "LinkedIn",
+      "href": "https://www.linkedin.com/company/nexfortis"
+    },
+    {
+      "text": "Privacy",
+      "href": "/privacy"
+    },
+    {
+      "text": "Terms",
+      "href": "/terms"
+    },
+    {
+      "text": "About NexFortis",
+      "href": "/about"
+    },
+    {
+      "text": "Our services",
+      "href": "/services"
+    },
+    {
+      "text": "Contact us",
+      "href": "/contact"
+    }
+  ],
+  "rootDivIsEmpty": false,
+  "hasNoindex": false
+}

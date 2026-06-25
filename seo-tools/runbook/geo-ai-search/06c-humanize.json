@@ -1,0 +1,13 @@
+{
+  "slug": "geo-ai-search",
+  "contentFile": "seo-tools/runbook/geo-ai-search/05-draft.md",
+  "humanizedBlocks": 5,
+  "totalBlocks": 32,
+  "integrity": {
+    "coverageOk": true,
+    "linksOk": true,
+    "origLinks": 9,
+    "newLinks": 9
+  },
+  "ai_detection": "ADVISORY (run undetectable-detect.mjs; detector flags human prose, non-binding)"
+}

@@ -1,0 +1,493 @@
+{
+  "route": "/services/digital-marketing/reputation-management",
+  "title": "Reputation Management Services | NexFortis IT Solutions",
+  "description": "Canadian reputation management company: more genuine reviews, professional responses, and content that outranks unfair results. Founder-led. Free audit.",
+  "canonical": "https://nexfortis.com/services/digital-marketing/reputation-management",
+  "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
+  "og": {
+    "title": "Reputation Management Services | NexFortis IT Solutions",
+    "description": "Canadian reputation management company: more genuine reviews, professional responses, and content that outranks unfair results. Founder-led. Free audit.",
+    "url": "https://nexfortis.com/services/digital-marketing/reputation-management",
+    "image": "https://nexfortis.com/opengraph.png",
+    "type": "website"
+  },
+  "twitter": {
+    "card": "summary_large_image"
+  },
+  "headings": [
+    {
+      "level": 1,
+      "text": "Reputation Management Services for Canadian Businesses"
+    },
+    {
+      "level": 2,
+      "text": "What NexFortis reputation management services include"
+    },
+    {
+      "level": 2,
+      "text": "Our reputation management services"
+    },
+    {
+      "level": 3,
+      "text": "Online reputation management (ORM)"
+    },
+    {
+      "level": 3,
+      "text": "Review generation &amp; management"
+    },
+    {
+      "level": 3,
+      "text": "Review monitoring &amp; response"
+    },
+    {
+      "level": 3,
+      "text": "Suppression of negative or harmful content"
+    },
+    {
+      "level": 3,
+      "text": "Brand reputation strategy"
+    },
+    {
+      "level": 2,
+      "text": "Our reputation management process"
+    },
+    {
+      "level": 3,
+      "text": "Free reputation management audit"
+    },
+    {
+      "level": 3,
+      "text": "Strategy"
+    },
+    {
+      "level": 3,
+      "text": "Execution"
+    },
+    {
+      "level": 3,
+      "text": "Monthly reporting"
+    },
+    {
+      "level": 2,
+      "text": "Why choose NexFortis for reputation management"
+    },
+    {
+      "level": 2,
+      "text": "Reputation management pricing after a free audit"
+    },
+    {
+      "level": 3,
+      "text": "Scoped to your starting point"
+    },
+    {
+      "level": 2,
+      "text": "Related services"
+    },
+    {
+      "level": 3,
+      "text": "SEO Services"
+    },
+    {
+      "level": 3,
+      "text": "Local SEO"
+    },
+    {
+      "level": 3,
+      "text": "GEO &amp; AI Search"
+    },
+    {
+      "level": 2,
+      "text": "Frequently Asked Questions"
+    },
+    {
+      "level": 2,
+      "text": "Want to control what customers find when they search you?"
+    },
+    {
+      "level": 4,
+      "text": "Services"
+    },
+    {
+      "level": 4,
+      "text": "Company"
+    },
+    {
+      "level": 4,
+      "text": "Contact"
+    }
+  ],
+  "jsonld": [
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://nexfortis.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Services",
+          "item": "https://nexfortis.com/services"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Digital Marketing",
+          "item": "https://nexfortis.com/services/digital-marketing"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Reputation Management",
+          "item": "https://nexfortis.com/services/digital-marketing/reputation-management"
+        }
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is a reputation management service?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A reputation management service monitors and improves how your business appears online — across reviews, search results, and brand mentions. At NexFortis it includes online reputation management, review generation and management, monitoring and response, suppression of negative or harmful content, and a proactive brand reputation strategy, backed by monthly reporting."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much does reputation management cost?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Reputation management pricing varies with your starting point — the state of your reviews, what ranks for your name, and how much negative content exists — so we scope every engagement after a free audit rather than quoting a one-size-fits-all price."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much does an ORM campaign typically cost?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Online reputation management (ORM) costs depend on scope. A focused review-generation program and a full ORM campaign that also addresses negative search results are very different in effort, so we quote ORM after the free audit shows what your situation requires."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much do reputation management companies charge?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It varies widely by what is involved and by the company. Rather than a flat published rate, NexFortis scopes the work after a free audit — transparent pricing, a fixed monthly scope, and month-to-month terms — so you pay for the work your reputation actually needs."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can you remove negative reviews or content?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We cannot promise to delete a legitimate review or remove content we do not control, and any company that guarantees it is not being honest. What we can do is respond professionally, earn more genuine positive reviews, and build stronger content that outranks unfair or outdated results over time."
+          }
+        }
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "@id": "https://nexfortis.com/#localbusiness",
+      "name": "NexFortis IT Solutions",
+      "legalName": "17756968 Canada Inc.",
+      "url": "https://nexfortis.com",
+      "logo": "https://nexfortis.com/images/logo-512.png",
+      "image": "https://nexfortis.com/opengraph.png",
+      "description": "NexFortis delivers end-to-end IT solutions for Canadian businesses including managed IT, Microsoft 365, QuickBooks migration, digital marketing, and workflow automation.",
+      "email": "contact@nexfortis.com",
+      "telephone": "+1-416-317-0051",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "204 Hill Farm Rd",
+        "addressLocality": "Nobleton",
+        "addressRegion": "ON",
+        "postalCode": "L7B 0A1",
+        "addressCountry": "CA"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 43.9327,
+        "longitude": -79.6615
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "Canada"
+      },
+      "priceRange": "$$",
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday"
+        ],
+        "opens": "09:00",
+        "closes": "17:00"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/company/nexfortis"
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "@id": "https://nexfortis.com/#organization",
+      "name": "NexFortis IT Solutions",
+      "legalName": "17756968 Canada Inc.",
+      "url": "https://nexfortis.com",
+      "logo": "https://nexfortis.com/images/logo-512.png",
+      "image": "https://nexfortis.com/opengraph.png",
+      "description": "NexFortis delivers end-to-end IT solutions for Canadian businesses including managed IT, Microsoft 365, QuickBooks migration, digital marketing, and workflow automation.",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer service",
+        "email": "contact@nexfortis.com",
+        "telephone": "+1-416-317-0051",
+        "areaServed": "CA",
+        "availableLanguage": [
+          "English"
+        ]
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "204 Hill Farm Rd",
+        "addressLocality": "Nobleton",
+        "addressRegion": "ON",
+        "postalCode": "L7B 0A1",
+        "addressCountry": "CA"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/company/nexfortis"
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Hassan Sadiq",
+      "jobTitle": "Founder & CEO, NexFortis IT Solutions",
+      "url": "https://nexfortis.com/about",
+      "worksFor": {
+        "@id": "https://nexfortis.com/#organization"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "Reputation Management Services",
+      "description": "Reputation management for Canadian businesses — online reputation management, review generation and management, monitoring and response, content suppression, and brand reputation strategy, delivered as one founder-led program.",
+      "url": "https://nexfortis.com/services/digital-marketing/reputation-management",
+      "provider": {
+        "@type": "Organization",
+        "name": "NexFortis IT Solutions",
+        "url": "https://nexfortis.com"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "Canada"
+      },
+      "serviceType": "Online Reputation Management"
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "@id": "https://nexfortis.com/#website",
+      "name": "NexFortis IT Solutions",
+      "url": "https://nexfortis.com",
+      "inLanguage": "en-CA",
+      "publisher": {
+        "@id": "https://nexfortis.com/#organization"
+      }
+    }
+  ],
+  "anchors": [
+    {
+      "text": "Skip to main content",
+      "href": "#main-content"
+    },
+    {
+      "text": "",
+      "href": "/"
+    },
+    {
+      "text": "Home",
+      "href": "/"
+    },
+    {
+      "text": "Digital Marketing",
+      "href": "/services/digital-marketing"
+    },
+    {
+      "text": "Microsoft 365 Solutions",
+      "href": "/services/microsoft-365"
+    },
+    {
+      "text": "QuickBooks Migration",
+      "href": "/services/quickbooks"
+    },
+    {
+      "text": "IT Consulting",
+      "href": "/services/it-consulting"
+    },
+    {
+      "text": "Workflow Automation",
+      "href": "/services/workflow-automation"
+    },
+    {
+      "text": "Browse our IT services",
+      "href": "/services"
+    },
+    {
+      "text": "SEO Services",
+      "href": "/services/digital-marketing/seo"
+    },
+    {
+      "text": "Local SEO",
+      "href": "/services/digital-marketing/local-seo"
+    },
+    {
+      "text": "GEO &amp; AI Search",
+      "href": "/services/digital-marketing/geo-ai-search"
+    },
+    {
+      "text": "Content Marketing",
+      "href": "/services/digital-marketing/content-marketing"
+    },
+    {
+      "text": "Link Building &amp; Digital PR",
+      "href": "/services/digital-marketing/link-building"
+    },
+    {
+      "text": "Google Ads Management",
+      "href": "/services/digital-marketing/google-ads-ppc"
+    },
+    {
+      "text": "Social Media Marketing",
+      "href": "/services/digital-marketing/social-media-marketing"
+    },
+    {
+      "text": "Web Design &amp; Development",
+      "href": "/services/digital-marketing/web-design"
+    },
+    {
+      "text": "Email Marketing",
+      "href": "/services/digital-marketing/email-marketing"
+    },
+    {
+      "text": "Conversion Rate Optimization",
+      "href": "/services/digital-marketing/conversion-rate-optimization"
+    },
+    {
+      "text": "Reputation Management",
+      "href": "/services/digital-marketing/reputation-management"
+    },
+    {
+      "text": "About",
+      "href": "/about"
+    },
+    {
+      "text": "Blog",
+      "href": "/blog"
+    },
+    {
+      "text": "Contact",
+      "href": "/contact"
+    },
+    {
+      "text": "QB Portal",
+      "href": "https://qb.nexfortis.com"
+    },
+    {
+      "text": "Get a Free Quote",
+      "href": "/contact"
+    },
+    {
+      "text": "All Services",
+      "href": "/services"
+    },
+    {
+      "text": "Services",
+      "href": "/services"
+    },
+    {
+      "text": "local SEO",
+      "href": "/services/digital-marketing/local-seo"
+    },
+    {
+      "text": "digital marketing services",
+      "href": "/services/digital-marketing"
+    },
+    {
+      "text": "Source: BrightLocal Local Consumer Review Survey",
+      "href": "https://www.brightlocal.com/research/local-consumer-review-survey/"
+    },
+    {
+      "text": "Source: Spiegel Research Center, Northwestern",
+      "href": "https://spiegel.medill.northwestern.edu/how-online-reviews-influence-sales/"
+    },
+    {
+      "text": "Source: Statcounter Global Stats",
+      "href": "https://gs.statcounter.com/search-engine-market-share"
+    },
+    {
+      "text": "More about NexFortis",
+      "href": "/about"
+    },
+    {
+      "text": "About Us",
+      "href": "/about"
+    },
+    {
+      "text": "Privacy Policy",
+      "href": "/privacy"
+    },
+    {
+      "text": "Terms of Service",
+      "href": "/terms"
+    },
+    {
+      "text": "(416) 317-0051",
+      "href": "tel:+14163170051"
+    },
+    {
+      "text": "contact@nexfortis.com",
+      "href": "mailto:contact@nexfortis.com"
+    },
+    {
+      "text": "LinkedIn",
+      "href": "https://www.linkedin.com/company/nexfortis"
+    },
+    {
+      "text": "Privacy",
+      "href": "/privacy"
+    },
+    {
+      "text": "Terms",
+      "href": "/terms"
+    },
+    {
+      "text": "About NexFortis",
+      "href": "/about"
+    },
+    {
+      "text": "Our services",
+      "href": "/services"
+    },
+    {
+      "text": "Contact us",
+      "href": "/contact"
+    }
+  ],
+  "rootDivIsEmpty": false,
+  "hasNoindex": false
+}

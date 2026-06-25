@@ -1,0 +1,15 @@
+{
+  "_slug": "local-seo",
+  "_purpose": "Locked outline headings for the keyword+outline coverage gate, RECONCILED to the app template's ACTUAL rendered section headings. The rendered page MUST contain the H1 and every H2 verbatim, plus every owned keyword from keyword-ownership.json.",
+  "_source": "Step 4 KI auto-generate outline (brief 09843ffb, auto_generate_order_id a2282990) reviewed vs the brief; reconciled to the DM template like the SEO page — template renders each SectionHeader title as an H2; 'Frequently Asked Questions' is the template's fixed FAQ heading; 'Who our local SEO services are for' folds into the intro callout (not a standalone heading). H1 will be re-verified against the rendered page at Step 7.",
+  "primary": "local seo services",
+  "h1": "Local SEO Services for Canadian Businesses",
+  "h2": [
+    "What NexFortis local SEO services include",
+    "Our local SEO services",
+    "Our local SEO process",
+    "Why choose NexFortis for local SEO",
+    "Local SEO pricing after a free audit",
+    "Frequently Asked Questions"
+  ]
+}

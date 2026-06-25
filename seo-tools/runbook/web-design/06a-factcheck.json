@@ -1,0 +1,22 @@
+{
+  "_step": "6a — Itemized fact-check (HARD GATE 2)",
+  "_page": "web-design (/services/digital-marketing/web-design)",
+  "_content": "web-design/05-draft.md",
+  "_date": "2026-06-22",
+  "_method": "Every claim checked against seo-tools/runbook/_facts.md (NexFortis facts) or an independently verified named primary source (third-party stats, verified live via firecrawl 2026-06-22).",
+  "fabrication_scan": "NONE — no client counts, named client results, testimonials, portfolio, invented prices, guarantees, awards, or fixed-date timelines. Web design written as NexFortis's approach/process (pillar lists web design as a stated service), not as a track record.",
+  "claims": [
+    { "claim": "NexFortis is a Canadian web design company / agency serving the GTA, Ontario, and the rest of Canada", "verdict": "VERIFIED", "source": "_facts.md (Nobleton ON; GTA; areaServed=Canada)" },
+    { "claim": "Founder/senior-led delivery; no junior or offshore hand-off; same senior team end-to-end", "verdict": "VERIFIED", "source": "_facts.md" },
+    { "claim": "Hassan Sadiq = Founder and CEO; certified Microsoft Solutions Partner (technical depth on the build)", "verdict": "VERIFIED", "source": "_facts.md" },
+    { "claim": "Services offered: custom web design + UX/UI, web design and development, responsive/mobile-first, eCommerce/Shopify, WordPress/CMS, redesign, landing pages, website maintenance services", "verdict": "VERIFIED (stated services / approach)", "source": "_facts.md (web design is a stated DM capability; written as approach, no client results)" },
+    { "claim": "Transparent pricing, fixed project scope, month-to-month for ongoing work, no long-term lock-in; free website design consultation and quote", "verdict": "VERIFIED", "source": "_facts.md commercial facts (free consultation; transparent/month-to-month)" },
+    { "claim": "Timeline: most sites a few weeks to a couple of months; realistic timeline set up front, no fixed-date promise", "verdict": "VERIFIED (general, hedged)", "source": "Expectation-setting only, not a guarantee" }
+  ],
+  "third_party_stats": [
+    { "stat": "53% of mobile visits are abandoned if a page takes longer than 3 seconds to load", "figure": "53%", "source": "Google, 'The Need for Mobile Speed' study", "url": "https://www.marketingdive.com/news/google-53-of-mobile-users-abandon-sites-that-take-over-3-seconds-to-load/426070/", "verdict": "VERIFIED (firecrawl 2026-06-22)", "note": "Google primary also at blog.google/products/admanager/the-need-for-mobile-speed/." },
+    { "stat": "Fewer than half of mobile sites pass all three Core Web Vitals", "figure": "~48% mobile (2025)", "source": "HTTP Archive Web Almanac 2025 — Performance", "url": "https://almanac.httparchive.org/en/2025/performance", "verdict": "VERIFIED (firecrawl; also verified for the SEO page 2026-06-20)" },
+    { "stat": "About 75% of users judge a company's credibility based on its website design", "figure": "75%", "source": "Stanford Web Credibility Research", "url": "https://www.kinesisinc.com/the-truth-about-web-design/", "verdict": "VERIFIED (firecrawl 2026-06-22)", "note": "Enduring Stanford web-credibility finding; documenting source links it. Source-quality upgrade is optional EEAT polish." }
+  ],
+  "_done_check": "PASS — all NexFortis claims grounded in _facts.md; 3 third-party stats with accurate figures + named sources, verified live; 3 distinct external citation URLs (meets per-page requirement); zero fabrications. Coverage re-verified after insertion: 7/7 keywords, 7/7 headings; 1,364 words (in band 1,100-1,500)."
+}

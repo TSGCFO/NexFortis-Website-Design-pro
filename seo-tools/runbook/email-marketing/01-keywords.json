@@ -1,0 +1,17 @@
+{
+  "_step": "1 — Keyword research", "_page": "Email Marketing spoke (/services/digital-marketing/email-marketing)",
+  "_primary_keyword": "email marketing services", "_location": "Canada", "_date": "2026-06-18",
+  "_provenance": "Live 3-tool pulls (DataForSEO returned empty on first try; retried successfully).",
+  "_done_check": "PASS: volume+difficulty from 3 tools; consensus; intent (KI cluster 7ac6fe00 in Step 2).",
+  "keywords": [
+    {"keyword": "email marketing services", "dataforseo": {"volume": 320, "difficulty": 44}, "ahrefs": {"volume": 300, "difficulty": 53}, "semrush": {"volume": 480, "difficulty": null}, "intent": "Commercial", "consensus": {"volume": "300-480", "difficulty_band": "med (44-53)", "winnable": true}, "note": "PRIMARY. High CPC ($12+)."},
+    {"keyword": "email marketing agency", "dataforseo": {"volume": 210, "difficulty": 0}, "ahrefs": {"volume": 450, "difficulty": 0}, "semrush": {"volume": 590, "difficulty": null}, "intent": "Commercial", "consensus": {"volume": "210-590", "difficulty_band": "very low (0)", "winnable": true}, "note": "Primary cluster — very winnable."},
+    {"keyword": "email marketing company", "dataforseo": {"volume": 70, "difficulty": 100}, "ahrefs": {"volume": 200, "difficulty": 26}, "semrush": {"volume": 110, "difficulty": null}, "intent": "Commercial", "consensus": {"volume": "70-200", "difficulty_band": "disputed (26-100)", "winnable": true}, "note": "Primary cluster synonym."},
+    {"keyword": "email marketing management", "dataforseo": {"volume": 20, "difficulty": 45}, "ahrefs": {"volume": 90, "difficulty": 5}, "semrush": {"volume": 50, "difficulty": null}, "intent": "Commercial", "consensus": {"volume": "20-90", "difficulty_band": "low-med (5-45)", "winnable": true}, "note": "Secondary (ongoing management)."},
+    {"keyword": "email automation services", "dataforseo": {"volume": 20, "difficulty": null}, "ahrefs": {"volume": 50, "difficulty": null}, "semrush": {"volume": 40, "difficulty": null}, "intent": "Commercial", "consensus": {"volume": "20-50", "winnable": true}, "note": "Secondary — automation/nurture angle."},
+    {"keyword": "email marketing consultant", "dataforseo": {"volume": 30, "difficulty": 43}, "ahrefs": {"volume": 60, "difficulty": 0}, "semrush": {"volume": 40, "difficulty": null}, "intent": "Commercial", "consensus": {"volume": "30-60", "difficulty_band": "low-med (0-43)", "winnable": true}, "note": "Secondary."},
+    {"keyword": "email campaign management", "dataforseo": {"volume": 10, "difficulty": 51}, "ahrefs": {"volume": 90, "difficulty": 33}, "semrush": {"volume": 50, "difficulty": null}, "intent": "Commercial", "consensus": {"volume": "10-90", "difficulty_band": "med (33-51)", "winnable": "borderline"}, "note": "Secondary."},
+    {"keyword": "email marketing for small business", "dataforseo": {"volume": 110, "difficulty": 5}, "ahrefs": {"volume": 70, "difficulty": 2}, "semrush": {"volume": 50, "difficulty": null}, "intent": "Commercial/Informational", "consensus": {"volume": "50-110", "difficulty_band": "very low (2-5)", "winnable": true}, "note": "Secondary (SMB)."}
+  ],
+  "takeaways": ["Primary = email marketing services/agency/company (agency very winnable). Secondaries = management, automation, consultant, campaign management, SMB. Email/lifecycle intent — distinct from the other spokes."]
+}

@@ -1,0 +1,31 @@
+{
+  "_step": "6b — EEAT audit (CORE-EEAT 80-item via aaron-seo-geo:content-quality-auditor, run by an INDEPENDENT subagent — not self-graded)",
+  "_page": "social-media-marketing (/services/digital-marketing/social-media-marketing)",
+  "_content": "social-media-marketing/05-draft.md",
+  "_content_type": "Landing Page (transactional service page)",
+  "_date": "2026-06-22",
+  "_scale": "0-100 per dimension; ratings: 90-100 Excellent / 75-89 Good / 60-74 Medium / 40-59 Low.",
+  "_word_count": "1,658 words (06a). Above the 150-word landing-page minimum; modestly over the SERP-derived 1100-1500 band — a minor length/density note for R, not a veto.",
+  "veto": "None. C01 (intent/title match): H1 'Social Media Marketing Services for Canadian Businesses' matches body intent exactly — PASS. T04 (affiliate disclosure): N/A — no affiliate links. R10 (data consistency): the 3 stats (5.79B, 18h36m, 29.7%) each appear once and are cited consistently; pricing stance (scoped-after-consultation, ad budget separate) and the no-guarantees / months-not-weeks posture are consistent throughout — PASS. cap_applied: false.",
+  "dimensions": {
+    "C_contextual_clarity": { "score": 95, "note": "Intent nailed for a transactional 'social media marketing services' page; term defined up front (what SMM is + the two jobs it does at once). Full query coverage (what's included, services breakdown, who it's for, 4-step process, pricing, FAQ answering cost / worth-it / platform-choice / timeline). Audience explicit (small biz, B2B, local/service, eComm, dormant accounts). Owned secondaries (agency / company / companies) all present. Only gap: no explicit out-of-scope sentence (C05 partial)." },
+    "O_organization": { "score": 58, "note": "Clean 6-H2 spine, scannable bold-led bullet lists, numbered process, question-led FAQ where each Q is a self-contained direct answer (marginally stronger than a bold-paragraph FAQ). Gaps: no summary/answer box at the top; no comparison or what's-included table; FAQ is bold-paragraph not native schema Q&A — auto-fixed by the template FAQPage schema at Step 7." },
+    "R_referenceability": { "score": 72, "note": "3 named, linkable primary sources (DataReportal/Kepios; DataReportal/GWI x2) with precise stats (5.79B identities, 18h36m/week, 29.7% ad discovery), each mapped to a specific claim and live-verified at 6a; 6 internal links (content-marketing x2, reputation-management, google-ads-ppc, digital-marketing x2) with descriptive anchors. Missing: last-updated/freshness marker; citation density still modest for 1,658 words." },
+    "E_exclusivity": { "score": 35, "note": "Category-standard service page; differentiator = one-connected-service / senior-led / no-outsourcing plus the honest 'two platforms well rather than six' stance. No original data or proprietary research (expected for a service page; not penalized beyond the structural reality)." },
+    "Exp_experience": { "score": 30, "note": "Capped BY DESIGN — process documented and limits honestly acknowledged (which platforms are worth your time; no fixed-follower promise), but no client case work, named results, or metrics (deliberate no-fabrication posture). Deferred: eeat-authority-circle-back. NOT a defect to fix by inventing proof." },
+    "Ept_expertise": { "score": 80, "note": "Named author (Hassan Sadiq, Founder & CEO) plus certified Microsoft Solutions Partner; accurate domain vocabulary (organic vs paid reach, community management, platform-specific creative, reach/engagement/audience-growth/action metrics, monthly reporting); edge-case awareness (B2B-on-LinkedIn, eComm + paid social, platform-fit judgment, months-not-weeks discipline)." },
+    "A_authority": { "score": 66, "flag": "Insufficient Data", "note": "7/10 items are site-level (backlinks / media mentions / awards / Knowledge Graph) — not observable on-page, marked N/A, excluded from the weighted total and re-normalized. On-page evaluable: entity consistency (NexFortis + Hassan Sadiq, Founder & CEO) PASS; Microsoft Solutions Partner credential PASS; on-page social proof (testimonials/case studies) FAIL — by design (no fabricated proof)." },
+    "T_trust": { "score": 64, "note": "Honest posture (explicitly no invented guarantees, no fixed follower count by a fixed date, realistic months-not-weeks timelines), transparent pricing model (scoped after a free consultation, no hidden fees, month-to-month, ad budget separate and goes directly to the platforms), certification disclosed. Gaps: no last-updated/correction policy and no on-page contact surface — both handled by the template/global layout at Step 7." }
+  },
+  "geo_score": 65,
+  "seo_score": 60,
+  "overall": 62,
+  "rating": "Medium (60-74)",
+  "verdict": "SHIP",
+  "remaining_soft_spots": "Most are Step-7 template-auto: FAQPage + Service + Person (Hassan Sadiq) schema auto-emitted by _DmSpokePageBody; contact surface via global layout/footer; last-updated marker. Optional content polish (none require inventing client proof): a top answer/summary box (lifts O + GEO), a one-line out-of-scope sentence (C05), a what's-included or organic-vs-paid comparison element (O03), and trimming toward the top of the 1100-1500 band to lift citation density.",
+  "_done_check": "PASS — overall 62/100 SHIP; no veto (C01/T04/R10 all clear); Referenceability 72 from the 3 named + live-verified cited stats (6a); Experience capped 30 by the deliberate no-client-proof posture (deferred to eeat-authority-circle-back, never fabricate). Author/Authority anchored on Hassan Sadiq (Founder & CEO) + Microsoft Solutions Partner. Audited via the standardized 80-item rubric by an independent subagent, not a self-grade.",
+  "cap_applied": false,
+  "raw_overall_score": 62,
+  "final_overall_score": 62,
+  "experience_capped_by_design": true
+}

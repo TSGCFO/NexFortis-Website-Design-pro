@@ -1,0 +1,13 @@
+{
+  "slug": "content-marketing",
+  "contentFile": "seo-tools/runbook/content-marketing/05-draft.md",
+  "humanizedBlocks": 7,
+  "totalBlocks": 31,
+  "integrity": {
+    "coverageOk": true,
+    "linksOk": false,
+    "origLinks": 9,
+    "newLinks": 8
+  },
+  "ai_detection": "ADVISORY (run undetectable-detect.mjs; detector flags human prose, non-binding)"
+}

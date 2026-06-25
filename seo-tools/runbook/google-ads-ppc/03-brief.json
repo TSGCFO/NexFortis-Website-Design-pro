@@ -1,0 +1,90 @@
+{
+  "_step": "3 — SERP analysis + content brief (KI)",
+  "_page": "google-ads-ppc (/services/digital-marketing/google-ads-ppc)",
+  "_primary_keyword": [
+    "google ads management"
+  ],
+  "_location": "Canada",
+  "_date": "2026-06-21",
+  "_ki_brief_status": "KI brief COMPLETE — order 6e0c39df-882c-4db0-a1c2-e42f256572ae, 16/17 (html_scraping true, completed true), 3 pages. Raw: seo-tools/tmp/briefs/google-ads-ppc.json (gitignored).",
+  "serp_source": "Keyword Insights content brief (live SERP, Canada, 'google ads management').",
+  "competitor_word_counts": {
+    "_method": "KI serp_page list. Service-page subset = transactional agency pages; excluded software/tool listicles, 'best/top N' roundups, Wikipedia, Google's own product/help pages, YouTube, directories.",
+    "service_page_subset": [
+      {
+        "url": "https://red27creative.com/google-ads-account-management",
+        "rank": 18,
+        "words": 4919
+      },
+      {
+        "url": "https://www.mikencube.com/blog/whats-included-in-a-google-ads-management-service/",
+        "rank": 10,
+        "words": 2365
+      },
+      {
+        "url": "https://infrontmarketing.ca/blog/google-ads/the-fundamentals-of-google-ads-management-key-strategies-to-run-a-successful-google-ads-campaign/",
+        "rank": 14,
+        "words": 938
+      },
+      {
+        "url": "https://www.cswebsolutions.ca/blog/importance-of-google-ads-management-services/",
+        "rank": 7,
+        "words": 894
+      },
+      {
+        "url": "https://firstrank.ca/google-ads-management-services-in-calgary/",
+        "rank": 9,
+        "words": 231
+      },
+      {
+        "url": "https://consultusdigital.com/google-ads-management-toronto/",
+        "rank": 13,
+        "words": 177
+      },
+      {
+        "url": "https://drivetraffic.ca/services/google-ads-management-that-generates-profit/",
+        "rank": 17,
+        "words": 85
+      },
+      {
+        "url": "https://thriveagency.com/digital-marketing-services/google-ads-management-services/",
+        "rank": 16,
+        "words": 65
+      }
+    ],
+    "service_subset_stats": {
+      "n": 8,
+      "min": 65,
+      "median": 562,
+      "max": 4919
+    },
+    "length_conclusion": "SERP-DERIVED target 1300-1800 words. Subset min 65 / median 562 / max 4919; beat thin pages, match the substantive service cluster, capped below guide/listicle/software outliers. Per locked rule 'length is SERP-derived per page' (NOT the stale Cursor-06-18 dm-word-targets.json)."
+  },
+  "questions": {
+    "_source": "KI people_also_asked + questions, buyer-intent filtered (dropped industry/forum noise).",
+    "buyer_questions": [
+      "What is the most successful commercial of all time?",
+      "How much should I pay someone to manage my Google Ads?",
+      "How much is a 30 second ad worth?",
+      "What is the most controversial ad of all time?",
+      "What is the oldest commercial still airing today?",
+      "How much does Google Ads cost in Canada?"
+    ]
+  },
+  "secondary_keywords": [
+    "google ads agency",
+    "google ads services",
+    "google ads management services",
+    "ppc agency",
+    "ppc services",
+    "ppc management",
+    "ppc management services",
+    "ppc management company",
+    "ppc company",
+    "ppc marketing agency",
+    "ppc advertising agency",
+    "google ppc services",
+    "google local service ads"
+  ],
+  "_done_check": "PASS — real KI brief 16/17 (html_scraping true); competitor subset + buyer questions + owned secondary keywords (Canada)."
+}

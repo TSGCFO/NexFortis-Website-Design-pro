@@ -1,0 +1,25 @@
+{
+  "_step": "6d — AI-detection + plagiarism (HARD GATE 3)",
+  "_page": "seo (/services/digital-marketing/seo)",
+  "_content": "seo/06c-humanized.md (humanized + proofread + coverage-verified)",
+  "_date": "2026-06-20",
+  "plagiarism_winston": {
+    "binding": true,
+    "tool": "Winston AI v2 (seo-tools/plagiarism-check.mjs)",
+    "score_percent": 0,
+    "matched_sources": 0,
+    "words_scanned": 1491,
+    "verdict": "PASS — original content, no unattributed matches."
+  },
+  "ai_detection_undetectable": {
+    "binding": false,
+    "policy": "ADVISORY (operator decision, PR #107 governance). The Undetectable xlm_ud_detector over-flags professional human business/SEO prose (calibration: Wikipedia 'Search engine optimization' AI=82; casual human SMB sample AI=100). Binding integrity gates for this run = Winston plagiarism (above) + the keyword/outline coverage gate (06c).",
+    "tool": "Undetectable.ai xlm_ud_detector (seo-tools/undetectable-detect.mjs)",
+    "ai_score": 72.0,
+    "human_percent": 37.5,
+    "threshold_reference": "<50 = 'human' on this tool",
+    "note": "Humanizer (Step 6c) touched only the 5 long prose blocks; lists/headings/FAQ were preserved verbatim for keyword + link safety, so the score stayed in the human-business-prose band. Pushing under 50 would require humanizing the lists/FAQ too, raising keyword/link-drop risk — not done. Operator may revisit if AI<50 ever becomes binding."
+  },
+  "coverage_gate": "PASS (06c re-verify: 12/12 keywords, 8/8 headings, 7/7 links).",
+  "_done_check": "GATE 3 satisfied: Winston plagiarism 0% (binding PASS); AI-detection recorded advisory; coverage intact."
+}

@@ -1,0 +1,29 @@
+{
+  "_step": "6b — EEAT audit (CORE-EEAT 80-item via aaron-seo-geo:content-quality-auditor, run by an INDEPENDENT subagent — not self-graded)",
+  "_page": "web-design (/services/digital-marketing/web-design)",
+  "_content": "web-design/05-draft.md",
+  "_content_type": "Landing Page (service page)",
+  "_date": "2026-06-22",
+  "_scale": "0-100 per dimension; ratings: 90-100 Excellent / 75-89 Good / 60-74 Medium / 40-59 Low.",
+  "veto": "None — C01 (clickbait) PASS, T04 (affiliate disclosure) N/A/Partial, R10 (data consistency) PASS. cap_applied: false.",
+  "dimensions": {
+    "C_contextual_clarity": { "score": 85, "note": "Title-content match, audience named, direct answer + FAQ + CTA loop. Gaps: explicit scope statement (C05), custom-vs-WordPress decision cue (C08)." },
+    "O_organization": { "score": 81, "note": "Clean H2 hierarchy, parallel service bullets, tight chunking. Held back by no comparison data table (O03)." },
+    "R_referenceability": { "score": 88, "note": "3 named Tier-1 sources (Google, Web Almanac, Stanford) with precise figures + descriptive internal links + Service/FAQ schema (Step 7). Only methodology transparency (R05) absent." },
+    "E_exclusivity": { "score": 25, "note": "Capped by design — no original data/framework/tools; differentiation is positioning (founder-led, Canadian/GTA)." },
+    "Exp_experience": { "score": 10, "note": "Expected cap (no portfolio/results by operator rule). Deferred: eeat-authority-circle-back. Never fabricate." },
+    "Ept_expertise": { "score": 55, "note": "Founder byline + Microsoft Solutions Partner + accurate web-craft vocabulary (Core Web Vitals, mobile-first, search equity). Thin on deeper technical depth + a visible reviewed-by stamp." },
+    "A_authority": { "score": 50, "flag": "Insufficient Data", "note": "6/10 items site-level/N/A on a standalone page (excluded, weights re-normalized). MS Partner partnership signal strongest; on-page social proof none (by design)." },
+    "T_trust": { "score": 71, "note": "Real NAP, privacy/terms, transparent pricing, month-to-month/no-lock-in, mobile-trust; no YMYL/affiliate exposure. Lowered by absent social proof + no visible editorial policy." }
+  },
+  "geo_score": 69,
+  "seo_score": 46,
+  "overall": 69,
+  "rating": "Medium (60-74)",
+  "verdict": "SHIP",
+  "remaining_soft_spots": "Post-publish hardening (none blocking, none requiring fabrication): O03 add a true non-priced comparison/spec table (highest GEO lever — AI extracts tables); R05/Ept04 add process/methodology specifics; C05/C08 bound scope + add a custom-vs-WordPress decision cue; Ept10/T05 add a lightweight 'Reviewed by Hassan Sadiq' editorial stamp; E07 add a true lead-magnet asset (pre-build checklist). Several are Step-7 template-auto (Service/FAQ schema).",
+  "_done_check": "PASS — overall 69/100 SHIP; no veto; Referenceability 88 from 3 verified Tier-1 cited stats; Experience/Exclusivity capped by the deliberate no-portfolio/no-proof posture (deferred eeat-authority-circle-back, never fabricate). Audited by an independent subagent via the standardized rubric, not a self-grade.",
+  "cap_applied": false,
+  "raw_overall_score": 69,
+  "final_overall_score": 69
+}

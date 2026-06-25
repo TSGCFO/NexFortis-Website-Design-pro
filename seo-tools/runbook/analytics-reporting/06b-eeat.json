@@ -1,0 +1,11 @@
+{
+  "_step": "6b — EEAT audit (§7)", "_page": "analytics-reporting", "_date": "2026-06-18", "_scale": "0-2; target >=8/10.",
+  "scores": {
+    "experience": {"score": 1, "why": "Practitioner POV (measure-to-grow, fix-broken-tracking, IT/data background); held at 1 (no citable client metrics)."},
+    "expertise": {"score": 2, "why": "Accurate analytics mechanics (GA4 events/conversions, Search Console, call/conversion tracking, attribution); correct terminology; GA4/UA fact current."},
+    "authoritativeness": {"score": 2, "why": "3 distinct named sources (Firework, Google/Dentsu, Statcounter) w/ URLs; Service+Person+Breadcrumb schema; Hassan Founder & CEO byline."},
+    "trust": {"score": 2, "why": "Revenue-over-vanity stance, honest about broken setups, transparent pricing; no fabricated client metrics; GA4 fact accurate."},
+    "veto_checks": {"score": 2, "passed": true}
+  },
+  "total": "9/10"
+}

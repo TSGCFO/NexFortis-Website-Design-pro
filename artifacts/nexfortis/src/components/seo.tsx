@@ -7,13 +7,17 @@ interface SEOProps {
   type?: "website" | "article";
   image?: string;
   noIndex?: boolean;
+  /** geo.region meta (ISO 3166-2). Defaults to the Ontario HQ; set per-city on geo pages. */
+  geoRegion?: string;
+  /** geo.placename meta. Defaults to the Nobleton HQ; set to the city on geo pages. */
+  geoPlacename?: string;
 }
 
 const SITE_NAME = "NexFortis IT Solutions";
 const SITE_URL = "https://nexfortis.com";
 const DEFAULT_IMAGE = "/opengraph.png";
 
-export function SEO({ title, description, path = "/", type = "website", image, noIndex }: SEOProps) {
+export function SEO({ title, description, path = "/", type = "website", image, noIndex, geoRegion = "CA-ON", geoPlacename = "Nobleton" }: SEOProps) {
   const siteUrl = SITE_URL;
   const fullTitle =
     path === "/"
@@ -50,8 +54,8 @@ export function SEO({ title, description, path = "/", type = "website", image, n
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={ogImage} />
 
-      <meta name="geo.region" content="CA-ON" />
-      <meta name="geo.placename" content="Nobleton" />
+      <meta name="geo.region" content={geoRegion} />
+      <meta name="geo.placename" content={geoPlacename} />
     </Helmet>
   );
 }
@@ -161,7 +165,7 @@ export function WebSiteSchema() {
   );
 }
 
-export function ServiceSchema({ name, description, url, serviceType = "IT Services" }: { name: string; description: string; url?: string; serviceType?: string }) {
+export function ServiceSchema({ name, description, url, serviceType = "IT Services", areaServed }: { name: string; description: string; url?: string; serviceType?: string; areaServed?: Record<string, unknown> }) {
   const siteUrl = SITE_URL;
   const resolvedUrl = url ? (url.startsWith("http") ? url : `${siteUrl}${url}`) : `${siteUrl}/services`;
   const schema = {
@@ -175,7 +179,7 @@ export function ServiceSchema({ name, description, url, serviceType = "IT Servic
       name: "NexFortis IT Solutions",
       url: siteUrl,
     },
-    areaServed: {
+    areaServed: areaServed ?? {
       "@type": "Country",
       name: "Canada",
     },

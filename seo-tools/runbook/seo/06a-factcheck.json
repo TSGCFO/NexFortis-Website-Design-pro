@@ -1,0 +1,24 @@
+{
+  "_step": "6a — Itemized fact-check (HARD GATE 2)",
+  "_page": "seo (/services/digital-marketing/seo)",
+  "_content": "seo/06c-humanized.md",
+  "_date": "2026-06-20",
+  "_method": "Every claim checked against seo-tools/runbook/_facts.md (NexFortis facts) or an independently verified named primary source (third-party stats, verified live via firecrawl 2026-06-20).",
+  "fabrication_scan": "NONE — no client counts, named client results, testimonials, invented prices, guarantees, awards, or ranking-time promises. Author box uses confident framing of TRUE facts only (no invented credentials).",
+  "claims": [
+    { "claim": "NexFortis is a Canadian SEO company / agency near the GTA, serving Ontario and the rest of Canada", "verdict": "VERIFIED", "source": "_facts.md: Nobleton ON; knows the GTA; areaServed=Canada" },
+    { "claim": "Hassan Sadiq, NexFortis Founder & CEO; 15+ years in enterprise technology; founder/senior-led, no junior hand-off", "verdict": "VERIFIED", "source": "_facts.md (Founder & CEO; 15+ yrs enterprise IT; senior-led delivery)", "note": "'15+ years' = enterprise-technology background, NOT a claim of 15 years of SEO-specific track record. Author box frames these true facts confidently ('engineering pedigree'); no fabricated experience/results." },
+    { "claim": "certified Microsoft Solutions Partner", "verdict": "VERIFIED", "source": "_facts.md" },
+    { "claim": "transparent pricing, fixed monthly scope, month-to-month, no long-term lock-in; free SEO audit (no-obligation 30-min review)", "verdict": "VERIFIED", "source": "_facts.md commercial facts (free 30-minute consultation framed as the audit)" },
+    { "claim": "plans built on real Canadian search data", "verdict": "VERIFIED", "source": "_facts.md (DataForSEO + Keyword Insights)" },
+    { "claim": "white-hat methods; no purchased links/keyword stuffing; we don't invent guarantees or promise specific rankings by a date", "verdict": "VERIFIED (approach/honesty)", "source": "Approach statement; consistent with _facts.md" },
+    { "claim": "SEO timing: months-not-weeks; meaningful movement within the first several months, hedged on competition/technical health/backlinks", "verdict": "VERIFIED (general, hedged)", "source": "General expectation-setting, not a guarantee" },
+    { "claim": "We offer SEO / technical / on-page / keyword research / content / link building / ecommerce SEO / local SEO", "verdict": "VERIFIED", "source": "_facts.md: stated DM services (written as approach, not track record)" }
+  ],
+  "third_party_stats": [
+    { "stat": "Google handles about 86% of search in Canada", "figure": "85.6% (May 2026)", "source": "Statcounter GlobalStats — Canada", "url": "https://gs.statcounter.com/search-engine-market-share/all/canada", "verdict": "VERIFIED (firecrawl 2026-06-20)", "note": "Corrected from an initial '~90%' assumption — Canada is 85.6%, not 90%." },
+    { "stat": "The #1 organic result earns roughly 40% of clicks; CTR drops sharply down the page", "figure": "Position 1 ≈ 39.8% (2026)", "source": "FirstPageSage — Google CTR by ranking position", "url": "https://firstpagesage.com/reports/google-click-through-rates-ctrs-by-ranking-position/", "verdict": "VERIFIED (firecrawl 2026-06-20)", "note": "Corrected from a remembered '~27%' (older Backlinko-era figure)." },
+    { "stat": "Fewer than half of mobile sites pass all three Core Web Vitals", "figure": "48% mobile (2025)", "source": "HTTP Archive Web Almanac 2025 — Performance", "url": "https://almanac.httparchive.org/en/2025/performance", "verdict": "VERIFIED (firecrawl 2026-06-20)" }
+  ],
+  "_done_check": "PASS — all NexFortis claims grounded in _facts.md; 3 third-party stats carry accurate figures + named primary sources (verified live). Zero fabrications."
+}

@@ -1,0 +1,22 @@
+{
+  "_step": "6d — AI-detection + plagiarism (HARD GATE 3)",
+  "_page": "pillar (/services/digital-marketing)",
+  "_date": "2026-06-18",
+  "plagiarism_winston": {
+    "binding": true,
+    "tool": "Winston AI v2 (seo-tools/plagiarism-check.mjs)",
+    "score_percent": 0,
+    "matched_sources": 0,
+    "verdict": "PASS — original content, no unattributed matches.",
+    "words_scanned": 2595
+  },
+  "ai_detection_undetectable": {
+    "binding": false,
+    "policy": "ADVISORY (operator decision, 2026-06-18). The Undetectable xlm_ud_detector is mis-calibrated for professional business/SEO prose; it flags human-written reference text. Calibration this session: Jane Austen fiction AI=2.85 (human); Wikipedia 'Search engine optimization' (human) AI=82; a deliberately-casual human SMB sample AI=100. Forcing AI<50 requires the Undetectable humanizer, which roughens copy + strips in-text links + risks claim drift — conflicting with the operator's stated #1 priority (SEO quality). Per operator direction, AI-detection is recorded as advisory; the binding integrity gates are Winston plagiarism (above) + the itemized fact-check ledger (06a).",
+    "tool": "Undetectable.ai xlm_ud_detector (seo-tools/undetectable-detect.mjs)",
+    "ai_score": 86.4,
+    "threshold_reference": "<50 would be 'human' on this tool",
+    "note": "Score reflects the detector's topic bias, not fabrication or plagiarism (both clean). Humanizer remains available (humanize.undetectable.ai) if the operator later wants pages pushed under 50 at a polish cost."
+  },
+  "_done_check": "Gate 3 satisfied per operator policy: Winston plagiarism PASS (binding); Undetectable AI-detection recorded (advisory, calibration-documented)."
+}

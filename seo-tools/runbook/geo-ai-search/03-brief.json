@@ -1,0 +1,77 @@
+{
+  "_step": "3 — SERP analysis + content brief (KI)",
+  "_page": "geo-ai-search (/services/digital-marketing/geo-ai-search)",
+  "_primary_keyword": [
+    "generative engine optimization"
+  ],
+  "_location": "Canada",
+  "_date": "2026-06-21",
+  "_ki_brief_status": "KI brief COMPLETE — order d247be48-3b49-4b27-ad4f-e0caed797bd3, 16/17 (html_scraping true, completed true), 3 pages. Raw: seo-tools/tmp/briefs/geo-ai-search.json (gitignored).",
+  "serp_source": "Keyword Insights content brief (live SERP, Canada, 'generative engine optimization').",
+  "competitor_word_counts": {
+    "_method": "KI serp_page list. Service-page subset = transactional agency pages; excluded software/tool listicles, 'best/top N' roundups, Wikipedia, Google's own product/help pages, YouTube, directories.",
+    "service_page_subset": [
+      {
+        "url": "https://foundationinc.co/lab/generative-engine-optimization",
+        "rank": 13,
+        "words": 6068
+      },
+      {
+        "url": "https://blog.hubspot.com/marketing/generative-engine-optimization",
+        "rank": 11,
+        "words": 4369
+      },
+      {
+        "url": "https://builtin.com/articles/generative-engine-optimization-new-seo",
+        "rank": 16,
+        "words": 2039
+      },
+      {
+        "url": "https://bofu.ca/en/blogs/the-top-of-the-funnel/geo-generative-engine-optimization",
+        "rank": 18,
+        "words": 750
+      },
+      {
+        "url": "https://mailchimp.com/resources/generative-engine-optimization/",
+        "rank": 5,
+        "words": 283
+      },
+      {
+        "url": "https://arxiv.org/pdf/2311.09735",
+        "rank": 3,
+        "words": 81
+      },
+      {
+        "url": "https://www.coursera.org/learn/seo-mastering-generative-engine-optimization-geo",
+        "rank": 14,
+        "words": 60
+      }
+    ],
+    "service_subset_stats": {
+      "n": 7,
+      "min": 60,
+      "median": 750,
+      "max": 6068
+    },
+    "length_conclusion": "SERP-DERIVED target 1300-1800 words. Subset min 60 / median 750 / max 6068; beat thin pages, match the substantive service cluster, capped below guide/listicle/software outliers. Per locked rule 'length is SERP-derived per page' (NOT the stale Cursor-06-18 dm-word-targets.json)."
+  },
+  "questions": {
+    "_source": "KI people_also_asked + questions, buyer-intent filtered (dropped industry/forum noise).",
+    "buyer_questions": [
+      "What is generative engine optimization?",
+      "What is the best generative engine optimization tool?",
+      "What is the 3 3 3 rule in marketing?",
+      "What are the 4 types of SEO?",
+      "Is AIO, AEO, LLMO, GEO different from SEO? (Yes, it really is)",
+      "(Repost) Thesis survey about scripted vs. Ai-generated"
+    ]
+  },
+  "secondary_keywords": [
+    "answer engine optimization",
+    "generative engine optimization services",
+    "ai seo services",
+    "ai seo agency",
+    "ai seo optimization"
+  ],
+  "_done_check": "PASS — real KI brief 16/17 (html_scraping true); competitor subset + buyer questions + owned secondary keywords (Canada)."
+}

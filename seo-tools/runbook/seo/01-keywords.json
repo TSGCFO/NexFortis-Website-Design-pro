@@ -1,0 +1,27 @@
+{
+  "_step": "1 — Keyword research & generation",
+  "_page": "SEO spoke (/services/digital-marketing/seo)",
+  "_primary_keyword": "seo services",
+  "_location": "Canada (DataForSEO 2124; Ahrefs ca; Semrush ca)",
+  "_date": "2026-06-18",
+  "_provenance": "Live 3-tool pulls this session.",
+  "_done_check": "PASS: volume+difficulty from 3 tools; consensus band; intent (confirmed by KI cluster order 362f44e6 in Step 2).",
+  "keywords": [
+    { "keyword": "seo services", "dataforseo": {"volume": 5400, "difficulty": 27}, "ahrefs": {"volume": 4300, "difficulty": 31}, "semrush": {"volume": 5400, "difficulty": 55}, "intent": "Commercial/Transactional", "consensus": {"volume": "4300-5400", "difficulty_band": "med (27-55)", "winnable": true}, "note": "PRIMARY. High volume, high CPC ($8-16) = strong buyer intent." },
+    { "keyword": "seo company", "dataforseo": {"volume": 3600, "difficulty": 14}, "ahrefs": {"volume": 3800, "difficulty": 9}, "semrush": {"volume": 4400, "difficulty": 50}, "intent": "Commercial", "consensus": {"volume": "3600-4400", "difficulty_band": "low-med (9-50)", "winnable": true}, "note": "Same cluster. Very winnable in 2/3 tools." },
+    { "keyword": "seo agency", "dataforseo": {"volume": 2900, "difficulty": 35}, "ahrefs": {"volume": 4400, "difficulty": 19}, "semrush": {"volume": 5400, "difficulty": 48}, "intent": "Commercial", "consensus": {"volume": "2900-5400", "difficulty_band": "low-med (19-48)", "winnable": true}, "note": "Same cluster." },
+    { "keyword": "seo consultant", "dataforseo": {"volume": 1900, "difficulty": 1}, "ahrefs": {"volume": 1200, "difficulty": 2}, "semrush": {"volume": 1300, "difficulty": 32}, "intent": "Commercial", "consensus": {"volume": "1200-1900", "difficulty_band": "low (1-32)", "winnable": true}, "note": "Secondary (fits founder-consultant positioning; confirm SERP isn't jobs in Step 2)." },
+    { "keyword": "seo agency near me", "dataforseo": {"volume": 1300, "difficulty": 21}, "ahrefs": {"volume": 500, "difficulty": 4}, "semrush": {"volume": 1000, "difficulty": 25}, "intent": "Transactional (local-ish)", "consensus": {"volume": "500-1300", "difficulty_band": "low (4-25)", "winnable": true}, "note": "Secondary — buyer hiring an SEO agency (NOT 'local seo', which is the local-seo spoke)." },
+    { "keyword": "seo expert", "dataforseo": {"volume": 880, "difficulty": 45}, "ahrefs": {"volume": 1100, "difficulty": 37}, "semrush": {"volume": 1300, "difficulty": 69}, "intent": "Commercial", "consensus": {"volume": "880-1300", "difficulty_band": "med-high (37-69)", "winnable": "borderline"}, "note": "Secondary." },
+    { "keyword": "affordable seo services", "dataforseo": {"volume": 260, "difficulty": 1}, "ahrefs": {"volume": 450, "difficulty": 3}, "semrush": {"volume": 390, "difficulty": 9}, "intent": "Transactional", "consensus": {"volume": "260-450", "difficulty_band": "very low (1-9)", "winnable": true}, "note": "Secondary, easy win, price-sensitive SMB intent." },
+    { "keyword": "seo services for small business", "dataforseo": {"volume": 720, "difficulty": 0}, "ahrefs": {"volume": 350, "difficulty": 0}, "semrush": {"volume": 260, "difficulty": 24}, "intent": "Transactional", "consensus": {"volume": "260-720", "difficulty_band": "very low (0-24)", "winnable": true}, "note": "Secondary — our SMB audience." },
+    { "keyword": "seo", "dataforseo": {"volume": 12100, "difficulty": 58}, "ahrefs": {"volume": 20000, "difficulty": 97}, "semrush": {"volume": 22200, "difficulty": 72}, "intent": "Informational", "consensus": {"volume": "12100-22200", "difficulty_band": "BRUTAL (58-97)", "winnable": false}, "note": "Bare head term, informational -> blog, NOT the service page." },
+    { "keyword": "search engine optimization", "dataforseo": {"volume": 12100, "difficulty": 68}, "ahrefs": {"volume": 2900, "difficulty": 92}, "semrush": {"volume": 6600, "difficulty": 81}, "intent": "Informational", "consensus": {"volume": "2900-12100", "difficulty_band": "BRUTAL (68-92)", "winnable": false}, "note": "Informational definition term -> blog." }
+  ],
+  "takeaways": [
+    "Primary cluster = seo services / company / agency (commercial, winnable, high CPC).",
+    "Secondaries: seo consultant, seo agency near me, seo expert, affordable seo services, seo services for small business.",
+    "Excluded to blog: bare 'seo' + 'search engine optimization' (informational, brutal).",
+    "Fenced: 'local seo *' -> local-seo spoke; 'technical seo *' -> technical-seo spoke. No overlap with this generic-SEO cluster."
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "_step": "6d — AI-detection + plagiarism (HARD GATE 3)",
+  "_page": "web-design (/services/digital-marketing/web-design)",
+  "_content": "web-design/06c-humanized.md (humanized + proofread + coverage-verified)",
+  "_date": "2026-06-22",
+  "plagiarism_winston": {
+    "binding": true,
+    "tool": "Winston AI (seo-tools/plagiarism-check.mjs)",
+    "score_percent": 0,
+    "matched_sources": 0,
+    "words_scanned": 1279,
+    "verdict": "PASS — original content, no unattributed matches."
+  },
+  "ai_detection_undetectable": {
+    "binding": false,
+    "policy": "ADVISORY (operator decision, PR #107 governance). The Undetectable detector over-flags professional human business/SEO prose; binding integrity gates = Winston plagiarism + the keyword/outline coverage gate.",
+    "tool": "Undetectable.ai detector (seo-tools/undetectable-detect.mjs)",
+    "ai_score": 49.7,
+    "human_percent": 87.5,
+    "threshold_reference": "<50 = 'human' on this tool",
+    "note": "Scored HUMAN (49.7 < 50) after the 6c humanize + proofread. The humanizer passed integrity on the first attempt for this page (5/29 prose blocks humanized); proofread fixed glosses (off-brand 'web development company', a broken pricing sentence, ALL-CAPS, 'based off of') while preserving all keywords/links/citations."
+  },
+  "coverage_gate": "PASS (06c re-verify: 7/7 keywords, 7/7 headings, 3 distinct cited URLs, 1,347 words).",
+  "_done_check": "GATE 3 satisfied: Winston plagiarism 0% (binding PASS); AI-detection HUMAN (advisory); coverage intact."
+}

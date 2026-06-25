@@ -1,0 +1,13 @@
+{
+  "slug": "reputation-management",
+  "contentFile": "seo-tools/runbook/reputation-management/05-draft.md",
+  "humanizedBlocks": 4,
+  "totalBlocks": 29,
+  "integrity": {
+    "coverageOk": false,
+    "linksOk": true,
+    "origLinks": 8,
+    "newLinks": 8
+  },
+  "ai_detection": "ADVISORY (run undetectable-detect.mjs; detector flags human prose, non-binding)"
+}

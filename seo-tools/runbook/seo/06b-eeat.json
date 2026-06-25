@@ -1,0 +1,30 @@
+{
+  "_step": "6b — EEAT audit (CORE-EEAT 80-item rubric via aaron-seo-geo:content-quality-auditor) — RE-AUDIT after Fix #1 (cited stats) + Fix #2 (author box)",
+  "_page": "seo (/services/digital-marketing/seo)",
+  "_content": "seo/06c-humanized.md",
+  "_content_type": "Landing Page (service page)",
+  "_date": "2026-06-20",
+  "_scale": "0-100 per dimension; ratings: 90-100 Excellent / 75-89 Good / 60-74 Medium / 40-59 Low.",
+  "veto": "None (no fabrication / no clickbait / no data inconsistency). cap_applied: false.",
+  "dimensions": {
+    "C_contextual_clarity": { "score": 86, "prev": 85, "note": "Title matches intent; direct answers; cited data sharpens the 'why SEO matters' answer." },
+    "O_organization": { "score": 85, "prev": 85, "note": "Clean H1/H2, lists, process, FAQ — scannable." },
+    "R_referenceability": { "score": 70, "prev": 48, "note": "BIG LIFT — went from zero citable data to 3 cited primary-source stats (Statcounter, FirstPageSage, Web Almanac), all dated/quotable. Still no original research of its own." },
+    "E_exclusivity": { "score": 64, "prev": 62, "note": "Author box adds a unique founder-led / IT-stack angle; some generic SEO language remains." },
+    "Exp_experience": { "score": 56, "prev": 50, "note": "Author box adds founder-led personal accountability; STILL no citable client results/case studies — the deferred circle-back item (real proof needed)." },
+    "Ept_expertise": { "score": 80, "prev": 78, "note": "Microsoft Solutions Partner + accurate, detailed SEO process; cited data reinforces competence." },
+    "A_authority": { "score": 67, "prev": 58, "note": "Named author (Hassan Sadiq, Founder & CEO) + credentials on-page + authoritative external citations. Site-level backlinks N/A." },
+    "T_trust": { "score": 89, "prev": 88, "note": "Transparency, month-to-month, honest 'no guarantees', no fabrication; cited sources add trust." }
+  },
+  "geo_score": 76,
+  "seo_score": 73,
+  "overall": 75,
+  "prev_overall": 70,
+  "rating": "Good (75-89)",
+  "verdict": "SHIP",
+  "remaining_soft_spot": "Experience (56) — capped by the absence of citable client results; tracked in memory eeat-authority-circle-back for when real proof exists.",
+  "_done_check": "PASS — overall 75/100 (Good), up from 70 (Medium); no veto. Referenceability lift confirms Fix #1 worked; Authority/Experience lift confirms Fix #2. Re-audited via the standardized rubric, not a self-grade.",
+  "cap_applied": false,
+  "raw_overall_score": 75,
+  "final_overall_score": 75
+}

@@ -1,0 +1,18 @@
+{
+  "_step": "3 — SERP analysis + content brief", "_page": "google-business-profile",
+  "_primary_keyword": "google business profile optimization", "_location": "Canada", "_date": "2026-06-18",
+  "_ki_brief_status": "KI brief tool down -> SERP brief from live Semrush SERP + competitor fetches.",
+  "serp_source": "Semrush phrase_organic (ca, 'google business profile optimization').",
+  "serp_character": "Guide-dominated SERP (Google support, Reddit, Whitespark/BrightLocal/Semrush guides) — confirms the informational lean; few pure service pages. Page educates + sells a managed service.",
+  "competitor_word_counts": {
+    "_method": "Fetched ranking pages; <body> raw words. Service pages scarce; included guides for length reference.",
+    "service_or_close": [{"url": "consultusdigital.com/...-toronto (service)", "words_raw": 4729}, {"url": "crummymedia.com (service/guide)", "words_raw": 2544}, {"url": "agency.media (guide)", "words_raw": 1326}, {"url": "whitespark.ca/...-guide", "words_raw": 1299}, {"url": "uberall.com (guide)", "words_raw": 3402}],
+    "length_conclusion": "Wide spread (1.3k-4.7k raw). A focused managed-service spoke aims ~1100-1900 main — beat thin pages, stay tighter than the long guides."
+  },
+  "questions": {
+    "_source": "Semrush phrase_questions (ca, 'google business profile'), buyer/owner.",
+    "buyer_questions": ["Is a Google Business Profile free / how much does it cost?", "Can I have a GBP without an address (service-area)?", "How do I create / set up a GBP?", "Can you merge two profiles?", "How is ongoing GBP management different from a one-time setup?"]
+  },
+  "secondary_keywords": ["google business profile management", "google business profile services", "gmb optimization", "google my business optimization", "google maps optimization", "local listing management"],
+  "_done_check": "PASS — competitor table + buyer questions + secondary kws (Canada)."
+}

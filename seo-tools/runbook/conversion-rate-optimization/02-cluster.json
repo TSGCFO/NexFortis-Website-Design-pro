@@ -1,0 +1,23 @@
+{
+  "_step": "2 — Cluster + cannibalization (HARD GATE 1)", "_page": "conversion-rate-optimization",
+  "_source": "KI clustering order 7c0b4a48-a29e-4f65-8096-9977786a866f (2026-06-18, Canada).",
+  "cluster_evidence": {
+    "conversion rate optimization services": {"intent": "Commercial", "note": "PRIMARY."},
+    "cro agency": {"intent": "Commercial", "note": "PRIMARY."},
+    "conversion rate optimization agency": {"intent": "Commercial", "note": "PRIMARY."},
+    "conversion optimization services": {"intent": "Commercial", "note": "Secondary (synonym)."},
+    "ab testing services": {"intent": "Commercial", "note": "Secondary (A/B testing tactic)."},
+    "cro consultant": {"intent": "Commercial", "note": "Secondary."},
+    "cro services": {"intent": "Informational", "note": "Secondary — KI flags informational SERP, but a low-difficulty service term; kept secondary."},
+    "landing page optimization": {"intent": "Informational", "note": "Secondary (key tactic)."},
+    "website conversion optimization": {"intent": "Informational", "note": "Secondary."},
+    "conversion rate optimization": {"intent": "Informational", "note": "EXCLUDED to blog (head, informational/definitional, harder). Page is about the service."}
+  },
+  "assignment": {
+    "owns_primary": ["conversion rate optimization services", "cro agency", "conversion rate optimization agency"],
+    "owns_secondary": ["cro services", "conversion optimization services", "landing page optimization", "website conversion optimization", "ab testing services", "cro consultant"],
+    "excluded": {"conversion rate optimization": "blog (informational head)"}
+  },
+  "fence_note": "Conversion/optimization intent — distinct from web-design (the page links web-design for landing-page builds) and the rest.",
+  "_done_check": "PASS — one primary cluster; registry updated; check-cannibalization exit 0."
+}

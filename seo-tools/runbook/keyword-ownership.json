@@ -1,101 +1,293 @@
 {
   "_purpose": "Cannibalization registry: which page owns which keywords. One page = one cluster. No keyword may appear under two pages.",
   "_rule": "Checked by seo-tools/runbook/check-cannibalization.mjs — it fails (exit 1) if any keyword is owned by more than one page.",
-  "_status_legend": {
-    "confirmed": "Owned cluster verified via live KI SERP-overlap clustering.",
-    "tentative": "Seed head terms only — REPLACE with real KI clustering when this page is produced through the run book.",
-    "reserved": "Informational terms parked on the blog/guide cluster so no service spoke claims them."
-  },
+  "_provenance": "National service-page map (Phase A), 2026-06-20. Business-logic grouping informed by KI clustering (order b0574d01, agglomerative/accuracy-2) + 3-tool intent (DataForSEO/Semrush/Ahrefs). SUPERSEDES and DISCARDS the prior PR #107 spoke set. Folds: GBP -> local-seo; technical+ecommerce SEO -> seo; PPC -> google-ads-ppc; GEO+AI -> geo-ai-search; website-maintenance -> web-design; analytics-reporting -> dropped. Geo [service]+[city] = Layer-2 (Phase B), appended later. Detail: seo-tools/runbook/02-page-map.md.",
   "pages": {
-    "/services/digital-marketing": {
-      "name": "Digital Marketing (pillar)",
-      "status": "tentative",
-      "primary": ["digital marketing services", "digital marketing agency"],
-      "secondary": []
+    "digital-marketing": {
+      "_role": "PILLAR (exists) — hub linking all spokes",
+      "primary": ["digital marketing services"],
+      "secondary": [
+        "digital marketing agency",
+        "digital marketing company",
+        "digital marketing firm",
+        "online marketing services",
+        "internet marketing services",
+        "digital marketing agency near me",
+        "digital marketing services for small business"
+      ]
     },
-    "/services/digital-marketing/local-seo": {
-      "name": "Local SEO",
-      "status": "confirmed (KI cluster order 60ed2346, 2026-06-15)",
-      "primary": ["local seo services", "local seo company", "local seo agency"],
-      "secondary": ["local seo near me", "local seo expert"]
+    "seo": {
+      "primary": ["seo services"],
+      "secondary": [
+        "seo company",
+        "seo agency",
+        "professional seo services",
+        "seo service",
+        "seo canada",
+        "seo consultant",
+        "seo specialist",
+        "seo expert",
+        "ecommerce seo agency",
+        "technical seo services",
+        "technical seo audit"
+      ]
     },
-    "/services/digital-marketing/seo": {
-      "name": "SEO Services",
-      "status": "tentative",
-      "primary": ["seo services", "seo company", "seo agency"],
-      "secondary": []
+    "local-seo": {
+      "primary": ["local seo services"],
+      "secondary": [
+        "local seo company",
+        "local seo agency",
+        "local seo service",
+        "local seo consultant",
+        "local seo services for small business",
+        "google business profile optimization",
+        "google business profile management",
+        "google business profile services"
+      ]
     },
-    "/services/digital-marketing/technical-seo": {
-      "name": "Technical SEO",
-      "status": "tentative",
-      "primary": ["technical seo", "technical seo services", "technical seo audit"],
-      "secondary": []
+    "web-design": {
+      "primary": ["web design services"],
+      "secondary": [
+        "web design company",
+        "web design agency",
+        "custom web design",
+        "best web design company",
+        "web design and development",
+        "website maintenance services"
+      ]
     },
-    "/services/digital-marketing/google-business-profile": {
-      "name": "Google Business Profile",
-      "status": "confirmed-reserved (GBP terms fenced off Local SEO per KI intent)",
-      "primary": ["google business profile optimization", "gmb optimization", "google business profile management"],
-      "secondary": ["gmb"]
+    "google-ads-ppc": {
+      "primary": ["google ads management"],
+      "secondary": [
+        "google ads agency",
+        "google ads services",
+        "google ads management services",
+        "ppc agency",
+        "ppc services",
+        "ppc management",
+        "ppc management services",
+        "ppc management company",
+        "ppc company",
+        "ppc marketing agency",
+        "ppc advertising agency",
+        "google ppc services",
+        "google local service ads"
+      ]
     },
-    "/services/digital-marketing/content-marketing": {
-      "name": "Content Marketing",
-      "status": "tentative",
-      "primary": ["content marketing services", "content marketing agency"],
-      "secondary": []
+    "social-media-marketing": {
+      "primary": ["social media marketing services"],
+      "secondary": [
+        "social media marketing agency",
+        "social media marketing company",
+        "social media marketing companies"
+      ]
     },
-    "/services/digital-marketing/link-building": {
-      "name": "Link Building & Digital PR",
-      "status": "tentative",
-      "primary": ["link building services", "link building agency"],
-      "secondary": []
+    "content-marketing": {
+      "primary": ["content marketing services"],
+      "secondary": [
+        "content marketing agency",
+        "content marketing service",
+        "b2b content marketing agency",
+        "video content marketing services"
+      ]
     },
-    "/services/digital-marketing/generative-engine-optimization": {
-      "name": "GEO & AI Search",
-      "status": "tentative",
-      "primary": ["generative engine optimization", "answer engine optimization", "ai search optimization"],
-      "secondary": []
+    "link-building": {
+      "primary": ["link building services"],
+      "secondary": [
+        "link building service",
+        "seo link building services",
+        "best link building service",
+        "link building packages",
+        "seo link building company",
+        "link building outreach service"
+      ]
     },
-    "/services/digital-marketing/google-ads": {
-      "name": "Google Ads Management",
-      "status": "tentative",
-      "primary": ["google ads management", "ppc management", "google ads agency"],
-      "secondary": []
+    "geo-ai-search": {
+      "primary": ["generative engine optimization"],
+      "secondary": [
+        "answer engine optimization",
+        "generative engine optimization services",
+        "ai seo services",
+        "ai seo agency",
+        "ai seo optimization"
+      ]
     },
-    "/services/digital-marketing/social-media-marketing": {
-      "name": "Social Media Marketing",
-      "status": "tentative",
-      "primary": ["social media marketing services", "social media management"],
-      "secondary": []
+    "reputation-management": {
+      "primary": ["reputation management services"],
+      "secondary": [
+        "online reputation management services",
+        "online reputation management agency",
+        "reputation management company",
+        "reputation management agency",
+        "brand reputation management"
+      ]
     },
-    "/services/digital-marketing/web-design": {
-      "name": "Web Design & Development",
-      "status": "tentative",
-      "primary": ["web design services", "web design and development"],
-      "secondary": []
+    "email-marketing": {
+      "primary": ["email marketing services"],
+      "secondary": [
+        "email marketing agency",
+        "email marketing company",
+        "email marketing automation",
+        "small business email marketing"
+      ]
     },
-    "/services/digital-marketing/email-marketing": {
-      "name": "Email Marketing",
-      "status": "tentative",
-      "primary": ["email marketing services", "email marketing agency"],
-      "secondary": []
+    "conversion-rate-optimization": {
+      "primary": ["conversion rate optimization services"],
+      "secondary": [
+        "conversion rate optimization agency",
+        "conversion rate optimization company",
+        "conversion rate optimization consultant"
+      ]
     },
-    "/services/digital-marketing/conversion-rate-optimization": {
-      "name": "Conversion Rate Optimization",
-      "status": "tentative",
-      "primary": ["conversion rate optimization services", "cro services"],
-      "secondary": []
+    "local-seo/toronto": {
+      "_role": "GEO (Phase B, Wave 1) — city page under local-seo; CITY-QUALIFIED terms ONLY (never the unqualified head, which the national local-seo spoke owns)",
+      "primary": ["local seo toronto"],
+      "secondary": [
+        "local seo services toronto",
+        "local seo company toronto",
+        "local seo agency toronto",
+        "toronto local seo"
+      ]
     },
-    "/services/digital-marketing/analytics-reporting": {
-      "name": "Analytics & Reporting",
-      "status": "tentative",
-      "primary": ["marketing analytics services", "analytics and reporting"],
-      "secondary": []
+    "seo/mississauga": {
+      "_role": "GEO (Phase B, Wave 1) — city page under seo (SEO services); CITY-QUALIFIED terms ONLY (the national seo spoke owns the unqualified heads). Excludes 'local seo mississauga' (-> local-seo/mississauga geo page) and 'dental seo mississauga' (distinct industry intent).",
+      "primary": ["seo services mississauga"],
+      "secondary": [
+        "seo company mississauga",
+        "seo agency mississauga",
+        "seo mississauga",
+        "mississauga seo"
+      ]
     },
-    "blog": {
-      "name": "Informational blog/guide cluster (links UP to the service pages)",
-      "status": "reserved",
-      "primary": ["local seo", "local seo for small business", "local search marketing"],
-      "secondary": []
+    "seo/markham": {
+      "_role": "GEO (Phase B, Wave 1) — city page under seo; CITY-QUALIFIED terms ONLY. DATA-GROUNDED primary: 'seo services markham' is weak here (DFS 50 / Ahrefs 100) so primary = 'seo company markham' (480/500, KD0, the demand bestQuery), NOT templated. Excludes 'local seo markham' / 'local seo company markham' (-> local-seo/markham).",
+      "primary": ["seo company markham"],
+      "secondary": [
+        "seo markham",
+        "markham seo",
+        "seo agency markham",
+        "seo services markham"
+      ]
+    },
+    "local-seo/edmonton": {
+      "_role": "GEO (Phase B, Wave 1) — city page under local-seo; CITY-QUALIFIED terms ONLY. Edmonton = Alberta (region AB, geo.region CA-AB). Primary 'local seo edmonton' (480/500, KD0, demand bestQuery — the bare head is strong here).",
+      "primary": ["local seo edmonton"],
+      "secondary": [
+        "local seo services edmonton",
+        "edmonton local seo",
+        "local seo company edmonton",
+        "local seo agency edmonton"
+      ]
+    },
+    "web-design/hamilton": {
+      "_role": "GEO (Phase B, Wave 1) — city page under web-design; CITY-QUALIFIED terms ONLY. Primary 'web design hamilton' (Ahrefs 500/KD1, DFS 590 — DFS KD73 inflated by US/NZ Hamilton; Ahrefs ca KD1 is the real difficulty). 'web design services hamilton' is weak (30/10).",
+      "primary": ["web design hamilton"],
+      "secondary": [
+        "hamilton web design",
+        "web design company hamilton",
+        "web design agency hamilton",
+        "website design hamilton"
+      ]
+    },
+    "local-seo/calgary": {
+      "_role": "GEO (Phase B, Wave 1) — city page under local-seo; CITY-QUALIFIED terms ONLY. Calgary = Alberta (region AB). Primary 'local seo calgary' (Ahrefs 600/KD0, DFS 320 — demand bestQuery, bare head strong).",
+      "primary": ["local seo calgary"],
+      "secondary": [
+        "local seo services calgary",
+        "calgary local seo",
+        "local seo company calgary",
+        "local seo agency calgary"
+      ]
+    },
+    "seo/brampton": {
+      "_role": "GEO (Phase B, Wave 1) — city page under seo; CITY-QUALIFIED terms ONLY. Data-grounded primary 'seo company brampton' (390/350, KD0, demand bestQuery — 'seo services brampton' weaker at 170/150). Excludes 'local seo ... brampton' (-> local-seo/brampton, Wave 3).",
+      "primary": ["seo company brampton"],
+      "secondary": [
+        "seo brampton",
+        "brampton seo",
+        "seo agency brampton",
+        "seo services brampton"
+      ]
+    },
+    "web-design/london-ontario": {
+      "_role": "GEO (Phase B, Wave 1) — city page under web-design; CITY-QUALIFIED terms ONLY. London, Ontario (citySlug london-ontario, cityName London, region ON). Primary 'web design london ontario' (390/200, KD0 — the 'ontario' qualifier disambiguates from London UK). company/agency variants weak (~40).",
+      "primary": ["web design london ontario"],
+      "secondary": [
+        "london ontario web design",
+        "website design london ontario",
+        "web design company london ontario",
+        "web design agency london ontario"
+      ]
+    },
+    "seo/calgary": {
+      "_role": "GEO (Phase B, Wave 1) — city page under seo; CITY-QUALIFIED terms ONLY. Calgary = Alberta (region AB). Top SEO metro after Toronto — here the service term IS strong: primary 'seo services calgary' (1500/1300, KD20, the demand bestQuery; KD higher 15-36 than GTA suburbs). Excludes 'local seo ... calgary' (-> local-seo/calgary, page #6).",
+      "primary": ["seo services calgary"],
+      "secondary": [
+        "seo calgary",
+        "calgary seo",
+        "seo company calgary",
+        "seo agency calgary"
+      ]
+    },
+    "seo/hamilton": {
+      "_role": "GEO (Phase B, Wave 1) — city page under seo; CITY-QUALIFIED terms ONLY. Hamilton ON (region ON). Primary 'seo services hamilton' (320/350, KD0, the demand bestQuery; decent service-intent here). Distinct from web-design/hamilton (#5) — seo vs web design qualified.",
+      "primary": ["seo services hamilton"],
+      "secondary": [
+        "seo company hamilton",
+        "seo hamilton",
+        "hamilton seo",
+        "seo agency hamilton"
+      ]
+    },
+    "google-ads-ppc/toronto": {
+      "_role": "GEO (Phase B, Wave 1) — city page under google-ads-ppc; CITY-QUALIFIED terms ONLY. Toronto (ON). Strongest GTA PPC market; high CPC ($5-12) = strong buyer money. Primary 'ppc agency toronto' (450/320, KD1, the demand bestQuery). Covers BOTH Google Ads and PPC. NEW service template (first PPC geo page). Distinct from local-seo/toronto (#1) and seo/toronto (#13) — ppc/google-ads qualified.",
+      "primary": ["ppc agency toronto"],
+      "secondary": [
+        "ppc management toronto",
+        "google ads agency toronto",
+        "google ads management toronto",
+        "ppc toronto"
+      ]
+    },
+    "social-media-marketing/calgary": {
+      "_role": "GEO (Phase B, Wave 1) — city page under social-media-marketing; CITY-QUALIFIED terms ONLY. Calgary = Alberta (region AB). Strongest SMM metro outside Toronto. Primary 'social media marketing calgary' (400/260, KD1, the demand bestQuery). NEW service template (managed social service, NOT a guide). Distinct from local-seo/calgary (#6) and seo/calgary (#9) — social-media qualified.",
+      "primary": ["social media marketing calgary"],
+      "secondary": [
+        "calgary social media marketing",
+        "social media agency calgary",
+        "social media management calgary",
+        "social media marketing agency calgary"
+      ]
+    },
+    "seo/toronto": {
+      "_role": "GEO (Phase B, Wave 1) — city page under seo; CITY-QUALIFIED terms ONLY. Toronto (ON). FLAGSHIP — highest-demand, highest-KD SEO metro (KD 35-44). Primary 'seo services toronto' (1700/2400, service-intent; 'seo agency toronto' is the demand bestQuery and 'seo company toronto' 1800 — all strong). Excludes 'local seo ... toronto' (-> local-seo/toronto #1) and 'ppc / google ads ... toronto' (-> google-ads-ppc/toronto #11).",
+      "primary": ["seo services toronto"],
+      "secondary": [
+        "seo company toronto",
+        "seo agency toronto",
+        "seo toronto",
+        "toronto seo"
+      ]
+    },
+    "web-design/brampton": {
+      "_role": "GEO (Phase B, Wave 1) — city page under web-design; CITY-QUALIFIED terms ONLY. Brampton (ON). Primary 'web design brampton' (390/200, KD0-1, the demand bestQuery — easy win). Distinct from seo/brampton (#7) — web design qualified.",
+      "primary": ["web design brampton"],
+      "secondary": [
+        "web design company brampton",
+        "brampton web design",
+        "website design brampton",
+        "web design agency brampton"
+      ]
+    },
+    "seo/ottawa": {
+      "_role": "GEO (Phase B, Wave 1) — city page under seo; CITY-QUALIFIED terms ONLY. Ottawa (ON). Primary 'seo company ottawa' (590/400, KD3 Ahrefs — the demand bestQuery + lowest KD). Heads 'seo ottawa'/'ottawa seo' higher vol (1300) but KD24+. Excludes 'local seo ... ottawa' (-> future local-seo/ottawa).",
+      "primary": ["seo company ottawa"],
+      "secondary": [
+        "seo services ottawa",
+        "seo ottawa",
+        "ottawa seo",
+        "seo agency ottawa"
+      ]
     }
   }
 }

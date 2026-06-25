@@ -1,0 +1,521 @@
+{
+  "route": "/services/digital-marketing/social-media-marketing",
+  "title": "Social Media Marketing Services | NexFortis IT Solutions",
+  "description": "Canadian social media marketing — strategy, content, community management, and paid social on Instagram, Facebook, and LinkedIn. Free consultation.",
+  "canonical": "https://nexfortis.com/services/digital-marketing/social-media-marketing",
+  "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
+  "og": {
+    "title": "Social Media Marketing Services | NexFortis IT Solutions",
+    "description": "Canadian social media marketing — strategy, content, community management, and paid social on Instagram, Facebook, and LinkedIn. Free consultation.",
+    "url": "https://nexfortis.com/services/digital-marketing/social-media-marketing",
+    "image": "https://nexfortis.com/opengraph.png",
+    "type": "website"
+  },
+  "twitter": {
+    "card": "summary_large_image"
+  },
+  "headings": [
+    {
+      "level": 1,
+      "text": "Social Media Marketing Services for Canadian Businesses"
+    },
+    {
+      "level": 2,
+      "text": "What NexFortis social media marketing services include"
+    },
+    {
+      "level": 2,
+      "text": "Our social media marketing services"
+    },
+    {
+      "level": 3,
+      "text": "Social media strategy"
+    },
+    {
+      "level": 3,
+      "text": "Content creation"
+    },
+    {
+      "level": 3,
+      "text": "Account &amp; community management"
+    },
+    {
+      "level": 3,
+      "text": "Paid social advertising"
+    },
+    {
+      "level": 3,
+      "text": "Platform management (Instagram, Facebook, LinkedIn, TikTok)"
+    },
+    {
+      "level": 3,
+      "text": "Analytics &amp; reporting"
+    },
+    {
+      "level": 2,
+      "text": "Our social media marketing process"
+    },
+    {
+      "level": 3,
+      "text": "Free consultation"
+    },
+    {
+      "level": 3,
+      "text": "Strategy"
+    },
+    {
+      "level": 3,
+      "text": "Execution"
+    },
+    {
+      "level": 3,
+      "text": "Monthly reporting"
+    },
+    {
+      "level": 2,
+      "text": "Why choose NexFortis for social media marketing"
+    },
+    {
+      "level": 2,
+      "text": "Social media marketing pricing after a free consultation"
+    },
+    {
+      "level": 3,
+      "text": "Scoped to your platforms"
+    },
+    {
+      "level": 2,
+      "text": "Related services"
+    },
+    {
+      "level": 3,
+      "text": "SEO Services"
+    },
+    {
+      "level": 3,
+      "text": "Local SEO"
+    },
+    {
+      "level": 3,
+      "text": "GEO &amp; AI Search"
+    },
+    {
+      "level": 2,
+      "text": "Social Media Marketing — areas we serve"
+    },
+    {
+      "level": 2,
+      "text": "Frequently Asked Questions"
+    },
+    {
+      "level": 2,
+      "text": "Ready for social channels that do real work?"
+    },
+    {
+      "level": 4,
+      "text": "Services"
+    },
+    {
+      "level": 4,
+      "text": "Company"
+    },
+    {
+      "level": 4,
+      "text": "Contact"
+    }
+  ],
+  "jsonld": [
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://nexfortis.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Services",
+          "item": "https://nexfortis.com/services"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Digital Marketing",
+          "item": "https://nexfortis.com/services/digital-marketing"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Social Media Marketing",
+          "item": "https://nexfortis.com/services/digital-marketing/social-media-marketing"
+        }
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What are social media marketing services?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "They cover the strategy, content creation, community management, paid social advertising, and analytics needed to build and run your presence on platforms like Instagram, Facebook, LinkedIn, and TikTok. NexFortis delivers all of it as one connected service, backed by monthly reporting."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much does social media marketing cost?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Pricing varies by the number of platforms, the volume of content, whether paid social is involved, and your goals — which is why we scope every engagement after a free consultation rather than quoting a one-size-fits-all price. Any ad spend is separate and goes directly to the platforms."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is it worth paying for social media marketing?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For most businesses, yes — when it is done with a strategy. Consistent, on-brand content and active community management build visibility and trust over time, and paid social can accelerate results — but only if the work is planned and measured rather than posted at random."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How is a social media marketing agency different from doing it in-house?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "An agency brings strategy, consistent execution, and measurement an overstretched in-house team often cannot sustain. NexFortis can run your social entirely or support an existing team — and either way, a senior consultant stays on your account end to end."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which social media platforms should my business be on?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It depends on where your customers are and what you sell. Rather than spreading you across every network, we focus on the platforms — Instagram, Facebook, LinkedIn, or TikTok — that fit your audience, then expand when it makes sense."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long does social media marketing take to show results?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Social media marketing is a months-not-weeks discipline. Building an engaged audience takes consistency over time, so we set realistic expectations up front rather than promising a fixed number of followers or sales by a fixed date."
+          }
+        }
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "@id": "https://nexfortis.com/#localbusiness",
+      "name": "NexFortis IT Solutions",
+      "legalName": "17756968 Canada Inc.",
+      "url": "https://nexfortis.com",
+      "logo": "https://nexfortis.com/images/logo-512.png",
+      "image": "https://nexfortis.com/opengraph.png",
+      "description": "NexFortis delivers end-to-end IT solutions for Canadian businesses including managed IT, Microsoft 365, QuickBooks migration, digital marketing, and workflow automation.",
+      "email": "contact@nexfortis.com",
+      "telephone": "+1-416-317-0051",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "204 Hill Farm Rd",
+        "addressLocality": "Nobleton",
+        "addressRegion": "ON",
+        "postalCode": "L7B 0A1",
+        "addressCountry": "CA"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 43.9327,
+        "longitude": -79.6615
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "Canada"
+      },
+      "priceRange": "$$",
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday"
+        ],
+        "opens": "09:00",
+        "closes": "17:00"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/company/nexfortis"
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "@id": "https://nexfortis.com/#organization",
+      "name": "NexFortis IT Solutions",
+      "legalName": "17756968 Canada Inc.",
+      "url": "https://nexfortis.com",
+      "logo": "https://nexfortis.com/images/logo-512.png",
+      "image": "https://nexfortis.com/opengraph.png",
+      "description": "NexFortis delivers end-to-end IT solutions for Canadian businesses including managed IT, Microsoft 365, QuickBooks migration, digital marketing, and workflow automation.",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer service",
+        "email": "contact@nexfortis.com",
+        "telephone": "+1-416-317-0051",
+        "areaServed": "CA",
+        "availableLanguage": [
+          "English"
+        ]
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "204 Hill Farm Rd",
+        "addressLocality": "Nobleton",
+        "addressRegion": "ON",
+        "postalCode": "L7B 0A1",
+        "addressCountry": "CA"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/company/nexfortis"
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Hassan Sadiq",
+      "jobTitle": "Founder & CEO, NexFortis IT Solutions",
+      "url": "https://nexfortis.com/about",
+      "worksFor": {
+        "@id": "https://nexfortis.com/#organization"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "Social Media Marketing Services",
+      "description": "Social media marketing for Canadian businesses — strategy, content creation, community management, paid social advertising, platform management, and analytics, delivered as one founder-led campaign.",
+      "url": "https://nexfortis.com/services/digital-marketing/social-media-marketing",
+      "provider": {
+        "@type": "Organization",
+        "name": "NexFortis IT Solutions",
+        "url": "https://nexfortis.com"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "Canada"
+      },
+      "serviceType": "Social Media Marketing"
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "@id": "https://nexfortis.com/#website",
+      "name": "NexFortis IT Solutions",
+      "url": "https://nexfortis.com",
+      "inLanguage": "en-CA",
+      "publisher": {
+        "@id": "https://nexfortis.com/#organization"
+      }
+    }
+  ],
+  "anchors": [
+    {
+      "text": "Skip to main content",
+      "href": "#main-content"
+    },
+    {
+      "text": "",
+      "href": "/"
+    },
+    {
+      "text": "Home",
+      "href": "/"
+    },
+    {
+      "text": "Digital Marketing",
+      "href": "/services/digital-marketing"
+    },
+    {
+      "text": "Microsoft 365 Solutions",
+      "href": "/services/microsoft-365"
+    },
+    {
+      "text": "QuickBooks Migration",
+      "href": "/services/quickbooks"
+    },
+    {
+      "text": "IT Consulting",
+      "href": "/services/it-consulting"
+    },
+    {
+      "text": "Workflow Automation",
+      "href": "/services/workflow-automation"
+    },
+    {
+      "text": "Browse our IT services",
+      "href": "/services"
+    },
+    {
+      "text": "SEO Services",
+      "href": "/services/digital-marketing/seo"
+    },
+    {
+      "text": "Local SEO",
+      "href": "/services/digital-marketing/local-seo"
+    },
+    {
+      "text": "GEO &amp; AI Search",
+      "href": "/services/digital-marketing/geo-ai-search"
+    },
+    {
+      "text": "Content Marketing",
+      "href": "/services/digital-marketing/content-marketing"
+    },
+    {
+      "text": "Link Building &amp; Digital PR",
+      "href": "/services/digital-marketing/link-building"
+    },
+    {
+      "text": "Google Ads Management",
+      "href": "/services/digital-marketing/google-ads-ppc"
+    },
+    {
+      "text": "Social Media Marketing",
+      "href": "/services/digital-marketing/social-media-marketing"
+    },
+    {
+      "text": "Web Design &amp; Development",
+      "href": "/services/digital-marketing/web-design"
+    },
+    {
+      "text": "Email Marketing",
+      "href": "/services/digital-marketing/email-marketing"
+    },
+    {
+      "text": "Conversion Rate Optimization",
+      "href": "/services/digital-marketing/conversion-rate-optimization"
+    },
+    {
+      "text": "Reputation Management",
+      "href": "/services/digital-marketing/reputation-management"
+    },
+    {
+      "text": "About",
+      "href": "/about"
+    },
+    {
+      "text": "Blog",
+      "href": "/blog"
+    },
+    {
+      "text": "Contact",
+      "href": "/contact"
+    },
+    {
+      "text": "QB Portal",
+      "href": "https://qb.nexfortis.com"
+    },
+    {
+      "text": "Get a Free Quote",
+      "href": "/contact"
+    },
+    {
+      "text": "All Services",
+      "href": "/services"
+    },
+    {
+      "text": "Services",
+      "href": "/services"
+    },
+    {
+      "text": "digital marketing services",
+      "href": "/services/digital-marketing"
+    },
+    {
+      "text": "Source: DataReportal / Kepios",
+      "href": "https://datareportal.com/social-media-users"
+    },
+    {
+      "text": "Source: DataReportal, Digital 2026 Global Overview",
+      "href": "https://datareportal.com/reports/digital-2026-global-overview-report"
+    },
+    {
+      "text": "Source: DataReportal / GWI",
+      "href": "https://datareportal.com/reports/digital-2025-sub-section-brand-discovery"
+    },
+    {
+      "text": "content marketing",
+      "href": "/services/digital-marketing/content-marketing"
+    },
+    {
+      "text": "reputation management",
+      "href": "/services/digital-marketing/reputation-management"
+    },
+    {
+      "text": "Google Ads management",
+      "href": "/services/digital-marketing/google-ads-ppc"
+    },
+    {
+      "text": "social media marketing Calgary",
+      "href": "/services/digital-marketing/social-media-marketing/calgary"
+    },
+    {
+      "text": "More about NexFortis",
+      "href": "/about"
+    },
+    {
+      "text": "About Us",
+      "href": "/about"
+    },
+    {
+      "text": "Privacy Policy",
+      "href": "/privacy"
+    },
+    {
+      "text": "Terms of Service",
+      "href": "/terms"
+    },
+    {
+      "text": "(416) 317-0051",
+      "href": "tel:+14163170051"
+    },
+    {
+      "text": "contact@nexfortis.com",
+      "href": "mailto:contact@nexfortis.com"
+    },
+    {
+      "text": "LinkedIn",
+      "href": "https://www.linkedin.com/company/nexfortis"
+    },
+    {
+      "text": "Privacy",
+      "href": "/privacy"
+    },
+    {
+      "text": "Terms",
+      "href": "/terms"
+    },
+    {
+      "text": "About NexFortis",
+      "href": "/about"
+    },
+    {
+      "text": "Our services",
+      "href": "/services"
+    },
+    {
+      "text": "Contact us",
+      "href": "/contact"
+    }
+  ],
+  "rootDivIsEmpty": false,
+  "hasNoindex": false
+}

@@ -1,0 +1,15 @@
+{
+  "_slug": "google-ads-ppc",
+  "_purpose": "Locked outline headings for the keyword+outline coverage gate, RECONCILED to the app template's rendered section headings. Rendered page MUST contain H1 + every H2 verbatim, plus every owned keyword from keyword-ownership.json.",
+  "_source": "Step 4 KI auto-generate outline (brief 6e0c39df-882c-4db0-a1c2-e42f256572ae, auto_generate_order_id dc2af95e-228d-43c7-a322-a523d84c30d2) -- REGENERATED with corrected steering: every owned secondary mandated (Option B = SEO-page model). Reviewed vs the brief; reconciled to the DM template. Coverage 14/14. H1 re-verified at Step 7.",
+  "primary": "google ads management",
+  "h1": "Google Ads and PPC Management for Canadian Businesses",
+  "h2": [
+    "What NexFortis Google Ads and PPC services include",
+    "Our Google Ads and PPC services",
+    "Our Google Ads and PPC process",
+    "Why choose NexFortis for Google Ads and PPC",
+    "Google Ads and PPC pricing after a free audit",
+    "Frequently Asked Questions"
+  ]
+}

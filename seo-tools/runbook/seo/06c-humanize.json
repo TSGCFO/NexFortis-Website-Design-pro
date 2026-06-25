@@ -1,0 +1,13 @@
+{
+  "slug": "seo",
+  "contentFile": "C:\\Users\\HassanSadiq_kmlkml0\\Projects\\NexFortis-Website-Design-pro\\seo-tools\\runbook\\seo\\05-draft.md",
+  "humanizedBlocks": 5,
+  "totalBlocks": 35,
+  "integrity": {
+    "coverageOk": true,
+    "linksOk": true,
+    "origLinks": 7,
+    "newLinks": 7
+  },
+  "ai_detection": "ADVISORY (run undetectable-detect.mjs; detector flags human prose, non-binding)"
+}

@@ -1,0 +1,18 @@
+{
+  "_step": "1 — Keyword research", "_page": "Technical SEO spoke (/services/digital-marketing/technical-seo)",
+  "_primary_keyword": "technical seo services", "_location": "Canada", "_date": "2026-06-18",
+  "_provenance": "Live 3-tool pulls. Niche category — modest volumes.",
+  "_done_check": "PASS: volume+difficulty from >=2 tools; consensus; intent (KI cluster 4c38469c in Step 2).",
+  "keywords": [
+    {"keyword": "technical seo services", "dataforseo": {"volume": 260, "difficulty": 0}, "ahrefs": {"volume": 450, "difficulty": 6}, "semrush": {"volume": 320, "difficulty": 10}, "intent": "Commercial", "consensus": {"volume": "260-450", "difficulty_band": "very low (0-10)", "winnable": true}, "note": "PRIMARY."},
+    {"keyword": "technical seo agency", "dataforseo": {"volume": 110, "difficulty": 7}, "ahrefs": {"volume": 600, "difficulty": 3}, "semrush": {"volume": 390, "difficulty": 10}, "intent": "Commercial", "consensus": {"volume": "110-600", "difficulty_band": "very low (3-10)", "winnable": true}, "note": "Primary cluster."},
+    {"keyword": "technical seo company", "dataforseo": {"volume": 70, "difficulty": 3}, "ahrefs": {"volume": 20, "difficulty": 5}, "semrush": {"volume": 140, "difficulty": 11}, "intent": "Commercial", "consensus": {"volume": "20-140", "difficulty_band": "very low (3-11)", "winnable": true}, "note": "Primary cluster synonym."},
+    {"keyword": "technical seo audit", "dataforseo": {"volume": 70, "difficulty": 50}, "ahrefs": {"volume": 100, "difficulty": 69}, "semrush": {"volume": 170, "difficulty": 37}, "intent": "Commercial", "consensus": {"volume": "70-170", "difficulty_band": "med-high (37-69)", "winnable": "borderline"}, "note": "Secondary — core deliverable; worth targeting."},
+    {"keyword": "technical seo consultant", "dataforseo": {"volume": 50, "difficulty": 5}, "ahrefs": {"volume": 150, "difficulty": 0}, "semrush": {"volume": 210, "difficulty": 7}, "intent": "Commercial", "consensus": {"volume": "50-210", "difficulty_band": "very low (0-7)", "winnable": true}, "note": "Secondary."},
+    {"keyword": "technical seo", "dataforseo": {"volume": 210, "difficulty": 44}, "ahrefs": {"volume": 450, "difficulty": 63}, "semrush": {"volume": 590, "difficulty": 68}, "intent": "Informational (likely)", "consensus": {"volume": "210-590", "difficulty_band": "high (44-68)", "winnable": false}, "note": "Head term, likely informational/guide SERP -> blog (confirm Step 2)."},
+    {"keyword": "website speed optimization", "dataforseo": {"volume": 70, "difficulty": 76}, "ahrefs": {"volume": 150, "difficulty": 96}, "semrush": {"volume": 50, "difficulty": 77}, "intent": "Informational/Commercial", "consensus": {"difficulty_band": "BRUTAL (76-96)", "winnable": false}, "note": "Excluded — brutal; covered as a feature, not a target."},
+    {"keyword": "core web vitals optimization", "dataforseo": {"volume": 10, "difficulty": null}, "ahrefs": {"volume": 40, "difficulty": null}, "semrush": {"volume": 30, "difficulty": null}, "intent": "Commercial", "consensus": {"volume": "10-40", "winnable": "tiny"}, "note": "Too thin — covered as a feature."},
+    {"keyword": "schema markup services", "dataforseo": {"volume": 10, "difficulty": null}, "ahrefs": {"volume": 0, "difficulty": null}, "semrush": {"volume": 10, "difficulty": null}, "intent": "Commercial", "consensus": {"winnable": "tiny"}, "note": "Too thin — covered as a feature."}
+  ],
+  "takeaways": ["Primary = technical seo services/agency/company (very winnable). Secondary = technical seo audit, technical seo consultant. Head 'technical seo' (informational/hard) -> blog. Speed/CWV/schema = features, not targets. Fenced from generic seo + local seo spokes."]
+}

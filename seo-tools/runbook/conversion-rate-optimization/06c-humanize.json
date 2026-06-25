@@ -1,0 +1,13 @@
+{
+  "slug": "conversion-rate-optimization",
+  "contentFile": "seo-tools/runbook/conversion-rate-optimization/05-draft.md",
+  "humanizedBlocks": 13,
+  "totalBlocks": 31,
+  "integrity": {
+    "coverageOk": true,
+    "linksOk": true,
+    "origLinks": 13,
+    "newLinks": 13
+  },
+  "ai_detection": "ADVISORY (run undetectable-detect.mjs; detector flags human prose, non-binding)"
+}
