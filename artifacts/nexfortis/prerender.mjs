@@ -208,11 +208,30 @@ async function prerender() {
   const server = await startServer();
   const chromePath = findChromium();
   if (chromePath) console.log(`[prerender] using Chrome at ${chromePath}`);
-  const browser = await puppeteer.launch({
-    headless: true,
-    executablePath: chromePath,
-    args: ["--no-sandbox", "--disable-setuid-sandbox", "--disable-dev-shm-usage"],
-  });
+  // Launch Chrome with a generous startup timeout + retries. CI runners
+  // intermittently fail with "Timed out after 30000 ms while waiting for the
+  // WS endpoint URL to appear in stdout" — a transient Chrome-launch flake, not
+  // a code error. Bump the launch timeout to 120s (default is 30s) and retry up
+  // to 3× so a single slow cold-start doesn't fail the whole build.
+  async function launchBrowserWithRetry() {
+    let lastErr;
+    for (let attempt = 1; attempt <= 3; attempt++) {
+      try {
+        return await puppeteer.launch({
+          headless: true,
+          executablePath: chromePath,
+          timeout: 120000,
+          args: ["--no-sandbox", "--disable-setuid-sandbox", "--disable-dev-shm-usage", "--disable-gpu"],
+        });
+      } catch (err) {
+        lastErr = err;
+        console.warn(`[prerender] Chrome launch attempt ${attempt}/3 failed: ${err.message}`);
+        if (attempt < 3) await new Promise((r) => setTimeout(r, 4000));
+      }
+    }
+    throw new Error(`[prerender] Chrome failed to launch after 3 attempts: ${lastErr?.message}`);
+  }
+  const browser = await launchBrowserWithRetry();
   const baseUrl = `http://127.0.0.1:${port}${base.slice(0, -1)}`;
   console.log(`[prerender] serving ${distDir} at ${baseUrl}/`);
 
