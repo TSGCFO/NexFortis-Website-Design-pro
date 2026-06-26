@@ -51,6 +51,19 @@ Mirror any completed spoke's folder (e.g. `link-building/`) and follow `CONTENT-
 
 ## Build history (newest first)
 
+### 2026-06-25 — PR #108 MERGED to main (Phase A + Phase B Wave 1) + pre-merge audit + cleanup
+- **Merged.** After a deep pre-merge audit, PR #108 was **squash-merged to `main` (`2720d7ff2`)** and is live on production (nexfortis.com) — the 12 national pages + 15 Wave-1 geo pages. (Branch protection disallows merge commits → squash; the per-page history lives in the committed `geo/<slug>/` artifacts + this CHANGELOG, not in commit messages.)
+- **The CI invariants gate had been RED since the geo pages were first added** (runs on 78336f8, 150d92d both failed) — the audit caught it and fixed all 5 violations:
+  - **INV-001 (duplicate `<h1>`) — ROOT FIX, site-wide:** the `index.html` `<noscript>` fallback `<h1>NexFortis IT Solutions</h1>` duplicated the page h1 on EVERY prerendered page → changed to `<p>` (kept bold). Cleared all 28 `__known-issues__.json` INV-001 entries (now genuinely one h1/page everywhere).
+  - **INV-003 (meta-desc pixel width >1000px):** trimmed 6 over-wide descriptions — 3 national spokes (`geo-ai-search`, `social-media-marketing`, `web-design`, which had been failing pre-existing) + 3 geo (`local-seo/edmonton`, `social-media-marketing/calgary`, `web-design/hamilton`).
+  - **INV-015 (ambiguous anchor):** the national SEO spoke cited Backlinko's *backlinks study* while local-seo cites the *local-SEO guide*, both rendering anchor "source: Backlinko" → renamed the spoke's `sourceName` to "Backlinko backlinks study".
+  - **INV-004 (short h1) — ALLOWLISTED, not changed:** the 6 `seo/<city>` h1s ("SEO Services in <City>", 22–24 chars) are the **researched keyword-primary form** and must stay aligned with the page content (operator call) → exempted in `__known-issues__.json` with that rationale, NOT lengthened.
+  - **INV-008 (footer H2→H4):** the shared-Layout footer column headings skip after the body h2 — same pattern the 25 pre-existing pages are already exempted for → added the 15 geo pages to the exemption (a global footer-heading refactor is its own future PR).
+- **Prerender hardening (`prerender.mjs`):** CI hit a transient `TimeoutError: …WS endpoint URL` (Chrome cold-start flake, not code) — bumped `puppeteer.launch` timeout 30s→120s, added `--disable-gpu`, and retry the launch up to 3× with backoff. Re-run went green (2m24s).
+- **Browser UI/UX pass** on the live PR-108 preview: the established seo template + both new templates (PPC, social) render correctly (custom lucide icons incl.), breadcrumbs show, **0 broken links, 0 console errors**, design consistent with the rest of the site.
+- **GSC:** ownership already verified; a sitemap is registered **by URL** and Google re-fetches it on its own schedule — the 15 new `<loc>`s are picked up automatically, **no resubmission needed** (corrected an earlier mis-statement).
+- **Cleanup (branch `chore/phase-b-status-and-cleanup`):** deleted the 5 stale old-slug runbook folders (`analytics-reporting`, `generative-engine-optimization`, `google-business-profile`, `technical-seo`, `google-ads`) after verifying **0 live-config references** each (50 files). Added **`TODO-phase-b-geo.md`** — the actionable checklist for the 64 remaining geo pages (Wave 2 19 · Wave 3 27 · Wave 4 18). Refreshed STATUS + this CHANGELOG.
+
 ### 2026-06-24 — Phase B Wave 1 ✅ COMPLETE (15/15) — pages #3–#15 + 2 new templates + Step-8 dedup hardening
 - **All 15 Wave-1 geo pages LIVE on the PR-108 preview, all gates green** (commits `…`..`78336f8`). Operator authorized **autonomous per-page runs (no per-step checkpoints)** — the full 8-step run book was still executed faithfully per page (raw tool output, fabrication review of every KI outline, real gates, independent EEAT). Pages #3–#15: seo/markham, local-seo/edmonton, web-design/hamilton, local-seo/calgary, seo/brampton, web-design/london-ontario, seo/calgary, seo/hamilton, **google-ads-ppc/toronto** (NEW), **social-media-marketing/calgary** (NEW), seo/toronto, web-design/brampton, seo/ottawa. 6b EEAT all **SHIP 78–87** (independent auditor per page); binding gates (Winston 0% + coverage 5/5) green per page.
 - **2 NEW service templates** (built like web-design): **google-ads-ppc** (managed PPC; Google Partner claimable on THIS page per `_facts.md` L30-32 — NOT on SEO pages; the #1 risk is invented ROAS/spend — auditor scan confirmed CLEAN) and **social-media-marketing** (managed social; the #1 risk is invented follower/engagement numbers — CLEAN). For both, the StatBand stats were **firecrawl-verified live at 6a** (WordStream 7.52% avg Google Ads conversion; DataReportal 79.4% CA social users / 2h21m daily / 29.7% brand-discovery-via-social-ads). Each new template added lucide icons + a `serviceType` + a `featuresHeading` override.
@@ -98,23 +111,23 @@ Mirror any completed spoke's folder (e.g. `link-building/`) and follow `CONTENT-
 
 ---
 
-## Supersession status (cleanup now SAFE — deferred)
+## Supersession status (cleanup ✅ DONE 2026-06-25)
 
-Step 7A (commit `297d6d9`) reconciled the live app to the 12-map — the app NO LONGER references the old slugs, and `tests/seo/dm-word-targets.json` was reconciled at Step 8 (commit `a3aea86`). The old-slug runbook folders are therefore **safe to delete** (deferred — not yet removed):
-- `generative-engine-optimization/` → became `geo-ai-search`
-- `google-ads/` → became `google-ads-ppc`
-- `google-business-profile/` → folded into `local-seo` (GBP section)
-- `technical-seo/` → dropped
-- `analytics-reporting/` → dropped
+Step 7A (commit `297d6d9`) reconciled the live app to the 12-map — the app NO LONGER references the old slugs, and `tests/seo/dm-word-targets.json` was reconciled at Step 8 (commit `a3aea86`). The 5 old-slug runbook folders were verified unreferenced (0 live-config refs each) and **DELETED** on 2026-06-25 (branch `chore/phase-b-status-and-cleanup`):
+- `generative-engine-optimization/` → became `geo-ai-search` ✅ deleted
+- `google-ads/` → became `google-ads-ppc` ✅ deleted
+- `google-business-profile/` → folded into `local-seo` (GBP section) ✅ deleted
+- `technical-seo/` → dropped ✅ deleted
+- `analytics-reporting/` → dropped ✅ deleted
 
-(Trace provenance + show the list before deleting, per protocol. The old DM URLs currently return a 200 SPA-fallback shell, not 404/301 — out of scope per operator.)
+(The old DM URLs still return a 200 SPA-fallback shell, not 404/301 — out of scope per operator.)
 
 ---
 
-## Current state (2026-06-24)
-- **Phase A: ✅ COMPLETE** (on PR #108, unmerged) — Steps 1–8 for the pillar + 11 spokes + the services mega-menu restructure; verified on the Render PR-108 preview.
-- **Phase B: IN PROGRESS** — demand scoping LOCKED, wave plan set (79 pages / 4 waves; 88 deferred to Phase C), architecture **IMPLEMENTED + proven end-to-end**, and **Wave 1 page #1 (Local SEO Toronto) COMPLETE (Steps 1–8), live on the PR-108 preview**. Codegen routes (`gen-geo-routes.mjs`) + drift test + the prerender geo-meta dedupe fix all in. **Next:** Wave 1 page #2 per `geo/03-build-waves.md`. See `STATUS.md`.
-- **PR #108 → main → production:** needs explicit operator authorization — do NOT merge without it.
+## Current state (2026-06-25)
+- **Phase A: ✅ COMPLETE + MERGED + LIVE** — Steps 1–8 for the pillar + 11 spokes + the services mega-menu restructure; merged to `main` via PR #108 and on production.
+- **Phase B: Wave 1 ✅ DONE + MERGED + LIVE (15/15)** — demand scoping LOCKED, wave plan set (79 pages / 4 waves; 88 deferred to Phase C), architecture proven end-to-end, all 15 Wave-1 geo pages merged + live. **Next: Waves 2/3/4 = 64 pages remaining — checklist in `TODO-phase-b-geo.md`.** New pages go on a fresh branch off `main` → new PR.
+- **PR #108:** ✅ squash-merged to `main` (`2720d7ff2`) on 2026-06-25.
 
 ## Roadmap
 - **Phase A: ✅ DONE** — the 12 national service pages (Steps 1–8) + the mega-menu.

@@ -1,7 +1,7 @@
 # NexFortis Service-Architecture Build — STATUS / RESUME POINT
 
-**Last updated:** 2026-06-24. **Read this first to resume.** Branch: `seo/dm-service-architecture` (PR #108).
-Full reasoning + history: `seo-tools/runbook/CHANGELOG.md`. Process: `seo-tools/CONTENT-RUNBOOK.md`.
+**Last updated:** 2026-06-25. **Read this first to resume.** Phase A + Phase B **Wave 1 are MERGED to `main` (PR #108, squash `2720d7ff2`) and LIVE on production (nexfortis.com).** Continue new work on fresh branches off `main`.
+Full reasoning + history: `seo-tools/runbook/CHANGELOG.md`. Process: `seo-tools/CONTENT-RUNBOOK.md`. **Remaining geo pages (Waves 2/3/4): `seo-tools/runbook/TODO-phase-b-geo.md`.**
 
 ---
 
@@ -9,11 +9,12 @@ Full reasoning + history: `seo-tools/runbook/CHANGELOG.md`. Process: `seo-tools/
 Market NexFortis's digital-marketing capabilities as strategically-grouped service subpages under `/services/digital-marketing`, built to rank AND sell, grounded in `seo-tools/Nexfortis-competitor-services.md` + `seo-tools/runbook/_facts.md`. Architecture = the **12-page map**: pillar `digital-marketing` + 11 spokes (seo, local-seo, web-design, google-ads-ppc, social-media-marketing, content-marketing, link-building, geo-ai-search, reputation-management, email-marketing, conversion-rate-optimization).
 
 ## ROADMAP — two phases
-- **Phase A — national service pages: ✅ COMPLETE** (on PR #108, unmerged). The 12-page map (pillar + 11 spokes), Steps 1–8 + the services mega-menu restructure.
-- **Phase B — geo layer (CURRENT). ←** Option D: `[service]+[city]` pages for **every GTA municipality + major Canadian metros**, at `/services/digital-marketing/<service>/<city>`, each with genuine local content (no thin doorway pages). **Full spec:** `seo-tools/runbook/00-architecture.md` → "Geography (decided: option D)". Same 8-step run book per page; expansion via Ahrefs matching-terms + Semrush.
+- **Phase A — national service pages: ✅ COMPLETE + MERGED + LIVE.** The 12-page map (pillar + 11 spokes), Steps 1–8 + the services mega-menu restructure. Merged to `main` via PR #108 (2026-06-25).
+- **Phase B — geo layer (CURRENT). ←** Option D: `[service]+[city]` pages for **every GTA municipality + major Canadian metros**, at `/services/digital-marketing/<service>/<city>`, each with genuine local content (no thin doorway pages). **Wave 1 (15 pages) ✅ DONE + merged + live; Waves 2/3/4 (64 pages) remain — see `TODO-phase-b-geo.md`.** Full spec: `seo-tools/runbook/00-architecture.md` → "Geography (decided: option D)". Same 8-step run book per page; expansion via Ahrefs matching-terms + Semrush.
 - **Future (beyond Phase B):** the other 4 main services (Microsoft 365, QuickBooks Migration, etc.) each gain their own sub-services under the same nested pattern.
 
-## WHERE WE ARE — Phase A COMPLETE (on PR #108, not yet merged)
+## WHERE WE ARE — Phase A + Phase B Wave 1 MERGED + LIVE on production (PR #108, 2026-06-25)
+> **2026-06-25 — MERGED.** After a full pre-merge audit, PR #108 (Phase A 12 pages + Phase B Wave-1 15 geo pages) was squash-merged to `main` (`2720d7ff2`) and is deploying to nexfortis.com. The audit found the **CI invariants gate had been red since the geo pages were added** and fixed all of it: **INV-001** duplicate `<h1>` root-fixed site-wide (the `index.html` noscript `<h1>`→`<p>`, cleared 28 allowlist entries), **INV-003** 6 over-wide meta descriptions trimmed <1000px, **INV-015** ambiguous Backlinko citation anchor disambiguated; **INV-004** the 6 short `seo/<city>` h1s ALLOWLISTED (kept as the researched keyword-primary form — NOT reworded) and **INV-008** the 15 geo pages added to the shared-footer exemption. Also **hardened the prerender Chrome launch** (120s timeout + 3 retries) against a transient CI flake. Browser UI/UX pass on the live preview: all templates render, 0 broken links, 0 console errors. GSC already verified (sitemap is auto-re-fetched by URL — no resubmission needed).
 - **Steps 1–6 (content + gates):** complete for all 12 pages. Binding gates green (coverage, fact-check, Winston plagiarism ≤2%); AI-detection advisory.
 - **Step 7 (integration): DONE** (commits `297d6d9`..`8b7f6b5`). 7A structural reconciliation to the 12-map (renamed geo/google-ads, dropped technical-seo/analytics, folded GBP into local-seo, added reputation-management); 7B typed `DM_SPOKE_CONTENT` for all 11 spokes from their gated `06c`. typecheck + build pass; metas ≤160; keyword coverage 100%/page.
 - **Step 8 (QA): DONE** (through `a3aea86`). Verified against the **Render PR-108 preview** (`nexfortis-marketing-pr-108.onrender.com`): build passed; all 12 pages prerendered (title/meta/body/Service+FAQ+Person JSON-LD); sitemap = the 12 new routes, zero old slugs. Cannibalization clean (87 kw / 12 pages). SEO test fixtures reconciled to the 12-map — snapshots regenerated from the deployed prerender, `dm-word-targets.json` + `__known-issues__.json` updated.
@@ -27,7 +28,7 @@ Market NexFortis's digital-marketing capabilities as strategically-grouped servi
   - **Lead cities are metros + Toronto** (Calgary/Edmonton/Vancouver rank with Toronto), NOT GTA suburbs.
   - **Content model = tiered:** demand-backed pages get full deep local content (full run book); Phase C exurbs deferred (genuine-local or noindex when greenlit) to avoid the doorway penalty.
 
-### PHASE B WAVE 1 — ✅ CONTENT COMPLETE (15/15)
+### PHASE B WAVE 1 — ✅ COMPLETE (15/15), MERGED + LIVE on production
 - **Architecture implemented + proven end-to-end** (commits `62793f4`..`25a7e08`). The 7 open decisions are resolved: **A**=codegen literal routes (`artifacts/nexfortis/scripts/gen-geo-routes.mjs` reads the `geo-links.ts` registry → App.tsx `GEO-ROUTES` block; drift-guarded by `tests/seo/geo-routes-drift.test.mjs`); **B**=mix (genuine local prose + cited market stats; NO invented client results); **C**=SERP-derived word band per page (`dm-word-targets.json`, geo kind); **D**=UP-to-spoke + ACROSS-nearby-cities + same-city link graph; **E**=`areaServed = City containedInPlace AdministrativeArea`; **F**=`published` flag gates codegen/prerender/sitemap; **G**=cannibalization + geo-route-drift wired into `test:seo`.
   - **New files:** `src/lib/geo-links.ts` (registry = SSOT), `…/digital-marketing/_geoContent.tsx` (typed `GeoPageContent`, anti-doorway required fields), `_GeoServicePageBody.tsx` (shared template; default-export for lazy load), `components/content/{LocalContextSection,LocalProofSection,GeoLinkList}.tsx`, `scripts/gen-geo-routes.mjs`, `tests/seo/geo-routes-drift.test.mjs`. **Changed:** `seo.tsx` (`geoRegion`/`geoPlacename` props + `ServiceSchema.areaServed`), `_DmSpokePageBody.tsx` (DOWN "Areas we serve" list).
   - **Prerender infra fix** (`lib/seo-dedupe.mjs`): now dedupes `geo.region`/`geo.placename`/`og:image:type` (keep-last). The helmet-in-puppeteer double-commit emits these 2× — harmless 2×-Nobleton on national pages, but on a geo page the stale HQ default (Nobleton) survived as the FIRST meta. Keep-last now yields the page's city. Confirmed live: geo.placename=Toronto, 0× Nobleton.
@@ -41,13 +42,14 @@ Market NexFortis's digital-marketing capabilities as strategically-grouped servi
 - **Template fix mid-wave** (`_GeoServicePageBody.tsx`): features heading was `serviceLabel.toLowerCase()` → "Our seo services work in [city]"; now `c.serviceType` → "Our SEO work in [city]" / "Our Local SEO work in [city]".
 - **Known local-build limitation:** the local `build:no-prerender` emits a partial `sitemap.xml` (20 urls, no geo); the committed sitemap snapshot = the verified production/Render value (43). After `UPDATE_SNAPSHOTS=1`, `git checkout` the nexfortis sitemap snapshot (run-book protocol). qb-portal snapshots are a separate app — not built this session (their snapshot failures are expected/out-of-scope).
 
-**Next = WAVE 2 (19 pages)** per `geo/03-build-waves.md` — same proven 8-step pipeline; nothing architectural left to decide. KI tip: front-load briefs (Steps 1→brief→outline) while the API is healthy — `html_scraping` stalls intermittently at 6/17; **WAIT, never relaunch** (a stalled brief eventually finishes). OR await operator direction. **PR #108 → main → production STILL needs explicit operator authorization — do NOT merge without it.**
+**Next = WAVE 2 (19 pages), then Wave 3 (27) + Wave 4 (18) = 64 remaining** — full checklist in **`TODO-phase-b-geo.md`**. Same proven 8-step pipeline; nothing architectural left to decide. KI tip: front-load briefs (Steps 1→brief→outline) while the API is healthy — `html_scraping` stalls intermittently at 6/17; **WAIT, never relaunch** (a stalled brief eventually finishes). OR await operator direction. **Phase B Wave 1 is already merged + live (PR #108)** — new pages go on a fresh branch off `main` → new PR.
 
 ## DEFERRED nav / UX to-dos (raised 2026-06-24, after the menu work)
 1. **Hover-intent / forgiveness** (smaller, near-term): the level-2 flyout collapses on imprecise mouse movement, and the corridor back to the level-1 list is too narrow (stray onto a sub-menu-less main service → everything collapses). Fix = hover-intent open/close delays + a "safe-triangle"/bridge so it isn't pixel-precise; keep keyboard/focus intact. Tracked **inline** at `artifacts/nexfortis/src/components/layout.tsx` (`TODO(nav-hover-intent)`).
 2. **Visual redesign pass** (larger, separate effort): the site reads as generic/templated — operator's analogy: *"expected a portrait, got a stick figure."* Modernize the visual design site-wide **without** touching content/IA/routes/slugs/SEO. Spec: `docs/TODO-visual-redesign.md`.
 
 ## ALSO PENDING
-- **Merge PR #108 → main → production:** needs **explicit operator authorization** — do NOT merge without it.
-- **Cleanup — now SAFE:** old-slug runbook folders (`generative-engine-optimization`, `google-ads`, `google-business-profile`, `technical-seo`, `analytics-reporting`) can be deleted (app no longer references them). Trace provenance + show the list before deleting.
+- ✅ **Merge PR #108 → main → production: DONE** (2026-06-25, squash `2720d7ff2`).
+- ✅ **Cleanup: DONE** — the 5 stale old-slug runbook folders (`generative-engine-optimization`, `google-ads`, `google-business-profile`, `technical-seo`, `analytics-reporting`) were verified unreferenced (0 live-config refs) and deleted on branch `chore/phase-b-status-and-cleanup`.
 - **Old-URL 200 soft-404** (OUT OF SCOPE per operator): old DM URLs return a 200 SPA-fallback shell, not 404/301. Operator is handling separately.
+- **Deferred nav/UX + visual-redesign to-dos** still open (see the two items above).
