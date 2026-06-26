@@ -88,8 +88,9 @@ This is the actionable checklist. Source of the wave order + vol/KD: `geo/03-bui
 ## Phase C (deferred — NOT in Phase B)
 88 near-zero-demand GTA exurb pages across the 5 services (Ajax, Aurora, Caledon, Clarington, Georgina, King City/Nobleton, Scugog, Stouffville, Uxbridge, Whitby, etc.). Ship eventually under the all-GTA rule but carry no SEO ROI — build only with genuine local content (or `noindex`) when Phase C is greenlit. Full list: `geo/03-build-waves.md` → "Phase C".
 
-## How to resume
-1. Read `STATUS.md` (resume point) → `CHANGELOG.md` (history) → this file (what's left).
-2. Pick the next unchecked page (top of Wave 2 = highest ROI).
-3. Run the 8-step run book for that one page; check it off here + log it in `CHANGELOG.md` when its gates are green and it's integrated.
-4. KI tip: when the API is healthy, front-load Steps 1→brief→outline for several pages before `html_scraping` stalls (a stalled brief eventually finishes — **WAIT, never relaunch**).
+## How to resume (the exact next steps)
+1. Read `STATUS.md` (resume point — has the "⭐ START HERE" onboarding) → `CHANGELOG.md` (history + durable decisions) → this file (what's left).
+2. **Next page = `google-ads-ppc/saskatoon`** (the first unchecked box above; top of Wave 2, highest ROI). **One page at a time.**
+3. **Follow the run book exactly — do not improvise:** `seo-tools/CONTENT-RUNBOOK.md` (the 8 steps + the exact tool per step) + `CLAUDE.md` → "NexFortis Content Run Book — non-negotiable execution discipline" (the per-step tool table + hard rules: RAW tool output first, KI generates brief + outline, no fabrication, trace anomalies upstream). Mirror a completed page's folder, e.g. `geo/google-ads-ppc-toronto/`. Ground every claim in `_facts.md`.
+4. Build on a **fresh branch off `main` → new PR** (Wave 1 shipped via PR #108). Check the page off here + log it in `CHANGELOG.md` when its gates are green and it's integrated.
+5. KI tip: when the API is healthy, front-load Steps 1→brief→outline for several pages before `html_scraping` stalls (a stalled brief eventually finishes — **WAIT, never relaunch**).

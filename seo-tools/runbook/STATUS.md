@@ -5,6 +5,18 @@ Full reasoning + history: `seo-tools/runbook/CHANGELOG.md`. Process: `seo-tools/
 
 ---
 
+## ⭐ START HERE — new to this build? (onboarding in 60 seconds)
+1. **Read, in order:** this `STATUS.md` (current state + next action) → `CHANGELOG.md` (full history + durable decisions) → `TODO-phase-b-geo.md` (the remaining-pages checklist).
+2. **The EXACT next action:** build the next unchecked page in `TODO-phase-b-geo.md` — currently **`google-ads-ppc/saskatoon`** (top of Wave 2, highest ROI). **One page at a time.**
+3. **The EXACT run book to follow** — do NOT improvise; it is a strict dependency chain (each step's output is the next step's input):
+   - **`seo-tools/CONTENT-RUNBOOK.md`** — the canonical 8-step process: what each step produces + the exact tool/command per step.
+   - **`CLAUDE.md` → "NexFortis Content Run Book — non-negotiable execution discipline"** — the per-step tool table + the hard rules: one step at a time, **show the tool's RAW output FIRST**, **KI generates the brief AND the outline — never hand-author them**, **no fabrication** (cited third-party stats only), trace any anomaly UPSTREAM.
+4. **Worked example** (what each step's output looks like): mirror any completed page's folder — e.g. `geo/google-ads-ppc-toronto/` (`01-keywords` → `03-brief` → `04-outline` → `05-draft` → `06-gates`).
+5. **Ground truth for every NexFortis claim:** `seo-tools/runbook/_facts.md` — the ONLY source of brand facts (Founder/CEO Hassan Sadiq, 15+ yrs, Microsoft Solutions Partner, Google Partner = Ads pages only, Canadian, free consultation). NO invented clients/results/numbers/prices.
+6. **How pages get wired + shipped:** content → `artifacts/nexfortis/src/pages/services/digital-marketing/_geoContent.tsx`; register + flip `published:true` in `src/lib/geo-links.ts`; QA via `node --test tests/seo` (+ cannibalization) and the **live Render PR preview**. New pages go on a **fresh branch off `main` → new PR** (Wave 1 already merged via PR #108).
+
+---
+
 ## THE OBJECTIVE
 Market NexFortis's digital-marketing capabilities as strategically-grouped service subpages under `/services/digital-marketing`, built to rank AND sell, grounded in `seo-tools/Nexfortis-competitor-services.md` + `seo-tools/runbook/_facts.md`. Architecture = the **12-page map**: pillar `digital-marketing` + 11 spokes (seo, local-seo, web-design, google-ads-ppc, social-media-marketing, content-marketing, link-building, geo-ai-search, reputation-management, email-marketing, conversion-rate-optimization).
 

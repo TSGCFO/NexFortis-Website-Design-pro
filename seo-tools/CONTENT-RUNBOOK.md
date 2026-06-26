@@ -39,12 +39,11 @@ Every step below is judged against these, in this order.
   - The **pillar** owns the head-term cluster.
   - Each of the **11 spokes** (the 12-page map) owns a distinct sub-intent cluster.
   - **No keyword appears on two pages. No cluster is split across pages.**
-- **Gate (NOT automated yet — build it):** there is currently **no keyword-ownership registry and
-  no cannibalization test** in the repo, and `pnpm test:seo` does **not** catch overlap. As a
-  blocking precondition you must (a) create/extend a committed **keyword-ownership registry**
-  (page → owned cluster/keywords, seeded with the pillar head term + each existing spoke's cluster)
-  and (b) run a manual or scripted overlap check before producing any page. No page proceeds until
-  it owns a clean, non-overlapping cluster.
+- **Gate (BUILT + WIRED):** the **keyword-ownership registry** is `seo-tools/runbook/keyword-ownership.json`
+  (page → owned cluster/keywords) and the **cannibalization test** is `seo-tools/runbook/check-cannibalization.mjs`,
+  which **runs as part of `test:seo`**. Add the new page's primary + secondaries to the registry, then run
+  `node seo-tools/runbook/check-cannibalization.mjs` → must exit 0. No page proceeds until it owns a clean,
+  non-overlapping cluster.
 - Why this is a hard gate: with 1 pillar + 11 near-topic spokes (+ Phase B geo pages), cannibalization is the
   default failure mode — two pages competing for the same query split authority and both lose.
 
@@ -107,10 +106,13 @@ Every step below is judged against these, in this order.
   Target **8+**. Apply its concrete fixes (case study with real metrics, author byline /
   reviewed-by, primary sources, last-updated date, advanced-expertise signals like
   LocalBusiness schema).
-- **6c. Humanize.** Claude-native natural writing is the first line; if an AI-detection or
-  "reads robotic" concern remains, pass through **Undetectable AI / Originality**.
-- **6d. Plagiarism + AI-detection  (HARD GATE 3).** Run **Originality.ai** (covers both).
-  **Run this LAST**, after all rewriting, since edits change the text. Fail → revise → re-run.
+- **6c. Humanize.** Claude-native natural writing is the first line; if needed, `seo-tools/runbook/humanize.mjs <slug>`
+  (Undetectable, **PROSE ONLY** — never the FAQ or any block carrying a citation/link; the humanizer alters
+  facts by design). Then proofread + re-verify coverage/links/stats by hand.
+- **6d. Plagiarism + AI-detection  (HARD GATE 3).** Run `seo-tools/runbook/plagiarism-check.mjs scan <slug>`
+  (**Winston — BINDING**) + `undetectable-detect.mjs` (**AI-detection — ADVISORY**; it over-flags professional
+  prose, so a page in the 60s is acceptable — never degrade facts/keywords chasing a lower score). **Run LAST**,
+  after all rewriting. Plagiarism fail → revise → re-run.
 
 ## Step 7 — On-page finalization + internal-link wiring
 - Title / meta description / **schema** (LocalBusiness / Service where applicable).
@@ -123,11 +125,11 @@ Every step below is judged against these, in this order.
   site-wide internal links (gate 1) and a clean discovery path (gate 2).
 
 ## Step 8 — Publish QA
-- The existing **20-rule SEO invariant suite** (`pnpm test:seo`). The **content-QA / length test**
-  (`tests/seo/dm-service-pages.content.test.mjs`) currently **hard-codes a 1,200-word floor and is
-  NOT wired into `pnpm test:seo`** — this run must change it to a **SERP-derived per-page target**
-  and wire it into a pnpm script so it actually runs. (Verify against the repo files — they are
-  authoritative over this doc on test wiring/floors.)
+- The **20-rule SEO invariant suite** + the **content-QA / length test**
+  (`tests/seo/dm-service-pages.content.test.mjs`) — now uses **SERP-derived per-page targets**
+  (`tests/seo/dm-word-targets.json`, NOT a fixed floor) and **IS wired into `test:seo`** (alongside
+  cannibalization + the geo-route-drift guard). Run `node --test tests/seo/*.test.mjs`; everything must pass.
+  CI ("Local SEO test suite", `.github/workflows/seo-tests.yml`) runs the full gate on every push — never merge red.
 - On the PR, **open the deployed Render preview URL in a browser and check the live page**
   (not just local) before merge.
 
@@ -173,13 +175,15 @@ Geo city pages run the SAME 8 steps, with these adaptations. Architecture: `runb
 | First draft | **Claude** (primary) |
 | Optional second-opinion draft (validation-gated) | KI Writer Agent (`keyword-insights.mjs writer`); SEOwind (`seowind-service-page` skill) |
 | EEAT audit | aaron-seo-geo content-quality-auditor (80-item CORE-EEAT) |
-| Humanize | Claude-native; Undetectable AI / Originality |
-| Plagiarism + AI-detection | Originality.ai |
+| Humanize (prose only) | Claude-native; `humanize.mjs` (Undetectable) |
+| Plagiarism (binding) + AI-detection (advisory) | Winston (`plagiarism-check.mjs scan`) + Undetectable (`undetectable-detect.mjs`) |
 | Internal links | repo typed hub-and-spoke link graph |
 | Publish QA | 20-rule SEO suite (`pnpm test:seo`) + content-QA gate + live Render check |
 
-## First application
-Regenerate the 3 pilot pages (SEO, Local SEO, GEO/AI-search) through this run book end to
-end. The SEOwind Local SEO draft (`seo-tools/tmp/seowind-draft-local-seo.md`) is a
-**reference only** — it must be re-verified through Steps 4–8, not trusted as-is (it carries
-unverified stats + invented capability claims).
+## Current application (as of 2026-06-25)
+The 12 national pages (pillar + 11 spokes) **and Phase B Wave 1 (15 geo `[service]+[city]` pages)** are
+COMPLETE, merged to `main` (PR #108), and live on production. **Next = the remaining geo pages** — Waves
+2/3/4 = 64 pages, full checklist in **`seo-tools/runbook/TODO-phase-b-geo.md`** (next page up:
+`google-ads-ppc/saskatoon`). Run each one through Steps 1–8 above + the geo adaptations. Current state +
+exact next action: **`runbook/STATUS.md`** (has a "⭐ START HERE" block); full history + decisions:
+**`runbook/CHANGELOG.md`**.
