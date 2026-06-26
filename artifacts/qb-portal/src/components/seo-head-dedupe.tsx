@@ -42,6 +42,8 @@ const META_DEDUPE_KEYS = new Set([
 
 function keyFor(el: Element): string | null {
   const tag = el.tagName.toLowerCase();
+  // Mirror lib/seo-dedupe.mjs, which also collapses <title> (keep-last).
+  if (tag === "title") return "title";
   if (tag === "link") {
     const rel = (el.getAttribute("rel") || "").toLowerCase();
     if (rel === "canonical") return "link:canonical";

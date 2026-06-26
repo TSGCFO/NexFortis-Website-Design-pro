@@ -49,6 +49,11 @@
     ],
     "overrides": {
       "zod": "3.25.76"
+    },
+    "peerDependencyRules": {
+      "allowedVersions": {
+        "react-helmet-async>react": "19"
+      }
     }
   }
 }
