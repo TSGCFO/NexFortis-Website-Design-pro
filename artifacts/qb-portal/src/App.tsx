@@ -1,6 +1,7 @@
 import { Switch, Route, Router as WouterRouter } from "wouter";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HelmetProvider } from "react-helmet-async";
+import { SeoHeadDedupe } from "@/components/seo-head-dedupe";
 import { lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -144,6 +145,7 @@ function Router() {
 function App() {
   return (
     <HelmetProvider>
+      <SeoHeadDedupe />
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
           <ThemeProvider>

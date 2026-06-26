@@ -10,7 +10,7 @@
  *   - admin-login, blog-admin, blog-post, not-found
  */
 import { describe, test, expect, beforeEach, vi } from "vitest";
-import { render } from "@testing-library/react";
+import { render, waitFor } from "@testing-library/react";
 import { Router, Route } from "wouter";
 import { memoryLocation } from "wouter/memory-location";
 import { HelmetProvider } from "react-helmet-async";
@@ -66,19 +66,23 @@ function renderAt(path: string, node: ReactNode) {
 
 const NX_CANON = "https://nexfortis.com";
 
-function expectSeoTags(canonicalPrefix: string = NX_CANON) {
-  const title = document.head.querySelector("title")?.textContent ?? "";
-  expect(title.length, "title should be non-empty").toBeGreaterThan(0);
+// react-helmet-async@2.x flushes head tags asynchronously (after the React
+// commit), so we wait for them rather than querying the head synchronously.
+async function expectSeoTags(canonicalPrefix: string = NX_CANON) {
+  await waitFor(() => {
+    const title = document.head.querySelector("title")?.textContent ?? "";
+    expect(title.length, "title should be non-empty").toBeGreaterThan(0);
 
-  const link = document.head.querySelector('link[rel="canonical"]');
-  expect(link, "canonical link should exist").not.toBeNull();
-  expect(link?.getAttribute("href")).toMatch(
-    new RegExp(`^${canonicalPrefix.replace(/\//g, "\\/")}`)
-  );
+    const link = document.head.querySelector('link[rel="canonical"]');
+    expect(link, "canonical link should exist").not.toBeNull();
+    expect(link?.getAttribute("href")).toMatch(
+      new RegExp(`^${canonicalPrefix.replace(/\//g, "\\/")}`)
+    );
 
-  const desc =
-    document.head.querySelector('meta[name="description"]')?.getAttribute("content") ?? "";
-  expect(desc.length, "description should be non-empty").toBeGreaterThan(0);
+    const desc =
+      document.head.querySelector('meta[name="description"]')?.getAttribute("content") ?? "";
+    expect(desc.length, "description should be non-empty").toBeGreaterThan(0);
+  });
 }
 
 // ---------------------------------------------------------------------------
@@ -94,86 +98,86 @@ beforeEach(() => {
 // ---------------------------------------------------------------------------
 
 describe("nexfortis: About page", () => {
-  test("emits SEO tags", () => {
+  test("emits SEO tags", async () => {
     renderAt("/about", <About />);
-    expectSeoTags(NX_CANON);
+    await expectSeoTags(NX_CANON);
   });
 });
 
 describe("nexfortis: Blog page", () => {
-  test("emits SEO tags", () => {
+  test("emits SEO tags", async () => {
     // Blog uses @tanstack/react-query's useQuery — wrapped with QueryClientProvider
     renderAt("/blog", <Blog />);
-    expectSeoTags(NX_CANON);
+    await expectSeoTags(NX_CANON);
   });
 });
 
 describe("nexfortis: Contact page", () => {
-  test("emits SEO tags", () => {
+  test("emits SEO tags", async () => {
     renderAt("/contact", <Contact />);
-    expectSeoTags(NX_CANON);
+    await expectSeoTags(NX_CANON);
   });
 });
 
 describe("nexfortis: Home page", () => {
-  test("emits SEO tags", () => {
+  test("emits SEO tags", async () => {
     renderAt("/", <Home />);
-    expectSeoTags(NX_CANON);
+    await expectSeoTags(NX_CANON);
   });
 });
 
 describe("nexfortis: Privacy page", () => {
-  test("emits SEO tags", () => {
+  test("emits SEO tags", async () => {
     renderAt("/privacy", <Privacy />);
-    expectSeoTags(NX_CANON);
+    await expectSeoTags(NX_CANON);
   });
 });
 
 describe("nexfortis: Services overview page", () => {
-  test("emits SEO tags", () => {
+  test("emits SEO tags", async () => {
     renderAt("/services", <Services />);
-    expectSeoTags(NX_CANON);
+    await expectSeoTags(NX_CANON);
   });
 });
 
 describe("nexfortis: Terms page", () => {
-  test("emits SEO tags", () => {
+  test("emits SEO tags", async () => {
     renderAt("/terms", <Terms />);
-    expectSeoTags(NX_CANON);
+    await expectSeoTags(NX_CANON);
   });
 });
 
 describe("nexfortis: Workflow Automation service page", () => {
-  test("emits SEO tags", () => {
+  test("emits SEO tags", async () => {
     renderAt("/services/workflow-automation", <Automation />);
-    expectSeoTags(NX_CANON);
+    await expectSeoTags(NX_CANON);
   });
 });
 
 describe("nexfortis: Digital Marketing service page", () => {
-  test("emits SEO tags", () => {
+  test("emits SEO tags", async () => {
     renderAt("/services/digital-marketing", <DigitalMarketing />);
-    expectSeoTags(NX_CANON);
+    await expectSeoTags(NX_CANON);
   });
 });
 
 describe("nexfortis: IT Consulting service page", () => {
-  test("emits SEO tags", () => {
+  test("emits SEO tags", async () => {
     renderAt("/services/it-consulting", <ITConsulting />);
-    expectSeoTags(NX_CANON);
+    await expectSeoTags(NX_CANON);
   });
 });
 
 describe("nexfortis: Microsoft 365 service page", () => {
-  test("emits SEO tags", () => {
+  test("emits SEO tags", async () => {
     renderAt("/services/microsoft-365", <Microsoft365 />);
-    expectSeoTags(NX_CANON);
+    await expectSeoTags(NX_CANON);
   });
 });
 
 describe("nexfortis: QuickBooks service page", () => {
-  test("emits SEO tags", () => {
+  test("emits SEO tags", async () => {
     renderAt("/services/quickbooks", <QuickBooks />);
-    expectSeoTags(NX_CANON);
+    await expectSeoTags(NX_CANON);
   });
 });
