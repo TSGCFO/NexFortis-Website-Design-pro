@@ -14,7 +14,7 @@
  *   - not-found
  */
 import { describe, test, expect, beforeEach, vi } from "vitest";
-import { render, act } from "@testing-library/react";
+import { render, act, waitFor } from "@testing-library/react";
 import { Router, Route } from "wouter";
 import { memoryLocation } from "wouter/memory-location";
 import { HelmetProvider } from "react-helmet-async";
@@ -148,19 +148,23 @@ function renderAt(path: string, node: ReactNode) {
 
 const QB_CANON = "https://qb.nexfortis.com";
 
-function expectSeoTags(canonicalPrefix: string = QB_CANON) {
-  const title = document.head.querySelector("title")?.textContent ?? "";
-  expect(title.length, "title should be non-empty").toBeGreaterThan(0);
+// react-helmet-async@2.x flushes head tags asynchronously (after the React
+// commit), so we wait for them rather than querying the head synchronously.
+async function expectSeoTags(canonicalPrefix: string = QB_CANON) {
+  await waitFor(() => {
+    const title = document.head.querySelector("title")?.textContent ?? "";
+    expect(title.length, "title should be non-empty").toBeGreaterThan(0);
 
-  const link = document.head.querySelector('link[rel="canonical"]');
-  expect(link, "canonical link should exist").not.toBeNull();
-  expect(link?.getAttribute("href")).toMatch(
-    new RegExp(`^${canonicalPrefix.replace(/\//g, "\\/")}`)
-  );
+    const link = document.head.querySelector('link[rel="canonical"]');
+    expect(link, "canonical link should exist").not.toBeNull();
+    expect(link?.getAttribute("href")).toMatch(
+      new RegExp(`^${canonicalPrefix.replace(/\//g, "\\/")}`)
+    );
 
-  const desc =
-    document.head.querySelector('meta[name="description"]')?.getAttribute("content") ?? "";
-  expect(desc.length, "description should be non-empty").toBeGreaterThan(0);
+    const desc =
+      document.head.querySelector('meta[name="description"]')?.getAttribute("content") ?? "";
+    expect(desc.length, "description should be non-empty").toBeGreaterThan(0);
+  });
 }
 
 // ---------------------------------------------------------------------------
@@ -189,38 +193,38 @@ beforeEach(() => {
 // ---------------------------------------------------------------------------
 
 describe("qb-portal: FAQ page", () => {
-  test("emits SEO tags", () => {
+  test("emits SEO tags", async () => {
     renderAt("/faq", <FAQ />);
-    expectSeoTags(QB_CANON);
+    await expectSeoTags(QB_CANON);
   });
 });
 
 describe("qb-portal: Home page", () => {
-  test("emits SEO tags", () => {
+  test("emits SEO tags", async () => {
     // Home renders SEO unconditionally before the async catalog load
     renderAt("/", <Home />);
-    expectSeoTags(QB_CANON);
+    await expectSeoTags(QB_CANON);
   });
 });
 
 describe("qb-portal: Privacy page", () => {
-  test("emits SEO tags", () => {
+  test("emits SEO tags", async () => {
     renderAt("/privacy", <Privacy />);
-    expectSeoTags(QB_CANON);
+    await expectSeoTags(QB_CANON);
   });
 });
 
 describe("qb-portal: QBM Guide page", () => {
-  test("emits SEO tags", () => {
+  test("emits SEO tags", async () => {
     renderAt("/qbm-guide", <QbmGuide />);
-    expectSeoTags(QB_CANON);
+    await expectSeoTags(QB_CANON);
   });
 });
 
 describe("qb-portal: Terms page", () => {
-  test("emits SEO tags", () => {
+  test("emits SEO tags", async () => {
     renderAt("/terms", <Terms />);
-    expectSeoTags(QB_CANON);
+    await expectSeoTags(QB_CANON);
   });
 });
 
@@ -233,7 +237,7 @@ describe("qb-portal: Catalog page", () => {
     await act(async () => {
       renderAt("/catalog", <Catalog />);
     });
-    expectSeoTags(QB_CANON);
+    await expectSeoTags(QB_CANON);
   });
 });
 
@@ -252,7 +256,7 @@ describe("qb-portal: Category page", () => {
         </HelmetProvider>,
       );
     });
-    expectSeoTags(QB_CANON);
+    await expectSeoTags(QB_CANON);
   });
 });
 
@@ -271,15 +275,15 @@ describe("qb-portal: Service Detail page", () => {
         </HelmetProvider>,
       );
     });
-    expectSeoTags(QB_CANON);
+    await expectSeoTags(QB_CANON);
   });
 });
 
 describe("qb-portal: Waitlist page", () => {
-  test("emits SEO tags", () => {
+  test("emits SEO tags", async () => {
     // Waitlist renders SEO synchronously then async-loads catalog in background
     renderAt("/waitlist", <Waitlist />);
-    expectSeoTags(QB_CANON);
+    await expectSeoTags(QB_CANON);
   });
 });
 
@@ -289,6 +293,6 @@ describe("qb-portal: Landing page", () => {
     await act(async () => {
       renderAt("/landing/enterprise-to-premier-conversion", <LandingPage />);
     });
-    expectSeoTags(QB_CANON);
+    await expectSeoTags(QB_CANON);
   });
 });
