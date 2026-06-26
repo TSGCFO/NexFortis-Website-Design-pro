@@ -2,6 +2,8 @@
 
 **Date:** 2026-06-24 · Derived from `geo/demand-raw.json` (3-tool consensus). Operator rule (2026-06-24): build the demand-backed "good ones" first, in ROI waves; **defer near-zero GTA exurbs to a possible Phase C**; fold overlaps (Burnaby→Vancouver).
 
+> **Live progress (2026-06-25): Wave 1 ✅ DONE (15/15), merged to `main` + live on production (PR #108). Waves 2/3/4 = 64 pages remaining.** This file is the demand/ROI rationale; the actionable per-page checklist is **`../TODO-phase-b-geo.md`**.
+
 ## Scope split
 - **Phase B (build now): 79 pages** — demand-backed (GTA consensus ≥70, or metro ≥150 / PPC ≥50 commercial).
 - **Phase C (deferred): 88 pages** — near-zero-demand GTA municipalities (ship eventually per the all-GTA rule, not now).
@@ -9,7 +11,7 @@
 
 Per-service Phase B counts: local seo 12, seo services 21, web design 29, google ads / ppc 10, social media marketing 7.
 
-## Wave 1 — proof-of-model (top 15 ROI = vol/(KD+5))
+## Wave 1 — proof-of-model (top 15 ROI = vol/(KD+5)) — ✅ DONE (merged + live, PR #108)
 Validate the geo route + template + local-content model end-to-end on these before scaling:
 1. local seo — Toronto (vol 1000, KD 3)
 2. seo services — Mississauga (vol 1000, KD 5)
