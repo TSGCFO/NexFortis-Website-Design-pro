@@ -266,6 +266,52 @@ async function prerender() {
         await page.close();
       }
     }
+
+    // ---------------------------------------------------------------------
+    // Branded 404 page. Render the SPA's NotFound view (the catch-all route)
+    // to dist/public/404.html. Render serves a root 404.html with a real HTTP
+    // 404 for any unmatched URL, so this gives crawlers a hard 404 AND visitors
+    // a styled page instead of the bare default. We serve the BARE shell
+    // (shellHtml) for the navigation via request interception so React boots
+    // with an empty #root and renders NotFound cleanly — serving a prerendered
+    // page would hydrate the wrong route. The NotFound view is intentionally
+    // noindex, so we deliberately SKIP validatePrerenderedHtml here. Fail-soft:
+    // any error just warns and the build continues — Render then falls back to
+    // its own (still real) 404.
+    try {
+      const nfPage = await browser.newPage();
+      await nfPage.setUserAgent("ReactSnap/Prerender Mozilla/5.0");
+      await nfPage.setRequestInterception(true);
+      nfPage.on("request", (req) => {
+        if (req.isNavigationRequest() && req.frame() === nfPage.mainFrame()) {
+          req.respond({ status: 200, contentType: "text/html; charset=utf-8", body: shellHtml });
+        } else {
+          req.continue();
+        }
+      });
+      try {
+        await nfPage.goto(`${baseUrl}/__prerender_not_found__`, { waitUntil: "networkidle0", timeout: 30000 });
+        await nfPage.waitForFunction(
+          () => /not found/i.test(document.querySelector("h1")?.textContent || ""),
+          { timeout: 15000 },
+        );
+        await new Promise((r) => setTimeout(r, 250));
+        const nfHtml = await nfPage.content();
+        const nfTitle = await nfPage.evaluate(() => document.title);
+        const nfCleaned = dedupeSeoTags(
+          replaceTitleTag(nfHtml, nfTitle)
+            .replace(/<script[^>]*replit-dev-banner[^>]*>[\s\S]*?<\/script>/gi, "")
+            .replace(/<script[^>]*cartographer[^>]*>[\s\S]*?<\/script>/gi, ""),
+        );
+        await fs.writeFile(path.join(distDir, "404.html"), nfCleaned, "utf-8");
+        console.log(`[prerender] wrote branded 404 page -> 404.html`);
+      } finally {
+        await nfPage.close();
+      }
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : String(e);
+      console.warn(`[prerender] could not generate 404.html (${msg}); Render will serve its default 404`);
+    }
   } finally {
     try { await browser.close(); } catch (e) { console.warn("[prerender] browser.close failed:", e.message); }
     try { server.close(); } catch (e) { console.warn("[prerender] server.close failed:", e.message); }

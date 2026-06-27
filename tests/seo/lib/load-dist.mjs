@@ -13,8 +13,10 @@ const SITES = [
   { site: "qb-portal", dist: path.join(REPO_ROOT, "artifacts/qb-portal/dist/public") },
 ];
 
-// Files to exclude from snapshotting (SPA fallbacks, not real routes)
-const EXCLUDE_FILES = new Set(["200.html", "spa-shell.html"]);
+// Files to exclude from snapshotting (SPA fallbacks, not real routes).
+// 404.html is the prerendered NotFound view Render serves (with a real 404
+// status) for unmatched URLs — a noindex fallback, not a content route.
+const EXCLUDE_FILES = new Set(["200.html", "spa-shell.html", "404.html"]);
 
 export async function loadDist() {
   const out = [];
