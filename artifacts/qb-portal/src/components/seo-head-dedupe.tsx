@@ -82,9 +82,16 @@ export function SeoHeadDedupe() {
     const head = document.head;
     if (!head) return;
     dedupeSeoHead();
+    // Coalesce bursts of head mutations (helmet can emit several in one tick on
+    // a route change) into a single dedupe pass per microtask.
+    let scheduled = false;
     const observer = new MutationObserver(() => {
-      // Defer so we run after helmet finishes a batch of head mutations.
-      queueMicrotask(dedupeSeoHead);
+      if (scheduled) return;
+      scheduled = true;
+      queueMicrotask(() => {
+        scheduled = false;
+        dedupeSeoHead();
+      });
     });
     observer.observe(head, { childList: true });
     return () => observer.disconnect();

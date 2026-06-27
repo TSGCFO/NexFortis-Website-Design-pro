@@ -157,9 +157,16 @@ services:
       - type: rewrite
         source: /api/*
         destination: https://nexfortis-api.onrender.com/api/*
-      # SPA-only routes (NOT prerendered — no .html mirror exists). These must
-      # come BEFORE the .html catch-all below so they fall back to index.html
-      # and let the React SPA handle the route.
+      # Canonicalize: strip a trailing slash to the no-slash URL (mirrors the
+      # scarecompanion-website config). e.g. /about/ -> 301 /about. Does not
+      # match "/" (root needs at least one path segment).
+      - type: redirect
+        source: /:slug+/
+        destination: /:slug+
+      # SPA-only routes (NOT prerendered). Each non-prerendered client route is
+      # rewritten explicitly to the bare noindex shell so the React SPA can
+      # render it. Everything NOT listed here and NOT prerendered falls through
+      # to dist/404.html with a real HTTP 404 (see note at the end of routes).
       - type: rewrite
         source: /admin
         destination: /spa-shell.html
@@ -169,17 +176,13 @@ services:
       - type: rewrite
         source: /blog/admin
         destination: /spa-shell.html
-      # Pretty URLs: serve the prerendered .html mirror for clean URLs without
-      # trailing slash. Render does NOT auto-strip .html, so /about must be
-      # explicitly rewritten to /about.html (which prerender.mjs writes
-      # alongside the dist/about/index.html directory index).
-      # - Real files (sitemap.xml, robots.txt, /assets/*) are served directly,
-      #   before rewrites apply.
-      # - Trailing-slash variants like /about/ are served from
-      #   dist/about/index.html via Render's directory-index handling.
-      - type: rewrite
-        source: /*
-        destination: /*.html
+      # NO `/* -> /*.html` catch-all. Prerendered pages are served at their
+      # clean no-slash URL directly from dist/<route>/index.html via Render's
+      # directory-index handling (proven by scarecompanion-website, which has no
+      # catch-all and serves clean URLs fine). Removing the catch-all is what
+      # makes unmatched URLs return dist/404.html with a real HTTP 404 instead
+      # of a soft-404 200 shell. Real files (sitemap.xml, robots.txt, /assets/*)
+      # and every explicit rewrite above are matched before the 404 fallback.
 
   - type: web
     name: nexfortis-qb-portal
@@ -276,11 +279,19 @@ services:
       - type: rewrite
         source: /api/*
         destination: https://nexfortis-api.onrender.com/api/*
-      # SPA-only routes (NOT prerendered — no .html mirror exists). These must
-      # come BEFORE the .html catch-all below. Includes the auth flow, the
-      # checkout / order pages (which need a live session), the customer
-      # portal, the admin area, and dynamic per-record routes (ticket/<id>,
-      # order/<id>) that aren't enumerated at build time.
+      # Canonicalize: strip a trailing slash to the no-slash URL (mirrors the
+      # scarecompanion-website config). e.g. /catalog/ -> 301 /catalog. Does
+      # not match "/" (root needs at least one path segment).
+      - type: redirect
+        source: /:slug+/
+        destination: /:slug+
+      # SPA-only routes (NOT prerendered). Each non-prerendered client route is
+      # rewritten explicitly to the bare noindex shell so the React SPA can
+      # render it. Includes the auth flow, the checkout / order pages (which
+      # need a live session), the customer portal, the admin area, and dynamic
+      # per-record routes (ticket/<id>, order/<id>) that aren't enumerated at
+      # build time. Everything NOT listed here and NOT prerendered falls through
+      # to dist/404.html with a real HTTP 404 (see note at the end of routes).
       - type: rewrite
         source: /login
         destination: /spa-shell.html
@@ -317,9 +328,9 @@ services:
       - type: rewrite
         source: /ticket/*
         destination: /spa-shell.html
-      # Pretty URLs: serve the prerendered .html mirror for clean URLs without
-      # trailing slash. See the marketing site block above for the rationale
-      # and behavior of real files / directory indexes.
-      - type: rewrite
-        source: /*
-        destination: /*.html
+      # NO `/* -> /*.html` catch-all. Prerendered pages are served at their
+      # clean no-slash URL directly from dist/<route>/index.html via Render's
+      # directory-index handling (same as the marketing site and
+      # scarecompanion-website). Removing the catch-all is what makes unmatched
+      # URLs return dist/404.html with a real HTTP 404 instead of a soft-404 200
+      # shell. Real files and every explicit rewrite above are matched first.
