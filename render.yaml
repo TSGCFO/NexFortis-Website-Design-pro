@@ -157,12 +157,10 @@ services:
       - type: rewrite
         source: /api/*
         destination: https://nexfortis-api.onrender.com/api/*
-      # Canonicalize: strip a trailing slash to the no-slash URL (mirrors the
-      # scarecompanion-website config). e.g. /about/ -> 301 /about. Does not
-      # match "/" (root needs at least one path segment).
-      - type: redirect
-        source: /:slug+/
-        destination: /:slug+
+      # NOTE: no trailing-slash canonicalizer. Render's routing here is managed
+      # in the dashboard (this file documents it); the dashboard has no
+      # trailing-slash rule, so none is listed. /about/ serves the page directly
+      # via directory-index; canonical tags dedupe the slash/no-slash variants.
       # SPA-only routes (NOT prerendered). Each non-prerendered client route is
       # rewritten explicitly to the bare noindex shell so the React SPA can
       # render it. Everything NOT listed here and NOT prerendered falls through
@@ -279,12 +277,10 @@ services:
       - type: rewrite
         source: /api/*
         destination: https://nexfortis-api.onrender.com/api/*
-      # Canonicalize: strip a trailing slash to the no-slash URL (mirrors the
-      # scarecompanion-website config). e.g. /catalog/ -> 301 /catalog. Does
-      # not match "/" (root needs at least one path segment).
-      - type: redirect
-        source: /:slug+/
-        destination: /:slug+
+      # NOTE: no trailing-slash canonicalizer. Render's routing here is managed
+      # in the dashboard (this file documents it); the dashboard has no
+      # trailing-slash rule, so none is listed. /catalog/ serves the page
+      # directly via directory-index; canonical tags dedupe the variants.
       # SPA-only routes (NOT prerendered). Each non-prerendered client route is
       # rewritten explicitly to the bare noindex shell so the React SPA can
       # render it. Includes the auth flow, the checkout / order pages (which
