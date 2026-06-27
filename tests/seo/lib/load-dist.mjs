@@ -13,7 +13,11 @@ const SITES = [
   { site: "qb-portal", dist: path.join(REPO_ROOT, "artifacts/qb-portal/dist/public") },
 ];
 
-// Files to exclude from snapshotting (SPA fallbacks, not real routes)
+// Files to exclude from snapshotting (SPA fallbacks, not real routes).
+// Note: 200.html is no longer emitted by the marketing prerender (removed
+// to fix soft-404s — see artifacts/nexfortis/prerender.mjs). The qb-portal
+// prerender still writes it, so it remains in this exclusion list until
+// qb-portal is migrated to the same explicit-routes pattern.
 const EXCLUDE_FILES = new Set(["200.html", "spa-shell.html"]);
 
 export async function loadDist() {

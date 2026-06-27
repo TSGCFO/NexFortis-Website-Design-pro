@@ -149,17 +149,25 @@ services:
         name: Strict-Transport-Security
         value: max-age=31536000; includeSubDomains; preload
     routes:
+      # ─────────────────────────────────────────────────────────────────
+      # 301 redirect — retired URL kept for SEO link equity.
+      # ─────────────────────────────────────────────────────────────────
       - type: redirect
         source: /services/automation-software
         destination: /services/workflow-automation
-      # Reverse-proxy /api/* to the API service. Render uses `*` (not Netlify's
-      # `:splat`) for the wildcard substitution in the destination URL.
+      # ─────────────────────────────────────────────────────────────────
+      # Reverse-proxy /api/* to the API service. Render uses `*` (not
+      # Netlify's `:splat`) for the wildcard substitution in the
+      # destination URL.
+      # ─────────────────────────────────────────────────────────────────
       - type: rewrite
         source: /api/*
         destination: https://nexfortis-api.onrender.com/api/*
-      # SPA-only routes (NOT prerendered — no .html mirror exists). These must
-      # come BEFORE the .html catch-all below so they fall back to index.html
-      # and let the React SPA handle the route.
+      # ─────────────────────────────────────────────────────────────────
+      # SPA-only routes (NOT prerendered — no .html mirror exists).
+      # These fall back to the noindex SPA shell so the React app can
+      # client-side route. Must come BEFORE the per-page rewrites below.
+      # ─────────────────────────────────────────────────────────────────
       - type: rewrite
         source: /admin
         destination: /spa-shell.html
@@ -169,17 +177,64 @@ services:
       - type: rewrite
         source: /blog/admin
         destination: /spa-shell.html
-      # Pretty URLs: serve the prerendered .html mirror for clean URLs without
-      # trailing slash. Render does NOT auto-strip .html, so /about must be
-      # explicitly rewritten to /about.html (which prerender.mjs writes
-      # alongside the dist/about/index.html directory index).
-      # - Real files (sitemap.xml, robots.txt, /assets/*) are served directly,
-      #   before rewrites apply.
+      # ─────────────────────────────────────────────────────────────────
+      # Prerendered pages — explicit per-page rewrite so unknown paths
+      # (e.g. /pricing, /danny, typos) fall through to Render's default
+      # 404 instead of being captured by a wildcard and served as an
+      # empty 200 (soft-404). Add a line here when adding a new page.
+      #
+      # Render does NOT auto-strip .html, so /about must be explicitly
+      # rewritten to /about.html (which prerender.mjs writes alongside
+      # the dist/about/index.html directory index).
+      # - Real files (sitemap.xml, robots.txt, /assets/*) are served
+      #   directly, before rewrites apply.
       # - Trailing-slash variants like /about/ are served from
       #   dist/about/index.html via Render's directory-index handling.
+      # - The home page (/) is served from dist/public/index.html
+      #   directly; no rewrite needed.
+      # ─────────────────────────────────────────────────────────────────
       - type: rewrite
-        source: /*
-        destination: /*.html
+        source: /about
+        destination: /about.html
+      - type: rewrite
+        source: /services
+        destination: /services.html
+      - type: rewrite
+        source: /services/digital-marketing
+        destination: /services/digital-marketing.html
+      - type: rewrite
+        source: /services/microsoft-365
+        destination: /services/microsoft-365.html
+      - type: rewrite
+        source: /services/quickbooks
+        destination: /services/quickbooks.html
+      - type: rewrite
+        source: /services/it-consulting
+        destination: /services/it-consulting.html
+      - type: rewrite
+        source: /services/workflow-automation
+        destination: /services/workflow-automation.html
+      - type: rewrite
+        source: /contact
+        destination: /contact.html
+      - type: rewrite
+        source: /blog
+        destination: /blog.html
+      - type: rewrite
+        source: /privacy
+        destination: /privacy.html
+      - type: rewrite
+        source: /terms
+        destination: /terms.html
+      # ─────────────────────────────────────────────────────────────────
+      # Blog posts — real prerendered files exist on disk for each
+      # published slug (written by prerender.mjs from the live blog
+      # API). This wildcard serves them via the .html mirror. Slugs
+      # without a corresponding file fall through to a 404.
+      # ─────────────────────────────────────────────────────────────────
+      - type: rewrite
+        source: /blog/*
+        destination: /blog/*.html
 
   - type: web
     name: nexfortis-qb-portal
