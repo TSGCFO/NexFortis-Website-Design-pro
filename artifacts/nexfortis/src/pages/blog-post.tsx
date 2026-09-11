@@ -3,24 +3,8 @@ import { SEO, ArticleSchema, BreadcrumbSchema } from "@/components/seo";
 import { Calendar, ArrowLeft, Tag } from "lucide-react";
 import { Link } from "wouter";
 import { useQuery } from "@tanstack/react-query";
-import { apiFetch } from "@/lib/api";
-
-interface BlogPost {
-  id: number;
-  title: string;
-  slug: string;
-  excerpt: string;
-  content: string;
-  category: string;
-  coverImage: string | null;
-  // seoTitle and metaDescription were added to the blog schema in PR #51.
-  // They're both nullable so old posts can still be fetched and rendered
-  // — the component falls back to title/excerpt when either is missing.
-  seoTitle: string | null;
-  metaDescription: string | null;
-  published: boolean;
-  createdAt: string;
-}
+import { ApiError, apiFetch } from "@/lib/api";
+import { discardPrerenderedBlogPost, readPrerenderedBlogPost, type BlogPost } from "@/lib/blog-post";
 
 // ArticleSchema in nexfortis/src/components/seo.tsx appends ` | NexFortis IT
 // Solutions` (25 chars) to whatever title is passed. A ~45-char slug gives
@@ -74,9 +58,23 @@ function deriveSeoDescription(post: BlogPost): string {
 }
 
 export default function BlogPostPage({ slug }: { slug: string }) {
-  const { data: post, isLoading, error } = useQuery<BlogPost>({
+  const { data: post, isLoading, refetch, isFetching } = useQuery<BlogPost | null>({
     queryKey: ["blog-post", slug],
-    queryFn: () => apiFetch<BlogPost>(`/blog/posts/${slug}`),
+    queryFn: async () => {
+      try {
+        return await apiFetch<BlogPost>(`/blog/posts/${slug}`);
+      } catch (error) {
+        if (error instanceof ApiError && (error.status === 404 || error.status === 410)) {
+          // A confirmed removal replaces cached content, so a later outage
+          // cannot revive a post that the API has already said is missing.
+          discardPrerenderedBlogPost(slug);
+          return null;
+        }
+        throw error;
+      }
+    },
+    initialData: () => readPrerenderedBlogPost(slug),
+    initialDataUpdatedAt: 0,
     retry: 1,
   });
 
@@ -91,15 +89,30 @@ export default function BlogPostPage({ slug }: { slug: string }) {
     );
   }
 
-  if (error || !post) {
+  if (post === null) {
     return (
       <Section bg="white">
+        <SEO title="Article Not Found" description="This article is no longer available." path={`/blog/${slug}`} noIndex />
         <div className="max-w-3xl mx-auto text-center py-20">
           <h1 className="text-3xl font-display font-bold text-primary mb-4">Article Not Found</h1>
           <p className="text-muted-foreground mb-8">The article you're looking for doesn't exist or has been removed.</p>
           <Link href="/blog" className="text-accent font-semibold hover:underline inline-flex items-center gap-2">
             <ArrowLeft className="w-4 h-4" /> Back to Blog
           </Link>
+        </div>
+      </Section>
+    );
+  }
+
+  if (!post) {
+    return (
+      <Section bg="white">
+        <div className="max-w-3xl mx-auto text-center py-20">
+          <h1 className="text-3xl font-display font-bold text-primary mb-4">Article temporarily unavailable</h1>
+          <p className="text-muted-foreground mb-8">We couldn't load this article right now. Please try again.</p>
+          <button type="button" onClick={() => void refetch()} disabled={isFetching} className="text-accent font-semibold hover:underline disabled:opacity-50">
+            Try again
+          </button>
         </div>
       </Section>
     );

@@ -4,6 +4,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import puppeteer from "puppeteer";
 import { dedupeSeoTags } from "../../lib/seo-dedupe.mjs";
+import { embedBlogPostSnapshot } from "../../lib/blog-snapshot.mjs";
 import { createStaticServer, validatePrerenderedHtml, replaceTitleTag } from "../../lib/prerender-utils.mjs";
 import { execSync } from "node:child_process";
 
@@ -362,7 +363,7 @@ async function prerender() {
         // the live document.title and inject it back into the serialized HTML
         // so per-page <title> tags survive into the prerendered output.
         const liveTitle = await page.evaluate(() => document.title);
-        const cleaned = dedupeSeoTags(
+        let cleaned = dedupeSeoTags(
           replaceTitleTag(html, liveTitle)
             .replace(/<script[^>]*replit-dev-banner[^>]*>[\s\S]*?<\/script>/gi, "")
             .replace(/<script[^>]*cartographer[^>]*>[\s\S]*?<\/script>/gi, ""),
@@ -370,6 +371,9 @@ async function prerender() {
         // Sanity check: blog posts must NOT contain "Article Not Found".
         if (isBlogPost && /Article Not Found/i.test(cleaned)) {
           throw new Error(`blog post rendered as "Article Not Found" — interception may have failed`);
+        }
+        if (isBlogPost) {
+          cleaned = embedBlogPostSnapshot(cleaned, postsBySlug.get(route.slice("/blog/".length)), route);
         }
         validatePrerenderedHtml({
           route,

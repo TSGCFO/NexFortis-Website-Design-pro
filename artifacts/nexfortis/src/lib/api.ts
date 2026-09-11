@@ -12,6 +12,13 @@ export function apiUrl(path: string): string {
   return `${API_BASE}${path.startsWith("/") ? path : "/" + path}`;
 }
 
+export class ApiError extends Error {
+  constructor(message: string, public readonly status: number) {
+    super(message);
+    this.name = "ApiError";
+  }
+}
+
 export async function apiFetch<T>(path: string, options?: RequestInit): Promise<T> {
   const res = await fetch(`${API_BASE}${path}`, {
     headers: { "Content-Type": "application/json", ...options?.headers },
@@ -20,7 +27,7 @@ export async function apiFetch<T>(path: string, options?: RequestInit): Promise<
   });
   if (!res.ok) {
     const body = await res.json().catch(() => ({}));
-    throw new Error(body.error || `API error ${res.status}`);
+    throw new ApiError(body?.error || `API error ${res.status}`, res.status);
   }
   return res.json();
 }
