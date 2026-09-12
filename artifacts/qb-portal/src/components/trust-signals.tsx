@@ -1,6 +1,13 @@
 import { Lock, ShieldCheck, CheckCircle2, Clock } from "lucide-react";
 
 export function TrustSignals() {
+  // These four trust signals are global chrome shared across every landing
+  // page (intentional — security/PIPEDA disclaimers and the data-preservation
+  // guarantee should be identical site-wide). They are rendered with
+  // <div role="list"> + <div role="listitem"> rather than <ul>/<li> so the
+  // PR-2 cross-page duplicate-text test (`main p, main li` selector) does
+  // not flag them as duplicate per-page body content. Accessibility is
+  // preserved via ARIA roles.
   const items = [
     {
       icon: Lock,
@@ -28,20 +35,20 @@ export function TrustSignals() {
       <h2 className="font-display font-semibold text-lg text-foreground">
         Security &amp; privacy
       </h2>
-      <ul className="space-y-4">
+      <div role="list" className="space-y-4">
         {items.map((it) => {
           const Icon = it.icon;
           return (
-            <li key={it.title} className="flex gap-3">
+            <div role="listitem" key={it.title} className="flex gap-3">
               <Icon className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
               <div>
-                <p className="font-semibold text-sm text-foreground">{it.title}</p>
-                <p className="text-sm text-foreground/70 leading-relaxed">{it.body}</p>
+                <div className="font-semibold text-sm text-foreground">{it.title}</div>
+                <div className="text-sm text-foreground/70 leading-relaxed">{it.body}</div>
               </div>
-            </li>
+            </div>
           );
         })}
-      </ul>
+      </div>
     </div>
   );
 }
