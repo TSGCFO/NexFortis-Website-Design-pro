@@ -116,6 +116,10 @@ router.post("/checkout", subscriptionLimiter, async (req: Request, res: Response
       mode: "subscription",
       customer: stripeCustomerId,
       line_items: [{ price: priceId, quantity: 1 }],
+      // Stripe Tax adds GST/HST based on the customer's billing province.
+      automatic_tax: { enabled: true },
+      billing_address_collection: "required",
+      customer_update: { address: "auto", name: "auto" },
       metadata: { user_id: userId, tier, type: "subscription" },
       subscription_data: {
         metadata: { user_id: userId, tier },
@@ -223,9 +227,21 @@ router.post("/upgrade", subscriptionLimiter, async (req: Request, res: Response)
       return;
     }
 
+    // Subscriptions created before GST/HST collection was enabled have
+    // automatic tax off. Turn it on when the plan changes, but only if the
+    // Stripe customer has a billing address (Stripe Tax needs a location and
+    // rejects the update otherwise).
+    let enableAutomaticTax = Boolean(stripeSub.automatic_tax?.enabled);
+    if (!enableAutomaticTax && typeof stripeSub.customer === "string") {
+      const customer = await stripe.customers.retrieve(stripeSub.customer);
+      enableAutomaticTax = !("deleted" in customer && customer.deleted) &&
+        Boolean((customer as { address?: { country?: string | null } | null }).address?.country);
+    }
+
     await stripe.subscriptions.update(sub.stripeSubscriptionId, {
       items: [{ id: itemId, price: priceId }],
       proration_behavior: "create_prorations",
+      ...(enableAutomaticTax ? { automatic_tax: { enabled: true } } : {}),
       metadata: { user_id: userId, tier: newTier },
     });
 

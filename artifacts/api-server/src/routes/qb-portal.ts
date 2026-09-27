@@ -527,9 +527,15 @@ router.post("/checkout/create-session", async (req: Request, res: Response) => {
             currency: "cad",
             product_data: { name: pricing.serviceName },
             unit_amount: stripeUnitAmount,
+            // Catalog prices are shown tax-exclusive ("GST/HST will be added at checkout").
+            tax_behavior: "exclusive",
           },
           quantity: 1,
         }],
+        // Stripe Tax adds GST/HST based on the customer's billing province.
+        // NexFortis is registered for GST/HST (797942570 RT0001) in Stripe Tax.
+        automatic_tax: { enabled: true },
+        billing_address_collection: "required",
         metadata: { order_id: String(order.id), user_id: userId || "" },
         success_url: `${getValidOrigin(req.headers.origin)}/order/${order.id}?success=true&uploadToken=${uploadToken}`,
         cancel_url: `${getValidOrigin(req.headers.origin)}/order?canceled=true`,
@@ -624,12 +630,21 @@ async function handleStripeWebhook(req: Request, res: Response) {
         if (orderId) {
           const [existing] = await db.select().from(qbOrders).where(eq(qbOrders.id, orderId)).limit(1);
           if (existing && (existing.status === "pending_payment" || existing.status === "submitted")) {
+            // With Stripe automatic tax enabled, the amount actually charged
+            // (session.amount_total, in cents) includes GST/HST on top of the
+            // pre-tax total stored at checkout creation. Persist the charged
+            // amount so the portal, admin screens and "Total Paid" emails match
+            // what the customer paid.
+            const paidTotalCad =
+              typeof session.amount_total === "number" ? session.amount_total : existing.totalCad;
             await db.update(qbOrders).set({
               status: "paid",
               paymentStatus: "paid",
               stripeSessionId: session.id,
+              totalCad: paidTotalCad,
               updatedAt: new Date(),
             }).where(eq(qbOrders.id, orderId));
+            existing.totalCad = paidTotalCad;
             console.log(`[Stripe] Payment confirmed for order ${orderId}`);
 
             try {
