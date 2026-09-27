@@ -630,12 +630,21 @@ async function handleStripeWebhook(req: Request, res: Response) {
         if (orderId) {
           const [existing] = await db.select().from(qbOrders).where(eq(qbOrders.id, orderId)).limit(1);
           if (existing && (existing.status === "pending_payment" || existing.status === "submitted")) {
+            // With Stripe automatic tax enabled, the amount actually charged
+            // (session.amount_total, in cents) includes GST/HST on top of the
+            // pre-tax total stored at checkout creation. Persist the charged
+            // amount so the portal, admin screens and "Total Paid" emails match
+            // what the customer paid.
+            const paidTotalCad =
+              typeof session.amount_total === "number" ? session.amount_total : existing.totalCad;
             await db.update(qbOrders).set({
               status: "paid",
               paymentStatus: "paid",
               stripeSessionId: session.id,
+              totalCad: paidTotalCad,
               updatedAt: new Date(),
             }).where(eq(qbOrders.id, orderId));
+            existing.totalCad = paidTotalCad;
             console.log(`[Stripe] Payment confirmed for order ${orderId}`);
 
             try {

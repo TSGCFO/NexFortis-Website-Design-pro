@@ -68,11 +68,17 @@ async function main() {
         currency: "cad",
         unit_amount: tier.basePriceCad,
         recurring: { interval: "month" },
+        tax_behavior: "exclusive",
         metadata: { tier: tier.tier, type: "standard" },
       });
       console.log(`  Created standard price: $${(tier.basePriceCad / 100).toFixed(2)} CAD/mo (${standardPrice.id})`);
     } else {
       console.log(`  Standard price exists: (${standardPrice.id})`);
+      if (standardPrice.tax_behavior === "unspecified" || !standardPrice.tax_behavior) {
+        // Stripe allows setting tax_behavior once on an existing price.
+        standardPrice = await stripe.prices.update(standardPrice.id, { tax_behavior: "exclusive" });
+        console.log(`  Set tax_behavior=exclusive on ${standardPrice.id}`);
+      }
     }
 
     let promoPrice = existingPrices.data.find(
@@ -84,11 +90,17 @@ async function main() {
         currency: "cad",
         unit_amount: tier.launchPriceCad,
         recurring: { interval: "month" },
+        tax_behavior: "exclusive",
         metadata: { tier: tier.tier, type: "promo" },
       });
       console.log(`  Created promo price: $${(tier.launchPriceCad / 100).toFixed(2)} CAD/mo (${promoPrice.id})`);
     } else {
       console.log(`  Promo price exists: (${promoPrice.id})`);
+      if (promoPrice.tax_behavior === "unspecified" || !promoPrice.tax_behavior) {
+        // Stripe allows setting tax_behavior once on an existing price.
+        promoPrice = await stripe.prices.update(promoPrice.id, { tax_behavior: "exclusive" });
+        console.log(`  Set tax_behavior=exclusive on ${promoPrice.id}`);
+      }
     }
 
     const envKey = tier.tier.toUpperCase();
