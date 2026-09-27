@@ -116,6 +116,10 @@ router.post("/checkout", subscriptionLimiter, async (req: Request, res: Response
       mode: "subscription",
       customer: stripeCustomerId,
       line_items: [{ price: priceId, quantity: 1 }],
+      // Stripe Tax adds GST/HST based on the customer's billing province.
+      automatic_tax: { enabled: true },
+      billing_address_collection: "required",
+      customer_update: { address: "auto", name: "auto" },
       metadata: { user_id: userId, tier, type: "subscription" },
       subscription_data: {
         metadata: { user_id: userId, tier },

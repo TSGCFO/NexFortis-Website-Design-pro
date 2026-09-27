@@ -527,9 +527,15 @@ router.post("/checkout/create-session", async (req: Request, res: Response) => {
             currency: "cad",
             product_data: { name: pricing.serviceName },
             unit_amount: stripeUnitAmount,
+            // Catalog prices are shown tax-exclusive ("GST/HST will be added at checkout").
+            tax_behavior: "exclusive",
           },
           quantity: 1,
         }],
+        // Stripe Tax adds GST/HST based on the customer's billing province.
+        // NexFortis is registered for GST/HST (797942570 RT0001) in Stripe Tax.
+        automatic_tax: { enabled: true },
+        billing_address_collection: "required",
         metadata: { order_id: String(order.id), user_id: userId || "" },
         success_url: `${getValidOrigin(req.headers.origin)}/order/${order.id}?success=true&uploadToken=${uploadToken}`,
         cancel_url: `${getValidOrigin(req.headers.origin)}/order?canceled=true`,
