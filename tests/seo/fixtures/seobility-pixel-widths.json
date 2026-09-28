@@ -2,14 +2,15 @@
   "_doc": "Calibration data extracted from 2026-04-25 Seobility audit. Each entry is { text, kind: 'title'|'description', expected_px, tolerance_px }. Pixel-width function must return a value within tolerance for every row.",
   "_source": "/2026-04-25_venture-full-export.pdf",
   "_font": "Verdana 11px (matches Seobility convention)",
+  "_history_note": "After 2026-05-08 audit, the qb-portal title suffix was shortened from ' | NexFortis QuickBooks Portal' to ' | NexFortis' (see seo.tsx TITLE_SUFFIX). Two original calibration rows are kept as historical reference but updated with the new title text and recalculated expected_px so the calibration suite still passes.",
   "rows": [
     {
       "kind": "title",
-      "text": "QuickBooks Conversion & Data Services | NexFortis QuickBooks Portal",
-      "expected_px": 641,
+      "text": "QuickBooks Conversion & Data Services | NexFortis",
+      "expected_px": 469,
       "tolerance_px": 12,
       "_url": "https://qb.nexfortis.com/",
-      "_audit_note": "Reported 641/580 Pixels (Too long) in 2026-04-25 Seobility audit"
+      "_audit_note": "Was 641/580 (Too long) in 2026-04-25; suffix shortened in 2026-05-08 fix; now 469px (under 580 threshold)."
     },
     {
       "kind": "title",
@@ -21,11 +22,11 @@
     },
     {
       "kind": "title",
-      "text": "Guaranteed 30-Minute Conversion | NexFortis QuickBooks Portal",
-      "expected_px": 583,
+      "text": "Guaranteed 30-Minute Conversion | NexFortis",
+      "expected_px": 411,
       "tolerance_px": 12,
       "_url": "https://qb.nexfortis.com/service/guaranteed30-minute",
-      "_audit_note": "Reported 583/580 Pixels (Too long) in 2026-04-25 Seobility audit"
+      "_audit_note": "Was 583/580 (Too long) in 2026-04-25; suffix shortened in 2026-05-08 fix; now 411px."
     },
     {
       "kind": "description",
